@@ -35,16 +35,16 @@ class CounterListWidget extends StatelessWidget {
       body: counterListProvider.counters.isEmpty
           ? _buildEmptyCounterList(context) // Show empty state widget
           : ListView.builder(
-        // Show list if not empty
-        itemCount: counterListProvider.counters.length,
-        itemBuilder: (context, index) {
-          final counter = counterListProvider.counters[index];
-          return ReusableCounter(
-            counterModel: counter,
-            onRemove: () => counterListProvider.removeCounter(counter),
-          );
-        },
-      ),
+              // Show list if not empty
+              itemCount: counterListProvider.counters.length,
+              itemBuilder: (context, index) {
+                final counter = counterListProvider.counters[index];
+                return ReusableCounter(
+                  counterModel: counter,
+                  onRemove: () => counterListProvider.removeCounter(counter),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(

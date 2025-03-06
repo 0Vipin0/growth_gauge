@@ -23,10 +23,9 @@ class _ChartPageState extends State<ChartPage> {
   }
 
   void loadData() {
-    Provider.of<ChartProvider>(context, listen: false)
-        .processDataForChart(
-            Provider.of<CounterListProvider>(context, listen: false)
-                .getCounter(widget.counter));
+    Provider.of<ChartProvider>(context, listen: false).processDataForChart(
+        Provider.of<CounterListProvider>(context, listen: false)
+            .getCounter(widget.counter));
   }
 
   @override
