@@ -40,19 +40,89 @@ class TimerListWidget extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: timerListProvider.timers.length,
-        itemBuilder: (context, index) {
-          final timer = timerListProvider.timers[index];
-          return ReusableTimer(
-            timerModel: timer,
-            onRemove: () => timerListProvider.removeTimer(timer),
-          );
-        },
-      ),
+      body: timerListProvider.timers.isEmpty
+          ? _buildEmptyTimerList(
+              context, timerListProvider) // Show empty state widget
+          : ListView.builder(
+              itemCount: timerListProvider.timers.length,
+              itemBuilder: (context, index) {
+                final timer = timerListProvider.timers[index];
+                return ReusableTimer(
+                  timerModel: timer,
+                  onRemove: () => timerListProvider.removeTimer(timer),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: timerListProvider.addTimer,
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildEmptyTimerList(
+      BuildContext context, TimerListProvider timerListProvider) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 1),
+                duration: const Duration(seconds: 2),
+                builder: (context, value, child) {
+                  return Opacity(
+                    opacity: value * 0.3, // Fade-in effect
+                    child: Transform.scale(
+                      scale: 1 + value * 0.3, // Scale up slightly
+                      child: Container(
+                        padding: const EdgeInsets.all(60),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.shade100,
+                          // Soft orange background
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const Icon(
+                Icons.timer,
+                size: 80,
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            'Time to get started!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            'No timers set yet. Create timers for your activities and track your time effectively.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton.icon(
+            onPressed: timerListProvider.addTimer,
+            icon: const Icon(Icons.play_arrow),
+            label: const Text('Create Your First Timer'),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 18),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -4,15 +4,7 @@ import 'timer_model.dart';
 import 'timer_repository.dart';
 
 class InMemoryTimerRepository implements TimerRepository {
-  List<TimerModel> _timers = [
-    TimerModel(
-      id: const Uuid().v4(),
-      interval: Duration.zero,
-      name: 'New Timer',
-      description: 'New Timer',
-      logs: [],
-    )
-  ];
+  List<TimerModel> _timers = [];
 
   @override
   Future<List<TimerModel>> getTimers() async {
