@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'add_timer_page.dart';
 import 'reusable_timer.dart';
 import 'timer_list_provider.dart';
 
@@ -56,7 +57,13 @@ class TimerListWidget extends StatelessWidget {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: timerListProvider.addTimer,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddTimerPage(),
+            ),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
@@ -115,7 +122,13 @@ class TimerListWidget extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           ElevatedButton.icon(
-            onPressed: timerListProvider.addTimer,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddTimerPage(),
+                ),
+              );
+            },
             icon: const Icon(Icons.play_arrow),
             label: const Text('Create Your First Timer'),
             style: ElevatedButton.styleFrom(

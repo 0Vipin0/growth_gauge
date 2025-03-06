@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
 
 import 'timer_model.dart';
 import 'timer_repository.dart';
@@ -13,7 +12,6 @@ import 'timer_repository.dart';
 class TimerListProvider with ChangeNotifier {
   final TimerRepository repository;
   List<TimerModel> _timers = [];
-  final Uuid _uuid = const Uuid();
 
   TimerListProvider({required this.repository}) {
     _loadTimers();
@@ -30,14 +28,7 @@ class TimerListProvider with ChangeNotifier {
     await repository.saveTimers(_timers);
   }
 
-  void addTimer() {
-    final newTimer = TimerModel(
-      id: _uuid.v4(),
-      interval: Duration.zero,
-      name: 'New Timer',
-      description: 'New Timer',
-      logs: [],
-    );
+  void addTimer(TimerModel newTimer) {
     _timers.add(newTimer);
     saveTimers();
     notifyListeners();
