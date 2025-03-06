@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'features/counter/counter.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/timer.dart';
+import 'features/chart/chart.dart';
 import 'routes.dart';
 
 void main() {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
             repository: InMemoryTimerRepository(),
           ),
         ),
+        ChangeNotifierProvider(create: (_) => ChartProvider()),
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {

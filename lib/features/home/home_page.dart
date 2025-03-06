@@ -56,7 +56,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counters & Timers'),
+        title: const Text('Growth Gauge'),
       ),
       body: PageView(
         controller: _pageController,
@@ -101,7 +101,7 @@ class TabletHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counters & Timers'),
+        title: const Text('Growth Gauge'),
       ),
       body: const Row(
         children: [

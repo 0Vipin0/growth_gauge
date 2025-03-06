@@ -29,6 +29,21 @@ class CounterListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  CounterModel getCounter(CounterModel newCounter) {
+    return _counters.firstWhere((counter) => counter.id == newCounter.id);
+  }
+
+  void updateCounter(CounterModel newCounter) {
+    CounterModel counter = getCounter(newCounter)
+        .copyWith(count: newCounter.count, logs: newCounter.logs);
+    for (int i = 0; i < _counters.length; i++) {
+      if (counter.id == _counters[i].id) {
+        _counters[i] = counter;
+      }
+    }
+    notifyListeners();
+  }
+
   void removeCounter(CounterModel counter) {
     _counters.remove(counter);
     saveCounters();
@@ -45,5 +60,22 @@ class CounterListProvider with ChangeNotifier {
     _counters = decodedJson.map((json) => CounterModel.fromJson(json)).toList();
     saveCounters();
     notifyListeners();
+  }
+
+  Map<DateTime, int> extractCountsByDay(CounterModel counter) {
+    final Map<DateTime, int> countsByDay = {};
+
+    final List<CounterLog> countLog = getCounter(counter).logs;
+    for (int j = 0; j < countLog.length; j++) {
+      final dateTime = countLog[j].timestamp;
+      final dateOnly = DateTime(dateTime.year, dateTime.month, dateTime.day);
+      countsByDay.update(
+        dateOnly,
+        (existingCount) => existingCount + 1,
+        ifAbsent: () => 1,
+      );
+    }
+
+    return countsByDay;
   }
 }

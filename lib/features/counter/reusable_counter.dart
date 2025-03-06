@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'counter_details_page.dart';
+import 'counter_list_provider.dart';
 import 'reusable_counter_provider.dart';
 import 'counter_model.dart';
 
@@ -29,11 +30,19 @@ class ReusableCounter extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.remove),
-                    onPressed: counterProvider.decreaseCounter,
+                    onPressed: () {
+                      counterProvider.decreaseCounter();
+                      Provider.of<CounterListProvider>(context, listen: false)
+                          .updateCounter(counterProvider.counter);
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.add),
-                    onPressed: counterProvider.increaseCounter,
+                    onPressed: () {
+                      counterProvider.increaseCounter();
+                      Provider.of<CounterListProvider>(context, listen: false)
+                          .updateCounter(counterProvider.counter);
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),

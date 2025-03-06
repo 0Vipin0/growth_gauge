@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('hasCompletedOnboarding', false);
+    await prefs.setBool('hasCompletedOnboarding', true);
   }
 
   @override

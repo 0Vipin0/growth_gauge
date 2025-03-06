@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../counter/counter.dart';
 
-import 'counter_change_graph.dart';
-import 'counter_model.dart';
+import '../chart/chart.dart';
 
 class CounterDetailsPage extends StatelessWidget {
   final CounterModel counter;
@@ -16,14 +16,8 @@ class CounterDetailsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Text(
-              counter.name,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
             Text(
               counter.description,
               style: const TextStyle(fontSize: 16),
@@ -33,16 +27,35 @@ class CounterDetailsPage extends StatelessWidget {
               'Current Count: ${counter.count}',
               style: const TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Changes in the last 7 days',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 16),
-            Expanded(
-              child: CounterChangeGraph(counter: counter),
-            ),
-            const SizedBox(height: 8),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 800) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                          width: 400,
+                          height: 400,
+                          child: ChartPage(counter: counter)),
+                      HeatmapPage(counter: counter),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          width: 400,
+                          height: 400,
+                          child: ChartPage(counter: counter)),
+                      const SizedBox(height: 15),
+                      HeatmapPage(counter: counter),
+                    ],
+                  );
+                }
+              },
+            )
           ],
         ),
       ),
