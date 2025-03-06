@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import 'font_size_config.dart';
 import 'settings_provider.dart';
 

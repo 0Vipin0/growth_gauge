@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:growth_gauge/features/counter/counter.dart';
+
 import 'package:provider/provider.dart';
 
+import '../counter/counter.dart';
 import 'chart_provider.dart';
 import 'chart_widget.dart';
 

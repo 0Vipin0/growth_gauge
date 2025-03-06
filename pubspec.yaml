@@ -32,6 +32,7 @@ dev_dependencies:
   build_runner: ^2.4.11
   freezed: 2.5.2
   json_serializable: ^6.8.0
+  import_sorter: 4.6.0
 
 flutter:
   uses-material-design: true
@@ -43,3 +44,5 @@ flutter:
     - assets/images/
     - assets/animations/
 
+import_sorter:
+  comments: false

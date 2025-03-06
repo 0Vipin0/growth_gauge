@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 import 'timer_model.dart';
 import 'timer_repository.dart';
 

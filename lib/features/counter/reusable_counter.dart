@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import 'counter_details_page.dart';
 import 'counter_list_provider.dart';
-import 'reusable_counter_provider.dart';
 import 'counter_model.dart';
+import 'reusable_counter_provider.dart';
 
 class ReusableCounter extends StatelessWidget {
   final CounterModel counterModel;

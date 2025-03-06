@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../counter/counter.dart';
 
 import '../chart/chart.dart';
+import '../counter/counter.dart';
 
 class CounterDetailsPage extends StatelessWidget {
   final CounterModel counter;

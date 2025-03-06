@@ -1,4 +1,5 @@
 import 'package:flutter/painting.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 
 class ColorConverter extends JsonConverter<Color, String> {

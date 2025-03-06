@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'add_counter_page.dart';
+
 import 'package:provider/provider.dart';
+
+import 'add_counter_page.dart';
 import 'counter_list_provider.dart';
 import 'reusable_counter.dart';
 

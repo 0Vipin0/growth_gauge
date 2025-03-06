@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'color_converter.dart';
 import 'color_utils.dart';
 import 'font_size_config.dart';

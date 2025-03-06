@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
+import 'features/chart/chart.dart';
 import 'features/counter/counter.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/timer.dart';
-import 'features/chart/chart.dart';
 import 'routes.dart';
 
 void main() {

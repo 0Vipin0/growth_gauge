@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'font_size_config.dart';
 import 'settings_model.dart';
 
