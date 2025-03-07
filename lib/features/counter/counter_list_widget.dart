@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_counter_page.dart';
-import 'counter_list_provider.dart';
-import 'reusable_counter.dart';
+import 'counter.dart';
 
 class CounterListWidget extends StatelessWidget {
   const CounterListWidget({super.key});
@@ -35,13 +34,12 @@ class CounterListWidget extends StatelessWidget {
       body: counterListProvider.counters.isEmpty
           ? _buildEmptyCounterList(context) // Show empty state widget
           : ListView.builder(
-              // Show list if not empty
               itemCount: counterListProvider.counters.length,
               itemBuilder: (context, index) {
                 final counter = counterListProvider.counters[index];
                 return ReusableCounter(
                   counterModel: counter,
-                  onRemove: () => counterListProvider.removeCounter(counter),
+                  onRemove: () => showDeleteDialog(context, counter),
                 );
               },
             ),
@@ -111,6 +109,34 @@ class CounterListWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  showDeleteDialog(BuildContext context, CounterModel counter) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Counter'),
+          content: const Text('Are you sure to remove Counter?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Provider.of<CounterListProvider>(context, listen: false)
+                    .removeCounter(counter);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

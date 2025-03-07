@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_timer_page.dart';
-import 'reusable_timer.dart';
-import 'timer_list_provider.dart';
+import 'timer.dart';
 
 class TimerListWidget extends StatelessWidget {
   const TimerListWidget({super.key});
@@ -52,7 +51,7 @@ class TimerListWidget extends StatelessWidget {
                 final timer = timerListProvider.timers[index];
                 return ReusableTimer(
                   timerModel: timer,
-                  onRemove: () => timerListProvider.removeTimer(timer),
+                  onRemove: () => showDeleteDialog(context, timer),
                 );
               },
             ),
@@ -139,6 +138,34 @@ class TimerListWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  showDeleteDialog(BuildContext context, TimerModel timer) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Timer'),
+          content: const Text('Are you sure to remove Timer?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Provider.of<TimerListProvider>(context, listen: false)
+                    .removeTimer(timer);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
