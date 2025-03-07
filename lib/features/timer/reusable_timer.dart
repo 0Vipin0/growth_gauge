@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'reusable_timer_provider.dart';
+import 'timer_details_page.dart';
+import 'timer_list_provider.dart';
 import 'timer_model.dart';
 
 class ReusableTimer extends StatelessWidget {
@@ -32,11 +34,19 @@ class ReusableTimer extends StatelessWidget {
                         icon: Icon(timerProvider.isRunning
                             ? Icons.pause
                             : Icons.play_arrow),
-                        onPressed: timerProvider.startOrPauseTimer,
+                        onPressed: () {
+                          timerProvider.startOrPauseTimer();
+                          Provider.of<TimerListProvider>(context, listen: false)
+                              .updateTimer(timerProvider.timer);
+                        },
                       ),
                       IconButton(
                         icon: const Icon(Icons.refresh),
-                        onPressed: timerProvider.resetTimer,
+                        onPressed: () {
+                          timerProvider.resetTimer();
+                          Provider.of<TimerListProvider>(context, listen: false)
+                              .updateTimer(timerProvider.timer);
+                        },
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete),
@@ -44,6 +54,14 @@ class ReusableTimer extends StatelessWidget {
                       ),
                     ],
                   ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TimerDetailsPage(timer: timerModel),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

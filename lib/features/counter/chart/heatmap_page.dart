@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:provider/provider.dart';
 
-import '../counter/counter.dart';
+import '../counter.dart';
 
 class HeatmapPage extends StatefulWidget {
   final CounterModel counter;

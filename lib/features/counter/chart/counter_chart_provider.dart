@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
-import '../counter/counter_model.dart';
+import '../counter.dart';
 
-class ChartProvider extends ChangeNotifier {
+class CounterChartProvider extends ChangeNotifier {
   List<BarChartGroupData> barGroups = [];
   bool isProcessed = false;
   late CounterModel _counter;

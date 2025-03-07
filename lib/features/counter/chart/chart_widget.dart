@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
 
-import 'chart_provider.dart';
+import 'counter_chart_provider.dart';
 
 class ChartWidget extends StatelessWidget {
   const ChartWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ChartProvider>(
+    return Consumer<CounterChartProvider>(
       builder: (context, chartProvider, child) {
         final maxY = chartProvider.barGroups
                 .map((group) => group.barRods.first.toY)

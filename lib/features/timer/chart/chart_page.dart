@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../counter/counter.dart';
-import 'chart_provider.dart';
+import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
+import '../timer.dart';
 import 'chart_widget.dart';
+import 'timer_chart_provider.dart';
 
 class ChartPage extends StatefulWidget {
-  final CounterModel counter;
+  final TimerModel timer;
+  final DurationInterval durationInterval;
 
-  const ChartPage({super.key, required this.counter});
+  const ChartPage(
+      {super.key, required this.timer, required this.durationInterval});
 
   @override
   State<ChartPage> createState() => _ChartPageState();
@@ -23,19 +26,20 @@ class _ChartPageState extends State<ChartPage> {
   }
 
   void loadData() {
-    Provider.of<ChartProvider>(context, listen: false).processDataForChart(
-        Provider.of<CounterListProvider>(context, listen: false)
-            .getCounter(widget.counter));
+    Provider.of<TimerChartProvider>(context, listen: false).processDataForChart(
+        Provider.of<TimerListProvider>(context, listen: false)
+            .getTimer(widget.timer),
+        widget.durationInterval);
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(
+          const Text(
             'Exercise Counts - Last 7 Days',
             style: TextStyle(
               fontSize: 18,
@@ -43,10 +47,15 @@ class _ChartPageState extends State<ChartPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20),
-          ChartWidget(),
-          SizedBox(height: 20),
           Text(
+            'Time Spent per ${widget.durationInterval.getUnitLabel()}',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(height: 20),
+          const ChartWidget(),
+          const SizedBox(height: 20),
+          const Text(
             'Days are based on the last 7 days.',
             style: TextStyle(fontSize: 12, color: Colors.grey),
             textAlign: TextAlign.center,
