@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.growthgauge" "\0"
-            VALUE "FileDescription", "growth_gauge" "\0"
+            VALUE "CompanyName", "GrowthGauge" "\0"
+            VALUE "FileDescription", "Growth Gauge" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "growth_gauge" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 com.growthgauge. All rights reserved." "\0"
-            VALUE "OriginalFilename", "growth_gauge.exe" "\0"
-            VALUE "ProductName", "growth_gauge" "\0"
+            VALUE "InternalName", "Growth Gauge" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 Growth Gauge. All rights reserved." "\0"
+            VALUE "OriginalFilename", "GrowthGauge.exe" "\0"
+            VALUE "ProductName", "Growth Gauge" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

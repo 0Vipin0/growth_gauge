@@ -1,11 +1,11 @@
 {
-    "name": "growth_gauge",
-    "short_name": "growth_gauge",
+    "name": "Growth Gauge",
+    "short_name": "An application to keep the count of the tasks or activities",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "An application to keep the count of the tasks or activities.",
+    "description": "An application to keep the count of the ongoing tasks or timer based activities along with displaying statistics using graphs",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
