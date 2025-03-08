@@ -93,7 +93,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen>
             FadeTransition(
               opacity: _titleAnimation,
               child: Text(
-                'Growth Gauge', // Replace with your app title
+                'Growth Gauge',
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.1,
                   fontWeight: FontWeight.bold,

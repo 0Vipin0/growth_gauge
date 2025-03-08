@@ -55,7 +55,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -91,7 +90,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       'Back',
                       style: TextStyle(
-                        color: _currentPage == 0 ? Colors.grey : Colors.black,
+                        color: _currentPage == 0
+                            ? Theme.of(context).disabledColor
+                            : Theme.of(context).primaryColor,
                         fontSize: 16,
                       ),
                     ),
@@ -144,7 +145,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             style: TextStyle(
               fontSize: screenWidth * 0.03,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Theme.of(context).primaryColor,
             ),
             textAlign: TextAlign.center,
           ),
@@ -153,7 +154,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             description,
             style: TextStyle(
               fontSize: screenWidth * 0.02,
-              color: Colors.grey[600],
+              color: Theme.of(context).primaryColor,
             ),
             textAlign: TextAlign.center,
           ),
