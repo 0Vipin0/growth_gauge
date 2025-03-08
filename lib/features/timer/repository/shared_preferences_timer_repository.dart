@@ -6,13 +6,12 @@ import '../model/model.dart';
 import 'timer_repository.dart';
 
 class SharedPreferencesTimerRepository implements TimerRepository {
-  final SharedPreferences _prefs;
-
-  SharedPreferencesTimerRepository(this._prefs);
+  static const String _storageKey = 'timers';
 
   @override
   Future<List<TimerModel>> getTimers() async {
-    final String? timersJson = _prefs.getString('timers');
+    final prefs = await SharedPreferences.getInstance();
+    final String? timersJson = prefs.getString(_storageKey);
     if (timersJson != null) {
       final List<dynamic> timersList = json.decode(timersJson);
       return timersList
@@ -24,13 +23,15 @@ class SharedPreferencesTimerRepository implements TimerRepository {
 
   @override
   Future<void> saveTimers(List<TimerModel> timers) async {
+    final prefs = await SharedPreferences.getInstance();
     final String timersJson =
         json.encode(timers.map((timer) => timer.toJson()).toList());
-    await _prefs.setString('timers', timersJson);
+    await prefs.setString(_storageKey, timersJson);
   }
 
   @override
   Future<void> clearTimers() async {
-    await _prefs.remove('timers');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_storageKey);
   }
 }

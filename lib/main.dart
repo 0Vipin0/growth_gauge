@@ -24,12 +24,13 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(
-          create: (_) =>
-              CounterListProvider(repository: InMemoryCounterRepository()),
+          create: (_) => CounterListProvider(
+            repository: SharedPreferencesCounterRepository(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => TimerListProvider(
-            repository: InMemoryTimerRepository(),
+            repository: SharedPreferencesTimerRepository(),
           ),
         ),
         ChangeNotifierProvider(create: (_) => CounterChartProvider()),
