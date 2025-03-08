@@ -41,6 +41,18 @@ flutter:
     - family: Cera
       fonts:
         - asset: assets/fonts/CeraPro.ttf
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat.ttf
+    - family: OpenSans.ttf
+      fonts:
+        - asset: assets/fonts/OpenSans.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto.ttf
   assets:
     - assets/images/
     - assets/animations/

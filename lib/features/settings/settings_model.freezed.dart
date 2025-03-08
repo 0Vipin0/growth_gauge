@@ -20,10 +20,9 @@ SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SettingsModel {
-  @ColorConverter()
-  Color get themeColor => throw _privateConstructorUsedError;
-  double get fontSize => throw _privateConstructorUsedError;
-  AppThemeMode get themeMode => throw _privateConstructorUsedError;
+  AppThemeName get themeName => throw _privateConstructorUsedError;
+  AppFontSize get fontSize => throw _privateConstructorUsedError;
+  AppFontFamily get fontFamily => throw _privateConstructorUsedError;
   String? get exportPath => throw _privateConstructorUsedError;
   String? get importPath => throw _privateConstructorUsedError;
 
@@ -40,9 +39,9 @@ abstract class $SettingsModelCopyWith<$Res> {
       _$SettingsModelCopyWithImpl<$Res, SettingsModel>;
   @useResult
   $Res call(
-      {@ColorConverter() Color themeColor,
-      double fontSize,
-      AppThemeMode themeMode,
+      {AppThemeName themeName,
+      AppFontSize fontSize,
+      AppFontFamily fontFamily,
       String? exportPath,
       String? importPath});
 }
@@ -60,25 +59,25 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeColor = null,
+    Object? themeName = null,
     Object? fontSize = null,
-    Object? themeMode = null,
+    Object? fontFamily = null,
     Object? exportPath = freezed,
     Object? importPath = freezed,
   }) {
     return _then(_value.copyWith(
-      themeColor: null == themeColor
-          ? _value.themeColor
-          : themeColor // ignore: cast_nullable_to_non_nullable
-              as Color,
+      themeName: null == themeName
+          ? _value.themeName
+          : themeName // ignore: cast_nullable_to_non_nullable
+              as AppThemeName,
       fontSize: null == fontSize
           ? _value.fontSize
           : fontSize // ignore: cast_nullable_to_non_nullable
-              as double,
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as AppThemeMode,
+              as AppFontSize,
+      fontFamily: null == fontFamily
+          ? _value.fontFamily
+          : fontFamily // ignore: cast_nullable_to_non_nullable
+              as AppFontFamily,
       exportPath: freezed == exportPath
           ? _value.exportPath
           : exportPath // ignore: cast_nullable_to_non_nullable
@@ -100,9 +99,9 @@ abstract class _$$SettingsModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@ColorConverter() Color themeColor,
-      double fontSize,
-      AppThemeMode themeMode,
+      {AppThemeName themeName,
+      AppFontSize fontSize,
+      AppFontFamily fontFamily,
       String? exportPath,
       String? importPath});
 }
@@ -118,25 +117,25 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeColor = null,
+    Object? themeName = null,
     Object? fontSize = null,
-    Object? themeMode = null,
+    Object? fontFamily = null,
     Object? exportPath = freezed,
     Object? importPath = freezed,
   }) {
     return _then(_$SettingsModelImpl(
-      themeColor: null == themeColor
-          ? _value.themeColor
-          : themeColor // ignore: cast_nullable_to_non_nullable
-              as Color,
+      themeName: null == themeName
+          ? _value.themeName
+          : themeName // ignore: cast_nullable_to_non_nullable
+              as AppThemeName,
       fontSize: null == fontSize
           ? _value.fontSize
           : fontSize // ignore: cast_nullable_to_non_nullable
-              as double,
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as AppThemeMode,
+              as AppFontSize,
+      fontFamily: null == fontFamily
+          ? _value.fontFamily
+          : fontFamily // ignore: cast_nullable_to_non_nullable
+              as AppFontFamily,
       exportPath: freezed == exportPath
           ? _value.exportPath
           : exportPath // ignore: cast_nullable_to_non_nullable
@@ -153,9 +152,9 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SettingsModelImpl implements _SettingsModel {
   const _$SettingsModelImpl(
-      {@ColorConverter() required this.themeColor,
-      this.fontSize = FontSizeConfig.medium,
-      required this.themeMode,
+      {required this.themeName,
+      this.fontSize = AppFontSize.medium,
+      this.fontFamily = AppFontFamily.roboto,
       this.exportPath,
       this.importPath});
 
@@ -163,13 +162,13 @@ class _$SettingsModelImpl implements _SettingsModel {
       _$$SettingsModelImplFromJson(json);
 
   @override
-  @ColorConverter()
-  final Color themeColor;
+  final AppThemeName themeName;
   @override
   @JsonKey()
-  final double fontSize;
+  final AppFontSize fontSize;
   @override
-  final AppThemeMode themeMode;
+  @JsonKey()
+  final AppFontFamily fontFamily;
   @override
   final String? exportPath;
   @override
@@ -177,7 +176,7 @@ class _$SettingsModelImpl implements _SettingsModel {
 
   @override
   String toString() {
-    return 'SettingsModel(themeColor: $themeColor, fontSize: $fontSize, themeMode: $themeMode, exportPath: $exportPath, importPath: $importPath)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportPath: $exportPath, importPath: $importPath)';
   }
 
   @override
@@ -185,12 +184,12 @@ class _$SettingsModelImpl implements _SettingsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsModelImpl &&
-            (identical(other.themeColor, themeColor) ||
-                other.themeColor == themeColor) &&
+            (identical(other.themeName, themeName) ||
+                other.themeName == themeName) &&
             (identical(other.fontSize, fontSize) ||
                 other.fontSize == fontSize) &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
+            (identical(other.fontFamily, fontFamily) ||
+                other.fontFamily == fontFamily) &&
             (identical(other.exportPath, exportPath) ||
                 other.exportPath == exportPath) &&
             (identical(other.importPath, importPath) ||
@@ -200,7 +199,7 @@ class _$SettingsModelImpl implements _SettingsModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, themeColor, fontSize, themeMode, exportPath, importPath);
+      runtimeType, themeName, fontSize, fontFamily, exportPath, importPath);
 
   @JsonKey(ignore: true)
   @override
@@ -218,9 +217,9 @@ class _$SettingsModelImpl implements _SettingsModel {
 
 abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
-      {@ColorConverter() required final Color themeColor,
-      final double fontSize,
-      required final AppThemeMode themeMode,
+      {required final AppThemeName themeName,
+      final AppFontSize fontSize,
+      final AppFontFamily fontFamily,
       final String? exportPath,
       final String? importPath}) = _$SettingsModelImpl;
 
@@ -228,12 +227,11 @@ abstract class _SettingsModel implements SettingsModel {
       _$SettingsModelImpl.fromJson;
 
   @override
-  @ColorConverter()
-  Color get themeColor;
+  AppThemeName get themeName;
   @override
-  double get fontSize;
+  AppFontSize get fontSize;
   @override
-  AppThemeMode get themeMode;
+  AppFontFamily get fontFamily;
   @override
   String? get exportPath;
   @override

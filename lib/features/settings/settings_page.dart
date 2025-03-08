@@ -1,10 +1,12 @@
+// settings_page.dart
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'app_theme_mode.dart';
-import 'font_size_config.dart';
+import 'font_config.dart';
 import 'settings_provider.dart';
+import 'theme_config.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -23,43 +25,51 @@ class SettingsPage extends StatelessWidget {
           children: [
             ListTile(
               title: const Text('App Theme'),
-              trailing: DropdownButton<AppThemeMode>(
-                value: settingsProvider.settings.themeMode,
-                items: AppThemeMode.values.map((AppThemeMode mode) {
-                  return DropdownMenuItem<AppThemeMode>(
+              trailing: DropdownButton<AppThemeName>(
+                value: settingsProvider.settings.themeName,
+                items: AppThemeName.values.map((AppThemeName mode) {
+                  return DropdownMenuItem<AppThemeName>(
                     value: mode,
-                    child:
-                        Text(mode.getLabel()), // Use extension method for label
+                    child: Text(mode.getLabel()),
                   );
                 }).toList(),
-                onChanged: (AppThemeMode? value) {
+                onChanged: (AppThemeName? value) {
                   if (value != null) {
-                    settingsProvider.updateThemeMode(value);
+                    settingsProvider.updateThemeName(value);
                   }
                 },
               ),
             ),
             ListTile(
               title: const Text('Font Size'),
-              trailing: DropdownButton<double>(
+              trailing: DropdownButton<AppFontSize>(
                 value: settingsProvider.settings.fontSize,
-                items: const [
-                  DropdownMenuItem(
-                    value: FontSizeConfig.small,
-                    child: Text('Small'),
-                  ),
-                  DropdownMenuItem(
-                    value: FontSizeConfig.medium,
-                    child: Text('Medium'),
-                  ),
-                  DropdownMenuItem(
-                    value: FontSizeConfig.large,
-                    child: Text('Large'),
-                  ),
-                ],
-                onChanged: (value) {
+                items: AppFontSize.values.map((AppFontSize size) {
+                  return DropdownMenuItem<AppFontSize>(
+                    value: size,
+                    child: Text(size.getLabel()),
+                  );
+                }).toList(),
+                onChanged: (AppFontSize? value) {
                   if (value != null) {
                     settingsProvider.updateFontSize(value);
+                  }
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Font Family'),
+              trailing: DropdownButton<AppFontFamily>(
+                value: settingsProvider.settings.fontFamily,
+                items: AppFontFamily.values.map((AppFontFamily family) {
+                  return DropdownMenuItem<AppFontFamily>(
+                    value: family,
+                    child: Text(family.getLabel()),
+                  );
+                }).toList(),
+                onChanged: (AppFontFamily? value) {
+                  if (value != null) {
+                    settingsProvider.updateFontFamily(value);
                   }
                 },
               ),
@@ -91,19 +101,4 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
-// Example file picker functions (Implement actual file/directory picking logic)
-// Future<void> _pickExportDirectory(SettingsProvider settingsProvider) async {
-//   String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-//   if (selectedDirectory != null) {
-//     settingsProvider.updateExportPath(selectedDirectory);
-//   }
-// }
-
-// Future<void> _pickImportDirectory(SettingsProvider settingsProvider) async {
-//   String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-//   if (selectedDirectory != null) {
-//     settingsProvider.updateImportPath(selectedDirectory);
-//   }
-// }
 }

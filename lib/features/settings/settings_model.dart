@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'app_theme_mode.dart';
-import 'color_converter.dart';
-import 'color_utils.dart';
-import 'font_size_config.dart';
+import 'app_theme.dart';
+import 'font_config.dart';
+import 'theme_config.dart';
 
 part 'settings_model.freezed.dart';
 
@@ -14,9 +11,9 @@ part 'settings_model.g.dart';
 @freezed
 class SettingsModel with _$SettingsModel {
   const factory SettingsModel({
-    @ColorConverter() required Color themeColor,
-    @Default(FontSizeConfig.medium) double fontSize,
-    required AppThemeMode themeMode,
+    required AppThemeName themeName,
+    @Default(AppFontSize.medium) AppFontSize fontSize,
+    @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
     String? exportPath,
     String? importPath,
   }) = _SettingsModel;
@@ -26,17 +23,8 @@ class SettingsModel with _$SettingsModel {
 }
 
 extension SettingsModelExtension on SettingsModel {
-  MaterialColor get materialThemeColor => createMaterialColor(themeColor);
-
-  TextTheme get textTheme {
-    switch (fontSize) {
-      case FontSizeConfig.small:
-        return FontSizeConfig.smallTextTheme;
-      case FontSizeConfig.large:
-        return FontSizeConfig.largeTextTheme;
-      case FontSizeConfig.medium:
-      default:
-        return FontSizeConfig.mediumTextTheme;
-    }
-  }
+  AppTheme get appTheme => AppTheme(
+        themeName: themeName,
+        fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
+      );
 }

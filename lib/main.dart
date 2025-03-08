@@ -1,3 +1,5 @@
+// main.dart
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -22,10 +24,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(
-          create: (_) => CounterListProvider(
-              repository:
-                  InMemoryCounterRepository() // or SharedPreferencesCounterRepository()
-              ),
+          create: (_) =>
+              CounterListProvider(repository: InMemoryCounterRepository()),
         ),
         ChangeNotifierProvider(
           create: (_) => TimerListProvider(
@@ -37,13 +37,11 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {
-          final ThemeData themeData =
-              settingsProvider.getThemeData(Theme.of(context).textTheme);
+          final ThemeData themeData = settingsProvider.getThemeData();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Growth Gage App',
-            theme: themeData.copyWith(
-                textTheme: settingsProvider.settings.textTheme),
+            theme: themeData,
             initialRoute: AppRoutes.splash,
             onGenerateRoute: AppRoutes.generateRoute,
           );
