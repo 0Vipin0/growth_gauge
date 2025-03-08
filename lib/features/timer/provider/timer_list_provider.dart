@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../chart/chart.dart';
 import '../model/model.dart';
@@ -57,29 +53,10 @@ class TimerListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> exportTimers() async {
-    final String timersJson =
-        json.encode(_timers.map((timer) => timer.toJson()).toList());
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/timers.json');
-    await file.writeAsString(timersJson);
-  }
-
-  Future<void> importTimers() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-    );
-    if (result != null) {
-      final file = File(result.files.single.path!);
-      final timersJson = await file.readAsString();
-      final List<dynamic> timersList = json.decode(timersJson);
-      _timers = timersList
-          .map((timer) => TimerModel.fromJson(timer as Map<String, dynamic>))
-          .toList();
-      saveTimers();
-      notifyListeners();
-    }
+  void importTimersFromData(List<TimerModel> importedTimers) {
+    _timers = importedTimers;
+    saveTimers();
+    notifyListeners();
   }
 
   Map<DateTime, int> extractCountsByDayPerDurationInterval(

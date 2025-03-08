@@ -15,24 +15,6 @@ class CounterListWidget extends StatelessWidget {
     final counterListProvider = Provider.of<CounterListProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Counter List'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.upload_file),
-            onPressed: () async {
-              String jsonString = ''; // Replace with your file picker result
-              await counterListProvider.importCounters(jsonString);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () async {
-              await counterListProvider.exportCounters();
-            },
-          ),
-        ],
-      ),
       body: counterListProvider.counters.isEmpty
           ? _buildEmptyCounterList(context) // Show empty state widget
           : ListView.builder(

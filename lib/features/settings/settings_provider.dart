@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../counter/counter.dart';
+import '../timer/timer.dart';
+import 'app_data.dart';
 import 'font_config.dart';
 import 'settings_model.dart';
 import 'theme_config.dart';
@@ -38,18 +45,6 @@ class SettingsProvider with ChangeNotifier {
 
   void updateFontFamily(AppFontFamily fontFamily) {
     _settings = _settings.copyWith(fontFamily: fontFamily);
-    saveSettingsToStorage();
-    notifyListeners();
-  }
-
-  void updateExportPath(String path) {
-    _settings = _settings.copyWith(exportPath: path);
-    saveSettingsToStorage();
-    notifyListeners();
-  }
-
-  void updateImportPath(String path) {
-    _settings = _settings.copyWith(importPath: path);
     saveSettingsToStorage();
     notifyListeners();
   }
@@ -93,15 +88,10 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final exportPath = prefs.getString('exportPath');
-    final importPath = prefs.getString('importPath');
-
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
       fontFamily: fontFamily,
-      exportPath: exportPath,
-      importPath: importPath,
     );
     notifyListeners();
   }
@@ -112,11 +102,98 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString('themeName', _settings.themeName.name);
     await prefs.setString('fontSize', _settings.fontSize.name);
     await prefs.setString('fontFamily', _settings.fontFamily.name);
-    if (_settings.exportPath != null) {
-      await prefs.setString('exportPath', _settings.exportPath!);
+  }
+
+  Future<void> exportData(
+      List<CounterModel> counters, List<TimerModel> timers) async {
+    try {
+      final appData =
+          await _prepareAppDataForExport(counters, timers); // Pass parameters
+      final exportJson = jsonEncode(appData.toJson());
+
+      String? filePath = await _getSaveFilePath();
+      if (filePath == null) {
+        throw Exception('Export Cancelled');
+      }
+
+      final file = File(filePath);
+      await file.writeAsString(exportJson);
+    } catch (e) {
+      rethrow;
     }
-    if (_settings.importPath != null) {
-      await prefs.setString('importPath', _settings.importPath!);
+  }
+
+  Future<AppData> _prepareAppDataForExport(
+      List<CounterModel> counters, List<TimerModel> timers) async {
+    return AppData(
+      version: 1,
+      counters: counters,
+      timers: timers,
+    );
+  }
+
+  Future<String?> _getSaveFilePath() async {
+    String? filePath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save Export File',
+      allowedExtensions: ['json'],
+      type: FileType.custom,
+      fileName: 'DataExport.json', // Default filename
+    );
+    return filePath;
+  }
+
+  Future<void> importData(
+    Function(List<CounterModel>) counterImporter,
+    Function(List<TimerModel>) timerImporter,
+  ) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        File file = File(result.files.single.path!);
+        String importJson = await file.readAsString();
+        await _processImportData(
+            importJson, counterImporter, timerImporter); // Pass providers
+      } else {
+        throw Exception('Import Cancelled');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _processImportData(
+    String importJson,
+    Function(List<CounterModel>) counterImporter,
+    Function(List<TimerModel>) timerImporter,
+  ) async {
+    final Map<String, dynamic> jsonData = json.decode(importJson);
+    final AppData appData = AppData.fromJson(jsonData);
+
+    if (appData.version == 1) {
+      _importVersion1Data(
+        appData: appData,
+        counterImporter: counterImporter,
+        timerImporter: timerImporter,
+      );
+    } else {
+      throw UnsupportedError('Unsupported data version: ${appData.version}');
+    }
+  }
+
+  void _importVersion1Data({
+    required AppData appData,
+    required Function(List<CounterModel>) counterImporter,
+    required Function(List<TimerModel>) timerImporter,
+  }) {
+    if (appData.counters.isNotEmpty) {
+      counterImporter(appData.counters);
+    }
+    if (appData.timers.isNotEmpty) {
+      timerImporter(appData.timers);
     }
   }
 }

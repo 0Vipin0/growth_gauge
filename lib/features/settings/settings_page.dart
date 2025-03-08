@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../counter/counter.dart';
+import '../timer/timer.dart';
 import 'font_config.dart';
 import 'settings_provider.dart';
 import 'theme_config.dart';
@@ -14,6 +16,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
+    final counterListProvider = Provider.of<CounterListProvider>(context);
+    final timerListProvider = Provider.of<TimerListProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -74,27 +78,46 @@ class SettingsPage extends StatelessWidget {
                 },
               ),
             ),
+            const Divider(), // Separator for data management options
             ListTile(
-              title: const Text('Export Path'),
-              subtitle: Text(settingsProvider.settings.exportPath ?? 'Not Set'),
-              trailing: IconButton(
-                icon: const Icon(Icons.folder_open),
-                onPressed: () {
-                  // Implement file picker for export path
-                  // Example: _pickExportDirectory(settingsProvider);
-                },
-              ),
+              title: const Text('Export Data'),
+              trailing: const Icon(Icons.file_upload),
+              onTap: () {
+                settingsProvider
+                    .exportData(
+                        counterListProvider.counters, timerListProvider.timers)
+                    .then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Data exported successfully!')),
+                  );
+                }).catchError((onError) {
+                  onError = onError.toString().replaceAll("Exception:", "");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error exporting data: $onError')),
+                  );
+                }); // Pass data
+              },
             ),
             ListTile(
-              title: const Text('Import Path'),
-              subtitle: Text(settingsProvider.settings.importPath ?? 'Not Set'),
-              trailing: IconButton(
-                icon: const Icon(Icons.folder_open),
-                onPressed: () {
-                  // Implement file picker for import path
-                  // Example: _pickImportDirectory(settingsProvider);
-                },
-              ),
+              title: const Text('Import Data'),
+              trailing: const Icon(Icons.file_download),
+              onTap: () {
+                settingsProvider
+                    .importData(counterListProvider.importCountersFromData,
+                        timerListProvider.importTimersFromData)
+                    .then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Data imported successfully!')),
+                  );
+                }).catchError((onError) {
+                  onError = onError.toString().replaceAll("Exception:", "");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error importing data: $onError')),
+                  );
+                }); // Pass providers
+              },
             ),
           ],
         ),

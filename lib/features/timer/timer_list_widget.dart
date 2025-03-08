@@ -15,35 +15,6 @@ class TimerListWidget extends StatelessWidget {
     final timerListProvider = Provider.of<TimerListProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Timer List'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save_alt),
-            onPressed: () async {
-              final messenger = ScaffoldMessenger.of(context);
-              await timerListProvider.exportTimers();
-              if (messenger.mounted) {
-                messenger.showSnackBar(
-                  const SnackBar(content: Text('Timers exported successfully')),
-                );
-              }
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.upload_file),
-            onPressed: () async {
-              final messenger = ScaffoldMessenger.of(context);
-              await timerListProvider.importTimers();
-              if (messenger.mounted) {
-                messenger.showSnackBar(
-                  const SnackBar(content: Text('Timers imported successfully')),
-                );
-              }
-            },
-          ),
-        ],
-      ),
       body: timerListProvider.timers.isEmpty
           ? _buildEmptyTimerList(
               context, timerListProvider) // Show empty state widget

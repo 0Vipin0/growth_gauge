@@ -14,8 +14,6 @@ class SettingsModel with _$SettingsModel {
     required AppThemeName themeName,
     @Default(AppFontSize.medium) AppFontSize fontSize,
     @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
-    String? exportPath,
-    String? importPath,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) =>

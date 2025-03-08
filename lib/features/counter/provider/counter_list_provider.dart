@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -51,14 +50,8 @@ class CounterListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> exportCounters() async {
-    final countersJson = jsonEncode(_counters.map((c) => c.toJson()).toList());
-    return countersJson;
-  }
-
-  Future<void> importCounters(String jsonString) async {
-    final List<dynamic> decodedJson = jsonDecode(jsonString);
-    _counters = decodedJson.map((json) => CounterModel.fromJson(json)).toList();
+  void importCountersFromData(List<CounterModel> importedCounters) {
+    _counters = importedCounters;
     saveCounters();
     notifyListeners();
   }
