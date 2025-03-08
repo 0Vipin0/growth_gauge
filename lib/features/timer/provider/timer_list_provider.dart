@@ -7,9 +7,9 @@ import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'chart/duration_interval.dart';
-import 'timer_model.dart';
-import 'timer_repository.dart';
+import '../chart/chart.dart';
+import '../model/model.dart';
+import '../repository/repository.dart';
 
 class TimerListProvider with ChangeNotifier {
   final TimerRepository repository;

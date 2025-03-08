@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
-import '../timer.dart';
+import '../model/model.dart';
 import 'duration_interval.dart';
 
 class TimerChartProvider extends ChangeNotifier {

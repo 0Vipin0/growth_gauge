@@ -1,4 +1,4 @@
-import 'timer_model.dart';
+import '../model/timer_model.dart';
 
 abstract class TimerRepository {
   Future<List<TimerModel>> getTimers();

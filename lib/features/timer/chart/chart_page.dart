@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
-import '../timer.dart';
+import '../model/model.dart';
+import '../provider/provider.dart';
 import 'chart_widget.dart';
+import 'duration_interval.dart';
 import 'timer_chart_provider.dart';
 
 class ChartPage extends StatefulWidget {

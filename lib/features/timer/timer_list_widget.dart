@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_timer_page.dart';
-import 'timer.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
+import 'reusable_timer_widget.dart';
 
 class TimerListWidget extends StatelessWidget {
   const TimerListWidget({super.key});
@@ -49,7 +51,7 @@ class TimerListWidget extends StatelessWidget {
               itemCount: timerListProvider.timers.length,
               itemBuilder: (context, index) {
                 final timer = timerListProvider.timers[index];
-                return ReusableTimer(
+                return ReusableTimerWidget(
                   timerModel: timer,
                   onRemove: () => showDeleteDialog(context, timer),
                 );

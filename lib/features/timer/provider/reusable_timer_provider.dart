@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:uuid/uuid.dart';
 
-import 'timer_model.dart';
+import '../model/model.dart';
 
 class ReusableTimerProvider with ChangeNotifier {
   TimerModel timer;

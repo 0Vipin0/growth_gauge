@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'chart/chart.dart';
-import 'chart/duration_interval.dart';
-import 'timer.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
 
 class TimerDetailsPage extends StatefulWidget {
   final TimerModel timer;

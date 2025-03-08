@@ -1,4 +1,4 @@
-import 'timer_model.dart';
+import '../model/timer_model.dart';
 import 'timer_repository.dart';
 
 class InMemoryTimerRepository implements TimerRepository {

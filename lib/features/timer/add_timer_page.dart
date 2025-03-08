@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import 'timer_list_provider.dart';
-import 'timer_model.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
 
 class AddTimerPage extends StatefulWidget {
   const AddTimerPage({super.key});

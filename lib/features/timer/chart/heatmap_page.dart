@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:provider/provider.dart';
 
-import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
-import '../timer.dart';
+import '../model/model.dart';
+import '../provider/provider.dart';
+import 'duration_interval.dart';
 
 class HeatmapPage extends StatefulWidget {
   final TimerModel timer;

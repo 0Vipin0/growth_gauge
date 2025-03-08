@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'reusable_timer_provider.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
 import 'timer_details_page.dart';
-import 'timer_list_provider.dart';
-import 'timer_model.dart';
 
-class ReusableTimer extends StatelessWidget {
+class ReusableTimerWidget extends StatelessWidget {
   final TimerModel timerModel;
   final VoidCallback onRemove;
 
-  const ReusableTimer(
+  const ReusableTimerWidget(
       {super.key, required this.timerModel, required this.onRemove});
 
   @override
