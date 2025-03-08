@@ -1,4 +1,4 @@
-import 'counter_model.dart';
+import '../model/counter_model.dart';
 
 abstract class CounterRepository {
   Future<List<CounterModel>> loadCounters();

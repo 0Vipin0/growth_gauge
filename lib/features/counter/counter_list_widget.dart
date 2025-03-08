@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_counter_page.dart';
-import 'counter.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
+import 'reusable_counter_widget.dart';
 
 class CounterListWidget extends StatelessWidget {
   const CounterListWidget({super.key});
@@ -37,7 +39,7 @@ class CounterListWidget extends StatelessWidget {
               itemCount: counterListProvider.counters.length,
               itemBuilder: (context, index) {
                 final counter = counterListProvider.counters[index];
-                return ReusableCounter(
+                return ReusableCounterWidget(
                   counterModel: counter,
                   onRemove: () => showDeleteDialog(context, counter),
                 );

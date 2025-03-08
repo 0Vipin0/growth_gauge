@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'counter_details_page.dart';
-import 'counter_list_provider.dart';
-import 'counter_model.dart';
-import 'reusable_counter_provider.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
 
-class ReusableCounter extends StatelessWidget {
+class ReusableCounterWidget extends StatelessWidget {
   final CounterModel counterModel;
   final VoidCallback onRemove;
 
-  const ReusableCounter({
+  const ReusableCounterWidget({
     super.key,
     required this.counterModel,
     required this.onRemove,

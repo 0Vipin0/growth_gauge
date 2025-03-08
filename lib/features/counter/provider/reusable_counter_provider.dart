@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:uuid/uuid.dart';
 
-import 'counter_model.dart';
+import '../model/model.dart';
 
 class ReusableCounterProvider with ChangeNotifier {
   CounterModel counter;

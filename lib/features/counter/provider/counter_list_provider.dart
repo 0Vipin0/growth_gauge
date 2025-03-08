@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'counter_model.dart';
-import 'counter_repository.dart';
+import '../model/counter_model.dart';
+import '../repository/repository.dart';
 
 class CounterListProvider with ChangeNotifier {
   final CounterRepository repository;

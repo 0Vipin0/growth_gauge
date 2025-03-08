@@ -1,4 +1,4 @@
-import 'counter_model.dart';
+import '../model/model.dart';
 import 'counter_repository.dart';
 
 class InMemoryCounterRepository implements CounterRepository {

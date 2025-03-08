@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import 'counter_list_provider.dart';
-import 'counter_model.dart';
+import 'model/model.dart';
+import 'provider/provider.dart';
 
 class AddCounterPage extends StatefulWidget {
   const AddCounterPage({super.key});
