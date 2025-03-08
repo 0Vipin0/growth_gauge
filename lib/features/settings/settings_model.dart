@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'app_theme_mode.dart';
 import 'color_converter.dart';
 import 'color_utils.dart';
 import 'font_size_config.dart';
@@ -15,6 +16,7 @@ class SettingsModel with _$SettingsModel {
   const factory SettingsModel({
     @ColorConverter() required Color themeColor,
     @Default(FontSizeConfig.medium) double fontSize,
+    required AppThemeMode themeMode,
     String? exportPath,
     String? importPath,
   }) = _SettingsModel;

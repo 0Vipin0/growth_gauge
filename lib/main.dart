@@ -37,15 +37,13 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {
-          final settings = settingsProvider.settings;
-
+          final ThemeData themeData =
+              settingsProvider.getThemeData(Theme.of(context).textTheme);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Growth Gage App',
-            theme: ThemeData(
-              primarySwatch: settings.materialThemeColor,
-              textTheme: settings.textTheme,
-            ),
+            theme: themeData.copyWith(
+                textTheme: settingsProvider.settings.textTheme),
             initialRoute: AppRoutes.splash,
             onGenerateRoute: AppRoutes.generateRoute,
           );

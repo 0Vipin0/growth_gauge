@@ -73,21 +73,19 @@ class CounterListWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Text(
+          const Text(
             'No counters yet!',
             style: TextStyle(
               fontSize: 22,
-              color: Colors.grey.shade700,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 10),
-          Text(
+          const Text(
             'Get started by creating your first counter.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
-              color: Colors.grey.shade600,
             ),
           ),
           const SizedBox(height: 30),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'app_theme_mode.dart';
 import 'font_size_config.dart';
 import 'settings_provider.dart';
 
@@ -21,26 +22,19 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: const Text('Theme Color'),
-              trailing: DropdownButton<Color>(
-                value: settingsProvider.settings.themeColor,
-                items: const [
-                  DropdownMenuItem(
-                    value: Colors.blue,
-                    child: Text('Blue'),
-                  ),
-                  DropdownMenuItem(
-                    value: Colors.red,
-                    child: Text('Red'),
-                  ),
-                  DropdownMenuItem(
-                    value: Colors.green,
-                    child: Text('Green'),
-                  ),
-                ],
-                onChanged: (value) {
+              title: const Text('App Theme'),
+              trailing: DropdownButton<AppThemeMode>(
+                value: settingsProvider.settings.themeMode,
+                items: AppThemeMode.values.map((AppThemeMode mode) {
+                  return DropdownMenuItem<AppThemeMode>(
+                    value: mode,
+                    child:
+                        Text(mode.getLabel()), // Use extension method for label
+                  );
+                }).toList(),
+                onChanged: (AppThemeMode? value) {
                   if (value != null) {
-                    settingsProvider.updateThemeColor(value);
+                    settingsProvider.updateThemeMode(value);
                   }
                 },
               ),
@@ -77,6 +71,7 @@ class SettingsPage extends StatelessWidget {
                 icon: const Icon(Icons.folder_open),
                 onPressed: () {
                   // Implement file picker for export path
+                  // Example: _pickExportDirectory(settingsProvider);
                 },
               ),
             ),
@@ -87,6 +82,7 @@ class SettingsPage extends StatelessWidget {
                 icon: const Icon(Icons.folder_open),
                 onPressed: () {
                   // Implement file picker for import path
+                  // Example: _pickImportDirectory(settingsProvider);
                 },
               ),
             ),
@@ -95,4 +91,19 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
+
+// Example file picker functions (Implement actual file/directory picking logic)
+// Future<void> _pickExportDirectory(SettingsProvider settingsProvider) async {
+//   String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+//   if (selectedDirectory != null) {
+//     settingsProvider.updateExportPath(selectedDirectory);
+//   }
+// }
+
+// Future<void> _pickImportDirectory(SettingsProvider settingsProvider) async {
+//   String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+//   if (selectedDirectory != null) {
+//     settingsProvider.updateImportPath(selectedDirectory);
+//   }
+// }
 }
