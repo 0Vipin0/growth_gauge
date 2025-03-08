@@ -46,7 +46,7 @@ jobs:
 
       - name: Zip Release
         run: |
-          Compress-Archive -Path build\windows\runner\Release\* -DestinationPath growth_gauge.zip
+          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath growth_gauge.zip
 
       - name: Create Release
         id: create_release
