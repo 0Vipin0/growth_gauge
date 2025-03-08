@@ -61,34 +61,54 @@ class CounterListWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.playlist_add_check,
-              size: 80,
-            ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 1),
+                duration: const Duration(seconds: 2),
+                builder: (context, value, child) {
+                  return Opacity(
+                    opacity: value * 0.3, // Fade-in effect
+                    child: Transform.scale(
+                      scale: 1 + value * 0.3, // Scale up slightly
+                      child: Container(
+                        padding: const EdgeInsets.all(60),
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).primaryColorLight,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const Icon(
+                Icons.playlist_add_check,
+                size: 80,
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           const Text(
-            'No counters yet!',
+            'Ready to count things?',
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 15),
           const Text(
-            'Get started by creating your first counter.',
+            'No counters created yet. Start tracking anything you want by creating your first counter.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).push(
@@ -98,11 +118,11 @@ class CounterListWidget extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.add),
-            label: const Text('Create Counter'),
+            label: const Text('Create Your First Counter'),
             style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 18),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
+                  borderRadius: BorderRadius.circular(30)),
             ),
           ),
         ],

@@ -88,8 +88,10 @@ class TimerListWidget extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(60),
                         decoration: BoxDecoration(
-                          color: Colors.orange.shade100,
-                          // Soft orange background
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).primaryColorLight,
                           shape: BoxShape.circle,
                         ),
                       ),
