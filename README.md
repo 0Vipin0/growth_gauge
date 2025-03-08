@@ -44,6 +44,10 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *   **Automated Builds with GitHub Actions:** Integrate GitHub Actions to automate the build, testing, and artifact generation processes for various platforms, streamlining development and release cycles.
 *   **Cross-Device Data Synchronization:** Enable seamless data sharing and access across multiple devices through cloud storage integration, allowing users to manage their Growth Gauge data from anywhere.
 *   **User Authentication:** Implement user authentication to enhance data security and potentially unlock future user-specific features and data management capabilities.
+*   **Sound Alerts and Notifications:** Support scheduled local notifications for both Mobile and Desktop with possibility of customizable sound notification.
+*   **Target Tracking:** Allows users to define target and trigger notification when goal is reached.
+*   **Data Categorization:** Allows users to add tags/categories to counters and timers to organize them with tag based filtering support.
+*   **Summary Statistics:** Display summary statistics like average, minimum, maximum for specific counters or timers with basic trend analysis showing rate of change counter and timer values over time. 
 
 ## License
 
