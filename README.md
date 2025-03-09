@@ -38,16 +38,25 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
     flutter run
     ```
 
-## Future Goals
+## Future Goals and Roadmap
 
-*   **CSV Data Export:** Implement the ability to export data in CSV format for enhanced compatibility with spreadsheet software and data analysis workflows.
-*   **Automated Builds with GitHub Actions:** Integrate GitHub Actions to automate the build, testing, and artifact generation processes for various platforms, streamlining development and release cycles.
-*   **Cross-Device Data Synchronization:** Enable seamless data sharing and access across multiple devices through cloud storage integration, allowing users to manage their Growth Gauge data from anywhere.
-*   **User Authentication:** Implement user authentication to enhance data security and potentially unlock future user-specific features and data management capabilities.
-*   **Sound Alerts and Notifications:** Support scheduled local notifications for both Mobile and Desktop with possibility of customizable sound notification.
-*   **Target Tracking:** Allows users to define target and trigger notification when goal is reached.
-*   **Data Categorization:** Allows users to add tags/categories to counters and timers to organize them with tag based filtering support.
-*   **Summary Statistics:** Display summary statistics like average, minimum, maximum for specific counters or timers with basic trend analysis showing rate of change counter and timer values over time. 
+*   **Automated Builds with GitHub Actions** ([#13][i13])
+*   **CSV Data Export** ([#14][i14])
+*   **Cross-Device Data Synchronization** ([#15][i15])
+*   **Local User Authentication** ([#16][i16])
+*   **Sound Alerts and Notifications** ([#17][i17])
+*   **Target Tracking** ([#18][i18])
+*   **Data Categorization** ([#19][i19])
+*   **Summary Statistics** ([#20][i20])
+
+[i13]: https://github.com/0Vipin0/growth_gauge/issues/13
+[i14]: https://github.com/0Vipin0/growth_gauge/issues/14
+[i15]: https://github.com/0Vipin0/growth_gauge/issues/15
+[i16]: https://github.com/0Vipin0/growth_gauge/issues/16
+[i17]: https://github.com/0Vipin0/growth_gauge/issues/17
+[i18]: https://github.com/0Vipin0/growth_gauge/issues/18
+[i19]: https://github.com/0Vipin0/growth_gauge/issues/19
+[i20]: https://github.com/0Vipin0/growth_gauge/issues/20
 
 ## License
 
