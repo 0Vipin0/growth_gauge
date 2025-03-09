@@ -37,6 +37,7 @@ class TimerListProvider with ChangeNotifier {
         _timers[i] = timer;
       }
     }
+    saveTimers();
     notifyListeners();
   }
 

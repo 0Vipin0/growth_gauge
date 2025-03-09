@@ -40,6 +40,7 @@ class CounterListProvider with ChangeNotifier {
         _counters[i] = counter;
       }
     }
+    saveCounters();
     notifyListeners();
   }
 
