@@ -77,8 +77,6 @@ class TimerChartProvider extends ChangeNotifier {
         return duration.inMinutes.toDouble();
       case DurationInterval.twoMinutes:
         return duration.inMinutes / 2.0;
-      default:
-        return duration.inMinutes.toDouble();
     }
   }
 

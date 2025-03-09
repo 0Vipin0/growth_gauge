@@ -24,8 +24,6 @@ extension AppThemeNameExtension on AppThemeName {
         return 'Dark Medium Contrast';
       case AppThemeName.darkHighContrast:
         return 'Dark High Contrast';
-      default:
-        return name;
     }
   }
 }

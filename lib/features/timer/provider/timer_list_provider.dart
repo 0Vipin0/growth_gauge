@@ -92,8 +92,6 @@ class TimerListProvider with ChangeNotifier {
         return duration.inMinutes;
       case DurationInterval.twoMinutes:
         return duration.inMinutes ~/ 2;
-      default:
-        return duration.inMinutes; // Default to minutes
     }
   }
 }

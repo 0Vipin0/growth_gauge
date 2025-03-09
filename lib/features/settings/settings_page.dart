@@ -18,7 +18,20 @@ class SettingsPage extends StatelessWidget {
     final settingsProvider = Provider.of<SettingsProvider>(context);
     final counterListProvider = Provider.of<CounterListProvider>(context);
     final timerListProvider = Provider.of<TimerListProvider>(context);
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (settingsProvider.exportMessage != "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(settingsProvider.exportMessage)),
+        );
+        settingsProvider.exportMessage = "";
+      }
+      if (settingsProvider.importMessage != "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(settingsProvider.importMessage)),
+        );
+        settingsProvider.importMessage = "";
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -78,45 +91,26 @@ class SettingsPage extends StatelessWidget {
                 },
               ),
             ),
-            const Divider(), // Separator for data management options
+            const Divider(),
             ListTile(
               title: const Text('Export Data'),
-              trailing: const Icon(Icons.file_upload),
+              trailing: settingsProvider.isExporting
+                  ? const CircularProgressIndicator()
+                  : const Icon(Icons.file_upload),
               onTap: () {
-                settingsProvider
-                    .exportData(
-                        counterListProvider.counters, timerListProvider.timers)
-                    .then((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Data exported successfully!')),
-                  );
-                }).catchError((onError) {
-                  onError = onError.toString().replaceAll("Exception:", "");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error exporting data: $onError')),
-                  );
-                }); // Pass data
+                settingsProvider.exportData(
+                    counterListProvider.counters, timerListProvider.timers);
               },
             ),
             ListTile(
               title: const Text('Import Data'),
-              trailing: const Icon(Icons.file_download),
+              trailing: settingsProvider.isImporting
+                  ? const CircularProgressIndicator()
+                  : const Icon(Icons.file_download),
               onTap: () {
-                settingsProvider
-                    .importData(counterListProvider.importCountersFromData,
-                        timerListProvider.importTimersFromData)
-                    .then((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Data imported successfully!')),
-                  );
-                }).catchError((onError) {
-                  onError = onError.toString().replaceAll("Exception:", "");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error importing data: $onError')),
-                  );
-                }); // Pass providers
+                settingsProvider.importData(
+                    counterListProvider.importCountersFromData,
+                    timerListProvider.importTimersFromData);
               },
             ),
           ],

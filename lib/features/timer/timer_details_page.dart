@@ -137,8 +137,6 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
         return 'Minute';
       case DurationInterval.twoMinutes:
         return '2 Minutes';
-      default:
-        return 'Minute'; // Default case, should not happen but good to have
     }
   }
 }

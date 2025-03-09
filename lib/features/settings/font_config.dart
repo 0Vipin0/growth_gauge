@@ -18,8 +18,6 @@ extension AppFontSizeExtension on AppFontSize {
         return 20.0;
       case AppFontSize.extraLarge:
         return 24.0;
-      default:
-        return 16.0; // Default medium
     }
   }
 
@@ -33,8 +31,6 @@ extension AppFontSizeExtension on AppFontSize {
         return 'Large';
       case AppFontSize.extraLarge:
         return 'Extra Large';
-      default:
-        return name;
     }
   }
 }
@@ -60,8 +56,6 @@ extension AppFontFamilyExtension on AppFontFamily {
         return 'Montserrat';
       case AppFontFamily.ceraPro:
         return 'CeraPro';
-      default:
-        return 'Roboto'; // Default font family
     }
   }
 
@@ -77,8 +71,6 @@ extension AppFontFamilyExtension on AppFontFamily {
         return 'Montserrat';
       case AppFontFamily.ceraPro:
         return 'CeraPro';
-      default:
-        return name;
     }
   }
 }

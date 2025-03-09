@@ -16,8 +16,6 @@ extension DurationIntervalExtension on DurationInterval {
         return 'minutes';
       case DurationInterval.twoMinutes:
         return '2-minute units';
-      default:
-        return 'minutes'; // Default label
     }
   }
 }

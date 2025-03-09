@@ -219,9 +219,7 @@ abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
       {required final AppThemeName themeName,
       final AppFontSize fontSize,
-      final AppFontFamily fontFamily,
-      final String? exportPath,
-      final String? importPath}) = _$SettingsModelImpl;
+      final AppFontFamily fontFamily}) = _$SettingsModelImpl;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$SettingsModelImpl.fromJson;

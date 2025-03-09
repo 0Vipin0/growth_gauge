@@ -16,6 +16,18 @@ import 'theme_config.dart';
 class SettingsProvider with ChangeNotifier {
   SettingsModel _settings;
 
+  bool _isExporting = false;
+
+  bool get isExporting => _isExporting;
+
+  String exportMessage = "";
+
+  bool _isImporting = false;
+
+  bool get isImporting => _isImporting;
+
+  String importMessage = "";
+
   SettingsProvider()
       : _settings = const SettingsModel(
           themeName: AppThemeName.light,
@@ -106,6 +118,8 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> exportData(
       List<CounterModel> counters, List<TimerModel> timers) async {
+    _isExporting = true;
+    notifyListeners();
     try {
       final appData =
           await _prepareAppDataForExport(counters, timers); // Pass parameters
@@ -113,13 +127,18 @@ class SettingsProvider with ChangeNotifier {
 
       String? filePath = await _getSaveFilePath();
       if (filePath == null) {
-        throw Exception('Export Cancelled');
+        exportMessage = 'Export Cancelled';
+        return;
       }
 
       final file = File(filePath);
       await file.writeAsString(exportJson);
+      exportMessage = 'Data exported successfully!';
     } catch (e) {
-      rethrow;
+      exportMessage = 'Error importing data: $e';
+    } finally {
+      _isExporting = false;
+      notifyListeners();
     }
   }
 
@@ -146,6 +165,8 @@ class SettingsProvider with ChangeNotifier {
     Function(List<CounterModel>) counterImporter,
     Function(List<TimerModel>) timerImporter,
   ) async {
+    _isImporting = true;
+    notifyListeners();
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -155,13 +176,17 @@ class SettingsProvider with ChangeNotifier {
       if (result != null && result.files.isNotEmpty) {
         File file = File(result.files.single.path!);
         String importJson = await file.readAsString();
-        await _processImportData(
-            importJson, counterImporter, timerImporter); // Pass providers
+        await _processImportData(importJson, counterImporter, timerImporter);
+        importMessage = 'Data imported successfully!';
       } else {
-        throw Exception('Import Cancelled');
+        importMessage = 'Import Cancelled';
+        return;
       }
     } catch (e) {
-      rethrow;
+      importMessage = 'Error exporting data: $e';
+    } finally {
+      _isImporting = false;
+      notifyListeners();
     }
   }
 
