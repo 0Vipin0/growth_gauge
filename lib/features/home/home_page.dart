@@ -88,7 +88,10 @@ class _MobileHomePageState extends State<MobileHomePage> {
             label: 'Settings',
           ),
         ],
-        selectedItemColor: Theme.of(context).primaryColor,
+        selectedIconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.primary),
+        unselectedIconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.primaryFixedDim),
       ),
     );
   }
@@ -159,7 +162,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
             selectedIndex: _selectedIndex,
             extended: _isRailExtended,
             onDestinationSelected: _onDestinationSelected,
-            destinations: const <NavigationRailDestination>[
+            destinations: <NavigationRailDestination>[
               NavigationRailDestination(
                 icon: Icon(Icons.list),
                 label: Text('Counters'),
@@ -180,11 +183,13 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
               onPressed: _toggleRail,
             ),
             selectedIconTheme:
-                IconThemeData(color: Theme.of(context).primaryColor),
+                IconThemeData(color: Theme.of(context).colorScheme.primary),
             selectedLabelTextStyle:
-                TextStyle(color: Theme.of(context).primaryColor),
-            unselectedIconTheme: const IconThemeData(color: Colors.grey),
-            unselectedLabelTextStyle: const TextStyle(color: Colors.grey),
+                TextStyle(color: Theme.of(context).colorScheme.primary),
+            unselectedIconTheme: IconThemeData(
+                color: Theme.of(context).colorScheme.primaryFixedDim),
+            unselectedLabelTextStyle:
+                TextStyle(color: Theme.of(context).colorScheme.primaryFixedDim),
           ),
           const VerticalDivider(thickness: 1, width: 1),
           Expanded(
