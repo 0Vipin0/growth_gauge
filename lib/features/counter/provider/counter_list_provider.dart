@@ -22,6 +22,12 @@ class CounterListProvider with ChangeNotifier {
     await repository.saveCounters(_counters);
   }
 
+  Future<void> clearCounters() async {
+    _counters = [];
+    saveCounters();
+    notifyListeners();
+  }
+
   void addCounter(CounterModel newCounter) {
     _counters.add(newCounter);
     saveCounters();

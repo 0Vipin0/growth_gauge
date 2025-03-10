@@ -1,5 +1,3 @@
-// settings_page.dart
-
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -113,9 +111,46 @@ class SettingsPage extends StatelessWidget {
                     timerListProvider.importTimersFromData);
               },
             ),
+            const Divider(),
+            ListTile(
+              title: const Text('Reset Application Data'),
+              trailing: const Icon(Icons.lock_reset),
+              onTap: () => showResetDialog(
+                  context, counterListProvider, timerListProvider),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  showResetDialog(BuildContext context, CounterListProvider counterProvider,
+      TimerListProvider timerProvider) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Reset Application Data'),
+          content:
+              const Text('Are you sure to clear all the application data?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                counterProvider.clearCounters();
+                timerProvider.clearTimers();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
