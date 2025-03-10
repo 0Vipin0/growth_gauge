@@ -25,6 +25,12 @@ class TimerListProvider with ChangeNotifier {
     await repository.saveTimers(_timers);
   }
 
+  Future<void> clearTimers() async {
+    _timers = [];
+    saveTimers();
+    notifyListeners();
+  }
+
   TimerModel getTimer(TimerModel newTimer) {
     return _timers.firstWhere((timer) => timer.id == newTimer.id);
   }
