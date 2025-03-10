@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -86,6 +88,23 @@ class SettingsPage extends StatelessWidget {
                   if (value != null) {
                     settingsProvider.updateFontFamily(value);
                   }
+                },
+              ),
+            ),
+            ListTile(
+              title: Text("Show Onboarding"),
+              trailing: Switch(
+                value: !settingsProvider.isOnboardingComplete,
+                onChanged: (bool value) {
+                  settingsProvider.toggleOnboarding(!value);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text(
+                            "You will now be redirected to onboarding screen in few seconds.")),
+                  );
+                  Timer(Duration(seconds: 3), () {
+                    Navigator.of(context).pushReplacementNamed('/onboarding');
+                  });
                 },
               ),
             ),

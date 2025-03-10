@@ -28,6 +28,8 @@ class SettingsProvider with ChangeNotifier {
 
   String importMessage = "";
 
+  late bool isOnboardingComplete;
+
   SettingsProvider()
       : _settings = const SettingsModel(
           themeName: AppThemeName.light,
@@ -63,6 +65,8 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> loadSettingsFromStorage() async {
     final prefs = await SharedPreferences.getInstance();
+
+    isOnboardingComplete = prefs.getBool("hasCompletedOnboarding") ?? true;
 
     String? themeNameString = prefs.getString('themeName');
     AppThemeName themeName = AppThemeName.light; // Default
@@ -220,5 +224,12 @@ class SettingsProvider with ChangeNotifier {
     if (appData.timers.isNotEmpty) {
       timerImporter(appData.timers);
     }
+  }
+
+  Future<void> toggleOnboarding(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    isOnboardingComplete = value;
+    await prefs.setBool('hasCompletedOnboarding', isOnboardingComplete);
+    notifyListeners();
   }
 }
