@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../settings/settings.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -100,6 +103,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (isLastPage) {
+                        Provider.of<SettingsProvider>(context, listen: false)
+                            .toggleOnboarding(true);
                         _completeOnboarding();
                         _navigateToHome();
                       } else {
