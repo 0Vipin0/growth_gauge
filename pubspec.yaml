@@ -1,7 +1,7 @@
 name: growth_gauge
 description: "An application to keep the count of the tasks or activities."
 publish_to: 'none' 
-version: 1.0.1+1
+version: 1.0.2+1
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
