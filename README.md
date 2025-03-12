@@ -37,6 +37,15 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
     ```bash
     flutter run
     ```
+    
+## Latest Releases
+*  [Android][android]
+*  [Linux][linux]
+*  [Windows][windows]
+
+[android]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_android-v1.0.2.apk
+[linux]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_linux-v1.0.2.zip
+[windows]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_windows-v1.0.2.zip
 
 ## Future Goals and Roadmap
 
