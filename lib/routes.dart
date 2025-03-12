@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
@@ -14,13 +15,29 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return PageTransition(
+          child: const SplashScreen(),
+          settings: routeSettings,
+          type: PageTransitionType.rightToLeftWithFade,
+        );
       case onboarding:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+        return PageTransition(
+          child: const OnboardingScreen(),
+          settings: routeSettings,
+          type: PageTransitionType.rightToLeftWithFade,
+        );
       case home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return PageTransition(
+          child: const HomePage(),
+          settings: routeSettings,
+          type: PageTransitionType.rightToLeftWithFade,
+        );
       case settings:
-        return MaterialPageRoute(builder: (_) => const SettingsPage());
+        return PageTransition(
+          child: const SettingsPage(),
+          settings: routeSettings,
+          type: PageTransitionType.rightToLeftWithFade,
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
