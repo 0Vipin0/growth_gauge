@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -54,11 +55,9 @@ class ReusableTimerWidget extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            TimerDetailsPage(timer: timerModel),
-                      ),
+                    context.pushTransition(
+                      type: PageTransitionType.bottomToTop,
+                      child: TimerDetailsPage(timer: timerModel),
                     );
                   },
                 ),

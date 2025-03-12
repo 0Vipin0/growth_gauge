@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -103,7 +104,10 @@ class SettingsPage extends StatelessWidget {
                             "You will now be redirected to onboarding screen in few seconds.")),
                   );
                   Timer(Duration(seconds: 3), () {
-                    Navigator.of(context).pushReplacementNamed('/onboarding');
+                    context.pushNamedTransition(
+                      routeName: '/onboarding',
+                      type: PageTransitionType.topToBottom,
+                    );
                   });
                 },
               ),

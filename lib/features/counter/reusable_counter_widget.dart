@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -52,11 +53,9 @@ class ReusableCounterWidget extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        CounterDetailsPage(counter: counterModel),
-                  ),
+                context.pushTransition(
+                  type: PageTransitionType.bottomToTop,
+                  child: CounterDetailsPage(counter: counterModel),
                 );
               },
             ),

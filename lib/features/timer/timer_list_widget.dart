@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -30,10 +31,9 @@ class TimerListWidget extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddTimerPage(),
-            ),
+          context.pushTransition(
+            type: PageTransitionType.bottomToTop,
+            child: const AddTimerPage(),
           );
         },
         child: const Icon(Icons.add),
@@ -97,10 +97,9 @@ class TimerListWidget extends StatelessWidget {
           const SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddTimerPage(),
-                ),
+              context.pushTransition(
+                type: PageTransitionType.bottomToTop,
+                child: const AddTimerPage(),
               );
             },
             icon: const Icon(Icons.play_arrow),

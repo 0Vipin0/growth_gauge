@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -29,10 +30,9 @@ class CounterListWidget extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddCounterPage(),
-            ),
+          context.pushTransition(
+            type: PageTransitionType.bottomToTop,
+            child: const AddCounterPage(),
           );
         },
         child: const Icon(Icons.add),
@@ -95,10 +95,9 @@ class CounterListWidget extends StatelessWidget {
           const SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddCounterPage(),
-                ),
+              context.pushTransition(
+                type: PageTransitionType.bottomToTop,
+                child: const AddCounterPage(),
               );
             },
             icon: const Icon(Icons.add),
