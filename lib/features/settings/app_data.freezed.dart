@@ -25,8 +25,12 @@ mixin _$AppData {
   List<CounterModel> get counters => throw _privateConstructorUsedError;
   List<TimerModel> get timers => throw _privateConstructorUsedError;
 
+  /// Serializes this AppData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AppData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AppDataCopyWith<AppData> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -49,6 +53,8 @@ class _$AppDataCopyWithImpl<$Res, $Val extends AppData>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AppData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$AppDataImplCopyWithImpl<$Res>
       _$AppDataImpl _value, $Res Function(_$AppDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AppData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -167,7 +175,7 @@ class _$AppDataImpl implements _AppData {
             const DeepCollectionEquality().equals(other._timers, _timers));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -175,7 +183,9 @@ class _$AppDataImpl implements _AppData {
       const DeepCollectionEquality().hash(_counters),
       const DeepCollectionEquality().hash(_timers));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AppData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AppDataImplCopyWith<_$AppDataImpl> get copyWith =>
@@ -198,13 +208,16 @@ abstract class _AppData implements AppData {
   factory _AppData.fromJson(Map<String, dynamic> json) = _$AppDataImpl.fromJson;
 
   @override
-  int get version;
-  @override // Version 1 for initial structure
+  int get version; // Version 1 for initial structure
+  @override
   List<CounterModel> get counters;
   @override
   List<TimerModel> get timers;
+
+  /// Create a copy of AppData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AppDataImplCopyWith<_$AppDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

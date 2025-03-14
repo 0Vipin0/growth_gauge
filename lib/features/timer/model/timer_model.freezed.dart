@@ -26,8 +26,12 @@ mixin _$TimerModel {
   String get description => throw _privateConstructorUsedError;
   List<TimerLog> get logs => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerModelCopyWith<TimerModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,8 @@ class __$$TimerModelImplCopyWithImpl<$Res>
       _$TimerModelImpl _value, $Res Function(_$TimerModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -198,12 +206,14 @@ class _$TimerModelImpl implements _TimerModel {
             const DeepCollectionEquality().equals(other._logs, _logs));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, interval, description,
       const DeepCollectionEquality().hash(_logs));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
@@ -238,8 +248,11 @@ abstract class _TimerModel implements TimerModel {
   String get description;
   @override
   List<TimerLog> get logs;
+
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -255,8 +268,12 @@ mixin _$TimerLog {
   DateTime get timestamp => throw _privateConstructorUsedError;
   Duration get interval => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerLog to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerLogCopyWith<TimerLog> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -279,6 +296,8 @@ class _$TimerLogCopyWithImpl<$Res, $Val extends TimerLog>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -327,6 +346,8 @@ class __$$TimerLogImplCopyWithImpl<$Res>
       _$TimerLogImpl _value, $Res Function(_$TimerLogImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -395,11 +416,13 @@ class _$TimerLogImpl implements _TimerLog {
                 other.interval == interval));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, action, timestamp, interval);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerLogImplCopyWith<_$TimerLogImpl> get copyWith =>
@@ -431,8 +454,11 @@ abstract class _TimerLog implements TimerLog {
   DateTime get timestamp;
   @override
   Duration get interval;
+
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerLogImplCopyWith<_$TimerLogImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

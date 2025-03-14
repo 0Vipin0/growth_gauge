@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../counter/counter.dart';
 import '../timer/timer.dart';
 import 'font_config.dart';
+import 'settings_model.dart';
 import 'settings_provider.dart';
 import 'theme_config.dart';
 
@@ -88,6 +89,23 @@ class SettingsPage extends StatelessWidget {
                 onChanged: (AppFontFamily? value) {
                   if (value != null) {
                     settingsProvider.updateFontFamily(value);
+                  }
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Export Format'),
+              trailing: DropdownButton<ExportFormat>(
+                value: settingsProvider.settings.exportFormat,
+                items: ExportFormat.values.map((ExportFormat mode) {
+                  return DropdownMenuItem<ExportFormat>(
+                    value: mode,
+                    child: Text(mode.getLabel()),
+                  );
+                }).toList(),
+                onChanged: (ExportFormat? value) {
+                  if (value != null) {
+                    settingsProvider.updateExportFormat(value);
                   }
                 },
               ),

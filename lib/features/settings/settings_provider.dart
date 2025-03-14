@@ -63,6 +63,12 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateExportFormat(ExportFormat value) {
+    _settings = _settings.copyWith(exportFormat: value);
+    saveSettingsToStorage();
+    notifyListeners();
+  }
+
   Future<void> loadSettingsFromStorage() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -104,10 +110,23 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
+    String? exportFormatString = prefs.getString('exportFormat');
+    ExportFormat exportFormat = ExportFormat.json; // Default
+    if (exportFormatString != null) {
+      try {
+        exportFormat = ExportFormat.values.byName(exportFormatString);
+      } catch (e) {
+        debugPrint(
+            'Error loading fontFamily from storage: $e, using default Roboto font family.');
+        exportFormat = ExportFormat.json; // Fallback if name is invalid
+      }
+    }
+
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
       fontFamily: fontFamily,
+      exportFormat: exportFormat,
     );
     notifyListeners();
   }
@@ -118,6 +137,7 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString('themeName', _settings.themeName.name);
     await prefs.setString('fontSize', _settings.fontSize.name);
     await prefs.setString('fontFamily', _settings.fontFamily.name);
+    await prefs.setString('exportFormat', _settings.exportFormat.name);
   }
 
   Future<void> exportData(

@@ -26,8 +26,12 @@ mixin _$CounterModel {
   String get description => throw _privateConstructorUsedError;
   List<CounterLog> get logs => throw _privateConstructorUsedError;
 
+  /// Serializes this CounterModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CounterModelCopyWith<CounterModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,8 @@ class __$$CounterModelImplCopyWithImpl<$Res>
       _$CounterModelImpl _value, $Res Function(_$CounterModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -196,12 +204,14 @@ class _$CounterModelImpl implements _CounterModel {
             const DeepCollectionEquality().equals(other._logs, _logs));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, count, description,
       const DeepCollectionEquality().hash(_logs));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CounterModelImplCopyWith<_$CounterModelImpl> get copyWith =>
@@ -236,8 +246,11 @@ abstract class _CounterModel implements CounterModel {
   String get description;
   @override
   List<CounterLog> get logs;
+
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CounterModelImplCopyWith<_$CounterModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -252,8 +265,12 @@ mixin _$CounterLog {
   String get action => throw _privateConstructorUsedError;
   DateTime get timestamp => throw _privateConstructorUsedError;
 
+  /// Serializes this CounterLog to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CounterLogCopyWith<CounterLog> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -277,6 +294,8 @@ class _$CounterLogCopyWithImpl<$Res, $Val extends CounterLog>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -320,6 +339,8 @@ class __$$CounterLogImplCopyWithImpl<$Res>
       _$CounterLogImpl _value, $Res Function(_$CounterLogImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -376,11 +397,13 @@ class _$CounterLogImpl implements _CounterLog {
                 other.timestamp == timestamp));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, action, timestamp);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CounterLogImplCopyWith<_$CounterLogImpl> get copyWith =>
@@ -409,8 +432,11 @@ abstract class _CounterLog implements CounterLog {
   String get action;
   @override
   DateTime get timestamp;
+
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CounterLogImplCopyWith<_$CounterLogImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
