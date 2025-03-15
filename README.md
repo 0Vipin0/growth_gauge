@@ -1,5 +1,14 @@
 # Growth Gauge
 
+[![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
+[![GitHub Tag](https://img.shields.io/github/v/tag/0Vipin0/growth_gauge?logo=git&logoColor=white)](https://github.com/0Vipin0/growth_gauge/releases)
+[![New Commits](https://img.shields.io/github/commits-since/0Vipin0/growth_gauge/latest?logo=git&logoColor=white)](https://github.com/0Vipin0/growth_gauge/network)
+[![Last Commits](https://img.shields.io/github/last-commit/0Vipin0/growth_gauge?logo=git&logoColor=white)](https://github.com/0Vipin0/growth_gauge/commits/main)
+[![Pull Requests](https://img.shields.io/github/issues-pr/0Vipin0/growth_gauge?logo=github&logoColor=white)](https://github.com/0Vipin0/growth_gauge/pulls)
+[![Code size](https://img.shields.io/github/languages/code-size/0Vipin0/growth_gauge?logo=github&logoColor=white)](https://github.com/0Vipin0/growth_gauge)
+[![License](https://img.shields.io/github/license/0Vipin0/growth_gauge?logo=open-source-initiative&logoColor=green)](https://github.com/0Vipin0/growth_gauge/blob/main/LICENSE)
+
+
 ## Description
 
 Growth Gauge is your personal companion for tracking tasks and time-based activities.  This application goes beyond simple counting, visualizing your progress with insightful graphs and statistics to help you understand your activity patterns and achievements.
