@@ -2,8 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../counter/counter.dart';
-import '../timer/timer.dart';
+import '../../counter/counter.dart';
+import '../../timer/timer.dart';
 
 part 'app_data.freezed.dart';
 

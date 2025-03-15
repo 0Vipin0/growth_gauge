@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import '../settings/settings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -64,9 +64,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _checkOnboardingStatus() async {
-    final prefs = await SharedPreferences.getInstance();
     final bool hasCompletedOnboarding =
-        prefs.getBool('hasCompletedOnboarding') ?? false;
+        await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
     if (hasCompletedOnboarding) {
       _navigateToHome();

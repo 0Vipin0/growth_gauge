@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'app_theme.dart';
-import 'font_config.dart';
-import 'theme_config.dart';
+import '../app_theme.dart';
+import '../config/config.dart';
 
 part 'settings_model.freezed.dart';
 

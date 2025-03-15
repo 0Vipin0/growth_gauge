@@ -9,7 +9,9 @@ import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
 import 'routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
 }
 

@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:growth_gauge/features/settings/config/config.dart';
 import '../model/model.dart';
 import 'counter_repository.dart';
 
 class SharedPreferencesCounterRepository implements CounterRepository {
-  static const String _storageKey = 'counters';
-
   @override
   Future<List<CounterModel>> loadCounters() async {
-    final prefs = await SharedPreferences.getInstance();
-    final countersJson = prefs.getString(_storageKey);
+    final String? countersJson = SharedPreferencesHelper.getCounters();
     if (countersJson == null) {
       return [];
     }
@@ -23,8 +19,7 @@ class SharedPreferencesCounterRepository implements CounterRepository {
 
   @override
   Future<void> saveCounters(List<CounterModel> counters) async {
-    final prefs = await SharedPreferences.getInstance();
     final countersJson = jsonEncode(counters.map((c) => c.toJson()).toList());
-    await prefs.setString(_storageKey, countersJson);
+    await SharedPreferencesHelper.setCounters(countersJson);
   }
 }
