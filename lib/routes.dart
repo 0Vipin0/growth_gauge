@@ -7,7 +7,7 @@ import 'features/onboarding/onboarding.dart';
 import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
 
-class AppRoutes {
+mixin AppRoutes {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
   static const String home = '/home';

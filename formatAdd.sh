@@ -1,6 +1,7 @@
 #!/bin/sh
 
 dart run import_sorter:main
+dart run pubspec_dependency_sorter
 dart format .
 dart fix --apply
 flutter analyze

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter/material.dart';
 
 import '../chart/chart.dart';
 import '../model/model.dart';
@@ -37,7 +36,7 @@ class TimerListProvider with ChangeNotifier {
   }
 
   void updateTimer(TimerModel newTimer) {
-    TimerModel timer = getTimer(newTimer)
+    final TimerModel timer = getTimer(newTimer)
         .copyWith(interval: newTimer.interval, logs: newTimer.logs);
     for (int i = 0; i < _timers.length; i++) {
       if (timer.id == _timers[i].id) {
@@ -68,7 +67,7 @@ class TimerListProvider with ChangeNotifier {
 
   Map<DateTime, int> extractCountsByDayPerDurationInterval(
       TimerModel timer, DurationInterval interval) {
-    Map<DateTime, int> dailyIntervalCounts = {};
+    final Map<DateTime, int> dailyIntervalCounts = {};
 
     if (timer.logs.isNotEmpty) {
       final logsByDate = groupBy(timer.logs, (TimerLog log) {
@@ -79,7 +78,7 @@ class TimerListProvider with ChangeNotifier {
         Duration totalDurationForDay = Duration.zero;
         totalDurationForDay += logs.last.interval;
 
-        int intervalCount =
+        final int intervalCount =
             _convertDurationToIntervalCount(totalDurationForDay, interval);
         dailyIntervalCounts[date] =
             (dailyIntervalCounts[date] ?? 0) + intervalCount;
@@ -104,9 +103,9 @@ class TimerListProvider with ChangeNotifier {
   }
 
   String convertToCSV() {
-    List<FlatTimerModel> flattenedDataList = [];
-    for (TimerModel timer in _timers) {
-      for (TimerLog log in timer.logs) {
+    final List<FlatTimerModel> flattenedDataList = [];
+    for (final TimerModel timer in _timers) {
+      for (final TimerLog log in timer.logs) {
         flattenedDataList.add(FlatTimerModel.fromTimerModel(timer, log));
       }
     }
@@ -114,7 +113,7 @@ class TimerListProvider with ChangeNotifier {
   }
 
   String convertFlattenedListToCsv(List<FlatTimerModel> flattenedDataList) {
-    List<List<dynamic>> rows = [];
+    final List<List<dynamic>> rows = [];
 
     rows.add([
       'ID',
@@ -126,7 +125,7 @@ class TimerListProvider with ChangeNotifier {
       'Log Interval'
     ]);
 
-    for (FlatTimerModel flattenedData in flattenedDataList) {
+    for (final FlatTimerModel flattenedData in flattenedDataList) {
       rows.add(flattenedData.toCsvRow());
     }
 

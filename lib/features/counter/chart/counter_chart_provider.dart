@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../counter.dart';
@@ -18,14 +17,14 @@ class CounterChartProvider extends ChangeNotifier {
       return;
     }
 
-    Map<String, int> dailyCounts = {};
-    DateTime now = DateTime.now();
-    DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
+    final Map<String, int> dailyCounts = {};
+    final DateTime now = DateTime.now();
+    final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
 
-    List<CounterLog>? countDateLogs = counter.logs;
-    for (CounterLog log in countDateLogs) {
+    final List<CounterLog> countDateLogs = counter.logs;
+    for (final CounterLog log in countDateLogs) {
       if (log.timestamp.isAfter(sevenDaysAgo)) {
-        String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
+        final String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
         dailyCounts[dateKey] = (dailyCounts[dateKey] ?? 0) + 1;
       }
     }
@@ -36,11 +35,11 @@ class CounterChartProvider extends ChangeNotifier {
 
   List<BarChartGroupData> generateBarGroups(
       Map<String, int> dailyCounts, DateTime startDate, DateTime endDate) {
-    List<BarChartGroupData> groups = [];
+    final List<BarChartGroupData> groups = [];
     for (int i = 0; i < 7; i++) {
-      DateTime date = startDate.add(Duration(days: i + 1));
-      String dateKey = DateFormat('yyyy-MM-dd').format(date);
-      int count = dailyCounts[dateKey] ?? 0;
+      final DateTime date = startDate.add(Duration(days: i + 1));
+      final String dateKey = DateFormat('yyyy-MM-dd').format(date);
+      final int count = dailyCounts[dateKey] ?? 0;
 
       groups.add(
         BarChartGroupData(
@@ -59,8 +58,8 @@ class CounterChartProvider extends ChangeNotifier {
   }
 
   String getDayOfWeek(int index) {
-    DateTime now = DateTime.now();
-    DateTime date = now.subtract(Duration(days: 7 - 1 - index));
+    final DateTime now = DateTime.now();
+    final DateTime date = now.subtract(Duration(days: 7 - 1 - index));
     return DateFormat('E').format(date);
   }
 }

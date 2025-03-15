@@ -1,5 +1,3 @@
-// main.dart
-
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -35,7 +33,7 @@ class DependencyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CounterChartProvider()),
         ChangeNotifierProvider(create: (_) => TimerChartProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }

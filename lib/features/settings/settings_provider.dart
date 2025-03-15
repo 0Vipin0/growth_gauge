@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../counter/counter.dart';
@@ -23,13 +22,13 @@ class SettingsProvider with ChangeNotifier {
 
   bool get isExporting => _isExporting;
 
-  String exportMessage = "";
+  String exportMessage = '';
 
   bool _isImporting = false;
 
   bool get isImporting => _isImporting;
 
-  String importMessage = "";
+  String importMessage = '';
 
   late bool isOnboardingComplete;
 
@@ -38,8 +37,6 @@ class SettingsProvider with ChangeNotifier {
     required TimerListProvider timerListProvider,
   })  : _settings = const SettingsModel(
           themeName: AppThemeName.light,
-          fontSize: AppFontSize.medium,
-          fontFamily: AppFontFamily.roboto,
         ),
         _counterListProvider = counterListProvider,
         _timerListProvider = timerListProvider {
@@ -79,9 +76,9 @@ class SettingsProvider with ChangeNotifier {
   Future<void> loadSettingsFromStorage() async {
     final prefs = await SharedPreferences.getInstance();
 
-    isOnboardingComplete = prefs.getBool("hasCompletedOnboarding") ?? true;
+    isOnboardingComplete = prefs.getBool('hasCompletedOnboarding') ?? true;
 
-    String? themeNameString = prefs.getString('themeName');
+    final String? themeNameString = prefs.getString('themeName');
     AppThemeName themeName = AppThemeName.light; // Default
     if (themeNameString != null) {
       try {
@@ -93,7 +90,7 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    String? fontSizeString = prefs.getString('fontSize');
+    final String? fontSizeString = prefs.getString('fontSize');
     AppFontSize fontSize = AppFontSize.medium; // Default
     if (fontSizeString != null) {
       try {
@@ -105,7 +102,7 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    String? fontFamilyString = prefs.getString('fontFamily');
+    final String? fontFamilyString = prefs.getString('fontFamily');
     AppFontFamily fontFamily = AppFontFamily.roboto; // Default
     if (fontFamilyString != null) {
       try {
@@ -117,7 +114,7 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    String? exportFormatString = prefs.getString('exportFormat');
+    final String? exportFormatString = prefs.getString('exportFormat');
     ExportFormat exportFormat = ExportFormat.json; // Default
     if (exportFormatString != null) {
       try {
@@ -156,7 +153,7 @@ class SettingsProvider with ChangeNotifier {
           _timerListProvider.timers); // Pass parameters
       final exportJson = jsonEncode(appData.toJson());
 
-      String? filePath = await _getSaveFilePath();
+      final String? filePath = await _getSaveFilePath();
       if (filePath == null) {
         exportMessage = 'Export Cancelled';
         return;
@@ -176,14 +173,13 @@ class SettingsProvider with ChangeNotifier {
   Future<AppData> _prepareAppDataForExport(
       List<CounterModel> counters, List<TimerModel> timers) async {
     return AppData(
-      version: 1,
       counters: counters,
       timers: timers,
     );
   }
 
   Future<String?> _getSaveFilePath() async {
-    String? filePath = await FilePicker.platform.saveFile(
+    final String? filePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Export File',
       allowedExtensions: ['json'],
       type: FileType.custom,
@@ -196,14 +192,14 @@ class SettingsProvider with ChangeNotifier {
     _isImporting = true;
     notifyListeners();
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
 
       if (result != null && result.files.isNotEmpty) {
-        File file = File(result.files.single.path!);
-        String importJson = await file.readAsString();
+        final File file = File(result.files.single.path!);
+        final String importJson = await file.readAsString();
         await _processImportData(
             importJson,
             _counterListProvider.importCountersFromData,
@@ -283,7 +279,7 @@ class SettingsProvider with ChangeNotifier {
     if (_counterListProvider.counters.isEmpty) return;
 
     try {
-      String? filePath =
+      final String? filePath =
           await _getCsvSaveFilePath(suggestedName: 'counters.csv');
       if (filePath == null) {
         exportMessage = 'Export Cancelled';
@@ -303,7 +299,8 @@ class SettingsProvider with ChangeNotifier {
     if (_timerListProvider.timers.isEmpty) return;
 
     try {
-      String? filePath = await _getCsvSaveFilePath(suggestedName: 'timers.csv');
+      final String? filePath =
+          await _getCsvSaveFilePath(suggestedName: 'timers.csv');
       if (filePath == null) {
         exportMessage = 'Export Cancelled';
         return;
@@ -319,7 +316,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<String?> _getCsvSaveFilePath({String? suggestedName}) async {
-    String? filePath = await FilePicker.platform.saveFile(
+    final String? filePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Export File',
       allowedExtensions: ['json'],
       type: FileType.custom,

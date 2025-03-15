@@ -113,7 +113,7 @@ class CounterListWidget extends StatelessWidget {
     );
   }
 
-  showDeleteDialog(BuildContext context, CounterModel counter) {
+  void showDeleteDialog(BuildContext context, CounterModel counter) {
     showDialog<bool>(
       context: context,
       builder: (context) {

@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../model/model.dart';
@@ -21,14 +20,14 @@ class TimerChartProvider extends ChangeNotifier {
       return;
     }
 
-    Map<String, Duration> dailyDurations = {};
-    DateTime now = DateTime.now();
-    DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
+    final Map<String, Duration> dailyDurations = {};
+    final DateTime now = DateTime.now();
+    final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
 
-    List<TimerLog>? timerLogs = timer.logs;
-    for (TimerLog log in timerLogs) {
+    final List<TimerLog> timerLogs = timer.logs;
+    for (final TimerLog log in timerLogs) {
       if (log.timestamp.isAfter(sevenDaysAgo)) {
-        String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
+        final String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
         dailyDurations[dateKey] = log.interval;
       }
     }
@@ -43,13 +42,13 @@ class TimerChartProvider extends ChangeNotifier {
       DateTime startDate,
       DateTime endDate,
       DurationInterval interval) {
-    List<BarChartGroupData> groups = [];
+    final List<BarChartGroupData> groups = [];
     for (int i = 0; i < 7; i++) {
-      DateTime date = startDate.add(Duration(days: i + 1));
-      String dateKey = DateFormat('yyyy-MM-dd').format(date);
-      Duration totalDuration = dailyDurations[dateKey] ?? Duration.zero;
+      final DateTime date = startDate.add(Duration(days: i + 1));
+      final String dateKey = DateFormat('yyyy-MM-dd').format(date);
+      final Duration totalDuration = dailyDurations[dateKey] ?? Duration.zero;
 
-      double yValue = _getDurationInInterval(totalDuration, interval);
+      final double yValue = _getDurationInInterval(totalDuration, interval);
 
       groups.add(
         BarChartGroupData(
@@ -81,8 +80,8 @@ class TimerChartProvider extends ChangeNotifier {
   }
 
   String getDayOfWeek(int index) {
-    DateTime now = DateTime.now();
-    DateTime date = now.subtract(Duration(days: 7 - 1 - index));
+    final DateTime now = DateTime.now();
+    final DateTime date = now.subtract(Duration(days: 7 - 1 - index));
     return DateFormat('E').format(date);
   }
 
