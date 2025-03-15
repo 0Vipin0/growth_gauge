@@ -22,20 +22,20 @@ dependencies:
   fl_chart: 0.68.0
   file_picker: ^9.1.0
   flutter_heatmap_calendar: ^1.0.5
-  logger: ^2.5.0
   collection: ^1.19.1
   page_transition: ^2.2.1
   csv: ^6.0.0
 
+  logger: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.3
   build_runner: ^2.4.15
-  freezed: 2.5.8
+  freezed: 2.5.2
   json_serializable: ^6.9.0
   import_sorter: 4.6.0
+  lint: ^2.8.0
 
 flutter:
   uses-material-design: true

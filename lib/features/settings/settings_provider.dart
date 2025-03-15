@@ -226,7 +226,8 @@ class SettingsProvider with ChangeNotifier {
     Function(List<CounterModel>) counterImporter,
     Function(List<TimerModel>) timerImporter,
   ) async {
-    final Map<String, dynamic> jsonData = json.decode(importJson);
+    final Map<String, dynamic> jsonData =
+        json.decode(importJson) as Map<String, dynamic>;
     final AppData appData = AppData.fromJson(jsonData);
 
     if (appData.version == 1) {
