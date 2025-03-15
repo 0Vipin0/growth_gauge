@@ -16,6 +16,9 @@ import 'theme_config.dart';
 class SettingsProvider with ChangeNotifier {
   SettingsModel _settings;
 
+  final CounterListProvider _counterListProvider;
+  final TimerListProvider _timerListProvider;
+
   bool _isExporting = false;
 
   bool get isExporting => _isExporting;
@@ -30,12 +33,16 @@ class SettingsProvider with ChangeNotifier {
 
   late bool isOnboardingComplete;
 
-  SettingsProvider()
-      : _settings = const SettingsModel(
+  SettingsProvider({
+    required CounterListProvider counterListProvider,
+    required TimerListProvider timerListProvider,
+  })  : _settings = const SettingsModel(
           themeName: AppThemeName.light,
           fontSize: AppFontSize.medium,
           fontFamily: AppFontFamily.roboto,
-        ) {
+        ),
+        _counterListProvider = counterListProvider,
+        _timerListProvider = timerListProvider {
     loadSettingsFromStorage();
   }
 
@@ -140,13 +147,13 @@ class SettingsProvider with ChangeNotifier {
     await prefs.setString('exportFormat', _settings.exportFormat.name);
   }
 
-  Future<void> exportData(
-      List<CounterModel> counters, List<TimerModel> timers) async {
+  Future<void> exportData() async {
     _isExporting = true;
     notifyListeners();
     try {
-      final appData =
-          await _prepareAppDataForExport(counters, timers); // Pass parameters
+      final appData = await _prepareAppDataForExport(
+          _counterListProvider.counters,
+          _timerListProvider.timers); // Pass parameters
       final exportJson = jsonEncode(appData.toJson());
 
       String? filePath = await _getSaveFilePath();
@@ -185,10 +192,7 @@ class SettingsProvider with ChangeNotifier {
     return filePath;
   }
 
-  Future<void> importData(
-    Function(List<CounterModel>) counterImporter,
-    Function(List<TimerModel>) timerImporter,
-  ) async {
+  Future<void> importData() async {
     _isImporting = true;
     notifyListeners();
     try {
@@ -200,7 +204,10 @@ class SettingsProvider with ChangeNotifier {
       if (result != null && result.files.isNotEmpty) {
         File file = File(result.files.single.path!);
         String importJson = await file.readAsString();
-        await _processImportData(importJson, counterImporter, timerImporter);
+        await _processImportData(
+            importJson,
+            _counterListProvider.importCountersFromData,
+            _timerListProvider.importTimersFromData);
         importMessage = 'Data imported successfully!';
       } else {
         importMessage = 'Import Cancelled';
@@ -253,19 +260,14 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> exportDataToCsv(
-    List<CounterModel> counters,
-    List<TimerModel> timers,
-    CounterListProvider counterListProvider,
-    TimerListProvider timerListProvider,
-  ) async {
+  Future<void> exportDataToCsv() async {
     _isExporting = true;
     notifyListeners();
     try {
       // Export counters to CSV
-      await _exportCountersToCsv(counters, counterListProvider);
+      await _exportCountersToCsv();
       // Export timers to CSV
-      await _exportTimersToCsv(timers, timerListProvider);
+      await _exportTimersToCsv();
 
       exportMessage = 'Data exported successfully to CSV!';
     } catch (e) {
@@ -276,9 +278,8 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> _exportCountersToCsv(List<CounterModel> counters,
-      CounterListProvider counterListProvider) async {
-    if (counters.isEmpty) return;
+  Future<void> _exportCountersToCsv() async {
+    if (_counterListProvider.counters.isEmpty) return;
 
     try {
       String? filePath =
@@ -289,7 +290,7 @@ class SettingsProvider with ChangeNotifier {
       }
 
       final file = File(filePath);
-      await file.writeAsString(counterListProvider.convertToCSV());
+      await file.writeAsString(_counterListProvider.convertToCSV());
       exportMessage = 'Counter Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting counter data: $e';
@@ -297,9 +298,8 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _exportTimersToCsv(
-      List<TimerModel> timers, TimerListProvider timerListProvider) async {
-    if (timers.isEmpty) return;
+  Future<void> _exportTimersToCsv() async {
+    if (_timerListProvider.timers.isEmpty) return;
 
     try {
       String? filePath = await _getCsvSaveFilePath(suggestedName: 'timers.csv');
@@ -309,7 +309,7 @@ class SettingsProvider with ChangeNotifier {
       }
 
       final file = File(filePath);
-      await file.writeAsString(timerListProvider.convertToCSV());
+      await file.writeAsString(_timerListProvider.convertToCSV());
       exportMessage = 'Timer Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting timer data: $e';
@@ -325,5 +325,11 @@ class SettingsProvider with ChangeNotifier {
       fileName: suggestedName,
     );
     return filePath;
+  }
+
+  void clearAppData() {
+    _counterListProvider.clearCounters();
+    _timerListProvider.clearTimers();
+    notifyListeners();
   }
 }

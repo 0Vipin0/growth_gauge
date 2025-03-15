@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../counter/counter.dart';
-import '../timer/timer.dart';
 import 'font_config.dart';
 import 'settings_model.dart';
 import 'settings_provider.dart';
@@ -18,8 +16,6 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
-    final counterListProvider = Provider.of<CounterListProvider>(context);
-    final timerListProvider = Provider.of<TimerListProvider>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (settingsProvider.exportMessage != "") {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -146,15 +142,10 @@ class SettingsPage extends StatelessWidget {
               onTap: () {
                 if (settingsProvider.settings.exportFormat ==
                     ExportFormat.json) {
-                  settingsProvider.exportData(
-                      counterListProvider.counters, timerListProvider.timers);
+                  settingsProvider.exportData();
                 } else if (settingsProvider.settings.exportFormat ==
                     ExportFormat.csv) {
-                  settingsProvider.exportDataToCsv(
-                      counterListProvider.counters,
-                      timerListProvider.timers,
-                      counterListProvider,
-                      timerListProvider);
+                  settingsProvider.exportDataToCsv();
                 }
               },
             ),
@@ -164,17 +155,14 @@ class SettingsPage extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : const Icon(Icons.file_download),
               onTap: () {
-                settingsProvider.importData(
-                    counterListProvider.importCountersFromData,
-                    timerListProvider.importTimersFromData);
+                settingsProvider.importData();
               },
             ),
             const Divider(),
             ListTile(
               title: const Text('Reset Application Data'),
               trailing: const Icon(Icons.lock_reset),
-              onTap: () => showResetDialog(
-                  context, counterListProvider, timerListProvider),
+              onTap: () => showResetDialog(context, settingsProvider),
             ),
           ],
         ),
@@ -182,8 +170,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  showResetDialog(BuildContext context, CounterListProvider counterProvider,
-      TimerListProvider timerProvider) {
+  showResetDialog(BuildContext context, SettingsProvider settingsProvider) {
     showDialog<bool>(
       context: context,
       builder: (context) {
@@ -194,8 +181,7 @@ class SettingsPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                counterProvider.clearCounters();
-                timerProvider.clearTimers();
+                settingsProvider.clearAppData();
                 Navigator.of(context).pop();
               },
               child: const Text('Yes'),
