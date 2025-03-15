@@ -41,6 +41,9 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
     *   **Android (App Bundle - recommended for Play Store):** `flutter build appbundle`
     *   **iOS:** `flutter build ios` (Requires macOS and Xcode)
     *   **Web:** `flutter build web`
+    *   **Windows:** `flutter build windows`
+    *   **Linux:** `flutter build linux`
+    *   **Macos:** `flutter build macos`
 
 5.  **Run for Development:** To quickly run the application on a connected device or emulator during development, use:
     ```bash
