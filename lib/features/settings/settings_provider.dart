@@ -73,7 +73,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> loadSettingsFromStorage() async {
     isOnboardingComplete =
-        await SharedPreferencesHelper.getHasCompletedOnboarding();
+        await SharedPreferencesHelper.getHasCompletedOnboarding() ?? true;
 
     final String? themeNameString = SharedPreferencesHelper.getThemeName();
     AppThemeName themeName = AppThemeName.light; // Default

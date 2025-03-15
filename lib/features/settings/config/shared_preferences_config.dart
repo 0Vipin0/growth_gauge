@@ -1,6 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesKeys {
+  static const String countersStorageKey = 'counters';
+  static const String timersStorageKey = 'timers';
   static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
   static const String themeName = 'themeName';
   static const String fontSize = 'fontSize';
@@ -24,9 +26,28 @@ mixin SharedPreferencesHelper {
     return _prefs!;
   }
 
-  static Future<bool> getHasCompletedOnboarding() async {
-    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding) ??
-        true;
+  static String? getCounters() {
+    return instance.getString(SharedPreferencesKeys.countersStorageKey);
+  }
+
+  static Future<bool> setCounters(String value) {
+    return instance.setString(SharedPreferencesKeys.countersStorageKey, value);
+  }
+
+  static String? getTimers() {
+    return instance.getString(SharedPreferencesKeys.timersStorageKey);
+  }
+
+  static Future<bool> setTimers(String value) {
+    return instance.setString(SharedPreferencesKeys.timersStorageKey, value);
+  }
+
+  static Future<bool> removeTimers() {
+    return instance.remove(SharedPreferencesKeys.timersStorageKey);
+  }
+
+  static Future<bool?>? getHasCompletedOnboarding() async {
+    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding);
   }
 
   static Future<bool> setHasCompletedOnboarding(bool value) {
