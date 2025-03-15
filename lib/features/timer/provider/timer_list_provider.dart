@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
+import 'package:csv/csv.dart';
 
 import '../chart/chart.dart';
 import '../model/model.dart';
@@ -100,5 +101,35 @@ class TimerListProvider with ChangeNotifier {
       case DurationInterval.twoMinutes:
         return duration.inMinutes ~/ 2;
     }
+  }
+
+  String convertToCSV() {
+    List<FlatTimerModel> flattenedDataList = [];
+    for (TimerModel timer in _timers) {
+      for (TimerLog log in timer.logs) {
+        flattenedDataList.add(FlatTimerModel.fromTimerModel(timer, log));
+      }
+    }
+    return convertFlattenedListToCsv(flattenedDataList);
+  }
+
+  String convertFlattenedListToCsv(List<FlatTimerModel> flattenedDataList) {
+    List<List<dynamic>> rows = [];
+
+    rows.add([
+      'ID',
+      'Name',
+      'Interval',
+      'Description',
+      'Log Action',
+      'Log Timestamp',
+      'Log Interval'
+    ]);
+
+    for (FlatTimerModel flattenedData in flattenedDataList) {
+      rows.add(flattenedData.toCsvRow());
+    }
+
+    return const ListToCsvConverter().convert(rows);
   }
 }

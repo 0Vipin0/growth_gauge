@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../counter/counter.dart';
 import '../timer/timer.dart';
 import 'font_config.dart';
+import 'settings_model.dart';
 import 'settings_provider.dart';
 import 'theme_config.dart';
 
@@ -93,6 +94,30 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             ListTile(
+              title: const Text('Export Format'),
+              trailing: DropdownButton<ExportFormat>(
+                value: settingsProvider.settings.exportFormat,
+                items: ExportFormat.values.map((ExportFormat mode) {
+                  return DropdownMenuItem<ExportFormat>(
+                    value: mode,
+                    child: Text(mode.getLabel()),
+                  );
+                }).toList(),
+                onChanged: (ExportFormat? value) {
+                  if (value != null) {
+                    settingsProvider.updateExportFormat(value);
+                  }
+                  if (value == ExportFormat.csv) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              "Setting Export Format to CSV does not change import format which still needs JSON")),
+                    );
+                  }
+                },
+              ),
+            ),
+            ListTile(
               title: Text("Show Onboarding"),
               trailing: Switch(
                 value: !settingsProvider.isOnboardingComplete,
@@ -119,8 +144,18 @@ class SettingsPage extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : const Icon(Icons.file_upload),
               onTap: () {
-                settingsProvider.exportData(
-                    counterListProvider.counters, timerListProvider.timers);
+                if (settingsProvider.settings.exportFormat ==
+                    ExportFormat.json) {
+                  settingsProvider.exportData(
+                      counterListProvider.counters, timerListProvider.timers);
+                } else if (settingsProvider.settings.exportFormat ==
+                    ExportFormat.csv) {
+                  settingsProvider.exportDataToCsv(
+                      counterListProvider.counters,
+                      timerListProvider.timers,
+                      counterListProvider,
+                      timerListProvider);
+                }
               },
             ),
             ListTile(

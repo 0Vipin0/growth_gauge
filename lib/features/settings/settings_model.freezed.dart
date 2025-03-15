@@ -23,11 +23,14 @@ mixin _$SettingsModel {
   AppThemeName get themeName => throw _privateConstructorUsedError;
   AppFontSize get fontSize => throw _privateConstructorUsedError;
   AppFontFamily get fontFamily => throw _privateConstructorUsedError;
-  String? get exportPath => throw _privateConstructorUsedError;
-  String? get importPath => throw _privateConstructorUsedError;
+  ExportFormat get exportFormat => throw _privateConstructorUsedError;
 
+  /// Serializes this SettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SettingsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SettingsModelCopyWith<SettingsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -42,8 +45,7 @@ abstract class $SettingsModelCopyWith<$Res> {
       {AppThemeName themeName,
       AppFontSize fontSize,
       AppFontFamily fontFamily,
-      String? exportPath,
-      String? importPath});
+      ExportFormat exportFormat});
 }
 
 /// @nodoc
@@ -56,14 +58,15 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SettingsModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? themeName = null,
     Object? fontSize = null,
     Object? fontFamily = null,
-    Object? exportPath = freezed,
-    Object? importPath = freezed,
+    Object? exportFormat = null,
   }) {
     return _then(_value.copyWith(
       themeName: null == themeName
@@ -78,14 +81,10 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
           ? _value.fontFamily
           : fontFamily // ignore: cast_nullable_to_non_nullable
               as AppFontFamily,
-      exportPath: freezed == exportPath
-          ? _value.exportPath
-          : exportPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      importPath: freezed == importPath
-          ? _value.importPath
-          : importPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      exportFormat: null == exportFormat
+          ? _value.exportFormat
+          : exportFormat // ignore: cast_nullable_to_non_nullable
+              as ExportFormat,
     ) as $Val);
   }
 }
@@ -102,8 +101,7 @@ abstract class _$$SettingsModelImplCopyWith<$Res>
       {AppThemeName themeName,
       AppFontSize fontSize,
       AppFontFamily fontFamily,
-      String? exportPath,
-      String? importPath});
+      ExportFormat exportFormat});
 }
 
 /// @nodoc
@@ -114,14 +112,15 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
       _$SettingsModelImpl _value, $Res Function(_$SettingsModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SettingsModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? themeName = null,
     Object? fontSize = null,
     Object? fontFamily = null,
-    Object? exportPath = freezed,
-    Object? importPath = freezed,
+    Object? exportFormat = null,
   }) {
     return _then(_$SettingsModelImpl(
       themeName: null == themeName
@@ -136,14 +135,10 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
           ? _value.fontFamily
           : fontFamily // ignore: cast_nullable_to_non_nullable
               as AppFontFamily,
-      exportPath: freezed == exportPath
-          ? _value.exportPath
-          : exportPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      importPath: freezed == importPath
-          ? _value.importPath
-          : importPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      exportFormat: null == exportFormat
+          ? _value.exportFormat
+          : exportFormat // ignore: cast_nullable_to_non_nullable
+              as ExportFormat,
     ));
   }
 }
@@ -155,8 +150,7 @@ class _$SettingsModelImpl implements _SettingsModel {
       {required this.themeName,
       this.fontSize = AppFontSize.medium,
       this.fontFamily = AppFontFamily.roboto,
-      this.exportPath,
-      this.importPath});
+      this.exportFormat = ExportFormat.json});
 
   factory _$SettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsModelImplFromJson(json);
@@ -170,13 +164,12 @@ class _$SettingsModelImpl implements _SettingsModel {
   @JsonKey()
   final AppFontFamily fontFamily;
   @override
-  final String? exportPath;
-  @override
-  final String? importPath;
+  @JsonKey()
+  final ExportFormat exportFormat;
 
   @override
   String toString() {
-    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportPath: $exportPath, importPath: $importPath)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat)';
   }
 
   @override
@@ -190,18 +183,18 @@ class _$SettingsModelImpl implements _SettingsModel {
                 other.fontSize == fontSize) &&
             (identical(other.fontFamily, fontFamily) ||
                 other.fontFamily == fontFamily) &&
-            (identical(other.exportPath, exportPath) ||
-                other.exportPath == exportPath) &&
-            (identical(other.importPath, importPath) ||
-                other.importPath == importPath));
+            (identical(other.exportFormat, exportFormat) ||
+                other.exportFormat == exportFormat));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, themeName, fontSize, fontFamily, exportPath, importPath);
+  int get hashCode =>
+      Object.hash(runtimeType, themeName, fontSize, fontFamily, exportFormat);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SettingsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SettingsModelImplCopyWith<_$SettingsModelImpl> get copyWith =>
@@ -219,7 +212,8 @@ abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
       {required final AppThemeName themeName,
       final AppFontSize fontSize,
-      final AppFontFamily fontFamily}) = _$SettingsModelImpl;
+      final AppFontFamily fontFamily,
+      final ExportFormat exportFormat}) = _$SettingsModelImpl;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$SettingsModelImpl.fromJson;
@@ -231,11 +225,12 @@ abstract class _SettingsModel implements SettingsModel {
   @override
   AppFontFamily get fontFamily;
   @override
-  String? get exportPath;
+  ExportFormat get exportFormat;
+
+  /// Create a copy of SettingsModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String? get importPath;
-  @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SettingsModelImplCopyWith<_$SettingsModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

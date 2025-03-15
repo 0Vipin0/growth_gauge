@@ -14,8 +14,9 @@ _$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
       fontFamily:
           $enumDecodeNullable(_$AppFontFamilyEnumMap, json['fontFamily']) ??
               AppFontFamily.roboto,
-      exportPath: json['exportPath'] as String?,
-      importPath: json['importPath'] as String?,
+      exportFormat:
+          $enumDecodeNullable(_$ExportFormatEnumMap, json['exportFormat']) ??
+              ExportFormat.json,
     );
 
 Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
@@ -23,8 +24,7 @@ Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
       'themeName': _$AppThemeNameEnumMap[instance.themeName]!,
       'fontSize': _$AppFontSizeEnumMap[instance.fontSize]!,
       'fontFamily': _$AppFontFamilyEnumMap[instance.fontFamily]!,
-      'exportPath': instance.exportPath,
-      'importPath': instance.importPath,
+      'exportFormat': _$ExportFormatEnumMap[instance.exportFormat]!,
     };
 
 const _$AppThemeNameEnumMap = {
@@ -49,4 +49,9 @@ const _$AppFontFamilyEnumMap = {
   AppFontFamily.lato: 'lato',
   AppFontFamily.montserrat: 'montserrat',
   AppFontFamily.ceraPro: 'ceraPro',
+};
+
+const _$ExportFormatEnumMap = {
+  ExportFormat.json: 'json',
+  ExportFormat.csv: 'csv',
 };

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../model/counter_model.dart';
+import 'package:csv/csv.dart';
+
+import '../model/model.dart';
 import '../repository/repository.dart';
 
 class CounterListProvider with ChangeNotifier {
@@ -77,5 +79,35 @@ class CounterListProvider with ChangeNotifier {
     }
 
     return countsByDay;
+  }
+
+  String convertToCSV() {
+    List<FlatCounterModel> flattenedDataList = [];
+    for (CounterModel counter in _counters) {
+      for (CounterLog log in counter.logs) {
+        flattenedDataList.add(FlatCounterModel.fromCounterModel(counter, log));
+      }
+    }
+    return convertFlattenedListToCsv(flattenedDataList);
+  }
+
+  String convertFlattenedListToCsv(List<FlatCounterModel> flattenedDataList) {
+    List<List<dynamic>> rows = [];
+
+    rows.add([
+      'ID',
+      'Name',
+      'Count',
+      'Description',
+      'Log ID',
+      'Log Action',
+      'Log Timestamp',
+    ]);
+
+    for (FlatCounterModel flattenedData in flattenedDataList) {
+      rows.add(flattenedData.toCsvRow());
+    }
+
+    return const ListToCsvConverter().convert(rows);
   }
 }
