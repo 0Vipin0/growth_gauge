@@ -8,9 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../counter/counter.dart';
 import '../timer/timer.dart';
 import 'app_data.dart';
-import 'font_config.dart';
+import 'config/config.dart';
 import 'settings_model.dart';
-import 'theme_config.dart';
 
 class SettingsProvider with ChangeNotifier {
   SettingsModel _settings;

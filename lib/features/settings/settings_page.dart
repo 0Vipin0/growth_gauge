@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import 'font_config.dart';
+import 'config/config.dart';
 import 'settings_model.dart';
 import 'settings_provider.dart';
-import 'theme_config.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

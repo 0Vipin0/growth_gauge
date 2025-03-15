@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'font_config.dart';
-import 'theme_config.dart';
+import 'config/config.dart';
 
 class AppTheme {
   final AppThemeName themeName;
