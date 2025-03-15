@@ -15,8 +15,10 @@ class SharedPreferencesCounterRepository implements CounterRepository {
     if (countersJson == null) {
       return [];
     }
-    final List<dynamic> decodedJson = jsonDecode(countersJson);
-    return decodedJson.map((json) => CounterModel.fromJson(json)).toList();
+    final List<dynamic> decodedJson = jsonDecode(countersJson) as List<dynamic>;
+    return decodedJson
+        .map((json) => CounterModel.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   @override

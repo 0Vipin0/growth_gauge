@@ -13,7 +13,7 @@ class SharedPreferencesTimerRepository implements TimerRepository {
     final prefs = await SharedPreferences.getInstance();
     final String? timersJson = prefs.getString(_storageKey);
     if (timersJson != null) {
-      final List<dynamic> timersList = json.decode(timersJson);
+      final List<dynamic> timersList = json.decode(timersJson) as List<dynamic>;
       return timersList
           .map((timer) => TimerModel.fromJson(timer as Map<String, dynamic>))
           .toList();

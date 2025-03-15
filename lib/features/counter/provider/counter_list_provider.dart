@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:csv/csv.dart';
+import 'package:flutter/material.dart';
 
 import '../model/model.dart';
 import '../repository/repository.dart';
@@ -41,7 +40,7 @@ class CounterListProvider with ChangeNotifier {
   }
 
   void updateCounter(CounterModel newCounter) {
-    CounterModel counter = getCounter(newCounter)
+    final CounterModel counter = getCounter(newCounter)
         .copyWith(count: newCounter.count, logs: newCounter.logs);
     for (int i = 0; i < _counters.length; i++) {
       if (counter.id == _counters[i].id) {
@@ -82,9 +81,9 @@ class CounterListProvider with ChangeNotifier {
   }
 
   String convertToCSV() {
-    List<FlatCounterModel> flattenedDataList = [];
-    for (CounterModel counter in _counters) {
-      for (CounterLog log in counter.logs) {
+    final List<FlatCounterModel> flattenedDataList = [];
+    for (final CounterModel counter in _counters) {
+      for (final CounterLog log in counter.logs) {
         flattenedDataList.add(FlatCounterModel.fromCounterModel(counter, log));
       }
     }
@@ -92,7 +91,7 @@ class CounterListProvider with ChangeNotifier {
   }
 
   String convertFlattenedListToCsv(List<FlatCounterModel> flattenedDataList) {
-    List<List<dynamic>> rows = [];
+    final List<List<dynamic>> rows = [];
 
     rows.add([
       'ID',
@@ -104,7 +103,7 @@ class CounterListProvider with ChangeNotifier {
       'Log Timestamp',
     ]);
 
-    for (FlatCounterModel flattenedData in flattenedDataList) {
+    for (final FlatCounterModel flattenedData in flattenedDataList) {
       rows.add(flattenedData.toCsvRow());
     }
 

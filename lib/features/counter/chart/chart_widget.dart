@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'counter_chart_provider.dart';
@@ -26,7 +25,6 @@ class ChartWidget extends StatelessWidget {
                     alignment: BarChartAlignment.spaceAround,
                     maxY: maxY,
                     titlesData: FlTitlesData(
-                      show: true,
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -57,12 +55,8 @@ class ChartWidget extends StatelessWidget {
                               maxY), // Calculate interval dynamically
                         ),
                       ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
+                      topTitles: const AxisTitles(),
+                      rightTitles: const AxisTitles(),
                     ),
                     borderData: FlBorderData(
                       show: false,

@@ -23,7 +23,7 @@ class _HeatMapCalendarExample extends State<HeatmapPage> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).brightness == Brightness.light
+    final Color primaryColor = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.onPrimaryFixedVariant;
     heatMapDatasets = Provider.of<TimerListProvider>(context)

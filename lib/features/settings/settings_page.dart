@@ -17,17 +17,17 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (settingsProvider.exportMessage != "") {
+      if (settingsProvider.exportMessage != '') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(settingsProvider.exportMessage)),
         );
-        settingsProvider.exportMessage = "";
+        settingsProvider.exportMessage = '';
       }
-      if (settingsProvider.importMessage != "") {
+      if (settingsProvider.importMessage != '') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(settingsProvider.importMessage)),
         );
-        settingsProvider.importMessage = "";
+        settingsProvider.importMessage = '';
       }
     });
     return Scaffold(
@@ -105,26 +105,26 @@ class SettingsPage extends StatelessWidget {
                   }
                   if (value == ExportFormat.csv) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                           content: Text(
-                              "Setting Export Format to CSV does not change import format which still needs JSON")),
+                              'Setting Export Format to CSV does not change import format which still needs JSON')),
                     );
                   }
                 },
               ),
             ),
             ListTile(
-              title: Text("Show Onboarding"),
+              title: const Text('Show Onboarding'),
               trailing: Switch(
                 value: !settingsProvider.isOnboardingComplete,
                 onChanged: (bool value) {
                   settingsProvider.toggleOnboarding(!value);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                         content: Text(
-                            "You will now be redirected to onboarding screen in few seconds.")),
+                            'You will now be redirected to onboarding screen in few seconds.')),
                   );
-                  Timer(Duration(seconds: 3), () {
+                  Timer(const Duration(seconds: 3), () {
                     context.pushNamedTransition(
                       routeName: '/onboarding',
                       type: PageTransitionType.topToBottom,
@@ -170,7 +170,8 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  showResetDialog(BuildContext context, SettingsProvider settingsProvider) {
+  void showResetDialog(
+      BuildContext context, SettingsProvider settingsProvider) {
     showDialog<bool>(
       context: context,
       builder: (context) {

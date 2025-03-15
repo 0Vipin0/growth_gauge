@@ -115,7 +115,7 @@ class TimerListWidget extends StatelessWidget {
     );
   }
 
-  showDeleteDialog(BuildContext context, TimerModel timer) {
+  void showDeleteDialog(BuildContext context, TimerModel timer) {
     showDialog<bool>(
       context: context,
       builder: (context) {

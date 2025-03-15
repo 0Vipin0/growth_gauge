@@ -162,7 +162,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
             selectedIndex: _selectedIndex,
             extended: _isRailExtended,
             onDestinationSelected: _onDestinationSelected,
-            destinations: <NavigationRailDestination>[
+            destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
                 icon: Icon(Icons.list),
                 label: Text('Counters'),
@@ -177,7 +177,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
               ),
             ],
             leading: IconButton(
-              tooltip: _isRailExtended ? "Collapse" : "Expand",
+              tooltip: _isRailExtended ? 'Collapse' : 'Expand',
               icon: Icon(
                   _isRailExtended ? Icons.chevron_left : Icons.chevron_right),
               onPressed: _toggleRail,
