@@ -26,11 +26,11 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Analyze code
+      - name: Analyze Code for any Issues
         run: flutter analyze --fatal-infos --fatal-warnings
 
-      - name: Format code
-        run: dart format --verify .
+      - name: Format Code Verification
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Run tests
         run: flutter test
