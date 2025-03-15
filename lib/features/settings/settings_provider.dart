@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../counter/counter.dart';
 import '../timer/timer.dart';
-import 'app_data.dart';
 import 'config/config.dart';
-import 'settings_model.dart';
+import 'model/model.dart';
 
 class SettingsProvider with ChangeNotifier {
   SettingsModel _settings;

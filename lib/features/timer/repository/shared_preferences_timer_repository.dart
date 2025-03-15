@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:growth_gauge/features/settings/config/config.dart';
+import '../../settings/config/config.dart';
 import '../model/model.dart';
 import 'timer_repository.dart';
 

@@ -6,7 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
-import 'settings_model.dart';
+import 'model/model.dart';
 import 'settings_provider.dart';
 
 class SettingsPage extends StatelessWidget {
