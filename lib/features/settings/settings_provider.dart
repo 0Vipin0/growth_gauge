@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../counter/counter.dart';
 import '../timer/timer.dart';
@@ -73,11 +72,10 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> loadSettingsFromStorage() async {
-    final prefs = await SharedPreferences.getInstance();
+    isOnboardingComplete =
+        await SharedPreferencesHelper.getHasCompletedOnboarding();
 
-    isOnboardingComplete = prefs.getBool('hasCompletedOnboarding') ?? true;
-
-    final String? themeNameString = prefs.getString('themeName');
+    final String? themeNameString = SharedPreferencesHelper.getThemeName();
     AppThemeName themeName = AppThemeName.light; // Default
     if (themeNameString != null) {
       try {
@@ -89,7 +87,7 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final String? fontSizeString = prefs.getString('fontSize');
+    final String? fontSizeString = SharedPreferencesHelper.getFontSize();
     AppFontSize fontSize = AppFontSize.medium; // Default
     if (fontSizeString != null) {
       try {
@@ -101,7 +99,7 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final String? fontFamilyString = prefs.getString('fontFamily');
+    final String? fontFamilyString = SharedPreferencesHelper.getFontFamily();
     AppFontFamily fontFamily = AppFontFamily.roboto; // Default
     if (fontFamilyString != null) {
       try {
@@ -113,7 +111,8 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final String? exportFormatString = prefs.getString('exportFormat');
+    final String? exportFormatString =
+        SharedPreferencesHelper.getExportFormat();
     ExportFormat exportFormat = ExportFormat.json; // Default
     if (exportFormatString != null) {
       try {
@@ -135,12 +134,10 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> saveSettingsToStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('themeName', _settings.themeName.name);
-    await prefs.setString('fontSize', _settings.fontSize.name);
-    await prefs.setString('fontFamily', _settings.fontFamily.name);
-    await prefs.setString('exportFormat', _settings.exportFormat.name);
+    await SharedPreferencesHelper.setThemeName(_settings.themeName.name);
+    await SharedPreferencesHelper.setFontSize(_settings.fontSize.name);
+    await SharedPreferencesHelper.setFontFamily(_settings.fontFamily.name);
+    await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
   }
 
   Future<void> exportData() async {
@@ -250,9 +247,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> toggleOnboarding(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
     isOnboardingComplete = value;
-    await prefs.setBool('hasCompletedOnboarding', isOnboardingComplete);
+    await SharedPreferencesHelper.setHasCompletedOnboarding(
+        isOnboardingComplete);
     notifyListeners();
   }
 
