@@ -107,6 +107,13 @@ class SettingsPage extends StatelessWidget {
                   if (value != null) {
                     settingsProvider.updateExportFormat(value);
                   }
+                  if (value == ExportFormat.csv) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              "Setting Export Format to CSV does not change import format which still needs JSON")),
+                    );
+                  }
                 },
               ),
             ),
@@ -137,8 +144,18 @@ class SettingsPage extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : const Icon(Icons.file_upload),
               onTap: () {
-                settingsProvider.exportData(
-                    counterListProvider.counters, timerListProvider.timers);
+                if (settingsProvider.settings.exportFormat ==
+                    ExportFormat.json) {
+                  settingsProvider.exportData(
+                      counterListProvider.counters, timerListProvider.timers);
+                } else if (settingsProvider.settings.exportFormat ==
+                    ExportFormat.csv) {
+                  settingsProvider.exportDataToCsv(
+                      counterListProvider.counters,
+                      timerListProvider.timers,
+                      counterListProvider,
+                      timerListProvider);
+                }
               },
             ),
             ListTile(

@@ -159,7 +159,7 @@ class SettingsProvider with ChangeNotifier {
       await file.writeAsString(exportJson);
       exportMessage = 'Data exported successfully!';
     } catch (e) {
-      exportMessage = 'Error importing data: $e';
+      exportMessage = 'Error exporting data: $e';
     } finally {
       _isExporting = false;
       notifyListeners();
@@ -251,5 +251,79 @@ class SettingsProvider with ChangeNotifier {
     isOnboardingComplete = value;
     await prefs.setBool('hasCompletedOnboarding', isOnboardingComplete);
     notifyListeners();
+  }
+
+  Future<void> exportDataToCsv(
+    List<CounterModel> counters,
+    List<TimerModel> timers,
+    CounterListProvider counterListProvider,
+    TimerListProvider timerListProvider,
+  ) async {
+    _isExporting = true;
+    notifyListeners();
+    try {
+      // Export counters to CSV
+      await _exportCountersToCsv(counters, counterListProvider);
+      // Export timers to CSV
+      await _exportTimersToCsv(timers, timerListProvider);
+
+      exportMessage = 'Data exported successfully to CSV!';
+    } catch (e) {
+      exportMessage = 'Error exporting data to CSV: $e';
+    } finally {
+      _isExporting = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> _exportCountersToCsv(List<CounterModel> counters,
+      CounterListProvider counterListProvider) async {
+    if (counters.isEmpty) return;
+
+    try {
+      String? filePath =
+          await _getCsvSaveFilePath(suggestedName: 'counters.csv');
+      if (filePath == null) {
+        exportMessage = 'Export Cancelled';
+        return;
+      }
+
+      final file = File(filePath);
+      await file.writeAsString(counterListProvider.convertToCSV());
+      exportMessage = 'Counter Data exported successfully!';
+    } catch (e) {
+      exportMessage = 'Error exporting counter data: $e';
+    }
+    notifyListeners();
+  }
+
+  Future<void> _exportTimersToCsv(
+      List<TimerModel> timers, TimerListProvider timerListProvider) async {
+    if (timers.isEmpty) return;
+
+    try {
+      String? filePath = await _getCsvSaveFilePath(suggestedName: 'timers.csv');
+      if (filePath == null) {
+        exportMessage = 'Export Cancelled';
+        return;
+      }
+
+      final file = File(filePath);
+      await file.writeAsString(timerListProvider.convertToCSV());
+      exportMessage = 'Timer Data exported successfully!';
+    } catch (e) {
+      exportMessage = 'Error exporting timer data: $e';
+    }
+    notifyListeners();
+  }
+
+  Future<String?> _getCsvSaveFilePath({String? suggestedName}) async {
+    String? filePath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save Export File',
+      allowedExtensions: ['json'],
+      type: FileType.custom,
+      fileName: suggestedName,
+    );
+    return filePath;
   }
 }
