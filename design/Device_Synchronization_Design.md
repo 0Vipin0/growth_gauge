@@ -39,7 +39,7 @@ Then, run `flutter pub get` in your terminal to download the package.
 
 Bluetooth operations require specific permissions on each platform. I need to check for permissions on other platform.
 
-You can use the `permission_handler` package in Flutter to request Bluetooth permissions. However, the relationship between Bluetooth and location permissions, especially on Android, can be a bit nuanced. Here's a step-by-step guide on how to approach this, keeping in mind the platform differences:
+You can use the `permission_handler` package in Flutter to request Bluetooth permissions. However, the relationship between Bluetooth and location permissions, especially on Android, can be a bit nuanced.
 
 **Understanding the Relationship (Android):**
 
@@ -187,7 +187,7 @@ Based on the `PermissionStatus` returned by the `request()` method, you can:
 * **iOS:** On iOS, requesting `Permission.bluetooth` will prompt the user for Bluetooth access. Location permission is generally not tied to Bluetooth in the same way as Android.
 * **Web and Linux:** Permission handling for Bluetooth on these platforms is different. `permission_handler` might not be the primary tool for these platforms. For Web, you'll rely on the browser's Web Bluetooth API permission flow. For Linux, it's mostly system-level permissions.
 
-**Key Takeaways:**
+**Key Points:**
 
 * On Android, especially before version 12, be aware that Bluetooth scanning often necessitates location permission.
 * On Android 12 and above, use the granular `bluetoothScan`, `bluetoothConnect`, and `bluetoothAdvertise` permissions and ensure your `AndroidManifest.xml` is configured correctly to avoid unnecessary location permission requests.
