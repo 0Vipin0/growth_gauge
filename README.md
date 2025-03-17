@@ -7,6 +7,7 @@
 [![Pull Requests](https://img.shields.io/github/issues-pr/0Vipin0/growth_gauge?logo=github&logoColor=white)](https://github.com/0Vipin0/growth_gauge/pulls)
 [![Code size](https://img.shields.io/github/languages/code-size/0Vipin0/growth_gauge?logo=github&logoColor=white)](https://github.com/0Vipin0/growth_gauge)
 [![License](https://img.shields.io/github/license/0Vipin0/growth_gauge?logo=open-source-initiative&logoColor=green)](https://github.com/0Vipin0/growth_gauge/blob/main/LICENSE)
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
 
 ## Description
@@ -61,8 +62,8 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 
 ## Future Goals and Roadmap
 
-*   **Automated Builds with GitHub Actions** ([#13][i13])
-*   **CSV Data Export** ([#14][i14])
+*   ~**Automated Builds with GitHub Actions** ([#13][i13])~
+*   ~**CSV Data Export** ([#14][i14])~
 *   **Cross-Device Data Synchronization** ([#15][i15])
 *   **Local User Authentication** ([#16][i16])
 *   **Sound Alerts and Notifications** ([#17][i17])
