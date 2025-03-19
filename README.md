@@ -20,9 +20,10 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *   **Detailed Counter Insights:** Dive deep into each counter with comprehensive detail views, including:
     *   **Heatmaps:**  Visually identify trends and peak activity periods over extended durations.
     *   **7-Day Charts:**  Quickly review your performance and counts for the past week at a glance.
-*   **JSON Data Export:**  Securely export your valuable counter and timer data as JSON files for backup, sharing, or in-depth analysis with other tools.
+*   **JSON and CSV Data Export:**  Securely export your valuable counter and timer data as JSON files for backup, sharing, or in CSV file for in-depth analysis with other tools.
 *   **Persistent Data Storage:**  Enjoy peace of mind knowing your data is persistently stored using Shared Preferences, ensuring your progress is saved across all application sessions.
 *   **Personalized App Experience:** Customize the look and feel of Growth Gauge to match your style by adjusting application themes and fonts directly within the settings.
+*   **Automatic Build Release:** New version release files are generated with Github Action and available under releases.
 
 ## Build Process
 1.  **Flutter Environment Setup:** Ensure you have the Flutter SDK installed and correctly configured on your development machine. Refer to the official Flutter installation guide for detailed platform-specific instructions: [Flutter Install Guide](https://flutter.dev/docs/get-started/install).
