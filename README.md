@@ -26,14 +26,14 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *   **Automatic Build Release:** New version release files are generated with Github Action and available under releases.
 
 ## Build Process
-1.  **Flutter Environment Setup:** Ensure you have the Flutter SDK installed and correctly configured on your development machine. Refer to the official Flutter installation guide for detailed platform-specific instructions: [Flutter Install Guide](https://flutter.dev/docs/get-started/install).
+1.  **Flutter Environment Setup:** Refer to the official Flutter installation guide for detailed platform-specific instructions: [Flutter Install Guide](https://flutter.dev/docs/get-started/install).
 
-2.  **Dependency Retrieval:** Navigate to the project's root directory in your terminal and execute:
+2.  **Dependency Retrieval:**
     ```bash
     flutter pub get
     ```
 
-3.  **Code Analysis :**  Run the Flutter analyzer to identify potential code issues and ensure code quality:
+3.  **Code Analysis :**
     ```bash
     flutter analyze
     ```
