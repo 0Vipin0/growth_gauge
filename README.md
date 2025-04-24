@@ -25,6 +25,38 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *   **Personalized App Experience:** Customize the look and feel of Growth Gauge to match your style by adjusting application themes and fonts directly within the settings.
 *   **Automatic Build Release:** New version release files are generated with Github Action and available under releases.
 
+## Screenshots
+
+### Counters
+
+* **Counter List:**
+    ![Counter List](screenshots/list-counter.png)
+
+* **Add Counter:**
+    ![Add Counter](screenshots/add-counter.png)
+
+* **Counter Details:**
+    ![Counter Details](screenshots/details-counter.png)
+
+### Timers
+
+* **Timer List:**
+    ![Timer List](screenshots/list-timer.png)
+
+* **Add Timer:**
+    ![Add Timer](screenshots/add-timer.png)
+
+* **Timer Details:**
+    ![Timer Details](screenshots/details-timer.png)
+
+### General
+
+* **Startup Screen:**
+    ![Startup Screen](screenshots/startup.png)
+
+* **Settings:**
+    ![Settings](screenshots/settings.png)
+
 ## Build Process
 1.  **Flutter Environment Setup:** Refer to the official Flutter installation guide for detailed platform-specific instructions: [Flutter Install Guide](https://flutter.dev/docs/get-started/install).
 
