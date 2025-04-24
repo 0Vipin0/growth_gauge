@@ -27,35 +27,14 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 
 ## Screenshots
 
-### Counters
+## Screenshots
 
-* **Counter List:**
-    ![Counter List](screenshots/list-counter.png)
-
-* **Add Counter:**
-    ![Add Counter](screenshots/add-counter.png)
-
-* **Counter Details:**
-    ![Counter Details](screenshots/details-counter.png)
-
-### Timers
-
-* **Timer List:**
-    ![Timer List](screenshots/list-timer.png)
-
-* **Add Timer:**
-    ![Add Timer](screenshots/add-timer.png)
-
-* **Timer Details:**
-    ![Timer Details](screenshots/details-timer.png)
-
-### General
-
-* **Startup Screen:**
-    ![Startup Screen](screenshots/startup.png)
-
-* **Settings:**
-    ![Settings](screenshots/settings.png)
+| Feature           | Screenshot                      | Feature           | Screenshot                      |
+| :---------------- | :------------------------------ | :---------------- | :------------------------------ |
+| Startup Screen    | ![Startup](screenshots/startup.png)       | Settings          | ![Settings](screenshots/settings.png)     |
+| Counter List      | ![List Counter](screenshots/list-counter.png) | Timer List        | ![List Timer](screenshots/list-timer.png)   |
+| Add Counter       | ![Add Counter](screenshots/add-counter.png)  | Add Timer         | ![Add Timer](screenshots/add-timer.png)    |
+| Counter Details   | ![Details Counter](screenshots/details-counter.png) | Timer Details     | ![Details Timer](screenshots/details-timer.png) |
 
 ## Build Process
 1.  **Flutter Environment Setup:** Refer to the official Flutter installation guide for detailed platform-specific instructions: [Flutter Install Guide](https://flutter.dev/docs/get-started/install).
