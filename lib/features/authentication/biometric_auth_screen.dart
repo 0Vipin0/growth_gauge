@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'authentication.dart';
+
+class BiometricAuthScreen extends StatefulWidget {
+  @override
+  _BiometricAuthScreenState createState() => _BiometricAuthScreenState();
+}
+
+class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
+  final AuthenticationProvider _authService = AuthenticationProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkBiometricAuth();
+  }
+
+  Future<void> _checkBiometricAuth() async {
+    final bool isAuthenticated = await _authService.authenticateWithBiometrics();
+    if (isAuthenticated) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Biometric authentication failed.')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Biometric Authentication'),
+      ),
+      body: const Center(
+        child: Text('Authenticating...'),
+      ),
+    );
+  }
+}
