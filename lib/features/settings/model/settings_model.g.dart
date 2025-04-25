@@ -17,6 +17,9 @@ _$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
       exportFormat:
           $enumDecodeNullable(_$ExportFormatEnumMap, json['exportFormat']) ??
               ExportFormat.json,
+      authenticationType: $enumDecodeNullable(
+              _$AuthenticationTypeEnumMap, json['authenticationType']) ??
+          AuthenticationType.none,
     );
 
 Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
@@ -25,6 +28,8 @@ Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
       'fontSize': _$AppFontSizeEnumMap[instance.fontSize]!,
       'fontFamily': _$AppFontFamilyEnumMap[instance.fontFamily]!,
       'exportFormat': _$ExportFormatEnumMap[instance.exportFormat]!,
+      'authenticationType':
+          _$AuthenticationTypeEnumMap[instance.authenticationType]!,
     };
 
 const _$AppThemeNameEnumMap = {
@@ -54,4 +59,10 @@ const _$AppFontFamilyEnumMap = {
 const _$ExportFormatEnumMap = {
   ExportFormat.json: 'json',
   ExportFormat.csv: 'csv',
+};
+
+const _$AuthenticationTypeEnumMap = {
+  AuthenticationType.none: 'none',
+  AuthenticationType.pin: 'pin',
+  AuthenticationType.biometric: 'biometric',
 };

@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../counter/counter.dart';
 import '../timer/timer.dart';
@@ -29,12 +31,13 @@ class SettingsProvider with ChangeNotifier {
 
   late bool isOnboardingComplete;
 
+  final LocalAuthentication _localAuth = LocalAuthentication();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+
   SettingsProvider({
     required CounterListProvider counterListProvider,
     required TimerListProvider timerListProvider,
-  })  : _settings = const SettingsModel(
-          themeName: AppThemeName.light,
-        ),
+  })  : _settings = const SettingsModel(themeName: AppThemeName.light),
         _counterListProvider = counterListProvider,
         _timerListProvider = timerListProvider {
     loadSettingsFromStorage();
@@ -70,6 +73,15 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateAuthenticationType(AuthenticationType type) {
+    if (type == AuthenticationType.none) {
+      _secureStorage.deleteAll();
+    }
+    _settings = _settings.copyWith(authenticationType: type);
+    saveSettingsToStorage();
+    notifyListeners();
+  }
+
   Future<void> loadSettingsFromStorage() async {
     isOnboardingComplete =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? true;
@@ -81,7 +93,8 @@ class SettingsProvider with ChangeNotifier {
         themeName = AppThemeName.values.byName(themeNameString);
       } catch (e) {
         debugPrint(
-            'Error loading themeName from storage: $e, using default Light theme.');
+          'Error loading themeName from storage: $e, using default Light theme.',
+        );
         themeName = AppThemeName.light; // Fallback if name is invalid
       }
     }
@@ -93,7 +106,8 @@ class SettingsProvider with ChangeNotifier {
         fontSize = AppFontSize.values.byName(fontSizeString);
       } catch (e) {
         debugPrint(
-            'Error loading fontSize from storage: $e, using default Medium font size.');
+          'Error loading fontSize from storage: $e, using default Medium font size.',
+        );
         fontSize = AppFontSize.medium; // Fallback if name is invalid
       }
     }
@@ -105,7 +119,8 @@ class SettingsProvider with ChangeNotifier {
         fontFamily = AppFontFamily.values.byName(fontFamilyString);
       } catch (e) {
         debugPrint(
-            'Error loading fontFamily from storage: $e, using default Roboto font family.');
+          'Error loading fontFamily from storage: $e, using default Roboto font family.',
+        );
         fontFamily = AppFontFamily.roboto; // Fallback if name is invalid
       }
     }
@@ -118,8 +133,25 @@ class SettingsProvider with ChangeNotifier {
         exportFormat = ExportFormat.values.byName(exportFormatString);
       } catch (e) {
         debugPrint(
-            'Error loading fontFamily from storage: $e, using default Roboto font family.');
+          'Error loading fontFamily from storage: $e, using default Roboto font family.',
+        );
         exportFormat = ExportFormat.json; // Fallback if name is invalid
+      }
+    }
+
+    final String? authenticationTypeString =
+        SharedPreferencesHelper.getAuthenticationType();
+    AuthenticationType authenticationType = AuthenticationType.none; // Default
+    if (authenticationTypeString != null) {
+      try {
+        authenticationType =
+            AuthenticationType.values.byName(authenticationTypeString);
+      } catch (e) {
+        debugPrint(
+          'Error loading authenticationType from storage: $e, using default None authentication type.',
+        );
+        authenticationType =
+            AuthenticationType.none; // Fallback if name is invalid
       }
     }
 
@@ -128,6 +160,7 @@ class SettingsProvider with ChangeNotifier {
       fontSize: fontSize,
       fontFamily: fontFamily,
       exportFormat: exportFormat,
+      authenticationType: authenticationType,
     );
     notifyListeners();
   }
@@ -137,6 +170,8 @@ class SettingsProvider with ChangeNotifier {
     await SharedPreferencesHelper.setFontSize(_settings.fontSize.name);
     await SharedPreferencesHelper.setFontFamily(_settings.fontFamily.name);
     await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
+    await SharedPreferencesHelper.setAuthenticationType(
+        _settings.authenticationType.name);
   }
 
   Future<void> exportData() async {
@@ -144,8 +179,9 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
     try {
       final appData = await _prepareAppDataForExport(
-          _counterListProvider.counters,
-          _timerListProvider.timers); // Pass parameters
+        _counterListProvider.counters,
+        _timerListProvider.timers,
+      ); // Pass parameters
       final exportJson = jsonEncode(appData.toJson());
 
       final String? filePath = await _getSaveFilePath();
@@ -166,11 +202,10 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<AppData> _prepareAppDataForExport(
-      List<CounterModel> counters, List<TimerModel> timers) async {
-    return AppData(
-      counters: counters,
-      timers: timers,
-    );
+    List<CounterModel> counters,
+    List<TimerModel> timers,
+  ) async {
+    return AppData(counters: counters, timers: timers);
   }
 
   Future<String?> _getSaveFilePath() async {
@@ -196,9 +231,10 @@ class SettingsProvider with ChangeNotifier {
         final File file = File(result.files.single.path!);
         final String importJson = await file.readAsString();
         await _processImportData(
-            importJson,
-            _counterListProvider.importCountersFromData,
-            _timerListProvider.importTimersFromData);
+          importJson,
+          _counterListProvider.importCountersFromData,
+          _timerListProvider.importTimersFromData,
+        );
         importMessage = 'Data imported successfully!';
       } else {
         importMessage = 'Import Cancelled';
@@ -248,7 +284,8 @@ class SettingsProvider with ChangeNotifier {
   Future<void> toggleOnboarding(bool value) async {
     isOnboardingComplete = value;
     await SharedPreferencesHelper.setHasCompletedOnboarding(
-        isOnboardingComplete);
+      isOnboardingComplete,
+    );
     notifyListeners();
   }
 
@@ -274,8 +311,9 @@ class SettingsProvider with ChangeNotifier {
     if (_counterListProvider.counters.isEmpty) return;
 
     try {
-      final String? filePath =
-          await _getCsvSaveFilePath(suggestedName: 'counters.csv');
+      final String? filePath = await _getCsvSaveFilePath(
+        suggestedName: 'counters.csv',
+      );
       if (filePath == null) {
         exportMessage = 'Export Cancelled';
         return;
@@ -294,8 +332,9 @@ class SettingsProvider with ChangeNotifier {
     if (_timerListProvider.timers.isEmpty) return;
 
     try {
-      final String? filePath =
-          await _getCsvSaveFilePath(suggestedName: 'timers.csv');
+      final String? filePath = await _getCsvSaveFilePath(
+        suggestedName: 'timers.csv',
+      );
       if (filePath == null) {
         exportMessage = 'Export Cancelled';
         return;
@@ -324,5 +363,14 @@ class SettingsProvider with ChangeNotifier {
     _counterListProvider.clearCounters();
     _timerListProvider.clearTimers();
     notifyListeners();
+  }
+
+  Future<bool> isBiometricAvailable() async {
+    try {
+      return await _localAuth.canCheckBiometrics;
+    } catch (e) {
+      debugPrint('Error checking biometric availability: $e');
+      return false;
+    }
   }
 }

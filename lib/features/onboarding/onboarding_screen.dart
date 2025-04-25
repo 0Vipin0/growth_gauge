@@ -22,17 +22,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'animation': 'assets/animations/welcome.json',
       'title': 'Welcome to MyApp!',
-      'description': 'This app helps you manage your tasks efficiently.'
+      'description': 'This app helps you manage your tasks efficiently.',
     },
     {
       'animation': 'assets/animations/counters.json',
       'title': 'Manage Counters',
-      'description': 'Track and manage counters easily in the app.'
+      'description': 'Track and manage counters easily in the app.',
     },
     {
       'animation': 'assets/animations/timers.json',
       'title': 'Track Timers',
-      'description': 'Keep track of timers and never miss a deadline.'
+      'description': 'Keep track of timers and never miss a deadline.',
     },
   ];
 
@@ -105,8 +105,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (isLastPage) {
-                        Provider.of<SettingsProvider>(context, listen: false)
-                            .toggleOnboarding(true);
+                        Provider.of<SettingsProvider>(
+                          context,
+                          listen: false,
+                        ).toggleOnboarding(true);
                         _completeOnboarding();
                         _navigateToHome();
                       } else {

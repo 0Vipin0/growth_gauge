@@ -22,7 +22,9 @@ class FlatTimerModel {
   final Duration logInterval;
 
   factory FlatTimerModel.fromTimerModel(
-      TimerModel timerModel, TimerLog timerLog) {
+    TimerModel timerModel,
+    TimerLog timerLog,
+  ) {
     return FlatTimerModel(
       id: timerModel.id,
       name: timerModel.name,

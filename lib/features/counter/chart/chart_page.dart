@@ -23,10 +23,15 @@ class _ChartPageState extends State<ChartPage> {
   }
 
   void loadData() {
-    Provider.of<CounterChartProvider>(context, listen: false)
-        .processDataForChart(
-            Provider.of<CounterListProvider>(context, listen: false)
-                .getCounter(widget.counter));
+    Provider.of<CounterChartProvider>(
+      context,
+      listen: false,
+    ).processDataForChart(
+      Provider.of<CounterListProvider>(
+        context,
+        listen: false,
+      ).getCounter(widget.counter),
+    );
   }
 
   @override
@@ -38,10 +43,7 @@ class _ChartPageState extends State<ChartPage> {
         children: <Widget>[
           Text(
             'Exercise Counts - Last 7 Days',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 20),

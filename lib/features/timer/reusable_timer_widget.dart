@@ -11,8 +11,11 @@ class ReusableTimerWidget extends StatelessWidget {
   final TimerModel timerModel;
   final VoidCallback onRemove;
 
-  const ReusableTimerWidget(
-      {super.key, required this.timerModel, required this.onRemove});
+  const ReusableTimerWidget({
+    super.key,
+    required this.timerModel,
+    required this.onRemove,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +29,33 @@ class ReusableTimerWidget extends StatelessWidget {
                 child: ListTile(
                   title: Text(timerModel.description),
                   subtitle: Text(
-                      'Time Passed: ${timerProvider.currentInterval.inSeconds} seconds\n'),
+                    'Time Passed: ${timerProvider.currentInterval.inSeconds} seconds\n',
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(timerProvider.isRunning
-                            ? Icons.pause
-                            : Icons.play_arrow),
+                        icon: Icon(
+                          timerProvider.isRunning
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                        ),
                         onPressed: () {
                           timerProvider.startOrPauseTimer();
-                          Provider.of<TimerListProvider>(context, listen: false)
-                              .updateTimer(timerProvider.timer);
+                          Provider.of<TimerListProvider>(
+                            context,
+                            listen: false,
+                          ).updateTimer(timerProvider.timer);
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.refresh),
                         onPressed: () {
                           timerProvider.resetTimer();
-                          Provider.of<TimerListProvider>(context, listen: false)
-                              .updateTimer(timerProvider.timer);
+                          Provider.of<TimerListProvider>(
+                            context,
+                            listen: false,
+                          ).updateTimer(timerProvider.timer);
                         },
                       ),
                       IconButton(

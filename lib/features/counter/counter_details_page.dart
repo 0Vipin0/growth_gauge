@@ -11,17 +11,12 @@ class CounterDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(counter.name),
-      ),
+      appBar: AppBar(title: Text(counter.name)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Text(
-              counter.description,
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text(counter.description, style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
             Text(
               'Current Count: ${counter.count}',
@@ -35,9 +30,10 @@ class CounterDetailsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                          width: 400,
-                          height: 400,
-                          child: ChartPage(counter: counter)),
+                        width: 400,
+                        height: 400,
+                        child: ChartPage(counter: counter),
+                      ),
                       HeatmapPage(counter: counter),
                     ],
                   );
@@ -46,16 +42,17 @@ class CounterDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                          width: 400,
-                          height: 400,
-                          child: ChartPage(counter: counter)),
+                        width: 400,
+                        height: 400,
+                        child: ChartPage(counter: counter),
+                      ),
                       const SizedBox(height: 15),
                       HeatmapPage(counter: counter),
                     ],
                   );
                 }
               },
-            )
+            ),
           ],
         ),
       ),

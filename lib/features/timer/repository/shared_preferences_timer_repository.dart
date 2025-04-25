@@ -19,8 +19,9 @@ class SharedPreferencesTimerRepository implements TimerRepository {
 
   @override
   Future<void> saveTimers(List<TimerModel> timers) async {
-    final String timersJson =
-        json.encode(timers.map((timer) => timer.toJson()).toList());
+    final String timersJson = json.encode(
+      timers.map((timer) => timer.toJson()).toList(),
+    );
     await SharedPreferencesHelper.setTimers(timersJson);
   }
 

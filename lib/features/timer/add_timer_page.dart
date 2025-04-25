@@ -25,9 +25,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Timer'),
-      ),
+      appBar: AppBar(title: const Text('Add New Timer')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -61,10 +59,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
                 },
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Set Timer Duration',
-                style: TextStyle(fontSize: 16),
-              ),
+              const Text('Set Timer Duration', style: TextStyle(fontSize: 16)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -98,7 +93,10 @@ class _AddTimerPageState extends State<AddTimerPage> {
   }
 
   Widget _buildTimeControl(
-      String label, int value, ValueChanged<int> onChanged) {
+    String label,
+    int value,
+    ValueChanged<int> onChanged,
+  ) {
     return Column(
       children: [
         Text(label),
@@ -116,7 +114,9 @@ class _AddTimerPageState extends State<AddTimerPage> {
                 child: Text(
                   '$value',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -134,8 +134,11 @@ class _AddTimerPageState extends State<AddTimerPage> {
 
   void _saveTimer() {
     if (_formKey.currentState!.validate()) {
-      final Duration duration =
-          Duration(hours: _hours, minutes: _minutes, seconds: _seconds);
+      final Duration duration = Duration(
+        hours: _hours,
+        minutes: _minutes,
+        seconds: _seconds,
+      );
 
       final newTimer = TimerModel(
         id: const Uuid().v4(),

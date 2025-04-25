@@ -25,9 +25,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Counter'),
-      ),
+      appBar: AppBar(title: const Text('Add New Counter')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -64,10 +62,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Initial Count',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  const Text('Initial Count', style: TextStyle(fontSize: 16)),
                   IconButton(
                     icon: const Icon(Icons.remove),
                     onPressed: () {
@@ -79,7 +74,9 @@ class _AddCounterPageState extends State<AddCounterPage> {
                   Text(
                     '$_count',
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.add),

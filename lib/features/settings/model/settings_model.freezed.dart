@@ -24,6 +24,8 @@ mixin _$SettingsModel {
   AppFontSize get fontSize => throw _privateConstructorUsedError;
   AppFontFamily get fontFamily => throw _privateConstructorUsedError;
   ExportFormat get exportFormat => throw _privateConstructorUsedError;
+  AuthenticationType get authenticationType =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this SettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,7 +47,8 @@ abstract class $SettingsModelCopyWith<$Res> {
       {AppThemeName themeName,
       AppFontSize fontSize,
       AppFontFamily fontFamily,
-      ExportFormat exportFormat});
+      ExportFormat exportFormat,
+      AuthenticationType authenticationType});
 }
 
 /// @nodoc
@@ -67,6 +70,7 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
     Object? fontSize = null,
     Object? fontFamily = null,
     Object? exportFormat = null,
+    Object? authenticationType = null,
   }) {
     return _then(_value.copyWith(
       themeName: null == themeName
@@ -85,6 +89,10 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
           ? _value.exportFormat
           : exportFormat // ignore: cast_nullable_to_non_nullable
               as ExportFormat,
+      authenticationType: null == authenticationType
+          ? _value.authenticationType
+          : authenticationType // ignore: cast_nullable_to_non_nullable
+              as AuthenticationType,
     ) as $Val);
   }
 }
@@ -101,7 +109,8 @@ abstract class _$$SettingsModelImplCopyWith<$Res>
       {AppThemeName themeName,
       AppFontSize fontSize,
       AppFontFamily fontFamily,
-      ExportFormat exportFormat});
+      ExportFormat exportFormat,
+      AuthenticationType authenticationType});
 }
 
 /// @nodoc
@@ -121,6 +130,7 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
     Object? fontSize = null,
     Object? fontFamily = null,
     Object? exportFormat = null,
+    Object? authenticationType = null,
   }) {
     return _then(_$SettingsModelImpl(
       themeName: null == themeName
@@ -139,6 +149,10 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
           ? _value.exportFormat
           : exportFormat // ignore: cast_nullable_to_non_nullable
               as ExportFormat,
+      authenticationType: null == authenticationType
+          ? _value.authenticationType
+          : authenticationType // ignore: cast_nullable_to_non_nullable
+              as AuthenticationType,
     ));
   }
 }
@@ -150,7 +164,8 @@ class _$SettingsModelImpl implements _SettingsModel {
       {required this.themeName,
       this.fontSize = AppFontSize.medium,
       this.fontFamily = AppFontFamily.roboto,
-      this.exportFormat = ExportFormat.json});
+      this.exportFormat = ExportFormat.json,
+      this.authenticationType = AuthenticationType.none});
 
   factory _$SettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsModelImplFromJson(json);
@@ -166,10 +181,13 @@ class _$SettingsModelImpl implements _SettingsModel {
   @override
   @JsonKey()
   final ExportFormat exportFormat;
+  @override
+  @JsonKey()
+  final AuthenticationType authenticationType;
 
   @override
   String toString() {
-    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType)';
   }
 
   @override
@@ -184,13 +202,15 @@ class _$SettingsModelImpl implements _SettingsModel {
             (identical(other.fontFamily, fontFamily) ||
                 other.fontFamily == fontFamily) &&
             (identical(other.exportFormat, exportFormat) ||
-                other.exportFormat == exportFormat));
+                other.exportFormat == exportFormat) &&
+            (identical(other.authenticationType, authenticationType) ||
+                other.authenticationType == authenticationType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, themeName, fontSize, fontFamily, exportFormat);
+  int get hashCode => Object.hash(runtimeType, themeName, fontSize, fontFamily,
+      exportFormat, authenticationType);
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -213,7 +233,8 @@ abstract class _SettingsModel implements SettingsModel {
       {required final AppThemeName themeName,
       final AppFontSize fontSize,
       final AppFontFamily fontFamily,
-      final ExportFormat exportFormat}) = _$SettingsModelImpl;
+      final ExportFormat exportFormat,
+      final AuthenticationType authenticationType}) = _$SettingsModelImpl;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$SettingsModelImpl.fromJson;
@@ -226,6 +247,8 @@ abstract class _SettingsModel implements SettingsModel {
   AppFontFamily get fontFamily;
   @override
   ExportFormat get exportFormat;
+  @override
+  AuthenticationType get authenticationType;
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.

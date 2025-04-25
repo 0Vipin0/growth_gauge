@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import 'package:provider/provider.dart';
+
+import '../authentication/authentication.dart';
 import '../settings/settings.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -67,19 +70,54 @@ class _SplashScreenState extends State<SplashScreen>
     final bool hasCompletedOnboarding =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
-    if (hasCompletedOnboarding) {
-      _navigateToHome();
-    } else {
-      _navigateToOnboarding();
+    if (mounted) {
+      if (hasCompletedOnboarding) {
+        final SettingsProvider settingsProvider =
+            Provider.of<SettingsProvider>(context, listen: false);
+        if (settingsProvider.settings.authenticationType ==
+            AuthenticationType.none) {
+          _navigateToHome();
+          return;
+        } else {
+          navigateToAuthentication();
+        }
+      } else {
+        _navigateToOnboarding();
+      }
     }
   }
 
   void _navigateToHome() {
-    Navigator.of(context).pushReplacementNamed('/home');
+    if (mounted) Navigator.of(context).pushReplacementNamed('/home');
   }
 
   void _navigateToOnboarding() {
     Navigator.of(context).pushReplacementNamed('/onboarding');
+  }
+
+  void _navigateToPinAuth() {
+    Navigator.of(context).pushReplacementNamed('/pin_auth');
+  }
+
+  void _navigateToBiometricAuth() {
+    Navigator.of(context).pushReplacementNamed('/biometric_auth');
+  }
+
+  Future<void> navigateToAuthentication() async {
+    final AuthenticationProvider authService = AuthenticationProvider();
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
+
+    final bool isBiometricAvailable =
+        await authService.authenticateWithBiometrics();
+
+    if (isBiometricAvailable) {
+      settingsProvider.updateAuthenticationType(AuthenticationType.biometric);
+      _navigateToBiometricAuth();
+    } else {
+      settingsProvider.updateAuthenticationType(AuthenticationType.pin);
+      _navigateToPinAuth();
+    }
   }
 
   @override

@@ -11,8 +11,11 @@ class HeatmapPage extends StatefulWidget {
   final TimerModel timer;
   final DurationInterval durationInterval;
 
-  const HeatmapPage(
-      {super.key, required this.timer, required this.durationInterval});
+  const HeatmapPage({
+    super.key,
+    required this.timer,
+    required this.durationInterval,
+  });
 
   @override
   State<StatefulWidget> createState() => _HeatMapCalendarExample();
@@ -26,9 +29,12 @@ class _HeatMapCalendarExample extends State<HeatmapPage> {
     final Color primaryColor = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.onPrimaryFixedVariant;
-    heatMapDatasets = Provider.of<TimerListProvider>(context)
-        .extractCountsByDayPerDurationInterval(
-            widget.timer, widget.durationInterval);
+    heatMapDatasets = Provider.of<TimerListProvider>(
+      context,
+    ).extractCountsByDayPerDurationInterval(
+      widget.timer,
+      widget.durationInterval,
+    );
     return Padding(
       padding: const EdgeInsets.all(20),
       child: HeatMapCalendar(

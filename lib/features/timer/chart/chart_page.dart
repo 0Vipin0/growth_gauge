@@ -12,8 +12,11 @@ class ChartPage extends StatefulWidget {
   final TimerModel timer;
   final DurationInterval durationInterval;
 
-  const ChartPage(
-      {super.key, required this.timer, required this.durationInterval});
+  const ChartPage({
+    super.key,
+    required this.timer,
+    required this.durationInterval,
+  });
 
   @override
   State<ChartPage> createState() => _ChartPageState();
@@ -28,9 +31,12 @@ class _ChartPageState extends State<ChartPage> {
 
   void loadData() {
     Provider.of<TimerChartProvider>(context, listen: false).processDataForChart(
-        Provider.of<TimerListProvider>(context, listen: false)
-            .getTimer(widget.timer),
-        widget.durationInterval);
+      Provider.of<TimerListProvider>(
+        context,
+        listen: false,
+      ).getTimer(widget.timer),
+      widget.durationInterval,
+    );
   }
 
   @override
@@ -42,10 +48,7 @@ class _ChartPageState extends State<ChartPage> {
         children: <Widget>[
           const Text(
             'Exercise Counts - Last 7 Days',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Text(

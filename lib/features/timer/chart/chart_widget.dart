@@ -32,8 +32,9 @@ class ChartWidget extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                  chartProvider.getDayOfWeek(value.toInt()),
-                                  style: const TextStyle(fontSize: 12)),
+                                chartProvider.getDayOfWeek(value.toInt()),
+                                style: const TextStyle(fontSize: 12),
+                              ),
                             );
                           },
                         ),
@@ -52,15 +53,14 @@ class ChartWidget extends StatelessWidget {
                           },
                           reservedSize: 28, // Adjust for label width
                           interval: calculateYAxisInterval(
-                              maxY), // Calculate interval dynamically
+                            maxY,
+                          ), // Calculate interval dynamically
                         ),
                       ),
                       topTitles: const AxisTitles(),
                       rightTitles: const AxisTitles(),
                     ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
+                    borderData: FlBorderData(show: false),
                     barGroups: chartProvider.barGroups,
                     barTouchData: BarTouchData(
                       touchTooltipData: BarTouchTooltipData(

@@ -70,27 +70,19 @@ class CounterListWidget extends StatelessWidget {
                   );
                 },
               ),
-              const Icon(
-                Icons.playlist_add_check,
-                size: 80,
-              ),
+              const Icon(Icons.playlist_add_check, size: 80),
             ],
           ),
           const SizedBox(height: 30),
           const Text(
             'Ready to count things?',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 15),
           const Text(
             'No counters created yet. Start tracking anything you want by creating your first counter.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 40),
           ElevatedButton.icon(
@@ -105,7 +97,8 @@ class CounterListWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 18),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
           ),
         ],
@@ -123,8 +116,10 @@ class CounterListWidget extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Provider.of<CounterListProvider>(context, listen: false)
-                    .removeCounter(counter);
+                Provider.of<CounterListProvider>(
+                  context,
+                  listen: false,
+                ).removeCounter(counter);
                 Navigator.of(context).pop();
               },
               child: const Text('Yes'),

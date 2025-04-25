@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:page_transition/page_transition.dart';
 
+import 'features/authentication/biometric_auth_screen.dart';
+import 'features/authentication/pin_auth_screen.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
 import 'features/settings/settings.dart';
@@ -12,6 +14,8 @@ mixin AppRoutes {
   static const String onboarding = '/onboarding';
   static const String home = '/home';
   static const String settings = '/settings';
+  static const String biometricAuth = '/biometric_auth';
+  static const String pinAuth = '/pin_auth';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -39,6 +43,10 @@ mixin AppRoutes {
           settings: routeSettings,
           type: PageTransitionType.rightToLeftWithFade,
         );
+      case biometricAuth:
+        return MaterialPageRoute(builder: (_) => BiometricAuthScreen());
+      case pinAuth:
+        return MaterialPageRoute(builder: (_) => PinAuthScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

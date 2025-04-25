@@ -9,8 +9,9 @@ class AppTheme {
   AppTheme({required this.themeName, required this.fontTheme});
 
   ThemeData getThemeData() {
-    final appColorTheme =
-        appColorThemes.firstWhere((theme) => theme.name == themeName);
+    final appColorTheme = appColorThemes.firstWhere(
+      (theme) => theme.name == themeName,
+    );
     return ThemeData(
       useMaterial3: true,
       brightness: appColorTheme.colorScheme.brightness,

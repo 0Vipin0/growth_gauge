@@ -8,6 +8,7 @@ class SharedPreferencesKeys {
   static const String fontSize = 'fontSize';
   static const String fontFamily = 'fontFamily';
   static const String exportFormat = 'exportFormat';
+  static const String authenticationType = 'authenticationType';
 }
 
 mixin SharedPreferencesHelper {
@@ -21,7 +22,8 @@ mixin SharedPreferencesHelper {
   static SharedPreferences get instance {
     if (_prefs == null) {
       throw Exception(
-          'SharedPreferencesHelper has not been initialized. Call init() first.');
+        'SharedPreferencesHelper has not been initialized. Call init() first.',
+      );
     }
     return _prefs!;
   }
@@ -52,7 +54,9 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setHasCompletedOnboarding(bool value) {
     return instance.setBool(
-        SharedPreferencesKeys.hasCompletedOnboarding, value);
+      SharedPreferencesKeys.hasCompletedOnboarding,
+      value,
+    );
   }
 
   static String? getThemeName() {
@@ -85,5 +89,13 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setExportFormat(String value) {
     return instance.setString(SharedPreferencesKeys.exportFormat, value);
+  }
+
+  static String? getAuthenticationType() {
+    return instance.getString(SharedPreferencesKeys.authenticationType);
+  }
+
+  static Future<bool> setAuthenticationType(String value) {
+    return instance.setString(SharedPreferencesKeys.authenticationType, value);
   }
 }
