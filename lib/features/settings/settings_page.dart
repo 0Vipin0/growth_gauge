@@ -200,6 +200,22 @@ class SettingsPage extends StatelessWidget {
                           );
                           return;
                         }
+                        if (value == AuthenticationType.pin &&
+                            settingsProvider.settings.authenticationType ==
+                                AuthenticationType.none) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'You will now be redirected to set your PIN and login again.'),
+                            ),
+                          );
+                          Timer(const Duration(seconds: 3), () {
+                            context.pushNamedTransition(
+                              routeName: '/pin_auth',
+                              type: PageTransitionType.rightToLeft,
+                            );
+                          });
+                        }
                         settingsProvider.updateAuthenticationType(value);
                         if (value == AuthenticationType.none) {
                           ScaffoldMessenger.of(context).showSnackBar(
