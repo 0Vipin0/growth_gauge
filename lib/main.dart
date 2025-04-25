@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:provider/provider.dart';
 
 import 'features/counter/chart/chart.dart';
 import 'features/counter/counter.dart';
+import 'features/notifications/notification_service.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
 import 'routes.dart';
-import 'features/notifications/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

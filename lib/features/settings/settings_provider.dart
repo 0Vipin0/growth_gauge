@@ -163,7 +163,8 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
-    final String? notificationTimeString = SharedPreferencesHelper.getNotificationTime();
+    final String? notificationTimeString =
+        SharedPreferencesHelper.getNotificationTime();
     TimeOfDay? notificationTime;
     if (notificationTimeString != null) {
       final parts = notificationTimeString.split(':');

@@ -1,22 +1,24 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final InitializationSettings initializationSettings = InitializationSettings(
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
       android: initializationSettingsAndroid,
       windows: WindowsInitializationSettings(
         defaultActionName: 'Open',
       ),
-      linux: LinuxInitializationSettings(
+      linux: const LinuxInitializationSettings(
         defaultActionName: 'Open',
       ),
       macOS: MacOSInitializationSettings(),
-      iOS: DarwinInitializationSettings(),
+      iOS: const DarwinInitializationSettings(),
     );
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);

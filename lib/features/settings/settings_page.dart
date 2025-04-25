@@ -150,12 +150,16 @@ class SettingsPage extends StatelessWidget {
                   title: const Text('Notification Time'),
                   trailing: TextButton(
                     child: Text(
-                      settingsProvider.settings.notificationTime?.format(context) ?? 'Set Time',
+                      settingsProvider.settings.notificationTime
+                              ?.format(context) ??
+                          'Set Time',
                     ),
                     onPressed: () async {
                       final TimeOfDay? pickedTime = await showTimePicker(
                         context: context,
-                        initialTime: settingsProvider.settings.notificationTime ?? TimeOfDay.now(),
+                        initialTime:
+                            settingsProvider.settings.notificationTime ??
+                                TimeOfDay.now(),
                       );
                       if (pickedTime != null) {
                         settingsProvider.updateNotificationTime(pickedTime);

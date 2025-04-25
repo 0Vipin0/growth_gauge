@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
 import '../config/config.dart';
@@ -43,7 +44,7 @@ class SettingsModel with _$SettingsModel {
     @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
     @Default(ExportFormat.json) ExportFormat exportFormat,
     @Default(AuthenticationType.none) AuthenticationType authenticationType,
-    @Default(null) TimeOfDay? notificationTime,
+    @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) =>
@@ -55,4 +56,25 @@ extension SettingsModelExtension on SettingsModel {
         themeName: themeName,
         fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
       );
+}
+
+class TimeOfDayConverter implements JsonConverter<TimeOfDay?, String?> {
+  const TimeOfDayConverter();
+
+  @override
+  TimeOfDay? fromJson(String? json) {
+    if (json == null) return null;
+    final parts = json.split(':');
+    if (parts.length != 2) return null;
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) return null;
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  @override
+  String? toJson(TimeOfDay? object) {
+    if (object == null) return null;
+    return '${object.hour}:${object.minute}';
+  }
 }

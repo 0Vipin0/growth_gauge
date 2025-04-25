@@ -20,6 +20,10 @@ _$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
       authenticationType: $enumDecodeNullable(
               _$AuthenticationTypeEnumMap, json['authenticationType']) ??
           AuthenticationType.none,
+      notificationTime: json['notificationTime'] == null
+          ? null
+          : const TimeOfDayConverter()
+              .fromJson(json['notificationTime'] as String?),
     );
 
 Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
@@ -30,6 +34,8 @@ Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
       'exportFormat': _$ExportFormatEnumMap[instance.exportFormat]!,
       'authenticationType':
           _$AuthenticationTypeEnumMap[instance.authenticationType]!,
+      'notificationTime':
+          const TimeOfDayConverter().toJson(instance.notificationTime),
     };
 
 const _$AppThemeNameEnumMap = {
