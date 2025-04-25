@@ -141,8 +141,7 @@ class SettingsProvider with ChangeNotifier {
 
     final String? authenticationTypeString =
         SharedPreferencesHelper.getAuthenticationType();
-    AuthenticationType authenticationType =
-        AuthenticationType.none; // Default
+    AuthenticationType authenticationType = AuthenticationType.none; // Default
     if (authenticationTypeString != null) {
       try {
         authenticationType =
@@ -151,7 +150,8 @@ class SettingsProvider with ChangeNotifier {
         debugPrint(
           'Error loading authenticationType from storage: $e, using default None authentication type.',
         );
-        authenticationType = AuthenticationType.none; // Fallback if name is invalid
+        authenticationType =
+            AuthenticationType.none; // Fallback if name is invalid
       }
     }
 
@@ -170,6 +170,8 @@ class SettingsProvider with ChangeNotifier {
     await SharedPreferencesHelper.setFontSize(_settings.fontSize.name);
     await SharedPreferencesHelper.setFontFamily(_settings.fontFamily.name);
     await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
+    await SharedPreferencesHelper.setAuthenticationType(
+        _settings.authenticationType.name);
   }
 
   Future<void> exportData() async {
