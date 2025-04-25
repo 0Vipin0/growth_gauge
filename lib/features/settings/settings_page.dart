@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (settingsProvider.exportMessage != '') {
         ScaffoldMessenger.of(
           context,
@@ -29,7 +29,6 @@ class SettingsPage extends StatelessWidget {
         settingsProvider.importMessage = '';
       }
     });
-
 
     return FutureBuilder<bool>(
       future: settingsProvider.isBiometricAvailable(),
@@ -205,7 +204,8 @@ class SettingsPage extends StatelessWidget {
                         if (value == AuthenticationType.none) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Pin Authentication data has been cleared.'),
+                              content: Text(
+                                  'Pin Authentication data has been cleared.'),
                             ),
                           );
                         }

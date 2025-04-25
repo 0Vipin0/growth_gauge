@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 import 'package:provider/provider.dart';
 
 import '../authentication/authentication.dart';
@@ -69,16 +70,20 @@ class _SplashScreenState extends State<SplashScreen>
     final bool hasCompletedOnboarding =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
-    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
-    if (settingsProvider.settings.authenticationType == AuthenticationType.none) {
-      _navigateToHome();
-      return;
-    }
+    if (mounted) {
+      final SettingsProvider settingsProvider =
+          Provider.of<SettingsProvider>(context, listen: false);
+      if (settingsProvider.settings.authenticationType ==
+          AuthenticationType.none) {
+        _navigateToHome();
+        return;
+      }
 
-    if (hasCompletedOnboarding) {
-      navigateToAuthentication();
-    } else {
-      _navigateToOnboarding();
+      if (hasCompletedOnboarding) {
+        navigateToAuthentication();
+      } else {
+        _navigateToOnboarding();
+      }
     }
   }
 
@@ -100,7 +105,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> navigateToAuthentication() async {
     final AuthenticationProvider authService = AuthenticationProvider();
-    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
 
     final bool isBiometricAvailable =
         await authService.authenticateWithBiometrics();

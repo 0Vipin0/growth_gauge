@@ -47,7 +47,9 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width > 600 ? 400 : double.infinity,
+              maxWidth: MediaQuery.of(context).size.width > 600
+                  ? 400
+                  : double.infinity,
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
