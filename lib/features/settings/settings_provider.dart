@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../counter/counter.dart';
 import '../timer/timer.dart';
@@ -28,6 +29,8 @@ class SettingsProvider with ChangeNotifier {
   String importMessage = '';
 
   late bool isOnboardingComplete;
+
+  final LocalAuthentication _localAuth = LocalAuthentication();
 
   SettingsProvider({
     required CounterListProvider counterListProvider,
@@ -336,5 +339,14 @@ class SettingsProvider with ChangeNotifier {
     _counterListProvider.clearCounters();
     _timerListProvider.clearTimers();
     notifyListeners();
+  }
+
+  Future<bool> isBiometricAvailable() async {
+    try {
+      return await _localAuth.canCheckBiometrics;
+    } catch (e) {
+      debugPrint('Error checking biometric availability: $e');
+      return false;
+    }
   }
 }
