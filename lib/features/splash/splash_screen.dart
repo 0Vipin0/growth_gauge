@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import '../authentication/authentication.dart';
 import '../settings/settings.dart';
 
@@ -98,9 +100,8 @@ class _SplashScreenState extends State<SplashScreen>
     final bool isBiometricAvailable =
         await authService.authenticateWithBiometrics();
 
-    final String route = isBiometricAvailable
-        ? AppRoutes.biometricAuth
-        : AppRoutes.pinAuth;
+    final String route =
+        isBiometricAvailable ? AppRoutes.biometricAuth : AppRoutes.pinAuth;
 
     settingsProvider.updateAuthenticationType(
       isBiometricAvailable
@@ -112,9 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateTo(String route) {
-    if (mounted) {
-      Navigator.of(context).pushReplacementNamed(route);
-    }
+    NavigationHelper.navigateTo(context, route);
   }
 
   @override

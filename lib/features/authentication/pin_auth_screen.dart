@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import 'authentication.dart';
 
 class PinAuthScreen extends StatefulWidget {
@@ -36,7 +38,9 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
   }
 
   void _navigateToHome() {
-    if (mounted) Navigator.of(context).pushReplacementNamed('/home');
+    if (mounted) {
+      NavigationHelper.replaceWith(context, AppRoutes.home);
+    }
   }
 
   @override
