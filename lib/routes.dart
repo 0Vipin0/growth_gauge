@@ -17,44 +17,30 @@ mixin AppRoutes {
   static const String biometricAuth = '/biometric_auth';
   static const String pinAuth = '/pin_auth';
 
+  static final Map<String, Widget Function(BuildContext)> _routes = {
+    splash: (_) => const SplashScreen(),
+    onboarding: (_) => const OnboardingScreen(),
+    home: (_) => const HomePage(),
+    settings: (_) => const SettingsPage(),
+    biometricAuth: (_) => BiometricAuthScreen(),
+    pinAuth: (_) => PinAuthScreen(),
+  };
+
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
-    switch (routeSettings.name) {
-      case splash:
-        return PageTransition(
-          child: const SplashScreen(),
-          settings: routeSettings,
-          type: PageTransitionType.rightToLeftWithFade,
-        );
-      case onboarding:
-        return PageTransition(
-          child: const OnboardingScreen(),
-          settings: routeSettings,
-          type: PageTransitionType.rightToLeftWithFade,
-        );
-      case home:
-        return PageTransition(
-          child: const HomePage(),
-          settings: routeSettings,
-          type: PageTransitionType.rightToLeftWithFade,
-        );
-      case settings:
-        return PageTransition(
-          child: const SettingsPage(),
-          settings: routeSettings,
-          type: PageTransitionType.rightToLeftWithFade,
-        );
-      case biometricAuth:
-        return MaterialPageRoute(builder: (_) => BiometricAuthScreen());
-      case pinAuth:
-        return MaterialPageRoute(builder: (_) => PinAuthScreen());
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${routeSettings.name}'),
-            ),
-          ),
-        );
+    final WidgetBuilder? builder = _routes[routeSettings.name];
+    if (builder != null) {
+      return PageTransition(
+        child: Builder(builder: builder),
+        settings: routeSettings,
+        type: PageTransitionType.rightToLeftWithFade,
+      );
     }
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        body: Center(
+          child: Text('No route defined for ${routeSettings.name}'),
+        ),
+      ),
+    );
   }
 }

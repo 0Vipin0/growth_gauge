@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import '../settings/settings.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -43,10 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _navigateToHome() {
-    context.pushNamedTransition(
-      routeName: '/home',
-      type: PageTransitionType.topToBottom,
-    );
+    NavigationHelper.replaceWith(context, AppRoutes.home);
   }
 
   Future<void> _completeOnboarding() async {

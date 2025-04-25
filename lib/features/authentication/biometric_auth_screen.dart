@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import 'authentication.dart';
 
 class BiometricAuthScreen extends StatefulWidget {
@@ -31,7 +33,7 @@ class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
   }
 
   void _navigateToHome() {
-    Navigator.of(context).pushReplacementNamed('/home');
+    NavigationHelper.navigateTo(context, AppRoutes.home);
   }
 
   @override

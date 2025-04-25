@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../utils/navigation_helper.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
@@ -113,7 +114,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
       // Add the counter to your provider or state management solution
       context.read<CounterListProvider>().addCounter(newCounter);
 
-      Navigator.of(context).pop();
+      NavigationHelper.pop(context);
     }
   }
 
