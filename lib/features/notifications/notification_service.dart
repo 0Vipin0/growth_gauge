@@ -7,8 +7,16 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initializationSettings = InitializationSettings(
+    final InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
+      windows: WindowsInitializationSettings(
+        defaultActionName: 'Open',
+      ),
+      linux: LinuxInitializationSettings(
+        defaultActionName: 'Open',
+      ),
+      macOS: MacOSInitializationSettings(),
+      iOS: DarwinInitializationSettings(),
     );
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -30,8 +38,28 @@ class NotificationService {
       sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
     );
 
+    final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
+      sound: sound,
+    );
+
+    final linuxPlatformChannelSpecifics = LinuxNotificationDetails(
+      sound: sound,
+    );
+
+    final macOSPlatformChannelSpecifics = MacOSNotificationDetails(
+      sound: sound,
+    );
+
+    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+      sound: sound,
+    );
+
     final platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
+      windows: windowsPlatformChannelSpecifics,
+      linux: linuxPlatformChannelSpecifics,
+      macOS: macOSPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
     );
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
