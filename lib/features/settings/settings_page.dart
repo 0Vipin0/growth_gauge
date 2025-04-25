@@ -203,17 +203,16 @@ class SettingsPage extends StatelessWidget {
                         if (value == AuthenticationType.pin &&
                             settingsProvider.settings.authenticationType ==
                                 AuthenticationType.none) {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
                                   'You will now be redirected to set your PIN and login again.'),
                             ),
                           );
-                          Timer(const Duration(seconds: 3), () {
-                            context.pushNamedTransition(
-                              routeName: '/pin_auth',
-                              type: PageTransitionType.rightToLeft,
-                            );
+                          Timer(const Duration(seconds: 2), () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/pin_auth');
                           });
                         }
                         settingsProvider.updateAuthenticationType(value);
