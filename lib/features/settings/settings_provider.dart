@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../counter/counter.dart';
@@ -31,6 +32,7 @@ class SettingsProvider with ChangeNotifier {
   late bool isOnboardingComplete;
 
   final LocalAuthentication _localAuth = LocalAuthentication();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   SettingsProvider({
     required CounterListProvider counterListProvider,
@@ -72,6 +74,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   void updateAuthenticationType(AuthenticationType type) {
+    if (type == AuthenticationType.none) {
+      _secureStorage.deleteAll();
+    }
     _settings = _settings.copyWith(authenticationType: type);
     saveSettingsToStorage();
     notifyListeners();

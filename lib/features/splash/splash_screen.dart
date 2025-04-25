@@ -69,11 +69,21 @@ class _SplashScreenState extends State<SplashScreen>
     final bool hasCompletedOnboarding =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    if (settingsProvider.settings.authenticationType == AuthenticationType.none) {
+      _navigateToHome();
+      return;
+    }
+
     if (hasCompletedOnboarding) {
       navigateToAuthentication();
     } else {
       _navigateToOnboarding();
     }
+  }
+
+  void _navigateToHome() {
+    if (mounted) Navigator.of(context).pushReplacementNamed('/home');
   }
 
   void _navigateToOnboarding() {

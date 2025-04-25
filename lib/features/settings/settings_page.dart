@@ -202,6 +202,13 @@ class SettingsPage extends StatelessWidget {
                           return;
                         }
                         settingsProvider.updateAuthenticationType(value);
+                        if (value == AuthenticationType.none) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Pin Authentication data has been cleared.'),
+                            ),
+                          );
+                        }
                       }
                     },
                   ),
