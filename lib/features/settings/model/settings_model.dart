@@ -43,6 +43,7 @@ class SettingsModel with _$SettingsModel {
     @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
     @Default(ExportFormat.json) ExportFormat exportFormat,
     @Default(AuthenticationType.none) AuthenticationType authenticationType,
+    @Default(null) TimeOfDay? notificationTime,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) =>

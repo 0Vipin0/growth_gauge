@@ -9,6 +9,7 @@ class SharedPreferencesKeys {
   static const String fontFamily = 'fontFamily';
   static const String exportFormat = 'exportFormat';
   static const String authenticationType = 'authenticationType';
+  static const String notificationTime = 'notificationTime';
 }
 
 mixin SharedPreferencesHelper {
@@ -97,5 +98,13 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setAuthenticationType(String value) {
     return instance.setString(SharedPreferencesKeys.authenticationType, value);
+  }
+
+  static String? getNotificationTime() {
+    return instance.getString(SharedPreferencesKeys.notificationTime);
+  }
+
+  static Future<bool> setNotificationTime(String value) {
+    return instance.setString(SharedPreferencesKeys.notificationTime, value);
   }
 }

@@ -163,12 +163,26 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
+    final String? notificationTimeString = SharedPreferencesHelper.getNotificationTime();
+    TimeOfDay? notificationTime;
+    if (notificationTimeString != null) {
+      final parts = notificationTimeString.split(':');
+      if (parts.length == 2) {
+        final hour = int.tryParse(parts[0]);
+        final minute = int.tryParse(parts[1]);
+        if (hour != null && minute != null) {
+          notificationTime = TimeOfDay(hour: hour, minute: minute);
+        }
+      }
+    }
+
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
       fontFamily: fontFamily,
       exportFormat: exportFormat,
       authenticationType: authenticationType,
+      notificationTime: notificationTime,
     );
     notifyListeners();
   }
@@ -180,6 +194,8 @@ class SettingsProvider with ChangeNotifier {
     await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
     await SharedPreferencesHelper.setAuthenticationType(
         _settings.authenticationType.name);
+    await SharedPreferencesHelper.setNotificationTime(
+        '${_settings.notificationTime?.hour}:${_settings.notificationTime?.minute}');
   }
 
   Future<void> exportData() async {
