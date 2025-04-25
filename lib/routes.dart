@@ -29,7 +29,7 @@ mixin AppRoutes {
     final WidgetBuilder? builder = _routes[routeSettings.name];
     if (builder != null) {
       return PageTransition(
-        child: builder(routeSettings.context!),
+        child: Builder(builder: builder),
         settings: routeSettings,
         type: PageTransitionType.rightToLeftWithFade,
       );
