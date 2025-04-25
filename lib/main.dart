@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:provider/provider.dart';
 
@@ -9,8 +10,54 @@ import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
 import 'routes.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+Future<void> initializeNotifications() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+}
+
+Future<void> scheduleNotification({
+  required int id,
+  required String title,
+  required String body,
+  required DateTime scheduledTime,
+  String? sound,
+}) async {
+  final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    'growth_gauge_channel',
+    'Default Channel',
+    channelDescription: 'Channel for default notifications',
+    importance: Importance.max,
+    priority: Priority.high,
+    sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
+  );
+
+  final platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+  );
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+    id,
+    title,
+    body,
+    scheduledTime,
+    platformChannelSpecifics,
+    androidAllowWhileIdle: true,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+  );
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeNotifications();
   await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
 }
