@@ -20,6 +20,21 @@ extension ExportFormatExtension on ExportFormat {
   }
 }
 
+enum AuthenticationType { none, pin, biometric }
+
+extension AuthenticationTypeExtension on AuthenticationType {
+  String getLabel() {
+    switch (this) {
+      case AuthenticationType.none:
+        return 'None';
+      case AuthenticationType.pin:
+        return 'PIN';
+      case AuthenticationType.biometric:
+        return 'Biometric';
+    }
+  }
+}
+
 @freezed
 class SettingsModel with _$SettingsModel {
   const factory SettingsModel({
@@ -27,6 +42,7 @@ class SettingsModel with _$SettingsModel {
     @Default(AppFontSize.medium) AppFontSize fontSize,
     @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
     @Default(ExportFormat.json) ExportFormat exportFormat,
+    @Default(AuthenticationType.none) AuthenticationType authenticationType,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) =>

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:page_transition/page_transition.dart';
 
+import 'features/authentication/biometric_auth_screen.dart';
+import 'features/authentication/pin_auth_screen.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
 import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
-import 'features/authentication/biometric_auth_screen.dart';
-import 'features/authentication/pin_auth_screen.dart';
 
 mixin AppRoutes {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
   static const String home = '/home';
   static const String settings = '/settings';
-  static const String biometricAuth = '/biometric-auth';
-  static const String pinAuth = '/pin-auth';
+  static const String biometricAuth = '/biometric_auth';
+  static const String pinAuth = '/pin_auth';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {

@@ -40,8 +40,9 @@ class CounterListProvider with ChangeNotifier {
   }
 
   void updateCounter(CounterModel newCounter) {
-    final CounterModel counter = getCounter(newCounter)
-        .copyWith(count: newCounter.count, logs: newCounter.logs);
+    final CounterModel counter = getCounter(
+      newCounter,
+    ).copyWith(count: newCounter.count, logs: newCounter.logs);
     for (int i = 0; i < _counters.length; i++) {
       if (counter.id == _counters[i].id) {
         _counters[i] = counter;

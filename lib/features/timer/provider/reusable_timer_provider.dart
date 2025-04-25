@@ -38,7 +38,7 @@ class ReusableTimerProvider with ChangeNotifier {
             action: 'Started',
             timestamp: DateTime.now(),
             interval: _currentInterval,
-          )
+          ),
         ],
       );
     } else {
@@ -53,7 +53,7 @@ class ReusableTimerProvider with ChangeNotifier {
             action: 'Paused',
             timestamp: DateTime.now(),
             interval: _currentInterval,
-          )
+          ),
         ],
       );
     }
@@ -73,7 +73,7 @@ class ReusableTimerProvider with ChangeNotifier {
           action: 'Reset',
           timestamp: DateTime.now(),
           interval: _currentInterval,
-        )
+        ),
       ],
     );
     notifyListeners();

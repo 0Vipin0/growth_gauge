@@ -18,7 +18,9 @@ class TimerListWidget extends StatelessWidget {
     return Scaffold(
       body: timerListProvider.timers.isEmpty
           ? _buildEmptyTimerList(
-              context, timerListProvider) // Show empty state widget
+              context,
+              timerListProvider,
+            ) // Show empty state widget
           : ListView.builder(
               itemCount: timerListProvider.timers.length,
               itemBuilder: (context, index) {
@@ -42,7 +44,9 @@ class TimerListWidget extends StatelessWidget {
   }
 
   Widget _buildEmptyTimerList(
-      BuildContext context, TimerListProvider timerListProvider) {
+    BuildContext context,
+    TimerListProvider timerListProvider,
+  ) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,27 +76,19 @@ class TimerListWidget extends StatelessWidget {
                   );
                 },
               ),
-              const Icon(
-                Icons.timer,
-                size: 80,
-              ),
+              const Icon(Icons.timer, size: 80),
             ],
           ),
           const SizedBox(height: 30),
           const Text(
             'Time to get started!',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 15),
           const Text(
             'No timers set yet. Create timers for your activities and track your time effectively.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 40),
           ElevatedButton.icon(
@@ -107,7 +103,8 @@ class TimerListWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 18),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
           ),
         ],
@@ -125,8 +122,10 @@ class TimerListWidget extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Provider.of<TimerListProvider>(context, listen: false)
-                    .removeTimer(timer);
+                Provider.of<TimerListProvider>(
+                  context,
+                  listen: false,
+                ).removeTimer(timer);
                 Navigator.of(context).pop();
               },
               child: const Text('Yes'),

@@ -55,9 +55,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Growth Gauge'),
-      ),
+      appBar: AppBar(title: const Text('Growth Gauge')),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -75,23 +73,19 @@ class _MobileHomePageState extends State<MobileHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Counters',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'Timers',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Counters'),
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
         ],
-        selectedIconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.primary),
-        unselectedIconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.primaryFixedDim),
+        selectedIconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        unselectedIconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.primaryFixedDim,
+        ),
       ),
     );
   }
@@ -103,9 +97,7 @@ class TabletHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Growth Gauge'),
-      ),
+      appBar: AppBar(title: const Text('Growth Gauge')),
       body: const Row(
         children: [
           Expanded(child: CounterListWidget()),
@@ -179,17 +171,22 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
             leading: IconButton(
               tooltip: _isRailExtended ? 'Collapse' : 'Expand',
               icon: Icon(
-                  _isRailExtended ? Icons.chevron_left : Icons.chevron_right),
+                _isRailExtended ? Icons.chevron_left : Icons.chevron_right,
+              ),
               onPressed: _toggleRail,
             ),
-            selectedIconTheme:
-                IconThemeData(color: Theme.of(context).colorScheme.primary),
-            selectedLabelTextStyle:
-                TextStyle(color: Theme.of(context).colorScheme.primary),
+            selectedIconTheme: IconThemeData(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            selectedLabelTextStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             unselectedIconTheme: IconThemeData(
-                color: Theme.of(context).colorScheme.primaryFixedDim),
-            unselectedLabelTextStyle:
-                TextStyle(color: Theme.of(context).colorScheme.primaryFixedDim),
+              color: Theme.of(context).colorScheme.primaryFixedDim,
+            ),
+            unselectedLabelTextStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primaryFixedDim,
+            ),
           ),
           const VerticalDivider(thickness: 1, width: 1),
           Expanded(

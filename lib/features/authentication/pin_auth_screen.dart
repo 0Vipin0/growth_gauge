@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'authentication.dart';
 
 class PinAuthScreen extends StatefulWidget {
@@ -18,12 +19,14 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
     if (storedPin == null) {
       // Save the entered PIN if no PIN is stored
       await _authService.savePin(enteredPin);
-      Navigator.pushReplacementNamed(context, '/home');
+      _navigateToHome();
     } else {
       // Authenticate using the stored PIN
-      final bool isAuthenticated = await _authService.authenticateWithPin(enteredPin);
+      final bool isAuthenticated = await _authService.authenticateWithPin(
+        enteredPin,
+      );
       if (isAuthenticated) {
-        Navigator.pushReplacementNamed(context, '/home');
+        _navigateToHome();
       } else {
         setState(() {
           _errorMessage = 'Invalid PIN. Please try again.';
@@ -32,12 +35,14 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
     }
   }
 
+  void _navigateToHome() {
+    Navigator.of(context).pushReplacementNamed('/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PIN Authentication'),
-      ),
+      appBar: AppBar(title: const Text('PIN Authentication')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -41,18 +41,20 @@ class DependencyProvider extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SettingsProvider>(
       create: (_) => SettingsProvider(
-        counterListProvider:
-            Provider.of<CounterListProvider>(context, listen: false),
-        timerListProvider:
-            Provider.of<TimerListProvider>(context, listen: false),
+        counterListProvider: Provider.of<CounterListProvider>(
+          context,
+          listen: false,
+        ),
+        timerListProvider: Provider.of<TimerListProvider>(
+          context,
+          listen: false,
+        ),
       ),
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {

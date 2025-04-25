@@ -38,10 +38,11 @@ class TimerChartProvider extends ChangeNotifier {
   }
 
   List<BarChartGroupData> generateBarGroups(
-      Map<String, Duration> dailyDurations,
-      DateTime startDate,
-      DateTime endDate,
-      DurationInterval interval) {
+    Map<String, Duration> dailyDurations,
+    DateTime startDate,
+    DateTime endDate,
+    DurationInterval interval,
+  ) {
     final List<BarChartGroupData> groups = [];
     for (int i = 0; i < 7; i++) {
       final DateTime date = startDate.add(Duration(days: i + 1));
@@ -54,11 +55,7 @@ class TimerChartProvider extends ChangeNotifier {
         BarChartGroupData(
           x: i,
           barRods: [
-            BarChartRodData(
-              toY: yValue,
-              color: Colors.blue,
-              width: 22,
-            ),
+            BarChartRodData(toY: yValue, color: Colors.blue, width: 22),
           ],
         ),
       );

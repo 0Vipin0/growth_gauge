@@ -36,8 +36,9 @@ class TimerListProvider with ChangeNotifier {
   }
 
   void updateTimer(TimerModel newTimer) {
-    final TimerModel timer = getTimer(newTimer)
-        .copyWith(interval: newTimer.interval, logs: newTimer.logs);
+    final TimerModel timer = getTimer(
+      newTimer,
+    ).copyWith(interval: newTimer.interval, logs: newTimer.logs);
     for (int i = 0; i < _timers.length; i++) {
       if (timer.id == _timers[i].id) {
         _timers[i] = timer;
@@ -66,20 +67,27 @@ class TimerListProvider with ChangeNotifier {
   }
 
   Map<DateTime, int> extractCountsByDayPerDurationInterval(
-      TimerModel timer, DurationInterval interval) {
+    TimerModel timer,
+    DurationInterval interval,
+  ) {
     final Map<DateTime, int> dailyIntervalCounts = {};
 
     if (timer.logs.isNotEmpty) {
       final logsByDate = groupBy(timer.logs, (TimerLog log) {
         return DateTime(
-            log.timestamp.year, log.timestamp.month, log.timestamp.day);
+          log.timestamp.year,
+          log.timestamp.month,
+          log.timestamp.day,
+        );
       });
       logsByDate.forEach((date, logs) {
         Duration totalDurationForDay = Duration.zero;
         totalDurationForDay += logs.last.interval;
 
-        final int intervalCount =
-            _convertDurationToIntervalCount(totalDurationForDay, interval);
+        final int intervalCount = _convertDurationToIntervalCount(
+          totalDurationForDay,
+          interval,
+        );
         dailyIntervalCounts[date] =
             (dailyIntervalCounts[date] ?? 0) + intervalCount;
       });
@@ -89,7 +97,9 @@ class TimerListProvider with ChangeNotifier {
   }
 
   int _convertDurationToIntervalCount(
-      Duration duration, DurationInterval interval) {
+    Duration duration,
+    DurationInterval interval,
+  ) {
     switch (interval) {
       case DurationInterval.tenSeconds:
         return duration.inSeconds ~/ 10;
@@ -122,7 +132,7 @@ class TimerListProvider with ChangeNotifier {
       'Description',
       'Log Action',
       'Log Timestamp',
-      'Log Interval'
+      'Log Interval',
     ]);
 
     for (final FlatTimerModel flattenedData in flattenedDataList) {

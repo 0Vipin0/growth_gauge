@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import '../settings/settings.dart';
 import '../authentication/authentication.dart';
+import '../settings/settings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -83,14 +83,23 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.of(context).pushReplacementNamed('/onboarding');
   }
 
+  void _navigateToPinAuth() {
+    Navigator.of(context).pushReplacementNamed('/pin_auth');
+  }
+
+  void _navigateToBiometricAuth() {
+    Navigator.of(context).pushReplacementNamed('/biometric_auth');
+  }
+
   Future<void> navigateToAuthentication() async {
     final AuthenticationProvider authService = AuthenticationProvider();
-    final bool isBiometricAvailable = await authService.authenticateWithBiometrics();
+    final bool isBiometricAvailable =
+        await authService.authenticateWithBiometrics();
 
     if (isBiometricAvailable) {
-      Navigator.pushReplacementNamed(context, '/biometric-auth');
+      _navigateToBiometricAuth();
     } else {
-      Navigator.pushReplacementNamed(context, '/pin-auth');
+      _navigateToPinAuth();
     }
   }
 
@@ -103,7 +112,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => navigateToAuthentication());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => navigateToAuthentication(),
+    );
 
     return Scaffold(
       body: Center(

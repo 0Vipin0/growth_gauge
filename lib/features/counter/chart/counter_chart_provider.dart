@@ -34,7 +34,10 @@ class CounterChartProvider extends ChangeNotifier {
   }
 
   List<BarChartGroupData> generateBarGroups(
-      Map<String, int> dailyCounts, DateTime startDate, DateTime endDate) {
+    Map<String, int> dailyCounts,
+    DateTime startDate,
+    DateTime endDate,
+  ) {
     final List<BarChartGroupData> groups = [];
     for (int i = 0; i < 7; i++) {
       final DateTime date = startDate.add(Duration(days: i + 1));

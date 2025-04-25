@@ -22,7 +22,9 @@ class FlatCounterModel {
   });
 
   static FlatCounterModel fromCounterModel(
-      CounterModel counter, CounterLog log) {
+    CounterModel counter,
+    CounterLog log,
+  ) {
     return FlatCounterModel(
       counterId: counter.id,
       counterName: counter.name,

@@ -22,8 +22,9 @@ class _HeatMapCalendarExample extends State<HeatmapPage> {
     final Color primaryColor = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.onPrimaryFixedVariant;
-    heatMapDatasets = Provider.of<CounterListProvider>(context)
-        .extractCountsByDay(widget.counter);
+    heatMapDatasets = Provider.of<CounterListProvider>(
+      context,
+    ).extractCountsByDay(widget.counter);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: HeatMapCalendar(

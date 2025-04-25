@@ -21,7 +21,8 @@ mixin SharedPreferencesHelper {
   static SharedPreferences get instance {
     if (_prefs == null) {
       throw Exception(
-          'SharedPreferencesHelper has not been initialized. Call init() first.');
+        'SharedPreferencesHelper has not been initialized. Call init() first.',
+      );
     }
     return _prefs!;
   }
@@ -52,7 +53,9 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setHasCompletedOnboarding(bool value) {
     return instance.setBool(
-        SharedPreferencesKeys.hasCompletedOnboarding, value);
+      SharedPreferencesKeys.hasCompletedOnboarding,
+      value,
+    );
   }
 
   static String? getThemeName() {

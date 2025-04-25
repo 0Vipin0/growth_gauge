@@ -17,22 +17,20 @@ class SettingsPage extends StatelessWidget {
     final settingsProvider = Provider.of<SettingsProvider>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (settingsProvider.exportMessage != '') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(settingsProvider.exportMessage)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(settingsProvider.exportMessage)));
         settingsProvider.exportMessage = '';
       }
       if (settingsProvider.importMessage != '') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(settingsProvider.importMessage)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(settingsProvider.importMessage)));
         settingsProvider.importMessage = '';
       }
     });
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -105,8 +103,10 @@ class SettingsPage extends StatelessWidget {
                   if (value == ExportFormat.csv) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text(
-                              'Setting Export Format to CSV does not change import format which still needs JSON')),
+                        content: Text(
+                          'Setting Export Format to CSV does not change import format which still needs JSON',
+                        ),
+                      ),
                     );
                   }
                 },
@@ -120,8 +120,10 @@ class SettingsPage extends StatelessWidget {
                   settingsProvider.toggleOnboarding(!value);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                        content: Text(
-                            'You will now be redirected to onboarding screen in few seconds.')),
+                      content: Text(
+                        'You will now be redirected to onboarding screen in few seconds.',
+                      ),
+                    ),
                   );
                   Timer(const Duration(seconds: 3), () {
                     context.pushNamedTransition(
@@ -157,6 +159,23 @@ class SettingsPage extends StatelessWidget {
                 settingsProvider.importData();
               },
             ),
+            ListTile(
+              title: const Text('Authentication Type'),
+              trailing: DropdownButton<AuthenticationType>(
+                value: settingsProvider.settings.authenticationType,
+                items: AuthenticationType.values.map((AuthenticationType mode) {
+                  return DropdownMenuItem<AuthenticationType>(
+                    value: mode,
+                    child: Text(mode.getLabel()),
+                  );
+                }).toList(),
+                onChanged: (AuthenticationType? value) {
+                  if (value != null) {
+                    settingsProvider.updateAuthenticationType(value);
+                  }
+                },
+              ),
+            ),
             const Divider(),
             ListTile(
               title: const Text('Reset Application Data'),
@@ -170,14 +189,17 @@ class SettingsPage extends StatelessWidget {
   }
 
   void showResetDialog(
-      BuildContext context, SettingsProvider settingsProvider) {
+    BuildContext context,
+    SettingsProvider settingsProvider,
+  ) {
     showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Reset Application Data'),
-          content:
-              const Text('Are you sure to clear all the application data?'),
+          content: const Text(
+            'Are you sure to clear all the application data?',
+          ),
           actions: [
             TextButton(
               onPressed: () {

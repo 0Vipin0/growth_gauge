@@ -22,9 +22,7 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.timer.name),
-      ),
+      appBar: AppBar(title: Text(widget.timer.name)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -91,7 +89,7 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                   );
                 }
               },
-            )
+            ),
           ],
         ),
       ),
@@ -115,11 +113,16 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               setState(() {
                 _selectedInterval = newValue;
               });
-              Provider.of<TimerChartProvider>(context, listen: false)
-                  .processDataForChart(
-                      Provider.of<TimerListProvider>(context, listen: false)
-                          .getTimer(widget.timer),
-                      _selectedInterval);
+              Provider.of<TimerChartProvider>(
+                context,
+                listen: false,
+              ).processDataForChart(
+                Provider.of<TimerListProvider>(
+                  context,
+                  listen: false,
+                ).getTimer(widget.timer),
+                _selectedInterval,
+              );
             }
           },
         ),

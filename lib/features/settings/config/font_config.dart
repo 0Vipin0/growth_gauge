@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AppFontSize {
-  small,
-  medium,
-  large,
-  extraLarge,
-}
+enum AppFontSize { small, medium, large, extraLarge }
 
 extension AppFontSizeExtension on AppFontSize {
   double getSize() {
@@ -35,13 +30,7 @@ extension AppFontSizeExtension on AppFontSize {
   }
 }
 
-enum AppFontFamily {
-  roboto,
-  openSans,
-  lato,
-  montserrat,
-  ceraPro,
-}
+enum AppFontFamily { roboto, openSans, lato, montserrat, ceraPro }
 
 extension AppFontFamilyExtension on AppFontFamily {
   String get fontFamilyName {
@@ -84,63 +73,83 @@ class AppFontTheme {
       : textTheme = _buildTextTheme(fontFamily, fontSize);
 
   static TextTheme _buildTextTheme(
-      AppFontFamily fontFamily, AppFontSize fontSize) {
+    AppFontFamily fontFamily,
+    AppFontSize fontSize,
+  ) {
     final baseFontSize = fontSize.getSize();
     return TextTheme(
       displayLarge: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 2.8,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 2.8,
+        fontWeight: FontWeight.bold,
+      ),
       displayMedium: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 2.5,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 2.5,
+        fontWeight: FontWeight.bold,
+      ),
       displaySmall: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 2.2,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 2.2,
+        fontWeight: FontWeight.bold,
+      ),
       headlineLarge: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 2.0,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 2.0,
+        fontWeight: FontWeight.bold,
+      ),
       headlineMedium: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 1.8,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.8,
+        fontWeight: FontWeight.bold,
+      ),
       headlineSmall: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 1.6,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.6,
+        fontWeight: FontWeight.bold,
+      ),
       titleLarge: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 1.4,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.4,
+        fontWeight: FontWeight.bold,
+      ),
       titleMedium: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 1.2,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.2,
+        fontWeight: FontWeight.bold,
+      ),
       titleSmall: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 1.0,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.0,
+        fontWeight: FontWeight.bold,
+      ),
       bodyLarge: TextStyle(
-          fontFamily: fontFamily.fontFamilyName, fontSize: baseFontSize * 1.0),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 1.0,
+      ),
       bodyMedium: TextStyle(
-          fontFamily: fontFamily.fontFamilyName, fontSize: baseFontSize * 0.9),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 0.9,
+      ),
       bodySmall: TextStyle(
-          fontFamily: fontFamily.fontFamilyName, fontSize: baseFontSize * 0.8),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 0.8,
+      ),
       labelLarge: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 0.9,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 0.9,
+        fontWeight: FontWeight.bold,
+      ),
       labelMedium: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 0.8,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 0.8,
+        fontWeight: FontWeight.bold,
+      ),
       labelSmall: TextStyle(
-          fontFamily: fontFamily.fontFamilyName,
-          fontSize: baseFontSize * 0.7,
-          fontWeight: FontWeight.bold),
+        fontFamily: fontFamily.fontFamilyName,
+        fontSize: baseFontSize * 0.7,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
