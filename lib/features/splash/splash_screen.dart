@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 
 import '../authentication/authentication.dart';
 import '../settings/settings.dart';
@@ -89,12 +90,16 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> navigateToAuthentication() async {
     final AuthenticationProvider authService = AuthenticationProvider();
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+
     final bool isBiometricAvailable =
         await authService.authenticateWithBiometrics();
 
     if (isBiometricAvailable) {
+      settingsProvider.updateAuthenticationType(AuthenticationType.biometric);
       _navigateToBiometricAuth();
     } else {
+      settingsProvider.updateAuthenticationType(AuthenticationType.pin);
       _navigateToPinAuth();
     }
   }
