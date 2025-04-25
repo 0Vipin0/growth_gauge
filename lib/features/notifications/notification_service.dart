@@ -73,4 +73,31 @@ class NotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
+
+  Future<void> scheduleDailyNotification({
+    required int id,
+    required String title,
+    required String body,
+    required TimeOfDay time,
+    String? sound,
+  }) async {
+    final now = DateTime.now();
+    final scheduledTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
+    );
+
+    await scheduleNotification(
+      id: id,
+      title: title,
+      body: body,
+      scheduledTime: scheduledTime.isBefore(now)
+          ? scheduledTime.add(const Duration(days: 1))
+          : scheduledTime,
+      sound: sound,
+    );
+  }
 }

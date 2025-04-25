@@ -82,6 +82,14 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  TimeOfDay? get notificationTime => _settings.notificationTime;
+
+  void updateNotificationTime(TimeOfDay time) {
+    _settings = _settings.copyWith(notificationTime: time);
+    saveSettingsToStorage();
+    notifyListeners();
+  }
+
   Future<void> loadSettingsFromStorage() async {
     isOnboardingComplete =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? true;
