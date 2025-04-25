@@ -139,11 +139,28 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
+    final String? authenticationTypeString =
+        SharedPreferencesHelper.getAuthenticationType();
+    AuthenticationType authenticationType =
+        AuthenticationType.none; // Default
+    if (authenticationTypeString != null) {
+      try {
+        authenticationType =
+            AuthenticationType.values.byName(authenticationTypeString);
+      } catch (e) {
+        debugPrint(
+          'Error loading authenticationType from storage: $e, using default None authentication type.',
+        );
+        authenticationType = AuthenticationType.none; // Fallback if name is invalid
+      }
+    }
+
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
       fontFamily: fontFamily,
       exportFormat: exportFormat,
+      authenticationType: authenticationType,
     );
     notifyListeners();
   }

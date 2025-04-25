@@ -8,6 +8,7 @@ class SharedPreferencesKeys {
   static const String fontSize = 'fontSize';
   static const String fontFamily = 'fontFamily';
   static const String exportFormat = 'exportFormat';
+  static const String authenticationType = 'authenticationType';
 }
 
 mixin SharedPreferencesHelper {
@@ -88,5 +89,13 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setExportFormat(String value) {
     return instance.setString(SharedPreferencesKeys.exportFormat, value);
+  }
+
+  static String? getAuthenticationType() {
+    return instance.getString(SharedPreferencesKeys.authenticationType);
+  }
+
+  static Future<bool> setAuthenticationType(String value) {
+    return instance.setString(SharedPreferencesKeys.authenticationType, value);
   }
 }
