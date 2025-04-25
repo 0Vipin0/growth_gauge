@@ -69,14 +69,10 @@ class _SplashScreenState extends State<SplashScreen>
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
     if (hasCompletedOnboarding) {
-      _navigateToHome();
+      navigateToAuthentication();
     } else {
       _navigateToOnboarding();
     }
-  }
-
-  void _navigateToHome() {
-    Navigator.of(context).pushReplacementNamed('/home');
   }
 
   void _navigateToOnboarding() {
@@ -112,10 +108,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => navigateToAuthentication(),
-    );
-
     return Scaffold(
       body: Center(
         child: Column(

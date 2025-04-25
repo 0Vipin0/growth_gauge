@@ -36,7 +36,7 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
   }
 
   void _navigateToHome() {
-    Navigator.of(context).pushReplacementNamed('/home');
+    if (mounted) Navigator.of(context).pushReplacementNamed('/home');
   }
 
   @override
