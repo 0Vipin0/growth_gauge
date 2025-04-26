@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import 'authentication.dart';
 
 class BiometricAuthScreen extends StatefulWidget {
@@ -31,14 +33,29 @@ class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
   }
 
   void _navigateToHome() {
-    Navigator.of(context).pushReplacementNamed('/home');
+    NavigationHelper.replaceWith(context, AppRoutes.home);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Biometric Authentication')),
-      body: const Center(child: Text('Authenticating...')),
+      body: const Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Kindly authenticate yourself',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text('Authenticating...'),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

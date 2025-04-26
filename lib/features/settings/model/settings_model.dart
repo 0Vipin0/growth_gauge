@@ -1,5 +1,6 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../app_theme.dart';
 import '../config/config.dart';

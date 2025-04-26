@@ -7,6 +7,15 @@ class AuthenticationProvider {
   final LocalAuthentication _auth = LocalAuthentication();
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
+  Future<bool> canAuthenticateWithBiometrics() async {
+    try {
+      return await _auth.canCheckBiometrics;
+    } catch (e) {
+      debugPrint('Biometric authentication error: $e');
+      return false;
+    }
+  }
+
   Future<bool> authenticateWithBiometrics() async {
     try {
       return await _auth.authenticate(

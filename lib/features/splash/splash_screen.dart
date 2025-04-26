@@ -3,6 +3,8 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../routes.dart';
+import '../../utils/navigation_helper.dart';
 import '../authentication/authentication.dart';
 import '../settings/settings.dart';
 
@@ -16,18 +18,19 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _logoController;
-
   late AnimationController _titleController;
-
   late Animation<double> _logoAnimation;
-
   late Animation<double> _titleAnimation;
 
   @override
   void initState() {
     super.initState();
+    _initializeAnimations();
+    _startAnimations();
+    _scheduleNavigation();
+  }
 
-    // Initialize animation controllers and animations
+  void _initializeAnimations() {
     _logoController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -47,22 +50,20 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _titleController,
       curve: Curves.easeInOut,
     );
+  }
 
-    // Start logo animation
+  void _startAnimations() {
     _logoController.forward();
-
-    // Start title animation after logo animation is complete
     _logoController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _titleController.forward();
       }
     });
+  }
 
-    // Navigate to Onboarding screen after a delay
+  void _scheduleNavigation() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 4), () {
-        _checkOnboardingStatus();
-      });
+      Future.delayed(const Duration(seconds: 4), _checkOnboardingStatus);
     });
   }
 
@@ -70,54 +71,49 @@ class _SplashScreenState extends State<SplashScreen>
     final bool hasCompletedOnboarding =
         await SharedPreferencesHelper.getHasCompletedOnboarding() ?? false;
 
-    if (mounted) {
-      if (hasCompletedOnboarding) {
-        final SettingsProvider settingsProvider =
-            Provider.of<SettingsProvider>(context, listen: false);
-        if (settingsProvider.settings.authenticationType ==
-            AuthenticationType.none) {
-          _navigateToHome();
-          return;
-        } else {
-          navigateToAuthentication();
-        }
-      } else {
-        _navigateToOnboarding();
-      }
+    if (!mounted) return;
+
+    if (hasCompletedOnboarding) {
+      _handlePostOnboardingNavigation();
+    } else {
+      _navigateTo(AppRoutes.onboarding);
     }
   }
 
-  void _navigateToHome() {
-    if (mounted) Navigator.of(context).pushReplacementNamed('/home');
+  void _handlePostOnboardingNavigation() {
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
+
+    if (settingsProvider.settings.authenticationType ==
+        AuthenticationType.none) {
+      _navigateTo(AppRoutes.home);
+    } else {
+      _navigateToAuthentication();
+    }
   }
 
-  void _navigateToOnboarding() {
-    Navigator.of(context).pushReplacementNamed('/onboarding');
-  }
-
-  void _navigateToPinAuth() {
-    Navigator.of(context).pushReplacementNamed('/pin_auth');
-  }
-
-  void _navigateToBiometricAuth() {
-    Navigator.of(context).pushReplacementNamed('/biometric_auth');
-  }
-
-  Future<void> navigateToAuthentication() async {
+  Future<void> _navigateToAuthentication() async {
     final AuthenticationProvider authService = AuthenticationProvider();
     final SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: false);
 
     final bool isBiometricAvailable =
-        await authService.authenticateWithBiometrics();
+        await authService.canAuthenticateWithBiometrics();
 
-    if (isBiometricAvailable) {
-      settingsProvider.updateAuthenticationType(AuthenticationType.biometric);
-      _navigateToBiometricAuth();
-    } else {
-      settingsProvider.updateAuthenticationType(AuthenticationType.pin);
-      _navigateToPinAuth();
-    }
+    final String route =
+        isBiometricAvailable ? AppRoutes.biometricAuth : AppRoutes.pinAuth;
+
+    settingsProvider.updateAuthenticationType(
+      isBiometricAvailable
+          ? AuthenticationType.biometric
+          : AuthenticationType.pin,
+    );
+
+    _navigateTo(route);
+  }
+
+  void _navigateTo(String route) {
+    NavigationHelper.replaceWith(context, route);
   }
 
   @override
@@ -134,7 +130,6 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Logo animation
             ScaleTransition(
               scale: _logoAnimation,
               child: Image.asset(
@@ -144,7 +139,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 20),
-            // Application title animation
             FadeTransition(
               opacity: _titleAnimation,
               child: Text(

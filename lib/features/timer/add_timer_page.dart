@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../utils/navigation_helper.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
@@ -150,7 +151,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
 
       context.read<TimerListProvider>().addTimer(newTimer);
 
-      Navigator.of(context).pop();
+      NavigationHelper.pop(context);
     }
   }
 
