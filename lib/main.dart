@@ -4,13 +4,18 @@ import 'package:provider/provider.dart';
 
 import 'features/counter/chart/chart.dart';
 import 'features/counter/counter.dart';
+import 'features/notification/notification_service.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
 import 'routes.dart';
 
+final notificationService = NotificationService();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await notificationService.initializeTimeZone();
+  await notificationService.initializeNotifications();
   await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
 }
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
           context,
           listen: false,
         ),
+        notificationService: notificationService,
       ),
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {

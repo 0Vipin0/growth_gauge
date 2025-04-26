@@ -26,6 +26,8 @@ mixin _$SettingsModel {
   ExportFormat get exportFormat => throw _privateConstructorUsedError;
   AuthenticationType get authenticationType =>
       throw _privateConstructorUsedError;
+  @TimeOfDayConverter()
+  TimeOfDay? get notificationTime => throw _privateConstructorUsedError;
 
   /// Serializes this SettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +50,8 @@ abstract class $SettingsModelCopyWith<$Res> {
       AppFontSize fontSize,
       AppFontFamily fontFamily,
       ExportFormat exportFormat,
-      AuthenticationType authenticationType});
+      AuthenticationType authenticationType,
+      @TimeOfDayConverter() TimeOfDay? notificationTime});
 }
 
 /// @nodoc
@@ -71,6 +74,7 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
     Object? fontFamily = null,
     Object? exportFormat = null,
     Object? authenticationType = null,
+    Object? notificationTime = freezed,
   }) {
     return _then(_value.copyWith(
       themeName: null == themeName
@@ -93,6 +97,10 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
           ? _value.authenticationType
           : authenticationType // ignore: cast_nullable_to_non_nullable
               as AuthenticationType,
+      notificationTime: freezed == notificationTime
+          ? _value.notificationTime
+          : notificationTime // ignore: cast_nullable_to_non_nullable
+              as TimeOfDay?,
     ) as $Val);
   }
 }
@@ -110,7 +118,8 @@ abstract class _$$SettingsModelImplCopyWith<$Res>
       AppFontSize fontSize,
       AppFontFamily fontFamily,
       ExportFormat exportFormat,
-      AuthenticationType authenticationType});
+      AuthenticationType authenticationType,
+      @TimeOfDayConverter() TimeOfDay? notificationTime});
 }
 
 /// @nodoc
@@ -131,6 +140,7 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
     Object? fontFamily = null,
     Object? exportFormat = null,
     Object? authenticationType = null,
+    Object? notificationTime = freezed,
   }) {
     return _then(_$SettingsModelImpl(
       themeName: null == themeName
@@ -153,6 +163,10 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
           ? _value.authenticationType
           : authenticationType // ignore: cast_nullable_to_non_nullable
               as AuthenticationType,
+      notificationTime: freezed == notificationTime
+          ? _value.notificationTime
+          : notificationTime // ignore: cast_nullable_to_non_nullable
+              as TimeOfDay?,
     ));
   }
 }
@@ -165,7 +179,8 @@ class _$SettingsModelImpl implements _SettingsModel {
       this.fontSize = AppFontSize.medium,
       this.fontFamily = AppFontFamily.roboto,
       this.exportFormat = ExportFormat.json,
-      this.authenticationType = AuthenticationType.none});
+      this.authenticationType = AuthenticationType.none,
+      @TimeOfDayConverter() this.notificationTime = null});
 
   factory _$SettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsModelImplFromJson(json);
@@ -184,10 +199,14 @@ class _$SettingsModelImpl implements _SettingsModel {
   @override
   @JsonKey()
   final AuthenticationType authenticationType;
+  @override
+  @JsonKey()
+  @TimeOfDayConverter()
+  final TimeOfDay? notificationTime;
 
   @override
   String toString() {
-    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
   }
 
   @override
@@ -204,13 +223,15 @@ class _$SettingsModelImpl implements _SettingsModel {
             (identical(other.exportFormat, exportFormat) ||
                 other.exportFormat == exportFormat) &&
             (identical(other.authenticationType, authenticationType) ||
-                other.authenticationType == authenticationType));
+                other.authenticationType == authenticationType) &&
+            (identical(other.notificationTime, notificationTime) ||
+                other.notificationTime == notificationTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, themeName, fontSize, fontFamily,
-      exportFormat, authenticationType);
+      exportFormat, authenticationType, notificationTime);
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -230,11 +251,13 @@ class _$SettingsModelImpl implements _SettingsModel {
 
 abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
-      {required final AppThemeName themeName,
-      final AppFontSize fontSize,
-      final AppFontFamily fontFamily,
-      final ExportFormat exportFormat,
-      final AuthenticationType authenticationType}) = _$SettingsModelImpl;
+          {required final AppThemeName themeName,
+          final AppFontSize fontSize,
+          final AppFontFamily fontFamily,
+          final ExportFormat exportFormat,
+          final AuthenticationType authenticationType,
+          @TimeOfDayConverter() final TimeOfDay? notificationTime}) =
+      _$SettingsModelImpl;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$SettingsModelImpl.fromJson;
@@ -249,6 +272,9 @@ abstract class _SettingsModel implements SettingsModel {
   ExportFormat get exportFormat;
   @override
   AuthenticationType get authenticationType;
+  @override
+  @TimeOfDayConverter()
+  TimeOfDay? get notificationTime;
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.

@@ -146,6 +146,27 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                 ),
+                ListTile(
+                  title: const Text('Notification Time'),
+                  trailing: TextButton(
+                    child: Text(
+                      settingsProvider.settings.notificationTime
+                              ?.format(context) ??
+                          'Set Time',
+                    ),
+                    onPressed: () async {
+                      final TimeOfDay? pickedTime = await showTimePicker(
+                        context: context,
+                        initialTime:
+                            settingsProvider.settings.notificationTime ??
+                                TimeOfDay.now(),
+                      );
+                      if (pickedTime != null) {
+                        settingsProvider.updateNotificationTime(pickedTime);
+                      }
+                    },
+                  ),
+                ),
                 const Divider(),
                 ListTile(
                   title: const Text('Export Data'),

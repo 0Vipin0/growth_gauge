@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../features/notification/notification_service.dart';
 import '../counter/counter.dart';
 import '../timer/timer.dart';
 import 'config/config.dart';
@@ -16,6 +17,7 @@ class SettingsProvider with ChangeNotifier {
 
   final CounterListProvider _counterListProvider;
   final TimerListProvider _timerListProvider;
+  final NotificationService _notificationService;
 
   bool _isExporting = false;
 
@@ -34,10 +36,12 @@ class SettingsProvider with ChangeNotifier {
   final LocalAuthentication _localAuth = LocalAuthentication();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  SettingsProvider({
-    required CounterListProvider counterListProvider,
-    required TimerListProvider timerListProvider,
-  })  : _settings = const SettingsModel(themeName: AppThemeName.light),
+  SettingsProvider(
+      {required CounterListProvider counterListProvider,
+      required TimerListProvider timerListProvider,
+      required NotificationService notificationService})
+      : _settings = const SettingsModel(themeName: AppThemeName.light),
+        _notificationService = notificationService,
         _counterListProvider = counterListProvider,
         _timerListProvider = timerListProvider {
     loadSettingsFromStorage();
@@ -78,6 +82,21 @@ class SettingsProvider with ChangeNotifier {
       _secureStorage.deleteAll();
     }
     _settings = _settings.copyWith(authenticationType: type);
+    saveSettingsToStorage();
+    notifyListeners();
+  }
+
+  TimeOfDay? get notificationTime => _settings.notificationTime;
+
+  void updateNotificationTime(TimeOfDay time) {
+    _settings = _settings.copyWith(notificationTime: time);
+    _notificationService.scheduleDailyNotification(
+        id: 1,
+        title: 'Keep the Growth going forever!',
+        body:
+            'Log the items that you have progressed today and keep up the good work!!',
+        time: time,
+        sound: 'assets/sounds/simple-notification.mp3');
     saveSettingsToStorage();
     notifyListeners();
   }
@@ -155,12 +174,27 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
+    final String? notificationTimeString =
+        SharedPreferencesHelper.getNotificationTime();
+    TimeOfDay? notificationTime;
+    if (notificationTimeString != null) {
+      final parts = notificationTimeString.split(':');
+      if (parts.length == 2) {
+        final hour = int.tryParse(parts[0]);
+        final minute = int.tryParse(parts[1]);
+        if (hour != null && minute != null) {
+          notificationTime = TimeOfDay(hour: hour, minute: minute);
+        }
+      }
+    }
+
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
       fontFamily: fontFamily,
       exportFormat: exportFormat,
       authenticationType: authenticationType,
+      notificationTime: notificationTime,
     );
     notifyListeners();
   }
@@ -172,6 +206,8 @@ class SettingsProvider with ChangeNotifier {
     await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
     await SharedPreferencesHelper.setAuthenticationType(
         _settings.authenticationType.name);
+    await SharedPreferencesHelper.setNotificationTime(
+        '${_settings.notificationTime?.hour}:${_settings.notificationTime?.minute}');
   }
 
   Future<void> exportData() async {
