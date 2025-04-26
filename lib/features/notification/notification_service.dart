@@ -19,19 +19,20 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
+    final InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
-      windows: WindowsInitializationSettings(
+      windows: const WindowsInitializationSettings(
+        iconPath: 'assets/images/icon.png',
         appName: 'Growth Gauge',
         guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
         appUserModelId: 'Com.GrowthGauge',
       ),
       linux: LinuxInitializationSettings(
         defaultActionName: 'Open',
+        defaultIcon: AssetsLinuxIcon('assets/images/icon.png'),
       ),
-      macOS: DarwinInitializationSettings(),
-      iOS: DarwinInitializationSettings(),
+      macOS: const DarwinInitializationSettings(),
+      iOS: const DarwinInitializationSettings(),
     );
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -45,16 +46,19 @@ class NotificationService {
     String? sound,
   }) async {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'growth_gauge',
-      'Growth Gauge Channel',
-      channelDescription: 'Channel for default notifications',
+      'growth_gauge_id',
+      'growth_gauge_channel',
+      channelDescription: 'Growth Gauge Channel for scheduled notifications',
       importance: Importance.max,
       priority: Priority.high,
       sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
     );
 
     final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
-      audio: WindowsNotificationAudio.asset(sound!),
+      audio: WindowsNotificationAudio.asset(
+        sound!,
+        fallback: WindowsNotificationSound.reminder,
+      ),
     );
 
     final linuxPlatformChannelSpecifics = LinuxNotificationDetails(
