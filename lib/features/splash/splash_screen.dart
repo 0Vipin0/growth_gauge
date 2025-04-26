@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
-import '../authentication/authentication.dart';
+import '../authentication/authentication_service.dart';
 import '../settings/settings.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigateToAuthentication() async {
-    final AuthenticationProvider authService = AuthenticationProvider();
+    final AuthenticationService authService = AuthenticationService();
     final SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: false);
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
-import 'authentication.dart';
+import 'authentication_service.dart';
 
 class PinAuthScreen extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class PinAuthScreen extends StatefulWidget {
 }
 
 class _PinAuthScreenState extends State<PinAuthScreen> {
-  final AuthenticationProvider _authService = AuthenticationProvider();
+  final AuthenticationService _authService = AuthenticationService();
   final TextEditingController _pinController = TextEditingController();
   String? _errorMessage;
 
@@ -46,7 +46,10 @@ class _PinAuthScreenState extends State<PinAuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('PIN Authentication')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('PIN Authentication'),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: ConstrainedBox(

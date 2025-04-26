@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
-import 'authentication.dart';
+import 'authentication_service.dart';
 
 class BiometricAuthScreen extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class BiometricAuthScreen extends StatefulWidget {
 }
 
 class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
-  final AuthenticationProvider _authService = AuthenticationProvider();
+  final AuthenticationService _authService = AuthenticationService();
 
   @override
   void initState() {
@@ -39,7 +39,10 @@ class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Biometric Authentication')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Biometric Authentication'),
+      ),
       body: const Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),

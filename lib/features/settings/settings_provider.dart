@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:growth_gauge/features/notifications/notification_service.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../features/notification/notification_service.dart';
 import '../counter/counter.dart';
 import '../timer/timer.dart';
 import 'config/config.dart';

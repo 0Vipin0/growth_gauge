@@ -7,7 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import 'features/counter/chart/chart.dart';
 import 'features/counter/counter.dart';
-import 'features/notifications/notification_service.dart';
+import 'features/notification/notification_service.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
