@@ -17,11 +17,11 @@ final notificationService = NotificationService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await notificationService.initializeNotifications();
-  await SharedPreferencesHelper.init();
   final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation(currentTimeZone));
+  await notificationService.initializeNotifications();
+  await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
 }
 
