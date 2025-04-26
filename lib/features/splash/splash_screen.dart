@@ -98,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen>
         Provider.of<SettingsProvider>(context, listen: false);
 
     final bool isBiometricAvailable =
-        await authService.authenticateWithBiometrics();
+        await authService.canAuthenticateWithBiometrics();
 
     final String route =
         isBiometricAvailable ? AppRoutes.biometricAuth : AppRoutes.pinAuth;
@@ -113,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateTo(String route) {
-    NavigationHelper.navigateTo(context, route);
+    NavigationHelper.replaceWith(context, route);
   }
 
   @override
