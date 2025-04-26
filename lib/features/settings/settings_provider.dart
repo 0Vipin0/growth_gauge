@@ -95,7 +95,8 @@ class SettingsProvider with ChangeNotifier {
         title: 'Keep the Growth going forever!',
         body:
             'Log the items that you have progressed today and keep up the good work!!',
-        time: time);
+        time: time,
+    sound: 'assets/sounds/simple-notification.mp3');
     saveSettingsToStorage();
     notifyListeners();
   }
