@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 import 'features/counter/chart/chart.dart';
 import 'features/counter/counter.dart';
@@ -17,9 +14,7 @@ final notificationService = NotificationService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-  tz.initializeTimeZones();
-  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+  await notificationService.initializeTimeZone();
   await notificationService.initializeNotifications();
   await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
