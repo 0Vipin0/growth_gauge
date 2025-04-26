@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:growth_gauge/features/notifications/notification_service.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../counter/counter.dart';
@@ -16,6 +17,7 @@ class SettingsProvider with ChangeNotifier {
 
   final CounterListProvider _counterListProvider;
   final TimerListProvider _timerListProvider;
+  final NotificationService _notificationService;
 
   bool _isExporting = false;
 
@@ -34,10 +36,12 @@ class SettingsProvider with ChangeNotifier {
   final LocalAuthentication _localAuth = LocalAuthentication();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  SettingsProvider({
-    required CounterListProvider counterListProvider,
-    required TimerListProvider timerListProvider,
-  })  : _settings = const SettingsModel(themeName: AppThemeName.light),
+  SettingsProvider(
+      {required CounterListProvider counterListProvider,
+      required TimerListProvider timerListProvider,
+      required NotificationService notificationService})
+      : _settings = const SettingsModel(themeName: AppThemeName.light),
+        _notificationService = notificationService,
         _counterListProvider = counterListProvider,
         _timerListProvider = timerListProvider {
     loadSettingsFromStorage();
@@ -86,6 +90,12 @@ class SettingsProvider with ChangeNotifier {
 
   void updateNotificationTime(TimeOfDay time) {
     _settings = _settings.copyWith(notificationTime: time);
+    _notificationService.scheduleDailyNotification(
+        id: 1,
+        title: 'Keep the Growth going forever!',
+        body:
+            'Log the items that you have progressed today and keep up the good work!!',
+        time: time);
     saveSettingsToStorage();
     notifyListeners();
   }

@@ -10,9 +10,10 @@ import 'features/timer/chart/chart.dart';
 import 'features/timer/timer.dart';
 import 'routes.dart';
 
+final notificationService = NotificationService();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final notificationService = NotificationService();
   await notificationService.initializeNotifications();
   await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           context,
           listen: false,
         ),
+        notificationService: notificationService,
       ),
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, child) {

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -8,17 +11,19 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       windows: WindowsInitializationSettings(
+        appName: 'Growth Gauge',
+        guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
+        appUserModelId: 'Com.GrowthGauge',
+      ),
+      linux: LinuxInitializationSettings(
         defaultActionName: 'Open',
       ),
-      linux: const LinuxInitializationSettings(
-        defaultActionName: 'Open',
-      ),
-      macOS: MacOSInitializationSettings(),
-      iOS: const DarwinInitializationSettings(),
+      macOS: DarwinInitializationSettings(),
+      iOS: DarwinInitializationSettings(),
     );
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -28,7 +33,7 @@ class NotificationService {
     required int id,
     required String title,
     required String body,
-    required DateTime scheduledTime,
+    required tz.TZDateTime scheduledTime,
     String? sound,
   }) async {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -41,14 +46,16 @@ class NotificationService {
     );
 
     final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
-      sound: sound,
+      audio: WindowsNotificationAudio.preset(
+        sound: WindowsNotificationSound.reminder,
+      ),
     );
 
     final linuxPlatformChannelSpecifics = LinuxNotificationDetails(
-      sound: sound,
+      sound: AssetsLinuxSound(sound!),
     );
 
-    final macOSPlatformChannelSpecifics = MacOSNotificationDetails(
+    final macOSPlatformChannelSpecifics = DarwinNotificationDetails(
       sound: sound,
     );
 
@@ -70,9 +77,7 @@ class NotificationService {
       body,
       scheduledTime,
       platformChannelSpecifics,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 
@@ -83,8 +88,9 @@ class NotificationService {
     required TimeOfDay time,
     String? sound,
   }) async {
-    final now = DateTime.now();
-    final scheduledTime = DateTime(
+    final now = tz.TZDateTime.now(tz.local);
+    final scheduledTime = tz.TZDateTime(
+      now.location,
       now.year,
       now.month,
       now.day,
