@@ -38,7 +38,7 @@ class NotificationService {
   }) async {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'growth_gauge',
-      'Default Channel',
+      'Growth Gauge Channel',
       channelDescription: 'Channel for default notifications',
       importance: Importance.max,
       priority: Priority.high,
@@ -46,13 +46,11 @@ class NotificationService {
     );
 
     final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
-      audio: WindowsNotificationAudio.preset(
-        sound: WindowsNotificationSound.reminder,
-      ),
+      audio: WindowsNotificationAudio.asset(sound!),
     );
 
     final linuxPlatformChannelSpecifics = LinuxNotificationDetails(
-      sound: AssetsLinuxSound(sound!),
+      sound: AssetsLinuxSound(sound),
     );
 
     final macOSPlatformChannelSpecifics = DarwinNotificationDetails(

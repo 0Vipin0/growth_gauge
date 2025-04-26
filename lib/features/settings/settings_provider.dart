@@ -96,7 +96,7 @@ class SettingsProvider with ChangeNotifier {
         body:
             'Log the items that you have progressed today and keep up the good work!!',
         time: time,
-    sound: 'assets/sounds/simple-notification.mp3');
+        sound: 'assets/sounds/simple-notification.mp3');
     saveSettingsToStorage();
     notifyListeners();
   }
