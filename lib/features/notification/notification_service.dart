@@ -57,7 +57,9 @@ class NotificationService {
       channelDescription: 'Growth Gauge Channel for scheduled notifications',
       importance: Importance.max,
       priority: Priority.high,
-      sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
+      sound: sound != null
+          ? const RawResourceAndroidNotificationSound('simple_notification')
+          : null,
     );
 
     final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
