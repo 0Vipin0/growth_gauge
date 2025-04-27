@@ -1,5 +1,5 @@
 name: growth_gauge
-version: 1.1.1+1
+version: 1.1.2+1
 publish_to: none
 environment:
   sdk: ">=3.4.1 <4.0.0"
@@ -36,6 +36,7 @@ dev_dependencies:
   import_sorter: 4.6.0
   json_serializable: ^6.9.5
   lint: ^2.8.0
+  msix: ^3.16.9
   pubspec_dependency_sorter: ^1.0.5
 flutter:
   uses-material-design: true
@@ -61,3 +62,19 @@ flutter:
     - assets/sounds/
 import_sorter:
   comments: false
+msix_config:
+  display_name: Growth Gauge
+  identity_name: Com.GrowthGauge
+  publisher: "CN=Unknown, O=Unknown, C=Unknown"
+  languages: en-us
+  logo_path: "assets/images/icon.png"
+  start_menu_icon_path: "assets/images/icon.png"
+  tile_icon_path: "assets/images/icon.png"
+  store: false
+  signtool_options: /q /fd sha256 /n "CN=Unknown, O=Unknown, C=Unknown" /tr http://timestamp.digicert.com
+  #install_certificate: false
+  output_name: GrowthGauge
+  toast_activator:
+    clsid: "9b17769e-c5cd-424a-b859-1e8b873909c1"
+    arguments: "msix-args"
+    display_name: "Growth Gauge"

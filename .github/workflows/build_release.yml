@@ -99,16 +99,17 @@ jobs:
         if: matrix.os == 'windows-latest'
         # IMPORTANT: Ensure pubspec.yaml has msix_config section
         # Add --sign flags if using a certificate (see comments above)
-        run: flutter pub run msix:create
+        run: dart run msix:create
         shell: pwsh
 
       - name: Prepare Windows Release Artifacts
         if: matrix.os == 'windows-latest'
         run: |
           mkdir -p artifacts # Create artifacts directory
-          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath artifacts\windows_release.zip
+          Copy-Item -Path build\windows\x64\runner\Release\*.msix -Destination artifacts\windows_release.msix
+          Remove-Item -Path build\windows\x64\runner\Release\*.msix -Force
+          Compress-Archive -Path build\windlsows\x64\runner\Release\* -DestinationPath artifacts\windows_release.zip
           # Copy the MSIX file (adjust name if needed, wildcard handles potential variations)
-          Copy-Item -Path build\windows\runner\Release\*.msix -Destination artifacts\windows_release.msix
         shell: pwsh
 
       - name: Upload Build Artifact
@@ -146,7 +147,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-	  asset_path: artifacts/ubuntu-latest-release-artifacts/linux_release.zip
+          asset_path: artifacts/ubuntu-latest-release-artifacts/linux_release.zip
           asset_name: growth_gauge_linux-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
