@@ -3,10 +3,10 @@ name: Build and Release Growth Gauge
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # Trigger on version tags like v1.0.0
 
 permissions:
-  contents: write
+  contents: write # Needed to create releases and upload assets
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ninja-build libgtk-3-dev libglib2.0-dev libsecret-1-dev libjsoncpp-dev
 
-      - name: Setup JDK
+      - name: Setup JDK for Android
         uses: actions/setup-java@v4
         if: matrix.os == 'ubuntu-latest'
         with:
@@ -53,7 +53,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           fileName: upload-keystore.jks
-          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }} # Store your base64 encoded keystore in secrets
 
       - name: Create key.properties for Android build
         if: matrix.os == 'ubuntu-latest'
@@ -79,39 +79,55 @@ jobs:
       - name: Copy Android Release Artifacts
         if: matrix.os == 'ubuntu-latest'
         run: |
-          cp -rp build/app/outputs/apk/release/*.apk android_release.apk
+          mkdir -p artifacts # Create artifacts directory
+          cp -rp build/app/outputs/apk/release/*.apk artifacts/android_release.apk
         shell: bash
 
       - name: Zip Linux Release Artifacts
         if: matrix.os == 'ubuntu-latest'
         run: |
           cd build/linux/x64/release/bundle
-          zip -r ../../../../../linux_release.zip .
+          zip -r ../../../../../artifacts/linux_release.zip . 
         shell: bash
 
-      - name: Zip Windows Release Artifacts
+      - name: Install msix tool
         if: matrix.os == 'windows-latest'
-        run: |
-          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath windows_release.zip
+        run: dart pub global activate msix
         shell: pwsh
 
-      - name: Upload Release Artifact
+      - name: Create MSIX package
+        if: matrix.os == 'windows-latest'
+        # IMPORTANT: Ensure pubspec.yaml has msix_config section
+        # Add --sign flags if using a certificate (see comments above)
+        run: flutter pub run msix:create
+        shell: pwsh
+
+      - name: Prepare Windows Release Artifacts
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir -p artifacts # Create artifacts directory
+          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath artifacts\windows_release.zip
+          # Copy the MSIX file (adjust name if needed, wildcard handles potential variations)
+          Copy-Item -Path build\windows\runner\Release\*.msix -Destination artifacts\windows_release.msix
+        shell: pwsh
+
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-release
-          path: |
-            linux_release.zip
-            windows_release.zip
-            android_release.apk
+          name: ${{ matrix.os }}-release-artifacts # Unique name per OS
+          path: artifacts/ # Upload the entire artifacts directory
 
   release:
-    needs: build
+    needs: build # Run after build jobs complete successfully
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: artifacts # Download all artifacts into 'artifacts' directory
+
+      - name: List downloaded artifacts
+        run: find artifacts -type f
 
       - name: Create Release
         id: create_release
@@ -124,32 +140,43 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Linux Release Asset
+      - name: Upload Linux Release Asset (ZIP)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ubuntu-latest-release/linux_release.zip
+	  asset_path: artifacts/ubuntu-latest-release-artifacts/linux_release.zip
           asset_name: growth_gauge_linux-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
-      - name: Upload Windows Release Asset
+      - name: Upload Windows Release Asset (ZIP)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/windows-latest-release/windows_release.zip
+          asset_path: artifacts/windows-latest-release-artifacts/windows_release.zip
           asset_name: growth_gauge_windows-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
-      - name: Upload Android Release Asset
+      - name: Upload Windows Release Asset (MSIX)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ubuntu-latest-release/android_release.apk
+          asset_path: artifacts/windows-latest-release-artifacts/windows_release.msix
+          asset_name: growth_gauge_windows-${{ github.ref_name }}.msix
+          asset_content_type: application/msix # Correct content type for MSIX
+
+      - name: Upload Android Release Asset (APK)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/ubuntu-latest-release-artifacts/android_release.apk
           asset_name: growth_gauge_android-${{ github.ref_name }}.apk
-          asset_content_type: application/zip
+          # Use 'application/vnd.android.package-archive' for APK
+          asset_content_type: application/vnd.android.package-archive
