@@ -19,6 +19,32 @@ class TimerListProvider with ChangeNotifier {
   }
 
   List<TimerModel> get timers => _timers;
+  List<TimerModel> _filteredTimers = [];
+  List<TimerModel> get filteredTimers =>
+      _filteredTimers.isEmpty ? _timers : _filteredTimers;
+
+  void filterTimersByTags(List<String> tags) {
+    if (tags.isEmpty) {
+      _filteredTimers = [];
+    } else {
+      _filteredTimers = _timers
+          .where((timer) =>
+              timer.tags != null &&
+              timer.tags!.any((tag) => tags.contains(tag)))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  List<String> getAllTags() {
+    final Set<String> tags = {};
+    for (final timer in _timers) {
+      if (timer.tags != null) {
+        tags.addAll(timer.tags!);
+      }
+    }
+    return tags.toList();
+  }
 
   Future<void> _loadTimers() async {
     _timers = await repository.getTimers();

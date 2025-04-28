@@ -26,6 +26,7 @@ mixin _$TimerModel {
   String get description => throw _privateConstructorUsedError;
   List<TimerLog> get logs => throw _privateConstructorUsedError;
   Duration? get target => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
 
   /// Serializes this TimerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +50,8 @@ abstract class $TimerModelCopyWith<$Res> {
       Duration interval,
       String description,
       List<TimerLog> logs,
-      Duration? target});
+      Duration? target,
+      List<String>? tags});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
     Object? description = null,
     Object? logs = null,
     Object? target = freezed,
+    Object? tags = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -99,6 +102,10 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
           ? _value.target
           : target // ignore: cast_nullable_to_non_nullable
               as Duration?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -117,7 +124,8 @@ abstract class _$$TimerModelImplCopyWith<$Res>
       Duration interval,
       String description,
       List<TimerLog> logs,
-      Duration? target});
+      Duration? target,
+      List<String>? tags});
 }
 
 /// @nodoc
@@ -139,6 +147,7 @@ class __$$TimerModelImplCopyWithImpl<$Res>
     Object? description = null,
     Object? logs = null,
     Object? target = freezed,
+    Object? tags = freezed,
   }) {
     return _then(_$TimerModelImpl(
       id: null == id
@@ -165,6 +174,10 @@ class __$$TimerModelImplCopyWithImpl<$Res>
           ? _value.target
           : target // ignore: cast_nullable_to_non_nullable
               as Duration?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -178,8 +191,10 @@ class _$TimerModelImpl implements _TimerModel {
       required this.interval,
       required this.description,
       final List<TimerLog> logs = const [],
-      this.target})
-      : _logs = logs;
+      this.target,
+      final List<String>? tags})
+      : _logs = logs,
+        _tags = tags;
 
   factory _$TimerModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimerModelImplFromJson(json);
@@ -203,10 +218,19 @@ class _$TimerModelImpl implements _TimerModel {
 
   @override
   final Duration? target;
+  final List<String>? _tags;
+  @override
+  List<String>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target)';
+    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 
   @override
@@ -221,13 +245,21 @@ class _$TimerModelImpl implements _TimerModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality().equals(other._logs, _logs) &&
-            (identical(other.target, target) || other.target == target));
+            (identical(other.target, target) || other.target == target) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, interval, description,
-      const DeepCollectionEquality().hash(_logs), target);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      interval,
+      description,
+      const DeepCollectionEquality().hash(_logs),
+      target,
+      const DeepCollectionEquality().hash(_tags));
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +284,8 @@ abstract class _TimerModel implements TimerModel {
       required final Duration interval,
       required final String description,
       final List<TimerLog> logs,
-      final Duration? target}) = _$TimerModelImpl;
+      final Duration? target,
+      final List<String>? tags}) = _$TimerModelImpl;
 
   factory _TimerModel.fromJson(Map<String, dynamic> json) =
       _$TimerModelImpl.fromJson;
@@ -269,6 +302,8 @@ abstract class _TimerModel implements TimerModel {
   List<TimerLog> get logs;
   @override
   Duration? get target;
+  @override
+  List<String>? get tags;
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.

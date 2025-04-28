@@ -26,6 +26,7 @@ mixin _$CounterModel {
   String get description => throw _privateConstructorUsedError;
   List<CounterLog> get logs => throw _privateConstructorUsedError;
   int? get target => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
 
   /// Serializes this CounterModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +50,8 @@ abstract class $CounterModelCopyWith<$Res> {
       int count,
       String description,
       List<CounterLog> logs,
-      int? target});
+      int? target,
+      List<String>? tags});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
     Object? description = null,
     Object? logs = null,
     Object? target = freezed,
+    Object? tags = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -99,6 +102,10 @@ class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
           ? _value.target
           : target // ignore: cast_nullable_to_non_nullable
               as int?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -117,7 +124,8 @@ abstract class _$$CounterModelImplCopyWith<$Res>
       int count,
       String description,
       List<CounterLog> logs,
-      int? target});
+      int? target,
+      List<String>? tags});
 }
 
 /// @nodoc
@@ -139,6 +147,7 @@ class __$$CounterModelImplCopyWithImpl<$Res>
     Object? description = null,
     Object? logs = null,
     Object? target = freezed,
+    Object? tags = freezed,
   }) {
     return _then(_$CounterModelImpl(
       id: null == id
@@ -165,6 +174,10 @@ class __$$CounterModelImplCopyWithImpl<$Res>
           ? _value.target
           : target // ignore: cast_nullable_to_non_nullable
               as int?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -178,8 +191,10 @@ class _$CounterModelImpl implements _CounterModel {
       required this.count,
       required this.description,
       required final List<CounterLog> logs,
-      this.target})
-      : _logs = logs;
+      this.target,
+      final List<String>? tags})
+      : _logs = logs,
+        _tags = tags;
 
   factory _$CounterModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CounterModelImplFromJson(json);
@@ -202,10 +217,19 @@ class _$CounterModelImpl implements _CounterModel {
 
   @override
   final int? target;
+  final List<String>? _tags;
+  @override
+  List<String>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target)';
+    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 
   @override
@@ -219,13 +243,21 @@ class _$CounterModelImpl implements _CounterModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality().equals(other._logs, _logs) &&
-            (identical(other.target, target) || other.target == target));
+            (identical(other.target, target) || other.target == target) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, count, description,
-      const DeepCollectionEquality().hash(_logs), target);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      count,
+      description,
+      const DeepCollectionEquality().hash(_logs),
+      target,
+      const DeepCollectionEquality().hash(_tags));
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.
@@ -250,7 +282,8 @@ abstract class _CounterModel implements CounterModel {
       required final int count,
       required final String description,
       required final List<CounterLog> logs,
-      final int? target}) = _$CounterModelImpl;
+      final int? target,
+      final List<String>? tags}) = _$CounterModelImpl;
 
   factory _CounterModel.fromJson(Map<String, dynamic> json) =
       _$CounterModelImpl.fromJson;
@@ -267,6 +300,8 @@ abstract class _CounterModel implements CounterModel {
   List<CounterLog> get logs;
   @override
   int? get target;
+  @override
+  List<String>? get tags;
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.

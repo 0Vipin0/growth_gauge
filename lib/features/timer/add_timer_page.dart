@@ -18,11 +18,14 @@ class _AddTimerPageState extends State<AddTimerPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _tagController =
+      TextEditingController(); // Controller for tags
 
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
   Duration? _target;
+  final List<String> _tags = []; // List to store tags
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +108,36 @@ class _AddTimerPageState extends State<AddTimerPage> {
                   }),
                 ],
               ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _tagController,
+                decoration: const InputDecoration(
+                  labelText: 'Add Tag',
+                  border: OutlineInputBorder(),
+                ),
+                onFieldSubmitted: (value) {
+                  setState(() {
+                    if (value.isNotEmpty && !_tags.contains(value)) {
+                      _tags.add(value);
+                      _tagController.clear();
+                    }
+                  });
+                },
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8.0,
+                children: _tags.map((tag) {
+                  return Chip(
+                    label: Text(tag),
+                    onDeleted: () {
+                      setState(() {
+                        _tags.remove(tag);
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _saveTimer,
@@ -171,7 +204,8 @@ class _AddTimerPageState extends State<AddTimerPage> {
         description: _descriptionController.text,
         interval: duration,
         logs: [],
-        target: _target, // Include target
+        target: _target,
+        tags: _tags, // Save tags
       );
 
       context.read<TimerListProvider>().addTimer(newTimer);
@@ -184,6 +218,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _tagController.dispose();
     super.dispose();
   }
 }

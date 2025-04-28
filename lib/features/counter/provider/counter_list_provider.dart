@@ -155,4 +155,31 @@ class CounterListProvider with ChangeNotifier {
 
     return const ListToCsvConverter().convert(rows);
   }
+
+  List<CounterModel> _filteredCounters = [];
+  List<CounterModel> get filteredCounters =>
+      _filteredCounters.isEmpty ? _counters : _filteredCounters;
+
+  void filterCountersByTags(List<String> tags) {
+    if (tags.isEmpty) {
+      _filteredCounters = [];
+    } else {
+      _filteredCounters = _counters
+          .where((counter) =>
+              counter.tags != null &&
+              counter.tags!.any((tag) => tags.contains(tag)))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  List<String> getAllTags() {
+    final Set<String> tags = {};
+    for (final counter in _counters) {
+      if (counter.tags != null) {
+        tags.addAll(counter.tags!);
+      }
+    }
+    return tags.toList();
+  }
 }

@@ -14,17 +14,53 @@ class TimerListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerListProvider = Provider.of<TimerListProvider>(context);
+    final List<String> selectedTags = []; // Track selected tags for filtering
 
     return Scaffold(
-      body: timerListProvider.timers.isEmpty
-          ? _buildEmptyTimerList(
-              context,
-              timerListProvider,
-            ) // Show empty state widget
+      appBar: AppBar(
+        title: const Text('Timers'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (tag) {
+              if (selectedTags.contains(tag)) {
+                selectedTags.remove(tag);
+              } else {
+                selectedTags.add(tag);
+              }
+              timerListProvider.filterTimersByTags(selectedTags);
+            },
+            itemBuilder: (context) {
+              return timerListProvider.getAllTags().map((tag) {
+                return PopupMenuItem<String>(
+                  value: tag,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: selectedTags.contains(tag),
+                        onChanged: (isSelected) {
+                          if (isSelected == true) {
+                            selectedTags.add(tag);
+                          } else {
+                            selectedTags.remove(tag);
+                          }
+                          timerListProvider.filterTimersByTags(selectedTags);
+                        },
+                      ),
+                      Text(tag),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+      body: timerListProvider.filteredTimers.isEmpty
+          ? _buildEmptyTimerList(context, timerListProvider)
           : ListView.builder(
-              itemCount: timerListProvider.timers.length,
+              itemCount: timerListProvider.filteredTimers.length,
               itemBuilder: (context, index) {
-                final timer = timerListProvider.timers[index];
+                final timer = timerListProvider.filteredTimers[index];
                 return ReusableTimerWidget(
                   timerModel: timer,
                   onRemove: () => showDeleteDialog(context, timer),

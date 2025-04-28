@@ -14,14 +14,54 @@ class CounterListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counterListProvider = Provider.of<CounterListProvider>(context);
+    final List<String> selectedTags = []; // Track selected tags for filtering
 
     return Scaffold(
-      body: counterListProvider.counters.isEmpty
-          ? _buildEmptyCounterList(context) // Show empty state widget
+      appBar: AppBar(
+        title: const Text('Counters'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (tag) {
+              if (selectedTags.contains(tag)) {
+                selectedTags.remove(tag);
+              } else {
+                selectedTags.add(tag);
+              }
+              counterListProvider.filterCountersByTags(selectedTags);
+            },
+            itemBuilder: (context) {
+              return counterListProvider.getAllTags().map((tag) {
+                return PopupMenuItem<String>(
+                  value: tag,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: selectedTags.contains(tag),
+                        onChanged: (isSelected) {
+                          if (isSelected == true) {
+                            selectedTags.add(tag);
+                          } else {
+                            selectedTags.remove(tag);
+                          }
+                          counterListProvider
+                              .filterCountersByTags(selectedTags);
+                        },
+                      ),
+                      Text(tag),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+      body: counterListProvider.filteredCounters.isEmpty
+          ? _buildEmptyCounterList(context)
           : ListView.builder(
-              itemCount: counterListProvider.counters.length,
+              itemCount: counterListProvider.filteredCounters.length,
               itemBuilder: (context, index) {
-                final counter = counterListProvider.counters[index];
+                final counter = counterListProvider.filteredCounters[index];
                 return ReusableCounterWidget(
                   counterModel: counter,
                   onRemove: () => showDeleteDialog(context, counter),
