@@ -28,7 +28,21 @@ class ReusableCounterWidget extends StatelessWidget {
           return Card(
             child: ListTile(
               title: Text(counterModel.name),
-              subtitle: Text('Count: ${counterProvider.count}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Count: ${counterProvider.count}'),
+                  if (counterModel.target != null)
+                    Text('Target: ${counterModel.target}',
+                        style: const TextStyle(color: Colors.green)),
+                  if (counterModel.target == null)
+                    TextButton(
+                      onPressed: onUpdateTarget,
+                      child: const Text('Add Target',
+                          style: TextStyle(color: Colors.red)),
+                    ),
+                ],
+              ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -52,10 +66,11 @@ class ReusableCounterWidget extends StatelessWidget {
                       ).updateCounter(counterProvider.counter);
                     },
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: onUpdateTarget,
-                  ),
+                  if (counterModel.target != null)
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: onUpdateTarget,
+                    ),
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: onRemove,
