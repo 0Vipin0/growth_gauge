@@ -23,9 +23,9 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *   **JSON and CSV Data Export:**  Securely export your valuable counter and timer data as JSON files for backup, sharing, or in CSV file for in-depth analysis with other tools.
 *   **Persistent Data Storage:**  Enjoy peace of mind knowing your data is persistently stored using Shared Preferences, ensuring your progress is saved across all application sessions.
 *   **Personalized App Experience:** Customize the look and feel of Growth Gauge to match your style by adjusting application themes and fonts directly within the settings.
+*   **Local Authentication:** To protect your own private data from prying eyes of the other, local authentincation using Biometric with Pin Authentication as fallback ensure that the data is always yours to see.
+*   **Scheduled Local Notification:** To keep you motivated to conitnuing the growth, scheduled local notifications are included allowing you to remember the idea of growth everyday.
 *   **Automatic Build Release:** New version release files are generated with Github Action and available under releases.
-
-## Screenshots
 
 ## Screenshots
 
@@ -68,17 +68,19 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
 *  [Linux][linux]
 *  [Windows][windows]
 
-[android]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_android-v1.0.2.apk
-[linux]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_linux-v1.0.2.zip
-[windows]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.0.2/growth_gauge_windows-v1.0.2.zip
+[android]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.1.2/growth_gauge_android-v1.1.2.apk
+[linux]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.1.2/growth_gauge_linux-v1.1.2.zip
+[windows]: https://github.com/0Vipin0/growth_gauge/releases/download/v1.1.2/growth_gauge_windows-v1.1.2.zip
+
+Kindly note that the releases are primarily based on the Android and Windows platform as these are ones that I am building. I do not own MacOs/iOS operating system, so I am not testing the same and they are not priortized as of now. If someone finds any issue, kindly raise an Issue for the same.
 
 ## Future Goals and Roadmap
 
 *   ~**Automated Builds with GitHub Actions** ([#13][i13])~
 *   ~**CSV Data Export** ([#14][i14])~
 *   **Cross-Device Data Synchronization** ([#15][i15])
-*   **Local User Authentication** ([#16][i16])
-*   **Sound Alerts and Notifications** ([#17][i17])
+*   ~**Local User Authentication** ([#16][i16])
+*   ~**Sound Alerts and Notifications** ([#17][i17])
 *   **Target Tracking** ([#18][i18])
 *   **Data Categorization** ([#19][i19])
 *   **Summary Statistics** ([#20][i20])
