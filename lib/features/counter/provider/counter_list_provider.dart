@@ -53,6 +53,15 @@ class CounterListProvider with ChangeNotifier {
       }
     }
 
+    if (newCounter.target != counter.target) {
+      final log = CounterLog(
+        id: DateTime.now().toIso8601String(),
+        action: 'Target updated to ${newCounter.target}',
+        timestamp: DateTime.now(),
+      );
+      counter.logs.add(log);
+    }
+
     // Check if the target is reached
     if (counter.target != null && counter.count >= counter.target!) {
       // Trigger notification

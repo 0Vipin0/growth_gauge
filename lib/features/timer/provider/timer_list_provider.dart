@@ -49,6 +49,16 @@ class TimerListProvider with ChangeNotifier {
       }
     }
 
+    if (newTimer.target != timer.target) {
+      final log = TimerLog(
+        id: DateTime.now().toIso8601String(),
+        action: 'Target updated to ${newTimer.target?.inMinutes} minutes',
+        timestamp: DateTime.now(),
+        interval: Duration.zero,
+      );
+      timer.logs.add(log);
+    }
+
     // Check if the target is reached
     if (timer.target != null && timer.interval >= timer.target!) {
       // Trigger notification
