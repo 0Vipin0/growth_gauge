@@ -29,7 +29,7 @@ class ReusableTimerWidget extends StatelessWidget {
             children: [
               Card(
                 child: ListTile(
-                  title: Text(timerModel.description),
+                  title: Text(timerModel.name),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

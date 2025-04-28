@@ -40,14 +40,7 @@ class TimerListProvider with ChangeNotifier {
   }
 
   void updateTimer(TimerModel newTimer) {
-    final TimerModel timer = getTimer(
-      newTimer,
-    ).copyWith(interval: newTimer.interval, logs: newTimer.logs);
-    for (int i = 0; i < _timers.length; i++) {
-      if (timer.id == _timers[i].id) {
-        _timers[i] = timer;
-      }
-    }
+    TimerModel timer = getTimer(newTimer);
 
     if (newTimer.target != timer.target) {
       final log = TimerLog(
@@ -63,6 +56,16 @@ class TimerListProvider with ChangeNotifier {
         if (updatedTimer.id == _timers[i].id) {
           _timers[i] = updatedTimer;
         }
+      }
+    }
+
+    timer = getTimer(newTimer).copyWith(
+        interval: newTimer.interval,
+        target: newTimer.target ?? timer.target,
+        logs: newTimer.logs);
+    for (int i = 0; i < _timers.length; i++) {
+      if (timer.id == _timers[i].id) {
+        _timers[i] = timer;
       }
     }
 
@@ -82,12 +85,12 @@ class TimerListProvider with ChangeNotifier {
 
   void _triggerNotification({required String title, required String body}) {
     notificationService.scheduleNotification(
-      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-      title: title,
-      body: body,
-      scheduledTime:
-          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
-    );
+        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+        title: title,
+        body: body,
+        scheduledTime:
+            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+        sound: 'assets/sounds/simple_notification.mp3');
   }
 
   void addTimer(TimerModel newTimer) {
