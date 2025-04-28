@@ -124,6 +124,7 @@ class CounterListProvider with ChangeNotifier {
       'Name',
       'Count',
       'Description',
+      'Target',
       'Log ID',
       'Log Action',
       'Log Timestamp',

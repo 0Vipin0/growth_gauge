@@ -155,6 +155,7 @@ class TimerListProvider with ChangeNotifier {
       'Name',
       'Interval',
       'Description',
+      'Target',
       'Log Action',
       'Log Timestamp',
       'Log Interval',

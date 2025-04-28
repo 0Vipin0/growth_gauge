@@ -7,6 +7,7 @@ class FlatCounterModel {
   final String counterName;
   final int counterCount;
   final String counterDescription;
+  final int target;
   final String logId;
   final String logAction;
   final DateTime logTimestamp;
@@ -16,6 +17,7 @@ class FlatCounterModel {
     required this.counterName,
     required this.counterCount,
     required this.counterDescription,
+    required this.target,
     required this.logId,
     required this.logAction,
     required this.logTimestamp,
@@ -30,6 +32,7 @@ class FlatCounterModel {
       counterName: counter.name,
       counterCount: counter.count,
       counterDescription: counter.description,
+      target: counter.target ?? 0,
       logId: log.id,
       logAction: log.action,
       logTimestamp: log.timestamp,
@@ -42,6 +45,7 @@ class FlatCounterModel {
       counterName,
       counterCount,
       counterDescription,
+      target,
       logId,
       logAction,
       DateFormat('dd-MM-yyyy HH:mm:ss').format(logTimestamp),
