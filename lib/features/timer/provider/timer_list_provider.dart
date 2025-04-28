@@ -1,16 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart' as tz;
 
+import '../../notification/notification_service.dart';
 import '../chart/chart.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
 class TimerListProvider with ChangeNotifier {
   final TimerRepository repository;
+  final NotificationService notificationService;
   List<TimerModel> _timers = [];
 
-  TimerListProvider({required this.repository}) {
+  TimerListProvider(
+      {required this.repository, required this.notificationService}) {
     _loadTimers();
   }
 
@@ -44,8 +48,39 @@ class TimerListProvider with ChangeNotifier {
         _timers[i] = timer;
       }
     }
+
+    if (newTimer.target != timer.target) {
+      final log = TimerLog(
+        id: DateTime.now().toIso8601String(),
+        action: 'Target updated to ${newTimer.target?.inMinutes} minutes',
+        timestamp: DateTime.now(),
+        interval: Duration.zero,
+      );
+      timer.logs.add(log);
+    }
+
+    // Check if the target is reached
+    if (timer.target != null && timer.interval >= timer.target!) {
+      // Trigger notification
+      _triggerNotification(
+        title: 'Target Reached!',
+        body:
+            'Timer "${timer.name}" has reached its target duration of ${timer.target!.inMinutes} minutes.',
+      );
+    }
+
     saveTimers();
     notifyListeners();
+  }
+
+  void _triggerNotification({required String title, required String body}) {
+    notificationService.scheduleNotification(
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime:
+          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+    );
   }
 
   void addTimer(TimerModel newTimer) {
@@ -130,6 +165,7 @@ class TimerListProvider with ChangeNotifier {
       'Name',
       'Interval',
       'Description',
+      'Target',
       'Log Action',
       'Log Timestamp',
       'Log Interval',

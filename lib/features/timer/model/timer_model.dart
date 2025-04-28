@@ -11,6 +11,7 @@ class TimerModel with _$TimerModel {
     required Duration interval,
     required String description,
     @Default([]) List<TimerLog> logs,
+    Duration? target, // New property for target
   }) = _TimerModel;
 
   factory TimerModel.fromJson(Map<String, dynamic> json) =>

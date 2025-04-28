@@ -28,6 +28,7 @@ class TimerListWidget extends StatelessWidget {
                 return ReusableTimerWidget(
                   timerModel: timer,
                   onRemove: () => showDeleteDialog(context, timer),
+                  onUpdateTarget: () => showUpdateTargetDialog(context, timer),
                 );
               },
             ),
@@ -135,6 +136,52 @@ class TimerListWidget extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showUpdateTargetDialog(BuildContext context, TimerModel timer) {
+    final TextEditingController targetController = TextEditingController(
+      text: timer.target?.inMinutes.toString() ?? '',
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Update Target'),
+          content: TextField(
+            controller: targetController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'New Target (Minutes)',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                final newTargetMinutes = int.tryParse(targetController.text);
+                if (newTargetMinutes != null) {
+                  Provider.of<TimerListProvider>(
+                    context,
+                    listen: false,
+                  ).updateTimer(
+                    timer.copyWith(target: Duration(minutes: newTargetMinutes)),
+                  );
+                }
+                Navigator.of(context).pop();
+              },
+              child: const Text('Update'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
             ),
           ],
         );

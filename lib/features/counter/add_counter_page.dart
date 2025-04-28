@@ -22,6 +22,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
   final TextEditingController _descriptionController = TextEditingController();
 
   int _count = 0;
+  int? _target;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,19 @@ class _AddCounterPageState extends State<AddCounterPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Target (Optional)',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    _target = int.tryParse(value);
+                  });
+                },
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _saveCounter,
@@ -109,9 +123,9 @@ class _AddCounterPageState extends State<AddCounterPage> {
         description: _descriptionController.text,
         count: _count,
         logs: [],
+        target: _target, // Include target
       );
 
-      // Add the counter to your provider or state management solution
       context.read<CounterListProvider>().addCounter(newCounter);
 
       NavigationHelper.pop(context);

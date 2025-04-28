@@ -1,14 +1,18 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart' as tz;
 
+import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
 class CounterListProvider with ChangeNotifier {
   final CounterRepository repository;
+  final NotificationService notificationService;
   List<CounterModel> _counters = [];
 
-  CounterListProvider({required this.repository}) {
+  CounterListProvider(
+      {required this.repository, required this.notificationService}) {
     _loadCounters();
   }
 
@@ -48,8 +52,38 @@ class CounterListProvider with ChangeNotifier {
         _counters[i] = counter;
       }
     }
+
+    if (newCounter.target != counter.target) {
+      final log = CounterLog(
+        id: DateTime.now().toIso8601String(),
+        action: 'Target updated to ${newCounter.target}',
+        timestamp: DateTime.now(),
+      );
+      counter.logs.add(log);
+    }
+
+    // Check if the target is reached
+    if (counter.target != null && counter.count >= counter.target!) {
+      // Trigger notification
+      _triggerNotification(
+        title: 'Target Reached!',
+        body:
+            'Counter "${counter.name}" has reached its target of ${counter.target}.',
+      );
+    }
+
     saveCounters();
     notifyListeners();
+  }
+
+  void _triggerNotification({required String title, required String body}) {
+    notificationService.scheduleNotification(
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime:
+          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+    );
   }
 
   void removeCounter(CounterModel counter) {
@@ -99,6 +133,7 @@ class CounterListProvider with ChangeNotifier {
       'Name',
       'Count',
       'Description',
+      'Target',
       'Log ID',
       'Log Action',
       'Log Timestamp',

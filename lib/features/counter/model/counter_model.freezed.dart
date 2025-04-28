@@ -25,6 +25,7 @@ mixin _$CounterModel {
   int get count => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   List<CounterLog> get logs => throw _privateConstructorUsedError;
+  int? get target => throw _privateConstructorUsedError;
 
   /// Serializes this CounterModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +48,8 @@ abstract class $CounterModelCopyWith<$Res> {
       String name,
       int count,
       String description,
-      List<CounterLog> logs});
+      List<CounterLog> logs,
+      int? target});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
     Object? count = null,
     Object? description = null,
     Object? logs = null,
+    Object? target = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,6 +95,10 @@ class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
           ? _value.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<CounterLog>,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$CounterModelImplCopyWith<$Res>
       String name,
       int count,
       String description,
-      List<CounterLog> logs});
+      List<CounterLog> logs,
+      int? target});
 }
 
 /// @nodoc
@@ -130,6 +138,7 @@ class __$$CounterModelImplCopyWithImpl<$Res>
     Object? count = null,
     Object? description = null,
     Object? logs = null,
+    Object? target = freezed,
   }) {
     return _then(_$CounterModelImpl(
       id: null == id
@@ -152,6 +161,10 @@ class __$$CounterModelImplCopyWithImpl<$Res>
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<CounterLog>,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -164,7 +177,8 @@ class _$CounterModelImpl implements _CounterModel {
       required this.name,
       required this.count,
       required this.description,
-      required final List<CounterLog> logs})
+      required final List<CounterLog> logs,
+      this.target})
       : _logs = logs;
 
   factory _$CounterModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -187,8 +201,11 @@ class _$CounterModelImpl implements _CounterModel {
   }
 
   @override
+  final int? target;
+
+  @override
   String toString() {
-    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs)';
+    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target)';
   }
 
   @override
@@ -201,13 +218,14 @@ class _$CounterModelImpl implements _CounterModel {
             (identical(other.count, count) || other.count == count) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other._logs, _logs));
+            const DeepCollectionEquality().equals(other._logs, _logs) &&
+            (identical(other.target, target) || other.target == target));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, count, description,
-      const DeepCollectionEquality().hash(_logs));
+      const DeepCollectionEquality().hash(_logs), target);
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.
@@ -231,7 +249,8 @@ abstract class _CounterModel implements CounterModel {
       required final String name,
       required final int count,
       required final String description,
-      required final List<CounterLog> logs}) = _$CounterModelImpl;
+      required final List<CounterLog> logs,
+      final int? target}) = _$CounterModelImpl;
 
   factory _CounterModel.fromJson(Map<String, dynamic> json) =
       _$CounterModelImpl.fromJson;
@@ -246,6 +265,8 @@ abstract class _CounterModel implements CounterModel {
   String get description;
   @override
   List<CounterLog> get logs;
+  @override
+  int? get target;
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.

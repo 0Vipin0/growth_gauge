@@ -25,6 +25,7 @@ mixin _$TimerModel {
   Duration get interval => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   List<TimerLog> get logs => throw _privateConstructorUsedError;
+  Duration? get target => throw _privateConstructorUsedError;
 
   /// Serializes this TimerModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +48,8 @@ abstract class $TimerModelCopyWith<$Res> {
       String name,
       Duration interval,
       String description,
-      List<TimerLog> logs});
+      List<TimerLog> logs,
+      Duration? target});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
     Object? interval = null,
     Object? description = null,
     Object? logs = null,
+    Object? target = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,6 +95,10 @@ class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
           ? _value.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<TimerLog>,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as Duration?,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$TimerModelImplCopyWith<$Res>
       String name,
       Duration interval,
       String description,
-      List<TimerLog> logs});
+      List<TimerLog> logs,
+      Duration? target});
 }
 
 /// @nodoc
@@ -130,6 +138,7 @@ class __$$TimerModelImplCopyWithImpl<$Res>
     Object? interval = null,
     Object? description = null,
     Object? logs = null,
+    Object? target = freezed,
   }) {
     return _then(_$TimerModelImpl(
       id: null == id
@@ -152,6 +161,10 @@ class __$$TimerModelImplCopyWithImpl<$Res>
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<TimerLog>,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as Duration?,
     ));
   }
 }
@@ -164,7 +177,8 @@ class _$TimerModelImpl implements _TimerModel {
       required this.name,
       required this.interval,
       required this.description,
-      final List<TimerLog> logs = const []})
+      final List<TimerLog> logs = const [],
+      this.target})
       : _logs = logs;
 
   factory _$TimerModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -188,8 +202,11 @@ class _$TimerModelImpl implements _TimerModel {
   }
 
   @override
+  final Duration? target;
+
+  @override
   String toString() {
-    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs)';
+    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target)';
   }
 
   @override
@@ -203,13 +220,14 @@ class _$TimerModelImpl implements _TimerModel {
                 other.interval == interval) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other._logs, _logs));
+            const DeepCollectionEquality().equals(other._logs, _logs) &&
+            (identical(other.target, target) || other.target == target));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, interval, description,
-      const DeepCollectionEquality().hash(_logs));
+      const DeepCollectionEquality().hash(_logs), target);
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -233,7 +251,8 @@ abstract class _TimerModel implements TimerModel {
       required final String name,
       required final Duration interval,
       required final String description,
-      final List<TimerLog> logs}) = _$TimerModelImpl;
+      final List<TimerLog> logs,
+      final Duration? target}) = _$TimerModelImpl;
 
   factory _TimerModel.fromJson(Map<String, dynamic> json) =
       _$TimerModelImpl.fromJson;
@@ -248,6 +267,8 @@ abstract class _TimerModel implements TimerModel {
   String get description;
   @override
   List<TimerLog> get logs;
+  @override
+  Duration? get target;
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.

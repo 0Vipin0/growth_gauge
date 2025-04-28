@@ -10,11 +10,13 @@ import 'timer_details_page.dart';
 class ReusableTimerWidget extends StatelessWidget {
   final TimerModel timerModel;
   final VoidCallback onRemove;
+  final VoidCallback onUpdateTarget;
 
   const ReusableTimerWidget({
     super.key,
     required this.timerModel,
     required this.onRemove,
+    required this.onUpdateTarget,
   });
 
   @override
@@ -28,8 +30,22 @@ class ReusableTimerWidget extends StatelessWidget {
               Card(
                 child: ListTile(
                   title: Text(timerModel.description),
-                  subtitle: Text(
-                    'Time Passed: ${timerProvider.currentInterval.inSeconds} seconds\n',
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Time Passed: ${timerProvider.currentInterval.inSeconds} seconds',
+                      ),
+                      if (timerModel.target != null)
+                        Text('Target: ${timerModel.target!.inMinutes} minutes',
+                            style: const TextStyle(color: Colors.green)),
+                      if (timerModel.target == null)
+                        TextButton(
+                          onPressed: onUpdateTarget,
+                          child: const Text('Add Target',
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                    ],
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -58,6 +74,11 @@ class ReusableTimerWidget extends StatelessWidget {
                           ).updateTimer(timerProvider.timer);
                         },
                       ),
+                      if (timerModel.target != null)
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: onUpdateTarget,
+                        ),
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: onRemove,

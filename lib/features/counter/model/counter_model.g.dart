@@ -15,6 +15,7 @@ _$CounterModelImpl _$$CounterModelImplFromJson(Map<String, dynamic> json) =>
       logs: (json['logs'] as List<dynamic>)
           .map((e) => CounterLog.fromJson(e as Map<String, dynamic>))
           .toList(),
+      target: (json['target'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$CounterModelImplToJson(_$CounterModelImpl instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$CounterModelImplToJson(_$CounterModelImpl instance) =>
       'count': instance.count,
       'description': instance.description,
       'logs': instance.logs,
+      'target': instance.target,
     };
 
 _$CounterLogImpl _$$CounterLogImplFromJson(Map<String, dynamic> json) =>
