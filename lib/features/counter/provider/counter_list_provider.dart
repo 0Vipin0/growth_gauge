@@ -182,4 +182,14 @@ class CounterListProvider with ChangeNotifier {
     }
     return tags.toList();
   }
+
+  void sortCountersByName() {
+    _counters.sort((a, b) => a.name.compareTo(b.name));
+    notifyListeners();
+  }
+
+  void sortCountersByCount() {
+    _counters.sort((a, b) => a.count.compareTo(b.count));
+    notifyListeners();
+  }
 }

@@ -21,6 +21,25 @@ class TimerListWidget extends StatelessWidget {
         title: const Text('Timers'),
         actions: [
           PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'Sort by Name') {
+                timerListProvider.sortTimersByName();
+              } else if (value == 'Sort by Interval') {
+                timerListProvider.sortTimersByInterval();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'Sort by Name',
+                child: Text('Sort by Name'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Interval',
+                child: Text('Sort by Interval'),
+              ),
+            ],
+          ),
+          PopupMenuButton<String>(
             onSelected: (tag) {
               if (selectedTags.contains(tag)) {
                 selectedTags.remove(tag);

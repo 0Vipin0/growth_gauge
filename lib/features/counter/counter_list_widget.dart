@@ -21,6 +21,25 @@ class CounterListWidget extends StatelessWidget {
         title: const Text('Counters'),
         actions: [
           PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'Sort by Name') {
+                counterListProvider.sortCountersByName();
+              } else if (value == 'Sort by Count') {
+                counterListProvider.sortCountersByCount();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'Sort by Name',
+                child: Text('Sort by Name'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Count',
+                child: Text('Sort by Count'),
+              ),
+            ],
+          ),
+          PopupMenuButton<String>(
             onSelected: (tag) {
               if (selectedTags.contains(tag)) {
                 selectedTags.remove(tag);

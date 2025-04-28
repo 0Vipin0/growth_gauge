@@ -213,4 +213,14 @@ class TimerListProvider with ChangeNotifier {
 
     return const ListToCsvConverter().convert(rows);
   }
+
+  void sortTimersByName() {
+    _timers.sort((a, b) => a.name.compareTo(b.name));
+    notifyListeners();
+  }
+
+  void sortTimersByInterval() {
+    _timers.sort((a, b) => a.interval.compareTo(b.interval));
+    notifyListeners();
+  }
 }
