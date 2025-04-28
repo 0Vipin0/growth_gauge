@@ -79,8 +79,8 @@ Kindly note that the releases are primarily based on the Android and Windows pla
 *   ~**Automated Builds with GitHub Actions** ([#13][i13])~
 *   ~**CSV Data Export** ([#14][i14])~
 *   **Cross-Device Data Synchronization** ([#15][i15])
-*   ~**Local User Authentication** ([#16][i16])
-*   ~**Sound Alerts and Notifications** ([#17][i17])
+*   ~**Local User Authentication** ([#16][i16])~
+*   ~**Sound Alerts and Notifications** ([#17][i17])~
 *   **Target Tracking** ([#18][i18])
 *   **Data Categorization** ([#19][i19])
 *   **Summary Statistics** ([#20][i20])
