@@ -10,11 +10,13 @@ import 'provider/provider.dart';
 class ReusableCounterWidget extends StatelessWidget {
   final CounterModel counterModel;
   final VoidCallback onRemove;
+  final VoidCallback onUpdateTarget;
 
   const ReusableCounterWidget({
     super.key,
     required this.counterModel,
     required this.onRemove,
+    required this.onUpdateTarget,
   });
 
   @override
@@ -49,6 +51,10 @@ class ReusableCounterWidget extends StatelessWidget {
                         listen: false,
                       ).updateCounter(counterProvider.counter);
                     },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: onUpdateTarget,
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),

@@ -10,11 +10,13 @@ import 'timer_details_page.dart';
 class ReusableTimerWidget extends StatelessWidget {
   final TimerModel timerModel;
   final VoidCallback onRemove;
+  final VoidCallback onUpdateTarget;
 
   const ReusableTimerWidget({
     super.key,
     required this.timerModel,
     required this.onRemove,
+    required this.onUpdateTarget,
   });
 
   @override
@@ -57,6 +59,10 @@ class ReusableTimerWidget extends StatelessWidget {
                             listen: false,
                           ).updateTimer(timerProvider.timer);
                         },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: onUpdateTarget,
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete),

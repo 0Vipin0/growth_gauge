@@ -25,6 +25,8 @@ class CounterListWidget extends StatelessWidget {
                 return ReusableCounterWidget(
                   counterModel: counter,
                   onRemove: () => showDeleteDialog(context, counter),
+                  onUpdateTarget: () =>
+                      showUpdateTargetDialog(context, counter),
                 );
               },
             ),
@@ -129,6 +131,52 @@ class CounterListWidget extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showUpdateTargetDialog(BuildContext context, CounterModel counter) {
+    final TextEditingController targetController = TextEditingController(
+      text: counter.target?.toString() ?? '',
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Update Target'),
+          content: TextField(
+            controller: targetController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'New Target',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                final newTarget = int.tryParse(targetController.text);
+                if (newTarget != null) {
+                  Provider.of<CounterListProvider>(
+                    context,
+                    listen: false,
+                  ).updateCounter(
+                    counter.copyWith(target: newTarget),
+                  );
+                }
+                Navigator.of(context).pop();
+              },
+              child: const Text('Update'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
             ),
           ],
         );
