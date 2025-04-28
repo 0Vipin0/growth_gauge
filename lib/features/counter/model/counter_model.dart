@@ -11,6 +11,7 @@ class CounterModel with _$CounterModel {
     required int count,
     required String description,
     required List<CounterLog> logs,
+    int? target, // New property for target
   }) = _CounterModel;
 
   factory CounterModel.fromJson(Map<String, dynamic> json) =>

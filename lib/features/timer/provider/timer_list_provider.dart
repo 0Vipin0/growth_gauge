@@ -44,8 +44,24 @@ class TimerListProvider with ChangeNotifier {
         _timers[i] = timer;
       }
     }
+
+    // Check if the target is reached
+    if (timer.target != null && timer.interval >= timer.target!) {
+      // Trigger notification
+      _triggerNotification(
+        title: 'Target Reached!',
+        body:
+            'Timer "${timer.name}" has reached its target duration of ${timer.target!.inMinutes} minutes.',
+      );
+    }
+
     saveTimers();
     notifyListeners();
+  }
+
+  void _triggerNotification({required String title, required String body}) {
+    // Implement platform-specific notification logic here
+    print('$title: $body');
   }
 
   void addTimer(TimerModel newTimer) {

@@ -48,8 +48,24 @@ class CounterListProvider with ChangeNotifier {
         _counters[i] = counter;
       }
     }
+
+    // Check if the target is reached
+    if (counter.target != null && counter.count >= counter.target!) {
+      // Trigger notification
+      _triggerNotification(
+        title: 'Target Reached!',
+        body:
+            'Counter "${counter.name}" has reached its target of ${counter.target}.',
+      );
+    }
+
     saveCounters();
     notifyListeners();
+  }
+
+  void _triggerNotification({required String title, required String body}) {
+    // Implement platform-specific notification logic here
+    print('$title: $body');
   }
 
   void removeCounter(CounterModel counter) {

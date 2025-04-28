@@ -22,6 +22,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
+  Duration? _target;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,29 @@ class _AddTimerPageState extends State<AddTimerPage> {
               ),
               const SizedBox(height: 16),
               const Text('Set Timer Duration', style: TextStyle(fontSize: 16)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildTimeControl('Hours', _hours, (value) {
+                    setState(() {
+                      _hours = value;
+                    });
+                  }),
+                  _buildTimeControl('Minutes', _minutes, (value) {
+                    setState(() {
+                      _minutes = value;
+                    });
+                  }),
+                  _buildTimeControl('Seconds', _seconds, (value) {
+                    setState(() {
+                      _seconds = value;
+                    });
+                  }),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const Text('Set Target Duration (Optional)',
+                  style: TextStyle(fontSize: 16)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -147,6 +171,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
         description: _descriptionController.text,
         interval: duration,
         logs: [],
+        target: _target, // Include target
       );
 
       context.read<TimerListProvider>().addTimer(newTimer);

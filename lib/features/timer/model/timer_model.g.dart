@@ -16,6 +16,9 @@ _$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => TimerLog.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      target: json['target'] == null
+          ? null
+          : Duration(microseconds: (json['target'] as num).toInt()),
     );
 
 Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
@@ -25,6 +28,7 @@ Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
       'interval': instance.interval.inMicroseconds,
       'description': instance.description,
       'logs': instance.logs,
+      'target': instance.target?.inMicroseconds,
     };
 
 _$TimerLogImpl _$$TimerLogImplFromJson(Map<String, dynamic> json) =>
