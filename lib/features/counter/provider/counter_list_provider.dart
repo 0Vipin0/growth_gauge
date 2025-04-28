@@ -44,22 +44,32 @@ class CounterListProvider with ChangeNotifier {
   }
 
   void updateCounter(CounterModel newCounter) {
-    final CounterModel counter = getCounter(
-      newCounter,
-    ).copyWith(count: newCounter.count, logs: newCounter.logs);
-    for (int i = 0; i < _counters.length; i++) {
-      if (counter.id == _counters[i].id) {
-        _counters[i] = counter;
-      }
-    }
-
-    if (newCounter.target != counter.target) {
+    CounterModel counter = getCounter(newCounter);
+    if (newCounter.target != null && newCounter.target != counter.target) {
       final log = CounterLog(
         id: DateTime.now().toIso8601String(),
         action: 'Target updated to ${newCounter.target}',
         timestamp: DateTime.now(),
       );
-      counter.logs.add(log);
+      final modifiableLogs = List<CounterLog>.from(counter.logs);
+      modifiableLogs.add(log);
+      final updatedCounter = counter.copyWith(logs: modifiableLogs);
+      for (int i = 0; i < _counters.length; i++) {
+        if (updatedCounter.id == _counters[i].id) {
+          _counters[i] = updatedCounter;
+        }
+      }
+    }
+
+    counter = getCounter(newCounter).copyWith(
+        count: newCounter.count,
+        target: newCounter.target ?? counter.target,
+        logs: newCounter.logs);
+
+    for (int i = 0; i < _counters.length; i++) {
+      if (counter.id == _counters[i].id) {
+        _counters[i] = counter;
+      }
     }
 
     // Check if the target is reached
@@ -78,12 +88,12 @@ class CounterListProvider with ChangeNotifier {
 
   void _triggerNotification({required String title, required String body}) {
     notificationService.scheduleNotification(
-      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-      title: title,
-      body: body,
-      scheduledTime:
-          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
-    );
+        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+        title: title,
+        body: body,
+        scheduledTime:
+            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+        sound: 'assets/sounds/simple_notification.mp3');
   }
 
   void removeCounter(CounterModel counter) {
