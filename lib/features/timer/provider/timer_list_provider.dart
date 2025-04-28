@@ -58,7 +58,12 @@ class TimerListProvider with ChangeNotifier {
       );
       final modifiableLogs = List<TimerLog>.from(timer.logs);
       modifiableLogs.add(log);
-      timer.logs = modifiableLogs;
+      final updatedTimer = timer.copyWith(logs: modifiableLogs);
+      for (int i = 0; i < _timers.length; i++) {
+        if (updatedTimer.id == _timers[i].id) {
+          _timers[i] = updatedTimer;
+        }
+      }
     }
 
     // Check if the target is reached

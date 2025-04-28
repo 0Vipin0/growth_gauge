@@ -61,7 +61,12 @@ class CounterListProvider with ChangeNotifier {
       );
       final modifiableLogs = List<CounterLog>.from(counter.logs);
       modifiableLogs.add(log);
-      counter.logs = modifiableLogs;
+      final updatedCounter = counter.copyWith(logs: modifiableLogs);
+      for (int i = 0; i < _counters.length; i++) {
+        if (updatedCounter.id == _counters[i].id) {
+          _counters[i] = updatedCounter;
+        }
+      }
     }
 
     // Check if the target is reached
