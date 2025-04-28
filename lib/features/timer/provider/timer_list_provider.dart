@@ -1,16 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart' as tz;
 
+import '../../notification/notification_service.dart';
 import '../chart/chart.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
 class TimerListProvider with ChangeNotifier {
   final TimerRepository repository;
+  final NotificationService notificationService;
   List<TimerModel> _timers = [];
 
-  TimerListProvider({required this.repository}) {
+  TimerListProvider(
+      {required this.repository, required this.notificationService}) {
     _loadTimers();
   }
 
@@ -60,8 +64,13 @@ class TimerListProvider with ChangeNotifier {
   }
 
   void _triggerNotification({required String title, required String body}) {
-    // Implement platform-specific notification logic here
-    print('$title: $body');
+    notificationService.scheduleNotification(
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime:
+          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+    );
   }
 
   void addTimer(TimerModel newTimer) {

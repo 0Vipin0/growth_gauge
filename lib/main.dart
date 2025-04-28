@@ -30,15 +30,18 @@ class DependencyProvider extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CounterListProvider(
             repository: SharedPreferencesCounterRepository(),
+            notificationService: notificationService,
           ),
         ),
         ChangeNotifierProvider(
           create: (_) => TimerListProvider(
             repository: SharedPreferencesTimerRepository(),
+            notificationService: notificationService,
           ),
         ),
         ChangeNotifierProvider(create: (_) => CounterChartProvider()),
         ChangeNotifierProvider(create: (_) => TimerChartProvider()),
+        Provider<NotificationService>.value(value: notificationService),
       ],
       child: const MyApp(),
     );

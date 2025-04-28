@@ -1,14 +1,18 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart' as tz;
 
+import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
 class CounterListProvider with ChangeNotifier {
   final CounterRepository repository;
+  final NotificationService notificationService;
   List<CounterModel> _counters = [];
 
-  CounterListProvider({required this.repository}) {
+  CounterListProvider(
+      {required this.repository, required this.notificationService}) {
     _loadCounters();
   }
 
@@ -64,8 +68,13 @@ class CounterListProvider with ChangeNotifier {
   }
 
   void _triggerNotification({required String title, required String body}) {
-    // Implement platform-specific notification logic here
-    print('$title: $body');
+    notificationService.scheduleNotification(
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime:
+          tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+    );
   }
 
   void removeCounter(CounterModel counter) {
