@@ -56,7 +56,9 @@ class TimerListProvider with ChangeNotifier {
         timestamp: DateTime.now(),
         interval: Duration.zero,
       );
-      timer.logs.add(log);
+      final modifiableLogs = List<TimerLog>.from(timer.logs);
+      modifiableLogs.add(log);
+      timer.logs = modifiableLogs;
     }
 
     // Check if the target is reached

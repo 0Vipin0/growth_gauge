@@ -59,7 +59,9 @@ class CounterListProvider with ChangeNotifier {
         action: 'Target updated to ${newCounter.target}',
         timestamp: DateTime.now(),
       );
-      counter.logs.add(log);
+      final modifiableLogs = List<CounterLog>.from(counter.logs);
+      modifiableLogs.add(log);
+      counter.logs = modifiableLogs;
     }
 
     // Check if the target is reached
