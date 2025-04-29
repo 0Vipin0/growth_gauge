@@ -20,6 +20,7 @@ class TimerListProvider with ChangeNotifier {
 
   List<TimerModel> get timers => _timers;
   List<TimerModel> _filteredTimers = [];
+
   List<TimerModel> get filteredTimers =>
       _filteredTimers.isEmpty ? _timers : _filteredTimers;
 
@@ -102,9 +103,11 @@ class TimerListProvider with ChangeNotifier {
     }
 
     timer = getTimer(newTimer).copyWith(
-        interval: newTimer.interval,
-        target: newTimer.target ?? timer.target,
-        logs: newTimer.logs);
+      interval: newTimer.interval,
+      target: newTimer.target ?? timer.target,
+      logs: newTimer.logs,
+      tags: newTimer.tags,
+    );
     for (int i = 0; i < _timers.length; i++) {
       if (timer.id == _timers[i].id) {
         _timers[i] = timer;
@@ -241,6 +244,7 @@ class TimerListProvider with ChangeNotifier {
   }
 
   final List<String> _selectedTags = [];
+
   List<String> get selectedTags => _selectedTags;
 
   void toggleTagSelection(String tag) {
@@ -276,6 +280,7 @@ class TimerListProvider with ChangeNotifier {
   }
 
   List<String> _updatedTags = [];
+
   List<String> get updatedTags => _updatedTags;
 
   void initializeTags(List<String>? tags) {
@@ -296,7 +301,8 @@ class TimerListProvider with ChangeNotifier {
   }
 
   void saveTags(TimerModel timer) {
-    updateTimer(timer.copyWith(tags: _updatedTags));
+    final TimerModel updatedTimer = timer.copyWith(tags: _updatedTags);
+    updateTimer(updatedTimer);
     _updatedTags = [];
     notifyListeners();
   }

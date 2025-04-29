@@ -62,9 +62,11 @@ class CounterListProvider with ChangeNotifier {
     }
 
     counter = getCounter(newCounter).copyWith(
-        count: newCounter.count,
-        target: newCounter.target ?? counter.target,
-        logs: newCounter.logs);
+      count: newCounter.count,
+      target: newCounter.target ?? counter.target,
+      logs: newCounter.logs,
+      tags: newCounter.tags,
+    );
 
     for (int i = 0; i < _counters.length; i++) {
       if (counter.id == _counters[i].id) {
@@ -157,6 +159,7 @@ class CounterListProvider with ChangeNotifier {
   }
 
   List<CounterModel> _filteredCounters = [];
+
   List<CounterModel> get filteredCounters =>
       _filteredCounters.isEmpty ? _counters : _filteredCounters;
 
@@ -209,6 +212,7 @@ class CounterListProvider with ChangeNotifier {
   }
 
   final List<String> _selectedTags = [];
+
   List<String> get selectedTags => _selectedTags;
 
   void toggleTagSelection(String tag) {
@@ -244,6 +248,7 @@ class CounterListProvider with ChangeNotifier {
   }
 
   List<String> _updatedTags = [];
+
   List<String> get updatedTags => _updatedTags;
 
   void initializeTags(List<String>? tags) {
@@ -264,7 +269,8 @@ class CounterListProvider with ChangeNotifier {
   }
 
   void saveTags(CounterModel counter) {
-    updateCounter(counter.copyWith(tags: _updatedTags));
+    final CounterModel updatedCounter = counter.copyWith(tags: _updatedTags);
+    updateCounter(updatedCounter);
     _updatedTags = [];
     notifyListeners();
   }

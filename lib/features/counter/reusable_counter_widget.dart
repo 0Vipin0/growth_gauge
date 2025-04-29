@@ -82,72 +82,75 @@ class ReusableCounterWidget extends StatelessWidget {
                       onPressed: onUpdateTarget,
                     ),
                   IconButton(
-  icon: const Icon(Icons.label),
-  onPressed: () {
-    final counterProvider = Provider.of<CounterListProvider>(context, listen: false);
-    counterProvider.initializeTags(counterModel.tags);
+                    icon: const Icon(Icons.label),
+                    onPressed: () {
+                      final counterProvider = Provider.of<CounterListProvider>(
+                          context,
+                          listen: false);
+                      counterProvider.initializeTags(counterModel.tags);
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        final TextEditingController tagController = TextEditingController();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          final TextEditingController tagController =
+                              TextEditingController();
 
-        return AlertDialog(
-          title: const Text('Manage Tags'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: tagController,
-                decoration: const InputDecoration(
-                  labelText: 'Add Tag',
-                  border: OutlineInputBorder(),
-                ),
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    counterProvider.addTag(value);
-                    tagController.clear();
-                  }
-                },
-              ),
-              const SizedBox(height: 8),
-              Consumer<CounterListProvider>(
-                builder: (context, provider, child) {
-                  return Wrap(
-                    spacing: 8.0,
-                    children: provider.updatedTags
-                        .map((tag) => Chip(
-                              label: Text(tag),
-                              onDeleted: () {
-                                provider.removeTag(tag);
-                              },
-                            ))
-                        .toList(),
-                  );
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                counterProvider.saveTags(counterModel);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Save'),
-            ),
-          ],
-        );
-      },
-    );
-  },
-),
+                          return AlertDialog(
+                            title: const Text('Manage Tags'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  controller: tagController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Add Tag',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onSubmitted: (value) {
+                                    if (value.isNotEmpty) {
+                                      counterProvider.addTag(value);
+                                      tagController.clear();
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 8),
+                                Consumer<CounterListProvider>(
+                                  builder: (context, provider, child) {
+                                    return Wrap(
+                                      spacing: 8.0,
+                                      children: provider.updatedTags
+                                          .map((tag) => Chip(
+                                                label: Text(tag),
+                                                onDeleted: () {
+                                                  provider.removeTag(tag);
+                                                },
+                                              ))
+                                          .toList(),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  counterProvider.saveTags(counterModel);
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Save'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: onRemove,
