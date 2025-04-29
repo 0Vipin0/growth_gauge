@@ -173,6 +173,21 @@ class CounterListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void filterCountersByText(String query) {
+    if (query.isEmpty) {
+      _filteredCounters = [];
+    } else {
+      _filteredCounters = _counters.where((counter) {
+        final lowerQuery = query.toLowerCase();
+        return counter.name.toLowerCase().contains(lowerQuery) ||
+            counter.description.toLowerCase().contains(lowerQuery) ||
+            (counter.target?.toString().contains(lowerQuery) ?? false) ||
+            counter.count.toString().contains(lowerQuery);
+      }).toList();
+    }
+    notifyListeners();
+  }
+
   List<String> getAllTags() {
     final Set<String> tags = {};
     for (final counter in _counters) {

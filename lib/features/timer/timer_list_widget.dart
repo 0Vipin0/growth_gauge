@@ -61,7 +61,7 @@ class TimerListWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) {
-                timerListProvider.filterTimersByTags([value]);
+                timerListProvider.filterTimersByText(value);
               },
               decoration: const InputDecoration(
                 labelText: 'Search Timers',

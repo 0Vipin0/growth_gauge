@@ -36,6 +36,21 @@ class TimerListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void filterTimersByText(String query) {
+    if (query.isEmpty) {
+      _filteredTimers = [];
+    } else {
+      _filteredTimers = _timers.where((timer) {
+        final lowerQuery = query.toLowerCase();
+        return timer.name.toLowerCase().contains(lowerQuery) ||
+            timer.description.toLowerCase().contains(lowerQuery) ||
+            (timer.target?.inMinutes.toString().contains(lowerQuery) ?? false) ||
+            timer.interval.inSeconds.toString().contains(lowerQuery);
+      }).toList();
+    }
+    notifyListeners();
+  }
+
   List<String> getAllTags() {
     final Set<String> tags = {};
     for (final timer in _timers) {

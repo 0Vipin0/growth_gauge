@@ -65,7 +65,7 @@ class CounterListWidget extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
-                counterListProvider.filterCountersByTags([value]);
+                counterListProvider.filterCountersByText(value);
               },
             ),
           ),
