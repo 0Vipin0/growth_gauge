@@ -274,4 +274,30 @@ class TimerListProvider with ChangeNotifier {
   void updateTagsForTimer(TimerModel timer, List<String> updatedTags) {
     updateTimer(timer.copyWith(tags: updatedTags));
   }
+
+  List<String> _updatedTags = [];
+  List<String> get updatedTags => _updatedTags;
+
+  void initializeTags(List<String>? tags) {
+    _updatedTags = List<String>.from(tags ?? []);
+    notifyListeners();
+  }
+
+  void addTag(String tag) {
+    if (!_updatedTags.contains(tag)) {
+      _updatedTags.add(tag);
+      notifyListeners();
+    }
+  }
+
+  void removeTag(String tag) {
+    _updatedTags.remove(tag);
+    notifyListeners();
+  }
+
+  void saveTags(TimerModel timer) {
+    updateTimer(timer.copyWith(tags: _updatedTags));
+    _updatedTags = [];
+    notifyListeners();
+  }
 }
