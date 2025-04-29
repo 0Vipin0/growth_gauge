@@ -25,11 +25,13 @@ class TimerListWidget extends StatelessWidget {
               if (value == 'Sort by Name Asc') {
                 timerListProvider.sortTimersByName();
               } else if (value == 'Sort by Name Desc') {
-                timerListProvider.sortTimersByName(descending: true);
+                timerListProvider.sortTimersByName();
+                timerListProvider.timers.reversed.toList();
               } else if (value == 'Sort by Interval Asc') {
                 timerListProvider.sortTimersByInterval();
               } else if (value == 'Sort by Interval Desc') {
-                timerListProvider.sortTimersByInterval(descending: true);
+                timerListProvider.sortTimersByInterval();
+                timerListProvider.timers.reversed.toList();
               }
             },
             itemBuilder: (context) => [
@@ -51,7 +53,6 @@ class TimerListWidget extends StatelessWidget {
               ),
             ],
           ),
-          
         ],
       ),
       body: Column(
@@ -60,7 +61,7 @@ class TimerListWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) {
-                timerListProvider.filterTimers(value);
+                timerListProvider.filterTimersByTags([value]);
               },
               decoration: const InputDecoration(
                 labelText: 'Search Timers',
@@ -72,7 +73,7 @@ class TimerListWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Wrap(
               spacing: 8.0,
-              children: timerListProvider.tags.map((tag) {
+              children: timerListProvider.getAllTags().map((tag) {
                 return FilterChip(
                   label: Text(tag),
                   selected: selectedTags.contains(tag),
@@ -88,27 +89,25 @@ class TimerListWidget extends StatelessWidget {
               }).toList(),
             ),
           ),
-      const SizedBox(height: 10),
-
-            Expanded(
-        child: timerListProvider.filteredTimers.isEmpty
-            ? _buildEmptyTimerList(context, timerListProvider)
-            : ListView.builder(
-                itemCount: timerListProvider.filteredTimers.length,
-                itemBuilder: (context, index) {
-                  final timer = timerListProvider.filteredTimers[index];
-                  return ReusableTimerWidget(
-                    timerModel: timer,
-                    onRemove: () => showDeleteDialog(context, timer),
-                    onUpdateTarget: () => showUpdateTargetDialog(context, timer),
-                  );
-                },
-              ),
-      ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: timerListProvider.filteredTimers.isEmpty
+                ? _buildEmptyTimerList(context, timerListProvider)
+                : ListView.builder(
+                    itemCount: timerListProvider.filteredTimers.length,
+                    itemBuilder: (context, index) {
+                      final timer = timerListProvider.filteredTimers[index];
+                      return ReusableTimerWidget(
+                        timerModel: timer,
+                        onRemove: () => showDeleteDialog(context, timer),
+                        onUpdateTarget: () =>
+                            showUpdateTargetDialog(context, timer),
+                      );
+                    },
+                  ),
+          ),
         ],
-      ), 
-      
-      
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushTransition(

@@ -44,9 +44,12 @@ class ReusableCounterWidget extends StatelessWidget {
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8.0,
-                    children: counterModel.tags?.map((tag) => Chip(
-                          label: Text(tag),
-                        ))?.toList() ?? [],
+                    children: counterModel.tags
+                            ?.map((tag) => Chip(
+                                  label: Text(tag),
+                                ))
+                            .toList() ??
+                        [],
                   ),
                 ],
               ),
@@ -84,8 +87,10 @@ class ReusableCounterWidget extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          final TextEditingController tagController = TextEditingController();
-                          final List<String> updatedTags = List.from(counterModel.tags ?? []);
+                          final TextEditingController tagController =
+                              TextEditingController();
+                          final List<String> updatedTags =
+                              List.from(counterModel.tags ?? []);
 
                           return AlertDialog(
                             title: const Text('Manage Tags'),
@@ -99,7 +104,8 @@ class ReusableCounterWidget extends StatelessWidget {
                                     border: OutlineInputBorder(),
                                   ),
                                   onSubmitted: (value) {
-                                    if (value.isNotEmpty && !updatedTags.contains(value)) {
+                                    if (value.isNotEmpty &&
+                                        !updatedTags.contains(value)) {
                                       updatedTags.add(value);
                                       tagController.clear();
                                     }
@@ -108,12 +114,14 @@ class ReusableCounterWidget extends StatelessWidget {
                                 const SizedBox(height: 8),
                                 Wrap(
                                   spacing: 8.0,
-                                  children: updatedTags.map((tag) => Chip(
-                                        label: Text(tag),
-                                        onDeleted: () {
-                                          updatedTags.remove(tag);
-                                        },
-                                      )).toList(),
+                                  children: updatedTags
+                                      .map((tag) => Chip(
+                                            label: Text(tag),
+                                            onDeleted: () {
+                                              updatedTags.remove(tag);
+                                            },
+                                          ))
+                                      .toList(),
                                 ),
                               ],
                             ),

@@ -56,9 +56,12 @@ class CounterDetailsPage extends StatelessWidget {
             const SizedBox(height: 16),
             Wrap(
               spacing: 8.0,
-              children: counter.tags?.map((tag) => Chip(
-                    label: Text(tag),
-                  ))?.toList() ?? [],
+              children: counter.tags
+                      ?.map((tag) => Chip(
+                            label: Text(tag),
+                          ))
+                      .toList() ??
+                  [],
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -66,8 +69,10 @@ class CounterDetailsPage extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    final TextEditingController tagController = TextEditingController();
-                    final List<String> updatedTags = List.from(counter.tags ?? []);
+                    final TextEditingController tagController =
+                        TextEditingController();
+                    final List<String> updatedTags =
+                        List.from(counter.tags ?? []);
 
                     return AlertDialog(
                       title: const Text('Manage Tags'),
@@ -81,7 +86,8 @@ class CounterDetailsPage extends StatelessWidget {
                               border: OutlineInputBorder(),
                             ),
                             onSubmitted: (value) {
-                              if (value.isNotEmpty && !updatedTags.contains(value)) {
+                              if (value.isNotEmpty &&
+                                  !updatedTags.contains(value)) {
                                 updatedTags.add(value);
                                 tagController.clear();
                               }
@@ -90,12 +96,14 @@ class CounterDetailsPage extends StatelessWidget {
                           const SizedBox(height: 8),
                           Wrap(
                             spacing: 8.0,
-                            children: updatedTags.map((tag) => Chip(
-                                  label: Text(tag),
-                                  onDeleted: () {
-                                    updatedTags.remove(tag);
-                                  },
-                                )).toList(),
+                            children: updatedTags
+                                .map((tag) => Chip(
+                                      label: Text(tag),
+                                      onDeleted: () {
+                                        updatedTags.remove(tag);
+                                      },
+                                    ))
+                                .toList(),
                           ),
                         ],
                       ),

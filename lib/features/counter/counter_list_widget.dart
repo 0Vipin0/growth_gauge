@@ -94,7 +94,8 @@ class CounterListWidget extends StatelessWidget {
                 : ListView.builder(
                     itemCount: counterListProvider.filteredCounters.length,
                     itemBuilder: (context, index) {
-                      final counter = counterListProvider.filteredCounters[index];
+                      final counter =
+                          counterListProvider.filteredCounters[index];
                       return ReusableCounterWidget(
                         counterModel: counter,
                         onRemove: () => showDeleteDialog(context, counter),
