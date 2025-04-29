@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'chart/chart.dart';
 import 'model/model.dart';
+import 'provider/counter_list_provider.dart';
 
 class CounterDetailsPage extends StatelessWidget {
   final CounterModel counter;
@@ -54,25 +57,33 @@ class CounterDetailsPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            Wrap(
-              spacing: 8.0,
-              children: counter.tags
-                      ?.map((tag) => Chip(
-                            label: Text(tag),
-                          ))
-                      .toList() ??
-                  [],
+            Consumer<CounterListProvider>(
+              builder: (context, provider, child) {
+                return Wrap(
+                  spacing: 8.0,
+                  children: provider
+                          .getCounter(counter)
+                          .tags
+                          ?.map((tag) => Chip(
+                                label: Text(tag),
+                              ))
+                          .toList() ??
+                      [],
+                );
+              },
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                final counterProvider =
+                    Provider.of<CounterListProvider>(context, listen: false);
+                counterProvider.initializeTags(counter.tags);
+
                 showDialog(
                   context: context,
                   builder: (context) {
                     final TextEditingController tagController =
                         TextEditingController();
-                    final List<String> updatedTags =
-                        List.from(counter.tags ?? []);
 
                     return AlertDialog(
                       title: const Text('Manage Tags'),
@@ -86,24 +97,27 @@ class CounterDetailsPage extends StatelessWidget {
                               border: OutlineInputBorder(),
                             ),
                             onSubmitted: (value) {
-                              if (value.isNotEmpty &&
-                                  !updatedTags.contains(value)) {
-                                updatedTags.add(value);
+                              if (value.isNotEmpty) {
+                                counterProvider.addTag(value);
                                 tagController.clear();
                               }
                             },
                           ),
                           const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8.0,
-                            children: updatedTags
-                                .map((tag) => Chip(
-                                      label: Text(tag),
-                                      onDeleted: () {
-                                        updatedTags.remove(tag);
-                                      },
-                                    ))
-                                .toList(),
+                          Consumer<CounterListProvider>(
+                            builder: (context, provider, child) {
+                              return Wrap(
+                                spacing: 8.0,
+                                children: provider.updatedTags
+                                    .map((tag) => Chip(
+                                          label: Text(tag),
+                                          onDeleted: () {
+                                            provider.removeTag(tag);
+                                          },
+                                        ))
+                                    .toList(),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -116,7 +130,7 @@ class CounterDetailsPage extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            // Update the counter with new tags
+                            counterProvider.saveTags(counter);
                             Navigator.of(context).pop();
                           },
                           child: const Text('Save'),

@@ -91,25 +91,33 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               },
             ),
             const SizedBox(height: 16),
-            Wrap(
-              spacing: 8.0,
-              children: widget.timer.tags
-                      ?.map((tag) => Chip(
-                            label: Text(tag),
-                          ))
-                      .toList() ??
-                  [],
+            Consumer<TimerListProvider>(
+              builder: (context, provider, child) {
+                return Wrap(
+                  spacing: 8.0,
+                  children: provider
+                          .getTimer(widget.timer)
+                          .tags
+                          ?.map((tag) => Chip(
+                                label: Text(tag),
+                              ))
+                          .toList() ??
+                      [],
+                );
+              },
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                final timerProvider =
+                    Provider.of<TimerListProvider>(context, listen: false);
+                timerProvider.initializeTags(widget.timer.tags);
+
                 showDialog(
                   context: context,
                   builder: (context) {
                     final TextEditingController tagController =
                         TextEditingController();
-                    final List<String> updatedTags =
-                        List.from(widget.timer.tags ?? []);
 
                     return AlertDialog(
                       title: const Text('Manage Tags'),
@@ -123,24 +131,27 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                               border: OutlineInputBorder(),
                             ),
                             onSubmitted: (value) {
-                              if (value.isNotEmpty &&
-                                  !updatedTags.contains(value)) {
-                                updatedTags.add(value);
+                              if (value.isNotEmpty) {
+                                timerProvider.addTag(value);
                                 tagController.clear();
                               }
                             },
                           ),
                           const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8.0,
-                            children: updatedTags
-                                .map((tag) => Chip(
-                                      label: Text(tag),
-                                      onDeleted: () {
-                                        updatedTags.remove(tag);
-                                      },
-                                    ))
-                                .toList(),
+                          Consumer<TimerListProvider>(
+                            builder: (context, provider, child) {
+                              return Wrap(
+                                spacing: 8.0,
+                                children: provider.updatedTags
+                                    .map((tag) => Chip(
+                                          label: Text(tag),
+                                          onDeleted: () {
+                                            provider.removeTag(tag);
+                                          },
+                                        ))
+                                    .toList(),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -153,12 +164,7 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Provider.of<TimerListProvider>(
-                              context,
-                              listen: false,
-                            ).updateTimer(
-                              widget.timer.copyWith(tags: updatedTags),
-                            );
+                            timerProvider.saveTags(widget.timer);
                             Navigator.of(context).pop();
                           },
                           child: const Text('Save'),
