@@ -19,6 +19,49 @@ class TimerListProvider with ChangeNotifier {
   }
 
   List<TimerModel> get timers => _timers;
+  List<TimerModel> _filteredTimers = [];
+
+  List<TimerModel> get filteredTimers =>
+      _filteredTimers.isEmpty ? _timers : _filteredTimers;
+
+  void filterTimersByTags(List<String> tags) {
+    if (tags.isEmpty) {
+      _filteredTimers = [];
+    } else {
+      _filteredTimers = _timers
+          .where((timer) =>
+              timer.tags != null &&
+              timer.tags!.any((tag) => tags.contains(tag)))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  void filterTimersByText(String query) {
+    if (query.isEmpty) {
+      _filteredTimers = [];
+    } else {
+      _filteredTimers = _timers.where((timer) {
+        final lowerQuery = query.toLowerCase();
+        return timer.name.toLowerCase().contains(lowerQuery) ||
+            timer.description.toLowerCase().contains(lowerQuery) ||
+            (timer.target?.inMinutes.toString().contains(lowerQuery) ??
+                false) ||
+            timer.interval.inSeconds.toString().contains(lowerQuery);
+      }).toList();
+    }
+    notifyListeners();
+  }
+
+  List<String> getAllTags() {
+    final Set<String> tags = {};
+    for (final timer in _timers) {
+      if (timer.tags != null) {
+        tags.addAll(timer.tags!);
+      }
+    }
+    return tags.toList();
+  }
 
   Future<void> _loadTimers() async {
     _timers = await repository.getTimers();
@@ -60,9 +103,11 @@ class TimerListProvider with ChangeNotifier {
     }
 
     timer = getTimer(newTimer).copyWith(
-        interval: newTimer.interval,
-        target: newTimer.target ?? timer.target,
-        logs: newTimer.logs);
+      interval: newTimer.interval,
+      target: newTimer.target ?? timer.target,
+      logs: newTimer.logs,
+      tags: newTimer.tags,
+    );
     for (int i = 0; i < _timers.length; i++) {
       if (timer.id == _timers[i].id) {
         _timers[i] = timer;
@@ -186,5 +231,79 @@ class TimerListProvider with ChangeNotifier {
     }
 
     return const ListToCsvConverter().convert(rows);
+  }
+
+  void sortTimersByName() {
+    _timers.sort((a, b) => a.name.compareTo(b.name));
+    notifyListeners();
+  }
+
+  void sortTimersByInterval() {
+    _timers.sort((a, b) => a.interval.compareTo(b.interval));
+    notifyListeners();
+  }
+
+  final List<String> _selectedTags = [];
+
+  List<String> get selectedTags => _selectedTags;
+
+  void toggleTagSelection(String tag) {
+    if (_selectedTags.contains(tag)) {
+      _selectedTags.remove(tag);
+    } else {
+      _selectedTags.add(tag);
+    }
+    filterTimersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void clearSelectedTags() {
+    _selectedTags.clear();
+    filterTimersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void addTagToTimer(TimerModel timer, String tag) {
+    if (!timer.tags!.contains(tag)) {
+      final updatedTags = List<String>.from(timer.tags ?? [])..add(tag);
+      updateTimer(timer.copyWith(tags: updatedTags));
+    }
+  }
+
+  void removeTagFromTimer(TimerModel timer, String tag) {
+    final updatedTags = List<String>.from(timer.tags ?? [])..remove(tag);
+    updateTimer(timer.copyWith(tags: updatedTags));
+  }
+
+  void updateTagsForTimer(TimerModel timer, List<String> updatedTags) {
+    updateTimer(timer.copyWith(tags: updatedTags));
+  }
+
+  List<String> _updatedTags = [];
+
+  List<String> get updatedTags => _updatedTags;
+
+  void initializeTags(List<String>? tags) {
+    _updatedTags = List<String>.from(tags ?? []);
+    notifyListeners();
+  }
+
+  void addTag(String tag) {
+    if (!_updatedTags.contains(tag)) {
+      _updatedTags.add(tag);
+      notifyListeners();
+    }
+  }
+
+  void removeTag(String tag) {
+    _updatedTags.remove(tag);
+    notifyListeners();
+  }
+
+  void saveTags(TimerModel timer) {
+    final TimerModel updatedTimer = timer.copyWith(tags: _updatedTags);
+    updateTimer(updatedTimer);
+    _updatedTags = [];
+    notifyListeners();
   }
 }

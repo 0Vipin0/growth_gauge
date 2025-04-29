@@ -45,6 +45,16 @@ class ReusableTimerWidget extends StatelessWidget {
                           child: const Text('Add Target',
                               style: TextStyle(color: Colors.red)),
                         ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8.0,
+                        children: timerModel.tags
+                                ?.map((tag) => Chip(
+                                      label: Text(tag),
+                                    ))
+                                .toList() ??
+                            [],
+                      ),
                     ],
                   ),
                   trailing: Row(
@@ -79,6 +89,76 @@ class ReusableTimerWidget extends StatelessWidget {
                           icon: const Icon(Icons.edit),
                           onPressed: onUpdateTarget,
                         ),
+                      IconButton(
+                        icon: const Icon(Icons.label),
+                        onPressed: () {
+                          final timerProvider = Provider.of<TimerListProvider>(
+                              context,
+                              listen: false);
+                          timerProvider.initializeTags(timerModel.tags);
+
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              final TextEditingController tagController =
+                                  TextEditingController();
+
+                              return AlertDialog(
+                                title: const Text('Manage Tags'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextField(
+                                      controller: tagController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Add Tag',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      onSubmitted: (value) {
+                                        if (value.isNotEmpty) {
+                                          timerProvider.addTag(value);
+                                          tagController.clear();
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Consumer<TimerListProvider>(
+                                      builder: (context, provider, child) {
+                                        return Wrap(
+                                          spacing: 8.0,
+                                          children: provider.updatedTags
+                                              .map((tag) => Chip(
+                                                    label: Text(tag),
+                                                    onDeleted: () {
+                                                      provider.removeTag(tag);
+                                                    },
+                                                  ))
+                                              .toList(),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      timerProvider.saveTags(timerModel);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Save'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: onRemove,

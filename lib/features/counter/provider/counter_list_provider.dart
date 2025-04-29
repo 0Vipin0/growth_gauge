@@ -62,9 +62,11 @@ class CounterListProvider with ChangeNotifier {
     }
 
     counter = getCounter(newCounter).copyWith(
-        count: newCounter.count,
-        target: newCounter.target ?? counter.target,
-        logs: newCounter.logs);
+      count: newCounter.count,
+      target: newCounter.target ?? counter.target,
+      logs: newCounter.logs,
+      tags: newCounter.tags,
+    );
 
     for (int i = 0; i < _counters.length; i++) {
       if (counter.id == _counters[i].id) {
@@ -154,5 +156,122 @@ class CounterListProvider with ChangeNotifier {
     }
 
     return const ListToCsvConverter().convert(rows);
+  }
+
+  List<CounterModel> _filteredCounters = [];
+
+  List<CounterModel> get filteredCounters =>
+      _filteredCounters.isEmpty ? _counters : _filteredCounters;
+
+  void filterCountersByTags(List<String> tags) {
+    if (tags.isEmpty) {
+      _filteredCounters = [];
+    } else {
+      _filteredCounters = _counters
+          .where((counter) =>
+              counter.tags != null &&
+              counter.tags!.any((tag) => tags.contains(tag)))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  void filterCountersByText(String query) {
+    if (query.isEmpty) {
+      _filteredCounters = [];
+    } else {
+      _filteredCounters = _counters.where((counter) {
+        final lowerQuery = query.toLowerCase();
+        return counter.name.toLowerCase().contains(lowerQuery) ||
+            counter.description.toLowerCase().contains(lowerQuery) ||
+            (counter.target?.toString().contains(lowerQuery) ?? false) ||
+            counter.count.toString().contains(lowerQuery);
+      }).toList();
+    }
+    notifyListeners();
+  }
+
+  List<String> getAllTags() {
+    final Set<String> tags = {};
+    for (final counter in _counters) {
+      if (counter.tags != null) {
+        tags.addAll(counter.tags!);
+      }
+    }
+    return tags.toList();
+  }
+
+  void sortCountersByName() {
+    _counters.sort((a, b) => a.name.compareTo(b.name));
+    notifyListeners();
+  }
+
+  void sortCountersByCount() {
+    _counters.sort((a, b) => a.count.compareTo(b.count));
+    notifyListeners();
+  }
+
+  final List<String> _selectedTags = [];
+
+  List<String> get selectedTags => _selectedTags;
+
+  void toggleTagSelection(String tag) {
+    if (_selectedTags.contains(tag)) {
+      _selectedTags.remove(tag);
+    } else {
+      _selectedTags.add(tag);
+    }
+    filterCountersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void clearSelectedTags() {
+    _selectedTags.clear();
+    filterCountersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void addTagToCounter(CounterModel counter, String tag) {
+    if (!counter.tags!.contains(tag)) {
+      final updatedTags = List<String>.from(counter.tags ?? [])..add(tag);
+      updateCounter(counter.copyWith(tags: updatedTags));
+    }
+  }
+
+  void removeTagFromCounter(CounterModel counter, String tag) {
+    final updatedTags = List<String>.from(counter.tags ?? [])..remove(tag);
+    updateCounter(counter.copyWith(tags: updatedTags));
+  }
+
+  void updateTagsForCounter(CounterModel counter, List<String> updatedTags) {
+    updateCounter(counter.copyWith(tags: updatedTags));
+  }
+
+  List<String> _updatedTags = [];
+
+  List<String> get updatedTags => _updatedTags;
+
+  void initializeTags(List<String>? tags) {
+    _updatedTags = List<String>.from(tags ?? []);
+    notifyListeners();
+  }
+
+  void addTag(String tag) {
+    if (!_updatedTags.contains(tag)) {
+      _updatedTags.add(tag);
+      notifyListeners();
+    }
+  }
+
+  void removeTag(String tag) {
+    _updatedTags.remove(tag);
+    notifyListeners();
+  }
+
+  void saveTags(CounterModel counter) {
+    final CounterModel updatedCounter = counter.copyWith(tags: _updatedTags);
+    updateCounter(updatedCounter);
+    _updatedTags = [];
+    notifyListeners();
   }
 }

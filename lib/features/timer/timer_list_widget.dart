@@ -16,22 +16,104 @@ class TimerListWidget extends StatelessWidget {
     final timerListProvider = Provider.of<TimerListProvider>(context);
 
     return Scaffold(
-      body: timerListProvider.timers.isEmpty
-          ? _buildEmptyTimerList(
-              context,
-              timerListProvider,
-            ) // Show empty state widget
-          : ListView.builder(
-              itemCount: timerListProvider.timers.length,
-              itemBuilder: (context, index) {
-                final timer = timerListProvider.timers[index];
-                return ReusableTimerWidget(
-                  timerModel: timer,
-                  onRemove: () => showDeleteDialog(context, timer),
-                  onUpdateTarget: () => showUpdateTargetDialog(context, timer),
-                );
+      appBar: AppBar(
+        title: const Text('Timers'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'Sort by Name Asc') {
+                timerListProvider.sortTimersByName();
+              } else if (value == 'Sort by Name Desc') {
+                timerListProvider.sortTimersByName();
+                timerListProvider.timers.reversed.toList();
+              } else if (value == 'Sort by Interval Asc') {
+                timerListProvider.sortTimersByInterval();
+              } else if (value == 'Sort by Interval Desc') {
+                timerListProvider.sortTimersByInterval();
+                timerListProvider.timers.reversed.toList();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'Sort by Name Asc',
+                child: Text('Sort by Name Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Name Desc',
+                child: Text('Sort by Name Descending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Interval Asc',
+                child: Text('Sort by Interval Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Interval Desc',
+                child: Text('Sort by Interval Descending'),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {
+                timerListProvider.filterTimersByText(value);
               },
+              decoration: const InputDecoration(
+                labelText: 'Search Timers',
+                border: OutlineInputBorder(),
+              ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              spacing: 8.0,
+              children: [
+                if (timerListProvider.selectedTags.isNotEmpty)
+                  ChoiceChip(
+                    label: const Text('Clear All'),
+                    selected: false,
+                    onSelected: (_) {
+                      timerListProvider.clearSelectedTags();
+                    },
+                  ),
+                ...timerListProvider.getAllTags().map((tag) {
+                  final isSelected =
+                      timerListProvider.selectedTags.contains(tag);
+                  return ChoiceChip(
+                    label: Text(tag),
+                    selected: isSelected,
+                    onSelected: (_) {
+                      timerListProvider.toggleTagSelection(tag);
+                    },
+                  );
+                }),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: timerListProvider.filteredTimers.isEmpty
+                ? _buildEmptyTimerList(context, timerListProvider)
+                : ListView.builder(
+                    itemCount: timerListProvider.filteredTimers.length,
+                    itemBuilder: (context, index) {
+                      final timer = timerListProvider.filteredTimers[index];
+                      return ReusableTimerWidget(
+                        timerModel: timer,
+                        onRemove: () => showDeleteDialog(context, timer),
+                        onUpdateTarget: () =>
+                            showUpdateTargetDialog(context, timer),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushTransition(

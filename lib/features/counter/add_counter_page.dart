@@ -16,13 +16,14 @@ class AddCounterPage extends StatefulWidget {
 
 class _AddCounterPageState extends State<AddCounterPage> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _tagController =
+      TextEditingController(); // Controller for tags
 
   int _count = 0;
   int? _target;
+  final List<String> _tags = []; // List to store tags
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +104,36 @@ class _AddCounterPageState extends State<AddCounterPage> {
                   });
                 },
               ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _tagController,
+                decoration: const InputDecoration(
+                  labelText: 'Add Tag',
+                  border: OutlineInputBorder(),
+                ),
+                onFieldSubmitted: (value) {
+                  setState(() {
+                    if (value.isNotEmpty && !_tags.contains(value)) {
+                      _tags.add(value);
+                      _tagController.clear();
+                    }
+                  });
+                },
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8.0,
+                children: _tags.map((tag) {
+                  return Chip(
+                    label: Text(tag),
+                    onDeleted: () {
+                      setState(() {
+                        _tags.remove(tag);
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _saveCounter,
@@ -123,7 +154,8 @@ class _AddCounterPageState extends State<AddCounterPage> {
         description: _descriptionController.text,
         count: _count,
         logs: [],
-        target: _target, // Include target
+        target: _target,
+        tags: _tags, // Save tags
       );
 
       context.read<CounterListProvider>().addCounter(newCounter);
@@ -136,6 +168,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _tagController.dispose();
     super.dispose();
   }
 }

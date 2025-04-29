@@ -16,20 +16,102 @@ class CounterListWidget extends StatelessWidget {
     final counterListProvider = Provider.of<CounterListProvider>(context);
 
     return Scaffold(
-      body: counterListProvider.counters.isEmpty
-          ? _buildEmptyCounterList(context) // Show empty state widget
-          : ListView.builder(
-              itemCount: counterListProvider.counters.length,
-              itemBuilder: (context, index) {
-                final counter = counterListProvider.counters[index];
-                return ReusableCounterWidget(
-                  counterModel: counter,
-                  onRemove: () => showDeleteDialog(context, counter),
-                  onUpdateTarget: () =>
-                      showUpdateTargetDialog(context, counter),
-                );
+      appBar: AppBar(
+        title: const Text('Counters'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'Sort by Name Asc') {
+                counterListProvider.sortCountersByName();
+              } else if (value == 'Sort by Name Desc') {
+                counterListProvider.sortCountersByName();
+                counterListProvider.counters.reversed.toList();
+              } else if (value == 'Sort by Count Asc') {
+                counterListProvider.sortCountersByCount();
+              } else if (value == 'Sort by Count Desc') {
+                counterListProvider.sortCountersByCount();
+                counterListProvider.counters.reversed.toList();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'Sort by Name Asc',
+                child: Text('Sort by Name Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Name Desc',
+                child: Text('Sort by Name Descending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Count Asc',
+                child: Text('Sort by Count Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Count Desc',
+                child: Text('Sort by Count Descending'),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                labelText: 'Filter by Name, Description, or Target',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                counterListProvider.filterCountersByText(value);
               },
             ),
+          ),
+          Wrap(
+            spacing: 8.0,
+            children: [
+              if (counterListProvider.selectedTags.isNotEmpty)
+                ChoiceChip(
+                  label: const Text('Clear All'),
+                  selected: false,
+                  onSelected: (_) {
+                    counterListProvider.clearSelectedTags();
+                  },
+                ),
+              ...counterListProvider.getAllTags().map((tag) {
+                final isSelected =
+                    counterListProvider.selectedTags.contains(tag);
+                return ChoiceChip(
+                  label: Text(tag),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    counterListProvider.toggleTagSelection(tag);
+                  },
+                );
+              }),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: counterListProvider.filteredCounters.isEmpty
+                ? _buildEmptyCounterList(context)
+                : ListView.builder(
+                    itemCount: counterListProvider.filteredCounters.length,
+                    itemBuilder: (context, index) {
+                      final counter =
+                          counterListProvider.filteredCounters[index];
+                      return ReusableCounterWidget(
+                        counterModel: counter,
+                        onRemove: () => showDeleteDialog(context, counter),
+                        onUpdateTarget: () =>
+                            showUpdateTargetDialog(context, counter),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushTransition(

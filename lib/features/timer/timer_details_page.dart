@@ -37,6 +37,97 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    final timerProvider =
+                        Provider.of<TimerListProvider>(context, listen: false);
+                    timerProvider.initializeTags(widget.timer.tags);
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        final TextEditingController tagController =
+                            TextEditingController();
+
+                        return AlertDialog(
+                          title: const Text('Manage Tags'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextField(
+                                controller: tagController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Add Tag',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onSubmitted: (value) {
+                                  if (value.isNotEmpty) {
+                                    timerProvider.addTag(value);
+                                    tagController.clear();
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 8),
+                              Consumer<TimerListProvider>(
+                                builder: (context, provider, child) {
+                                  return Wrap(
+                                    spacing: 8.0,
+                                    children: provider.updatedTags
+                                        .map((tag) => Chip(
+                                              label: Text(tag),
+                                              onDeleted: () {
+                                                provider.removeTag(tag);
+                                              },
+                                            ))
+                                        .toList(),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                timerProvider.saveTags(widget.timer);
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Save'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Text('Manage Tags'),
+                ),
+                const SizedBox(width: 16),
+                Consumer<TimerListProvider>(
+                  builder: (context, provider, child) {
+                    return Wrap(
+                      spacing: 8.0,
+                      children: provider
+                              .getTimer(widget.timer)
+                              .tags
+                              ?.map((tag) => Chip(
+                                    label: Text(tag),
+                                  ))
+                              .toList() ??
+                          [],
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 16),
             _buildIntervalDropdown(),
             // Dropdown for interval selection
             const SizedBox(height: 16),

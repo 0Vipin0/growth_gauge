@@ -18,11 +18,18 @@ class _AddTimerPageState extends State<AddTimerPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _tagController =
+      TextEditingController(); // Controller for tags
 
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
+
+  int _targetHours = 0;
+  int _targetMinutes = 0;
+  int _targetSeconds = 0;
   Duration? _target;
+  final List<String> _tags = []; // List to store tags
 
   @override
   Widget build(BuildContext context) {
@@ -88,22 +95,52 @@ class _AddTimerPageState extends State<AddTimerPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildTimeControl('Hours', _hours, (value) {
+                  _buildTimeControl('Hours', _targetHours, (value) {
                     setState(() {
-                      _hours = value;
+                      _targetHours = value;
                     });
                   }),
-                  _buildTimeControl('Minutes', _minutes, (value) {
+                  _buildTimeControl('Minutes', _targetMinutes, (value) {
                     setState(() {
-                      _minutes = value;
+                      _targetMinutes = value;
                     });
                   }),
-                  _buildTimeControl('Seconds', _seconds, (value) {
+                  _buildTimeControl('Seconds', _targetSeconds, (value) {
                     setState(() {
-                      _seconds = value;
+                      _targetSeconds = value;
                     });
                   }),
                 ],
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _tagController,
+                decoration: const InputDecoration(
+                  labelText: 'Add Tag',
+                  border: OutlineInputBorder(),
+                ),
+                onFieldSubmitted: (value) {
+                  setState(() {
+                    if (value.isNotEmpty && !_tags.contains(value)) {
+                      _tags.add(value);
+                      _tagController.clear();
+                    }
+                  });
+                },
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8.0,
+                children: _tags.map((tag) {
+                  return Chip(
+                    label: Text(tag),
+                    onDeleted: () {
+                      setState(() {
+                        _tags.remove(tag);
+                      });
+                    },
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
@@ -164,6 +201,11 @@ class _AddTimerPageState extends State<AddTimerPage> {
         minutes: _minutes,
         seconds: _seconds,
       );
+      _target = Duration(
+        hours: _targetHours,
+        minutes: _targetMinutes,
+        seconds: _targetSeconds,
+      );
 
       final newTimer = TimerModel(
         id: const Uuid().v4(),
@@ -171,7 +213,8 @@ class _AddTimerPageState extends State<AddTimerPage> {
         description: _descriptionController.text,
         interval: duration,
         logs: [],
-        target: _target, // Include target
+        target: _target,
+        tags: _tags, // Save tags
       );
 
       context.read<TimerListProvider>().addTimer(newTimer);
@@ -184,6 +227,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _tagController.dispose();
     super.dispose();
   }
 }

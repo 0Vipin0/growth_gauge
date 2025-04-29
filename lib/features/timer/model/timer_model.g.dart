@@ -19,6 +19,7 @@ _$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
       target: json['target'] == null
           ? null
           : Duration(microseconds: (json['target'] as num).toInt()),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
       'description': instance.description,
       'logs': instance.logs,
       'target': instance.target?.inMicroseconds,
+      'tags': instance.tags,
     };
 
 _$TimerLogImpl _$$TimerLogImplFromJson(Map<String, dynamic> json) =>
