@@ -22,73 +22,90 @@ class CounterListWidget extends StatelessWidget {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              if (value == 'Sort by Name') {
+              if (value == 'Sort by Name Asc') {
                 counterListProvider.sortCountersByName();
-              } else if (value == 'Sort by Count') {
+              } else if (value == 'Sort by Name Desc') {
+                counterListProvider.sortCountersByName();
+                counterListProvider.counters.reversed.toList();
+              } else if (value == 'Sort by Count Asc') {
                 counterListProvider.sortCountersByCount();
+              } else if (value == 'Sort by Count Desc') {
+                counterListProvider.sortCountersByCount();
+                counterListProvider.counters.reversed.toList();
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
-                value: 'Sort by Name',
-                child: Text('Sort by Name'),
+                value: 'Sort by Name Asc',
+                child: Text('Sort by Name Ascending'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Count',
-                child: Text('Sort by Count'),
+                value: 'Sort by Name Desc',
+                child: Text('Sort by Name Descending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Count Asc',
+                child: Text('Sort by Count Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Count Desc',
+                child: Text('Sort by Count Descending'),
               ),
             ],
           ),
-          PopupMenuButton<String>(
-            onSelected: (tag) {
-              if (selectedTags.contains(tag)) {
-                selectedTags.remove(tag);
-              } else {
-                selectedTags.add(tag);
-              }
-              counterListProvider.filterCountersByTags(selectedTags);
-            },
-            itemBuilder: (context) {
-              return counterListProvider.getAllTags().map((tag) {
-                return PopupMenuItem<String>(
-                  value: tag,
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: selectedTags.contains(tag),
-                        onChanged: (isSelected) {
-                          if (isSelected == true) {
-                            selectedTags.add(tag);
-                          } else {
-                            selectedTags.remove(tag);
-                          }
-                          counterListProvider
-                              .filterCountersByTags(selectedTags);
-                        },
-                      ),
-                      Text(tag),
-                    ],
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                labelText: 'Filter by Name, Description, or Target',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                counterListProvider.filterCountersByTags([value]);
+              },
+            ),
+          ),
+          Wrap(
+            spacing: 8.0,
+            children: counterListProvider.getAllTags().map((tag) {
+              final isSelected = selectedTags.contains(tag);
+              return ChoiceChip(
+                label: Text(tag),
+                selected: isSelected,
+                onSelected: (selected) {
+                  if (selected) {
+                    selectedTags.add(tag);
+                  } else {
+                    selectedTags.remove(tag);
+                  }
+                  counterListProvider.filterCountersByTags(selectedTags);
+                },
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: counterListProvider.filteredCounters.isEmpty
+                ? _buildEmptyCounterList(context)
+                : ListView.builder(
+                    itemCount: counterListProvider.filteredCounters.length,
+                    itemBuilder: (context, index) {
+                      final counter = counterListProvider.filteredCounters[index];
+                      return ReusableCounterWidget(
+                        counterModel: counter,
+                        onRemove: () => showDeleteDialog(context, counter),
+                        onUpdateTarget: () =>
+                            showUpdateTargetDialog(context, counter),
+                      );
+                    },
                   ),
-                );
-              }).toList();
-            },
           ),
         ],
       ),
-      body: counterListProvider.filteredCounters.isEmpty
-          ? _buildEmptyCounterList(context)
-          : ListView.builder(
-              itemCount: counterListProvider.filteredCounters.length,
-              itemBuilder: (context, index) {
-                final counter = counterListProvider.filteredCounters[index];
-                return ReusableCounterWidget(
-                  counterModel: counter,
-                  onRemove: () => showDeleteDialog(context, counter),
-                  onUpdateTarget: () =>
-                      showUpdateTargetDialog(context, counter),
-                );
-              },
-            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushTransition(

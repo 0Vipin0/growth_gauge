@@ -45,6 +45,13 @@ class ReusableTimerWidget extends StatelessWidget {
                           child: const Text('Add Target',
                               style: TextStyle(color: Colors.red)),
                         ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8.0,
+                        children: timerModel.tags?.map((tag) => Chip(
+                              label: Text(tag),
+                            ))?.toList() ?? [],
+                      ),
                     ],
                   ),
                   trailing: Row(
@@ -79,6 +86,71 @@ class ReusableTimerWidget extends StatelessWidget {
                           icon: const Icon(Icons.edit),
                           onPressed: onUpdateTarget,
                         ),
+IconButton(
+                    icon: const Icon(Icons.label),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              final TextEditingController tagController = TextEditingController();
+                              final List<String> updatedTags = List.from(timerModel.tags ?? []);
+
+                              return AlertDialog(
+                                title: const Text('Manage Tags'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextField(
+                                      controller: tagController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Add Tag',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      onSubmitted: (value) {
+                                        if (value.isNotEmpty && !updatedTags.contains(value)) {
+                                          updatedTags.add(value);
+                                          tagController.clear();
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Wrap(
+                                      spacing: 8.0,
+                                      children: updatedTags.map((tag) => Chip(
+                                            label: Text(tag),
+                                            onDeleted: () {
+                                              updatedTags.remove(tag);
+                                            },
+                                          )).toList(),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Provider.of<TimerListProvider>(
+                                        context,
+                                        listen: false,
+                                      ).updateTimer(
+                                        timerModel.copyWith(tags: updatedTags),
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Save'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: onRemove,

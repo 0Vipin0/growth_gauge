@@ -22,71 +22,93 @@ class TimerListWidget extends StatelessWidget {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              if (value == 'Sort by Name') {
+              if (value == 'Sort by Name Asc') {
                 timerListProvider.sortTimersByName();
-              } else if (value == 'Sort by Interval') {
+              } else if (value == 'Sort by Name Desc') {
+                timerListProvider.sortTimersByName(descending: true);
+              } else if (value == 'Sort by Interval Asc') {
                 timerListProvider.sortTimersByInterval();
+              } else if (value == 'Sort by Interval Desc') {
+                timerListProvider.sortTimersByInterval(descending: true);
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
-                value: 'Sort by Name',
-                child: Text('Sort by Name'),
+                value: 'Sort by Name Asc',
+                child: Text('Sort by Name Ascending'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Interval',
-                child: Text('Sort by Interval'),
+                value: 'Sort by Name Desc',
+                child: Text('Sort by Name Descending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Interval Asc',
+                child: Text('Sort by Interval Ascending'),
+              ),
+              const PopupMenuItem(
+                value: 'Sort by Interval Desc',
+                child: Text('Sort by Interval Descending'),
               ),
             ],
           ),
-          PopupMenuButton<String>(
-            onSelected: (tag) {
-              if (selectedTags.contains(tag)) {
-                selectedTags.remove(tag);
-              } else {
-                selectedTags.add(tag);
-              }
-              timerListProvider.filterTimersByTags(selectedTags);
-            },
-            itemBuilder: (context) {
-              return timerListProvider.getAllTags().map((tag) {
-                return PopupMenuItem<String>(
-                  value: tag,
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: selectedTags.contains(tag),
-                        onChanged: (isSelected) {
-                          if (isSelected == true) {
-                            selectedTags.add(tag);
-                          } else {
-                            selectedTags.remove(tag);
-                          }
-                          timerListProvider.filterTimersByTags(selectedTags);
-                        },
-                      ),
-                      Text(tag),
-                    ],
-                  ),
-                );
-              }).toList();
-            },
-          ),
+          
         ],
       ),
-      body: timerListProvider.filteredTimers.isEmpty
-          ? _buildEmptyTimerList(context, timerListProvider)
-          : ListView.builder(
-              itemCount: timerListProvider.filteredTimers.length,
-              itemBuilder: (context, index) {
-                final timer = timerListProvider.filteredTimers[index];
-                return ReusableTimerWidget(
-                  timerModel: timer,
-                  onRemove: () => showDeleteDialog(context, timer),
-                  onUpdateTarget: () => showUpdateTargetDialog(context, timer),
-                );
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {
+                timerListProvider.filterTimers(value);
               },
+              decoration: const InputDecoration(
+                labelText: 'Search Timers',
+                border: OutlineInputBorder(),
+              ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              spacing: 8.0,
+              children: timerListProvider.tags.map((tag) {
+                return FilterChip(
+                  label: Text(tag),
+                  selected: selectedTags.contains(tag),
+                  onSelected: (isSelected) {
+                    if (isSelected) {
+                      selectedTags.add(tag);
+                    } else {
+                      selectedTags.remove(tag);
+                    }
+                    timerListProvider.filterTimersByTags(selectedTags);
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+      const SizedBox(height: 10),
+
+            Expanded(
+        child: timerListProvider.filteredTimers.isEmpty
+            ? _buildEmptyTimerList(context, timerListProvider)
+            : ListView.builder(
+                itemCount: timerListProvider.filteredTimers.length,
+                itemBuilder: (context, index) {
+                  final timer = timerListProvider.filteredTimers[index];
+                  return ReusableTimerWidget(
+                    timerModel: timer,
+                    onRemove: () => showDeleteDialog(context, timer),
+                    onUpdateTarget: () => showUpdateTargetDialog(context, timer),
+                  );
+                },
+              ),
+      ),
+        ],
+      ), 
+      
+      
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushTransition(

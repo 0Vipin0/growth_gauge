@@ -90,6 +90,78 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                 }
               },
             ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8.0,
+              children: widget.timer.tags?.map((tag) => Chip(
+                    label: Text(tag),
+                  ))?.toList() ?? [],
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    final TextEditingController tagController = TextEditingController();
+                    final List<String> updatedTags = List.from(widget.timer.tags ?? []);
+
+                    return AlertDialog(
+                      title: const Text('Manage Tags'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: tagController,
+                            decoration: const InputDecoration(
+                              labelText: 'Add Tag',
+                              border: OutlineInputBorder(),
+                            ),
+                            onSubmitted: (value) {
+                              if (value.isNotEmpty && !updatedTags.contains(value)) {
+                                updatedTags.add(value);
+                                tagController.clear();
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8.0,
+                            children: updatedTags.map((tag) => Chip(
+                                  label: Text(tag),
+                                  onDeleted: () {
+                                    updatedTags.remove(tag);
+                                  },
+                                )).toList(),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Provider.of<TimerListProvider>(
+                              context,
+                              listen: false,
+                            ).updateTimer(
+                              widget.timer.copyWith(tags: updatedTags),
+                            );
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Save'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Manage Tags'),
+            ),
           ],
         ),
       ),
