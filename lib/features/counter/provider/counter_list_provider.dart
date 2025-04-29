@@ -226,4 +226,20 @@ class CounterListProvider with ChangeNotifier {
     filterCountersByTags(_selectedTags);
     notifyListeners();
   }
+
+  void addTagToCounter(CounterModel counter, String tag) {
+    if (!counter.tags!.contains(tag)) {
+      final updatedTags = List<String>.from(counter.tags ?? [])..add(tag);
+      updateCounter(counter.copyWith(tags: updatedTags));
+    }
+  }
+
+  void removeTagFromCounter(CounterModel counter, String tag) {
+    final updatedTags = List<String>.from(counter.tags ?? [])..remove(tag);
+    updateCounter(counter.copyWith(tags: updatedTags));
+  }
+
+  void updateTagsForCounter(CounterModel counter, List<String> updatedTags) {
+    updateCounter(counter.copyWith(tags: updatedTags));
+  }
 }

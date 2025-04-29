@@ -87,10 +87,8 @@ class ReusableCounterWidget extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          final TextEditingController tagController =
-                              TextEditingController();
-                          final List<String> updatedTags =
-                              List.from(counterModel.tags ?? []);
+                          final TextEditingController tagController = TextEditingController();
+                          final List<String> updatedTags = List.from(counterModel.tags ?? []);
 
                           return AlertDialog(
                             title: const Text('Manage Tags'),
@@ -137,9 +135,7 @@ class ReusableCounterWidget extends StatelessWidget {
                                   Provider.of<CounterListProvider>(
                                     context,
                                     listen: false,
-                                  ).updateCounter(
-                                    counterModel.copyWith(tags: updatedTags),
-                                  );
+                                  ).updateTagsForCounter(counterModel, updatedTags);
                                   Navigator.of(context).pop();
                                 },
                                 child: const Text('Save'),

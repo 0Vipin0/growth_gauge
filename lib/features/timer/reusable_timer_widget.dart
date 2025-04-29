@@ -95,10 +95,8 @@ class ReusableTimerWidget extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              final TextEditingController tagController =
-                                  TextEditingController();
-                              final List<String> updatedTags =
-                                  List.from(timerModel.tags ?? []);
+                              final TextEditingController tagController = TextEditingController();
+                              final List<String> updatedTags = List.from(timerModel.tags ?? []);
 
                               return AlertDialog(
                                 title: const Text('Manage Tags'),
@@ -145,9 +143,7 @@ class ReusableTimerWidget extends StatelessWidget {
                                       Provider.of<TimerListProvider>(
                                         context,
                                         listen: false,
-                                      ).updateTimer(
-                                        timerModel.copyWith(tags: updatedTags),
-                                      );
+                                      ).updateTagsForTimer(timerModel, updatedTags);
                                       Navigator.of(context).pop();
                                     },
                                     child: const Text('Save'),
