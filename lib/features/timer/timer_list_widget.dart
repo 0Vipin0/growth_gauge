@@ -74,17 +74,20 @@ class TimerListWidget extends StatelessWidget {
             child: Wrap(
               spacing: 8.0,
               children: timerListProvider.getAllTags().map((tag) {
-                return FilterChip(
+                final isSelected = selectedTags.contains(tag);
+                return ChoiceChip(
                   label: Text(tag),
-                  selected: selectedTags.contains(tag),
-                  onSelected: (isSelected) {
-                    if (isSelected) {
+                  selected: isSelected,
+                  onSelected: (selected) {
+                    if (selected) {
                       selectedTags.add(tag);
                     } else {
                       selectedTags.remove(tag);
                     }
                     timerListProvider.filterTimersByTags(selectedTags);
                   },
+                  selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                  backgroundColor: Colors.grey.shade200,
                 );
               }).toList(),
             ),

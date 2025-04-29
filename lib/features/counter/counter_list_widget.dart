@@ -84,6 +84,8 @@ class CounterListWidget extends StatelessWidget {
                   }
                   counterListProvider.filterCountersByTags(selectedTags);
                 },
+                selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                backgroundColor: Colors.grey.shade200,
               );
             }).toList(),
           ),
