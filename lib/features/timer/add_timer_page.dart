@@ -24,6 +24,10 @@ class _AddTimerPageState extends State<AddTimerPage> {
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
+
+  int _targetHours = 0;
+  int _targetMinutes = 0;
+  int _targetSeconds = 0;
   Duration? _target;
   final List<String> _tags = []; // List to store tags
 
@@ -91,19 +95,19 @@ class _AddTimerPageState extends State<AddTimerPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildTimeControl('Hours', _hours, (value) {
+                  _buildTimeControl('Hours', _targetHours, (value) {
                     setState(() {
-                      _hours = value;
+                      _targetHours = value;
                     });
                   }),
-                  _buildTimeControl('Minutes', _minutes, (value) {
+                  _buildTimeControl('Minutes', _targetMinutes, (value) {
                     setState(() {
-                      _minutes = value;
+                      _targetMinutes = value;
                     });
                   }),
-                  _buildTimeControl('Seconds', _seconds, (value) {
+                  _buildTimeControl('Seconds', _targetSeconds, (value) {
                     setState(() {
-                      _seconds = value;
+                      _targetSeconds = value;
                     });
                   }),
                 ],
@@ -196,6 +200,11 @@ class _AddTimerPageState extends State<AddTimerPage> {
         hours: _hours,
         minutes: _minutes,
         seconds: _seconds,
+      );
+      _target = Duration(
+        hours: _targetHours,
+        minutes: _targetMinutes,
+        seconds: _targetSeconds,
       );
 
       final newTimer = TimerModel(

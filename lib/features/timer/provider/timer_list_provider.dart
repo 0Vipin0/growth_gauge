@@ -44,7 +44,8 @@ class TimerListProvider with ChangeNotifier {
         final lowerQuery = query.toLowerCase();
         return timer.name.toLowerCase().contains(lowerQuery) ||
             timer.description.toLowerCase().contains(lowerQuery) ||
-            (timer.target?.inMinutes.toString().contains(lowerQuery) ?? false) ||
+            (timer.target?.inMinutes.toString().contains(lowerQuery) ??
+                false) ||
             timer.interval.inSeconds.toString().contains(lowerQuery);
       }).toList();
     }
@@ -239,7 +240,7 @@ class TimerListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<String> _selectedTags = [];
+  final List<String> _selectedTags = [];
   List<String> get selectedTags => _selectedTags;
 
   void toggleTagSelection(String tag) {

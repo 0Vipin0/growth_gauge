@@ -80,20 +80,18 @@ class TimerListWidget extends StatelessWidget {
                     onSelected: (_) {
                       timerListProvider.clearSelectedTags();
                     },
-                    backgroundColor: Colors.red.shade100,
                   ),
                 ...timerListProvider.getAllTags().map((tag) {
-                  final isSelected = timerListProvider.selectedTags.contains(tag);
+                  final isSelected =
+                      timerListProvider.selectedTags.contains(tag);
                   return ChoiceChip(
                     label: Text(tag),
                     selected: isSelected,
                     onSelected: (_) {
                       timerListProvider.toggleTagSelection(tag);
                     },
-                    selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
-                    backgroundColor: Colors.grey.shade200,
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),

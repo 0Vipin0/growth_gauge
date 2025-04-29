@@ -78,20 +78,18 @@ class CounterListWidget extends StatelessWidget {
                   onSelected: (_) {
                     counterListProvider.clearSelectedTags();
                   },
-                  backgroundColor: Colors.red.shade100,
                 ),
               ...counterListProvider.getAllTags().map((tag) {
-                final isSelected = counterListProvider.selectedTags.contains(tag);
+                final isSelected =
+                    counterListProvider.selectedTags.contains(tag);
                 return ChoiceChip(
                   label: Text(tag),
                   selected: isSelected,
                   onSelected: (_) {
                     counterListProvider.toggleTagSelection(tag);
                   },
-                  selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
-                  backgroundColor: Colors.grey.shade200,
                 );
-              }).toList(),
+              }),
             ],
           ),
           const SizedBox(height: 8),
