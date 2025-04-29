@@ -14,7 +14,6 @@ class TimerListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerListProvider = Provider.of<TimerListProvider>(context);
-    final List<String> selectedTags = []; // Track selected tags for filtering
 
     return Scaffold(
       appBar: AppBar(
@@ -74,28 +73,22 @@ class TimerListWidget extends StatelessWidget {
             child: Wrap(
               spacing: 8.0,
               children: [
-                if (selectedTags.isNotEmpty)
+                if (timerListProvider.selectedTags.isNotEmpty)
                   ChoiceChip(
                     label: const Text('Clear All'),
                     selected: false,
                     onSelected: (_) {
-                      selectedTags.clear();
-                      timerListProvider.filterTimersByTags(selectedTags);
+                      timerListProvider.clearSelectedTags();
                     },
                     backgroundColor: Colors.red.shade100,
                   ),
                 ...timerListProvider.getAllTags().map((tag) {
-                  final isSelected = selectedTags.contains(tag);
+                  final isSelected = timerListProvider.selectedTags.contains(tag);
                   return ChoiceChip(
                     label: Text(tag),
                     selected: isSelected,
-                    onSelected: (selected) {
-                      if (selected) {
-                        selectedTags.add(tag);
-                      } else {
-                        selectedTags.remove(tag);
-                      }
-                      timerListProvider.filterTimersByTags(selectedTags);
+                    onSelected: (_) {
+                      timerListProvider.toggleTagSelection(tag);
                     },
                     selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
                     backgroundColor: Colors.grey.shade200,

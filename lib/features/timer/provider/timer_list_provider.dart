@@ -238,4 +238,23 @@ class TimerListProvider with ChangeNotifier {
     _timers.sort((a, b) => a.interval.compareTo(b.interval));
     notifyListeners();
   }
+
+  List<String> _selectedTags = [];
+  List<String> get selectedTags => _selectedTags;
+
+  void toggleTagSelection(String tag) {
+    if (_selectedTags.contains(tag)) {
+      _selectedTags.remove(tag);
+    } else {
+      _selectedTags.add(tag);
+    }
+    filterTimersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void clearSelectedTags() {
+    _selectedTags.clear();
+    filterTimersByTags(_selectedTags);
+    notifyListeners();
+  }
 }

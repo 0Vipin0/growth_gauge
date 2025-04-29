@@ -207,4 +207,23 @@ class CounterListProvider with ChangeNotifier {
     _counters.sort((a, b) => a.count.compareTo(b.count));
     notifyListeners();
   }
+
+  List<String> _selectedTags = [];
+  List<String> get selectedTags => _selectedTags;
+
+  void toggleTagSelection(String tag) {
+    if (_selectedTags.contains(tag)) {
+      _selectedTags.remove(tag);
+    } else {
+      _selectedTags.add(tag);
+    }
+    filterCountersByTags(_selectedTags);
+    notifyListeners();
+  }
+
+  void clearSelectedTags() {
+    _selectedTags.clear();
+    filterCountersByTags(_selectedTags);
+    notifyListeners();
+  }
 }

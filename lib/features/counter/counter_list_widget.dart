@@ -14,7 +14,6 @@ class CounterListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counterListProvider = Provider.of<CounterListProvider>(context);
-    final List<String> selectedTags = []; // Track selected tags for filtering
 
     return Scaffold(
       appBar: AppBar(
@@ -72,28 +71,22 @@ class CounterListWidget extends StatelessWidget {
           Wrap(
             spacing: 8.0,
             children: [
-              if (selectedTags.isNotEmpty)
+              if (counterListProvider.selectedTags.isNotEmpty)
                 ChoiceChip(
                   label: const Text('Clear All'),
                   selected: false,
                   onSelected: (_) {
-                    selectedTags.clear();
-                    counterListProvider.filterCountersByTags(selectedTags);
+                    counterListProvider.clearSelectedTags();
                   },
                   backgroundColor: Colors.red.shade100,
                 ),
               ...counterListProvider.getAllTags().map((tag) {
-                final isSelected = selectedTags.contains(tag);
+                final isSelected = counterListProvider.selectedTags.contains(tag);
                 return ChoiceChip(
                   label: Text(tag),
                   selected: isSelected,
-                  onSelected: (selected) {
-                    if (selected) {
-                      selectedTags.add(tag);
-                    } else {
-                      selectedTags.remove(tag);
-                    }
-                    counterListProvider.filterCountersByTags(selectedTags);
+                  onSelected: (_) {
+                    counterListProvider.toggleTagSelection(tag);
                   },
                   selectedColor: Theme.of(context).primaryColor.withOpacity(0.5),
                   backgroundColor: Colors.grey.shade200,
