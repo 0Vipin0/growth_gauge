@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/features/counter/chart/counter_chart_provider.dart';
 import 'package:growth_gauge/features/counter/model/model.dart';
@@ -45,7 +46,13 @@ void main() {
 
     test('getDayOfWeek', () {
       // Act
-      final day = provider.getDayOfWeek(0); // Adjusted to match 'Sun'
+      final day = withClock(
+        Clock.fixed(DateTime(2000)),
+        () {
+          // This will always return 'Sun' for the fixed date
+          return provider.getDayOfWeek(0);
+        },
+      );
 
       // Assert
       expect(day, 'Sun');

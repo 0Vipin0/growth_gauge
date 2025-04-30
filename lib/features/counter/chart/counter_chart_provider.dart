@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -61,7 +62,7 @@ class CounterChartProvider extends ChangeNotifier {
   }
 
   String getDayOfWeek(int index) {
-    final DateTime now = DateTime.now();
+    final DateTime now = clock.now();
     final DateTime date = now.subtract(Duration(days: 7 - 1 - index));
     return DateFormat('E').format(date);
   }
