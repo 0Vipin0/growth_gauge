@@ -1,14 +1,17 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:growth_gauge/features/settings/settings_provider.dart';
-import 'package:growth_gauge/features/settings/model/model.dart';
-import 'package:growth_gauge/features/counter/provider/counter_list_provider.dart';
-import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
-import 'package:growth_gauge/features/notification/notification_service.dart';
-import 'package:growth_gauge/features/settings/model/app_theme_name.dart';
-import 'package:growth_gauge/features/settings/model/app_font_size.dart';
-import 'package:growth_gauge/features/settings/model/app_font_family.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/features/counter/model/model.dart';
+import 'package:growth_gauge/features/counter/provider/counter_list_provider.dart';
+import 'package:growth_gauge/features/notification/notification_service.dart';
+import 'package:growth_gauge/features/settings/config/config.dart';
+import 'package:growth_gauge/features/settings/settings_provider.dart';
+import 'package:growth_gauge/features/timer/model/model.dart';
+import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
+import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../counter/provider/counter_list_provider_test.dart';
+import '../timer/provider/timer_list_provider_test.dart';
 
 class MockCounterListProvider extends Mock implements CounterListProvider {}
 class MockTimerListProvider extends Mock implements TimerListProvider {}
@@ -20,7 +23,7 @@ void main() {
   late MockNotificationService mockNotificationService;
   late SettingsProvider provider;
 
-  setUp(() {
+  setUp(() async {
     mockCounterListProvider = MockCounterListProvider();
     mockTimerListProvider = MockTimerListProvider();
     mockNotificationService = MockNotificationService();
@@ -29,10 +32,14 @@ void main() {
       timerListProvider: mockTimerListProvider,
       notificationService: mockNotificationService,
     );
-    when(mockCounterListProvider.counters).thenReturn([]);
-    when(mockTimerListProvider.timers).thenReturn([]);
-    when(mockCounterListProvider.importCountersFromData(argThat(isA<List<CounterModel>>()))).thenReturn(null);
-    when(mockTimerListProvider.importTimersFromData(argThat(isA<List<TimerModel>>()))).thenReturn(null);
+
+    SharedPreferences.setMockInitialValues({});
+    await SharedPreferencesHelper.init();
+
+    when(mockCounterListProvider.counters).thenReturn(<CounterModel>[]);
+    when(mockTimerListProvider.timers).thenReturn(<TimerModel>[]);
+    when(mockCounterListProvider.importCountersFromData(testCounters)).thenAnswer((_) => Future.value());
+    when(mockTimerListProvider.importTimersFromData(testTimers)).thenAnswer((_) => Future.value());
   });
 
   group('SettingsProvider Tests', () {
@@ -62,7 +69,7 @@ void main() {
 
     test('updateNotificationTime schedules a notification and updates settings', () {
       // Arrange
-      final time = TimeOfDay(hour: 8, minute: 30);
+      const time = TimeOfDay(hour: 8, minute: 30);
 
       // Act
       provider.updateNotificationTime(time);
@@ -70,8 +77,8 @@ void main() {
       // Assert
       verify(mockNotificationService.scheduleDailyNotification(
         id: 1,
-        title: anyNamed('title'),
-        body: anyNamed('body'),
+        title: 'Daily Notification',
+        body: 'This is a notification body',
         time: time,
         sound: anyNamed('sound'),
       )).called(1);
@@ -130,8 +137,8 @@ void main() {
 
     test('importData', () async {
       // Arrange
-      when(mockCounterListProvider.importCountersFromData(any)).thenReturn(null);
-      when(mockTimerListProvider.importTimersFromData(any)).thenReturn(null);
+      when(mockCounterListProvider.importCountersFromData(testCounters)).thenReturn(null);
+      when(mockTimerListProvider.importTimersFromData(testTimers)).thenReturn(null);
 
       // Act
       await provider.importData();

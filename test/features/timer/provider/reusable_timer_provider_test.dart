@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:growth_gauge/features/timer/provider/reusable_timer_provider.dart';
 import 'package:growth_gauge/features/timer/model/model.dart';
+import 'package:growth_gauge/features/timer/provider/reusable_timer_provider.dart';
 
 void main() {
   late ReusableTimerProvider provider;

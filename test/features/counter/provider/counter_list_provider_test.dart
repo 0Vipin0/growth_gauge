@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:growth_gauge/features/counter/model/model.dart';
 import 'package:growth_gauge/features/counter/provider/counter_list_provider.dart';
 import 'package:growth_gauge/features/counter/repository/repository.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
-import 'package:growth_gauge/features/counter/model/model.dart';
+import 'package:mockito/mockito.dart';
 
 class MockCounterRepository extends Mock implements CounterRepository {}
 class MockNotificationService extends Mock implements NotificationService {}
@@ -76,6 +76,9 @@ void main() {
       repository: mockRepository,
       notificationService: mockNotificationService,
     );
+
+    when(mockRepository.loadCounters()).thenAnswer((_) async => <CounterModel>[]);
+    when(mockRepository.saveCounters(testCounters)).thenAnswer((_) => Future.value());
   });
 
   group('CounterListProvider Tests', () {
@@ -128,13 +131,13 @@ void main() {
 
     test('saveCounters', () async {
       // Arrange
-      when(mockRepository.saveCounters(argThat(isA<List<CounterModel>>()))).thenAnswer((_) async => null);
+      when(mockRepository.saveCounters(testCounters)).thenAnswer((_) async {});
 
       // Act
       await provider.saveCounters();
 
       // Assert
-      verify(mockRepository.saveCounters(argThat(isA<List<CounterModel>>()))).called(1);
+      verify(mockRepository.saveCounters(testCounters)).called(1);
     });
 
     test('clearCounters', () async {

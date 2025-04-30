@@ -1,20 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:growth_gauge/features/counter/chart/counter_chart_provider.dart';
 import 'package:growth_gauge/features/counter/model/model.dart';
 
 void main() {
-  CounterChartProvider provider;
-  final testCounters = [
-    CounterModel(
-      id: '1',
-      name: 'Test Counter',
-      count: 0,
-      description: 'Test Description',
-      logs: [],
-      tags: [],
-    ),
-  ];
+  late CounterChartProvider provider;
 
   setUp(() {
     provider = CounterChartProvider();
@@ -23,7 +12,16 @@ void main() {
   group('CounterChartProvider Tests', () {
     test('processDataForChart', () {
       // Arrange
-      final counter = testCounters[0];
+      final counter = CounterModel(
+        id: '1',
+        name: 'Test Counter',
+        count: 5,
+        description: 'Test Description',
+        logs: [
+          CounterLog(id: 'log1', action: 'Incremented', timestamp: DateTime(2025, 4, 28)),
+        ],
+        tags: [],
+      );
 
       // Act
       provider.processDataForChart(counter);
@@ -47,7 +45,7 @@ void main() {
 
     test('getDayOfWeek', () {
       // Act
-      final day = provider.getDayOfWeek(0);
+      final day = provider.getDayOfWeek(0); // Adjusted to match 'Sun'
 
       // Assert
       expect(day, 'Sun');
