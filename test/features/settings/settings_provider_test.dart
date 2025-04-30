@@ -148,19 +148,40 @@ void main() {
     });
 
     test('toggleOnboarding', () {
-      // TODO: Add test logic for toggleOnboarding
+      // Act
+      provider.toggleOnboarding();
+
+      // Assert
+      expect(provider.settings.hasCompletedOnboarding, isFalse);
     });
 
-    test('exportDataToCsv', () {
-      // TODO: Add test logic for exportDataToCsv
+    test('exportDataToCsv', () async {
+      // Act
+      final csvData = await provider.exportDataToCsv();
+
+      // Assert
+      expect(csvData, contains('Counter Name,Count,Description'));
     });
 
-    test('clearAppData', () {
-      // TODO: Add test logic for clearAppData
+    test('clearAppData', () async {
+      // Act
+      await provider.clearAppData();
+
+      // Assert
+      expect(provider.settings.themeName, AppThemeName.light);
+      expect(provider.settings.fontSize, AppFontSize.medium);
+      expect(provider.settings.fontFamily, AppFontFamily.defaultFont);
     });
 
-    test('isBiometricAvailable', () {
-      // TODO: Add test logic for isBiometricAvailable
+    test('isBiometricAvailable', () async {
+      // Arrange
+      when(mockNotificationService.isBiometricAvailable()).thenAnswer((_) async => true);
+
+      // Act
+      final isAvailable = await provider.isBiometricAvailable();
+
+      // Assert
+      expect(isAvailable, isTrue);
     });
   });
 }
