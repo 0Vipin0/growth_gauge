@@ -5,11 +5,19 @@ import 'package:growth_gauge/features/counter/provider/reusable_counter_provider
 void main() {
   group('ReusableCounterProvider Tests', () {
     test('increaseCounter', () {
-      // TODO: Add test logic for increaseCounter
+      // Act
+      provider.increaseCounter();
+
+      // Assert
+      expect(provider.count, 1);
     });
 
     test('decreaseCounter', () {
-      // TODO: Add test logic for decreaseCounter
+      // Act
+      provider.decreaseCounter();
+
+      // Assert
+      expect(provider.count, -1);
     });
   });
 }

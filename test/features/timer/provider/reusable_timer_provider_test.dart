@@ -36,7 +36,11 @@ void main() {
     });
 
     test('dispose', () {
-      // TODO: Add test logic for dispose
+      // Act
+      provider.dispose();
+
+      // Assert
+      expect(provider.isRunning, false);
     });
 
     // Add more tests for other methods

@@ -90,47 +90,125 @@ void main() {
     });
 
     test('filterCountersByTags', () {
-      // TODO: Add test logic for filterCountersByTags
+      // Arrange
+      provider.addCounter(testCounters[0]);
+      provider.addCounter(testCounters[1]);
+
+      // Act
+      provider.filterCountersByTags(['tag1']);
+
+      // Assert
+      expect(provider.filteredCounters.length, 1);
     });
 
     test('filterCountersByText', () {
-      // TODO: Add test logic for filterCountersByText
+      // Arrange
+      provider.addCounter(testCounters[0]);
+      provider.addCounter(testCounters[1]);
+
+      // Act
+      provider.filterCountersByText('Test Counter 1');
+
+      // Assert
+      expect(provider.filteredCounters.length, 1);
+      expect(provider.filteredCounters.first.name, 'Test Counter 1');
     });
 
     test('getAllTags', () {
-      // TODO: Add test logic for getAllTags
+      // Arrange
+      provider.addCounter(testCounters[0]);
+      provider.addCounter(testCounters[1]);
+
+      // Act
+      final tags = provider.getAllTags();
+
+      // Assert
+      expect(tags, containsAll(['tag1', 'tag2', 'tag3']));
     });
 
-    test('saveCounters', () {
-      // TODO: Add test logic for saveCounters
+    test('saveCounters', () async {
+      // Act
+      await provider.saveCounters();
+
+      // Assert
+      verify(mockRepository.saveCounters(any)).called(1);
     });
 
-    test('clearCounters', () {
-      // TODO: Add test logic for clearCounters
+    test('clearCounters', () async {
+      // Arrange
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      await provider.clearCounters();
+
+      // Assert
+      expect(provider.counters.isEmpty, true);
     });
 
     test('addCounter', () {
-      // TODO: Add test logic for addCounter
+      // Act
+      provider.addCounter(testCounters[0]);
+
+      // Assert
+      expect(provider.counters.length, 1);
     });
 
     test('removeCounter', () {
-      // TODO: Add test logic for removeCounter
+      // Arrange
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.removeCounter(testCounters[0]);
+
+      // Assert
+      expect(provider.counters.isEmpty, true);
     });
 
     test('importCountersFromData', () {
-      // TODO: Add test logic for importCountersFromData
+      // Arrange
+      final importedCounters = [testCounters[2], testCounters[3]];
+
+      // Act
+      provider.importCountersFromData(importedCounters);
+
+      // Assert
+      expect(provider.counters.length, 2);
+      expect(provider.counters, containsAll(importedCounters));
     });
 
     test('convertToCSV', () {
-      // TODO: Add test logic for convertToCSV
+      // Arrange
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      final csv = provider.convertToCSV();
+
+      // Assert
+      expect(csv, contains('Test Counter 1'));
     });
 
     test('sortCountersByName', () {
-      // TODO: Add test logic for sortCountersByName
+      // Arrange
+      provider.addCounter(testCounters[1]);
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.sortCountersByName();
+
+      // Assert
+      expect(provider.counters.first.name, 'Test Counter 1');
     });
 
     test('sortCountersByCount', () {
-      // TODO: Add test logic for sortCountersByCount
+      // Arrange
+      provider.addCounter(testCounters[1]);
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.sortCountersByCount();
+
+      // Assert
+      expect(provider.counters.first.count, 5);
     });
   });
 }

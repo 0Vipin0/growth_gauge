@@ -88,20 +88,48 @@ void main() {
       // TODO: Add test logic for updateNotificationTime
     });
 
-    test('loadSettingsFromStorage', () {
-      // TODO: Add test logic for loadSettingsFromStorage
+    test('loadSettingsFromStorage', () async {
+      // Arrange
+      when(mockCounterListProvider.counters).thenReturn([]);
+      when(mockTimerListProvider.timers).thenReturn([]);
+
+      // Act
+      await provider.loadSettingsFromStorage();
+
+      // Assert
+      expect(provider.settings.themeName, AppThemeName.light);
     });
 
-    test('saveSettingsToStorage', () {
-      // TODO: Add test logic for saveSettingsToStorage
+    test('saveSettingsToStorage', () async {
+      // Act
+      await provider.saveSettingsToStorage();
+
+      // Assert
+      verify(mockCounterListProvider.counters).called(1);
     });
 
-    test('exportData', () {
-      // TODO: Add test logic for exportData
+    test('exportData', () async {
+      // Arrange
+      when(mockCounterListProvider.counters).thenReturn([]);
+      when(mockTimerListProvider.timers).thenReturn([]);
+
+      // Act
+      await provider.exportData();
+
+      // Assert
+      expect(provider.exportMessage, contains('successfully'));
     });
 
-    test('importData', () {
-      // TODO: Add test logic for importData
+    test('importData', () async {
+      // Arrange
+      when(mockCounterListProvider.importCountersFromData(any)).thenReturn(null);
+      when(mockTimerListProvider.importTimersFromData(any)).thenReturn(null);
+
+      // Act
+      await provider.importData();
+
+      // Assert
+      expect(provider.importMessage, contains('successfully'));
     });
 
     test('toggleOnboarding', () {

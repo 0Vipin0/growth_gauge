@@ -80,47 +80,125 @@ void main() {
     });
 
     test('filterTimersByTags', () {
-      // TODO: Add test logic for filterTimersByTags
+      // Arrange
+      provider.addTimer(testTimers[0]);
+      provider.addTimer(testTimers[1]);
+
+      // Act
+      provider.filterTimersByTags(['tag1']);
+
+      // Assert
+      expect(provider.filteredTimers.length, 1);
     });
 
     test('filterTimersByText', () {
-      // TODO: Add test logic for filterTimersByText
+      // Arrange
+      provider.addTimer(testTimers[0]);
+      provider.addTimer(testTimers[1]);
+
+      // Act
+      provider.filterTimersByText('Test Timer 1');
+
+      // Assert
+      expect(provider.filteredTimers.length, 1);
+      expect(provider.filteredTimers.first.name, 'Test Timer 1');
     });
 
     test('getAllTags', () {
-      // TODO: Add test logic for getAllTags
+      // Arrange
+      provider.addTimer(testTimers[0]);
+      provider.addTimer(testTimers[1]);
+
+      // Act
+      final tags = provider.getAllTags();
+
+      // Assert
+      expect(tags, containsAll(['tag1', 'tag2', 'tag3']));
     });
 
-    test('saveTimers', () {
-      // TODO: Add test logic for saveTimers
+    test('saveTimers', () async {
+      // Act
+      await provider.saveTimers();
+
+      // Assert
+      verify(mockRepository.saveTimers(any)).called(1);
     });
 
-    test('clearTimers', () {
-      // TODO: Add test logic for clearTimers
+    test('clearTimers', () async {
+      // Arrange
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      await provider.clearTimers();
+
+      // Assert
+      expect(provider.timers.isEmpty, true);
     });
 
     test('addTimer', () {
-      // TODO: Add test logic for addTimer
+      // Act
+      provider.addTimer(testTimers[0]);
+
+      // Assert
+      expect(provider.timers.length, 1);
     });
 
     test('removeTimer', () {
-      // TODO: Add test logic for removeTimer
+      // Arrange
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.removeTimer(testTimers[0]);
+
+      // Assert
+      expect(provider.timers.isEmpty, true);
     });
 
     test('importTimersFromData', () {
-      // TODO: Add test logic for importTimersFromData
+      // Arrange
+      final importedTimers = [testTimers[2], testTimers[3]];
+
+      // Act
+      provider.importTimersFromData(importedTimers);
+
+      // Assert
+      expect(provider.timers.length, 2);
+      expect(provider.timers, containsAll(importedTimers));
     });
 
     test('convertToCSV', () {
-      // TODO: Add test logic for convertToCSV
+      // Arrange
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      final csv = provider.convertToCSV();
+
+      // Assert
+      expect(csv, contains('Test Timer 1'));
     });
 
     test('sortTimersByName', () {
-      // TODO: Add test logic for sortTimersByName
+      // Arrange
+      provider.addTimer(testTimers[1]);
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.sortTimersByName();
+
+      // Assert
+      expect(provider.timers.first.name, 'Test Timer 1');
     });
 
     test('sortTimersByInterval', () {
-      // TODO: Add test logic for sortTimersByInterval
+      // Arrange
+      provider.addTimer(testTimers[1]);
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.sortTimersByInterval();
+
+      // Assert
+      expect(provider.timers.first.interval, Duration(minutes: 5));
     });
   });
 }
