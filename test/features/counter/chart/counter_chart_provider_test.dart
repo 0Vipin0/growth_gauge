@@ -1,8 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:growth_gauge/features/counter/chart/counter_chart_provider.dart';
+import 'package:growth_gauge/features/counter/model/model.dart';
 
 void main() {
+  CounterChartProvider provider;
+  final testCounters = [
+    CounterModel(
+      id: '1',
+      name: 'Test Counter',
+      count: 0,
+      description: 'Test Description',
+      logs: [],
+      tags: [],
+    ),
+  ];
+
+  setUp(() {
+    provider = CounterChartProvider();
+  });
+
   group('CounterChartProvider Tests', () {
     test('processDataForChart', () {
       // Arrange

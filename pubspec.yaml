@@ -36,6 +36,7 @@ dev_dependencies:
   import_sorter: 4.6.0
   json_serializable: ^6.9.5
   lint: ^2.8.0
+  mockito: ^5.4.6
   pubspec_dependency_sorter: ^1.0.5
 flutter:
   uses-material-design: true

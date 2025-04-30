@@ -12,6 +12,7 @@ void main() {
       id: '1',
       name: 'Test Timer',
       interval: Duration.zero,
+      description: 'Test Description',
       logs: [],
     );
     provider = ReusableTimerProvider(timer: testTimer);

@@ -1,8 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:growth_gauge/features/counter/provider/reusable_counter_provider.dart';
+import 'package:growth_gauge/features/counter/model/model.dart';
 
 void main() {
+  ReusableCounterProvider provider;
+
+  setUp(() {
+    provider = ReusableCounterProvider(
+      counter: CounterModel(
+        id: '1',
+        name: 'Test Counter',
+        count: 0,
+        description: 'Test Description',
+        logs: [],
+        tags: [],
+      ),
+    );
+  });
+
   group('ReusableCounterProvider Tests', () {
     test('increaseCounter', () {
       // Act

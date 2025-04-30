@@ -117,11 +117,14 @@ void main() {
     });
 
     test('saveTimers', () async {
+      // Arrange
+      when(mockRepository.saveTimers(argThat(isA<List<TimerModel>>()))).thenAnswer((_) async => null);
+
       // Act
       await provider.saveTimers();
 
       // Assert
-      verify(mockRepository.saveTimers(any)).called(1);
+      verify(mockRepository.saveTimers(argThat(isA<List<TimerModel>>()))).called(1);
     });
 
     test('clearTimers', () async {

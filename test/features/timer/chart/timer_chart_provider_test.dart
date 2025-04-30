@@ -1,8 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:growth_gauge/features/timer/chart/timer_chart_provider.dart';
+import 'package:growth_gauge/features/timer/model/model.dart';
+import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
 
 void main() {
+  TimerChartProvider provider;
+  final testTimers = [
+    TimerModel(
+      id: '1',
+      name: 'Test Timer',
+      interval: Duration.zero,
+      description: 'Test Description',
+      logs: [],
+    ),
+  ];
+
+  setUp(() {
+    provider = TimerChartProvider();
+  });
+
   group('TimerChartProvider Tests', () {
     test('processDataForChart', () {
       // Arrange

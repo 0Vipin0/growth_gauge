@@ -127,11 +127,14 @@ void main() {
     });
 
     test('saveCounters', () async {
+      // Arrange
+      when(mockRepository.saveCounters(argThat(isA<List<CounterModel>>()))).thenAnswer((_) async => null);
+
       // Act
       await provider.saveCounters();
 
       // Assert
-      verify(mockRepository.saveCounters(any)).called(1);
+      verify(mockRepository.saveCounters(argThat(isA<List<CounterModel>>()))).called(1);
     });
 
     test('clearCounters', () async {

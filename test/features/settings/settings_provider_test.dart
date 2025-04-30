@@ -5,6 +5,10 @@ import 'package:growth_gauge/features/settings/model/model.dart';
 import 'package:growth_gauge/features/counter/provider/counter_list_provider.dart';
 import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
+import 'package:growth_gauge/features/settings/model/app_theme_name.dart';
+import 'package:growth_gauge/features/settings/model/app_font_size.dart';
+import 'package:growth_gauge/features/settings/model/app_font_family.dart';
+import 'package:flutter/material.dart';
 
 class MockCounterListProvider extends Mock implements CounterListProvider {}
 class MockTimerListProvider extends Mock implements TimerListProvider {}
@@ -25,6 +29,10 @@ void main() {
       timerListProvider: mockTimerListProvider,
       notificationService: mockNotificationService,
     );
+    when(mockCounterListProvider.counters).thenReturn([]);
+    when(mockTimerListProvider.timers).thenReturn([]);
+    when(mockCounterListProvider.importCountersFromData(argThat(isA<List<CounterModel>>()))).thenReturn(null);
+    when(mockTimerListProvider.importTimersFromData(argThat(isA<List<TimerModel>>()))).thenReturn(null);
   });
 
   group('SettingsProvider Tests', () {
