@@ -5,6 +5,7 @@ environment:
   sdk: ">=3.4.1 <4.0.0"
 description: An application to keep the count of the tasks or activities.
 dependencies:
+  clock: ^1.1.2
   collection: ^1.19.1
   csv: ^6.0.0
   cupertino_icons: ^1.0.6
@@ -36,6 +37,7 @@ dev_dependencies:
   import_sorter: 4.6.0
   json_serializable: ^6.9.5
   lint: ^2.8.0
+  mockito: ^5.4.6
   pubspec_dependency_sorter: ^1.0.5
 flutter:
   uses-material-design: true
