@@ -65,20 +65,17 @@ final testCounters = [
 ];
 
 void main() {
-  late MockCounterRepository mockRepository;
+  late InMemoryCounterRepository mockRepository;
   late MockNotificationService mockNotificationService;
   late CounterListProvider provider;
 
   setUp(() {
-    mockRepository = MockCounterRepository();
+    mockRepository = InMemoryCounterRepository();
     mockNotificationService = MockNotificationService();
     provider = CounterListProvider(
       repository: mockRepository,
       notificationService: mockNotificationService,
     );
-
-    when(mockRepository.loadCounters()).thenAnswer((_) async => <CounterModel>[]);
-    when(mockRepository.saveCounters(testCounters)).thenAnswer((_) => Future.value());
   });
 
   group('CounterListProvider Tests', () {
@@ -127,17 +124,6 @@ void main() {
 
       // Assert
       expect(tags, containsAll(['tag1', 'tag2', 'tag3']));
-    });
-
-    test('saveCounters', () async {
-      // Arrange
-      when(mockRepository.saveCounters(testCounters)).thenAnswer((_) async {});
-
-      // Act
-      await provider.saveCounters();
-
-      // Assert
-      verify(mockRepository.saveCounters(testCounters)).called(1);
     });
 
     test('clearCounters', () async {

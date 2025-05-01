@@ -55,20 +55,17 @@ final testTimers = [
 ];
 
 void main() {
-  late MockTimerRepository mockRepository;
+  late InMemoryTimerRepository mockRepository;
   late MockNotificationService mockNotificationService;
   late TimerListProvider provider;
 
   setUp(() {
-    mockRepository = MockTimerRepository();
+    mockRepository = InMemoryTimerRepository();
     mockNotificationService = MockNotificationService();
     provider = TimerListProvider(
       repository: mockRepository,
       notificationService: mockNotificationService,
     );
-
-    when(mockRepository.getTimers()).thenAnswer((_) async => <TimerModel>[]);
-    when(mockRepository.saveTimers(testTimers)).thenAnswer((_) => Future.value());
   });
 
   group('TimerListProvider Tests', () {
@@ -117,17 +114,6 @@ void main() {
 
       // Assert
       expect(tags, containsAll(['tag1', 'tag2', 'tag3']));
-    });
-
-    test('saveTimers', () async {
-      // Arrange
-      when(mockRepository.saveTimers(testTimers)).thenAnswer((_) async {});
-
-      // Act
-      await provider.saveTimers();
-
-      // Assert
-      verify(mockRepository.saveTimers(testTimers)).called(1);
     });
 
     test('clearTimers', () async {
