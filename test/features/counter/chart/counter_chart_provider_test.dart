@@ -33,7 +33,10 @@ void main() {
         count: 5,
         description: 'Test Description',
         logs: [
-          CounterLog(id: 'log1', action: 'Incremented', timestamp: DateTime(2025, 4, 28)),
+          CounterLog(
+              id: 'log1',
+              action: 'Incremented',
+              timestamp: DateTime(2025, 4, 28)),
         ],
         tags: [],
       );
@@ -52,7 +55,8 @@ void main() {
       final endDate = DateTime(2025, 4, 30);
 
       // Act
-      final barGroups = provider.generateBarGroups(dailyCounts, startDate, endDate);
+      final barGroups =
+          provider.generateBarGroups(dailyCounts, startDate, endDate);
 
       // Assert
       expect(barGroups.isNotEmpty, true);
