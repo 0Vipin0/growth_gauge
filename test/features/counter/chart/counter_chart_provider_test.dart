@@ -3,6 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/features/counter/chart/counter_chart_provider.dart';
 import 'package:growth_gauge/features/counter/model/model.dart';
 
+final testCounter = CounterModel(
+  id: '1',
+  name: 'Test Counter',
+  count: 5,
+  description: 'Test Description',
+  logs: [
+    CounterLog(
+      id: 'log1',
+      action: 'Incremented',
+      timestamp: DateTime(2025, 4, 28),
+    ),
+  ],
+);
+
 void main() {
   late CounterChartProvider provider;
 
@@ -57,5 +71,15 @@ void main() {
       // Assert
       expect(day, 'Sun');
     });
+
+    test('processDataForChart processes data correctly', () {
+      // Act
+      provider.processDataForChart(testCounter);
+
+      // Assert
+      expect(provider.barGroups.isNotEmpty, true);
+    });
+
+    // Add more tests for other methods
   });
 }

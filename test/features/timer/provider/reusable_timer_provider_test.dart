@@ -26,6 +26,20 @@ void main() {
       expect(provider.isRunning, true);
     });
 
+    test('startOrPauseTimer toggles the timer state', () {
+      // Act
+      provider.startOrPauseTimer();
+
+      // Assert
+      expect(provider.isRunning, true);
+
+      // Act again
+      provider.startOrPauseTimer();
+
+      // Assert
+      expect(provider.isRunning, false);
+    });
+
     test('resetTimer resets the timer and clears logs', () {
       // Act
       provider.resetTimer();
@@ -33,6 +47,14 @@ void main() {
       // Assert
       expect(provider.currentInterval, Duration.zero);
       expect(provider.timer.logs.last.action, 'Reset');
+    });
+
+    test('resetTimer resets the timer state', () {
+      // Act
+      provider.resetTimer();
+
+      // Assert
+      expect(provider.currentInterval, Duration.zero);
     });
 
     test('dispose', () {

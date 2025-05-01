@@ -206,5 +206,25 @@ void main() {
       // Assert
       expect(provider.timers.first.interval, const Duration(minutes: 5));
     });
+
+    test('addTimer adds a timer to the list', () {
+      // Act
+      provider.addTimer(testTimers[0]);
+
+      // Assert
+      expect(provider.timers.length, 1);
+      expect(provider.timers.first.name, 'Test Timer 1');
+    });
+
+    test('removeTimer removes a timer from the list', () {
+      // Arrange
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.removeTimer(testTimers[0]);
+
+      // Assert
+      expect(provider.timers.isEmpty, true);
+    });
   });
 }

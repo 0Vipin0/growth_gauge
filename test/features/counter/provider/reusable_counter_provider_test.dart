@@ -34,5 +34,23 @@ void main() {
       // Assert
       expect(provider.count, -1);
     });
+
+    test('increaseCounter increments the counter', () {
+      // Act
+      provider.increaseCounter();
+
+      // Assert
+      expect(provider.count, 1);
+    });
+
+    test('decreaseCounter decrements the counter', () {
+      // Act
+      provider.decreaseCounter();
+
+      // Assert
+      expect(provider.count, -1);
+    });
+
+    // Add more tests for other methods
   });
 }

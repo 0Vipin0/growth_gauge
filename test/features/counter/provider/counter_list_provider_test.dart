@@ -216,5 +216,25 @@ void main() {
       // Assert
       expect(provider.counters.first.count, 5);
     });
+
+    test('addCounter adds a counter to the list', () {
+      // Act
+      provider.addCounter(testCounters[0]);
+
+      // Assert
+      expect(provider.counters.length, 1);
+      expect(provider.counters.first.name, 'Test Counter 1');
+    });
+
+    test('removeCounter removes a counter from the list', () {
+      // Arrange
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.removeCounter(testCounters[0]);
+
+      // Assert
+      expect(provider.counters.isEmpty, true);
+    });
   });
 }

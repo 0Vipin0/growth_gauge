@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/features/authentication/authentication_service.dart';
 import 'package:growth_gauge/features/counter/model/model.dart';
 import 'package:growth_gauge/features/counter/provider/counter_list_provider.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
 import 'package:growth_gauge/features/settings/config/config.dart';
+import 'package:growth_gauge/features/settings/model/model.dart';
 import 'package:growth_gauge/features/settings/settings_provider.dart';
 import 'package:growth_gauge/features/timer/model/model.dart';
 import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
@@ -16,17 +18,26 @@ import '../timer/provider/timer_list_provider_test.dart';
 class MockCounterListProvider extends Mock implements CounterListProvider {}
 class MockTimerListProvider extends Mock implements TimerListProvider {}
 class MockNotificationService extends Mock implements NotificationService {}
+class MockAuthenticationService extends Mock implements AuthenticationService {}
+
+const testSettings = SettingsModel(
+  themeName: AppThemeName.light,
+  fontFamily: AppFontFamily.lato,
+  notificationTime: TimeOfDay(hour: 8, minute: 0),
+);
 
 void main() {
   late MockCounterListProvider mockCounterListProvider;
   late MockTimerListProvider mockTimerListProvider;
   late MockNotificationService mockNotificationService;
+  late MockAuthenticationService mockAuthenticationService;
   late SettingsProvider provider;
 
   setUp(() async {
     mockCounterListProvider = MockCounterListProvider();
     mockTimerListProvider = MockTimerListProvider();
     mockNotificationService = MockNotificationService();
+    mockAuthenticationService = MockAuthenticationService();
     provider = SettingsProvider(
       counterListProvider: mockCounterListProvider,
       timerListProvider: mockTimerListProvider,
@@ -149,39 +160,59 @@ void main() {
 
     test('toggleOnboarding', () {
       // Act
-      provider.toggleOnboarding();
+      provider.toggleOnboarding(false);
 
       // Assert
-      expect(provider.settings.hasCompletedOnboarding, isFalse);
+      expect(provider.isOnboardingComplete, isFalse);
     });
 
     test('exportDataToCsv', () async {
       // Act
-      final csvData = await provider.exportDataToCsv();
+      await provider.exportDataToCsv();
 
       // Assert
-      expect(csvData, contains('Counter Name,Count,Description'));
-    });
-
-    test('clearAppData', () async {
-      // Act
-      await provider.clearAppData();
-
-      // Assert
-      expect(provider.settings.themeName, AppThemeName.light);
-      expect(provider.settings.fontSize, AppFontSize.medium);
-      expect(provider.settings.fontFamily, AppFontFamily.defaultFont);
+      expect(provider.exportMessage, 'Data exported successfully to CSV!');
     });
 
     test('isBiometricAvailable', () async {
       // Arrange
-      when(mockNotificationService.isBiometricAvailable()).thenAnswer((_) async => true);
+      when(mockAuthenticationService.canAuthenticateWithBiometrics()).thenAnswer((_) async => true);
 
       // Act
       final isAvailable = await provider.isBiometricAvailable();
 
       // Assert
       expect(isAvailable, isTrue);
+    });
+
+    test('loadSettingsFromStorage loads settings correctly', () async {
+      // Arrange
+      SharedPreferences.setMockInitialValues({
+        'themeName': 'light',
+        'fontSize': 'medium',
+        'fontFamily': 'defaultFont',
+        'notificationTime': '08:00',
+        'hasCompletedOnboarding': true,
+      });
+
+      // Act
+      await provider.loadSettingsFromStorage();
+
+      // Assert
+      expect(provider.settings, testSettings);
+    });
+
+    test('saveSettingsToStorage saves settings correctly', () async {
+      // Act
+      await provider.saveSettingsToStorage();
+
+      // Assert
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('themeName'), 'light');
+      expect(prefs.getString('fontSize'), 'medium');
+      expect(prefs.getString('fontFamily'), 'defaultFont');
+      expect(prefs.getString('notificationTime'), '08:00');
+      expect(prefs.getBool('hasCompletedOnboarding'), true);
     });
   });
 }

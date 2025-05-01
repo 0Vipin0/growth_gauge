@@ -3,7 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
 import 'package:growth_gauge/features/timer/chart/timer_chart_provider.dart';
 import 'package:growth_gauge/features/timer/model/model.dart';
-import 'package:intl/intl.dart';
+
+final testTimer = TimerModel(
+  id: '1',
+  name: 'Test Timer',
+  interval: const Duration(minutes: 5),
+  description: 'Test Description',
+  logs: [
+    TimerLog(
+      id: 'log1',
+      action: 'Started',
+      timestamp: DateTime(2025, 4, 28),
+      interval: const Duration(minutes: 2),
+    ),
+  ],
+);
 
 void main() {
   late TimerChartProvider provider;
@@ -74,5 +88,15 @@ void main() {
       // Assert
       expect(title, contains('Total Time Spent'));
     });
+
+    test('processDataForChart processes data correctly', () {
+      // Act
+      provider.processDataForChart(testTimer, DurationInterval.minute);
+
+      // Assert
+      expect(provider.barGroups.isNotEmpty, true);
+    });
+
+    // Add more tests for other methods
   });
 }
