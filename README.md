@@ -81,8 +81,8 @@ Kindly note that the releases are primarily based on the Android and Windows pla
 *   **Cross-Device Data Synchronization** ([#15][i15])
 *   ~**Local User Authentication** ([#16][i16])~
 *   ~**Sound Alerts and Notifications** ([#17][i17])~
-*   **Target Tracking** ([#18][i18])
-*   **Data Categorization** ([#19][i19])
+*   ~**Target Tracking** ([#18][i18])~
+*   ~**Data Categorization** ([#19][i19])~
 *   **Summary Statistics** ([#20][i20])
 
 [i13]: https://github.com/0Vipin0/growth_gauge/issues/13
