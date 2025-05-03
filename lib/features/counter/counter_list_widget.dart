@@ -62,11 +62,20 @@ class CounterListWidget extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth > kTabletScreenSize) {
-                return Center(
-                  child: SizedBox(
-                    width: 400,
-                    child: _buildFilterTextField(counterListProvider),
-                  ),
+                return Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Filter Counters:',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: _buildFilterTextField(counterListProvider),
+                    ),
+                  ],
                 );
               } else {
                 return _buildFilterTextField(counterListProvider);
@@ -106,29 +115,32 @@ class CounterListWidget extends StatelessWidget {
     );
   }
 
-  Wrap _buildFilterTags(CounterListProvider counterListProvider) {
-    return Wrap(
-      spacing: 8.0,
-      children: [
-        if (counterListProvider.selectedTags.isNotEmpty)
-          ChoiceChip(
-            label: const Text('Clear All'),
-            selected: false,
-            onSelected: (_) {
-              counterListProvider.clearSelectedTags();
-            },
-          ),
-        ...counterListProvider.getAllTags().map((tag) {
-          final isSelected = counterListProvider.selectedTags.contains(tag);
-          return ChoiceChip(
-            label: Text(tag),
-            selected: isSelected,
-            onSelected: (_) {
-              counterListProvider.toggleTagSelection(tag);
-            },
-          );
-        }),
-      ],
+  Widget _buildFilterTags(CounterListProvider counterListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 8.0,
+        children: [
+          if (counterListProvider.selectedTags.isNotEmpty)
+            ChoiceChip(
+              label: const Text('Clear All'),
+              selected: false,
+              onSelected: (_) {
+                counterListProvider.clearSelectedTags();
+              },
+            ),
+          ...counterListProvider.getAllTags().map((tag) {
+            final isSelected = counterListProvider.selectedTags.contains(tag);
+            return ChoiceChip(
+              label: Text(tag),
+              selected: isSelected,
+              onSelected: (_) {
+                counterListProvider.toggleTagSelection(tag);
+              },
+            );
+          }),
+        ],
+      ),
     );
   }
 
