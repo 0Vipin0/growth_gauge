@@ -38,14 +38,16 @@ class ReusableCounterWidget extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Count: ${counterProvider.count}'),
+                  Text('Count: ${counterProvider.count}',
+                      style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.labelLarge?.fontSize,
+                      )),
                   if (counterModel.target != null)
                     Text('Target: ${counterModel.target}',
                         style: TextStyle(
-                          fontSize: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.fontSize,
+                          fontSize:
+                              Theme.of(context).textTheme.labelMedium?.fontSize,
                           color: Colors.green,
                         )),
                   if (counterModel.target == null)
