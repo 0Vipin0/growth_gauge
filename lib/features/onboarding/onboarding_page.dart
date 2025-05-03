@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:growth_gauge/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -79,7 +79,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth > kMobileScreenSize ? 16.0 : 2.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -150,7 +151,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Text(
             title,
             style: TextStyle(
-              fontSize: screenWidth * 0.03,
+              fontSize: screenWidth > kMobileScreenSize
+                  ? screenWidth * 0.03
+                  : screenWidth * 0.06,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
             ),
@@ -160,7 +163,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Text(
             description,
             style: TextStyle(
-              fontSize: screenWidth * 0.02,
+              fontSize: screenWidth > kMobileScreenSize
+                  ? screenWidth * 0.02
+                  : screenWidth * 0.05,
               color: Theme.of(context).primaryColor,
             ),
             textAlign: TextAlign.center,

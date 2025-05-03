@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/constants.dart';
 import 'add_counter_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
@@ -17,81 +18,71 @@ class CounterListWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Counters'),
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              if (value == 'Sort by Name Asc') {
+              if (value == 'SortByNameAsc') {
                 counterListProvider.sortCountersByName();
-              } else if (value == 'Sort by Name Desc') {
+              } else if (value == 'SortByNameDesc') {
                 counterListProvider.sortCountersByName();
                 counterListProvider.counters.reversed.toList();
-              } else if (value == 'Sort by Count Asc') {
+              } else if (value == 'SortByCountAsc') {
                 counterListProvider.sortCountersByCount();
-              } else if (value == 'Sort by Count Desc') {
+              } else if (value == 'SortByCountDesc') {
                 counterListProvider.sortCountersByCount();
                 counterListProvider.counters.reversed.toList();
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
-                value: 'Sort by Name Asc',
-                child: Text('Sort by Name Ascending'),
+                value: 'SortByNameAsc',
+                child: Text('Sort by Name (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Name Desc',
-                child: Text('Sort by Name Descending'),
+                value: 'SortByNameDesc',
+                child: Text('Sort by Name (Desc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Count Asc',
-                child: Text('Sort by Count Ascending'),
+                value: 'SortByCountAsc',
+                child: Text('Sort by Count (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Count Desc',
-                child: Text('Sort by Count Descending'),
+                value: 'SortByCountDesc',
+                child: Text('Sort by Count (Desc)'),
               ),
             ],
           ),
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Filter by Name, Description, or Target',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                counterListProvider.filterCountersByText(value);
-              },
-            ),
-          ),
-          Wrap(
-            spacing: 8.0,
-            children: [
-              if (counterListProvider.selectedTags.isNotEmpty)
-                ChoiceChip(
-                  label: const Text('Clear All'),
-                  selected: false,
-                  onSelected: (_) {
-                    counterListProvider.clearSelectedTags();
-                  },
-                ),
-              ...counterListProvider.getAllTags().map((tag) {
-                final isSelected =
-                    counterListProvider.selectedTags.contains(tag);
-                return ChoiceChip(
-                  label: Text(tag),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    counterListProvider.toggleTagSelection(tag);
-                  },
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > kTabletScreenSize) {
+                return Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Filter Counters:',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: _buildFilterTextField(counterListProvider),
+                    ),
+                  ],
                 );
-              }),
-            ],
+              } else {
+                return _buildFilterTextField(counterListProvider);
+              }
+            },
           ),
+          _buildFilterTags(counterListProvider),
           const SizedBox(height: 8),
           Expanded(
             child: counterListProvider.filteredCounters.isEmpty
@@ -113,6 +104,7 @@ class CounterListWidget extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Add Counter',
         onPressed: () {
           context.pushTransition(
             type: PageTransitionType.bottomToTop,
@@ -120,6 +112,51 @@ class CounterListWidget extends StatelessWidget {
           );
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildFilterTags(CounterListProvider counterListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 8.0,
+        children: [
+          if (counterListProvider.selectedTags.isNotEmpty)
+            ChoiceChip(
+              label: const Text('Clear All'),
+              selected: false,
+              onSelected: (_) {
+                counterListProvider.clearSelectedTags();
+              },
+            ),
+          ...counterListProvider.getAllTags().map((tag) {
+            final isSelected = counterListProvider.selectedTags.contains(tag);
+            return ChoiceChip(
+              label: Text(tag),
+              selected: isSelected,
+              onSelected: (_) {
+                counterListProvider.toggleTagSelection(tag);
+              },
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterTextField(CounterListProvider counterListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: const InputDecoration(
+          labelText: 'Search Counters',
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+        ),
+        onChanged: (value) {
+          counterListProvider.filterCountersByText(value);
+        },
       ),
     );
   }
