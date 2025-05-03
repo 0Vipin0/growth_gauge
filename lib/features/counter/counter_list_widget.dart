@@ -144,13 +144,14 @@ class CounterListWidget extends StatelessWidget {
     );
   }
 
-  Padding _buildFilterTextField(CounterListProvider counterListProvider) {
+  Widget _buildFilterTextField(CounterListProvider counterListProvider) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: const InputDecoration(
-          labelText: 'Filter Counter by Name, Description, or Target',
-          border: OutlineInputBorder(),
+          labelText: 'Search Counters',
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16))),
         ),
         onChanged: (value) {
           counterListProvider.filterCountersByText(value);

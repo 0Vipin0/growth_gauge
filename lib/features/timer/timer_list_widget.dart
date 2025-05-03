@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/constants.dart';
 import 'add_timer_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
@@ -17,6 +18,7 @@ class TimerListWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Timers'),
         actions: [
           PopupMenuButton<String>(
@@ -56,45 +58,30 @@ class TimerListWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (value) {
-                timerListProvider.filterTimersByText(value);
-              },
-              decoration: const InputDecoration(
-                labelText: 'Search Timers',
-                border: OutlineInputBorder(),
-              ),
-            ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > kTabletScreenSize) {
+                return Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Filter Counters:',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: _buildFilterTextField(timerListProvider),
+                    ),
+                  ],
+                );
+              } else {
+                return _buildFilterTextField(timerListProvider);
+              }
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Wrap(
-              spacing: 8.0,
-              children: [
-                if (timerListProvider.selectedTags.isNotEmpty)
-                  ChoiceChip(
-                    label: const Text('Clear All'),
-                    selected: false,
-                    onSelected: (_) {
-                      timerListProvider.clearSelectedTags();
-                    },
-                  ),
-                ...timerListProvider.getAllTags().map((tag) {
-                  final isSelected =
-                      timerListProvider.selectedTags.contains(tag);
-                  return ChoiceChip(
-                    label: Text(tag),
-                    selected: isSelected,
-                    onSelected: (_) {
-                      timerListProvider.toggleTagSelection(tag);
-                    },
-                  );
-                }),
-              ],
-            ),
-          ),
+          _buildFilterTags(timerListProvider),
           const SizedBox(height: 8),
           Expanded(
             child: timerListProvider.filteredTimers.isEmpty
@@ -122,6 +109,52 @@ class TimerListWidget extends StatelessWidget {
           );
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildFilterTags(TimerListProvider timerListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 8.0,
+        children: [
+          if (timerListProvider.selectedTags.isNotEmpty)
+            ChoiceChip(
+              label: const Text('Clear All'),
+              selected: false,
+              onSelected: (_) {
+                timerListProvider.clearSelectedTags();
+              },
+            ),
+          ...timerListProvider.getAllTags().map((tag) {
+            final isSelected = timerListProvider.selectedTags.contains(tag);
+            return ChoiceChip(
+              label: Text(tag),
+              selected: isSelected,
+              onSelected: (_) {
+                timerListProvider.toggleTagSelection(tag);
+              },
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildFilterTextField(TimerListProvider timerListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        onChanged: (value) {
+          timerListProvider.filterTimersByText(value);
+        },
+        decoration: const InputDecoration(
+          labelText: 'Search Timers',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+        ),
       ),
     );
   }
