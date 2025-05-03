@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../chart/base_chart_widget.dart';
 import '../chart/base_heatmap_widget.dart';
 import 'chart/chart.dart';
 import 'model/model.dart';
@@ -127,15 +126,7 @@ class CounterDetailsPage extends StatelessWidget {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: BaseChartWidget(
-                          barGroups: Provider.of<CounterChartProvider>(context)
-                              .barGroups,
-                          dayLabels: List.generate(
-                              7,
-                              (index) =>
-                                  Provider.of<CounterChartProvider>(context)
-                                      .getDayOfWeek(index)),
-                        ),
+                        child: ChartPage(counter: counter),
                       ),
                       const BaseHeatmapWidget(
                         heatmapData: {}, // Replace with actual heatmap data
@@ -149,15 +140,7 @@ class CounterDetailsPage extends StatelessWidget {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: BaseChartWidget(
-                          barGroups: Provider.of<CounterChartProvider>(context)
-                              .barGroups,
-                          dayLabels: List.generate(
-                              7,
-                              (index) =>
-                                  Provider.of<CounterChartProvider>(context)
-                                      .getDayOfWeek(index)),
-                        ),
+                        child: ChartPage(counter: counter),
                       ),
                       const SizedBox(height: 15),
                       const BaseHeatmapWidget(

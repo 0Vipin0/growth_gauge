@@ -7,8 +7,15 @@ import '../counter/counter.dart';
 import 'abstract_chart_provider.dart';
 
 class CounterChartProvider extends AbstractChartProvider<CounterModel> {
+  bool isProcessed = false;
+
   @override
   List<BarChartGroupData> processDataForChart(CounterModel counter) {
+    isProcessed = false;
+    if (counter.logs.isEmpty) {
+      return [];
+    }
+
     final Map<String, int> dailyCounts = {};
     final DateTime now = DateTime.now();
     final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
@@ -20,11 +27,10 @@ class CounterChartProvider extends AbstractChartProvider<CounterModel> {
       }
     }
 
-    return generateBarGroups(dailyCounts, sevenDaysAgo, now);
+    return _generateBarGroups(dailyCounts, sevenDaysAgo, now);
   }
 
-  @override
-  List<BarChartGroupData> generateBarGroups(
+  List<BarChartGroupData> _generateBarGroups(
     Map<String, dynamic> dailyCounts,
     DateTime startDate,
     DateTime endDate,
@@ -48,6 +54,7 @@ class CounterChartProvider extends AbstractChartProvider<CounterModel> {
         ),
       );
     }
+    isProcessed = true;
     return groups;
   }
 

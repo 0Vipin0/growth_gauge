@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../chart/chart.dart';
 import '../model/model.dart';
-import '../provider/provider.dart';
-import 'chart_widget.dart';
 import 'duration_interval.dart';
-import 'timer_chart_provider.dart';
 
-class ChartPage extends StatefulWidget {
+class ChartPage extends StatelessWidget {
   final TimerModel timer;
   final DurationInterval durationInterval;
 
@@ -17,27 +15,6 @@ class ChartPage extends StatefulWidget {
     required this.timer,
     required this.durationInterval,
   });
-
-  @override
-  State<ChartPage> createState() => _ChartPageState();
-}
-
-class _ChartPageState extends State<ChartPage> {
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  void loadData() {
-    Provider.of<TimerChartProvider>(context, listen: false).processDataForChart(
-      Provider.of<TimerListProvider>(
-        context,
-        listen: false,
-      ).getTimer(widget.timer),
-      widget.durationInterval,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +29,29 @@ class _ChartPageState extends State<ChartPage> {
             textAlign: TextAlign.center,
           ),
           Text(
-            'Time Spent per ${widget.durationInterval.getUnitLabel()}',
+            'Time Spent per ${durationInterval.getUnitLabel()}',
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           const SizedBox(height: 20),
-          const ChartWidget(),
+          Consumer<TimerChartProvider>(
+            builder: (context, chartProvider, child) {
+              chartProvider.interval = durationInterval;
+              final barGroups = chartProvider.processDataForChart(timer);
+              final maxY = barGroups
+                      .map((group) => group.barRods.first.toY)
+                      .fold(0.0, (max, y) => y > max ? y : max) +
+                  5;
+
+              return !chartProvider.isProcessed
+                  ? const CircularProgressIndicator()
+                  : BaseChartWidget(
+                      barGroups: barGroups,
+                      dayLabel: (value) => chartProvider.getDayOfWeek(value),
+                      yAxisInterval: calculateYAxisInterval(maxY),
+                    );
+            },
+          ),
           const SizedBox(height: 20),
           const Text(
             'Days are based on the last 7 days.',
@@ -67,5 +61,17 @@ class _ChartPageState extends State<ChartPage> {
         ],
       ),
     );
+  }
+
+  static double calculateYAxisInterval(double maxY) {
+    if (maxY <= 10) {
+      return 1;
+    } else if (maxY <= 50) {
+      return 5;
+    } else if (maxY <= 100) {
+      return 10;
+    } else {
+      return 20; // Or some other logic for larger maxY values
+    }
   }
 }

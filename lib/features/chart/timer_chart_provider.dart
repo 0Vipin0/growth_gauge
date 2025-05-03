@@ -9,9 +9,15 @@ import 'abstract_chart_provider.dart';
 
 class TimerChartProvider extends AbstractChartProvider<TimerModel> {
   late DurationInterval interval;
+  bool isProcessed = false;
 
   @override
   List<BarChartGroupData> processDataForChart(TimerModel timer) {
+    isProcessed = false;
+    if (timer.logs.isEmpty) {
+      return [];
+    }
+
     final Map<String, Duration> dailyDurations = {};
     final DateTime now = DateTime.now();
     final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
@@ -23,11 +29,10 @@ class TimerChartProvider extends AbstractChartProvider<TimerModel> {
       }
     }
 
-    return generateBarGroups(dailyDurations, sevenDaysAgo, now);
+    return _generateBarGroups(dailyDurations, sevenDaysAgo, now);
   }
 
-  @override
-  List<BarChartGroupData> generateBarGroups(
+  List<BarChartGroupData> _generateBarGroups(
     Map<String, dynamic> dailyDurations,
     DateTime startDate,
     DateTime endDate,
@@ -50,6 +55,7 @@ class TimerChartProvider extends AbstractChartProvider<TimerModel> {
         ),
       );
     }
+    isProcessed = true;
     return groups;
   }
 

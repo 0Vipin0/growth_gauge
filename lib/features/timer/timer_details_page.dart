@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../chart/base_chart_widget.dart';
-import '../chart/base_heatmap_widget.dart';
+import '../chart/chart.dart';
 import 'chart/chart.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
@@ -142,14 +141,9 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: BaseChartWidget(
-                          barGroups: Provider.of<TimerChartProvider>(context)
-                              .barGroups,
-                          dayLabels: List.generate(
-                              7,
-                              (index) =>
-                                  Provider.of<TimerChartProvider>(context)
-                                      .getDayOfWeek(index)),
+                        child: ChartPage(
+                          timer: widget.timer,
+                          durationInterval: _selectedInterval,
                         ),
                       ),
                       const BaseHeatmapWidget(
@@ -164,14 +158,9 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: BaseChartWidget(
-                          barGroups: Provider.of<TimerChartProvider>(context)
-                              .barGroups,
-                          dayLabels: List.generate(
-                              7,
-                              (index) =>
-                                  Provider.of<TimerChartProvider>(context)
-                                      .getDayOfWeek(index)),
+                        child: ChartPage(
+                          timer: widget.timer,
+                          durationInterval: _selectedInterval,
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -206,15 +195,14 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               setState(() {
                 _selectedInterval = newValue;
               });
-              Provider.of<TimerChartProvider>(
-                context,
-                listen: false,
-              ).processDataForChart(
+              Provider.of<TimerChartProvider>(context, listen: false).interval =
+                  _selectedInterval;
+              Provider.of<TimerChartProvider>(context, listen: false)
+                  .processDataForChart(
                 Provider.of<TimerListProvider>(
                   context,
                   listen: false,
                 ).getTimer(widget.timer),
-                _selectedInterval,
               );
             }
           },
