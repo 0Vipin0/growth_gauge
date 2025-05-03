@@ -3,39 +3,35 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../counter.dart';
+import '../../counter/counter.dart';
+import 'abstract_chart_provider.dart';
 
-class CounterChartProvider extends ChangeNotifier {
-  List<BarChartGroupData> barGroups = [];
+class CounterChartProvider extends AbstractChartProvider<CounterModel> {
   bool isProcessed = false;
-  late CounterModel _counter;
 
-  void processDataForChart(CounterModel counter) {
+  @override
+  List<BarChartGroupData> processDataForChart(CounterModel counter) {
     isProcessed = false;
-    _counter = counter;
-    if (_counter.logs.isEmpty) {
-      barGroups = [];
-      return;
+    if (counter.logs.isEmpty) {
+      return [];
     }
 
     final Map<String, int> dailyCounts = {};
     final DateTime now = DateTime.now();
     final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
 
-    final List<CounterLog> countDateLogs = counter.logs;
-    for (final CounterLog log in countDateLogs) {
+    for (final CounterLog log in counter.logs) {
       if (log.timestamp.isAfter(sevenDaysAgo)) {
         final String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
         dailyCounts[dateKey] = (dailyCounts[dateKey] ?? 0) + 1;
       }
     }
 
-    barGroups = generateBarGroups(dailyCounts, sevenDaysAgo, now);
-    isProcessed = true;
+    return _generateBarGroups(dailyCounts, sevenDaysAgo, now);
   }
 
-  List<BarChartGroupData> generateBarGroups(
-    Map<String, int> dailyCounts,
+  List<BarChartGroupData> _generateBarGroups(
+    Map<String, dynamic> dailyCounts,
     DateTime startDate,
     DateTime endDate,
   ) {
@@ -43,7 +39,7 @@ class CounterChartProvider extends ChangeNotifier {
     for (int i = 0; i < 7; i++) {
       final DateTime date = startDate.add(Duration(days: i + 1));
       final String dateKey = DateFormat('yyyy-MM-dd').format(date);
-      final int count = dailyCounts[dateKey] ?? 0;
+      final int count = (dailyCounts[dateKey] ?? 0) as int;
 
       groups.add(
         BarChartGroupData(
@@ -58,9 +54,11 @@ class CounterChartProvider extends ChangeNotifier {
         ),
       );
     }
+    isProcessed = true;
     return groups;
   }
 
+  @override
   String getDayOfWeek(int index) {
     final DateTime now = clock.now();
     final DateTime date = now.subtract(Duration(days: 7 - 1 - index));

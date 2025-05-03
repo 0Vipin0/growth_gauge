@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../notification/notification_service.dart';
-import '../chart/chart.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 

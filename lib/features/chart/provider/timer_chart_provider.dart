@@ -3,54 +3,47 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../model/model.dart';
-import 'duration_interval.dart';
+import '../../timer/model/model.dart';
+import 'abstract_chart_provider.dart';
 
-class TimerChartProvider extends ChangeNotifier {
-  List<BarChartGroupData> barGroups = [];
+class TimerChartProvider extends AbstractChartProvider<TimerModel> {
+  late DurationInterval interval;
   bool isProcessed = false;
-  late TimerModel _timer;
-  late DurationInterval _interval;
 
-  void processDataForChart(TimerModel timer, DurationInterval interval) {
+  @override
+  List<BarChartGroupData> processDataForChart(TimerModel timer) {
     isProcessed = false;
-    _timer = timer;
-    _interval = interval;
-    if (_timer.logs.isEmpty) {
-      barGroups = [];
-      return;
+    if (timer.logs.isEmpty) {
+      return [];
     }
 
     final Map<String, Duration> dailyDurations = {};
     final DateTime now = DateTime.now();
     final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
 
-    final List<TimerLog> timerLogs = timer.logs;
-    for (final TimerLog log in timerLogs) {
+    for (final TimerLog log in timer.logs) {
       if (log.timestamp.isAfter(sevenDaysAgo)) {
         final String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
         dailyDurations[dateKey] = log.interval;
       }
     }
 
-    barGroups = generateBarGroups(dailyDurations, sevenDaysAgo, now, _interval);
-    isProcessed = true;
-    notifyListeners();
+    return _generateBarGroups(dailyDurations, sevenDaysAgo, now);
   }
 
-  List<BarChartGroupData> generateBarGroups(
-    Map<String, Duration> dailyDurations,
+  List<BarChartGroupData> _generateBarGroups(
+    Map<String, dynamic> dailyDurations,
     DateTime startDate,
     DateTime endDate,
-    DurationInterval interval,
   ) {
     final List<BarChartGroupData> groups = [];
     for (int i = 0; i < 7; i++) {
       final DateTime date = startDate.add(Duration(days: i + 1));
       final String dateKey = DateFormat('yyyy-MM-dd').format(date);
-      final Duration totalDuration = dailyDurations[dateKey] ?? Duration.zero;
+      final Duration totalDuration =
+          (dailyDurations[dateKey] ?? Duration.zero) as Duration;
 
-      final double yValue = _getDurationInInterval(totalDuration, interval);
+      final double yValue = _getDurationInInterval(totalDuration);
 
       groups.add(
         BarChartGroupData(
@@ -61,10 +54,11 @@ class TimerChartProvider extends ChangeNotifier {
         ),
       );
     }
+    isProcessed = true;
     return groups;
   }
 
-  double _getDurationInInterval(Duration duration, DurationInterval interval) {
+  double _getDurationInInterval(Duration duration) {
     switch (interval) {
       case DurationInterval.tenSeconds:
         return duration.inSeconds / 10;
@@ -77,13 +71,10 @@ class TimerChartProvider extends ChangeNotifier {
     }
   }
 
+  @override
   String getDayOfWeek(int index) {
     final DateTime now = clock.now();
     final DateTime date = now.subtract(Duration(days: 7 - 1 - index));
     return DateFormat('E').format(date);
-  }
-
-  String getChartTitle(DurationInterval interval) {
-    return 'Total Time Spent (Last 7 Days) in ${interval.getUnitLabel()}';
   }
 }

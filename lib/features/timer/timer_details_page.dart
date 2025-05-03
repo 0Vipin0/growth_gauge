@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'chart/chart.dart';
+import '../chart/chart.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
@@ -145,13 +145,12 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                           durationInterval: _selectedInterval,
                         ),
                       ),
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: HeatmapPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
-                        ), // Assuming you adapt HeatmapPage
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<TimerListProvider>(context)
+                            .extractCountsByDayPerDurationInterval(
+                          widget.timer,
+                          _selectedInterval,
+                        ), // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -168,13 +167,12 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: HeatmapPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
-                        ), // Assuming you adapt HeatmapPage
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<TimerListProvider>(context)
+                            .extractCountsByDayPerDurationInterval(
+                          widget.timer,
+                          _selectedInterval,
+                        ), // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -204,15 +202,14 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               setState(() {
                 _selectedInterval = newValue;
               });
-              Provider.of<TimerChartProvider>(
-                context,
-                listen: false,
-              ).processDataForChart(
+              Provider.of<TimerChartProvider>(context, listen: false).interval =
+                  _selectedInterval;
+              Provider.of<TimerChartProvider>(context, listen: false)
+                  .processDataForChart(
                 Provider.of<TimerListProvider>(
                   context,
                   listen: false,
                 ).getTimer(widget.timer),
-                _selectedInterval,
               );
             }
           },
@@ -231,6 +228,102 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
         return 'Minute';
       case DurationInterval.twoMinutes:
         return '2 Minutes';
+    }
+  }
+}
+
+class HeatmapPage extends StatelessWidget {
+  final TimerModel timer;
+  final DurationInterval durationInterval;
+
+  const HeatmapPage({
+    super.key,
+    required this.timer,
+    required this.durationInterval,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: BaseHeatmapWidget(
+        heatmapData: Provider.of<TimerListProvider>(
+          context,
+        ).extractCountsByDayPerDurationInterval(
+          timer,
+          durationInterval,
+        ),
+      ),
+    );
+  }
+}
+
+class ChartPage extends StatelessWidget {
+  final TimerModel timer;
+  final DurationInterval durationInterval;
+
+  const ChartPage({
+    super.key,
+    required this.timer,
+    required this.durationInterval,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const Text(
+            'Exercise Counts - Last 7 Days',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            'Time Spent per ${durationInterval.getUnitLabel()}',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const SizedBox(height: 20),
+          Consumer<TimerChartProvider>(
+            builder: (context, chartProvider, child) {
+              chartProvider.interval = durationInterval;
+              final barGroups = chartProvider.processDataForChart(timer);
+              final maxY = barGroups
+                      .map((group) => group.barRods.first.toY)
+                      .fold(0.0, (max, y) => y > max ? y : max) +
+                  5;
+
+              return !chartProvider.isProcessed
+                  ? const CircularProgressIndicator()
+                  : BaseChartWidget(
+                      barGroups: barGroups,
+                      dayLabel: (value) => chartProvider.getDayOfWeek(value),
+                      yAxisInterval: calculateYAxisInterval(maxY),
+                    );
+            },
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Days are based on the last 7 days.',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static double calculateYAxisInterval(double maxY) {
+    if (maxY <= 10) {
+      return 1;
+    } else if (maxY <= 50) {
+      return 5;
+    } else if (maxY <= 100) {
+      return 10;
+    } else {
+      return 20; // Or some other logic for larger maxY values
     }
   }
 }
