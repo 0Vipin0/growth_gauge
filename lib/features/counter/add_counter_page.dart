@@ -35,10 +35,10 @@ class _AddCounterPageState extends State<AddCounterPage> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth > kDesktopScreenSize) {
+          if (constraints.maxWidth > kTabletScreenSize) {
             return Center(
               child: SizedBox(
-                width: 400,
+                width: 600,
                 child: _buildForm(),
               ),
             );

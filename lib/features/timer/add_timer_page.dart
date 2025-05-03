@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:growth_gauge/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,10 +40,10 @@ class _AddTimerPageState extends State<AddTimerPage> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth > 600) {
+          if (constraints.maxWidth > kTabletScreenSize) {
             return Center(
               child: SizedBox(
-                width: 400,
+                width: 600,
                 child: _buildForm(),
               ),
             );
