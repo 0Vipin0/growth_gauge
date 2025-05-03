@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../timer/chart/duration_interval.dart';
 import '../timer/model/model.dart';
 import 'abstract_chart_provider.dart';
 

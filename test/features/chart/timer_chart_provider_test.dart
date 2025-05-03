@@ -2,7 +2,6 @@ import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:growth_gauge/features/chart/chart.dart';
-import 'package:growth_gauge/features/timer/chart/duration_interval.dart';
 import 'package:growth_gauge/features/timer/model/model.dart';
 
 void main() {
