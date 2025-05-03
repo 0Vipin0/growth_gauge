@@ -127,8 +127,10 @@ class CounterDetailsPage extends StatelessWidget {
                         height: 400,
                         child: ChartPage(counter: counter),
                       ),
-                      const BaseHeatmapWidget(
-                        heatmapData: {}, // Replace with actual heatmap data
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<CounterListProvider>(
+                          context,
+                        ).extractCountsByDay(counter),
                       ),
                     ],
                   );
@@ -142,8 +144,9 @@ class CounterDetailsPage extends StatelessWidget {
                         child: ChartPage(counter: counter),
                       ),
                       const SizedBox(height: 15),
-                      const BaseHeatmapWidget(
-                        heatmapData: {}, // Replace with actual heatmap data
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<CounterListProvider>(context)
+                            .extractCountsByDay(counter),
                       ),
                     ],
                   );

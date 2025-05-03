@@ -145,8 +145,12 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                           durationInterval: _selectedInterval,
                         ),
                       ),
-                      const BaseHeatmapWidget(
-                        heatmapData: {}, // Replace with actual heatmap data
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<TimerListProvider>(context)
+                            .extractCountsByDayPerDurationInterval(
+                          widget.timer,
+                          _selectedInterval,
+                        ), // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -163,8 +167,12 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      const BaseHeatmapWidget(
-                        heatmapData: {}, // Replace with actual heatmap data
+                      BaseHeatmapWidget(
+                        heatmapData: Provider.of<TimerListProvider>(context)
+                            .extractCountsByDayPerDurationInterval(
+                          widget.timer,
+                          _selectedInterval,
+                        ), // Replace with actual heatmap data
                       ),
                     ],
                   );
