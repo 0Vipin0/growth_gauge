@@ -23,34 +23,34 @@ class CounterListWidget extends StatelessWidget {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              if (value == 'Sort by Name Asc') {
+              if (value == 'SortByNameAsc') {
                 counterListProvider.sortCountersByName();
-              } else if (value == 'Sort by Name Desc') {
+              } else if (value == 'SortByNameDesc') {
                 counterListProvider.sortCountersByName();
                 counterListProvider.counters.reversed.toList();
-              } else if (value == 'Sort by Count Asc') {
+              } else if (value == 'SortByCountAsc') {
                 counterListProvider.sortCountersByCount();
-              } else if (value == 'Sort by Count Desc') {
+              } else if (value == 'SortByCountDesc') {
                 counterListProvider.sortCountersByCount();
                 counterListProvider.counters.reversed.toList();
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
-                value: 'Sort by Name Asc',
-                child: Text('Sort by Name Ascending'),
+                value: 'SortByNameAsc',
+                child: Text('Sort by Name (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Name Desc',
-                child: Text('Sort by Name Descending'),
+                value: 'SortByNameDesc',
+                child: Text('Sort by Name (Desc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Count Asc',
-                child: Text('Sort by Count Ascending'),
+                value: 'SortByCountAsc',
+                child: Text('Sort by Count (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Count Desc',
-                child: Text('Sort by Count Descending'),
+                value: 'SortByCountDesc',
+                child: Text('Sort by Count (Desc)'),
               ),
             ],
           ),
@@ -104,6 +104,7 @@ class CounterListWidget extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Add Counter',
         onPressed: () {
           context.pushTransition(
             type: PageTransitionType.bottomToTop,

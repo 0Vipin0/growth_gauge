@@ -23,40 +23,41 @@ class TimerListWidget extends StatelessWidget {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              if (value == 'Sort by Name Asc') {
+              if (value == 'SortByNameAsc') {
                 timerListProvider.sortTimersByName();
-              } else if (value == 'Sort by Name Desc') {
+              } else if (value == 'SortByNameDesc') {
                 timerListProvider.sortTimersByName();
                 timerListProvider.timers.reversed.toList();
-              } else if (value == 'Sort by Interval Asc') {
+              } else if (value == 'SortByIntervalAsc') {
                 timerListProvider.sortTimersByInterval();
-              } else if (value == 'Sort by Interval Desc') {
+              } else if (value == 'SortByIntervalDesc') {
                 timerListProvider.sortTimersByInterval();
                 timerListProvider.timers.reversed.toList();
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
-                value: 'Sort by Name Asc',
-                child: Text('Sort by Name Ascending'),
+                value: 'SortByNameAsc',
+                child: Text('Sort by Name (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Name Desc',
-                child: Text('Sort by Name Descending'),
+                value: 'SortByNameDesc',
+                child: Text('Sort by Name (Desc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Interval Asc',
-                child: Text('Sort by Interval Ascending'),
+                value: 'SortByIntervalAsc',
+                child: Text('Sort by Interval (Asc)'),
               ),
               const PopupMenuItem(
-                value: 'Sort by Interval Desc',
-                child: Text('Sort by Interval Descending'),
+                value: 'SortByIntervalDesc',
+                child: Text('Sort by Interval (Desc)'),
               ),
             ],
           ),
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LayoutBuilder(
             builder: (context, constraints) {
@@ -102,6 +103,7 @@ class TimerListWidget extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Add Timer',
         onPressed: () {
           context.pushTransition(
             type: PageTransitionType.bottomToTop,
