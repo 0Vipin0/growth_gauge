@@ -6,6 +6,7 @@ import 'package:local_auth/local_auth.dart';
 abstract class AuthenticationServiceBase {
   Future<bool> canAuthenticateWithBiometrics();
   Future<bool> authenticateWithBiometrics();
+  Future<String?> getSavedPin();
   Future<void> savePin(String pin);
   Future<bool> authenticateWithPin(String pin);
 }
@@ -42,6 +43,7 @@ class AuthenticationService implements AuthenticationServiceBase {
     await _storage.write(key: 'user_pin', value: pin);
   }
 
+  @override
   Future<String?> getSavedPin() async {
     return await _storage.read(key: 'user_pin');
   }

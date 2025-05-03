@@ -39,5 +39,11 @@ void main() {
       final result = await authService.authenticateWithPin('1234');
       expect(result, true);
     });
+
+    test('getSavedPin should return a pin', () async {
+      when(authService.getSavedPin()).thenAnswer((_) async => '1234');
+      final result = await authService.getSavedPin();
+      expect(result, '1234');
+    });
   });
 }

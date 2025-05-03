@@ -53,6 +53,15 @@ class MockAuthenticationServiceBase extends _i1.Mock
       ) as _i3.Future<bool>);
 
   @override
+  _i3.Future<String?> getSavedPin() => (super.noSuchMethod(
+        Invocation.method(
+          #getSavedPin,
+          [],
+        ),
+        returnValue: _i3.Future<String?>.value(),
+      ) as _i3.Future<String?>);
+
+  @override
   _i3.Future<void> savePin(String? pin) => (super.noSuchMethod(
         Invocation.method(
           #savePin,
