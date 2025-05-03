@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../chart/base_chart_widget.dart';
+import '../chart/base_heatmap_widget.dart';
 import 'chart/chart.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
@@ -140,18 +142,18 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: ChartPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
+                        child: BaseChartWidget(
+                          barGroups: Provider.of<TimerChartProvider>(context)
+                              .barGroups,
+                          dayLabels: List.generate(
+                              7,
+                              (index) =>
+                                  Provider.of<TimerChartProvider>(context)
+                                      .getDayOfWeek(index)),
                         ),
                       ),
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: HeatmapPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
-                        ), // Assuming you adapt HeatmapPage
+                      const BaseHeatmapWidget(
+                        heatmapData: {}, // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -162,19 +164,19 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: ChartPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
+                        child: BaseChartWidget(
+                          barGroups: Provider.of<TimerChartProvider>(context)
+                              .barGroups,
+                          dayLabels: List.generate(
+                              7,
+                              (index) =>
+                                  Provider.of<TimerChartProvider>(context)
+                                      .getDayOfWeek(index)),
                         ),
                       ),
                       const SizedBox(height: 15),
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: HeatmapPage(
-                          timer: widget.timer,
-                          durationInterval: _selectedInterval,
-                        ), // Assuming you adapt HeatmapPage
+                      const BaseHeatmapWidget(
+                        heatmapData: {}, // Replace with actual heatmap data
                       ),
                     ],
                   );

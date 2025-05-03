@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../chart/base_chart_widget.dart';
+import '../chart/base_heatmap_widget.dart';
 import 'chart/chart.dart';
 import 'model/model.dart';
 import 'provider/counter_list_provider.dart';
@@ -125,9 +127,19 @@ class CounterDetailsPage extends StatelessWidget {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: ChartPage(counter: counter),
+                        child: BaseChartWidget(
+                          barGroups: Provider.of<CounterChartProvider>(context)
+                              .barGroups,
+                          dayLabels: List.generate(
+                              7,
+                              (index) =>
+                                  Provider.of<CounterChartProvider>(context)
+                                      .getDayOfWeek(index)),
+                        ),
                       ),
-                      HeatmapPage(counter: counter),
+                      const BaseHeatmapWidget(
+                        heatmapData: {}, // Replace with actual heatmap data
+                      ),
                     ],
                   );
                 } else {
@@ -137,10 +149,20 @@ class CounterDetailsPage extends StatelessWidget {
                       SizedBox(
                         width: 400,
                         height: 400,
-                        child: ChartPage(counter: counter),
+                        child: BaseChartWidget(
+                          barGroups: Provider.of<CounterChartProvider>(context)
+                              .barGroups,
+                          dayLabels: List.generate(
+                              7,
+                              (index) =>
+                                  Provider.of<CounterChartProvider>(context)
+                                      .getDayOfWeek(index)),
+                        ),
                       ),
                       const SizedBox(height: 15),
-                      HeatmapPage(counter: counter),
+                      const BaseHeatmapWidget(
+                        heatmapData: {}, // Replace with actual heatmap data
+                      ),
                     ],
                   );
                 }
