@@ -3,36 +3,35 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../timer/model/model.dart';
+import '../../counter/counter.dart';
 import 'abstract_chart_provider.dart';
 
-class TimerChartProvider extends AbstractChartProvider<TimerModel> {
-  late DurationInterval interval;
+class CounterChartProvider extends AbstractChartProvider<CounterModel> {
   bool isProcessed = false;
 
   @override
-  List<BarChartGroupData> processDataForChart(TimerModel timer) {
+  List<BarChartGroupData> processDataForChart(CounterModel counter) {
     isProcessed = false;
-    if (timer.logs.isEmpty) {
+    if (counter.logs.isEmpty) {
       return [];
     }
 
-    final Map<String, Duration> dailyDurations = {};
+    final Map<String, int> dailyCounts = {};
     final DateTime now = DateTime.now();
     final DateTime sevenDaysAgo = now.subtract(const Duration(days: 7));
 
-    for (final TimerLog log in timer.logs) {
+    for (final CounterLog log in counter.logs) {
       if (log.timestamp.isAfter(sevenDaysAgo)) {
         final String dateKey = DateFormat('yyyy-MM-dd').format(log.timestamp);
-        dailyDurations[dateKey] = log.interval;
+        dailyCounts[dateKey] = (dailyCounts[dateKey] ?? 0) + 1;
       }
     }
 
-    return _generateBarGroups(dailyDurations, sevenDaysAgo, now);
+    return _generateBarGroups(dailyCounts, sevenDaysAgo, now);
   }
 
   List<BarChartGroupData> _generateBarGroups(
-    Map<String, dynamic> dailyDurations,
+    Map<String, dynamic> dailyCounts,
     DateTime startDate,
     DateTime endDate,
   ) {
@@ -40,35 +39,23 @@ class TimerChartProvider extends AbstractChartProvider<TimerModel> {
     for (int i = 0; i < 7; i++) {
       final DateTime date = startDate.add(Duration(days: i + 1));
       final String dateKey = DateFormat('yyyy-MM-dd').format(date);
-      final Duration totalDuration =
-          (dailyDurations[dateKey] ?? Duration.zero) as Duration;
-
-      final double yValue = _getDurationInInterval(totalDuration);
+      final int count = (dailyCounts[dateKey] ?? 0) as int;
 
       groups.add(
         BarChartGroupData(
           x: i,
           barRods: [
-            BarChartRodData(toY: yValue, color: Colors.blue, width: 22),
+            BarChartRodData(
+              toY: count.toDouble(),
+              color: Colors.blue,
+              width: 22,
+            ),
           ],
         ),
       );
     }
     isProcessed = true;
     return groups;
-  }
-
-  double _getDurationInInterval(Duration duration) {
-    switch (interval) {
-      case DurationInterval.tenSeconds:
-        return duration.inSeconds / 10;
-      case DurationInterval.thirtySeconds:
-        return duration.inSeconds / 30;
-      case DurationInterval.minute:
-        return duration.inMinutes.toDouble();
-      case DurationInterval.twoMinutes:
-        return duration.inMinutes / 2.0;
-    }
   }
 
   @override

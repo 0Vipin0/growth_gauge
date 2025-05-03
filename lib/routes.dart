@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:page_transition/page_transition.dart';
 
-import 'features/authentication/biometric_auth_screen.dart';
-import 'features/authentication/pin_auth_screen.dart';
+import 'features/authentication/authentication.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
 import 'features/settings/settings.dart';
