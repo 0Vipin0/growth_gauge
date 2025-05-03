@@ -17,27 +17,27 @@ void main() {
 
     // Mocking Future<void> methods to return completed futures
     when(mockNotificationService.initializeTimeZone())
-        .thenAnswer((_) async => Future.value());
+        .thenAnswer((_) => Future.value());
     when(mockNotificationService.initializeNotificationSettings())
-        .thenAnswer((_) async => Future.value());
+        .thenAnswer((_) => Future.value());
     when(mockNotificationService.requestPlatformPermissions())
-        .thenAnswer((_) async => Future.value());
+        .thenAnswer((_) => Future.value());
     when(mockNotificationService.isAndroidPermissionGranted())
-        .thenAnswer((_) async => Future.value());
+        .thenAnswer((_) => Future.value());
     when(mockNotificationService.scheduleNotification(
       id: anyNamed('id'),
       title: anyNamed('title'),
       body: anyNamed('body'),
       scheduledTime: anyNamed('scheduledTime'),
       sound: anyNamed('sound'),
-    )).thenAnswer((_) async => Future.value());
+    )).thenAnswer((_) => Future.value());
     when(mockNotificationService.scheduleDailyNotification(
       id: anyNamed('id'),
       title: anyNamed('title'),
       body: anyNamed('body'),
       time: anyNamed('time'),
       sound: anyNamed('sound'),
-    )).thenAnswer((_) async => Future.value());
+    )).thenAnswer((_) => Future.value());
 
     // Initialize tz.local for timezone-related tests
     tz.initializeTimeZones();

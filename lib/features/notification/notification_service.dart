@@ -42,10 +42,10 @@ class NotificationService extends NotificationServiceBase {
 
   @override
   Future<void> initializeNotificationSettings() async {
-    await initializeNotifications();
+    await _initializeNotifications();
   }
 
-  Future<void> initializeNotifications() async {
+  Future<void> _initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -68,7 +68,7 @@ class NotificationService extends NotificationServiceBase {
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
     await isAndroidPermissionGranted();
-    await requestPermissions();
+    await _requestPermissions();
   }
 
   @override
@@ -171,10 +171,10 @@ class NotificationService extends NotificationServiceBase {
 
   @override
   Future<void> requestPlatformPermissions() async {
-    await requestPermissions();
+    await _requestPermissions();
   }
 
-  Future<void> requestPermissions() async {
+  Future<void> _requestPermissions() async {
     if (Platform.isIOS || Platform.isMacOS) {
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
