@@ -54,7 +54,6 @@ class _MobileHomePageState extends State<MobileHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Growth Gauge')),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

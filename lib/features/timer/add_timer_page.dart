@@ -34,121 +34,141 @@ class _AddTimerPageState extends State<AddTimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add New Timer')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Timer Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a timer name';
-                  }
-                  return null;
-                },
+      appBar: AppBar(
+        title: const Text('New Timer'),
+        centerTitle: true,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 600) {
+            return Center(
+              child: SizedBox(
+                width: 400,
+                child: _buildForm(),
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  border: OutlineInputBorder(),
-                ),
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a description';
-                  }
-                  return null;
-                },
+            );
+          } else {
+            return _buildForm();
+          }
+        },
+      ),
+    );
+  }
+
+  Padding _buildForm() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Timer Name'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a timer name';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 16),
-              const Text('Set Timer Duration', style: TextStyle(fontSize: 16)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildTimeControl('Hours', _hours, (value) {
-                    setState(() {
-                      _hours = value;
-                    });
-                  }),
-                  _buildTimeControl('Minutes', _minutes, (value) {
-                    setState(() {
-                      _minutes = value;
-                    });
-                  }),
-                  _buildTimeControl('Seconds', _seconds, (value) {
-                    setState(() {
-                      _seconds = value;
-                    });
-                  }),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Text('Set Target Duration (Optional)',
-                  style: TextStyle(fontSize: 16)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildTimeControl('Hours', _targetHours, (value) {
-                    setState(() {
-                      _targetHours = value;
-                    });
-                  }),
-                  _buildTimeControl('Minutes', _targetMinutes, (value) {
-                    setState(() {
-                      _targetMinutes = value;
-                    });
-                  }),
-                  _buildTimeControl('Seconds', _targetSeconds, (value) {
-                    setState(() {
-                      _targetSeconds = value;
-                    });
-                  }),
-                ],
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _tagController,
-                decoration: const InputDecoration(
-                  labelText: 'Add Tag',
-                  border: OutlineInputBorder(),
-                ),
-                onFieldSubmitted: (value) {
+              maxLines: 3,
+              keyboardType: TextInputType.multiline,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a description';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            const Text('Set Timer Duration', style: TextStyle(fontSize: 16)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildTimeControl('Hours', _hours, (value) {
                   setState(() {
-                    if (value.isNotEmpty && !_tags.contains(value)) {
-                      _tags.add(value);
-                      _tagController.clear();
-                    }
+                    _hours = value;
                   });
-                },
+                }),
+                _buildTimeControl('Minutes', _minutes, (value) {
+                  setState(() {
+                    _minutes = value;
+                  });
+                }),
+                _buildTimeControl('Seconds', _seconds, (value) {
+                  setState(() {
+                    _seconds = value;
+                  });
+                }),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Set Target Duration (Optional)',
+                style: TextStyle(fontSize: 16)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildTimeControl('Hours', _targetHours, (value) {
+                  setState(() {
+                    _targetHours = value;
+                  });
+                }),
+                _buildTimeControl('Minutes', _targetMinutes, (value) {
+                  setState(() {
+                    _targetMinutes = value;
+                  });
+                }),
+                _buildTimeControl('Seconds', _targetSeconds, (value) {
+                  setState(() {
+                    _targetSeconds = value;
+                  });
+                }),
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _tagController,
+              decoration: const InputDecoration(
+                labelText: 'Add Tag',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8.0,
-                children: _tags.map((tag) {
-                  return Chip(
-                    label: Text(tag),
-                    onDeleted: () {
-                      setState(() {
-                        _tags.remove(tag);
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _saveTimer,
-                child: const Text('Save Timer'),
-              ),
-            ],
-          ),
+              onFieldSubmitted: (value) {
+                setState(() {
+                  if (value.isNotEmpty && !_tags.contains(value)) {
+                    _tags.add(value);
+                    _tagController.clear();
+                  }
+                });
+              },
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8.0,
+              children: _tags.map((tag) {
+                return Chip(
+                  label: Text(tag),
+                  onDeleted: () {
+                    setState(() {
+                      _tags.remove(tag);
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _saveTimer,
+              child: const Text('Save Timer'),
+            ),
+          ],
         ),
       ),
     );

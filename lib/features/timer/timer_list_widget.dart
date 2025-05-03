@@ -152,7 +152,7 @@ class TimerListWidget extends StatelessWidget {
         decoration: const InputDecoration(
           labelText: 'Search Timers',
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
         ),
       ),
