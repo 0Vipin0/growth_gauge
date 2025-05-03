@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/constants.dart';
 import 'add_counter_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
@@ -17,6 +18,7 @@ class CounterListWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Counters'),
         actions: [
           PopupMenuButton<String>(
@@ -55,43 +57,23 @@ class CounterListWidget extends StatelessWidget {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Filter by Name, Description, or Target',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                counterListProvider.filterCountersByText(value);
-              },
-            ),
-          ),
-          Wrap(
-            spacing: 8.0,
-            children: [
-              if (counterListProvider.selectedTags.isNotEmpty)
-                ChoiceChip(
-                  label: const Text('Clear All'),
-                  selected: false,
-                  onSelected: (_) {
-                    counterListProvider.clearSelectedTags();
-                  },
-                ),
-              ...counterListProvider.getAllTags().map((tag) {
-                final isSelected =
-                    counterListProvider.selectedTags.contains(tag);
-                return ChoiceChip(
-                  label: Text(tag),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    counterListProvider.toggleTagSelection(tag);
-                  },
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > kTabletScreenSize) {
+                return Center(
+                  child: SizedBox(
+                    width: 400,
+                    child: _buildFilterTextField(counterListProvider),
+                  ),
                 );
-              }),
-            ],
+              } else {
+                return _buildFilterTextField(counterListProvider);
+              }
+            },
           ),
+          _buildFilterTags(counterListProvider),
           const SizedBox(height: 8),
           Expanded(
             child: counterListProvider.filteredCounters.isEmpty
@@ -120,6 +102,47 @@ class CounterListWidget extends StatelessWidget {
           );
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Wrap _buildFilterTags(CounterListProvider counterListProvider) {
+    return Wrap(
+      spacing: 8.0,
+      children: [
+        if (counterListProvider.selectedTags.isNotEmpty)
+          ChoiceChip(
+            label: const Text('Clear All'),
+            selected: false,
+            onSelected: (_) {
+              counterListProvider.clearSelectedTags();
+            },
+          ),
+        ...counterListProvider.getAllTags().map((tag) {
+          final isSelected = counterListProvider.selectedTags.contains(tag);
+          return ChoiceChip(
+            label: Text(tag),
+            selected: isSelected,
+            onSelected: (_) {
+              counterListProvider.toggleTagSelection(tag);
+            },
+          );
+        }),
+      ],
+    );
+  }
+
+  Padding _buildFilterTextField(CounterListProvider counterListProvider) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: const InputDecoration(
+          labelText: 'Filter Counter by Name, Description, or Target',
+          border: OutlineInputBorder(),
+        ),
+        onChanged: (value) {
+          counterListProvider.filterCountersByText(value);
+        },
       ),
     );
   }

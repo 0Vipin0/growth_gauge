@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:growth_gauge/utils/constants.dart';
 import '../counter/counter.dart';
 import '../settings/settings.dart';
 import '../timer/timer.dart';
@@ -11,10 +12,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 1200) {
+        if (constraints.maxWidth > kTabletScreenSize) {
           return const DesktopHomePage();
-        } else if (constraints.maxWidth > 800) {
-          return const TabletHomePage();
         } else {
           return const MobileHomePage();
         }
@@ -86,23 +85,6 @@ class _MobileHomePageState extends State<MobileHomePage> {
         unselectedIconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.primaryFixedDim,
         ),
-      ),
-    );
-  }
-}
-
-class TabletHomePage extends StatelessWidget {
-  const TabletHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Growth Gauge')),
-      body: const Row(
-        children: [
-          Expanded(child: CounterListWidget()),
-          Expanded(child: TimerListWidget()),
-        ],
       ),
     );
   }
