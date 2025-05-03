@@ -91,6 +91,7 @@ class ReusableCounterWidget extends StatelessWidget {
     final List<Widget> actions = [
       IconButton(
         icon: const Icon(Icons.remove),
+        tooltip: 'Decrease',
         onPressed: () {
           counterProvider.decreaseCounter();
           Provider.of<CounterListProvider>(context, listen: false)
@@ -99,6 +100,7 @@ class ReusableCounterWidget extends StatelessWidget {
       ),
       IconButton(
         icon: const Icon(Icons.add),
+        tooltip: 'Increase',
         onPressed: () {
           counterProvider.increaseCounter();
           Provider.of<CounterListProvider>(context, listen: false)
@@ -111,6 +113,7 @@ class ReusableCounterWidget extends StatelessWidget {
         actions.add(
           IconButton(
             icon: const Icon(Icons.edit),
+            tooltip: 'Update Target',
             onPressed: onUpdateTarget,
           ),
         );
@@ -118,6 +121,7 @@ class ReusableCounterWidget extends StatelessWidget {
       actions.add(
         IconButton(
           icon: const Icon(Icons.label),
+          tooltip: 'Manage Tags',
           onPressed: () {
             _manageTagsDialog(context);
           },
@@ -126,6 +130,7 @@ class ReusableCounterWidget extends StatelessWidget {
       actions.add(
         IconButton(
           icon: const Icon(Icons.delete),
+          tooltip: 'Delete',
           onPressed: onRemove,
         ),
       );

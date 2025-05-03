@@ -186,6 +186,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
           children: [
             IconButton(
               icon: const Icon(Icons.remove),
+              tooltip: 'Decrease',
               onPressed: () {
                 onChanged(value > 0 ? value - 1 : 0);
               },
@@ -204,6 +205,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
             ),
             IconButton(
               icon: const Icon(Icons.add),
+              tooltip: 'Increase',
               onPressed: () {
                 onChanged(value + 1);
               },

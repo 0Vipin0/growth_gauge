@@ -26,6 +26,7 @@ class ReusableTimerWidget extends StatelessWidget {
       child: Consumer<ReusableTimerProvider>(
         builder: (context, timerProvider, child) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
                 child: ListTile(
@@ -102,6 +103,7 @@ class ReusableTimerWidget extends StatelessWidget {
         icon: Icon(
           timerProvider.isRunning ? Icons.pause : Icons.play_arrow,
         ),
+        tooltip: timerProvider.isRunning ? 'Pause' : 'Start',
         onPressed: () {
           timerProvider.startOrPauseTimer();
           Provider.of<TimerListProvider>(
@@ -112,6 +114,7 @@ class ReusableTimerWidget extends StatelessWidget {
       ),
       IconButton(
         icon: const Icon(Icons.refresh),
+        tooltip: 'Reset',
         onPressed: () {
           timerProvider.resetTimer();
           Provider.of<TimerListProvider>(
@@ -127,6 +130,7 @@ class ReusableTimerWidget extends StatelessWidget {
         actions.add(
           IconButton(
             icon: const Icon(Icons.edit),
+            tooltip: 'Update Target',
             onPressed: onUpdateTarget,
           ),
         );
@@ -134,6 +138,7 @@ class ReusableTimerWidget extends StatelessWidget {
       actions.add(
         IconButton(
           icon: const Icon(Icons.label),
+          tooltip: 'Manage Tags',
           onPressed: () {
             _manageTagsDialog(context);
           },
@@ -142,6 +147,7 @@ class ReusableTimerWidget extends StatelessWidget {
       actions.add(
         IconButton(
           icon: const Icon(Icons.delete),
+          tooltip: 'Delete',
           onPressed: onRemove,
         ),
       );

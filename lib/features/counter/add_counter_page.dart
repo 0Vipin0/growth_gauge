@@ -90,6 +90,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
                 const Text('Initial Count', style: TextStyle(fontSize: 16)),
                 IconButton(
                   icon: const Icon(Icons.remove),
+                  tooltip: 'Decrease',
                   onPressed: () {
                     setState(() {
                       if (_count > 0) _count--;
@@ -105,6 +106,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.add),
+                  tooltip: 'Increase',
                   onPressed: () {
                     setState(() {
                       _count++;
