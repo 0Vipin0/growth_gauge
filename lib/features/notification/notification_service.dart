@@ -7,18 +7,45 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-class NotificationService {
+abstract class NotificationServiceBase {
+  Future<void> initializeTimeZone();
+  Future<void> initializeNotificationSettings();
+  Future<void> requestPlatformPermissions();
+  Future<void> isAndroidPermissionGranted();
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required tz.TZDateTime scheduledTime,
+    String? sound,
+  });
+  Future<void> scheduleDailyNotification({
+    required int id,
+    required String title,
+    required String body,
+    required TimeOfDay time,
+    String? sound,
+  });
+}
+
+class NotificationService extends NotificationServiceBase {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool notificationsEnabled = false;
 
+  @override
   Future<void> initializeTimeZone() async {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
   }
 
-  Future<void> initializeNotifications() async {
+  @override
+  Future<void> initializeNotificationSettings() async {
+    await _initializeNotifications();
+  }
+
+  Future<void> _initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -41,9 +68,10 @@ class NotificationService {
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
     await isAndroidPermissionGranted();
-    await requestPermissions();
+    await _requestPermissions();
   }
 
+  @override
   Future<void> scheduleNotification({
     required int id,
     required String title,
@@ -99,6 +127,7 @@ class NotificationService {
     );
   }
 
+  @override
   Future<void> scheduleDailyNotification({
     required int id,
     required String title,
@@ -127,6 +156,7 @@ class NotificationService {
     );
   }
 
+  @override
   Future<void> isAndroidPermissionGranted() async {
     if (Platform.isAndroid) {
       final bool granted = await _flutterLocalNotificationsPlugin
@@ -139,7 +169,12 @@ class NotificationService {
     }
   }
 
-  Future<void> requestPermissions() async {
+  @override
+  Future<void> requestPlatformPermissions() async {
+    await _requestPermissions();
+  }
+
+  Future<void> _requestPermissions() async {
     if (Platform.isIOS || Platform.isMacOS) {
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<

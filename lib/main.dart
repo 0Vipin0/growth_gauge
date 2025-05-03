@@ -15,7 +15,7 @@ final notificationService = NotificationService();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await notificationService.initializeTimeZone();
-  await notificationService.initializeNotifications();
+  await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
   runApp(const DependencyProvider());
 }
