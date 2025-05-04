@@ -12,9 +12,6 @@ class CounterChartProvider extends AbstractChartProvider<CounterModel> {
   @override
   List<BarChartGroupData> processDataForChart(CounterModel counter) {
     isProcessed = false;
-    if (counter.logs.isEmpty) {
-      return [];
-    }
 
     final Map<String, int> dailyCounts = {};
     final DateTime now = DateTime.now();
