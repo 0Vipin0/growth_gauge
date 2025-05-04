@@ -24,15 +24,13 @@ class CounterListWidget extends StatelessWidget {
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'SortByNameAsc') {
-                counterListProvider.sortCountersByName();
+                counterListProvider.sortCountersByName(ascending: true);
               } else if (value == 'SortByNameDesc') {
-                counterListProvider.sortCountersByName();
-                counterListProvider.counters.reversed.toList();
+                counterListProvider.sortCountersByName(ascending: false);
               } else if (value == 'SortByCountAsc') {
-                counterListProvider.sortCountersByCount();
+                counterListProvider.sortCountersByCount(ascending: true);
               } else if (value == 'SortByCountDesc') {
-                counterListProvider.sortCountersByCount();
-                counterListProvider.counters.reversed.toList();
+                counterListProvider.sortCountersByCount(ascending: false);
               }
             },
             itemBuilder: (context) => [

@@ -24,15 +24,13 @@ class TimerListWidget extends StatelessWidget {
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'SortByNameAsc') {
-                timerListProvider.sortTimersByName();
+                timerListProvider.sortTimersByName(ascending: true);
               } else if (value == 'SortByNameDesc') {
-                timerListProvider.sortTimersByName();
-                timerListProvider.timers.reversed.toList();
+                timerListProvider.sortTimersByName(ascending: false);
               } else if (value == 'SortByIntervalAsc') {
-                timerListProvider.sortTimersByInterval();
+                timerListProvider.sortTimersByInterval(ascending: true);
               } else if (value == 'SortByIntervalDesc') {
-                timerListProvider.sortTimersByInterval();
-                timerListProvider.timers.reversed.toList();
+                timerListProvider.sortTimersByInterval(ascending: false);
               }
             },
             itemBuilder: (context) => [
