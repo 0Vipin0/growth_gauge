@@ -227,5 +227,53 @@ void main() {
       // Assert
       expect(provider.timers.isEmpty, true);
     });
+
+    test('sortTimersByName ascending', () {
+      // Arrange
+      provider.addTimer(testTimers[1]);
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.sortTimersByName();
+
+      // Assert
+      expect(provider.timers.first.name, 'Test Timer 1');
+    });
+
+    test('sortTimersByName descending', () {
+      // Arrange
+      provider.addTimer(testTimers[0]);
+      provider.addTimer(testTimers[1]);
+
+      // Act
+      provider.sortTimersByName(ascending: false);
+
+      // Assert
+      expect(provider.timers.first.name, 'Test Timer 2');
+    });
+
+    test('sortTimersByInterval ascending', () {
+      // Arrange
+      provider.addTimer(testTimers[1]);
+      provider.addTimer(testTimers[0]);
+
+      // Act
+      provider.sortTimersByInterval();
+
+      // Assert
+      expect(provider.timers.first.interval, const Duration(minutes: 5));
+    });
+
+    test('sortTimersByInterval descending', () {
+      // Arrange
+      provider.addTimer(testTimers[0]);
+      provider.addTimer(testTimers[1]);
+
+      // Act
+      provider.sortTimersByInterval(ascending: false);
+
+      // Assert
+      expect(provider.timers.first.interval, const Duration(minutes: 15));
+    });
   });
 }

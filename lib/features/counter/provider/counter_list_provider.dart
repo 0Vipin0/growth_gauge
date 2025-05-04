@@ -201,13 +201,15 @@ class CounterListProvider with ChangeNotifier {
     return tags.toList();
   }
 
-  void sortCountersByName() {
-    _counters.sort((a, b) => a.name.compareTo(b.name));
+  void sortCountersByName({bool ascending = true}) {
+    _counters.sort((a, b) =>
+        ascending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
     notifyListeners();
   }
 
-  void sortCountersByCount() {
-    _counters.sort((a, b) => a.count.compareTo(b.count));
+  void sortCountersByCount({bool ascending = true}) {
+    _counters.sort((a, b) =>
+        ascending ? a.count.compareTo(b.count) : b.count.compareTo(a.count));
     notifyListeners();
   }
 

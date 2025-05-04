@@ -225,5 +225,53 @@ void main() {
       // Assert
       expect(provider.counters.isEmpty, true);
     });
+
+    test('sortCountersByName ascending', () {
+      // Arrange
+      provider.addCounter(testCounters[1]);
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.sortCountersByName();
+
+      // Assert
+      expect(provider.counters.first.name, 'Test Counter 1');
+    });
+
+    test('sortCountersByName descending', () {
+      // Arrange
+      provider.addCounter(testCounters[0]);
+      provider.addCounter(testCounters[1]);
+
+      // Act
+      provider.sortCountersByName(ascending: false);
+
+      // Assert
+      expect(provider.counters.first.name, 'Test Counter 2');
+    });
+
+    test('sortCountersByCount ascending', () {
+      // Arrange
+      provider.addCounter(testCounters[1]);
+      provider.addCounter(testCounters[0]);
+
+      // Act
+      provider.sortCountersByCount();
+
+      // Assert
+      expect(provider.counters.first.count, 5);
+    });
+
+    test('sortCountersByCount descending', () {
+      // Arrange
+      provider.addCounter(testCounters[0]);
+      provider.addCounter(testCounters[1]);
+
+      // Act
+      provider.sortCountersByCount(ascending: false);
+
+      // Assert
+      expect(provider.counters.first.count, 15);
+    });
   });
 }

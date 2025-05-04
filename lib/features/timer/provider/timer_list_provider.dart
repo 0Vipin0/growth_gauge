@@ -232,13 +232,16 @@ class TimerListProvider with ChangeNotifier {
     return const ListToCsvConverter().convert(rows);
   }
 
-  void sortTimersByName() {
-    _timers.sort((a, b) => a.name.compareTo(b.name));
+  void sortTimersByName({bool ascending = true}) {
+    _timers.sort((a, b) =>
+        ascending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
     notifyListeners();
   }
 
-  void sortTimersByInterval() {
-    _timers.sort((a, b) => a.interval.compareTo(b.interval));
+  void sortTimersByInterval({bool ascending = true}) {
+    _timers.sort((a, b) => ascending
+        ? a.interval.compareTo(b.interval)
+        : b.interval.compareTo(a.interval));
     notifyListeners();
   }
 
