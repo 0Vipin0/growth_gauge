@@ -13,9 +13,6 @@ class TimerChartProvider extends AbstractChartProvider<TimerModel> {
   @override
   List<BarChartGroupData> processDataForChart(TimerModel timer) {
     isProcessed = false;
-    if (timer.logs.isEmpty) {
-      return [];
-    }
 
     final Map<String, Duration> dailyDurations = {};
     final DateTime now = DateTime.now();
