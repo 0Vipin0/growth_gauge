@@ -9,7 +9,7 @@ dependencies:
   collection: ^1.19.1
   csv: ^6.0.0
   cupertino_icons: ^1.0.6
-  file_picker: ^9.2.1
+  file_picker: ^10.2.2
   fl_chart: 0.68.0
   flutter:
     sdk: flutter
