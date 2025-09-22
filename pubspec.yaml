@@ -16,7 +16,7 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   flutter_local_notifications: ^19.1.0
   flutter_secure_storage: ^9.2.4
-  flutter_timezone: ^4.1.0
+  flutter_timezone: ^5.0.0
   freezed_annotation: 2.4.4
   intl: ^0.20.2
   json_annotation: ^4.9.0
