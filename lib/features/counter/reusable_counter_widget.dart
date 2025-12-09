@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 import 'counter_details_page.dart';
+import 'edit_counter_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
@@ -120,6 +121,18 @@ class ReusableCounterWidget extends StatelessWidget {
       }
       actions.add(
         IconButton(
+          icon: const Icon(Icons.edit_note),
+          tooltip: 'Edit Details',
+          onPressed: () {
+            context.pushTransition(
+              type: PageTransitionType.bottomToTop,
+              child: EditCounterPage(counter: counterModel),
+            );
+          },
+        ),
+      );
+      actions.add(
+        IconButton(
           icon: const Icon(Icons.label),
           tooltip: 'Manage Tags',
           onPressed: () {
@@ -140,6 +153,11 @@ class ReusableCounterWidget extends StatelessWidget {
           onSelected: (value) {
             if (value == 'UpdateTargetAction') {
               onUpdateTarget();
+            } else if (value == 'EditDetailsAction') {
+              context.pushTransition(
+                type: PageTransitionType.bottomToTop,
+                child: EditCounterPage(counter: counterModel),
+              );
             } else if (value == 'ManageTagsAction') {
               _manageTagsDialog(context);
             } else if (value == 'DeleteAction') {
@@ -152,6 +170,10 @@ class ReusableCounterWidget extends StatelessWidget {
                 value: 'UpdateTargetAction',
                 child: Text('Update Target'),
               ),
+            const PopupMenuItem(
+              value: 'EditDetailsAction',
+              child: Text('Edit Details'),
+            ),
             const PopupMenuItem(
               value: 'ManageTagsAction',
               child: Text('Manage Tags'),

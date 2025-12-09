@@ -3,6 +3,7 @@ import 'package:growth_gauge/utils/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import 'edit_timer_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 import 'timer_details_page.dart';
@@ -137,6 +138,18 @@ class ReusableTimerWidget extends StatelessWidget {
       }
       actions.add(
         IconButton(
+          icon: const Icon(Icons.edit_note),
+          tooltip: 'Edit Details',
+          onPressed: () {
+            context.pushTransition(
+              type: PageTransitionType.bottomToTop,
+              child: EditTimerPage(timer: timerModel),
+            );
+          },
+        ),
+      );
+      actions.add(
+        IconButton(
           icon: const Icon(Icons.label),
           tooltip: 'Manage Tags',
           onPressed: () {
@@ -157,6 +170,11 @@ class ReusableTimerWidget extends StatelessWidget {
           onSelected: (value) {
             if (value == 'UpdateTargetAction') {
               onUpdateTarget();
+            } else if (value == 'EditDetailsAction') {
+              context.pushTransition(
+                type: PageTransitionType.bottomToTop,
+                child: EditTimerPage(timer: timerModel),
+              );
             } else if (value == 'ManageTagsAction') {
               _manageTagsDialog(context);
             } else if (value == 'DeleteAction') {
@@ -167,6 +185,10 @@ class ReusableTimerWidget extends StatelessWidget {
             const PopupMenuItem(
               value: 'UpdateTargetAction',
               child: Text('Update Target'),
+            ),
+            const PopupMenuItem(
+              value: 'EditDetailsAction',
+              child: Text('Edit Details'),
             ),
             const PopupMenuItem(
               value: 'ManageTagsAction',
