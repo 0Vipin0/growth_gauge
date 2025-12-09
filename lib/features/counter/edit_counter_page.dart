@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 import '../common/presentation/widgets/responsive_form_layout.dart';
 import '../common/presentation/widgets/tag_input_widget.dart';
@@ -9,27 +8,39 @@ import '../../utils/navigation_helper.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class AddCounterPage extends StatefulWidget {
-  const AddCounterPage({super.key});
+class EditCounterPage extends StatefulWidget {
+  final CounterModel counter;
+  const EditCounterPage({super.key, required this.counter});
 
   @override
-  State<AddCounterPage> createState() => _AddCounterPageState();
+  State<EditCounterPage> createState() => _EditCounterPageState();
 }
 
-class _AddCounterPageState extends State<AddCounterPage> {
+class _EditCounterPageState extends State<EditCounterPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _descriptionController;
 
-  int _count = 0;
+  late int _count;
   int? _target;
-  List<String> _tags = [];
+  late List<String> _tags;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.counter.name);
+    _descriptionController =
+        TextEditingController(text: widget.counter.description);
+    _count = widget.counter.count;
+    _target = widget.counter.target;
+    _tags = List.from(widget.counter.tags ?? []);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Counter'),
+        title: const Text('Edit Counter'),
         centerTitle: true,
       ),
       body: ResponsiveFormLayout(
@@ -69,7 +80,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Initial Count', style: TextStyle(fontSize: 16)),
+                    const Text('Count', style: TextStyle(fontSize: 16)),
                     IconButton(
                       icon: const Icon(Icons.remove),
                       tooltip: 'Decrease',
@@ -99,6 +110,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
+                  initialValue: _target?.toString(),
                   decoration: const InputDecoration(
                     labelText: 'Target (Optional)',
                     border: OutlineInputBorder(),
@@ -121,8 +133,8 @@ class _AddCounterPageState extends State<AddCounterPage> {
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton(
-                  onPressed: _saveCounter,
-                  child: const Text('Save Counter'),
+                  onPressed: _updateCounter,
+                  child: const Text('Update Counter'),
                 ),
               ],
             ),
@@ -132,19 +144,17 @@ class _AddCounterPageState extends State<AddCounterPage> {
     );
   }
 
-  void _saveCounter() {
+  void _updateCounter() {
     if (_formKey.currentState!.validate()) {
-      final newCounter = CounterModel(
-        id: const Uuid().v4(),
+      final updatedCounter = widget.counter.copyWith(
         name: _nameController.text,
         description: _descriptionController.text,
         count: _count,
-        logs: [],
         target: _target,
         tags: _tags,
       );
 
-      context.read<CounterListProvider>().addCounter(newCounter);
+      context.read<CounterListProvider>().updateCounter(updatedCounter);
 
       NavigationHelper.pop(context);
     }
