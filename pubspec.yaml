@@ -10,7 +10,7 @@ dependencies:
   csv: ^6.0.0
   cupertino_icons: ^1.0.6
   file_picker: ^9.2.1
-  fl_chart: 0.68.0
+  fl_chart: ^1.1.1
   flutter:
     sdk: flutter
   flutter_heatmap_calendar: ^1.0.5
