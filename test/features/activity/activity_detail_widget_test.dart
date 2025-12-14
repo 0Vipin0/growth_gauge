@@ -22,12 +22,10 @@ void main() {
     provider.logActivityEntry(ActivityLog(
         id: const Uuid().v4(),
         activityId: a.id,
-        value: 20.0,
         timestamp: DateTime.now().subtract(const Duration(days: 2))));
     provider.logActivityEntry(ActivityLog(
         id: const Uuid().v4(),
         activityId: a.id,
-        value: 30.0,
         timestamp: DateTime.now().subtract(const Duration(days: 1))));
 
     final initialCount =

@@ -27,7 +27,7 @@ void main() {
     final a = Activity(id: const Uuid().v4(),name: 'Run', type: ActivityType.timeBased, unit: 'minutes');
     provider.addActivity(a);
 
-    final log = ActivityLog(id: const Uuid().v4(),activityId: a.id, value: 30, timestamp: DateTime.now());
+    final log = ActivityLog(id: const Uuid().v4(),activityId: a.id, timestamp: DateTime.now());
     provider.logActivityEntry(log);
 
     final logs = provider.getLogsForRange(a.id, DateTime.now().subtract(const Duration(days: 1)), DateTime.now().add(const Duration(days: 1)));

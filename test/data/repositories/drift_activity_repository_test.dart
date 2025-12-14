@@ -23,7 +23,6 @@ void main() {
     final log = domain.ActivityLog(
         id: const Uuid().v4(),
         activityId: activity.id,
-        value: 20,
         timestamp: DateTime.now());
     await repo.saveLog(log);
 
@@ -48,11 +47,11 @@ void main() {
     final d2 = d1.subtract(const Duration(days: 1));
 
     await repo.saveLog(domain.ActivityLog(
-        id: const Uuid().v4(), activityId: a.id, value: 10, timestamp: d1));
+        id: const Uuid().v4(), activityId: a.id, timestamp: d1));
     await repo.saveLog(domain.ActivityLog(
-        id: const Uuid().v4(), activityId: a.id, value: 5, timestamp: d1));
+        id: const Uuid().v4(), activityId: a.id, timestamp: d1));
     await repo.saveLog(domain.ActivityLog(
-        id: const Uuid().v4(), activityId: a.id, value: 7, timestamp: d2));
+        id: const Uuid().v4(), activityId: a.id, timestamp: d2));
 
     final aggs = await repo.dailyAggregates(a.id,
         d2.subtract(const Duration(days: 1)), d1.add(const Duration(days: 1)));

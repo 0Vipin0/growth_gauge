@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'data/repositories/drift_activity_repository.dart';
 import 'data/repositories/drift_counter_repository.dart';
+import 'data/repositories/drift_goal_repository.dart';
 import 'data/repositories/drift_user_profile_repository.dart';
 import 'data/repositories/drift_workout_repository.dart';
 import 'data/repositories/shared_preferences_timer_repository.dart';
@@ -69,7 +70,9 @@ class DependencyProvider extends StatelessWidget {
         Provider<DriftUserProfileRepository>(
             create: (_) => DriftUserProfileRepository(_appDatabase!)),
         Provider<DriftActivityRepository>(
-            create: (_) => DriftActivityRepository(_appDatabase!)),
+            create: (_) => DriftActivityRepository(ActivityDao(_appDatabase!))),
+        Provider<DriftGoalRepository>(
+            create: (_) => DriftGoalRepository(GoalDao(_appDatabase!))),
         Provider<DriftWorkoutRepository>(
             create: (_) => DriftWorkoutRepository(_appDatabase!)),
 

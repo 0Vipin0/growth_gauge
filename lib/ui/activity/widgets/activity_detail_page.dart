@@ -116,7 +116,6 @@ class ActivityDetailPage extends StatelessWidget {
           final value = logs.isEmpty ? 1.0 : logs.last.value + 1.0;
           provider.logActivityEntry(ActivityLog(
               activityId: activity.id,
-              value: value,
               id: Uuid().v4(),
               timestamp: DateTime.now()));
         },

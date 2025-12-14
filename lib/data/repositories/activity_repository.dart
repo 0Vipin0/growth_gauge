@@ -2,6 +2,7 @@ import 'package:growth_gauge/data/models/activity.dart';
 
 abstract class ActivityRepository {
   Future<List<Activity>> loadActivities();
+  Future<Activity?> loadActivityById(String id);
   Future<void> saveActivity(Activity activity);
   Future<void> saveLog(ActivityLog log);
   Future<List<ActivityLog>> loadLogs(String activityId);

@@ -14,7 +14,7 @@ void main() {
   });
 
   test('ActivityLog JSON roundtrip', () {
-    final log = ActivityLog(id: const Uuid().v4(),activityId: 'a1', value: 15, timestamp: DateTime.now());
+    final log = ActivityLog(id: const Uuid().v4(),activityId: 'a1', timestamp: DateTime.now());
     final json = log.toJson();
     final restored = ActivityLog.fromJson(json);
 

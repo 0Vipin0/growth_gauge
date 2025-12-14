@@ -15,7 +15,16 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Activity _$ActivityFromJson(Map<String, dynamic> json) {
-  return _Activity.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'countBased':
+      return CountBasedActivity.fromJson(json);
+    case 'timeBased':
+      return TimeBasedActivity.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'Activity',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
 }
 
 /// @nodoc
@@ -23,11 +32,88 @@ mixin _$Activity {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  ActivityType get type => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   String? get goalId => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            int count)
+        countBased,
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)
+        timeBased,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult? Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CountBasedActivity value) countBased,
+    required TResult Function(TimeBasedActivity value) timeBased,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CountBasedActivity value)? countBased,
+    TResult? Function(TimeBasedActivity value)? timeBased,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CountBasedActivity value)? countBased,
+    TResult Function(TimeBasedActivity value)? timeBased,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Activity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +134,6 @@ abstract class $ActivityCopyWith<$Res> {
       {String id,
       String name,
       String? description,
-      ActivityType type,
       String unit,
       bool isFavorite,
       String? goalId,
@@ -73,7 +158,6 @@ class _$ActivityCopyWithImpl<$Res, $Val extends Activity>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? type = null,
     Object? unit = null,
     Object? isFavorite = null,
     Object? goalId = freezed,
@@ -92,10 +176,6 @@ class _$ActivityCopyWithImpl<$Res, $Val extends Activity>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as ActivityType,
       unit: null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -117,30 +197,30 @@ class _$ActivityCopyWithImpl<$Res, $Val extends Activity>
 }
 
 /// @nodoc
-abstract class _$$ActivityImplCopyWith<$Res>
+abstract class _$$CountBasedActivityImplCopyWith<$Res>
     implements $ActivityCopyWith<$Res> {
-  factory _$$ActivityImplCopyWith(
-          _$ActivityImpl value, $Res Function(_$ActivityImpl) then) =
-      __$$ActivityImplCopyWithImpl<$Res>;
+  factory _$$CountBasedActivityImplCopyWith(_$CountBasedActivityImpl value,
+          $Res Function(_$CountBasedActivityImpl) then) =
+      __$$CountBasedActivityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      ActivityType type,
       String unit,
       bool isFavorite,
       String? goalId,
-      List<String>? tags});
+      List<String>? tags,
+      int count});
 }
 
 /// @nodoc
-class __$$ActivityImplCopyWithImpl<$Res>
-    extends _$ActivityCopyWithImpl<$Res, _$ActivityImpl>
-    implements _$$ActivityImplCopyWith<$Res> {
-  __$$ActivityImplCopyWithImpl(
-      _$ActivityImpl _value, $Res Function(_$ActivityImpl) _then)
+class __$$CountBasedActivityImplCopyWithImpl<$Res>
+    extends _$ActivityCopyWithImpl<$Res, _$CountBasedActivityImpl>
+    implements _$$CountBasedActivityImplCopyWith<$Res> {
+  __$$CountBasedActivityImplCopyWithImpl(_$CountBasedActivityImpl _value,
+      $Res Function(_$CountBasedActivityImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of Activity
@@ -151,13 +231,13 @@ class __$$ActivityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? type = null,
     Object? unit = null,
     Object? isFavorite = null,
     Object? goalId = freezed,
     Object? tags = freezed,
+    Object? count = null,
   }) {
-    return _then(_$ActivityImpl(
+    return _then(_$CountBasedActivityImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -170,10 +250,6 @@ class __$$ActivityImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as ActivityType,
       unit: null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -190,26 +266,32 @@ class __$$ActivityImplCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ActivityImpl implements _Activity {
-  const _$ActivityImpl(
+class _$CountBasedActivityImpl implements CountBasedActivity {
+  const _$CountBasedActivityImpl(
       {required this.id,
       required this.name,
       this.description,
-      required this.type,
       required this.unit,
       this.isFavorite = false,
       this.goalId,
-      final List<String>? tags})
-      : _tags = tags;
+      final List<String>? tags,
+      required this.count,
+      final String? $type})
+      : _tags = tags,
+        $type = $type ?? 'countBased';
 
-  factory _$ActivityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ActivityImplFromJson(json);
+  factory _$CountBasedActivityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountBasedActivityImplFromJson(json);
 
   @override
   final String id;
@@ -217,8 +299,6 @@ class _$ActivityImpl implements _Activity {
   final String name;
   @override
   final String? description;
-  @override
-  final ActivityType type;
   @override
   final String unit;
   @override
@@ -236,62 +316,175 @@ class _$ActivityImpl implements _Activity {
     return EqualUnmodifiableListView(value);
   }
 
+// --- Count-Specific Field ---
+  @override
+  final int count;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
   @override
   String toString() {
-    return 'Activity(id: $id, name: $name, description: $description, type: $type, unit: $unit, isFavorite: $isFavorite, goalId: $goalId, tags: $tags)';
+    return 'Activity.countBased(id: $id, name: $name, description: $description, unit: $unit, isFavorite: $isFavorite, goalId: $goalId, tags: $tags, count: $count)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ActivityImpl &&
+            other is _$CountBasedActivityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.unit, unit) || other.unit == unit) &&
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite) &&
             (identical(other.goalId, goalId) || other.goalId == goalId) &&
-            const DeepCollectionEquality().equals(other._tags, _tags));
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.count, count) || other.count == count));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description, type,
-      unit, isFavorite, goalId, const DeepCollectionEquality().hash(_tags));
+  int get hashCode => Object.hash(runtimeType, id, name, description, unit,
+      isFavorite, goalId, const DeepCollectionEquality().hash(_tags), count);
 
   /// Create a copy of Activity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ActivityImplCopyWith<_$ActivityImpl> get copyWith =>
-      __$$ActivityImplCopyWithImpl<_$ActivityImpl>(this, _$identity);
+  _$$CountBasedActivityImplCopyWith<_$CountBasedActivityImpl> get copyWith =>
+      __$$CountBasedActivityImplCopyWithImpl<_$CountBasedActivityImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            int count)
+        countBased,
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)
+        timeBased,
+  }) {
+    return countBased(
+        id, name, description, unit, isFavorite, goalId, tags, count);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult? Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+  }) {
+    return countBased?.call(
+        id, name, description, unit, isFavorite, goalId, tags, count);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+    required TResult orElse(),
+  }) {
+    if (countBased != null) {
+      return countBased(
+          id, name, description, unit, isFavorite, goalId, tags, count);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CountBasedActivity value) countBased,
+    required TResult Function(TimeBasedActivity value) timeBased,
+  }) {
+    return countBased(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CountBasedActivity value)? countBased,
+    TResult? Function(TimeBasedActivity value)? timeBased,
+  }) {
+    return countBased?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CountBasedActivity value)? countBased,
+    TResult Function(TimeBasedActivity value)? timeBased,
+    required TResult orElse(),
+  }) {
+    if (countBased != null) {
+      return countBased(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ActivityImplToJson(
+    return _$$CountBasedActivityImplToJson(
       this,
     );
   }
 }
 
-abstract class _Activity implements Activity {
-  const factory _Activity(
+abstract class CountBasedActivity implements Activity, ActivityBase {
+  const factory CountBasedActivity(
       {required final String id,
       required final String name,
       final String? description,
-      required final ActivityType type,
       required final String unit,
       final bool isFavorite,
       final String? goalId,
-      final List<String>? tags}) = _$ActivityImpl;
+      final List<String>? tags,
+      required final int count}) = _$CountBasedActivityImpl;
 
-  factory _Activity.fromJson(Map<String, dynamic> json) =
-      _$ActivityImpl.fromJson;
+  factory CountBasedActivity.fromJson(Map<String, dynamic> json) =
+      _$CountBasedActivityImpl.fromJson;
 
   @override
   String get id;
@@ -300,7 +493,320 @@ abstract class _Activity implements Activity {
   @override
   String? get description;
   @override
-  ActivityType get type;
+  String get unit;
+  @override
+  bool get isFavorite;
+  @override
+  String? get goalId;
+  @override
+  List<String>? get tags; // --- Count-Specific Field ---
+  int get count;
+
+  /// Create a copy of Activity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CountBasedActivityImplCopyWith<_$CountBasedActivityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TimeBasedActivityImplCopyWith<$Res>
+    implements $ActivityCopyWith<$Res> {
+  factory _$$TimeBasedActivityImplCopyWith(_$TimeBasedActivityImpl value,
+          $Res Function(_$TimeBasedActivityImpl) then) =
+      __$$TimeBasedActivityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String? description,
+      String unit,
+      bool isFavorite,
+      String? goalId,
+      List<String>? tags,
+      Duration duration});
+}
+
+/// @nodoc
+class __$$TimeBasedActivityImplCopyWithImpl<$Res>
+    extends _$ActivityCopyWithImpl<$Res, _$TimeBasedActivityImpl>
+    implements _$$TimeBasedActivityImplCopyWith<$Res> {
+  __$$TimeBasedActivityImplCopyWithImpl(_$TimeBasedActivityImpl _value,
+      $Res Function(_$TimeBasedActivityImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Activity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? unit = null,
+    Object? isFavorite = null,
+    Object? goalId = freezed,
+    Object? tags = freezed,
+    Object? duration = null,
+  }) {
+    return _then(_$TimeBasedActivityImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit: null == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+      goalId: freezed == goalId
+          ? _value.goalId
+          : goalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TimeBasedActivityImpl implements TimeBasedActivity {
+  const _$TimeBasedActivityImpl(
+      {required this.id,
+      required this.name,
+      this.description,
+      required this.unit,
+      this.isFavorite = false,
+      this.goalId,
+      final List<String>? tags,
+      required this.duration,
+      final String? $type})
+      : _tags = tags,
+        $type = $type ?? 'timeBased';
+
+  factory _$TimeBasedActivityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TimeBasedActivityImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final String unit;
+  @override
+  @JsonKey()
+  final bool isFavorite;
+  @override
+  final String? goalId;
+  final List<String>? _tags;
+  @override
+  List<String>? get tags {
+    final value = _tags;
+    if (value == null) return null;
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+// --- Time-Specific Field ---
+  @override
+  final Duration duration;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'Activity.timeBased(id: $id, name: $name, description: $description, unit: $unit, isFavorite: $isFavorite, goalId: $goalId, tags: $tags, duration: $duration)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TimeBasedActivityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.unit, unit) || other.unit == unit) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite) &&
+            (identical(other.goalId, goalId) || other.goalId == goalId) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, description, unit,
+      isFavorite, goalId, const DeepCollectionEquality().hash(_tags), duration);
+
+  /// Create a copy of Activity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TimeBasedActivityImplCopyWith<_$TimeBasedActivityImpl> get copyWith =>
+      __$$TimeBasedActivityImplCopyWithImpl<_$TimeBasedActivityImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            int count)
+        countBased,
+    required TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)
+        timeBased,
+  }) {
+    return timeBased(
+        id, name, description, unit, isFavorite, goalId, tags, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult? Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+  }) {
+    return timeBased?.call(
+        id, name, description, unit, isFavorite, goalId, tags, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String name, String? description, String unit,
+            bool isFavorite, String? goalId, List<String>? tags, int count)?
+        countBased,
+    TResult Function(
+            String id,
+            String name,
+            String? description,
+            String unit,
+            bool isFavorite,
+            String? goalId,
+            List<String>? tags,
+            Duration duration)?
+        timeBased,
+    required TResult orElse(),
+  }) {
+    if (timeBased != null) {
+      return timeBased(
+          id, name, description, unit, isFavorite, goalId, tags, duration);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CountBasedActivity value) countBased,
+    required TResult Function(TimeBasedActivity value) timeBased,
+  }) {
+    return timeBased(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CountBasedActivity value)? countBased,
+    TResult? Function(TimeBasedActivity value)? timeBased,
+  }) {
+    return timeBased?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CountBasedActivity value)? countBased,
+    TResult Function(TimeBasedActivity value)? timeBased,
+    required TResult orElse(),
+  }) {
+    if (timeBased != null) {
+      return timeBased(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TimeBasedActivityImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class TimeBasedActivity implements Activity, ActivityBase {
+  const factory TimeBasedActivity(
+      {required final String id,
+      required final String name,
+      final String? description,
+      required final String unit,
+      final bool isFavorite,
+      final String? goalId,
+      final List<String>? tags,
+      required final Duration duration}) = _$TimeBasedActivityImpl;
+
+  factory TimeBasedActivity.fromJson(Map<String, dynamic> json) =
+      _$TimeBasedActivityImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String? get description;
   @override
   String get unit;
   @override
@@ -308,13 +814,14 @@ abstract class _Activity implements Activity {
   @override
   String? get goalId;
   @override
-  List<String>? get tags;
+  List<String>? get tags; // --- Time-Specific Field ---
+  Duration get duration;
 
   /// Create a copy of Activity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ActivityImplCopyWith<_$ActivityImpl> get copyWith =>
+  _$$TimeBasedActivityImplCopyWith<_$TimeBasedActivityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -325,9 +832,11 @@ ActivityLog _$ActivityLogFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ActivityLog {
   String get id => throw _privateConstructorUsedError;
-  String get activityId => throw _privateConstructorUsedError;
+  String get activityId =>
+      throw _privateConstructorUsedError; // Assuming you want 'activityId' for the field name
   DateTime get timestamp => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
+  double get value =>
+      throw _privateConstructorUsedError; // Can be count or duration (in seconds/minutes)
   String? get notes => throw _privateConstructorUsedError;
   int? get rpe => throw _privateConstructorUsedError;
 
@@ -491,10 +1000,12 @@ class _$ActivityLogImpl implements _ActivityLog {
   final String id;
   @override
   final String activityId;
+// Assuming you want 'activityId' for the field name
   @override
   final DateTime timestamp;
   @override
   final double value;
+// Can be count or duration (in seconds/minutes)
   @override
   final String? notes;
   @override
@@ -556,11 +1067,11 @@ abstract class _ActivityLog implements ActivityLog {
   @override
   String get id;
   @override
-  String get activityId;
+  String get activityId; // Assuming you want 'activityId' for the field name
   @override
   DateTime get timestamp;
   @override
-  double get value;
+  double get value; // Can be count or duration (in seconds/minutes)
   @override
   String? get notes;
   @override
@@ -580,7 +1091,6 @@ Goal _$GoalFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Goal {
-// Use @JsonKey for custom field names in JSON
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
@@ -754,7 +1264,6 @@ class _$GoalImpl implements _Goal {
   factory _$GoalImpl.fromJson(Map<String, dynamic> json) =>
       _$$GoalImplFromJson(json);
 
-// Use @JsonKey for custom field names in JSON
   @override
   final String id;
   @override
@@ -825,7 +1334,6 @@ abstract class _Goal implements Goal {
 
   factory _Goal.fromJson(Map<String, dynamic> json) = _$GoalImpl.fromJson;
 
-// Use @JsonKey for custom field names in JSON
   @override
   String get id;
   @override

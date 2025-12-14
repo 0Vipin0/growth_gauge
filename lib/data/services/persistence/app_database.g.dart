@@ -3,6 +3,15 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
+mixin _$GoalDaoMixin on DatabaseAccessor<AppDatabase> {
+  $GoalsTable get goals => attachedDatabase.goals;
+}
+mixin _$ActivityDaoMixin on DatabaseAccessor<AppDatabase> {
+  $GoalsTable get goals => attachedDatabase.goals;
+  $ActivitiesTable get activities => attachedDatabase.activities;
+  $ActivityLogsTable get activityLogs => attachedDatabase.activityLogs;
+}
+
 class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -383,775 +392,7 @@ class UsersCompanion extends UpdateCompanion<User> {
   }
 }
 
-class $ActivitiesTable extends Activities
-    with TableInfo<$ActivitiesTable, Activity> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ActivitiesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
-  @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
-  @override
-  late final GeneratedColumn<int> type = GeneratedColumn<int>(
-      'type', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
-  @override
-  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
-      'unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _isFavoriteMeta =
-      const VerificationMeta('isFavorite');
-  @override
-  late final GeneratedColumn<bool> isFavorite = GeneratedColumn<bool>(
-      'is_favorite', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_favorite" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  static const VerificationMeta _goalIdMeta = const VerificationMeta('goalId');
-  @override
-  late final GeneratedColumn<String> goalId = GeneratedColumn<String>(
-      'goal_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
-  @override
-  late final GeneratedColumn<String> tags = GeneratedColumn<String>(
-      'tags', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, description, type, unit, isFavorite, goalId, tags];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'activities';
-  @override
-  VerificationContext validateIntegrity(Insertable<Activity> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('description')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
-    }
-    if (data.containsKey('type')) {
-      context.handle(
-          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
-    } else if (isInserting) {
-      context.missing(_typeMeta);
-    }
-    if (data.containsKey('unit')) {
-      context.handle(
-          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
-    } else if (isInserting) {
-      context.missing(_unitMeta);
-    }
-    if (data.containsKey('is_favorite')) {
-      context.handle(
-          _isFavoriteMeta,
-          isFavorite.isAcceptableOrUnknown(
-              data['is_favorite']!, _isFavoriteMeta));
-    }
-    if (data.containsKey('goal_id')) {
-      context.handle(_goalIdMeta,
-          goalId.isAcceptableOrUnknown(data['goal_id']!, _goalIdMeta));
-    }
-    if (data.containsKey('tags')) {
-      context.handle(
-          _tagsMeta, tags.isAcceptableOrUnknown(data['tags']!, _tagsMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Activity map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Activity(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description']),
-      type: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}type'])!,
-      unit: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
-      isFavorite: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_favorite'])!,
-      goalId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}goal_id']),
-      tags: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tags']),
-    );
-  }
-
-  @override
-  $ActivitiesTable createAlias(String alias) {
-    return $ActivitiesTable(attachedDatabase, alias);
-  }
-}
-
-class Activity extends DataClass implements Insertable<Activity> {
-  final String id;
-  final String name;
-  final String? description;
-  final int type;
-  final String unit;
-  final bool isFavorite;
-  final String? goalId;
-  final String? tags;
-  const Activity(
-      {required this.id,
-      required this.name,
-      this.description,
-      required this.type,
-      required this.unit,
-      required this.isFavorite,
-      this.goalId,
-      this.tags});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
-    }
-    map['type'] = Variable<int>(type);
-    map['unit'] = Variable<String>(unit);
-    map['is_favorite'] = Variable<bool>(isFavorite);
-    if (!nullToAbsent || goalId != null) {
-      map['goal_id'] = Variable<String>(goalId);
-    }
-    if (!nullToAbsent || tags != null) {
-      map['tags'] = Variable<String>(tags);
-    }
-    return map;
-  }
-
-  ActivitiesCompanion toCompanion(bool nullToAbsent) {
-    return ActivitiesCompanion(
-      id: Value(id),
-      name: Value(name),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      type: Value(type),
-      unit: Value(unit),
-      isFavorite: Value(isFavorite),
-      goalId:
-          goalId == null && nullToAbsent ? const Value.absent() : Value(goalId),
-      tags: tags == null && nullToAbsent ? const Value.absent() : Value(tags),
-    );
-  }
-
-  factory Activity.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Activity(
-      id: serializer.fromJson<String>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      description: serializer.fromJson<String?>(json['description']),
-      type: serializer.fromJson<int>(json['type']),
-      unit: serializer.fromJson<String>(json['unit']),
-      isFavorite: serializer.fromJson<bool>(json['isFavorite']),
-      goalId: serializer.fromJson<String?>(json['goalId']),
-      tags: serializer.fromJson<String?>(json['tags']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'name': serializer.toJson<String>(name),
-      'description': serializer.toJson<String?>(description),
-      'type': serializer.toJson<int>(type),
-      'unit': serializer.toJson<String>(unit),
-      'isFavorite': serializer.toJson<bool>(isFavorite),
-      'goalId': serializer.toJson<String?>(goalId),
-      'tags': serializer.toJson<String?>(tags),
-    };
-  }
-
-  Activity copyWith(
-          {String? id,
-          String? name,
-          Value<String?> description = const Value.absent(),
-          int? type,
-          String? unit,
-          bool? isFavorite,
-          Value<String?> goalId = const Value.absent(),
-          Value<String?> tags = const Value.absent()}) =>
-      Activity(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description.present ? description.value : this.description,
-        type: type ?? this.type,
-        unit: unit ?? this.unit,
-        isFavorite: isFavorite ?? this.isFavorite,
-        goalId: goalId.present ? goalId.value : this.goalId,
-        tags: tags.present ? tags.value : this.tags,
-      );
-  Activity copyWithCompanion(ActivitiesCompanion data) {
-    return Activity(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-      description:
-          data.description.present ? data.description.value : this.description,
-      type: data.type.present ? data.type.value : this.type,
-      unit: data.unit.present ? data.unit.value : this.unit,
-      isFavorite:
-          data.isFavorite.present ? data.isFavorite.value : this.isFavorite,
-      goalId: data.goalId.present ? data.goalId.value : this.goalId,
-      tags: data.tags.present ? data.tags.value : this.tags,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('Activity(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('type: $type, ')
-          ..write('unit: $unit, ')
-          ..write('isFavorite: $isFavorite, ')
-          ..write('goalId: $goalId, ')
-          ..write('tags: $tags')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, name, description, type, unit, isFavorite, goalId, tags);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is Activity &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.description == this.description &&
-          other.type == this.type &&
-          other.unit == this.unit &&
-          other.isFavorite == this.isFavorite &&
-          other.goalId == this.goalId &&
-          other.tags == this.tags);
-}
-
-class ActivitiesCompanion extends UpdateCompanion<Activity> {
-  final Value<String> id;
-  final Value<String> name;
-  final Value<String?> description;
-  final Value<int> type;
-  final Value<String> unit;
-  final Value<bool> isFavorite;
-  final Value<String?> goalId;
-  final Value<String?> tags;
-  final Value<int> rowid;
-  const ActivitiesCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.description = const Value.absent(),
-    this.type = const Value.absent(),
-    this.unit = const Value.absent(),
-    this.isFavorite = const Value.absent(),
-    this.goalId = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ActivitiesCompanion.insert({
-    required String id,
-    required String name,
-    this.description = const Value.absent(),
-    required int type,
-    required String unit,
-    this.isFavorite = const Value.absent(),
-    this.goalId = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        name = Value(name),
-        type = Value(type),
-        unit = Value(unit);
-  static Insertable<Activity> custom({
-    Expression<String>? id,
-    Expression<String>? name,
-    Expression<String>? description,
-    Expression<int>? type,
-    Expression<String>? unit,
-    Expression<bool>? isFavorite,
-    Expression<String>? goalId,
-    Expression<String>? tags,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-      if (type != null) 'type': type,
-      if (unit != null) 'unit': unit,
-      if (isFavorite != null) 'is_favorite': isFavorite,
-      if (goalId != null) 'goal_id': goalId,
-      if (tags != null) 'tags': tags,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ActivitiesCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? name,
-      Value<String?>? description,
-      Value<int>? type,
-      Value<String>? unit,
-      Value<bool>? isFavorite,
-      Value<String?>? goalId,
-      Value<String?>? tags,
-      Value<int>? rowid}) {
-    return ActivitiesCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      type: type ?? this.type,
-      unit: unit ?? this.unit,
-      isFavorite: isFavorite ?? this.isFavorite,
-      goalId: goalId ?? this.goalId,
-      tags: tags ?? this.tags,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
-    }
-    if (type.present) {
-      map['type'] = Variable<int>(type.value);
-    }
-    if (unit.present) {
-      map['unit'] = Variable<String>(unit.value);
-    }
-    if (isFavorite.present) {
-      map['is_favorite'] = Variable<bool>(isFavorite.value);
-    }
-    if (goalId.present) {
-      map['goal_id'] = Variable<String>(goalId.value);
-    }
-    if (tags.present) {
-      map['tags'] = Variable<String>(tags.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ActivitiesCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('type: $type, ')
-          ..write('unit: $unit, ')
-          ..write('isFavorite: $isFavorite, ')
-          ..write('goalId: $goalId, ')
-          ..write('tags: $tags, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ActivityLogsTable extends ActivityLogs
-    with TableInfo<$ActivityLogsTable, ActivityLog> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ActivityLogsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _activityIdMeta =
-      const VerificationMeta('activityId');
-  @override
-  late final GeneratedColumn<String> activityId = GeneratedColumn<String>(
-      'activity_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _timestampMeta =
-      const VerificationMeta('timestamp');
-  @override
-  late final GeneratedColumn<DateTime> timestamp = GeneratedColumn<DateTime>(
-      'timestamp', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  @override
-  late final GeneratedColumn<double> value = GeneratedColumn<double>(
-      'value', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
-  @override
-  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
-      'notes', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _rpeMeta = const VerificationMeta('rpe');
-  @override
-  late final GeneratedColumn<int> rpe = GeneratedColumn<int>(
-      'rpe', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, activityId, timestamp, value, notes, rpe];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'activity_logs';
-  @override
-  VerificationContext validateIntegrity(Insertable<ActivityLog> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('activity_id')) {
-      context.handle(
-          _activityIdMeta,
-          activityId.isAcceptableOrUnknown(
-              data['activity_id']!, _activityIdMeta));
-    } else if (isInserting) {
-      context.missing(_activityIdMeta);
-    }
-    if (data.containsKey('timestamp')) {
-      context.handle(_timestampMeta,
-          timestamp.isAcceptableOrUnknown(data['timestamp']!, _timestampMeta));
-    } else if (isInserting) {
-      context.missing(_timestampMeta);
-    }
-    if (data.containsKey('value')) {
-      context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
-    if (data.containsKey('notes')) {
-      context.handle(
-          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
-    }
-    if (data.containsKey('rpe')) {
-      context.handle(
-          _rpeMeta, rpe.isAcceptableOrUnknown(data['rpe']!, _rpeMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ActivityLog map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ActivityLog(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      activityId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}activity_id'])!,
-      timestamp: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}timestamp'])!,
-      value: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}value'])!,
-      notes: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
-      rpe: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}rpe']),
-    );
-  }
-
-  @override
-  $ActivityLogsTable createAlias(String alias) {
-    return $ActivityLogsTable(attachedDatabase, alias);
-  }
-}
-
-class ActivityLog extends DataClass implements Insertable<ActivityLog> {
-  final String id;
-  final String activityId;
-  final DateTime timestamp;
-  final double value;
-  final String? notes;
-  final int? rpe;
-  const ActivityLog(
-      {required this.id,
-      required this.activityId,
-      required this.timestamp,
-      required this.value,
-      this.notes,
-      this.rpe});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['activity_id'] = Variable<String>(activityId);
-    map['timestamp'] = Variable<DateTime>(timestamp);
-    map['value'] = Variable<double>(value);
-    if (!nullToAbsent || notes != null) {
-      map['notes'] = Variable<String>(notes);
-    }
-    if (!nullToAbsent || rpe != null) {
-      map['rpe'] = Variable<int>(rpe);
-    }
-    return map;
-  }
-
-  ActivityLogsCompanion toCompanion(bool nullToAbsent) {
-    return ActivityLogsCompanion(
-      id: Value(id),
-      activityId: Value(activityId),
-      timestamp: Value(timestamp),
-      value: Value(value),
-      notes:
-          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
-      rpe: rpe == null && nullToAbsent ? const Value.absent() : Value(rpe),
-    );
-  }
-
-  factory ActivityLog.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ActivityLog(
-      id: serializer.fromJson<String>(json['id']),
-      activityId: serializer.fromJson<String>(json['activityId']),
-      timestamp: serializer.fromJson<DateTime>(json['timestamp']),
-      value: serializer.fromJson<double>(json['value']),
-      notes: serializer.fromJson<String?>(json['notes']),
-      rpe: serializer.fromJson<int?>(json['rpe']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'activityId': serializer.toJson<String>(activityId),
-      'timestamp': serializer.toJson<DateTime>(timestamp),
-      'value': serializer.toJson<double>(value),
-      'notes': serializer.toJson<String?>(notes),
-      'rpe': serializer.toJson<int?>(rpe),
-    };
-  }
-
-  ActivityLog copyWith(
-          {String? id,
-          String? activityId,
-          DateTime? timestamp,
-          double? value,
-          Value<String?> notes = const Value.absent(),
-          Value<int?> rpe = const Value.absent()}) =>
-      ActivityLog(
-        id: id ?? this.id,
-        activityId: activityId ?? this.activityId,
-        timestamp: timestamp ?? this.timestamp,
-        value: value ?? this.value,
-        notes: notes.present ? notes.value : this.notes,
-        rpe: rpe.present ? rpe.value : this.rpe,
-      );
-  ActivityLog copyWithCompanion(ActivityLogsCompanion data) {
-    return ActivityLog(
-      id: data.id.present ? data.id.value : this.id,
-      activityId:
-          data.activityId.present ? data.activityId.value : this.activityId,
-      timestamp: data.timestamp.present ? data.timestamp.value : this.timestamp,
-      value: data.value.present ? data.value.value : this.value,
-      notes: data.notes.present ? data.notes.value : this.notes,
-      rpe: data.rpe.present ? data.rpe.value : this.rpe,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ActivityLog(')
-          ..write('id: $id, ')
-          ..write('activityId: $activityId, ')
-          ..write('timestamp: $timestamp, ')
-          ..write('value: $value, ')
-          ..write('notes: $notes, ')
-          ..write('rpe: $rpe')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, activityId, timestamp, value, notes, rpe);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ActivityLog &&
-          other.id == this.id &&
-          other.activityId == this.activityId &&
-          other.timestamp == this.timestamp &&
-          other.value == this.value &&
-          other.notes == this.notes &&
-          other.rpe == this.rpe);
-}
-
-class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
-  final Value<String> id;
-  final Value<String> activityId;
-  final Value<DateTime> timestamp;
-  final Value<double> value;
-  final Value<String?> notes;
-  final Value<int?> rpe;
-  final Value<int> rowid;
-  const ActivityLogsCompanion({
-    this.id = const Value.absent(),
-    this.activityId = const Value.absent(),
-    this.timestamp = const Value.absent(),
-    this.value = const Value.absent(),
-    this.notes = const Value.absent(),
-    this.rpe = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ActivityLogsCompanion.insert({
-    required String id,
-    required String activityId,
-    required DateTime timestamp,
-    required double value,
-    this.notes = const Value.absent(),
-    this.rpe = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        activityId = Value(activityId),
-        timestamp = Value(timestamp),
-        value = Value(value);
-  static Insertable<ActivityLog> custom({
-    Expression<String>? id,
-    Expression<String>? activityId,
-    Expression<DateTime>? timestamp,
-    Expression<double>? value,
-    Expression<String>? notes,
-    Expression<int>? rpe,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (activityId != null) 'activity_id': activityId,
-      if (timestamp != null) 'timestamp': timestamp,
-      if (value != null) 'value': value,
-      if (notes != null) 'notes': notes,
-      if (rpe != null) 'rpe': rpe,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ActivityLogsCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? activityId,
-      Value<DateTime>? timestamp,
-      Value<double>? value,
-      Value<String?>? notes,
-      Value<int?>? rpe,
-      Value<int>? rowid}) {
-    return ActivityLogsCompanion(
-      id: id ?? this.id,
-      activityId: activityId ?? this.activityId,
-      timestamp: timestamp ?? this.timestamp,
-      value: value ?? this.value,
-      notes: notes ?? this.notes,
-      rpe: rpe ?? this.rpe,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (activityId.present) {
-      map['activity_id'] = Variable<String>(activityId.value);
-    }
-    if (timestamp.present) {
-      map['timestamp'] = Variable<DateTime>(timestamp.value);
-    }
-    if (value.present) {
-      map['value'] = Variable<double>(value.value);
-    }
-    if (notes.present) {
-      map['notes'] = Variable<String>(notes.value);
-    }
-    if (rpe.present) {
-      map['rpe'] = Variable<int>(rpe.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ActivityLogsCompanion(')
-          ..write('id: $id, ')
-          ..write('activityId: $activityId, ')
-          ..write('timestamp: $timestamp, ')
-          ..write('value: $value, ')
-          ..write('notes: $notes, ')
-          ..write('rpe: $rpe, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
+class $GoalsTable extends Goals with TableInfo<$GoalsTable, GoalEntity> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1160,17 +401,24 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
       'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 128),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
       'type', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 50),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
   static const VerificationMeta _targetValueMeta =
       const VerificationMeta('targetValue');
   @override
@@ -1204,7 +452,7 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   String get actualTableName => $name;
   static const String $name = 'goals';
   @override
-  VerificationContext validateIntegrity(Insertable<Goal> instance,
+  VerificationContext validateIntegrity(Insertable<GoalEntity> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1253,9 +501,9 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Goal map(Map<String, dynamic> data, {String? tablePrefix}) {
+  GoalEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Goal(
+    return GoalEntity(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -1279,7 +527,7 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   }
 }
 
-class Goal extends DataClass implements Insertable<Goal> {
+class GoalEntity extends DataClass implements Insertable<GoalEntity> {
   final String id;
   final String name;
   final String type;
@@ -1287,7 +535,7 @@ class Goal extends DataClass implements Insertable<Goal> {
   final double? currentValue;
   final DateTime startDate;
   final DateTime? endDate;
-  const Goal(
+  const GoalEntity(
       {required this.id,
       required this.name,
       required this.type,
@@ -1332,10 +580,10 @@ class Goal extends DataClass implements Insertable<Goal> {
     );
   }
 
-  factory Goal.fromJson(Map<String, dynamic> json,
+  factory GoalEntity.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Goal(
+    return GoalEntity(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       type: serializer.fromJson<String>(json['type']),
@@ -1359,7 +607,7 @@ class Goal extends DataClass implements Insertable<Goal> {
     };
   }
 
-  Goal copyWith(
+  GoalEntity copyWith(
           {String? id,
           String? name,
           String? type,
@@ -1367,7 +615,7 @@ class Goal extends DataClass implements Insertable<Goal> {
           Value<double?> currentValue = const Value.absent(),
           DateTime? startDate,
           Value<DateTime?> endDate = const Value.absent()}) =>
-      Goal(
+      GoalEntity(
         id: id ?? this.id,
         name: name ?? this.name,
         type: type ?? this.type,
@@ -1377,8 +625,8 @@ class Goal extends DataClass implements Insertable<Goal> {
         startDate: startDate ?? this.startDate,
         endDate: endDate.present ? endDate.value : this.endDate,
       );
-  Goal copyWithCompanion(GoalsCompanion data) {
-    return Goal(
+  GoalEntity copyWithCompanion(GoalsCompanion data) {
+    return GoalEntity(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
@@ -1394,7 +642,7 @@ class Goal extends DataClass implements Insertable<Goal> {
 
   @override
   String toString() {
-    return (StringBuffer('Goal(')
+    return (StringBuffer('GoalEntity(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
@@ -1412,7 +660,7 @@ class Goal extends DataClass implements Insertable<Goal> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Goal &&
+      (other is GoalEntity &&
           other.id == this.id &&
           other.name == this.name &&
           other.type == this.type &&
@@ -1422,7 +670,7 @@ class Goal extends DataClass implements Insertable<Goal> {
           other.endDate == this.endDate);
 }
 
-class GoalsCompanion extends UpdateCompanion<Goal> {
+class GoalsCompanion extends UpdateCompanion<GoalEntity> {
   final Value<String> id;
   final Value<String> name;
   final Value<String> type;
@@ -1454,7 +702,7 @@ class GoalsCompanion extends UpdateCompanion<Goal> {
         name = Value(name),
         type = Value(type),
         startDate = Value(startDate);
-  static Insertable<Goal> custom({
+  static Insertable<GoalEntity> custom({
     Expression<String>? id,
     Expression<String>? name,
     Expression<String>? type,
@@ -1537,6 +785,889 @@ class GoalsCompanion extends UpdateCompanion<Goal> {
           ..write('currentValue: $currentValue, ')
           ..write('startDate: $startDate, ')
           ..write('endDate: $endDate, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ActivitiesTable extends Activities
+    with TableInfo<$ActivitiesTable, ActivityEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ActivitiesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 128),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+      'unit', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 32),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _isFavoriteMeta =
+      const VerificationMeta('isFavorite');
+  @override
+  late final GeneratedColumn<bool> isFavorite = GeneratedColumn<bool>(
+      'is_favorite', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_favorite" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _goalIdMeta = const VerificationMeta('goalId');
+  @override
+  late final GeneratedColumn<String> goalId = GeneratedColumn<String>(
+      'goal_id', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES goals (id)'));
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>?, String> tags =
+      GeneratedColumn<String>('tags', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<String>?>($ActivitiesTable.$convertertagsn);
+  static const VerificationMeta _activityTypeMeta =
+      const VerificationMeta('activityType');
+  @override
+  late final GeneratedColumn<String> activityType = GeneratedColumn<String>(
+      'activity_type', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('countBased'));
+  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  @override
+  late final GeneratedColumn<int> count = GeneratedColumn<int>(
+      'count', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _durationSecondsMeta =
+      const VerificationMeta('durationSeconds');
+  @override
+  late final GeneratedColumn<int> durationSeconds = GeneratedColumn<int>(
+      'duration_seconds', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        description,
+        unit,
+        isFavorite,
+        goalId,
+        tags,
+        activityType,
+        count,
+        durationSeconds
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'activities';
+  @override
+  VerificationContext validateIntegrity(Insertable<ActivityEntity> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
+    } else if (isInserting) {
+      context.missing(_unitMeta);
+    }
+    if (data.containsKey('is_favorite')) {
+      context.handle(
+          _isFavoriteMeta,
+          isFavorite.isAcceptableOrUnknown(
+              data['is_favorite']!, _isFavoriteMeta));
+    }
+    if (data.containsKey('goal_id')) {
+      context.handle(_goalIdMeta,
+          goalId.isAcceptableOrUnknown(data['goal_id']!, _goalIdMeta));
+    }
+    if (data.containsKey('activity_type')) {
+      context.handle(
+          _activityTypeMeta,
+          activityType.isAcceptableOrUnknown(
+              data['activity_type']!, _activityTypeMeta));
+    }
+    if (data.containsKey('count')) {
+      context.handle(
+          _countMeta, count.isAcceptableOrUnknown(data['count']!, _countMeta));
+    }
+    if (data.containsKey('duration_seconds')) {
+      context.handle(
+          _durationSecondsMeta,
+          durationSeconds.isAcceptableOrUnknown(
+              data['duration_seconds']!, _durationSecondsMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActivityEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ActivityEntity(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      unit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
+      isFavorite: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_favorite'])!,
+      goalId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}goal_id']),
+      tags: $ActivitiesTable.$convertertagsn.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tags'])),
+      activityType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}activity_type'])!,
+      count: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}count']),
+      durationSeconds: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}duration_seconds']),
+    );
+  }
+
+  @override
+  $ActivitiesTable createAlias(String alias) {
+    return $ActivitiesTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<List<String>, String> $convertertags =
+      const StringListConverter();
+  static TypeConverter<List<String>?, String?> $convertertagsn =
+      NullAwareTypeConverter.wrap($convertertags);
+}
+
+class ActivityEntity extends DataClass implements Insertable<ActivityEntity> {
+  final String id;
+  final String name;
+  final String? description;
+  final String unit;
+  final bool isFavorite;
+  final String? goalId;
+  final List<String>? tags;
+  final String activityType;
+  final int? count;
+  final int? durationSeconds;
+  const ActivityEntity(
+      {required this.id,
+      required this.name,
+      this.description,
+      required this.unit,
+      required this.isFavorite,
+      this.goalId,
+      this.tags,
+      required this.activityType,
+      this.count,
+      this.durationSeconds});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['unit'] = Variable<String>(unit);
+    map['is_favorite'] = Variable<bool>(isFavorite);
+    if (!nullToAbsent || goalId != null) {
+      map['goal_id'] = Variable<String>(goalId);
+    }
+    if (!nullToAbsent || tags != null) {
+      map['tags'] =
+          Variable<String>($ActivitiesTable.$convertertagsn.toSql(tags));
+    }
+    map['activity_type'] = Variable<String>(activityType);
+    if (!nullToAbsent || count != null) {
+      map['count'] = Variable<int>(count);
+    }
+    if (!nullToAbsent || durationSeconds != null) {
+      map['duration_seconds'] = Variable<int>(durationSeconds);
+    }
+    return map;
+  }
+
+  ActivitiesCompanion toCompanion(bool nullToAbsent) {
+    return ActivitiesCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      unit: Value(unit),
+      isFavorite: Value(isFavorite),
+      goalId:
+          goalId == null && nullToAbsent ? const Value.absent() : Value(goalId),
+      tags: tags == null && nullToAbsent ? const Value.absent() : Value(tags),
+      activityType: Value(activityType),
+      count:
+          count == null && nullToAbsent ? const Value.absent() : Value(count),
+      durationSeconds: durationSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(durationSeconds),
+    );
+  }
+
+  factory ActivityEntity.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ActivityEntity(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      unit: serializer.fromJson<String>(json['unit']),
+      isFavorite: serializer.fromJson<bool>(json['isFavorite']),
+      goalId: serializer.fromJson<String?>(json['goalId']),
+      tags: serializer.fromJson<List<String>?>(json['tags']),
+      activityType: serializer.fromJson<String>(json['activityType']),
+      count: serializer.fromJson<int?>(json['count']),
+      durationSeconds: serializer.fromJson<int?>(json['durationSeconds']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'unit': serializer.toJson<String>(unit),
+      'isFavorite': serializer.toJson<bool>(isFavorite),
+      'goalId': serializer.toJson<String?>(goalId),
+      'tags': serializer.toJson<List<String>?>(tags),
+      'activityType': serializer.toJson<String>(activityType),
+      'count': serializer.toJson<int?>(count),
+      'durationSeconds': serializer.toJson<int?>(durationSeconds),
+    };
+  }
+
+  ActivityEntity copyWith(
+          {String? id,
+          String? name,
+          Value<String?> description = const Value.absent(),
+          String? unit,
+          bool? isFavorite,
+          Value<String?> goalId = const Value.absent(),
+          Value<List<String>?> tags = const Value.absent(),
+          String? activityType,
+          Value<int?> count = const Value.absent(),
+          Value<int?> durationSeconds = const Value.absent()}) =>
+      ActivityEntity(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description.present ? description.value : this.description,
+        unit: unit ?? this.unit,
+        isFavorite: isFavorite ?? this.isFavorite,
+        goalId: goalId.present ? goalId.value : this.goalId,
+        tags: tags.present ? tags.value : this.tags,
+        activityType: activityType ?? this.activityType,
+        count: count.present ? count.value : this.count,
+        durationSeconds: durationSeconds.present
+            ? durationSeconds.value
+            : this.durationSeconds,
+      );
+  ActivityEntity copyWithCompanion(ActivitiesCompanion data) {
+    return ActivityEntity(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description:
+          data.description.present ? data.description.value : this.description,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      isFavorite:
+          data.isFavorite.present ? data.isFavorite.value : this.isFavorite,
+      goalId: data.goalId.present ? data.goalId.value : this.goalId,
+      tags: data.tags.present ? data.tags.value : this.tags,
+      activityType: data.activityType.present
+          ? data.activityType.value
+          : this.activityType,
+      count: data.count.present ? data.count.value : this.count,
+      durationSeconds: data.durationSeconds.present
+          ? data.durationSeconds.value
+          : this.durationSeconds,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivityEntity(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('unit: $unit, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('goalId: $goalId, ')
+          ..write('tags: $tags, ')
+          ..write('activityType: $activityType, ')
+          ..write('count: $count, ')
+          ..write('durationSeconds: $durationSeconds')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, description, unit, isFavorite,
+      goalId, tags, activityType, count, durationSeconds);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ActivityEntity &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.unit == this.unit &&
+          other.isFavorite == this.isFavorite &&
+          other.goalId == this.goalId &&
+          other.tags == this.tags &&
+          other.activityType == this.activityType &&
+          other.count == this.count &&
+          other.durationSeconds == this.durationSeconds);
+}
+
+class ActivitiesCompanion extends UpdateCompanion<ActivityEntity> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<String> unit;
+  final Value<bool> isFavorite;
+  final Value<String?> goalId;
+  final Value<List<String>?> tags;
+  final Value<String> activityType;
+  final Value<int?> count;
+  final Value<int?> durationSeconds;
+  final Value<int> rowid;
+  const ActivitiesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+    this.goalId = const Value.absent(),
+    this.tags = const Value.absent(),
+    this.activityType = const Value.absent(),
+    this.count = const Value.absent(),
+    this.durationSeconds = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ActivitiesCompanion.insert({
+    required String id,
+    required String name,
+    this.description = const Value.absent(),
+    required String unit,
+    this.isFavorite = const Value.absent(),
+    this.goalId = const Value.absent(),
+    this.tags = const Value.absent(),
+    this.activityType = const Value.absent(),
+    this.count = const Value.absent(),
+    this.durationSeconds = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name),
+        unit = Value(unit);
+  static Insertable<ActivityEntity> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? unit,
+    Expression<bool>? isFavorite,
+    Expression<String>? goalId,
+    Expression<String>? tags,
+    Expression<String>? activityType,
+    Expression<int>? count,
+    Expression<int>? durationSeconds,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (unit != null) 'unit': unit,
+      if (isFavorite != null) 'is_favorite': isFavorite,
+      if (goalId != null) 'goal_id': goalId,
+      if (tags != null) 'tags': tags,
+      if (activityType != null) 'activity_type': activityType,
+      if (count != null) 'count': count,
+      if (durationSeconds != null) 'duration_seconds': durationSeconds,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ActivitiesCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String?>? description,
+      Value<String>? unit,
+      Value<bool>? isFavorite,
+      Value<String?>? goalId,
+      Value<List<String>?>? tags,
+      Value<String>? activityType,
+      Value<int?>? count,
+      Value<int?>? durationSeconds,
+      Value<int>? rowid}) {
+    return ActivitiesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      unit: unit ?? this.unit,
+      isFavorite: isFavorite ?? this.isFavorite,
+      goalId: goalId ?? this.goalId,
+      tags: tags ?? this.tags,
+      activityType: activityType ?? this.activityType,
+      count: count ?? this.count,
+      durationSeconds: durationSeconds ?? this.durationSeconds,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (isFavorite.present) {
+      map['is_favorite'] = Variable<bool>(isFavorite.value);
+    }
+    if (goalId.present) {
+      map['goal_id'] = Variable<String>(goalId.value);
+    }
+    if (tags.present) {
+      map['tags'] =
+          Variable<String>($ActivitiesTable.$convertertagsn.toSql(tags.value));
+    }
+    if (activityType.present) {
+      map['activity_type'] = Variable<String>(activityType.value);
+    }
+    if (count.present) {
+      map['count'] = Variable<int>(count.value);
+    }
+    if (durationSeconds.present) {
+      map['duration_seconds'] = Variable<int>(durationSeconds.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivitiesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('unit: $unit, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('goalId: $goalId, ')
+          ..write('tags: $tags, ')
+          ..write('activityType: $activityType, ')
+          ..write('count: $count, ')
+          ..write('durationSeconds: $durationSeconds, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ActivityLogsTable extends ActivityLogs
+    with TableInfo<$ActivityLogsTable, ActivityLogEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ActivityLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _activityIdMeta =
+      const VerificationMeta('activityId');
+  @override
+  late final GeneratedColumn<String> activityId = GeneratedColumn<String>(
+      'activity_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES activities (id)'));
+  static const VerificationMeta _timestampMeta =
+      const VerificationMeta('timestamp');
+  @override
+  late final GeneratedColumn<DateTime> timestamp = GeneratedColumn<DateTime>(
+      'timestamp', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<double> value = GeneratedColumn<double>(
+      'value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _rpeMeta = const VerificationMeta('rpe');
+  @override
+  late final GeneratedColumn<int> rpe = GeneratedColumn<int>(
+      'rpe', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, activityId, timestamp, value, notes, rpe];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'activity_logs';
+  @override
+  VerificationContext validateIntegrity(Insertable<ActivityLogEntity> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('activity_id')) {
+      context.handle(
+          _activityIdMeta,
+          activityId.isAcceptableOrUnknown(
+              data['activity_id']!, _activityIdMeta));
+    } else if (isInserting) {
+      context.missing(_activityIdMeta);
+    }
+    if (data.containsKey('timestamp')) {
+      context.handle(_timestampMeta,
+          timestamp.isAcceptableOrUnknown(data['timestamp']!, _timestampMeta));
+    } else if (isInserting) {
+      context.missing(_timestampMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('rpe')) {
+      context.handle(
+          _rpeMeta, rpe.isAcceptableOrUnknown(data['rpe']!, _rpeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActivityLogEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ActivityLogEntity(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      activityId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}activity_id'])!,
+      timestamp: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}timestamp'])!,
+      value: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}value'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      rpe: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}rpe']),
+    );
+  }
+
+  @override
+  $ActivityLogsTable createAlias(String alias) {
+    return $ActivityLogsTable(attachedDatabase, alias);
+  }
+}
+
+class ActivityLogEntity extends DataClass
+    implements Insertable<ActivityLogEntity> {
+  final String id;
+  final String activityId;
+  final DateTime timestamp;
+  final double value;
+  final String? notes;
+  final int? rpe;
+  const ActivityLogEntity(
+      {required this.id,
+      required this.activityId,
+      required this.timestamp,
+      required this.value,
+      this.notes,
+      this.rpe});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['activity_id'] = Variable<String>(activityId);
+    map['timestamp'] = Variable<DateTime>(timestamp);
+    map['value'] = Variable<double>(value);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    if (!nullToAbsent || rpe != null) {
+      map['rpe'] = Variable<int>(rpe);
+    }
+    return map;
+  }
+
+  ActivityLogsCompanion toCompanion(bool nullToAbsent) {
+    return ActivityLogsCompanion(
+      id: Value(id),
+      activityId: Value(activityId),
+      timestamp: Value(timestamp),
+      value: Value(value),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      rpe: rpe == null && nullToAbsent ? const Value.absent() : Value(rpe),
+    );
+  }
+
+  factory ActivityLogEntity.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ActivityLogEntity(
+      id: serializer.fromJson<String>(json['id']),
+      activityId: serializer.fromJson<String>(json['activityId']),
+      timestamp: serializer.fromJson<DateTime>(json['timestamp']),
+      value: serializer.fromJson<double>(json['value']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      rpe: serializer.fromJson<int?>(json['rpe']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'activityId': serializer.toJson<String>(activityId),
+      'timestamp': serializer.toJson<DateTime>(timestamp),
+      'value': serializer.toJson<double>(value),
+      'notes': serializer.toJson<String?>(notes),
+      'rpe': serializer.toJson<int?>(rpe),
+    };
+  }
+
+  ActivityLogEntity copyWith(
+          {String? id,
+          String? activityId,
+          DateTime? timestamp,
+          double? value,
+          Value<String?> notes = const Value.absent(),
+          Value<int?> rpe = const Value.absent()}) =>
+      ActivityLogEntity(
+        id: id ?? this.id,
+        activityId: activityId ?? this.activityId,
+        timestamp: timestamp ?? this.timestamp,
+        value: value ?? this.value,
+        notes: notes.present ? notes.value : this.notes,
+        rpe: rpe.present ? rpe.value : this.rpe,
+      );
+  ActivityLogEntity copyWithCompanion(ActivityLogsCompanion data) {
+    return ActivityLogEntity(
+      id: data.id.present ? data.id.value : this.id,
+      activityId:
+          data.activityId.present ? data.activityId.value : this.activityId,
+      timestamp: data.timestamp.present ? data.timestamp.value : this.timestamp,
+      value: data.value.present ? data.value.value : this.value,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      rpe: data.rpe.present ? data.rpe.value : this.rpe,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivityLogEntity(')
+          ..write('id: $id, ')
+          ..write('activityId: $activityId, ')
+          ..write('timestamp: $timestamp, ')
+          ..write('value: $value, ')
+          ..write('notes: $notes, ')
+          ..write('rpe: $rpe')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, activityId, timestamp, value, notes, rpe);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ActivityLogEntity &&
+          other.id == this.id &&
+          other.activityId == this.activityId &&
+          other.timestamp == this.timestamp &&
+          other.value == this.value &&
+          other.notes == this.notes &&
+          other.rpe == this.rpe);
+}
+
+class ActivityLogsCompanion extends UpdateCompanion<ActivityLogEntity> {
+  final Value<String> id;
+  final Value<String> activityId;
+  final Value<DateTime> timestamp;
+  final Value<double> value;
+  final Value<String?> notes;
+  final Value<int?> rpe;
+  final Value<int> rowid;
+  const ActivityLogsCompanion({
+    this.id = const Value.absent(),
+    this.activityId = const Value.absent(),
+    this.timestamp = const Value.absent(),
+    this.value = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.rpe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ActivityLogsCompanion.insert({
+    required String id,
+    required String activityId,
+    required DateTime timestamp,
+    required double value,
+    this.notes = const Value.absent(),
+    this.rpe = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        activityId = Value(activityId),
+        timestamp = Value(timestamp),
+        value = Value(value);
+  static Insertable<ActivityLogEntity> custom({
+    Expression<String>? id,
+    Expression<String>? activityId,
+    Expression<DateTime>? timestamp,
+    Expression<double>? value,
+    Expression<String>? notes,
+    Expression<int>? rpe,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (activityId != null) 'activity_id': activityId,
+      if (timestamp != null) 'timestamp': timestamp,
+      if (value != null) 'value': value,
+      if (notes != null) 'notes': notes,
+      if (rpe != null) 'rpe': rpe,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ActivityLogsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? activityId,
+      Value<DateTime>? timestamp,
+      Value<double>? value,
+      Value<String?>? notes,
+      Value<int?>? rpe,
+      Value<int>? rowid}) {
+    return ActivityLogsCompanion(
+      id: id ?? this.id,
+      activityId: activityId ?? this.activityId,
+      timestamp: timestamp ?? this.timestamp,
+      value: value ?? this.value,
+      notes: notes ?? this.notes,
+      rpe: rpe ?? this.rpe,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (activityId.present) {
+      map['activity_id'] = Variable<String>(activityId.value);
+    }
+    if (timestamp.present) {
+      map['timestamp'] = Variable<DateTime>(timestamp.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<double>(value.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (rpe.present) {
+      map['rpe'] = Variable<int>(rpe.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivityLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('activityId: $activityId, ')
+          ..write('timestamp: $timestamp, ')
+          ..write('value: $value, ')
+          ..write('notes: $notes, ')
+          ..write('rpe: $rpe, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1898,9 +2029,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $UsersTable users = $UsersTable(this);
+  late final $GoalsTable goals = $GoalsTable(this);
   late final $ActivitiesTable activities = $ActivitiesTable(this);
   late final $ActivityLogsTable activityLogs = $ActivityLogsTable(this);
-  late final $GoalsTable goals = $GoalsTable(this);
   late final $WorkoutTemplatesTable workoutTemplates =
       $WorkoutTemplatesTable(this);
   @override
@@ -1908,7 +2039,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [users, activities, activityLogs, goals, workoutTemplates];
+      [users, goals, activities, activityLogs, workoutTemplates];
 }
 
 typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
@@ -2096,404 +2227,6 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     (User, BaseReferences<_$AppDatabase, $UsersTable, User>),
     User,
     PrefetchHooks Function()>;
-typedef $$ActivitiesTableCreateCompanionBuilder = ActivitiesCompanion Function({
-  required String id,
-  required String name,
-  Value<String?> description,
-  required int type,
-  required String unit,
-  Value<bool> isFavorite,
-  Value<String?> goalId,
-  Value<String?> tags,
-  Value<int> rowid,
-});
-typedef $$ActivitiesTableUpdateCompanionBuilder = ActivitiesCompanion Function({
-  Value<String> id,
-  Value<String> name,
-  Value<String?> description,
-  Value<int> type,
-  Value<String> unit,
-  Value<bool> isFavorite,
-  Value<String?> goalId,
-  Value<String?> tags,
-  Value<int> rowid,
-});
-
-class $$ActivitiesTableFilterComposer
-    extends Composer<_$AppDatabase, $ActivitiesTable> {
-  $$ActivitiesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get isFavorite => $composableBuilder(
-      column: $table.isFavorite, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get goalId => $composableBuilder(
-      column: $table.goalId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnFilters(column));
-}
-
-class $$ActivitiesTableOrderingComposer
-    extends Composer<_$AppDatabase, $ActivitiesTable> {
-  $$ActivitiesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get isFavorite => $composableBuilder(
-      column: $table.isFavorite, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get goalId => $composableBuilder(
-      column: $table.goalId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnOrderings(column));
-}
-
-class $$ActivitiesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ActivitiesTable> {
-  $$ActivitiesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => column);
-
-  GeneratedColumn<int> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumn<String> get unit =>
-      $composableBuilder(column: $table.unit, builder: (column) => column);
-
-  GeneratedColumn<bool> get isFavorite => $composableBuilder(
-      column: $table.isFavorite, builder: (column) => column);
-
-  GeneratedColumn<String> get goalId =>
-      $composableBuilder(column: $table.goalId, builder: (column) => column);
-
-  GeneratedColumn<String> get tags =>
-      $composableBuilder(column: $table.tags, builder: (column) => column);
-}
-
-class $$ActivitiesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ActivitiesTable,
-    Activity,
-    $$ActivitiesTableFilterComposer,
-    $$ActivitiesTableOrderingComposer,
-    $$ActivitiesTableAnnotationComposer,
-    $$ActivitiesTableCreateCompanionBuilder,
-    $$ActivitiesTableUpdateCompanionBuilder,
-    (Activity, BaseReferences<_$AppDatabase, $ActivitiesTable, Activity>),
-    Activity,
-    PrefetchHooks Function()> {
-  $$ActivitiesTableTableManager(_$AppDatabase db, $ActivitiesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ActivitiesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ActivitiesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ActivitiesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<int> type = const Value.absent(),
-            Value<String> unit = const Value.absent(),
-            Value<bool> isFavorite = const Value.absent(),
-            Value<String?> goalId = const Value.absent(),
-            Value<String?> tags = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivitiesCompanion(
-            id: id,
-            name: name,
-            description: description,
-            type: type,
-            unit: unit,
-            isFavorite: isFavorite,
-            goalId: goalId,
-            tags: tags,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String name,
-            Value<String?> description = const Value.absent(),
-            required int type,
-            required String unit,
-            Value<bool> isFavorite = const Value.absent(),
-            Value<String?> goalId = const Value.absent(),
-            Value<String?> tags = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivitiesCompanion.insert(
-            id: id,
-            name: name,
-            description: description,
-            type: type,
-            unit: unit,
-            isFavorite: isFavorite,
-            goalId: goalId,
-            tags: tags,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$ActivitiesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $ActivitiesTable,
-    Activity,
-    $$ActivitiesTableFilterComposer,
-    $$ActivitiesTableOrderingComposer,
-    $$ActivitiesTableAnnotationComposer,
-    $$ActivitiesTableCreateCompanionBuilder,
-    $$ActivitiesTableUpdateCompanionBuilder,
-    (Activity, BaseReferences<_$AppDatabase, $ActivitiesTable, Activity>),
-    Activity,
-    PrefetchHooks Function()>;
-typedef $$ActivityLogsTableCreateCompanionBuilder = ActivityLogsCompanion
-    Function({
-  required String id,
-  required String activityId,
-  required DateTime timestamp,
-  required double value,
-  Value<String?> notes,
-  Value<int?> rpe,
-  Value<int> rowid,
-});
-typedef $$ActivityLogsTableUpdateCompanionBuilder = ActivityLogsCompanion
-    Function({
-  Value<String> id,
-  Value<String> activityId,
-  Value<DateTime> timestamp,
-  Value<double> value,
-  Value<String?> notes,
-  Value<int?> rpe,
-  Value<int> rowid,
-});
-
-class $$ActivityLogsTableFilterComposer
-    extends Composer<_$AppDatabase, $ActivityLogsTable> {
-  $$ActivityLogsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get activityId => $composableBuilder(
-      column: $table.activityId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get timestamp => $composableBuilder(
-      column: $table.timestamp, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get notes => $composableBuilder(
-      column: $table.notes, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get rpe => $composableBuilder(
-      column: $table.rpe, builder: (column) => ColumnFilters(column));
-}
-
-class $$ActivityLogsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ActivityLogsTable> {
-  $$ActivityLogsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get activityId => $composableBuilder(
-      column: $table.activityId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get timestamp => $composableBuilder(
-      column: $table.timestamp, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get notes => $composableBuilder(
-      column: $table.notes, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get rpe => $composableBuilder(
-      column: $table.rpe, builder: (column) => ColumnOrderings(column));
-}
-
-class $$ActivityLogsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ActivityLogsTable> {
-  $$ActivityLogsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get activityId => $composableBuilder(
-      column: $table.activityId, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get timestamp =>
-      $composableBuilder(column: $table.timestamp, builder: (column) => column);
-
-  GeneratedColumn<double> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
-
-  GeneratedColumn<String> get notes =>
-      $composableBuilder(column: $table.notes, builder: (column) => column);
-
-  GeneratedColumn<int> get rpe =>
-      $composableBuilder(column: $table.rpe, builder: (column) => column);
-}
-
-class $$ActivityLogsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ActivityLogsTable,
-    ActivityLog,
-    $$ActivityLogsTableFilterComposer,
-    $$ActivityLogsTableOrderingComposer,
-    $$ActivityLogsTableAnnotationComposer,
-    $$ActivityLogsTableCreateCompanionBuilder,
-    $$ActivityLogsTableUpdateCompanionBuilder,
-    (
-      ActivityLog,
-      BaseReferences<_$AppDatabase, $ActivityLogsTable, ActivityLog>
-    ),
-    ActivityLog,
-    PrefetchHooks Function()> {
-  $$ActivityLogsTableTableManager(_$AppDatabase db, $ActivityLogsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ActivityLogsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ActivityLogsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ActivityLogsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> activityId = const Value.absent(),
-            Value<DateTime> timestamp = const Value.absent(),
-            Value<double> value = const Value.absent(),
-            Value<String?> notes = const Value.absent(),
-            Value<int?> rpe = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivityLogsCompanion(
-            id: id,
-            activityId: activityId,
-            timestamp: timestamp,
-            value: value,
-            notes: notes,
-            rpe: rpe,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String activityId,
-            required DateTime timestamp,
-            required double value,
-            Value<String?> notes = const Value.absent(),
-            Value<int?> rpe = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ActivityLogsCompanion.insert(
-            id: id,
-            activityId: activityId,
-            timestamp: timestamp,
-            value: value,
-            notes: notes,
-            rpe: rpe,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$ActivityLogsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $ActivityLogsTable,
-    ActivityLog,
-    $$ActivityLogsTableFilterComposer,
-    $$ActivityLogsTableOrderingComposer,
-    $$ActivityLogsTableAnnotationComposer,
-    $$ActivityLogsTableCreateCompanionBuilder,
-    $$ActivityLogsTableUpdateCompanionBuilder,
-    (
-      ActivityLog,
-      BaseReferences<_$AppDatabase, $ActivityLogsTable, ActivityLog>
-    ),
-    ActivityLog,
-    PrefetchHooks Function()>;
 typedef $$GoalsTableCreateCompanionBuilder = GoalsCompanion Function({
   required String id,
   required String name,
@@ -2514,6 +2247,25 @@ typedef $$GoalsTableUpdateCompanionBuilder = GoalsCompanion Function({
   Value<DateTime?> endDate,
   Value<int> rowid,
 });
+
+final class $$GoalsTableReferences
+    extends BaseReferences<_$AppDatabase, $GoalsTable, GoalEntity> {
+  $$GoalsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$ActivitiesTable, List<ActivityEntity>>
+      _activitiesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+          db.activities,
+          aliasName: $_aliasNameGenerator(db.goals.id, db.activities.goalId));
+
+  $$ActivitiesTableProcessedTableManager get activitiesRefs {
+    final manager = $$ActivitiesTableTableManager($_db, $_db.activities)
+        .filter((f) => f.goalId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_activitiesRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
 
 class $$GoalsTableFilterComposer extends Composer<_$AppDatabase, $GoalsTable> {
   $$GoalsTableFilterComposer({
@@ -2543,6 +2295,27 @@ class $$GoalsTableFilterComposer extends Composer<_$AppDatabase, $GoalsTable> {
 
   ColumnFilters<DateTime> get endDate => $composableBuilder(
       column: $table.endDate, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> activitiesRefs(
+      Expression<bool> Function($$ActivitiesTableFilterComposer f) f) {
+    final $$ActivitiesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.activities,
+        getReferencedColumn: (t) => t.goalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivitiesTableFilterComposer(
+              $db: $db,
+              $table: $db.activities,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$GoalsTableOrderingComposer
@@ -2606,20 +2379,41 @@ class $$GoalsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get endDate =>
       $composableBuilder(column: $table.endDate, builder: (column) => column);
+
+  Expression<T> activitiesRefs<T extends Object>(
+      Expression<T> Function($$ActivitiesTableAnnotationComposer a) f) {
+    final $$ActivitiesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.activities,
+        getReferencedColumn: (t) => t.goalId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivitiesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.activities,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$GoalsTableTableManager extends RootTableManager<
     _$AppDatabase,
     $GoalsTable,
-    Goal,
+    GoalEntity,
     $$GoalsTableFilterComposer,
     $$GoalsTableOrderingComposer,
     $$GoalsTableAnnotationComposer,
     $$GoalsTableCreateCompanionBuilder,
     $$GoalsTableUpdateCompanionBuilder,
-    (Goal, BaseReferences<_$AppDatabase, $GoalsTable, Goal>),
-    Goal,
-    PrefetchHooks Function()> {
+    (GoalEntity, $$GoalsTableReferences),
+    GoalEntity,
+    PrefetchHooks Function({bool activitiesRefs})> {
   $$GoalsTableTableManager(_$AppDatabase db, $GoalsTable table)
       : super(TableManagerState(
           db: db,
@@ -2671,24 +2465,761 @@ class $$GoalsTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) =>
+                  (e.readTable(table), $$GoalsTableReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({activitiesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (activitiesRefs) db.activities],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (activitiesRefs)
+                    await $_getPrefetchedData<GoalEntity, $GoalsTable,
+                            ActivityEntity>(
+                        currentTable: table,
+                        referencedTable:
+                            $$GoalsTableReferences._activitiesRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$GoalsTableReferences(db, table, p0)
+                                .activitiesRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.goalId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
 typedef $$GoalsTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
     $GoalsTable,
-    Goal,
+    GoalEntity,
     $$GoalsTableFilterComposer,
     $$GoalsTableOrderingComposer,
     $$GoalsTableAnnotationComposer,
     $$GoalsTableCreateCompanionBuilder,
     $$GoalsTableUpdateCompanionBuilder,
-    (Goal, BaseReferences<_$AppDatabase, $GoalsTable, Goal>),
-    Goal,
-    PrefetchHooks Function()>;
+    (GoalEntity, $$GoalsTableReferences),
+    GoalEntity,
+    PrefetchHooks Function({bool activitiesRefs})>;
+typedef $$ActivitiesTableCreateCompanionBuilder = ActivitiesCompanion Function({
+  required String id,
+  required String name,
+  Value<String?> description,
+  required String unit,
+  Value<bool> isFavorite,
+  Value<String?> goalId,
+  Value<List<String>?> tags,
+  Value<String> activityType,
+  Value<int?> count,
+  Value<int?> durationSeconds,
+  Value<int> rowid,
+});
+typedef $$ActivitiesTableUpdateCompanionBuilder = ActivitiesCompanion Function({
+  Value<String> id,
+  Value<String> name,
+  Value<String?> description,
+  Value<String> unit,
+  Value<bool> isFavorite,
+  Value<String?> goalId,
+  Value<List<String>?> tags,
+  Value<String> activityType,
+  Value<int?> count,
+  Value<int?> durationSeconds,
+  Value<int> rowid,
+});
+
+final class $$ActivitiesTableReferences
+    extends BaseReferences<_$AppDatabase, $ActivitiesTable, ActivityEntity> {
+  $$ActivitiesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $GoalsTable _goalIdTable(_$AppDatabase db) => db.goals
+      .createAlias($_aliasNameGenerator(db.activities.goalId, db.goals.id));
+
+  $$GoalsTableProcessedTableManager? get goalId {
+    final $_column = $_itemColumn<String>('goal_id');
+    if ($_column == null) return null;
+    final manager = $$GoalsTableTableManager($_db, $_db.goals)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_goalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static MultiTypedResultKey<$ActivityLogsTable, List<ActivityLogEntity>>
+      _activityLogsRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.activityLogs,
+              aliasName: $_aliasNameGenerator(
+                  db.activities.id, db.activityLogs.activityId));
+
+  $$ActivityLogsTableProcessedTableManager get activityLogsRefs {
+    final manager = $$ActivityLogsTableTableManager($_db, $_db.activityLogs)
+        .filter((f) => f.activityId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_activityLogsRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$ActivitiesTableFilterComposer
+    extends Composer<_$AppDatabase, $ActivitiesTable> {
+  $$ActivitiesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isFavorite => $composableBuilder(
+      column: $table.isFavorite, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+      get tags => $composableBuilder(
+          column: $table.tags,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get activityType => $composableBuilder(
+      column: $table.activityType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get count => $composableBuilder(
+      column: $table.count, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get durationSeconds => $composableBuilder(
+      column: $table.durationSeconds,
+      builder: (column) => ColumnFilters(column));
+
+  $$GoalsTableFilterComposer get goalId {
+    final $$GoalsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.goalId,
+        referencedTable: $db.goals,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$GoalsTableFilterComposer(
+              $db: $db,
+              $table: $db.goals,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<bool> activityLogsRefs(
+      Expression<bool> Function($$ActivityLogsTableFilterComposer f) f) {
+    final $$ActivityLogsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.activityLogs,
+        getReferencedColumn: (t) => t.activityId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityLogsTableFilterComposer(
+              $db: $db,
+              $table: $db.activityLogs,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$ActivitiesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ActivitiesTable> {
+  $$ActivitiesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isFavorite => $composableBuilder(
+      column: $table.isFavorite, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tags => $composableBuilder(
+      column: $table.tags, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get activityType => $composableBuilder(
+      column: $table.activityType,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get count => $composableBuilder(
+      column: $table.count, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get durationSeconds => $composableBuilder(
+      column: $table.durationSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  $$GoalsTableOrderingComposer get goalId {
+    final $$GoalsTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.goalId,
+        referencedTable: $db.goals,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$GoalsTableOrderingComposer(
+              $db: $db,
+              $table: $db.goals,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$ActivitiesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ActivitiesTable> {
+  $$ActivitiesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<bool> get isFavorite => $composableBuilder(
+      column: $table.isFavorite, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<String>?, String> get tags =>
+      $composableBuilder(column: $table.tags, builder: (column) => column);
+
+  GeneratedColumn<String> get activityType => $composableBuilder(
+      column: $table.activityType, builder: (column) => column);
+
+  GeneratedColumn<int> get count =>
+      $composableBuilder(column: $table.count, builder: (column) => column);
+
+  GeneratedColumn<int> get durationSeconds => $composableBuilder(
+      column: $table.durationSeconds, builder: (column) => column);
+
+  $$GoalsTableAnnotationComposer get goalId {
+    final $$GoalsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.goalId,
+        referencedTable: $db.goals,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$GoalsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.goals,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<T> activityLogsRefs<T extends Object>(
+      Expression<T> Function($$ActivityLogsTableAnnotationComposer a) f) {
+    final $$ActivityLogsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.activityLogs,
+        getReferencedColumn: (t) => t.activityId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityLogsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.activityLogs,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$ActivitiesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ActivitiesTable,
+    ActivityEntity,
+    $$ActivitiesTableFilterComposer,
+    $$ActivitiesTableOrderingComposer,
+    $$ActivitiesTableAnnotationComposer,
+    $$ActivitiesTableCreateCompanionBuilder,
+    $$ActivitiesTableUpdateCompanionBuilder,
+    (ActivityEntity, $$ActivitiesTableReferences),
+    ActivityEntity,
+    PrefetchHooks Function({bool goalId, bool activityLogsRefs})> {
+  $$ActivitiesTableTableManager(_$AppDatabase db, $ActivitiesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ActivitiesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ActivitiesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ActivitiesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String> unit = const Value.absent(),
+            Value<bool> isFavorite = const Value.absent(),
+            Value<String?> goalId = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<String> activityType = const Value.absent(),
+            Value<int?> count = const Value.absent(),
+            Value<int?> durationSeconds = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ActivitiesCompanion(
+            id: id,
+            name: name,
+            description: description,
+            unit: unit,
+            isFavorite: isFavorite,
+            goalId: goalId,
+            tags: tags,
+            activityType: activityType,
+            count: count,
+            durationSeconds: durationSeconds,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String name,
+            Value<String?> description = const Value.absent(),
+            required String unit,
+            Value<bool> isFavorite = const Value.absent(),
+            Value<String?> goalId = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<String> activityType = const Value.absent(),
+            Value<int?> count = const Value.absent(),
+            Value<int?> durationSeconds = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ActivitiesCompanion.insert(
+            id: id,
+            name: name,
+            description: description,
+            unit: unit,
+            isFavorite: isFavorite,
+            goalId: goalId,
+            tags: tags,
+            activityType: activityType,
+            count: count,
+            durationSeconds: durationSeconds,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$ActivitiesTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({goalId = false, activityLogsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (activityLogsRefs) db.activityLogs],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (goalId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.goalId,
+                    referencedTable:
+                        $$ActivitiesTableReferences._goalIdTable(db),
+                    referencedColumn:
+                        $$ActivitiesTableReferences._goalIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (activityLogsRefs)
+                    await $_getPrefetchedData<ActivityEntity, $ActivitiesTable,
+                            ActivityLogEntity>(
+                        currentTable: table,
+                        referencedTable: $$ActivitiesTableReferences
+                            ._activityLogsRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ActivitiesTableReferences(db, table, p0)
+                                .activityLogsRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.activityId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$ActivitiesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ActivitiesTable,
+    ActivityEntity,
+    $$ActivitiesTableFilterComposer,
+    $$ActivitiesTableOrderingComposer,
+    $$ActivitiesTableAnnotationComposer,
+    $$ActivitiesTableCreateCompanionBuilder,
+    $$ActivitiesTableUpdateCompanionBuilder,
+    (ActivityEntity, $$ActivitiesTableReferences),
+    ActivityEntity,
+    PrefetchHooks Function({bool goalId, bool activityLogsRefs})>;
+typedef $$ActivityLogsTableCreateCompanionBuilder = ActivityLogsCompanion
+    Function({
+  required String id,
+  required String activityId,
+  required DateTime timestamp,
+  required double value,
+  Value<String?> notes,
+  Value<int?> rpe,
+  Value<int> rowid,
+});
+typedef $$ActivityLogsTableUpdateCompanionBuilder = ActivityLogsCompanion
+    Function({
+  Value<String> id,
+  Value<String> activityId,
+  Value<DateTime> timestamp,
+  Value<double> value,
+  Value<String?> notes,
+  Value<int?> rpe,
+  Value<int> rowid,
+});
+
+final class $$ActivityLogsTableReferences extends BaseReferences<_$AppDatabase,
+    $ActivityLogsTable, ActivityLogEntity> {
+  $$ActivityLogsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ActivitiesTable _activityIdTable(_$AppDatabase db) =>
+      db.activities.createAlias(
+          $_aliasNameGenerator(db.activityLogs.activityId, db.activities.id));
+
+  $$ActivitiesTableProcessedTableManager get activityId {
+    final $_column = $_itemColumn<String>('activity_id')!;
+
+    final manager = $$ActivitiesTableTableManager($_db, $_db.activities)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_activityIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$ActivityLogsTableFilterComposer
+    extends Composer<_$AppDatabase, $ActivityLogsTable> {
+  $$ActivityLogsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get timestamp => $composableBuilder(
+      column: $table.timestamp, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get rpe => $composableBuilder(
+      column: $table.rpe, builder: (column) => ColumnFilters(column));
+
+  $$ActivitiesTableFilterComposer get activityId {
+    final $$ActivitiesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activities,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivitiesTableFilterComposer(
+              $db: $db,
+              $table: $db.activities,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$ActivityLogsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ActivityLogsTable> {
+  $$ActivityLogsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get timestamp => $composableBuilder(
+      column: $table.timestamp, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get rpe => $composableBuilder(
+      column: $table.rpe, builder: (column) => ColumnOrderings(column));
+
+  $$ActivitiesTableOrderingComposer get activityId {
+    final $$ActivitiesTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activities,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivitiesTableOrderingComposer(
+              $db: $db,
+              $table: $db.activities,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$ActivityLogsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ActivityLogsTable> {
+  $$ActivityLogsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get timestamp =>
+      $composableBuilder(column: $table.timestamp, builder: (column) => column);
+
+  GeneratedColumn<double> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<int> get rpe =>
+      $composableBuilder(column: $table.rpe, builder: (column) => column);
+
+  $$ActivitiesTableAnnotationComposer get activityId {
+    final $$ActivitiesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activities,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivitiesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.activities,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$ActivityLogsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ActivityLogsTable,
+    ActivityLogEntity,
+    $$ActivityLogsTableFilterComposer,
+    $$ActivityLogsTableOrderingComposer,
+    $$ActivityLogsTableAnnotationComposer,
+    $$ActivityLogsTableCreateCompanionBuilder,
+    $$ActivityLogsTableUpdateCompanionBuilder,
+    (ActivityLogEntity, $$ActivityLogsTableReferences),
+    ActivityLogEntity,
+    PrefetchHooks Function({bool activityId})> {
+  $$ActivityLogsTableTableManager(_$AppDatabase db, $ActivityLogsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ActivityLogsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ActivityLogsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ActivityLogsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> activityId = const Value.absent(),
+            Value<DateTime> timestamp = const Value.absent(),
+            Value<double> value = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<int?> rpe = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ActivityLogsCompanion(
+            id: id,
+            activityId: activityId,
+            timestamp: timestamp,
+            value: value,
+            notes: notes,
+            rpe: rpe,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String activityId,
+            required DateTime timestamp,
+            required double value,
+            Value<String?> notes = const Value.absent(),
+            Value<int?> rpe = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ActivityLogsCompanion.insert(
+            id: id,
+            activityId: activityId,
+            timestamp: timestamp,
+            value: value,
+            notes: notes,
+            rpe: rpe,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$ActivityLogsTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({activityId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (activityId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.activityId,
+                    referencedTable:
+                        $$ActivityLogsTableReferences._activityIdTable(db),
+                    referencedColumn:
+                        $$ActivityLogsTableReferences._activityIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$ActivityLogsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ActivityLogsTable,
+    ActivityLogEntity,
+    $$ActivityLogsTableFilterComposer,
+    $$ActivityLogsTableOrderingComposer,
+    $$ActivityLogsTableAnnotationComposer,
+    $$ActivityLogsTableCreateCompanionBuilder,
+    $$ActivityLogsTableUpdateCompanionBuilder,
+    (ActivityLogEntity, $$ActivityLogsTableReferences),
+    ActivityLogEntity,
+    PrefetchHooks Function({bool activityId})>;
 typedef $$WorkoutTemplatesTableCreateCompanionBuilder
     = WorkoutTemplatesCompanion Function({
   required String id,
@@ -2884,12 +3415,12 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
+  $$GoalsTableTableManager get goals =>
+      $$GoalsTableTableManager(_db, _db.goals);
   $$ActivitiesTableTableManager get activities =>
       $$ActivitiesTableTableManager(_db, _db.activities);
   $$ActivityLogsTableTableManager get activityLogs =>
       $$ActivityLogsTableTableManager(_db, _db.activityLogs);
-  $$GoalsTableTableManager get goals =>
-      $$GoalsTableTableManager(_db, _db.goals);
   $$WorkoutTemplatesTableTableManager get workoutTemplates =>
       $$WorkoutTemplatesTableTableManager(_db, _db.workoutTemplates);
 }
