@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:growth_gauge/data/models/models.dart';
 import 'package:provider/provider.dart';
 
-import 'package:growth_gauge/data/models/models.dart';
 import '../provider/workout_template_provider.dart';
 import 'workout_template_detail.dart';
 

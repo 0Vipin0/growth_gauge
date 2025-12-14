@@ -8,7 +8,6 @@ import 'package:growth_gauge/ui/core/theme_config.dart';
 import 'package:growth_gauge/ui/counter/provider/provider.dart';
 import 'package:growth_gauge/ui/settings/provider/settings_provider.dart';
 import 'package:growth_gauge/ui/timer/provider/provider.dart';
-import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

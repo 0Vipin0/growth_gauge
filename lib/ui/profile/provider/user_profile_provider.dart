@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:growth_gauge/data/models/models.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../data/repositories/user_profile_repository.dart';
-import 'package:growth_gauge/data/models/models.dart';
 
 class UserProfileProvider with ChangeNotifier {
   final UserProfileRepository? repository;

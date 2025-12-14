@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:growth_gauge/data/models/models.dart';
 
 import '../../../data/repositories/activity_repository.dart';
-import 'package:growth_gauge/data/models/models.dart';
 
 class InsightsProvider with ChangeNotifier {
   final ActivityRepository repository;
