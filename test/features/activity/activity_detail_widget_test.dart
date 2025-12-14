@@ -5,18 +5,33 @@ import 'package:growth_gauge/data/models/activity.dart';
 import 'package:growth_gauge/ui/activity/provider/activity_provider.dart';
 import 'package:growth_gauge/ui/activity/widgets/activity_detail_page.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
-  testWidgets('ActivityDetailPage shows chart and quick-log FAB adds a log', (WidgetTester tester) async {
+  testWidgets('ActivityDetailPage shows chart and quick-log FAB adds a log',
+      (WidgetTester tester) async {
     final provider = ActivityProvider();
-    final a = Activity(name: 'Cycling', type: ActivityType.timeBased, unit: 'minutes');
+    final a = Activity(
+        name: 'Cycling',
+        type: ActivityType.timeBased,
+        unit: 'minutes',
+        id: const Uuid().v4());
     provider.addActivity(a);
 
     // Add an initial log so chart has data
-    provider.logActivityEntry(ActivityLog(activityId: a.id, value: 20.0, timestamp: DateTime.now().subtract(const Duration(days: 2))));
-    provider.logActivityEntry(ActivityLog(activityId: a.id, value: 30.0, timestamp: DateTime.now().subtract(const Duration(days: 1))));
+    provider.logActivityEntry(ActivityLog(
+        id: const Uuid().v4(),
+        activityId: a.id,
+        value: 20.0,
+        timestamp: DateTime.now().subtract(const Duration(days: 2))));
+    provider.logActivityEntry(ActivityLog(
+        id: const Uuid().v4(),
+        activityId: a.id,
+        value: 30.0,
+        timestamp: DateTime.now().subtract(const Duration(days: 1))));
 
-    final initialCount = provider.logs.where((l) => l.activityId == a.id).length;
+    final initialCount =
+        provider.logs.where((l) => l.activityId == a.id).length;
 
     await tester.pumpWidget(MaterialApp(
       home: ChangeNotifierProvider<ActivityProvider>.value(
@@ -24,7 +39,9 @@ void main() {
         child: Builder(builder: (context) {
           // push the detail page with the activity id as route arg
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).push(MaterialPageRoute(settings: RouteSettings(arguments: a.id), builder: (_) => const ActivityDetailPage()));
+            Navigator.of(context).push(MaterialPageRoute(
+                settings: RouteSettings(arguments: a.id),
+                builder: (_) => const ActivityDetailPage()));
           });
           return const SizedBox.shrink();
         }),

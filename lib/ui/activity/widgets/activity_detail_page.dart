@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:growth_gauge/data/models/models.dart';
 import 'package:growth_gauge/ui/core/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../provider/activity_provider.dart';
 
@@ -72,8 +73,8 @@ class ActivityDetailPage extends StatelessWidget {
                                 }
                                 return const Text('');
                               })),
-                      leftTitles:
-                          const AxisTitles(sideTitles: SideTitles(showTitles: true)),
+                      leftTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: true)),
                     ),
                     lineBarsData: [
                       LineChartBarData(
@@ -113,8 +114,11 @@ class ActivityDetailPage extends StatelessWidget {
         onPressed: () {
           // Quick log: add a sample log entry equal to 1 more than last or 1
           final value = logs.isEmpty ? 1.0 : logs.last.value + 1.0;
-          provider.logActivityEntry(
-              ActivityLog(activityId: activity.id, value: value));
+          provider.logActivityEntry(ActivityLog(
+              activityId: activity.id,
+              value: value,
+              id: Uuid().v4(),
+              timestamp: DateTime.now()));
         },
       ),
     );

@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/data/models/activity.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   test('Activity JSON roundtrip', () {
-    final activity = Activity(name: 'Pushups', type: ActivityType.countBased, unit: 'reps');
+    final activity = Activity(id: const Uuid().v4(),name: 'Pushups', type: ActivityType.countBased, unit: 'reps');
     final json = activity.toJson();
     final fromJson = Activity.fromJson(json);
 
@@ -13,7 +14,7 @@ void main() {
   });
 
   test('ActivityLog JSON roundtrip', () {
-    final log = ActivityLog(activityId: 'a1', value: 15);
+    final log = ActivityLog(id: const Uuid().v4(),activityId: 'a1', value: 15, timestamp: DateTime.now());
     final json = log.toJson();
     final restored = ActivityLog.fromJson(json);
 

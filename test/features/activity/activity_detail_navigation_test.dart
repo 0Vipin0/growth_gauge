@@ -7,13 +7,14 @@ import 'package:growth_gauge/ui/activity/widgets/activity_detail_page.dart';
 import 'package:growth_gauge/ui/insights/provider/insights_provider.dart';
 import 'package:growth_gauge/ui/insights/widgets/insights_page.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   testWidgets('Tapping insights button opens InsightsPage',
       (WidgetTester tester) async {
     final provider = ActivityProvider();
     final a =
-        Activity(name: 'Yoga', type: ActivityType.timeBased, unit: 'minutes');
+        Activity(name: 'Yoga', type: ActivityType.timeBased, unit: 'minutes', id: const Uuid().v4());
     provider.addActivity(a);
 
     await tester.pumpWidget(MaterialApp(

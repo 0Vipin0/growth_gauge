@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 
 import 'package:growth_gauge/data/models/activity.dart' as domain;
+import 'package:uuid/uuid.dart';
 import '../services/persistence/app_database.dart';
 import 'activity_repository.dart';
 
@@ -32,7 +33,7 @@ class DriftActivityRepository implements ActivityRepository {
   @override
   Future<void> saveActivity(domain.Activity activity) async {
     await db.into(db.activities).insertOnConflictUpdate(ActivitiesCompanion(
-          id: Value(activity.id),
+          id: Value(const Uuid().v4()),
           name: Value(activity.name),
           description: Value(activity.description),
           type: Value(activity.type.index),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_gauge/data/models/models.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../provider/activity_provider.dart';
 
@@ -54,6 +55,7 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
                 final provider =
                     Provider.of<ActivityProvider>(context, listen: false);
                 provider.addActivity(Activity(
+                    id: Uuid().v4(),
                     name: nameCtrl.text.trim(),
                     type: type,
                     unit: unitCtrl.text.trim()));
