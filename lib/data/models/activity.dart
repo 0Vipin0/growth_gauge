@@ -10,6 +10,7 @@ class Activity {
   final String unit;
   final bool isFavorite;
   final String? goalId;
+  final List<String>? tags;
 
   Activity({
     String? id,
@@ -19,6 +20,7 @@ class Activity {
     required this.unit,
     this.isFavorite = false,
     this.goalId,
+    this.tags,
   }) : id = id ?? const Uuid().v4();
 
   Activity copyWith({
@@ -29,6 +31,7 @@ class Activity {
     String? unit,
     bool? isFavorite,
     String? goalId,
+    List<String>? tags,
   }) {
     return Activity(
       id: id ?? this.id,
@@ -38,6 +41,7 @@ class Activity {
       unit: unit ?? this.unit,
       isFavorite: isFavorite ?? this.isFavorite,
       goalId: goalId ?? this.goalId,
+      tags: tags ?? this.tags,
     );
   }
 
@@ -49,6 +53,7 @@ class Activity {
         'unit': unit,
         'is_favorite': isFavorite,
         'goal_id': goalId,
+        'tags': tags,
       };
 
   factory Activity.fromJson(Map<String, dynamic> json) => Activity(
@@ -59,6 +64,8 @@ class Activity {
         unit: json['unit'] as String,
         isFavorite: json['is_favorite'] as bool? ?? false,
         goalId: json['goal_id'] as String?,
+        tags:
+            (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       );
 }
 

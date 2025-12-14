@@ -3,6 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repositories/drift_activity_repository.dart';
+import 'data/repositories/drift_counter_repository.dart';
 import 'data/repositories/drift_user_profile_repository.dart';
 import 'data/repositories/drift_workout_repository.dart';
 import 'data/repositories/shared_preferences_counter_repository.dart';
@@ -40,6 +41,23 @@ void main() async {
   // Initialize local DB
   _appDatabase = await AppDatabase.open();
 
+  // Migration: Counter List -> Activity List (Drift)
+  final driftCounterRepo = DriftCounterRepository(_appDatabase!);
+  final existingCounters = await driftCounterRepo.loadCounters();
+  if (existingCounters.isEmpty) {
+    print('Drift Counter Repository is empty. Checking for legacy data...');
+    final sharedPrefsRepo = SharedPreferencesCounterRepository();
+    final oldCounters = await sharedPrefsRepo.loadCounters();
+    if (oldCounters.isNotEmpty) {
+      print(
+          'Migrating ${oldCounters.length} counters from SharedPreferences to Drift...');
+      await driftCounterRepo.saveCounters(oldCounters);
+      print('Migration completed.');
+    } else {
+      print('No legacy data found.');
+    }
+  }
+
   runApp(const DependencyProvider());
 }
 
@@ -52,7 +70,7 @@ class DependencyProvider extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => CounterListProvider(
-            repository: SharedPreferencesCounterRepository(),
+            repository: DriftCounterRepository(_appDatabase!),
             notificationService: notificationService,
           ),
         ),

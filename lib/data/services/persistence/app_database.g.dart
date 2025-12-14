@@ -430,9 +430,14 @@ class $ActivitiesTable extends Activities
   late final GeneratedColumn<String> goalId = GeneratedColumn<String>(
       'goal_id', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
+  @override
+  late final GeneratedColumn<String> tags = GeneratedColumn<String>(
+      'tags', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, description, type, unit, isFavorite, goalId];
+      [id, name, description, type, unit, isFavorite, goalId, tags];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -482,6 +487,10 @@ class $ActivitiesTable extends Activities
       context.handle(_goalIdMeta,
           goalId.isAcceptableOrUnknown(data['goal_id']!, _goalIdMeta));
     }
+    if (data.containsKey('tags')) {
+      context.handle(
+          _tagsMeta, tags.isAcceptableOrUnknown(data['tags']!, _tagsMeta));
+    }
     return context;
   }
 
@@ -505,6 +514,8 @@ class $ActivitiesTable extends Activities
           .read(DriftSqlType.bool, data['${effectivePrefix}is_favorite'])!,
       goalId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}goal_id']),
+      tags: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tags']),
     );
   }
 
@@ -522,6 +533,7 @@ class Activity extends DataClass implements Insertable<Activity> {
   final String unit;
   final bool isFavorite;
   final String? goalId;
+  final String? tags;
   const Activity(
       {required this.id,
       required this.name,
@@ -529,7 +541,8 @@ class Activity extends DataClass implements Insertable<Activity> {
       required this.type,
       required this.unit,
       required this.isFavorite,
-      this.goalId});
+      this.goalId,
+      this.tags});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -543,6 +556,9 @@ class Activity extends DataClass implements Insertable<Activity> {
     map['is_favorite'] = Variable<bool>(isFavorite);
     if (!nullToAbsent || goalId != null) {
       map['goal_id'] = Variable<String>(goalId);
+    }
+    if (!nullToAbsent || tags != null) {
+      map['tags'] = Variable<String>(tags);
     }
     return map;
   }
@@ -559,6 +575,7 @@ class Activity extends DataClass implements Insertable<Activity> {
       isFavorite: Value(isFavorite),
       goalId:
           goalId == null && nullToAbsent ? const Value.absent() : Value(goalId),
+      tags: tags == null && nullToAbsent ? const Value.absent() : Value(tags),
     );
   }
 
@@ -573,6 +590,7 @@ class Activity extends DataClass implements Insertable<Activity> {
       unit: serializer.fromJson<String>(json['unit']),
       isFavorite: serializer.fromJson<bool>(json['isFavorite']),
       goalId: serializer.fromJson<String?>(json['goalId']),
+      tags: serializer.fromJson<String?>(json['tags']),
     );
   }
   @override
@@ -586,6 +604,7 @@ class Activity extends DataClass implements Insertable<Activity> {
       'unit': serializer.toJson<String>(unit),
       'isFavorite': serializer.toJson<bool>(isFavorite),
       'goalId': serializer.toJson<String?>(goalId),
+      'tags': serializer.toJson<String?>(tags),
     };
   }
 
@@ -596,7 +615,8 @@ class Activity extends DataClass implements Insertable<Activity> {
           int? type,
           String? unit,
           bool? isFavorite,
-          Value<String?> goalId = const Value.absent()}) =>
+          Value<String?> goalId = const Value.absent(),
+          Value<String?> tags = const Value.absent()}) =>
       Activity(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -605,6 +625,7 @@ class Activity extends DataClass implements Insertable<Activity> {
         unit: unit ?? this.unit,
         isFavorite: isFavorite ?? this.isFavorite,
         goalId: goalId.present ? goalId.value : this.goalId,
+        tags: tags.present ? tags.value : this.tags,
       );
   Activity copyWithCompanion(ActivitiesCompanion data) {
     return Activity(
@@ -617,6 +638,7 @@ class Activity extends DataClass implements Insertable<Activity> {
       isFavorite:
           data.isFavorite.present ? data.isFavorite.value : this.isFavorite,
       goalId: data.goalId.present ? data.goalId.value : this.goalId,
+      tags: data.tags.present ? data.tags.value : this.tags,
     );
   }
 
@@ -629,14 +651,15 @@ class Activity extends DataClass implements Insertable<Activity> {
           ..write('type: $type, ')
           ..write('unit: $unit, ')
           ..write('isFavorite: $isFavorite, ')
-          ..write('goalId: $goalId')
+          ..write('goalId: $goalId, ')
+          ..write('tags: $tags')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, name, description, type, unit, isFavorite, goalId);
+      Object.hash(id, name, description, type, unit, isFavorite, goalId, tags);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -647,7 +670,8 @@ class Activity extends DataClass implements Insertable<Activity> {
           other.type == this.type &&
           other.unit == this.unit &&
           other.isFavorite == this.isFavorite &&
-          other.goalId == this.goalId);
+          other.goalId == this.goalId &&
+          other.tags == this.tags);
 }
 
 class ActivitiesCompanion extends UpdateCompanion<Activity> {
@@ -658,6 +682,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
   final Value<String> unit;
   final Value<bool> isFavorite;
   final Value<String?> goalId;
+  final Value<String?> tags;
   final Value<int> rowid;
   const ActivitiesCompanion({
     this.id = const Value.absent(),
@@ -667,6 +692,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
     this.unit = const Value.absent(),
     this.isFavorite = const Value.absent(),
     this.goalId = const Value.absent(),
+    this.tags = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ActivitiesCompanion.insert({
@@ -677,6 +703,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
     required String unit,
     this.isFavorite = const Value.absent(),
     this.goalId = const Value.absent(),
+    this.tags = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name),
@@ -690,6 +717,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
     Expression<String>? unit,
     Expression<bool>? isFavorite,
     Expression<String>? goalId,
+    Expression<String>? tags,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -700,6 +728,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
       if (unit != null) 'unit': unit,
       if (isFavorite != null) 'is_favorite': isFavorite,
       if (goalId != null) 'goal_id': goalId,
+      if (tags != null) 'tags': tags,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -712,6 +741,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
       Value<String>? unit,
       Value<bool>? isFavorite,
       Value<String?>? goalId,
+      Value<String?>? tags,
       Value<int>? rowid}) {
     return ActivitiesCompanion(
       id: id ?? this.id,
@@ -721,6 +751,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
       unit: unit ?? this.unit,
       isFavorite: isFavorite ?? this.isFavorite,
       goalId: goalId ?? this.goalId,
+      tags: tags ?? this.tags,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -749,6 +780,9 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
     if (goalId.present) {
       map['goal_id'] = Variable<String>(goalId.value);
     }
+    if (tags.present) {
+      map['tags'] = Variable<String>(tags.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -765,6 +799,7 @@ class ActivitiesCompanion extends UpdateCompanion<Activity> {
           ..write('unit: $unit, ')
           ..write('isFavorite: $isFavorite, ')
           ..write('goalId: $goalId, ')
+          ..write('tags: $tags, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2069,6 +2104,7 @@ typedef $$ActivitiesTableCreateCompanionBuilder = ActivitiesCompanion Function({
   required String unit,
   Value<bool> isFavorite,
   Value<String?> goalId,
+  Value<String?> tags,
   Value<int> rowid,
 });
 typedef $$ActivitiesTableUpdateCompanionBuilder = ActivitiesCompanion Function({
@@ -2079,6 +2115,7 @@ typedef $$ActivitiesTableUpdateCompanionBuilder = ActivitiesCompanion Function({
   Value<String> unit,
   Value<bool> isFavorite,
   Value<String?> goalId,
+  Value<String?> tags,
   Value<int> rowid,
 });
 
@@ -2111,6 +2148,9 @@ class $$ActivitiesTableFilterComposer
 
   ColumnFilters<String> get goalId => $composableBuilder(
       column: $table.goalId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tags => $composableBuilder(
+      column: $table.tags, builder: (column) => ColumnFilters(column));
 }
 
 class $$ActivitiesTableOrderingComposer
@@ -2142,6 +2182,9 @@ class $$ActivitiesTableOrderingComposer
 
   ColumnOrderings<String> get goalId => $composableBuilder(
       column: $table.goalId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tags => $composableBuilder(
+      column: $table.tags, builder: (column) => ColumnOrderings(column));
 }
 
 class $$ActivitiesTableAnnotationComposer
@@ -2173,6 +2216,9 @@ class $$ActivitiesTableAnnotationComposer
 
   GeneratedColumn<String> get goalId =>
       $composableBuilder(column: $table.goalId, builder: (column) => column);
+
+  GeneratedColumn<String> get tags =>
+      $composableBuilder(column: $table.tags, builder: (column) => column);
 }
 
 class $$ActivitiesTableTableManager extends RootTableManager<
@@ -2205,6 +2251,7 @@ class $$ActivitiesTableTableManager extends RootTableManager<
             Value<String> unit = const Value.absent(),
             Value<bool> isFavorite = const Value.absent(),
             Value<String?> goalId = const Value.absent(),
+            Value<String?> tags = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ActivitiesCompanion(
@@ -2215,6 +2262,7 @@ class $$ActivitiesTableTableManager extends RootTableManager<
             unit: unit,
             isFavorite: isFavorite,
             goalId: goalId,
+            tags: tags,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -2225,6 +2273,7 @@ class $$ActivitiesTableTableManager extends RootTableManager<
             required String unit,
             Value<bool> isFavorite = const Value.absent(),
             Value<String?> goalId = const Value.absent(),
+            Value<String?> tags = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ActivitiesCompanion.insert(
@@ -2235,6 +2284,7 @@ class $$ActivitiesTableTableManager extends RootTableManager<
             unit: unit,
             isFavorite: isFavorite,
             goalId: goalId,
+            tags: tags,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

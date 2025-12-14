@@ -27,6 +27,7 @@ class Activities extends Table {
   TextColumn get unit => text()();
   BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
   TextColumn get goalId => text().nullable()();
+  TextColumn get tags => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -69,7 +70,8 @@ class WorkoutTemplates extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Users, Activities, ActivityLogs, Goals, WorkoutTemplates])
+@DriftDatabase(
+    tables: [Users, Activities, ActivityLogs, Goals, WorkoutTemplates])
 class AppDatabase extends _$AppDatabase {
   AppDatabase._(super.e);
 

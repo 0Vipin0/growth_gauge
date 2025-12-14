@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:drift/drift.dart';
 
 import 'package:growth_gauge/data/models/activity.dart' as domain;
@@ -21,6 +22,9 @@ class DriftActivityRepository implements ActivityRepository {
               'unit': r.unit,
               'is_favorite': r.isFavorite,
               'goal_id': r.goalId,
+              'tags': r.tags != null
+                  ? (jsonDecode(r.tags!) as List).cast<String>()
+                  : null,
             }))
         .toList();
   }
@@ -35,6 +39,7 @@ class DriftActivityRepository implements ActivityRepository {
           unit: Value(activity.unit),
           isFavorite: Value(activity.isFavorite),
           goalId: Value(activity.goalId),
+          tags: Value(activity.tags != null ? jsonEncode(activity.tags) : null),
         ));
   }
 
