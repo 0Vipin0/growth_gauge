@@ -10,6 +10,7 @@ class SharedPreferencesKeys {
   static const String exportFormat = 'exportFormat';
   static const String authenticationType = 'authenticationType';
   static const String notificationTime = 'notificationTime';
+  static const String ttsEnabled = 'ttsEnabled';
 }
 
 mixin SharedPreferencesHelper {
@@ -107,4 +108,8 @@ mixin SharedPreferencesHelper {
   static Future<bool> setNotificationTime(String value) {
     return instance.setString(SharedPreferencesKeys.notificationTime, value);
   }
+
+  static bool? getTtsEnabled() => instance.getBool(SharedPreferencesKeys.ttsEnabled);
+
+  static Future<bool> setTtsEnabled(bool value) => instance.setBool(SharedPreferencesKeys.ttsEnabled, value);
 }

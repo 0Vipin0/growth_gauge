@@ -72,8 +72,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Counters'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),
-          BottomNavigationBarItem(
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),          BottomNavigationBarItem(icon: Icon(Icons.fitness_center), label: 'Activities'),          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
@@ -145,6 +144,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                 label: Text('Timers'),
               ),
               NavigationRailDestination(
+                icon: Icon(Icons.fitness_center),
+                label: Text('Activities'),
+              ),
+              NavigationRailDestination(
                 icon: Icon(Icons.settings),
                 label: Text('Settings'),
               ),
@@ -181,6 +184,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
               children: const [
                 CounterListWidget(),
                 TimerListWidget(),
+                // Activities page
+                ActivityListWidget(),
+                // Activities page
+                ActivityListWidget(),
                 SettingsPage(),
               ],
             ),

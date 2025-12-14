@@ -46,6 +46,7 @@ class SettingsModel with _$SettingsModel {
     @Default(ExportFormat.json) ExportFormat exportFormat,
     @Default(AuthenticationType.none) AuthenticationType authenticationType,
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
+    @Default(true) bool ttsEnabled,
   }) = _SettingsModel;
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) =>

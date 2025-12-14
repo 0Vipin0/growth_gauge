@@ -170,6 +170,15 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                 ),
+                ListTile(
+                  title: const Text('TTS Cues (Voice Guidance)'),
+                  trailing: Switch(
+                    value: settingsProvider.settings.ttsEnabled,
+                    onChanged: (bool value) {
+                      settingsProvider.updateTtsEnabled(value);
+                    },
+                  ),
+                ),
                 const Divider(),
                 ListTile(
                   title: const Text('Export Data'),
@@ -185,6 +194,12 @@ class SettingsPage extends StatelessWidget {
                       settingsProvider.exportDataToCsv();
                     }
                   },
+                ),
+                const Divider(),
+                ListTile(
+                  title: const Text('Profile'),
+                  trailing: const Icon(Icons.person),
+                  onTap: () => Navigator.of(context).pushNamed('/profile'),
                 ),
                 ListTile(
                   title: const Text('Import Data'),

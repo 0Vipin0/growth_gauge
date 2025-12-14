@@ -86,6 +86,12 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTtsEnabled(bool enabled) {
+    _settings = _settings.copyWith(ttsEnabled: enabled);
+    saveSettingsToStorage();
+    notifyListeners();
+  }
+
   TimeOfDay? get notificationTime => _settings.notificationTime;
 
   void updateNotificationTime(TimeOfDay time) {
@@ -188,6 +194,8 @@ class SettingsProvider with ChangeNotifier {
       }
     }
 
+    final bool? ttsEnabled = SharedPreferencesHelper.getTtsEnabled();
+
     _settings = SettingsModel(
       themeName: themeName,
       fontSize: fontSize,
@@ -195,6 +203,7 @@ class SettingsProvider with ChangeNotifier {
       exportFormat: exportFormat,
       authenticationType: authenticationType,
       notificationTime: notificationTime,
+      ttsEnabled: ttsEnabled ?? true,
     );
     notifyListeners();
   }
@@ -208,6 +217,7 @@ class SettingsProvider with ChangeNotifier {
         _settings.authenticationType.name);
     await SharedPreferencesHelper.setNotificationTime(
         '${_settings.notificationTime?.hour}:${_settings.notificationTime?.minute}');
+    await SharedPreferencesHelper.setTtsEnabled(_settings.ttsEnabled);
   }
 
   Future<void> exportData() async {
