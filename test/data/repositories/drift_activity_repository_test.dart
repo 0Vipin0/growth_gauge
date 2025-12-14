@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/data/models/activity.dart' as domain;
 import 'package:growth_gauge/data/repositories/drift_activity_repository.dart';
 import 'package:growth_gauge/data/services/persistence/app_database.dart';
-import 'package:growth_gauge/features/activity/model/activity.dart' as domain;
 
 void main() {
   test('DriftActivityRepository save and load activity and log', () async {

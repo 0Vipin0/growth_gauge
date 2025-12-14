@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/activity/provider/activity_provider.dart';
-import 'package:growth_gauge/features/activity/widgets/activity_list_page.dart';
+import 'package:growth_gauge/ui/activity/provider/activity_provider.dart';
+import 'package:growth_gauge/ui/activity/widgets/activity_list_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {

@@ -1,8 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:growth_gauge/features/chart/chart.dart';
-import 'package:growth_gauge/features/timer/model/model.dart';
+import 'package:growth_gauge/data/models/models.dart';
+import 'package:growth_gauge/ui/chart/provider/timer_chart_provider.dart';
 
 void main() {
   late TimerChartProvider provider;

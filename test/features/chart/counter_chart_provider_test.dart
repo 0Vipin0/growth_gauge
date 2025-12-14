@@ -1,8 +1,8 @@
 import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/data/models/counter_model.dart';
+import 'package:growth_gauge/ui/chart/provider/counter_chart_provider.dart';
 
-import 'package:growth_gauge/features/chart/chart.dart';
-import 'package:growth_gauge/features/counter/model/model.dart';
 
 void main() {
   late CounterChartProvider provider;

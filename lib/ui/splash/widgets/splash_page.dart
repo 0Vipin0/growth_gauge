@@ -3,9 +3,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:growth_gauge/ui/core/navigation_helper.dart';
 import 'package:provider/provider.dart';
 
-import '../../routes.dart';
-import '../authentication/authentication_service.dart';
-import '../settings/settings.dart';
+import '../../../data/models/settings_model.dart';
+import '../../../data/services/authentication_service.dart';
+import '../../core/routes.dart';
+import '../../core/shared_preferences_config.dart';
+import '../../settings/provider/settings_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

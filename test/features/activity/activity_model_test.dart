@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/activity/model/activity.dart';
+import 'package:growth_gauge/data/models/activity.dart';
 
 void main() {
   test('Activity JSON roundtrip', () {

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:growth_gauge/data/models/models.dart';
 import 'package:growth_gauge/ui/core/shared_preferences_config.dart';
 
-import '../services/tts_service.dart';
+import '../../../data/services/tts_service.dart';
 
 class WorkoutRunProvider with ChangeNotifier {
   WorkoutTemplate? _template;

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/data/models/models.dart';
 
-import 'package:growth_gauge/features/counter/model/model.dart';
-import 'package:growth_gauge/features/counter/provider/reusable_counter_provider.dart';
+import 'package:growth_gauge/ui/counter/provider/reusable_counter_provider.dart';
 
 void main() {
   late ReusableCounterProvider provider;

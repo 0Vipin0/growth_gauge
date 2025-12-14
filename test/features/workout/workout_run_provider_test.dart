@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/workout/model/workout_template.dart';
-import 'package:growth_gauge/features/workout/provider/workout_run_provider.dart';
-import 'package:growth_gauge/features/workout/services/tts_service.dart';
+import 'package:growth_gauge/data/models/workout_template.dart';
+import 'package:growth_gauge/data/services/tts_service.dart';
+import 'package:growth_gauge/ui/workout/provider/workout_run_provider.dart';
 
 class FakeTts implements TtsService {
   final List<String> calls = [];

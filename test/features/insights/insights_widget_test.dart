@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/data/models/models.dart';
 import 'package:growth_gauge/data/repositories/activity_repository.dart';
-import 'package:growth_gauge/features/activity/activity.dart';
-import 'package:growth_gauge/features/insights/insights.dart';
-import 'package:growth_gauge/features/insights/widgets/activity_heatmap.dart';
-import 'package:growth_gauge/features/insights/widgets/x_day_chart.dart';
+import 'package:growth_gauge/ui/insights/provider/insights_provider.dart';
+import 'package:growth_gauge/ui/insights/widgets/activity_heatmap.dart';
+import 'package:growth_gauge/ui/insights/widgets/insights_page.dart';
+import 'package:growth_gauge/ui/insights/widgets/x_day_chart.dart';
 import 'package:provider/provider.dart';
 
 class _FakeRepo extends ActivityRepository {

@@ -4,8 +4,10 @@ import 'package:growth_gauge/ui/core/navigation_helper.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import '../../routes.dart';
-import '../settings/settings.dart';
+import '../../core/routes.dart';
+import '../../core/shared_preferences_config.dart';
+import '../../settings/provider/settings_provider.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

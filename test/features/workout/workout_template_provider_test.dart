@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/workout/model/workout_template.dart';
-import 'package:growth_gauge/features/workout/provider/workout_template_provider.dart';
+import 'package:growth_gauge/data/models/workout_template.dart';
+import 'package:growth_gauge/ui/workout/provider/workout_template_provider.dart';
 
 void main() {
   test('WorkoutTemplateProvider add and delete', () async {

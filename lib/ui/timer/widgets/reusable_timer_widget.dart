@@ -4,8 +4,9 @@ import 'package:growth_gauge/ui/core/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/reusable_timer_provider.dart';
+import '../provider/timer_list_provider.dart';
 import 'edit_timer_page.dart';
-import 'provider/provider.dart';
 import 'timer_details_page.dart';
 
 class ReusableTimerWidget extends StatelessWidget {

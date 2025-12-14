@@ -3,10 +3,10 @@ import 'package:growth_gauge/data/models/models.dart';
 import 'package:growth_gauge/ui/core/navigation_helper.dart';
 import 'package:provider/provider.dart';
 
-import '../common/presentation/widgets/responsive_form_layout.dart';
-import '../common/presentation/widgets/tag_input_widget.dart';
-import '../common/presentation/widgets/time_control_widget.dart';
-import 'provider/provider.dart';
+import '../../core/widgets/responsive_form_layout.dart';
+import '../../core/widgets/tag_input_widget.dart';
+import '../../core/widgets/time_control_widget.dart';
+import '../provider/timer_list_provider.dart';
 
 class EditTimerPage extends StatefulWidget {
   final TimerModel timer;

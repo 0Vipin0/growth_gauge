@@ -1,8 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/activity/activity.dart';
-import 'package:growth_gauge/features/activity/widgets/activity_detail_page.dart';
+import 'package:growth_gauge/data/models/activity.dart';
+import 'package:growth_gauge/ui/activity/provider/activity_provider.dart';
+import 'package:growth_gauge/ui/activity/widgets/activity_detail_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {

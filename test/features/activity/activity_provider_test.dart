@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/activity/activity.dart';
+import 'package:growth_gauge/data/models/activity.dart';
+import 'package:growth_gauge/ui/activity/provider/activity_provider.dart';
 
 void main() {
   test('ActivityProvider add and group activities', () {

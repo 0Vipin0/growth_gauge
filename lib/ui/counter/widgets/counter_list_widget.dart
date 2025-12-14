@@ -4,8 +4,8 @@ import 'package:growth_gauge/ui/core/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../pages/add_counter_page.dart';
 import '../provider/provider.dart';
+import 'add_counter_page.dart';
 import 'reusable_counter_widget.dart';
 
 class CounterListWidget extends StatelessWidget {

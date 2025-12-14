@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/data/models/user_profile.dart';
 import 'package:growth_gauge/data/repositories/drift_user_profile_repository.dart';
 import 'package:growth_gauge/data/services/persistence/app_database.dart';
-import 'package:growth_gauge/features/profile/model/user_profile.dart';
 
 void main() {
   test('DriftUserProfileRepository save and load profile', () async {

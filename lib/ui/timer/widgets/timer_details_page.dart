@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:growth_gauge/data/models/models.dart';
 import 'package:provider/provider.dart';
 
-import '../chart/chart.dart';
-import 'provider/provider.dart';
+import '../../chart/provider/timer_chart_provider.dart';
+import '../../chart/widgets/base_chart_widget.dart';
+import '../../chart/widgets/base_heatmap_widget.dart';
+import '../provider/timer_list_provider.dart';
 
 class TimerDetailsPage extends StatefulWidget {
   final TimerModel timer;

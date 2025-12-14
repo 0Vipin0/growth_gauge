@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/authentication/authentication_service.dart';
+import 'package:growth_gauge/data/services/authentication_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -30,7 +30,7 @@ void main() {
 
     test('savePin should complete without errors', () {
       when(authService.savePin('1234')).thenAnswer((_) async {
-        return null;
+        return;
       });
       expect(authService.savePin('1234'), completes);
     });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/notification/notification_service.dart';
+import 'package:growth_gauge/data/services/notification_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:timezone/data/latest_all.dart' as tz;

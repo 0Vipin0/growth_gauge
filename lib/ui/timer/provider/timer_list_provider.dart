@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:growth_gauge/data/models/models.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../notification/notification_service.dart';
-import '../repository/repository.dart';
+import '../../../data/repositories/timer_repository.dart';
+import '../../../data/services/notification_service.dart';
+
 
 class TimerListProvider with ChangeNotifier {
   final TimerRepository repository;
