@@ -7,9 +7,19 @@ class FitnessData {
   final double? weightKg;
   final int? restingHeartRate;
 
-  FitnessData({this.gender, this.age, this.heightCm, this.weightKg, this.restingHeartRate});
+  FitnessData(
+      {this.gender,
+      this.age,
+      this.heightCm,
+      this.weightKg,
+      this.restingHeartRate});
 
-  FitnessData copyWith({String? gender, int? age, double? heightCm, double? weightKg, int? restingHeartRate}) {
+  FitnessData copyWith(
+      {String? gender,
+      int? age,
+      double? heightCm,
+      double? weightKg,
+      int? restingHeartRate}) {
     return FitnessData(
       gender: gender ?? this.gender,
       age: age ?? this.age,
@@ -43,10 +53,12 @@ class AssessmentResult {
 
   AssessmentResult({this.bmi, this.predictedMaxHeartRate, this.fitnessScore});
 
-  AssessmentResult copyWith({double? bmi, int? predictedMaxHeartRate, int? fitnessScore}) {
+  AssessmentResult copyWith(
+      {double? bmi, int? predictedMaxHeartRate, int? fitnessScore}) {
     return AssessmentResult(
       bmi: bmi ?? this.bmi,
-      predictedMaxHeartRate: predictedMaxHeartRate ?? this.predictedMaxHeartRate,
+      predictedMaxHeartRate:
+          predictedMaxHeartRate ?? this.predictedMaxHeartRate,
       fitnessScore: fitnessScore ?? this.fitnessScore,
     );
   }
@@ -57,7 +69,8 @@ class AssessmentResult {
         'fitness_score': fitnessScore,
       };
 
-  factory AssessmentResult.fromJson(Map<String, dynamic> json) => AssessmentResult(
+  factory AssessmentResult.fromJson(Map<String, dynamic> json) =>
+      AssessmentResult(
         bmi: (json['bmi'] as num?)?.toDouble(),
         predictedMaxHeartRate: json['predicted_max_heart_rate'] as int?,
         fitnessScore: json['fitness_score'] as int?,
@@ -72,11 +85,24 @@ class UserProfile {
   final FitnessData? data;
   final AssessmentResult? assessment;
 
-  UserProfile({required this.id, required this.creationDate, this.lastAssessmentDate, this.fitnessScore, this.data, this.assessment});
+  UserProfile(
+      {required this.id,
+      required this.creationDate,
+      this.lastAssessmentDate,
+      this.fitnessScore,
+      this.data,
+      this.assessment});
 
-  factory UserProfile.createEmpty() => UserProfile(id: const Uuid().v4(), creationDate: DateTime.now());
+  factory UserProfile.createEmpty() =>
+      UserProfile(id: const Uuid().v4(), creationDate: DateTime.now());
 
-  UserProfile copyWith({String? id, DateTime? creationDate, DateTime? lastAssessmentDate, int? fitnessScore, FitnessData? data, AssessmentResult? assessment}) {
+  UserProfile copyWith(
+      {String? id,
+      DateTime? creationDate,
+      DateTime? lastAssessmentDate,
+      int? fitnessScore,
+      FitnessData? data,
+      AssessmentResult? assessment}) {
     return UserProfile(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
@@ -99,8 +125,17 @@ class UserProfile {
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
         id: json['id'] as String,
         creationDate: DateTime.parse(json['creation_date'] as String),
-        lastAssessmentDate: json['last_assessment_date'] == null ? null : DateTime.parse(json['last_assessment_date'] as String),
+        lastAssessmentDate: json['last_assessment_date'] == null
+            ? null
+            : DateTime.parse(json['last_assessment_date'] as String),
         fitnessScore: json['fitness_score'] as int?,
-        data: json['data'] == null ? null : FitnessData.fromJson(Map<String, dynamic>.from(json['data'] as Map)),
-        assessment: json['assessment'] == null ? null : AssessmentResult.fromJson(Map<String, dynamic>.from(json['assessment'] as Map)),
+        data: json['data'] == null
+            ? null
+            : FitnessData.fromJson(
+                Map<String, dynamic>.from(json['data'] as Map)),
+        assessment: json['assessment'] == null
+            ? null
+            : AssessmentResult.fromJson(
+                Map<String, dynamic>.from(json['assessment'] as Map)),
       );
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import '../../workout/model/workout_template.dart';
 import '../../../data/repositories/workout_repository.dart';
+import '../../workout/model/workout_template.dart';
 
 class WorkoutTemplateProvider with ChangeNotifier {
   final WorkoutRepository? repository;

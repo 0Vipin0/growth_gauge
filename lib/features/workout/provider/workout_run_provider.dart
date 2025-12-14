@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../settings/config/shared_preferences_config.dart';
 import '../model/workout_template.dart';
 import '../services/tts_service.dart';
-import '../../settings/config/shared_preferences_config.dart';
 
 class WorkoutRunProvider with ChangeNotifier {
   WorkoutTemplate? _template;
@@ -70,7 +70,7 @@ class WorkoutRunProvider with ChangeNotifier {
     final step = currentStep;
     // If current step is a multi-set, advance sets first
     if (step != null && step.containsKey('sets')) {
-      final totalSets = (step['sets'] as int);
+      final totalSets = step['sets'] as int;
       if (_currentSetIndex < totalSets - 1) {
         _currentSetIndex++;
         // reset remaining for next set if duration present
@@ -85,7 +85,7 @@ class WorkoutRunProvider with ChangeNotifier {
       _currentIndex++;
       _currentSetIndex = 0;
       _remaining = _initialRemainingForStep(currentStep);
-      if (_isTtsEnabled()) (ttsService)?.speak('Starting ${currentStep?['name'] ?? ''}');
+      if (_isTtsEnabled()) ttsService?.speak('Starting ${currentStep?['name'] ?? ''}');
       notifyListeners();
       _startTimerIfNeeded();
     }
@@ -109,7 +109,7 @@ class WorkoutRunProvider with ChangeNotifier {
 
   int? _initialRemainingForStep(Map<String, dynamic>? step) {
     if (step == null) return null;
-    if (step.containsKey('duration')) return (step['duration'] as int);
+    if (step.containsKey('duration')) return step['duration'] as int;
     // if it's a 'rest' entry represented as duration, also handled
     return null;
   }

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 part 'app_database.g.dart';
 
@@ -71,7 +71,7 @@ class WorkoutTemplates extends Table {
 
 @DriftDatabase(tables: [Users, Activities, ActivityLogs, Goals, WorkoutTemplates])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase._(QueryExecutor e) : super(e);
+  AppDatabase._(super.e);
 
   static Future<AppDatabase> open() async {
     final dir = await getApplicationDocumentsDirectory();

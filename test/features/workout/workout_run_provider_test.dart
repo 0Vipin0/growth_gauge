@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/workout/provider/workout_run_provider.dart';
 import 'package:growth_gauge/features/workout/model/workout_template.dart';
+import 'package:growth_gauge/features/workout/provider/workout_run_provider.dart';
 import 'package:growth_gauge/features/workout/services/tts_service.dart';
 
 class FakeTts implements TtsService {
@@ -15,13 +15,14 @@ void main() {
   test('WorkoutRunProvider pause/resume and tts', () async {
     final fakeTts = FakeTts();
     final provider = WorkoutRunProvider(ttsService: fakeTts);
-    final t = WorkoutTemplate(name: 'TimerTest', steps: [ {'name': 'Hold', 'duration': 3} ]);
+    final t = WorkoutTemplate(name: 'TimerTest', steps: [
+      {'name': 'Hold', 'duration': 3}
+    ]);
 
     provider.startSession(t);
     expect(provider.template!.name, 'TimerTest');
     expect(fakeTts.calls.isNotEmpty, true);
 
-    final rem1 = provider.remaining;
     await Future.delayed(const Duration(milliseconds: 100));
     provider.pause();
     final pausedRem = provider.remaining;
@@ -33,9 +34,11 @@ void main() {
     expect(provider.remaining, lessThanOrEqualTo(pausedRem! - 1));
   });
 
-  test('WorkoutRunProvider handles sets progression', () async {
+  test('WorkoutRunProvider handles sets progression', () {
     final provider = WorkoutRunProvider();
-    final t = WorkoutTemplate(name: 'SetsTest', steps: [ {'name': 'Sets', 'sets': 2, 'reps': 5} ]);
+    final t = WorkoutTemplate(name: 'SetsTest', steps: [
+      {'name': 'Sets', 'sets': 2, 'reps': 5}
+    ]);
 
     provider.startSession(t);
     expect(provider.currentSetIndex, 0);

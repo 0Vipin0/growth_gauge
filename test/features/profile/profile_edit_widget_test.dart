@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-import 'package:growth_gauge/features/profile/widgets/profile_edit_page.dart';
 import 'package:growth_gauge/features/profile/provider/user_profile_provider.dart';
+import 'package:growth_gauge/features/profile/widgets/profile_edit_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   testWidgets('ProfileEditPage validates and saves data', (WidgetTester tester) async {

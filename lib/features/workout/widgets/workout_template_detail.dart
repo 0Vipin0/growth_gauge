@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/workout_template.dart';
-import '../provider/workout_template_provider.dart';
 import '../../workout/provider/workout_run_provider.dart';
 import '../../workout/widgets/workout_run_page.dart';
+import '../provider/workout_template_provider.dart';
 
 class WorkoutTemplateDetailPage extends StatelessWidget {
   final String templateId;
@@ -14,7 +13,8 @@ class WorkoutTemplateDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<WorkoutTemplateProvider>(context);
-    final template = provider.templates.firstWhere((t) => t.id == templateId, orElse: () => throw Exception('Template not found'));
+    final template = provider.templates.firstWhere((t) => t.id == templateId,
+        orElse: () => throw Exception('Template not found'));
 
     return Scaffold(
       appBar: AppBar(title: Text(template.name)),
@@ -34,7 +34,8 @@ class WorkoutTemplateDetailPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final step = template.steps[index];
                   return ListTile(
-                    title: Text(step['name'] ?? 'Step ${index + 1}'),
+                    title:
+                        Text(step['name']?.toString() ?? 'Step ${index + 1}'),
                     subtitle: Text(_stepSubtitle(step)),
                     leading: CircleAvatar(child: Text('${index + 1}')),
                   );
@@ -49,9 +50,14 @@ class WorkoutTemplateDetailPage extends StatelessWidget {
         label: const Text('Start'),
         onPressed: () {
           // start workout run session
-          final runProvider = Provider.of<WorkoutRunProvider>(context, listen: false);
+          final runProvider =
+              Provider.of<WorkoutRunProvider>(context, listen: false);
           runProvider.startSession(template);
-          Navigator.push(context, MaterialPageRoute(builder: (_) => ChangeNotifierProvider.value(value: runProvider, child: const WorkoutRunPage())));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider.value(
+                      value: runProvider, child: const WorkoutRunPage())));
         },
       ),
     );

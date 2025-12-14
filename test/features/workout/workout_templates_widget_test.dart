@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
 import 'package:growth_gauge/features/workout/provider/workout_template_provider.dart';
 import 'package:growth_gauge/features/workout/widgets/workout_templates_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   testWidgets('WorkoutTemplatesPage shows create dialog and adds template', (WidgetTester tester) async {

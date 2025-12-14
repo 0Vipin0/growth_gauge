@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:drift/drift.dart';
 
-import '../../features/activity/model/activity.dart';
+import '../../features/activity/model/activity.dart' as domain;
 import '../services/persistence/app_database.dart';
 import 'activity_repository.dart';
 
@@ -12,10 +10,10 @@ class DriftActivityRepository implements ActivityRepository {
   DriftActivityRepository(this.db);
 
   @override
-  Future<List<Activity>> loadActivities() async {
-    final rows = await (db.select(db.activities)).get();
+  Future<List<domain.Activity>> loadActivities() async {
+    final rows = await db.select(db.activities).get();
     return rows
-        .map((r) => Activity.fromJson({
+        .map((r) => domain.Activity.fromJson({
               'id': r.id,
               'name': r.name,
               'description': r.description,
@@ -28,35 +26,37 @@ class DriftActivityRepository implements ActivityRepository {
   }
 
   @override
-  Future<void> saveActivity(Activity activity) async {
+  Future<void> saveActivity(domain.Activity activity) async {
     await db.into(db.activities).insertOnConflictUpdate(ActivitiesCompanion(
-      id: Value(activity.id),
-      name: Value(activity.name),
-      description: Value(activity.description),
-      type: Value(activity.type.index),
-      unit: Value(activity.unit),
-      isFavorite: Value(activity.isFavorite),
-      goalId: Value(activity.goalId),
-    ));
+          id: Value(activity.id),
+          name: Value(activity.name),
+          description: Value(activity.description),
+          type: Value(activity.type.index),
+          unit: Value(activity.unit),
+          isFavorite: Value(activity.isFavorite),
+          goalId: Value(activity.goalId),
+        ));
   }
 
   @override
-  Future<void> saveLog(ActivityLog log) async {
+  Future<void> saveLog(domain.ActivityLog log) async {
     await db.into(db.activityLogs).insertOnConflictUpdate(ActivityLogsCompanion(
-      id: Value(log.id),
-      activityId: Value(log.activityId),
-      timestamp: Value(log.timestamp),
-      value: Value(log.value),
-      notes: Value(log.notes),
-      rpe: Value(log.rpe),
-    ));
+          id: Value(log.id),
+          activityId: Value(log.activityId),
+          timestamp: Value(log.timestamp),
+          value: Value(log.value),
+          notes: Value(log.notes),
+          rpe: Value(log.rpe),
+        ));
   }
 
   @override
-  Future<List<ActivityLog>> loadLogs(String activityId) async {
-    final rows = await (db.select(db.activityLogs)..where((t) => t.activityId.equals(activityId))).get();
+  Future<List<domain.ActivityLog>> loadLogs(String activityId) async {
+    final rows = await (db.select(db.activityLogs)
+          ..where((t) => t.activityId.equals(activityId)))
+        .get();
     return rows
-        .map((r) => ActivityLog.fromJson({
+        .map((r) => domain.ActivityLog.fromJson({
               'id': r.id,
               'activity_id': r.activityId,
               'timestamp': r.timestamp.toIso8601String(),
@@ -68,13 +68,14 @@ class DriftActivityRepository implements ActivityRepository {
   }
 
   @override
-  Future<List<ActivityLog>> loadLogsInRange(String activityId, DateTime from, DateTime to) async {
+  Future<List<domain.ActivityLog>> loadLogsInRange(
+      String activityId, DateTime from, DateTime to) async {
     final rows = await (db.select(db.activityLogs)
           ..where((t) => t.activityId.equals(activityId))
           ..where((t) => t.timestamp.isBetweenValues(from, to)))
         .get();
     return rows
-        .map((r) => ActivityLog.fromJson({
+        .map((r) => domain.ActivityLog.fromJson({
               'id': r.id,
               'activity_id': r.activityId,
               'timestamp': r.timestamp.toIso8601String(),
@@ -86,7 +87,8 @@ class DriftActivityRepository implements ActivityRepository {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dailyAggregates(String activityId, DateTime from, DateTime to) async {
+  Future<List<Map<String, dynamic>>> dailyAggregates(
+      String activityId, DateTime from, DateTime to) async {
     // Use raw SQL to group by date and sum the values per day
     final results = await db.customSelect(
       'SELECT DATE(timestamp) as day, SUM(value) as total FROM activity_logs WHERE activity_id = ? AND timestamp BETWEEN ? AND ? GROUP BY DATE(timestamp) ORDER BY day',
@@ -105,4 +107,3 @@ class DriftActivityRepository implements ActivityRepository {
         .toList();
   }
 }
-

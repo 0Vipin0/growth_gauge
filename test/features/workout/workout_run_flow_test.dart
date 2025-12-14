@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
-import 'package:growth_gauge/features/workout/provider/workout_template_provider.dart';
-import 'package:growth_gauge/features/workout/provider/workout_run_provider.dart';
 import 'package:growth_gauge/features/workout/model/workout_template.dart';
+import 'package:growth_gauge/features/workout/provider/workout_run_provider.dart';
+import 'package:growth_gauge/features/workout/provider/workout_template_provider.dart';
 import 'package:growth_gauge/features/workout/widgets/workout_templates_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   testWidgets('Start a workout and navigate steps', (WidgetTester tester) async {

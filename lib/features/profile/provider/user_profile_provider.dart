@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
-import '../model/user_profile.dart';
 import '../../../data/repositories/user_profile_repository.dart';
+import '../model/user_profile.dart';
 
 class UserProfileProvider with ChangeNotifier {
   final UserProfileRepository? repository;
@@ -20,7 +20,8 @@ class UserProfileProvider with ChangeNotifier {
     notifyListeners();
 
     if (repository != null) {
-      _currentUserProfile = await repository!.loadProfile() ?? UserProfile.createEmpty();
+      _currentUserProfile =
+          await repository!.loadProfile() ?? UserProfile.createEmpty();
     } else {
       // Fallback: initialize with an empty profile.
       await Future<void>.delayed(const Duration(milliseconds: 50));
@@ -36,7 +37,8 @@ class UserProfileProvider with ChangeNotifier {
     await repository!.saveProfile(_currentUserProfile!);
   }
 
-  void updateBiometrics({int? age, double? heightCm, double? weightKg, int? restingHr}) {
+  void updateBiometrics(
+      {int? age, double? heightCm, double? weightKg, int? restingHr}) {
     final data = _currentUserProfile?.data ?? FitnessData();
     final updated = data.copyWith(
       age: age ?? data.age,
@@ -54,9 +56,9 @@ class UserProfileProvider with ChangeNotifier {
 
     notifyListeners();
   }
-+
-+  void setProfile(UserProfile profile) {
-+    _currentUserProfile = profile;
-+    notifyListeners();
-+  }
+
+  void setProfile(UserProfile profile) {
+    _currentUserProfile = profile;
+    notifyListeners();
+  }
 }

@@ -28,6 +28,7 @@ mixin _$SettingsModel {
       throw _privateConstructorUsedError;
   @TimeOfDayConverter()
   TimeOfDay? get notificationTime => throw _privateConstructorUsedError;
+  bool get ttsEnabled => throw _privateConstructorUsedError;
 
   /// Serializes this SettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +52,8 @@ abstract class $SettingsModelCopyWith<$Res> {
       AppFontFamily fontFamily,
       ExportFormat exportFormat,
       AuthenticationType authenticationType,
-      @TimeOfDayConverter() TimeOfDay? notificationTime});
+      @TimeOfDayConverter() TimeOfDay? notificationTime,
+      bool ttsEnabled});
 }
 
 /// @nodoc
@@ -75,6 +77,7 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
     Object? exportFormat = null,
     Object? authenticationType = null,
     Object? notificationTime = freezed,
+    Object? ttsEnabled = null,
   }) {
     return _then(_value.copyWith(
       themeName: null == themeName
@@ -101,6 +104,10 @@ class _$SettingsModelCopyWithImpl<$Res, $Val extends SettingsModel>
           ? _value.notificationTime
           : notificationTime // ignore: cast_nullable_to_non_nullable
               as TimeOfDay?,
+      ttsEnabled: null == ttsEnabled
+          ? _value.ttsEnabled
+          : ttsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -119,7 +126,8 @@ abstract class _$$SettingsModelImplCopyWith<$Res>
       AppFontFamily fontFamily,
       ExportFormat exportFormat,
       AuthenticationType authenticationType,
-      @TimeOfDayConverter() TimeOfDay? notificationTime});
+      @TimeOfDayConverter() TimeOfDay? notificationTime,
+      bool ttsEnabled});
 }
 
 /// @nodoc
@@ -141,6 +149,7 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
     Object? exportFormat = null,
     Object? authenticationType = null,
     Object? notificationTime = freezed,
+    Object? ttsEnabled = null,
   }) {
     return _then(_$SettingsModelImpl(
       themeName: null == themeName
@@ -167,6 +176,10 @@ class __$$SettingsModelImplCopyWithImpl<$Res>
           ? _value.notificationTime
           : notificationTime // ignore: cast_nullable_to_non_nullable
               as TimeOfDay?,
+      ttsEnabled: null == ttsEnabled
+          ? _value.ttsEnabled
+          : ttsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -180,7 +193,8 @@ class _$SettingsModelImpl implements _SettingsModel {
       this.fontFamily = AppFontFamily.roboto,
       this.exportFormat = ExportFormat.json,
       this.authenticationType = AuthenticationType.none,
-      @TimeOfDayConverter() this.notificationTime = null});
+      @TimeOfDayConverter() this.notificationTime = null,
+      this.ttsEnabled = true});
 
   factory _$SettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsModelImplFromJson(json);
@@ -203,10 +217,13 @@ class _$SettingsModelImpl implements _SettingsModel {
   @JsonKey()
   @TimeOfDayConverter()
   final TimeOfDay? notificationTime;
+  @override
+  @JsonKey()
+  final bool ttsEnabled;
 
   @override
   String toString() {
-    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime, ttsEnabled: $ttsEnabled)';
   }
 
   @override
@@ -225,13 +242,15 @@ class _$SettingsModelImpl implements _SettingsModel {
             (identical(other.authenticationType, authenticationType) ||
                 other.authenticationType == authenticationType) &&
             (identical(other.notificationTime, notificationTime) ||
-                other.notificationTime == notificationTime));
+                other.notificationTime == notificationTime) &&
+            (identical(other.ttsEnabled, ttsEnabled) ||
+                other.ttsEnabled == ttsEnabled));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, themeName, fontSize, fontFamily,
-      exportFormat, authenticationType, notificationTime);
+      exportFormat, authenticationType, notificationTime, ttsEnabled);
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -251,13 +270,13 @@ class _$SettingsModelImpl implements _SettingsModel {
 
 abstract class _SettingsModel implements SettingsModel {
   const factory _SettingsModel(
-          {required final AppThemeName themeName,
-          final AppFontSize fontSize,
-          final AppFontFamily fontFamily,
-          final ExportFormat exportFormat,
-          final AuthenticationType authenticationType,
-          @TimeOfDayConverter() final TimeOfDay? notificationTime}) =
-      _$SettingsModelImpl;
+      {required final AppThemeName themeName,
+      final AppFontSize fontSize,
+      final AppFontFamily fontFamily,
+      final ExportFormat exportFormat,
+      final AuthenticationType authenticationType,
+      @TimeOfDayConverter() final TimeOfDay? notificationTime,
+      final bool ttsEnabled}) = _$SettingsModelImpl;
 
   factory _SettingsModel.fromJson(Map<String, dynamic> json) =
       _$SettingsModelImpl.fromJson;
@@ -275,6 +294,8 @@ abstract class _SettingsModel implements SettingsModel {
   @override
   @TimeOfDayConverter()
   TimeOfDay? get notificationTime;
+  @override
+  bool get ttsEnabled;
 
   /// Create a copy of SettingsModel
   /// with the given fields replaced by the non-null parameter values.

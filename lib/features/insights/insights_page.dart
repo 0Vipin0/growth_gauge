@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../insights.dart';
+import 'insights.dart';
 import 'widgets/activity_heatmap.dart';
 import 'widgets/x_day_chart.dart';
 
@@ -10,11 +10,14 @@ class InsightsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? activityId = ModalRoute.of(context)!.settings.arguments as String?;
+    final String? activityId =
+        ModalRoute.of(context)!.settings.arguments as String?;
     final provider = Provider.of<InsightsProvider>(context);
 
     if (activityId == null) {
-      return Scaffold(appBar: AppBar(title: const Text('Insights')), body: const Center(child: Text('No activity selected')));
+      return Scaffold(
+          appBar: AppBar(title: const Text('Insights')),
+          body: const Center(child: Text('No activity selected')));
     }
 
     final now = DateTime.now();
@@ -32,9 +35,17 @@ class InsightsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Last 30 Days', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Last 30 Days',
+                style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            if (provider.isLoading) const LinearProgressIndicator() else Column(children: [ActivityHeatmap(data: provider.daily), const SizedBox(height: 12), XDayChart(data: provider.daily)]),
+            if (provider.isLoading)
+              const LinearProgressIndicator()
+            else
+              Column(children: [
+                ActivityHeatmap(data: provider.daily),
+                const SizedBox(height: 12),
+                XDayChart(data: provider.daily)
+              ]),
           ],
         ),
       ),

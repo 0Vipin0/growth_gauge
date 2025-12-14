@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/activity_provider.dart';
 import '../model/activity.dart';
+import '../provider/activity_provider.dart';
 
 class ActivityListWidget extends StatefulWidget {
   const ActivityListWidget({super.key});
@@ -16,9 +15,9 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
   String _query = '';
 
   Future<void> _showCreateDialog(BuildContext context) async {
-    final _nameCtrl = TextEditingController();
-    final _unitCtrl = TextEditingController(text: 'reps');
-    ActivityType _type = ActivityType.countBased;
+    final nameCtrl = TextEditingController();
+    final unitCtrl = TextEditingController(text: 'reps');
+    ActivityType type = ActivityType.countBased;
 
     final result = await showDialog<bool>(
       context: context,
@@ -28,23 +27,36 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: _nameCtrl, decoration: const InputDecoration(labelText: 'Name')),
-              TextField(controller: _unitCtrl, decoration: const InputDecoration(labelText: 'Unit')),
+              TextField(
+                  controller: nameCtrl,
+                  decoration: const InputDecoration(labelText: 'Name')),
+              TextField(
+                  controller: unitCtrl,
+                  decoration: const InputDecoration(labelText: 'Unit')),
               const SizedBox(height: 8),
               DropdownButton<ActivityType>(
-                value: _type,
-                items: ActivityType.values.map((t) => DropdownMenuItem(value: t, child: Text(t.name))).toList(),
-                onChanged: (v) => setState(() => _type = v ?? ActivityType.countBased),
+                value: type,
+                items: ActivityType.values
+                    .map((t) => DropdownMenuItem(value: t, child: Text(t.name)))
+                    .toList(),
+                onChanged: (v) =>
+                    setState(() => type = v ?? ActivityType.countBased),
               ),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+            TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel')),
             ElevatedButton(
               onPressed: () {
-                if (_nameCtrl.text.trim().isEmpty) return;
-                final provider = Provider.of<ActivityProvider>(context, listen: false);
-                provider.addActivity(Activity(name: _nameCtrl.text.trim(), type: _type, unit: _unitCtrl.text.trim()));
+                if (nameCtrl.text.trim().isEmpty) return;
+                final provider =
+                    Provider.of<ActivityProvider>(context, listen: false);
+                provider.addActivity(Activity(
+                    name: nameCtrl.text.trim(),
+                    type: type,
+                    unit: unitCtrl.text.trim()));
                 Navigator.pop(context, true);
               },
               child: const Text('Create'),
@@ -60,7 +72,9 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ActivityProvider>(context);
-    final activities = provider.activities.where((a) => a.name.toLowerCase().contains(_query.toLowerCase())).toList();
+    final activities = provider.activities
+        .where((a) => a.name.toLowerCase().contains(_query.toLowerCase()))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Activities')),
@@ -71,7 +85,9 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
             : isWide
                 ? GridView.builder(
                     padding: const EdgeInsets.all(12),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 5),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 5),
                     itemCount: activities.length,
                     itemBuilder: (context, index) {
                       final a = activities[index];
@@ -80,13 +96,18 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
                           title: Text(a.name),
                           subtitle: Text(a.unit),
                           trailing: IconButton(
-                            icon: Icon(a.isFavorite ? Icons.star : Icons.star_border),
+                            icon: Icon(
+                                a.isFavorite ? Icons.star : Icons.star_border),
                             onPressed: () {
-                              final updated = a.copyWith(isFavorite: !a.isFavorite);
-                              provider.addActivity(updated); // simple replace for now
+                              final updated =
+                                  a.copyWith(isFavorite: !a.isFavorite);
+                              provider.addActivity(
+                                  updated); // simple replace for now
                             },
                           ),
-                          onTap: () => Navigator.pushNamed(context, '/activity/detail', arguments: a.id),
+                          onTap: () => Navigator.pushNamed(
+                              context, '/activity/detail',
+                              arguments: a.id),
                         ),
                       );
                     },
@@ -100,7 +121,9 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
                         title: Text(a.name),
                         subtitle: Text(a.unit),
                         trailing: a.isFavorite ? const Icon(Icons.star) : null,
-                        onTap: () => Navigator.pushNamed(context, '/activity/detail', arguments: a.id),
+                        onTap: () => Navigator.pushNamed(
+                            context, '/activity/detail',
+                            arguments: a.id),
                       );
                     },
                   );
@@ -113,7 +136,9 @@ class _ActivityListWidgetState extends State<ActivityListWidget> {
                 children: [
                   Expanded(
                     child: TextField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Search activities'),
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          hintText: 'Search activities'),
                       onChanged: (v) => setState(() => _query = v),
                     ),
                   ),

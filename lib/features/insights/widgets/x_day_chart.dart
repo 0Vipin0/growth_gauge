@@ -16,7 +16,6 @@ class XDayChart extends StatelessWidget {
       height: 200,
       child: LineChart(
         LineChartData(
-          gridData: FlGridData(show: true),
           titlesData: FlTitlesData(
             bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: (v, meta) {
               final index = v.toInt();
@@ -26,7 +25,7 @@ class XDayChart extends StatelessWidget {
               }
               return const Text('');
             })),
-            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+            leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: true)),
           ),
           lineBarsData: [LineChartBarData(spots: spots)],
         ),

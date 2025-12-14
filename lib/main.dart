@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
-import 'features/chart/chart.dart';
-import 'features/counter/counter.dart';
-import 'features/notification/notification_service.dart';
-import 'features/settings/settings.dart';
-import 'features/profile/provider/user_profile_provider.dart';
-import 'features/activity/activity.dart';
-import 'features/insights/insights.dart';
-import 'features/workout/provider/workout_template_provider.dart';
-import 'features/workout/widgets/workout_templates_page.dart';
-import 'features/workout/provider/workout_run_provider.dart';
-import 'features/workout/services/flutter_tts_service.dart';
-import 'features/workout/services/tts_service.dart';
-import 'features/timer/timer.dart';
-import 'data/services/persistence/app_database.dart';
-import 'data/repositories/drift_user_profile_repository.dart';
 import 'data/repositories/drift_activity_repository.dart';
+import 'data/repositories/drift_user_profile_repository.dart';
 import 'data/repositories/drift_workout_repository.dart';
 import 'data/repositories/workout_repository.dart';
+import 'data/services/persistence/app_database.dart';
+import 'features/activity/activity.dart';
+import 'features/chart/chart.dart';
+import 'features/counter/counter.dart';
+import 'features/insights/insights.dart';
+import 'features/notification/notification_service.dart';
+import 'features/profile/provider/user_profile_provider.dart';
+import 'features/settings/settings.dart';
+import 'features/timer/timer.dart';
+import 'features/workout/provider/workout_run_provider.dart';
+import 'features/workout/provider/workout_template_provider.dart';
+import 'features/workout/services/flutter_tts_service.dart';
+import 'features/workout/services/tts_service.dart';
 import 'routes.dart';
 
 final notificationService = NotificationService();
@@ -62,18 +60,31 @@ class DependencyProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TimerChartProvider()),
         // Repositories backed by Drift DB
         Provider<AppDatabase>.value(value: _appDatabase!),
-        Provider<DriftUserProfileRepository>(create: (_) => DriftUserProfileRepository(_appDatabase!)),
-        Provider<DriftActivityRepository>(create: (_) => DriftActivityRepository(_appDatabase!)),
-        Provider<DriftWorkoutRepository>(create: (_) => DriftWorkoutRepository(_appDatabase!)),
+        Provider<DriftUserProfileRepository>(
+            create: (_) => DriftUserProfileRepository(_appDatabase!)),
+        Provider<DriftActivityRepository>(
+            create: (_) => DriftActivityRepository(_appDatabase!)),
+        Provider<DriftWorkoutRepository>(
+            create: (_) => DriftWorkoutRepository(_appDatabase!)),
 
-        ChangeNotifierProvider(create: (_) => UserProfileProvider(repository: DriftUserProfileRepository(_appDatabase!))),
-        ChangeNotifierProvider(create: (_) => ActivityProvider(repository: DriftActivityRepository(_appDatabase!))),
-        ChangeNotifierProvider(create: (_) => InsightsProvider(repository: DriftActivityRepository(_appDatabase!))),
-        ChangeNotifierProvider(create: (_) => WorkoutTemplateProvider(repository: DriftWorkoutRepository(_appDatabase!))),
+        ChangeNotifierProvider(
+            create: (_) => UserProfileProvider(
+                repository: DriftUserProfileRepository(_appDatabase!))),
+        ChangeNotifierProvider(
+            create: (_) => ActivityProvider(
+                repository: DriftActivityRepository(_appDatabase!))),
+        ChangeNotifierProvider(
+            create: (_) => InsightsProvider(
+                repository: DriftActivityRepository(_appDatabase!))),
+        ChangeNotifierProvider(
+            create: (_) => WorkoutTemplateProvider(
+                repository: DriftWorkoutRepository(_appDatabase!))),
         ChangeNotifierProvider(create: (_) => WorkoutTimerProvider()),
-        ChangeNotifierProvider(create: (_) => WorkoutRunProvider(ttsService: FlutterTtsService())),
+        ChangeNotifierProvider(
+            create: (_) => WorkoutRunProvider(ttsService: FlutterTtsService())),
         // Make Workout templates accessible via routes
-        Provider<WorkoutRepository>(create: (_) => DriftWorkoutRepository(_appDatabase!)),
+        Provider<WorkoutRepository>(
+            create: (_) => DriftWorkoutRepository(_appDatabase!)),
         Provider<TtsService>(create: (_) => FlutterTtsService()),
         Provider<NotificationService>.value(value: notificationService),
       ],

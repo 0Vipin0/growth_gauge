@@ -1,10 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:provider/provider.dart';
-import 'package:growth_gauge/features/activity/provider/activity_provider.dart';
 import 'package:growth_gauge/features/activity/activity.dart';
 import 'package:growth_gauge/features/activity/widgets/activity_detail_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   testWidgets('ActivityDetailPage shows chart and quick-log FAB adds a log', (WidgetTester tester) async {

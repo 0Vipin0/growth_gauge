@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../data/repositories/activity_repository.dart';
+import '../../../data/repositories/activity_repository.dart';
 import '../model/activity.dart';
 
 class ActivityProvider with ChangeNotifier {
@@ -61,7 +61,13 @@ class ActivityProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<ActivityLog> getLogsForRange(String activityId, DateTime from, DateTime to) {
-    return _logs.where((l) => l.activityId == activityId && l.timestamp.isAfter(from) && l.timestamp.isBefore(to)).toList();
+  List<ActivityLog> getLogsForRange(
+      String activityId, DateTime from, DateTime to) {
+    return _logs
+        .where((l) =>
+            l.activityId == activityId &&
+            l.timestamp.isAfter(from) &&
+            l.timestamp.isBefore(to))
+        .toList();
   }
 }

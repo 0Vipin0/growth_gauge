@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:growth_gauge/utils/constants.dart';
+
+import '../activity/widgets/activity_list_page.dart';
 import '../counter/counter.dart';
 import '../settings/settings.dart';
 import '../timer/timer.dart';
@@ -72,7 +73,10 @@ class _MobileHomePageState extends State<MobileHomePage> {
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Counters'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),          BottomNavigationBarItem(icon: Icon(Icons.fitness_center), label: 'Activities'),          BottomNavigationBarItem(
+          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.fitness_center), label: 'Activities'),
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
@@ -184,8 +188,6 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
               children: const [
                 CounterListWidget(),
                 TimerListWidget(),
-                // Activities page
-                ActivityListWidget(),
                 // Activities page
                 ActivityListWidget(),
                 SettingsPage(),

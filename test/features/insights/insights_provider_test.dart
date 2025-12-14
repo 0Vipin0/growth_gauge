@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/insights/model/daily_aggregate.dart';
-import 'package:growth_gauge/features/insights/provider/insights_provider.dart';
 import 'package:growth_gauge/data/repositories/activity_repository.dart';
 import 'package:growth_gauge/features/activity/activity.dart';
+import 'package:growth_gauge/features/insights/model/daily_aggregate.dart';
+import 'package:growth_gauge/features/insights/provider/insights_provider.dart';
 
 class FakeActivityRepo implements ActivityRepository {
   final List<Map<String, dynamic>> _aggs;

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'package:page_transition/page_transition.dart';
 
+import 'features/activity/widgets/activity_detail_page.dart';
+import 'features/activity/widgets/activity_list_page.dart';
 import 'features/authentication/authentication.dart';
 import 'features/home/home.dart';
-import 'features/onboarding/onboarding.dart';
-import 'features/settings/settings.dart';
-import 'features/profile/widgets/profile_page.dart';
-import 'features/profile/widgets/profile_edit_page.dart';
 import 'features/insights/insights.dart';
-import 'features/workout/widgets/workout_templates_page.dart';
+import 'features/onboarding/onboarding.dart';
+import 'features/profile/widgets/profile_edit_page.dart';
+import 'features/profile/widgets/profile_page.dart';
+import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
+import 'features/workout/widgets/workout_run_page.dart';
+import 'features/workout/widgets/workout_template_detail.dart';
+import 'features/workout/widgets/workout_templates_page.dart';
 
 mixin AppRoutes {
   static const String splash = '/';
@@ -40,11 +43,15 @@ mixin AppRoutes {
     activityInsights: (_) => const InsightsPage(),
     workoutTemplates: (_) => const WorkoutTemplatesPage(),
     '/workouts/detail': (_) => Builder(builder: (context) {
-      final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
-      final id = args?['id'] as String?;
-      if (id == null) return const Scaffold(body: Center(child: Text('No template specified')));
-      return WorkoutTemplateDetailPage(templateId: id);
-    }),
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>?;
+          final id = args?['id'] as String?;
+          if (id == null) {
+            return const Scaffold(
+                body: Center(child: Text('No template specified')));
+          }
+          return WorkoutTemplateDetailPage(templateId: id);
+        }),
     '/workouts/run': (_) => const WorkoutRunPage(),
   };
 

@@ -24,6 +24,7 @@ _$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : const TimeOfDayConverter()
               .fromJson(json['notificationTime'] as String?),
+      ttsEnabled: json['ttsEnabled'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
@@ -36,6 +37,7 @@ Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
           _$AuthenticationTypeEnumMap[instance.authenticationType]!,
       'notificationTime':
           const TimeOfDayConverter().toJson(instance.notificationTime),
+      'ttsEnabled': instance.ttsEnabled,
     };
 
 const _$AppThemeNameEnumMap = {
