@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
-import '../../features/profile/model/user_profile.dart';
+import 'package:growth_gauge/data/models/user_profile.dart';
 import '../services/persistence/app_database.dart';
 import 'user_profile_repository.dart';
 

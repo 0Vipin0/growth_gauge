@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/profile/provider/user_profile_provider.dart';
+import 'package:growth_gauge/ui/profile/provider/user_profile_provider.dart';
 
 void main() {
   test('UserProfileProvider initializes and loads profile', () async {

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
-import '../../features/workout/model/workout_template.dart' as domain;
+import 'package:growth_gauge/data/models/workout_template.dart' as domain;
 import '../services/persistence/app_database.dart';
 import 'workout_repository.dart';
 

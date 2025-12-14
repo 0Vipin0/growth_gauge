@@ -29,7 +29,9 @@ void main() {
     });
 
     test('savePin should complete without errors', () {
-      when(authService.savePin('1234')).thenAnswer((_) async {});
+      when(authService.savePin('1234')).thenAnswer((_) async {
+        return null;
+      });
       expect(authService.savePin('1234'), completes);
     });
 

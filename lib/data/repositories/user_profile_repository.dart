@@ -1,4 +1,4 @@
-import '../../features/profile/model/user_profile.dart';
+import 'package:growth_gauge/data/models/user_profile.dart';
 
 abstract class UserProfileRepository {
   Future<UserProfile?> loadProfile();

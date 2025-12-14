@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/profile/provider/user_profile_provider.dart';
-import 'package:growth_gauge/features/profile/widgets/profile_edit_page.dart';
+import 'package:growth_gauge/ui/profile/provider/user_profile_provider.dart';
+import 'package:growth_gauge/ui/profile/widgets/profile_edit_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('ProfileEditPage validates and saves data', (WidgetTester tester) async {
+  testWidgets('ProfileEditPage validates and saves data',
+      (WidgetTester tester) async {
     final provider = UserProfileProvider();
     await provider.loadInitialProfile();
 
     await tester.pumpWidget(MaterialApp(
-      home: ChangeNotifierProvider<UserProfileProvider>.value(value: provider, child: const ProfileEditPage()),
+      home: ChangeNotifierProvider<UserProfileProvider>.value(
+          value: provider, child: const ProfileEditPage()),
     ));
 
     await tester.pumpAndSettle();

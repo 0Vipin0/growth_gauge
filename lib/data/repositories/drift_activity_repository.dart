@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-import '../../features/activity/model/activity.dart' as domain;
+import 'package:growth_gauge/data/models/activity.dart' as domain;
 import '../services/persistence/app_database.dart';
 import 'activity_repository.dart';
 

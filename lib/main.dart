@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repositories/drift_activity_repository.dart';
 import 'data/repositories/drift_user_profile_repository.dart';
 import 'data/repositories/drift_workout_repository.dart';
+import 'data/repositories/shared_preferences_counter_repository.dart';
+import 'data/repositories/shared_preferences_timer_repository.dart';
 import 'data/repositories/workout_repository.dart';
+import 'data/services/flutter_tts_service.dart';
+import 'data/services/notification_service.dart';
 import 'data/services/persistence/app_database.dart';
-import 'features/activity/activity.dart';
-import 'features/chart/chart.dart';
-import 'features/counter/counter.dart';
-import 'features/insights/insights.dart';
-import 'features/notification/notification_service.dart';
-import 'features/profile/provider/user_profile_provider.dart';
-import 'features/settings/settings.dart';
-import 'features/timer/timer.dart';
-import 'features/workout/provider/workout_run_provider.dart';
-import 'features/workout/provider/workout_template_provider.dart';
-import 'features/workout/services/flutter_tts_service.dart';
-import 'features/workout/services/tts_service.dart';
-import 'routes.dart';
+import 'data/services/tts_service.dart';
+import 'ui/activity/provider/activity_provider.dart';
+import 'ui/activity/provider/workout_timer_provider.dart';
+import 'ui/chart/provider/counter_chart_provider.dart';
+import 'ui/chart/provider/timer_chart_provider.dart';
+import 'ui/core/routes.dart';
+import 'ui/core/shared_preferences_config.dart';
+import 'ui/counter/provider/counter_list_provider.dart';
+import 'ui/insights/provider/insights_provider.dart';
+import 'ui/profile/provider/user_profile_provider.dart';
+import 'ui/settings/provider/settings_provider.dart';
+import 'ui/timer/provider/timer_list_provider.dart';
+import 'ui/workout/provider/workout_run_provider.dart';
+import 'ui/workout/provider/workout_template_provider.dart';
 
 final notificationService = NotificationService();
 
@@ -81,11 +87,12 @@ class DependencyProvider extends StatelessWidget {
                 repository: DriftWorkoutRepository(_appDatabase!))),
         ChangeNotifierProvider(create: (_) => WorkoutTimerProvider()),
         ChangeNotifierProvider(
-            create: (_) => WorkoutRunProvider(ttsService: FlutterTtsService())),
+            create: (_) => WorkoutRunProvider(
+                ttsService: FlutterTtsService(FlutterTts()))),
         // Make Workout templates accessible via routes
         Provider<WorkoutRepository>(
             create: (_) => DriftWorkoutRepository(_appDatabase!)),
-        Provider<TtsService>(create: (_) => FlutterTtsService()),
+        Provider<TtsService>(create: (_) => FlutterTtsService(FlutterTts())),
         Provider<NotificationService>.value(value: notificationService),
       ],
       child: const MyApp(),

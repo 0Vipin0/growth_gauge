@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/notification/notification_service.dart';
-import 'package:growth_gauge/features/timer/model/model.dart';
-import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
-import 'package:growth_gauge/features/timer/repository/repository.dart';
+import 'package:growth_gauge/data/models/models.dart';
+import 'package:growth_gauge/data/repositories/in_memory_timer_repository.dart';
+import 'package:growth_gauge/data/services/notification_service.dart';
+import 'package:growth_gauge/ui/timer/provider/timer_list_provider.dart';
 import 'package:mockito/mockito.dart';
 
 class MockNotificationService extends Mock implements NotificationService {}

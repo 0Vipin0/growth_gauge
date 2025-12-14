@@ -1,4 +1,4 @@
-import '../../features/activity/model/activity.dart';
+import 'package:growth_gauge/data/models/activity.dart';
 
 abstract class ActivityRepository {
   Future<List<Activity>> loadActivities();

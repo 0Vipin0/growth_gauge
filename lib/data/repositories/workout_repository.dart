@@ -1,4 +1,4 @@
-import '../../features/workout/model/workout_template.dart';
+import 'package:growth_gauge/data/models/workout_template.dart';
 
 abstract class WorkoutRepository {
   Future<List<WorkoutTemplate>> loadTemplates();
