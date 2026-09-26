@@ -100,6 +100,8 @@ class SessionUseCases {
               )
             : rest)
         .toList();
+    final restClosureAudits =
+        _restClosureAudits(id, session.restIntervals, restIntervals);
     final updated = session.copyWith(
       status: SessionStatus.paused,
       pausedAt: now,
@@ -114,11 +116,14 @@ class SessionUseCases {
       ],
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
-      audits: [...session.audits, _audit(id, AuditAction.paused)],
+      audits: [
+        ...session.audits,
+        ...restClosureAudits,
+        _audit(id, AuditAction.paused)
+      ],
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
-    _events.publish(WorkoutSessionPaused(aggregateId: id));
     return Result.success(updated);
   }
 
@@ -162,6 +167,16 @@ class SessionUseCases {
     String? actorId,
     String? reason,
   }) async {
+    if (weight == null &&
+        reps == null &&
+        durationSeconds == null &&
+        distanceMeters == null &&
+        calories == null &&
+        rpe == null &&
+        rir == null) {
+      return const Result.error(
+          ValidationFailure('Enter at least one set measurement'));
+    }
     if ((weight != null && (!weight.isFinite || weight < 0)) ||
         (reps != null && reps < 0) ||
         (durationSeconds != null && durationSeconds < 0) ||
@@ -190,6 +205,11 @@ class SessionUseCases {
           if (set.id != setId) {
             sets.add(set);
             continue;
+          }
+          if (set.status == ExecutionSetStatus.completed ||
+              set.status == ExecutionSetStatus.skipped) {
+            return Result.error(ConflictFailure(
+                'A completed or skipped set cannot be logged again', setId));
           }
           oldSet = set;
           sets.add(set.copyWith(
@@ -263,6 +283,10 @@ class SessionUseCases {
       return Result.error(
           NotFoundFailure('Execution set not found', executionSetId));
     }
+    if (executionSet.status != ExecutionSetStatus.completed) {
+      return Result.error(ConflictFailure(
+          'Rest can only start after the set is completed', executionSetId));
+    }
     if (executionSet.plannedRestSeconds <= 0) {
       return const Result.error(ValidationFailure(
           'This set does not have a positive planned rest duration'));
@@ -289,8 +313,14 @@ class SessionUseCases {
       allowSkip: executionSet.restAllowSkip,
       allowExtend: executionSet.restAllowExtend,
     );
-    final updated =
-        session.copyWith(restIntervals: [...session.restIntervals, rest]);
+    final updated = session.copyWith(
+      restIntervals: [...session.restIntervals, rest],
+      audits: [
+        ...session.audits,
+        _audit(sessionId, AuditAction.created,
+            entityType: 'RestInterval', entityId: rest.id)
+      ],
+    );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     _events.publish(RestStarted(aggregateId: sessionId));
@@ -351,9 +381,8 @@ class SessionUseCases {
       ],
     );
     final saved = await _sessions.save(updated);
-    return saved.isError
-        ? Result.error(saved.errorOrNull!)
-        : Result.success(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    return Result.success(updated);
   }
 
   Future<Result<WorkoutSession, Failure>> skipRest(String sessionId,
@@ -398,9 +427,8 @@ class SessionUseCases {
         _audit(sessionId, AuditAction.updated,
             entityType: 'RestInterval',
             entityId: activeRest.id,
-            field: 'skipped',
-            previousValue: false,
-            newValue: true)
+            previousValue: activeRest.toJson(),
+            newValue: intervals[index].toJson())
       ],
     );
     final saved = await _sessions.save(updated);
@@ -473,6 +501,11 @@ class SessionUseCases {
     final previousSet = oldSet;
     if (previousSet == null) {
       return Result.error(NotFoundFailure('Execution set not found', setId));
+    }
+    if (previousSet.status == ExecutionSetStatus.completed ||
+        previousSet.status == ExecutionSetStatus.skipped) {
+      return Result.error(ConflictFailure(
+          'Targets cannot be changed on a completed or skipped set', setId));
     }
     var updatedSet = previousSet;
     for (final block in blocks) {
@@ -668,6 +701,11 @@ class SessionUseCases {
     if (previousSet == null) {
       return Result.error(NotFoundFailure('Execution set not found', setId));
     }
+    if (previousSet.status != ExecutionSetStatus.planned &&
+        previousSet.status != ExecutionSetStatus.inProgress) {
+      return Result.error(ConflictFailure(
+          'Only a planned or active set can be skipped', setId));
+    }
     final updated = session.copyWith(
       blocks: blocks,
       audits: [
@@ -713,17 +751,23 @@ class SessionUseCases {
       interruptions[interruptions.length - 1] =
           interruptions.last.copyWith(endedAt: now);
     }
-    final completing = session.copyWith(status: SessionStatus.completing);
-    final prepared = await _sessions.save(completing);
-    if (prepared.isError) return Result.error(prepared.errorOrNull!);
-    final completed = completing.copyWith(
-      status: SessionStatus.completed,
+    final restClosureAudits =
+        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final completing = session.copyWith(
+      status: SessionStatus.completing,
       completedAt: now,
       interruptions: interruptions,
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
-      audits: [...session.audits, _audit(id, AuditAction.completed)],
+      audits: [
+        ...session.audits,
+        ...restClosureAudits,
+        _audit(id, AuditAction.completed)
+      ],
     );
+    final prepared = await _sessions.save(completing);
+    if (prepared.isError) return Result.error(prepared.errorOrNull!);
+    final completed = completing.copyWith(status: SessionStatus.completed);
     final saved = await _sessions.save(completed);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     _events.publish(WorkoutSessionCompleted(aggregateId: id));
@@ -744,6 +788,8 @@ class SessionUseCases {
     }
     final now = AppClock.nowUtc();
     final restIntervals = _closeRestIntervals(session, now);
+    final restClosureAudits =
+        _restClosureAudits(id, session.restIntervals, restIntervals);
     final updated = session.copyWith(
       status: SessionStatus.cancelled,
       interruptions: _closeInterruptions(session, now),
@@ -751,6 +797,7 @@ class SessionUseCases {
       blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
+        ...restClosureAudits,
         _audit(id, AuditAction.cancelled, reason: reason)
       ],
     );
@@ -772,6 +819,8 @@ class SessionUseCases {
     }
     final now = AppClock.nowUtc();
     final restIntervals = _closeRestIntervals(session, now);
+    final restClosureAudits =
+        _restClosureAudits(id, session.restIntervals, restIntervals);
     final updated = session.copyWith(
       status: SessionStatus.abandoned,
       interruptions: _closeInterruptions(session, now),
@@ -779,6 +828,7 @@ class SessionUseCases {
       blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
+        ...restClosureAudits,
         _audit(id, AuditAction.abandoned, reason: reason)
       ],
     );
@@ -821,9 +871,9 @@ class SessionUseCases {
       ],
     );
     final saved = await _sessions.save(updated);
-    return saved.isError
-        ? Result.error(saved.errorOrNull!)
-        : Result.success(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    _events.publish(WorkoutSessionPaused(aggregateId: id));
+    return Result.success(updated);
   }
 
   /// Repairs transitions that were interrupted between their durable writes.
@@ -838,24 +888,27 @@ class SessionUseCases {
       return Result.success(session);
     }
     final now = AppClock.nowUtc();
-    final restIntervals = session.restIntervals
-        .map((rest) => rest.endedAt == null
-            ? rest.copyWith(
-                endedAt: now,
-                actualDurationSeconds: now.difference(rest.startedAt).inSeconds,
-              )
-            : rest)
-        .toList();
+    final completedAt = session.completedAt ?? now;
+    final restIntervals = _closeRestIntervals(session, completedAt);
+    final restClosureAudits =
+        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final hasCompletionAudit = session.audits.any((entry) =>
+        entry.action == AuditAction.completed &&
+        entry.entityType == 'WorkoutSession' &&
+        entry.entityId == id);
     final completed = session.copyWith(
       status: SessionStatus.completed,
-      completedAt: now,
+      completedAt: completedAt,
+      interruptions: _closeInterruptions(session, completedAt),
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [
         ...session.audits,
-        _audit(id, AuditAction.completed,
-            actorType: AuditActorType.system,
-            reason: 'Completion finalized during recovery')
+        ...restClosureAudits,
+        if (!hasCompletionAudit)
+          _audit(id, AuditAction.completed,
+              actorType: AuditActorType.system,
+              reason: 'Completion finalized during recovery')
       ],
     );
     final saved = await _sessions.save(completed);
@@ -885,6 +938,24 @@ class SessionUseCases {
               )
             : rest)
         .toList();
+  }
+
+  List<AuditEntry> _restClosureAudits(String sessionId,
+      List<RestInterval> previous, List<RestInterval> updated) {
+    final previousById = {for (final interval in previous) interval.id: interval};
+    return updated.where((interval) {
+      final oldInterval = previousById[interval.id];
+      return oldInterval != null &&
+          oldInterval.endedAt == null &&
+          interval.endedAt != null;
+    }).map((interval) {
+      return _audit(sessionId, AuditAction.updated,
+          entityType: 'RestInterval',
+          entityId: interval.id,
+          previousValue: previousById[interval.id]!.toJson(),
+          newValue: interval.toJson(),
+          reason: 'Rest interval closed with session lifecycle');
+    }).toList();
   }
 
   List<SessionBlock> _withRestTotals(

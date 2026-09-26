@@ -555,50 +555,67 @@ class _ExerciseCard extends StatelessWidget {
                 title: Text(
                     'Set ${set.setNumber}  ·  ${set.targetWeight == null ? '' : '${set.targetWeight} kg'} ${set.targetReps == null ? '' : '× ${set.targetReps}'}'),
                 subtitle: Text(set.status.name.toUpperCase()),
-                trailing: set.status == ExecutionSetStatus.completed ||
-                        set.status == ExecutionSetStatus.skipped
+                trailing: set.status == ExecutionSetStatus.completed
                     ? PopupMenuButton<_SetAction>(
                         enabled: actionsEnabled,
-                        onSelected: (_) => onDelete(set),
-                        itemBuilder: (context) => const [
-                          PopupMenuItem(
-                              value: _SetAction.delete,
-                              child: Text('Delete set')),
-                        ],
-                      )
-                    : PopupMenuButton<_SetAction>(
-                        enabled: actionsEnabled,
                         onSelected: (action) {
-                          switch (action) {
-                            case _SetAction.editTarget:
-                              onEditTarget(set);
-                            case _SetAction.record:
-                              onRecord(set);
-                            case _SetAction.startRest:
-                              onRest(set);
-                            case _SetAction.skip:
-                              onSkip(set);
-                            case _SetAction.delete:
-                              onDelete(set);
+                          if (action == _SetAction.startRest) {
+                            onRest(set);
+                          } else {
+                            onDelete(set);
                           }
                         },
                         itemBuilder: (context) => [
-                          const PopupMenuItem(
-                              value: _SetAction.editTarget,
-                              child: Text('Edit target')),
-                          const PopupMenuItem(
-                              value: _SetAction.record, child: Text('Log set')),
                           if (set.plannedRestSeconds > 0)
                             const PopupMenuItem(
                                 value: _SetAction.startRest,
                                 child: Text('Start rest')),
                           const PopupMenuItem(
-                              value: _SetAction.skip, child: Text('Skip set')),
-                          const PopupMenuItem(
                               value: _SetAction.delete,
                               child: Text('Delete set')),
                         ],
-                      ),
+                      )
+                    : set.status == ExecutionSetStatus.skipped
+                        ? PopupMenuButton<_SetAction>(
+                            enabled: actionsEnabled,
+                            onSelected: (_) => onDelete(set),
+                            itemBuilder: (context) => const [
+                              PopupMenuItem(
+                                  value: _SetAction.delete,
+                                  child: Text('Delete set')),
+                            ],
+                          )
+                        : PopupMenuButton<_SetAction>(
+                            enabled: actionsEnabled,
+                            onSelected: (action) {
+                              switch (action) {
+                                case _SetAction.editTarget:
+                                  onEditTarget(set);
+                                case _SetAction.record:
+                                  onRecord(set);
+                                case _SetAction.startRest:
+                                  onRest(set);
+                                case _SetAction.skip:
+                                  onSkip(set);
+                                case _SetAction.delete:
+                                  onDelete(set);
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                  value: _SetAction.editTarget,
+                                  child: Text('Edit target')),
+                              const PopupMenuItem(
+                                  value: _SetAction.record,
+                                  child: Text('Log set')),
+                              const PopupMenuItem(
+                                  value: _SetAction.skip,
+                                  child: Text('Skip set')),
+                              const PopupMenuItem(
+                                  value: _SetAction.delete,
+                                  child: Text('Delete set')),
+                            ],
+                          ),
               ),
           ]),
         ),
