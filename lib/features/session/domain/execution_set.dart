@@ -36,6 +36,7 @@ abstract class ExecutionSet with _$ExecutionSet {
     @Default(true) bool restAllowExtend,
     int? restMinimumSeconds,
     int? restMaximumSeconds,
+    /// Sum of recorded actual durations for this set's rest intervals.
     int? actualRestSeconds,
     String? notes,
   }) = _ExecutionSet;

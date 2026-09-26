@@ -112,6 +112,7 @@ class SessionUseCases {
           userInitiated: reason == InterruptionReason.userPause,
         )
       ],
+      blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [...session.audits, _audit(id, AuditAction.paused)],
     );
@@ -337,6 +338,7 @@ class SessionUseCases {
       plannedDurationSeconds: extendedDuration,
     );
     final updated = session.copyWith(
+      blocks: _withRestTotals(session.blocks, intervals),
       restIntervals: intervals,
       audits: [
         ...session.audits,
@@ -389,6 +391,7 @@ class SessionUseCases {
       skipped: true,
     );
     final updated = session.copyWith(
+      blocks: _withRestTotals(session.blocks, intervals),
       restIntervals: intervals,
       audits: [
         ...session.audits,
@@ -534,6 +537,7 @@ class SessionUseCases {
       skipped: skipped,
     );
     final updated = session.copyWith(
+      blocks: _withRestTotals(session.blocks, intervals),
       restIntervals: intervals,
       audits: [
         ...session.audits,
@@ -716,6 +720,7 @@ class SessionUseCases {
       status: SessionStatus.completed,
       completedAt: now,
       interruptions: interruptions,
+      blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [...session.audits, _audit(id, AuditAction.completed)],
     );
@@ -738,10 +743,12 @@ class SessionUseCases {
           'This session cannot be cancelled from its current state', id));
     }
     final now = AppClock.nowUtc();
+    final restIntervals = _closeRestIntervals(session, now);
     final updated = session.copyWith(
       status: SessionStatus.cancelled,
       interruptions: _closeInterruptions(session, now),
-      restIntervals: _closeRestIntervals(session, now),
+      restIntervals: restIntervals,
+      blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
         _audit(id, AuditAction.cancelled, reason: reason)
@@ -764,10 +771,12 @@ class SessionUseCases {
           'Only an active or paused session can be abandoned', id));
     }
     final now = AppClock.nowUtc();
+    final restIntervals = _closeRestIntervals(session, now);
     final updated = session.copyWith(
       status: SessionStatus.abandoned,
       interruptions: _closeInterruptions(session, now),
-      restIntervals: _closeRestIntervals(session, now),
+      restIntervals: restIntervals,
+      blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
         _audit(id, AuditAction.abandoned, reason: reason)
@@ -840,6 +849,7 @@ class SessionUseCases {
     final completed = session.copyWith(
       status: SessionStatus.completed,
       completedAt: now,
+      blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [
         ...session.audits,
@@ -874,6 +884,35 @@ class SessionUseCases {
                 actualDurationSeconds: at.difference(rest.startedAt).inSeconds,
               )
             : rest)
+        .toList();
+  }
+
+  List<SessionBlock> _withRestTotals(
+      List<SessionBlock> blocks, List<RestInterval> restIntervals) {
+    final secondsBySet = <String, int>{};
+    for (final interval in restIntervals) {
+      final seconds = interval.actualDurationSeconds;
+      if (seconds == null) continue;
+      secondsBySet.update(
+        interval.executionSetId,
+        (total) => total + seconds,
+        ifAbsent: () => seconds,
+      );
+    }
+    if (secondsBySet.isEmpty) return blocks;
+    return blocks
+        .map((block) => block.copyWith(
+              items: block.items
+                  .map((item) => item.copyWith(
+                        sets: item.sets
+                            .map((set) => secondsBySet.containsKey(set.id)
+                                ? set.copyWith(
+                                    actualRestSeconds: secondsBySet[set.id])
+                                : set)
+                            .toList(),
+                      ))
+                  .toList(),
+            ))
         .toList();
   }
 
