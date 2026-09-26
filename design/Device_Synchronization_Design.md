@@ -1,3 +1,6 @@
+**Status : Deprecated**
+Note this will be removed in coming re-design. 
+
 Synchronizing application data between different devices using Bluetooth in Flutter can be difficult due to platform differences and the inherent nature of Bluetooth as a short-range, peer-to-peer communication protocol. While there isn't a single, perfectly seamless "plug-and-play" Flutter library that handles all aspects of cross-platform Bluetooth synchronization with a high level of abstraction, you can achieve this by combining existing libraries and implementing your synchronization logic.
 
 **Step-by-Step Outline:**
