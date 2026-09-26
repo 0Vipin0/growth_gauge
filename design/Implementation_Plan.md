@@ -87,7 +87,7 @@ flowchart TD
 | Phase | Description | Status | Completed Steps | Total Steps |
 |---|---|---|---|---|
 | **Phase 1** | Dependencies & Core Foundation | `[x] COMPLETED` | 6 | 6 |
-| **Phase 2** | Exercise Catalog & Templates | `[ ] READY TO START` | 0 | 7 |
+| **Phase 2** | Exercise Catalog & Templates | `[-] IN PROGRESS` | 4 | 7 |
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[ ] NOT STARTED` | 0 | 8 |
 | **Phase 4** | Materialized Analytics & Drift Projections | `[ ] NOT STARTED` | 0 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[ ] NOT STARTED` | 0 | 4 |
@@ -204,6 +204,18 @@ Phase 2 builds the reusable program definitions: the **Exercise Catalog** and **
 - `lib/features/template/infrastructure/`: `template_document_adapters.dart`, `template_repository.dart`.
 - `lib/features/template/presentation/`: `template_list_screen.dart`, `template_detail_screen.dart`, `template_editor_screen.dart`, `block_card_widget.dart`.
 - Tests under `test/features/catalog/` and `test/features/template/`.
+
+### 5.3 Phase 2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 2.1** | Catalog domain and document persistence | `[x] COMPLETED` | Exercise taxonomy, JSON adapter, and Drift-backed repository are present. Seed fixture constructor fields were aligned with the current model. |
+| **Step 2.2** | Catalog seeding and use cases | `[x] COMPLETED` | Added empty-catalog seeding, catalog filters, custom exercise creation, and guarded archive behavior for system exercises. |
+| **Step 2.3** | Template document persistence | `[x] COMPLETED` | Added separate document adapters and repository for stable templates and immutable revision snapshots. |
+| **Step 2.4** | Draft and publish lifecycle | `[x] COMPLETED` | Added template creation, draft-from-current, draft updates, and publication; repository rejects edits to already-published revisions. |
+| **Step 2.5** | Catalog presentation | `[-] IN PROGRESS` | Search, detail, and custom exercise screens are implemented; richer taxonomy filters and relationship editing remain. |
+| **Step 2.6** | Template presentation | `[-] IN PROGRESS` | Template list/detail and basic block editor are implemented; exercise prescription editing remains. |
+| **Step 2.7** | Phase 2 integration and acceptance checks | `[ ] NOT STARTED` | Wire into app navigation/startup, add focused feature tests, and run analysis/verification. |
 
 ---
 
