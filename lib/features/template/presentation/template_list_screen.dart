@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../features/catalog/infrastructure/exercise_repository.dart';
 import '../application/template_use_cases.dart';
 import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
@@ -9,9 +10,11 @@ class TemplateListScreen extends StatefulWidget {
   const TemplateListScreen(
       {super.key,
       required this.repository,
+      required this.exerciseRepository,
       required this.useCases,
       required this.userId});
   final ITemplateRepository repository;
+  final IExerciseRepository exerciseRepository;
   final TemplateUseCases useCases;
   final String userId;
 
@@ -51,9 +54,10 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
     if (result == null || !mounted) return;
     final created =
         await widget.useCases.create(name: result, createdById: widget.userId);
-    if (created.isError && mounted)
+    if (created.isError && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(created.errorOrNull!.message)));
+    }
   }
 
   @override
@@ -66,15 +70,18 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
         body: StreamBuilder<List<WorkoutTemplate>>(
           stream: _templates,
           builder: (context, snapshot) {
-            if (snapshot.hasError)
+            if (snapshot.hasError) {
               return const Center(child: Text('Could not load templates'));
-            if (!snapshot.hasData)
+            }
+            if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
+            }
             final templates =
                 snapshot.data!.where((t) => !t.isArchived).toList();
-            if (templates.isEmpty)
+            if (templates.isEmpty) {
               return const Center(
                   child: Text('Create a template to start planning workouts'));
+            }
             return ListView.builder(
                 itemCount: templates.length,
                 itemBuilder: (context, i) {
@@ -90,6 +97,7 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
                         builder: (_) => TemplateDetailScreen(
                             template: template,
                             repository: widget.repository,
+                            exerciseRepository: widget.exerciseRepository,
                             useCases: widget.useCases,
                             userId: widget.userId))),
                   );

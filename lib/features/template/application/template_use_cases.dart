@@ -17,9 +17,10 @@ class TemplateUseCases {
       required String createdById,
       String description = ''}) async {
     final cleanName = name.trim();
-    if (cleanName.isEmpty)
+    if (cleanName.isEmpty) {
       return const Result.error(
           ValidationFailure('Template name is required', 'name'));
+    }
     final now = AppClock.nowUtc();
     final templateId = UniqueId.generate().value;
     final revision = WorkoutTemplateRevision(
@@ -49,20 +50,23 @@ class TemplateUseCases {
       String templateId,
       {String changeSummary = ''}) async {
     final templateResult = await _repository.getTemplate(templateId);
-    if (templateResult.isError)
+    if (templateResult.isError) {
       return Result.error(templateResult.errorOrNull!);
+    }
     final template = templateResult.dataOrNull!;
     final revisionsResult = await _repository.getRevisions(templateId);
-    if (revisionsResult.isError)
+    if (revisionsResult.isError) {
       return Result.error(revisionsResult.errorOrNull!);
+    }
     final revisions = revisionsResult.dataOrNull!;
     WorkoutTemplateRevision? current;
     for (final revision in revisions) {
       if (revision.id == template.currentRevisionId) current = revision;
     }
-    if (current == null)
+    if (current == null) {
       return Result.error(NotFoundFailure('Current template revision not found',
           template.currentRevisionId ?? templateId));
+    }
     if (current.status == TemplateRevisionStatus.draft) {
       return Result.error(
           ConflictFailure('A draft revision already exists', current.id));
@@ -113,8 +117,9 @@ class TemplateUseCases {
         revision.copyWith(status: TemplateRevisionStatus.published));
     if (published.isError) return published;
     final templateResult = await _repository.getTemplate(revision.templateId);
-    if (templateResult.isError)
+    if (templateResult.isError) {
       return Result.error(templateResult.errorOrNull!);
+    }
     return _repository.saveTemplate(templateResult.dataOrNull!
         .copyWith(currentRevisionId: revisionId, updatedAt: AppClock.nowUtc()));
   }

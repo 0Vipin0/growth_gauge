@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'core/database/app_database.dart';
+import 'features/catalog/infrastructure/catalog_seeder.dart';
+import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/chart/chart.dart';
 import 'features/counter/counter.dart';
 import 'features/notification/notification_service.dart';
@@ -16,16 +19,26 @@ void main() async {
   await notificationService.initializeTimeZone();
   await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
-  runApp(const DependencyProvider());
+  final database = AppDatabase();
+  final seedResult =
+      await CatalogSeeder(ExerciseRepository(database)).seedIfEmpty();
+  if (seedResult.isError) {
+    throw StateError(
+        'Could not seed exercise catalog: ${seedResult.errorOrNull}');
+  }
+  runApp(DependencyProvider(database: database));
 }
 
 class DependencyProvider extends StatelessWidget {
-  const DependencyProvider({super.key});
+  const DependencyProvider({super.key, required this.database});
+
+  final AppDatabase database;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<AppDatabase>.value(value: database),
         ChangeNotifierProvider(
           create: (_) => CounterListProvider(
             repository: SharedPreferencesCounterRepository(),

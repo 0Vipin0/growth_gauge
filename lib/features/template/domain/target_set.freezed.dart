@@ -21,6 +21,7 @@ mixin _$TargetSet {
   int? get targetReps;
   int? get targetDurationSeconds;
   double? get targetDistanceMeters;
+  int? get targetCalories;
   double? get targetRpe;
   int? get targetRir;
   double? get percentageOf1Rm;
@@ -54,6 +55,8 @@ mixin _$TargetSet {
                 other.targetDurationSeconds == targetDurationSeconds) &&
             (identical(other.targetDistanceMeters, targetDistanceMeters) ||
                 other.targetDistanceMeters == targetDistanceMeters) &&
+            (identical(other.targetCalories, targetCalories) ||
+                other.targetCalories == targetCalories) &&
             (identical(other.targetRpe, targetRpe) ||
                 other.targetRpe == targetRpe) &&
             (identical(other.targetRir, targetRir) ||
@@ -76,6 +79,7 @@ mixin _$TargetSet {
       targetReps,
       targetDurationSeconds,
       targetDistanceMeters,
+      targetCalories,
       targetRpe,
       targetRir,
       percentageOf1Rm,
@@ -84,7 +88,7 @@ mixin _$TargetSet {
 
   @override
   String toString() {
-    return 'TargetSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, restPolicy: $restPolicy, notes: $notes)';
+    return 'TargetSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, restPolicy: $restPolicy, notes: $notes)';
   }
 }
 
@@ -101,6 +105,7 @@ abstract mixin class $TargetSetCopyWith<$Res> {
       int? targetReps,
       int? targetDurationSeconds,
       double? targetDistanceMeters,
+      int? targetCalories,
       double? targetRpe,
       int? targetRir,
       double? percentageOf1Rm,
@@ -129,6 +134,7 @@ class _$TargetSetCopyWithImpl<$Res> implements $TargetSetCopyWith<$Res> {
     Object? targetReps = freezed,
     Object? targetDurationSeconds = freezed,
     Object? targetDistanceMeters = freezed,
+    Object? targetCalories = freezed,
     Object? targetRpe = freezed,
     Object? targetRir = freezed,
     Object? percentageOf1Rm = freezed,
@@ -164,6 +170,10 @@ class _$TargetSetCopyWithImpl<$Res> implements $TargetSetCopyWith<$Res> {
           ? _self.targetDistanceMeters
           : targetDistanceMeters // ignore: cast_nullable_to_non_nullable
               as double?,
+      targetCalories: freezed == targetCalories
+          ? _self.targetCalories
+          : targetCalories // ignore: cast_nullable_to_non_nullable
+              as int?,
       targetRpe: freezed == targetRpe
           ? _self.targetRpe
           : targetRpe // ignore: cast_nullable_to_non_nullable
@@ -303,6 +313,7 @@ extension TargetSetPatterns on TargetSet {
             int? targetReps,
             int? targetDurationSeconds,
             double? targetDistanceMeters,
+            int? targetCalories,
             double? targetRpe,
             int? targetRir,
             double? percentageOf1Rm,
@@ -322,6 +333,7 @@ extension TargetSetPatterns on TargetSet {
             _that.targetReps,
             _that.targetDurationSeconds,
             _that.targetDistanceMeters,
+            _that.targetCalories,
             _that.targetRpe,
             _that.targetRir,
             _that.percentageOf1Rm,
@@ -355,6 +367,7 @@ extension TargetSetPatterns on TargetSet {
             int? targetReps,
             int? targetDurationSeconds,
             double? targetDistanceMeters,
+            int? targetCalories,
             double? targetRpe,
             int? targetRir,
             double? percentageOf1Rm,
@@ -373,6 +386,7 @@ extension TargetSetPatterns on TargetSet {
             _that.targetReps,
             _that.targetDurationSeconds,
             _that.targetDistanceMeters,
+            _that.targetCalories,
             _that.targetRpe,
             _that.targetRir,
             _that.percentageOf1Rm,
@@ -405,6 +419,7 @@ extension TargetSetPatterns on TargetSet {
             int? targetReps,
             int? targetDurationSeconds,
             double? targetDistanceMeters,
+            int? targetCalories,
             double? targetRpe,
             int? targetRir,
             double? percentageOf1Rm,
@@ -423,6 +438,7 @@ extension TargetSetPatterns on TargetSet {
             _that.targetReps,
             _that.targetDurationSeconds,
             _that.targetDistanceMeters,
+            _that.targetCalories,
             _that.targetRpe,
             _that.targetRir,
             _that.percentageOf1Rm,
@@ -445,6 +461,7 @@ class _TargetSet implements TargetSet {
       this.targetReps,
       this.targetDurationSeconds,
       this.targetDistanceMeters,
+      this.targetCalories,
       this.targetRpe,
       this.targetRir,
       this.percentageOf1Rm,
@@ -469,6 +486,8 @@ class _TargetSet implements TargetSet {
   final int? targetDurationSeconds;
   @override
   final double? targetDistanceMeters;
+  @override
+  final int? targetCalories;
   @override
   final double? targetRpe;
   @override
@@ -512,6 +531,8 @@ class _TargetSet implements TargetSet {
                 other.targetDurationSeconds == targetDurationSeconds) &&
             (identical(other.targetDistanceMeters, targetDistanceMeters) ||
                 other.targetDistanceMeters == targetDistanceMeters) &&
+            (identical(other.targetCalories, targetCalories) ||
+                other.targetCalories == targetCalories) &&
             (identical(other.targetRpe, targetRpe) ||
                 other.targetRpe == targetRpe) &&
             (identical(other.targetRir, targetRir) ||
@@ -534,6 +555,7 @@ class _TargetSet implements TargetSet {
       targetReps,
       targetDurationSeconds,
       targetDistanceMeters,
+      targetCalories,
       targetRpe,
       targetRir,
       percentageOf1Rm,
@@ -542,7 +564,7 @@ class _TargetSet implements TargetSet {
 
   @override
   String toString() {
-    return 'TargetSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, restPolicy: $restPolicy, notes: $notes)';
+    return 'TargetSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, restPolicy: $restPolicy, notes: $notes)';
   }
 }
 
@@ -562,6 +584,7 @@ abstract mixin class _$TargetSetCopyWith<$Res>
       int? targetReps,
       int? targetDurationSeconds,
       double? targetDistanceMeters,
+      int? targetCalories,
       double? targetRpe,
       int? targetRir,
       double? percentageOf1Rm,
@@ -591,6 +614,7 @@ class __$TargetSetCopyWithImpl<$Res> implements _$TargetSetCopyWith<$Res> {
     Object? targetReps = freezed,
     Object? targetDurationSeconds = freezed,
     Object? targetDistanceMeters = freezed,
+    Object? targetCalories = freezed,
     Object? targetRpe = freezed,
     Object? targetRir = freezed,
     Object? percentageOf1Rm = freezed,
@@ -626,6 +650,10 @@ class __$TargetSetCopyWithImpl<$Res> implements _$TargetSetCopyWith<$Res> {
           ? _self.targetDistanceMeters
           : targetDistanceMeters // ignore: cast_nullable_to_non_nullable
               as double?,
+      targetCalories: freezed == targetCalories
+          ? _self.targetCalories
+          : targetCalories // ignore: cast_nullable_to_non_nullable
+              as int?,
       targetRpe: freezed == targetRpe
           ? _self.targetRpe
           : targetRpe // ignore: cast_nullable_to_non_nullable

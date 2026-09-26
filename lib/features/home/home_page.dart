@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:growth_gauge/utils/constants.dart';
+
 import '../counter/counter.dart';
 import '../settings/settings.dart';
 import '../timer/timer.dart';
+import 'fitness_hub_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -64,6 +66,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
         children: const [
           CounterListWidget(),
           TimerListWidget(),
+          FitnessHubPage(),
           SettingsPage(),
         ],
       ),
@@ -73,6 +76,8 @@ class _MobileHomePageState extends State<MobileHomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Counters'),
           BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.fitness_center), label: 'Training'),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
@@ -145,6 +150,10 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
                 label: Text('Timers'),
               ),
               NavigationRailDestination(
+                icon: Icon(Icons.fitness_center),
+                label: Text('Training'),
+              ),
+              NavigationRailDestination(
                 icon: Icon(Icons.settings),
                 label: Text('Settings'),
               ),
@@ -181,6 +190,7 @@ class _DesktopHomePageState extends State<DesktopHomePage> {
               children: const [
                 CounterListWidget(),
                 TimerListWidget(),
+                FitnessHubPage(),
                 SettingsPage(),
               ],
             ),

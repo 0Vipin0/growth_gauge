@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise.dart';
+import '../domain/exercise_enums.dart';
 import '../infrastructure/exercise_repository.dart';
 import 'custom_exercise_screen.dart';
 import 'exercise_detail_screen.dart';
@@ -23,6 +24,10 @@ class CatalogScreen extends StatefulWidget {
 class _CatalogScreenState extends State<CatalogScreen> {
   late Future<List<Exercise>> _exercises;
   String _query = '';
+  BodyRegion? _bodyRegion;
+  MovementPattern? _movementPattern;
+  MuscleGroup? _muscleGroup;
+  EquipmentType? _equipment;
 
   @override
   void initState() {
@@ -32,7 +37,13 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   void _load() {
     _exercises = widget.useCases
-        .list(query: _query)
+        .list(
+          query: _query,
+          bodyRegion: _bodyRegion,
+          movementPattern: _movementPattern,
+          muscleGroup: _muscleGroup,
+          equipment: _equipment,
+        )
         .then((r) => r.dataOrNull ?? const []);
   }
 
@@ -64,14 +75,62 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   _load();
                 }),
               )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _filter<BodyRegion>(
+                  title: 'Region',
+                  value: _bodyRegion,
+                  options: BodyRegion.values,
+                  onChanged: (value) => setState(() {
+                    _bodyRegion = value;
+                    _load();
+                  }),
+                ),
+                _filter<MovementPattern>(
+                  title: 'Pattern',
+                  value: _movementPattern,
+                  options: MovementPattern.values,
+                  onChanged: (value) => setState(() {
+                    _movementPattern = value;
+                    _load();
+                  }),
+                ),
+                _filter<MuscleGroup>(
+                  title: 'Muscle',
+                  value: _muscleGroup,
+                  options: MuscleGroup.values,
+                  onChanged: (value) => setState(() {
+                    _muscleGroup = value;
+                    _load();
+                  }),
+                ),
+                _filter<EquipmentType>(
+                  title: 'Equipment',
+                  value: _equipment,
+                  options: EquipmentType.values,
+                  onChanged: (value) => setState(() {
+                    _equipment = value;
+                    _load();
+                  }),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
           Expanded(
               child: FutureBuilder<List<Exercise>>(
             future: _exercises,
             builder: (context, snapshot) {
-              if (!snapshot.hasData)
+              if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
-              if (snapshot.data!.isEmpty)
+              }
+              if (snapshot.data!.isEmpty) {
                 return const Center(child: Text('No exercises found'));
+              }
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -85,13 +144,37 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         .join(' · ')),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) =>
-                            ExerciseDetailScreen(exercise: exercise))),
+                        builder: (_) => ExerciseDetailScreen(
+                              exercise: exercise,
+                              repository: widget.repository,
+                              useCases: widget.useCases,
+                              userId: widget.userId,
+                            ))),
                   );
                 },
               );
             },
           )),
         ]),
+      );
+
+  Widget _filter<T extends Enum>({
+    required String title,
+    required T? value,
+    required List<T> options,
+    required ValueChanged<T?> onChanged,
+  }) =>
+      DropdownButton<T?>(
+        value: value,
+        hint: Text(title),
+        underline: const SizedBox.shrink(),
+        items: [
+          DropdownMenuItem<T?>(child: Text('Any $title')),
+          ...options.map((option) => DropdownMenuItem<T?>(
+                value: option,
+                child: Text(option.name),
+              )),
+        ],
+        onChanged: onChanged,
       );
 }

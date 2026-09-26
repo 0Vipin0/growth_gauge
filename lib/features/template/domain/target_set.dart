@@ -16,6 +16,7 @@ abstract class TargetSet with _$TargetSet {
     int? targetReps,
     int? targetDurationSeconds,
     double? targetDistanceMeters,
+    int? targetCalories,
     double? targetRpe,
     int? targetRir,
     double? percentageOf1Rm,

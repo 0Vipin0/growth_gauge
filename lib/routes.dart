@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
+import 'core/database/app_database.dart';
 import 'features/authentication/authentication.dart';
+import 'features/catalog/application/catalog_use_cases.dart';
+import 'features/catalog/infrastructure/exercise_repository.dart';
+import 'features/catalog/presentation/catalog_screen.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
 import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
+import 'features/template/application/template_use_cases.dart';
+import 'features/template/infrastructure/template_repository.dart';
+import 'features/template/presentation/template_list_screen.dart';
 
 mixin AppRoutes {
   static const String splash = '/';
@@ -15,6 +22,8 @@ mixin AppRoutes {
   static const String settings = '/settings';
   static const String biometricAuth = '/biometric_auth';
   static const String pinAuth = '/pin_auth';
+  static const String exerciseCatalog = '/exercise_catalog';
+  static const String workoutTemplates = '/workout_templates';
 
   static final Map<String, Widget Function(BuildContext)> _routes = {
     splash: (_) => const SplashScreen(),
@@ -23,6 +32,25 @@ mixin AppRoutes {
     settings: (_) => const SettingsPage(),
     biometricAuth: (_) => BiometricAuthScreen(),
     pinAuth: (_) => PinAuthScreen(),
+    exerciseCatalog: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final repository = ExerciseRepository(database);
+      return CatalogScreen(
+        repository: repository,
+        useCases: CatalogUseCases(repository),
+        userId: 'local-user',
+      );
+    },
+    workoutTemplates: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final repository = TemplateRepository(database);
+      return TemplateListScreen(
+        repository: repository,
+        exerciseRepository: ExerciseRepository(database),
+        useCases: TemplateUseCases(repository),
+        userId: 'local-user',
+      );
+    },
   };
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {

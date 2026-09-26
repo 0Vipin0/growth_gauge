@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../features/catalog/infrastructure/exercise_repository.dart';
 import '../application/template_use_cases.dart';
 import '../domain/template_enums.dart';
 import '../domain/workout_template.dart';
@@ -11,10 +12,12 @@ class TemplateDetailScreen extends StatefulWidget {
       {super.key,
       required this.template,
       required this.repository,
+      required this.exerciseRepository,
       required this.useCases,
       required this.userId});
   final WorkoutTemplate template;
   final ITemplateRepository repository;
+  final IExerciseRepository exerciseRepository;
   final TemplateUseCases useCases;
   final String userId;
 
@@ -41,9 +44,10 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
       final draft = await widget.useCases.createDraftFromCurrent(_template.id,
           changeSummary: 'Edited in template builder');
       if (draft.isError) {
-        if (mounted)
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(draft.errorOrNull!.message)));
+        }
         return;
       }
       revision = draft.dataOrNull!;
@@ -53,6 +57,7 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
         builder: (_) => TemplateEditorScreen(
             revision: revision,
             repository: widget.repository,
+            exerciseRepository: widget.exerciseRepository,
             useCases: widget.useCases,
             userId: widget.userId)));
     final latest = await widget.repository.getTemplate(_template.id);
@@ -73,12 +78,14 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
               ? null
               : widget.repository.getRevision(_template.currentRevisionId!),
           builder: (context, snapshot) {
-            if (!snapshot.hasData)
+            if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
+            }
             final result = snapshot.data!;
-            if (result.isError)
+            if (result.isError) {
               return const Center(
                   child: Text('Current revision is unavailable'));
+            }
             final revision = result.dataOrNull!;
             return ListView(padding: const EdgeInsets.all(20), children: [
               Text(_template.description.isEmpty

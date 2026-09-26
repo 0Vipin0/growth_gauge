@@ -3,6 +3,7 @@ import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/core/error/failures.dart';
 import 'package:growth_gauge/features/template/application/template_use_cases.dart';
 import 'package:growth_gauge/features/template/domain/template_enums.dart';
+import 'package:growth_gauge/features/template/domain/target_set.dart';
 import 'package:growth_gauge/features/template/domain/workout_block.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
@@ -37,6 +38,18 @@ void main() {
       final result = await useCases.create(name: '   ', createdById: 'user-1');
 
       expect(result.errorOrNull, isA<ValidationFailure>());
+    });
+
+    test('target sets serialize calorie prescriptions', () {
+      final target = TargetSet(
+        id: 'set-1',
+        setNumber: 1,
+        targetCalories: 120,
+      );
+
+      final restored = TargetSet.fromJson(target.toJson());
+
+      expect(restored.targetCalories, 120);
     });
 
     test('updates and publishes a draft revision', () async {

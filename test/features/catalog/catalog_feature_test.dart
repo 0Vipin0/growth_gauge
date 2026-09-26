@@ -79,6 +79,58 @@ void main() {
       expect(found.dataOrNull!.status, ExerciseStatus.archived);
     });
 
+    test('custom exercises store taxonomy, equipment, and metric choices',
+        () async {
+      final created = await useCases.createCustom(
+        name: 'Tempo run',
+        createdById: 'user-1',
+        bodyRegion: BodyRegion.lowerBody,
+        movementPattern: MovementPattern.isolation,
+        primaryMuscle: MuscleGroup.calves,
+        equipment: EquipmentType.resistanceBand,
+        metricType: MetricType.distanceBased,
+      );
+
+      expect(created.dataOrNull!.classification.bodyRegions,
+          contains(BodyRegion.lowerBody));
+      expect(created.dataOrNull!.classification.primaryMuscles,
+          contains(MuscleGroup.calves));
+      expect(created.dataOrNull!.equipment.requiredEquipment,
+          contains(EquipmentType.resistanceBand));
+      expect(created.dataOrNull!.measurementProfile.supportsDistance, isTrue);
+    });
+
+    test('exercise relationships can be added and removed by their owner',
+        () async {
+      await CatalogSeeder(repository).seedIfEmpty();
+      final created = (await useCases.createCustom(
+              name: 'Paused squat', createdById: 'user-1'))
+          .dataOrNull!;
+
+      final added = await useCases.addRelationship(
+        sourceExerciseId: created.id,
+        targetExerciseId: 'exercise-squat-001',
+        actorId: 'user-1',
+        type: RelationshipType.variationOf,
+        reason: 'Same movement with a pause',
+      );
+      final withRelationship = await repository.findById(created.id);
+      final removed = await useCases.removeRelationship(
+        sourceExerciseId: created.id,
+        targetExerciseId: 'exercise-squat-001',
+        actorId: 'user-1',
+        type: RelationshipType.variationOf,
+      );
+      final withoutRelationship = await repository.findById(created.id);
+
+      expect(added.isSuccess, isTrue);
+      expect(withRelationship.dataOrNull!.relationships, hasLength(1));
+      expect(withRelationship.dataOrNull!.relationships.single.reason,
+          'Same movement with a pause');
+      expect(removed.isSuccess, isTrue);
+      expect(withoutRelationship.dataOrNull!.relationships, isEmpty);
+    });
+
     test('rejects blank names and protects system exercises from archiving',
         () async {
       await CatalogSeeder(repository).seedIfEmpty();

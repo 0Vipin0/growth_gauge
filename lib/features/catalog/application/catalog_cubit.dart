@@ -21,12 +21,14 @@ class CatalogCubit extends Cubit<CatalogState> {
       {String query = '',
       BodyRegion? bodyRegion,
       MovementPattern? movementPattern,
+      MuscleGroup? muscleGroup,
       EquipmentType? equipment}) async {
     emit(CatalogState(exercises: state.exercises, isLoading: true));
     final result = await _useCases.list(
         query: query,
         bodyRegion: bodyRegion,
         movementPattern: movementPattern,
+        muscleGroup: muscleGroup,
         equipment: equipment);
     switch (result) {
       case Success(data: final exercises):
