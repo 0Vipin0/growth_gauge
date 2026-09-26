@@ -11,7 +11,8 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [message, cause];
 
   @override
-  String toString() => '$runtimeType: $message${cause != null ? ' (Cause: $cause)' : ''}';
+  String toString() =>
+      '$runtimeType: $message${cause != null ? ' (Cause: $cause)' : ''}';
 }
 
 /// Represents a failure occurring in SQLite or document store persistence.

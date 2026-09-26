@@ -29,8 +29,10 @@ abstract class Exercise with _$Exercise {
     @Default(ExerciseExecutionProfile()) ExerciseExecutionProfile execution,
     @Default(ExerciseEquipmentProfile()) ExerciseEquipmentProfile equipment,
     @Default([]) List<ExerciseRelationship> relationships,
-    @Default(ExerciseMeasurementProfile()) ExerciseMeasurementProfile measurementProfile,
+    @Default(ExerciseMeasurementProfile())
+    ExerciseMeasurementProfile measurementProfile,
   }) = _Exercise;
 
-  factory Exercise.fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
+  factory Exercise.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseFromJson(json);
 }

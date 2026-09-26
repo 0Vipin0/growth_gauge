@@ -10,7 +10,7 @@ import '../../domain/exercise_equipment.dart';
 class ExerciseSeedData {
   const ExerciseSeedData._();
 
-  static final _epoch = DateTime.utc(2024, 1);
+  static final _epoch = DateTime.utc(2024);
 
   static List<Exercise> get all => [
         _squat,
@@ -135,7 +135,8 @@ class ExerciseSeedData {
     id: 'exercise-rdl-001',
     name: 'Dumbbell RDL',
     aliases: ['Romanian deadlift', 'dumbbell Romanian deadlift'],
-    description: 'Hip-hinge hinge movement with dumbbells emphasising hamstrings.',
+    description:
+        'Hip-hinge hinge movement with dumbbells emphasising hamstrings.',
     createdAt: _epoch,
     updatedAt: _epoch,
     classification: const ExerciseClassification(

@@ -46,7 +46,7 @@ void main() {
       final revision =
           (await repository.getRevision(template.currentRevisionId!))
               .dataOrNull!;
-      final block = WorkoutBlock(id: 'block-1', name: 'Main lifts');
+      const block = WorkoutBlock(id: 'block-1', name: 'Main lifts');
 
       final updated = await useCases.updateDraftBlocks(revision.id, [block]);
       final published = await useCases.publish(revision.id);
@@ -76,7 +76,7 @@ void main() {
       final directSave = await repository
           .saveRevision(revision.copyWith(changeSummary: 'tampered'));
       final update = await useCases.updateDraftBlocks(
-          revision.id, [WorkoutBlock(id: 'block-1', name: 'Changed')]);
+          revision.id, [const WorkoutBlock(id: 'block-1', name: 'Changed')]);
 
       expect(directSave.errorOrNull, isA<ConflictFailure>());
       expect(update.errorOrNull, isA<ConflictFailure>());

@@ -14,7 +14,10 @@ class SampleUser {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SampleUser && id == other.id && name == other.name && age == other.age;
+      other is SampleUser &&
+          id == other.id &&
+          name == other.name &&
+          age == other.age;
 
   @override
   int get hashCode => Object.hash(id, name, age);
@@ -72,15 +75,19 @@ void main() {
       expect(fetchResult.dataOrNull, equals(user));
     });
 
-    test('getById returns NotFoundFailure when entity does not exist', () async {
+    test('getById returns NotFoundFailure when entity does not exist',
+        () async {
       final result = await store.getById('non-existent-id');
       expect(result.isError, isTrue);
       expect(result.errorOrNull, isA<NotFoundFailure>());
     });
 
-    test('second upsert with same ID updates entity in-place without duplicating rows', () async {
+    test(
+        'second upsert with same ID updates entity in-place without duplicating rows',
+        () async {
       final userV1 = SampleUser(id: 'user-001', name: 'Sarah', age: 30);
-      final userV2 = SampleUser(id: 'user-001', name: 'Sarah Mitchell', age: 31);
+      final userV2 =
+          SampleUser(id: 'user-001', name: 'Sarah Mitchell', age: 31);
 
       await store.upsert(userV1);
       await store.upsert(userV2);
@@ -116,7 +123,8 @@ void main() {
 
     test('watchAll emits reactive updates when documents are added', () async {
       final emissions = <List<SampleUser>>[];
-      final subscription = store.watchAll().listen((list) => emissions.add(list));
+      final subscription =
+          store.watchAll().listen((list) => emissions.add(list));
 
       await Future<void>.delayed(const Duration(milliseconds: 30));
       expect(emissions.last, isEmpty);

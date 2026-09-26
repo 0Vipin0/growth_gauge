@@ -16,5 +16,6 @@ abstract class RestPolicy with _$RestPolicy {
     @Default(true) bool allowExtend,
   }) = _RestPolicy;
 
-  factory RestPolicy.fromJson(Map<String, dynamic> json) => _$RestPolicyFromJson(json);
+  factory RestPolicy.fromJson(Map<String, dynamic> json) =>
+      _$RestPolicyFromJson(json);
 }

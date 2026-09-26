@@ -18,7 +18,8 @@ class UniqueId extends Equatable {
   factory UniqueId.from(String id) {
     final trimmed = id.trim();
     if (trimmed.isEmpty) {
-      throw ArgumentError.value(id, 'id', 'UniqueId cannot be empty or whitespace');
+      throw ArgumentError.value(
+          id, 'id', 'UniqueId cannot be empty or whitespace');
     }
     return UniqueId._(trimmed);
   }

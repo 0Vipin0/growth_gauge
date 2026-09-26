@@ -22,13 +22,23 @@ class CatalogUseCases {
     return result.map((exercises) {
       final normalized = query.trim().toLowerCase();
       return exercises.where((exercise) {
-        if (!includeArchived && exercise.status == ExerciseStatus.archived) return false;
-        if (bodyRegion != null && !exercise.classification.bodyRegions.contains(bodyRegion)) return false;
-        if (movementPattern != null && !exercise.classification.movementPatterns.contains(movementPattern)) return false;
-        if (equipment != null && !exercise.equipment.requiredEquipment.contains(equipment)) return false;
+        if (!includeArchived && exercise.status == ExerciseStatus.archived)
+          return false;
+        if (bodyRegion != null &&
+            !exercise.classification.bodyRegions.contains(bodyRegion))
+          return false;
+        if (movementPattern != null &&
+            !exercise.classification.movementPatterns.contains(movementPattern))
+          return false;
+        if (equipment != null &&
+            !exercise.equipment.requiredEquipment.contains(equipment))
+          return false;
         if (normalized.isNotEmpty &&
             !exercise.name.toLowerCase().contains(normalized) &&
-            !exercise.aliases.any((alias) => alias.toLowerCase().contains(normalized))) return false;
+            !exercise.aliases
+                .any((alias) => alias.toLowerCase().contains(normalized))) {
+          return false;
+        }
         return true;
       }).toList();
     });
@@ -40,20 +50,23 @@ class CatalogUseCases {
     String description = '',
   }) async {
     final cleanName = name.trim();
-    if (cleanName.isEmpty) return const Result.error(ValidationFailure('Exercise name is required', 'name'));
+    if (cleanName.isEmpty)
+      return const Result.error(
+          ValidationFailure('Exercise name is required', 'name'));
     final now = AppClock.nowUtc();
     final exercise = Exercise(
       id: UniqueId.generate().value,
       name: cleanName,
       description: description.trim(),
-      status: ExerciseStatus.active,
       sourceType: ExerciseSourceType.userCreated,
       createdById: createdById,
       createdAt: now,
       updatedAt: now,
     );
     final saved = await _repository.save(exercise);
-    return saved.isError ? Result.error(saved.errorOrNull!) : Result.success(exercise);
+    return saved.isError
+        ? Result.error(saved.errorOrNull!)
+        : Result.success(exercise);
   }
 
   Future<Result<void, Failure>> archive(String id) async {
@@ -61,8 +74,10 @@ class CatalogUseCases {
     if (found.isError) return Result.error(found.errorOrNull!);
     final exercise = found.dataOrNull!;
     if (exercise.sourceType == ExerciseSourceType.system) {
-      return Result.error(ConflictFailure('System exercises cannot be changed', id));
+      return Result.error(
+          ConflictFailure('System exercises cannot be changed', id));
     }
-    return _repository.save(exercise.copyWith(status: ExerciseStatus.archived, updatedAt: AppClock.nowUtc()));
+    return _repository.save(exercise.copyWith(
+        status: ExerciseStatus.archived, updatedAt: AppClock.nowUtc()));
   }
 }

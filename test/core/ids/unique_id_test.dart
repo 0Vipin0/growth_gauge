@@ -18,7 +18,8 @@ void main() {
       expect(customId.isUuidV4, isFalse);
     });
 
-    test('from() throws ArgumentError for empty or whitespace-only strings', () {
+    test('from() throws ArgumentError for empty or whitespace-only strings',
+        () {
       expect(() => UniqueId.from(''), throwsArgumentError);
       expect(() => UniqueId.from('   '), throwsArgumentError);
     });

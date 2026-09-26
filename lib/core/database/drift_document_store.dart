@@ -29,11 +29,13 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
 
       // Check existing document to preserve original createdAt if available
       final existing = await (_db.select(_db.documents)
-            ..where((t) => t.collection.equals(_adapter.collection) & t.id.equals(id)))
+            ..where((t) =>
+                t.collection.equals(_adapter.collection) & t.id.equals(id)))
           .getSingleOrNull();
 
       final now = AppClock.nowUtc();
-      final createdAt = _adapter.getCreatedAt(entity) ?? existing?.createdAt ?? now;
+      final createdAt =
+          _adapter.getCreatedAt(entity) ?? existing?.createdAt ?? now;
       final updatedAt = _adapter.getUpdatedAt(entity) ?? now;
 
       final companion = DocumentsCompanion(
@@ -47,8 +49,9 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
 
       await _db.into(_db.documents).insertOnConflictUpdate(companion);
       return const Result.success(null);
-    } catch (e, stack) {
-      return Result.error(DatabaseFailure('Failed to upsert document in ${_adapter.collection}', e));
+    } catch (e) {
+      return Result.error(DatabaseFailure(
+          'Failed to upsert document in ${_adapter.collection}', e));
     }
   }
 
@@ -56,18 +59,21 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
   Future<Result<T, Failure>> getById(String id) async {
     try {
       final row = await (_db.select(_db.documents)
-            ..where((t) => t.collection.equals(_adapter.collection) & t.id.equals(id)))
+            ..where((t) =>
+                t.collection.equals(_adapter.collection) & t.id.equals(id)))
           .getSingleOrNull();
 
       if (row == null) {
-        return Result.error(NotFoundFailure('Document not found in ${_adapter.collection}', id));
+        return Result.error(NotFoundFailure(
+            'Document not found in ${_adapter.collection}', id));
       }
 
       final jsonMap = jsonDecode(row.jsonData) as Map<String, dynamic>;
       final entity = _adapter.fromJson(jsonMap);
       return Result.success(entity);
-    } catch (e, stack) {
-      return Result.error(DatabaseFailure('Failed to get document $id in ${_adapter.collection}', e));
+    } catch (e) {
+      return Result.error(DatabaseFailure(
+          'Failed to get document $id in ${_adapter.collection}', e));
     }
   }
 
@@ -85,8 +91,9 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
       }).toList();
 
       return Result.success(list);
-    } catch (e, stack) {
-      return Result.error(DatabaseFailure('Failed to list documents in ${_adapter.collection}', e));
+    } catch (e) {
+      return Result.error(DatabaseFailure(
+          'Failed to list documents in ${_adapter.collection}', e));
     }
   }
 
@@ -94,11 +101,13 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
   Future<Result<void, Failure>> delete(String id) async {
     try {
       await (_db.delete(_db.documents)
-            ..where((t) => t.collection.equals(_adapter.collection) & t.id.equals(id)))
+            ..where((t) =>
+                t.collection.equals(_adapter.collection) & t.id.equals(id)))
           .go();
       return const Result.success(null);
-    } catch (e, stack) {
-      return Result.error(DatabaseFailure('Failed to delete document $id in ${_adapter.collection}', e));
+    } catch (e) {
+      return Result.error(DatabaseFailure(
+          'Failed to delete document $id in ${_adapter.collection}', e));
     }
   }
 
@@ -123,8 +132,9 @@ class DriftDocumentStore<T> implements IDocumentStore<T> {
             ..where((t) => t.collection.equals(_adapter.collection)))
           .go();
       return const Result.success(null);
-    } catch (e, stack) {
-      return Result.error(DatabaseFailure('Failed to clear collection ${_adapter.collection}', e));
+    } catch (e) {
+      return Result.error(DatabaseFailure(
+          'Failed to clear collection ${_adapter.collection}', e));
     }
   }
 }

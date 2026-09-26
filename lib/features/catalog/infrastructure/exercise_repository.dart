@@ -1,6 +1,6 @@
-import '../../../core/database/drift_document_store.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/document_store.dart';
+import '../../../core/database/drift_document_store.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../domain/exercise.dart';
@@ -34,7 +34,8 @@ class ExerciseRepository implements IExerciseRepository {
   ExerciseRepository.withStore(this._store);
 
   @override
-  Future<Result<void, Failure>> save(Exercise exercise) => _store.upsert(exercise);
+  Future<Result<void, Failure>> save(Exercise exercise) =>
+      _store.upsert(exercise);
 
   @override
   Future<Result<Exercise, Failure>> findById(String id) => _store.getById(id);

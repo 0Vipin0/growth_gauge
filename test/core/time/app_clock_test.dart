@@ -19,7 +19,7 @@ void main() {
     });
 
     test('deterministic clock testing using withClock', () {
-      final fixedDate = DateTime.utc(2026, 9, 24, 9, 15, 0);
+      final fixedDate = DateTime.utc(2026, 9, 24, 9, 15);
 
       withClock(Clock.fixed(fixedDate), () {
         expect(AppClock.nowUtc(), equals(fixedDate));
@@ -28,7 +28,7 @@ void main() {
     });
 
     test('parseIsoUtc and formatIsoUtc roundtrip', () {
-      final sample = '2026-09-24T09:15:00.000Z';
+      const sample = '2026-09-24T09:15:00.000Z';
       final parsed = AppClock.parseIsoUtc(sample);
 
       expect(parsed.isUtc, isTrue);

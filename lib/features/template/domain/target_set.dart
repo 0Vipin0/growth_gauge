@@ -23,5 +23,6 @@ abstract class TargetSet with _$TargetSet {
     String? notes,
   }) = _TargetSet;
 
-  factory TargetSet.fromJson(Map<String, dynamic> json) => _$TargetSetFromJson(json);
+  factory TargetSet.fromJson(Map<String, dynamic> json) =>
+      _$TargetSetFromJson(json);
 }

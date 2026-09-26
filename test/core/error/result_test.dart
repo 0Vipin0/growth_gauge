@@ -50,7 +50,8 @@ void main() {
 
       expect(flatMapped.dataOrNull, equals('Value: 10'));
 
-      const errorResult = Result<int, Failure>.error(DatabaseFailure('Disk error'));
+      const errorResult =
+          Result<int, Failure>.error(DatabaseFailure('Disk error'));
       final errorChain = errorResult.flatMap(
         (data) => Result<String, Failure>.success('Value: $data'),
       );

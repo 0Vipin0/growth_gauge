@@ -27,10 +27,7 @@ class DomainEventDispatcher {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return _controller.stream
-        .where((event) => event is E)
-        .cast<E>()
-        .listen(
+    return _controller.stream.where((event) => event is E).cast<E>().listen(
           onData,
           onError: onError,
           onDone: onDone,
