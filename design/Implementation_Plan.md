@@ -88,7 +88,7 @@ flowchart TD
 |---|---|---|---|---|
 | **Phase 1** | Dependencies & Core Foundation | `[x] COMPLETED` | 6 | 6 |
 | **Phase 2** | Exercise Catalog & Templates | `[x] COMPLETED` | 7 | 7 |
-| **Phase 3** | Session Runtime & Copy-on-Write Engine | `[ ] NOT STARTED` | 0 | 8 |
+| **Phase 3** | Session Runtime & Copy-on-Write Engine | `[*] IN PROGRESS` | 2 | 8 |
 | **Phase 4** | Materialized Analytics & Drift Projections | `[ ] NOT STARTED` | 0 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[ ] NOT STARTED` | 0 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[ ] NOT STARTED` | 0 | 5 |
@@ -237,6 +237,23 @@ Phase 3 implements the live workout tracking engine: copy-on-write execution, de
 - `lib/features/session/infrastructure/`: `session_document_adapter.dart`, `session_repository.dart`, `crash_recovery_service.dart`.
 - `lib/features/session/presentation/`: `active_session_screen.dart`, `session_summary_screen.dart`, `active_exercise_card.dart`, `execution_set_row.dart`, `rest_timer_overlay.dart`, `plate_calculator_sheet.dart`, `session_recovery_dialog.dart`.
 - Tests under `test/features/session/` verifying copy-on-write, state transitions, audit trail, and crash recovery.
+
+### 6.3 Phase 3 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 3.1** | Session runtime domain snapshots and serialization | `[x] COMPLETED` | Added immutable session, block, item, execution set, rest interval, interruption, audit, and lifecycle enum models with JSON serialization. |
+| **Step 3.2** | Copy-on-write from a template revision | `[x] COMPLETED` | `SessionUseCases.createFromRevision` snapshots template content into session-owned IDs, retains source IDs, and allows active-session target edits without changing the template. |
+| **Step 3.3** | Persisted lifecycle state machine | `[*] IN PROGRESS` | Start, pause, resume, complete, cancel, abandon, and interrupted `STARTING`/`COMPLETING` recovery persist; transition verification remains. |
+| **Step 3.4** | Execution set logging and rest interval runtime | `[*] IN PROGRESS` | Full supported measurements, target edits, validation, skip/delete, and rest start/finish are persisted; automatic rest policy behavior and verification remain. |
+| **Step 3.5** | Append-only audits and domain events | `[*] IN PROGRESS` | Set updates/deletion and lifecycle actions append audit entries; lifecycle, rest, and set completion/skip/delete events publish after persistence. Event verification remains. |
+| **Step 3.6** | Session document repository and crash recovery query | `[*] IN PROGRESS` | Home cold-start and template flows offer recovery, unfinished-session lookup excludes drafts, and interrupted start/completion transitions are repaired; authenticated user context and verification remain. |
+| **Step 3.7** | Active session and recovery presentation | `[*] IN PROGRESS` | Active UI now captures the supported measurement fields, resolves exercise names, and offers cancel/abandon alongside pause/resume, rest, completion, and recovery. Remaining presentation polish remains. |
+| **Step 3.8** | Session integration and acceptance checks | `[ ] NOT STARTED` | Add session tests, verify cross-feature behavior, and run the complete acceptance checks. |
+
+### 6.4 Phase 3 Work Started (2026-09-26)
+
+Implemented the session domain and persistence foundation under `lib/features/session/`, including snapshot models, published-template revision cloning, session-only target editing, lifecycle and set-recording use cases, append-only audit entries, domain events, and a Drift-backed repository. Added set validation/skip/delete and rest interval start/finish; active rests are closed when a session pauses or ends. Cancel and abandon transitions preserve session history and publish lifecycle events. Recovery excludes unstarted drafts, resumes interrupted starts, and finalizes sessions interrupted during completion. Home and template flows offer recovery; the active screen supports all modeled measurements, target editing, and exercise-name lookup. Scoped static analysis passes with no issues. Session tests, automatic rest policy behavior, authenticated user context, and remaining lifecycle/event verification are not complete, so Phase 3 remains in progress.
 
 ---
 

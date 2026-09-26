@@ -1,14 +1,71 @@
 import 'package:flutter/material.dart';
-
 import 'package:growth_gauge/utils/constants.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/database/app_database.dart';
+import '../../core/events/domain_event_dispatcher.dart';
+import '../catalog/infrastructure/exercise_repository.dart';
 import '../counter/counter.dart';
+import '../session/application/session_use_cases.dart';
+import '../session/domain/session_enums.dart';
+import '../session/infrastructure/session_repository.dart';
+import '../session/presentation/active_session_screen.dart';
+import '../session/presentation/session_recovery_dialog.dart';
 import '../settings/settings.dart';
+import '../template/infrastructure/template_repository.dart';
 import '../timer/timer.dart';
 import 'fitness_hub_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _offerRecovery());
+  }
+
+  Future<void> _offerRecovery() async {
+    final database = Provider.of<AppDatabase>(context, listen: false);
+    final sessionRepository = WorkoutSessionRepository(database);
+    final result = await sessionRepository.listUnfinished('local-user');
+    if (!mounted || result.isError || result.dataOrNull!.isEmpty) return;
+    final selected =
+        await showSessionRecoveryDialog(context, result.dataOrNull!);
+    if (selected == null || !mounted) return;
+    final events = DomainEventDispatcher();
+    final useCases = SessionUseCases(
+      templates: TemplateRepository(database),
+      sessions: sessionRepository,
+      events: events,
+    );
+    try {
+      final recovery = await useCases.recoverIncomplete(selected.id);
+      if (!mounted) return;
+      if (recovery.isError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(recovery.errorOrNull!.message)),
+        );
+        return;
+      }
+      final session = recovery.dataOrNull!;
+      if (session.status == SessionStatus.completed) return;
+      await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ActiveSessionScreen(
+          session: session,
+          useCases: useCases,
+          exerciseRepository: ExerciseRepository(database),
+        ),
+      ));
+    } finally {
+      await events.dispose();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

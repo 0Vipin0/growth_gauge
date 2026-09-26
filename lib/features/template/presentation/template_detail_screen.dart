@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../core/database/app_database.dart';
+import '../../../core/events/domain_event_dispatcher.dart';
 import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../session/application/session_use_cases.dart';
+import '../../session/infrastructure/session_repository.dart';
+import '../../session/presentation/active_session_screen.dart';
 import '../application/template_use_cases.dart';
 import '../domain/template_enums.dart';
 import '../domain/workout_template.dart';
+import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 import 'template_editor_screen.dart';
 
@@ -27,6 +34,7 @@ class TemplateDetailScreen extends StatefulWidget {
 
 class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
   late WorkoutTemplate _template;
+  bool _starting = false;
 
   @override
   void initState() {
@@ -66,6 +74,49 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
     }
   }
 
+  Future<void> _start(WorkoutTemplateRevision revision) async {
+    if (_starting) return;
+    setState(() => _starting = true);
+    final database = Provider.of<AppDatabase>(context, listen: false);
+    final events = DomainEventDispatcher();
+    final useCases = SessionUseCases(
+      templates: widget.repository,
+      sessions: WorkoutSessionRepository(database),
+      events: events,
+    );
+    try {
+      final created = await useCases.createFromRevision(
+        revisionId: revision.id,
+        userId: widget.userId,
+      );
+      if (!mounted) return;
+      if (created.isError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(created.errorOrNull!.message)),
+        );
+        return;
+      }
+      final started = await useCases.start(created.dataOrNull!.id);
+      if (!mounted) return;
+      if (started.isError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(started.errorOrNull!.message)),
+        );
+        return;
+      }
+      await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ActiveSessionScreen(
+          session: started.dataOrNull!,
+          useCases: useCases,
+          exerciseRepository: widget.exerciseRepository,
+        ),
+      ));
+    } finally {
+      await events.dispose();
+      if (mounted) setState(() => _starting = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text(_template.name)),
@@ -101,6 +152,15 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
                     padding: EdgeInsets.all(16),
                     child: Text(
                         'No workout blocks yet. Edit this template to add a block.')),
+              if (revision.status == TemplateRevisionStatus.published &&
+                  revision.blocks.isNotEmpty) ...[
+                const SizedBox(height: 20),
+                FilledButton.icon(
+                  onPressed: _starting ? null : () => _start(revision),
+                  icon: const Icon(Icons.play_arrow),
+                  label: Text(_starting ? 'Starting…' : 'Start workout'),
+                ),
+              ],
               ...revision.blocks.map((block) => Card(
                   child: ListTile(
                       leading: const Icon(Icons.fitness_center),

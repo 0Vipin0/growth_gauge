@@ -9,6 +9,7 @@ import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/catalog/presentation/catalog_screen.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
+import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
 import 'features/template/application/template_use_cases.dart';
@@ -47,6 +48,7 @@ mixin AppRoutes {
       return TemplateListScreen(
         repository: repository,
         exerciseRepository: ExerciseRepository(database),
+        sessionRepository: WorkoutSessionRepository(database),
         useCases: TemplateUseCases(repository),
         userId: 'local-user',
       );

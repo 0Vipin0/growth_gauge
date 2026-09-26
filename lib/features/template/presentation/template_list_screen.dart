@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/events/domain_event_dispatcher.dart';
 import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../session/application/session_use_cases.dart';
+import '../../session/domain/session_enums.dart';
+import '../../session/infrastructure/session_repository.dart';
+import '../../session/presentation/active_session_screen.dart';
+import '../../session/presentation/session_recovery_dialog.dart';
 import '../application/template_use_cases.dart';
 import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
@@ -11,10 +17,12 @@ class TemplateListScreen extends StatefulWidget {
       {super.key,
       required this.repository,
       required this.exerciseRepository,
+      required this.sessionRepository,
       required this.useCases,
       required this.userId});
   final ITemplateRepository repository;
   final IExerciseRepository exerciseRepository;
+  final IWorkoutSessionRepository sessionRepository;
   final TemplateUseCases useCases;
   final String userId;
 
@@ -29,6 +37,51 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
   void initState() {
     super.initState();
     _templates = widget.repository.watchTemplates();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _offerRecovery());
+  }
+
+  Future<void> _offerRecovery() async {
+    final result = await widget.sessionRepository.listUnfinished(widget.userId);
+    if (!mounted || result.isError || result.dataOrNull!.isEmpty) return;
+    final sessions = result.dataOrNull!;
+    final selected = await showSessionRecoveryDialog(context, sessions);
+    if (selected == null || !mounted) {
+      return;
+    }
+    final events = DomainEventDispatcher();
+    final sessionUseCases = SessionUseCases(
+      templates: widget.repository,
+      sessions: widget.sessionRepository,
+      events: events,
+    );
+    var session = selected;
+    final recovered = await sessionUseCases.recoverIncomplete(session.id);
+    if (recovered.isError) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(recovered.errorOrNull!.message)),
+        );
+      }
+      await events.dispose();
+      return;
+    }
+    session = recovered.dataOrNull!;
+    if (session.status == SessionStatus.completed) {
+      await events.dispose();
+      return;
+    }
+    if (!mounted) {
+      await events.dispose();
+      return;
+    }
+    await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ActiveSessionScreen(
+        session: session,
+        useCases: sessionUseCases,
+        exerciseRepository: widget.exerciseRepository,
+      ),
+    ));
+    await events.dispose();
   }
 
   Future<void> _create() async {
