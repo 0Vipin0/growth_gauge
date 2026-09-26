@@ -110,7 +110,7 @@ abstract mixin class $AuditEntryCopyWith<$Res> {
 class _$AuditEntryCopyWithImpl<$Res> implements $AuditEntryCopyWith<$Res> {
   _$AuditEntryCopyWithImpl(this._self, this._then);
 
-  final AuditEntry _self;
+  AuditEntry _self;
   final $Res Function(AuditEntry) _then;
 
   /// Create a copy of AuditEntry

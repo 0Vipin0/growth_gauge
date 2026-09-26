@@ -1,4 +1,9 @@
-enum DurationInterval { tenSeconds, thirtySeconds, minute, twoMinutes }
+enum DurationInterval() {
+  tenSeconds,
+  thirtySeconds,
+  minute,
+  twoMinutes,
+}
 
 extension DurationIntervalExtension on DurationInterval {
   String getUnitLabel() {

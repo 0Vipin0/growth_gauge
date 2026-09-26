@@ -87,7 +87,7 @@ class _$ExerciseExecutionProfileCopyWithImpl<$Res>
     implements $ExerciseExecutionProfileCopyWith<$Res> {
   _$ExerciseExecutionProfileCopyWithImpl(this._self, this._then);
 
-  final ExerciseExecutionProfile _self;
+  ExerciseExecutionProfile _self;
   final $Res Function(ExerciseExecutionProfile) _then;
 
   /// Create a copy of ExerciseExecutionProfile
@@ -331,10 +331,10 @@ extension ExerciseExecutionProfilePatterns on ExerciseExecutionProfile {
 @JsonSerializable()
 class _ExerciseExecutionProfile implements ExerciseExecutionProfile {
   const _ExerciseExecutionProfile(
-      {final List<String> setupInstructions = const [],
-      final List<String> executionInstructions = const [],
+      {List<String> setupInstructions = const [],
+      List<String> executionInstructions = const [],
       this.breathingInstructions,
-      final List<String> techniqueCues = const [],
+      List<String> techniqueCues = const [],
       this.tempo,
       this.rangeOfMotion})
       : _setupInstructions = setupInstructions,

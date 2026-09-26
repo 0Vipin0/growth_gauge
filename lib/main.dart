@@ -20,20 +20,18 @@ void main() async {
   await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
   final database = AppDatabase();
-  final seedResult =
-      await CatalogSeeder(ExerciseRepository(database)).seedIfEmpty();
+  final seedResult = await CatalogSeeder(ExerciseRepository(database))
+      .seedIfEmpty();
   if (seedResult.isError) {
     throw StateError(
-        'Could not seed exercise catalog: ${seedResult.errorOrNull}');
+      'Could not seed exercise catalog: ${seedResult.errorOrNull}',
+    );
   }
   runApp(DependencyProvider(database: database));
 }
 
-class DependencyProvider extends StatelessWidget {
-  const DependencyProvider({super.key, required this.database});
-
-  final AppDatabase database;
-
+class const DependencyProvider({super.key, required final AppDatabase database})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -60,9 +58,7 @@ class DependencyProvider extends StatelessWidget {
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class const MyApp({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SettingsProvider>(

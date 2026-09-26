@@ -75,7 +75,7 @@ class _$SessionInterruptionCopyWithImpl<$Res>
     implements $SessionInterruptionCopyWith<$Res> {
   _$SessionInterruptionCopyWithImpl(this._self, this._then);
 
-  final SessionInterruption _self;
+  SessionInterruption _self;
   final $Res Function(SessionInterruption) _then;
 
   /// Create a copy of SessionInterruption

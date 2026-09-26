@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 /// Body regions targeted by an exercise.
-enum BodyRegion {
+enum BodyRegion() {
   @JsonValue('UPPER_BODY')
   upperBody,
   @JsonValue('LOWER_BODY')
@@ -13,7 +13,7 @@ enum BodyRegion {
 }
 
 /// Primary movement biomechanical patterns.
-enum MovementPattern {
+enum MovementPattern() {
   @JsonValue('HORIZONTAL_PUSH')
   horizontalPush,
   @JsonValue('VERTICAL_PUSH')
@@ -37,7 +37,7 @@ enum MovementPattern {
 }
 
 /// Anatomical muscle groups.
-enum MuscleGroup {
+enum MuscleGroup() {
   @JsonValue('CHEST')
   chest,
   @JsonValue('LATS')
@@ -73,7 +73,7 @@ enum MuscleGroup {
 }
 
 /// Equipment required or used for exercise execution.
-enum EquipmentType {
+enum EquipmentType() {
   @JsonValue('BARBELL')
   barbell,
   @JsonValue('DUMBBELL')
@@ -97,7 +97,7 @@ enum EquipmentType {
 }
 
 /// Exercise lifecycle status.
-enum ExerciseStatus {
+enum ExerciseStatus() {
   @JsonValue('DRAFT')
   draft,
   @JsonValue('ACTIVE')
@@ -107,7 +107,7 @@ enum ExerciseStatus {
 }
 
 /// Source / ownership of an exercise catalog item.
-enum ExerciseSourceType {
+enum ExerciseSourceType() {
   @JsonValue('SYSTEM')
   system,
   @JsonValue('USER_CREATED')
@@ -117,7 +117,7 @@ enum ExerciseSourceType {
 }
 
 /// Relational connection between exercises (for substitutions and progressions).
-enum RelationshipType {
+enum RelationshipType() {
   @JsonValue('ALTERNATIVE')
   alternative,
   @JsonValue('REGRESSION')
@@ -133,7 +133,7 @@ enum RelationshipType {
 }
 
 /// Metric tracking style supported by an exercise.
-enum MetricType {
+enum MetricType() {
   @JsonValue('WEIGHT_AND_REPS')
   weightAndReps,
   @JsonValue('TIME_BASED')

@@ -8,18 +8,12 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'timer_details_page.dart';
 
-class ReusableTimerWidget extends StatelessWidget {
-  final TimerModel timerModel;
-  final VoidCallback onRemove;
-  final VoidCallback onUpdateTarget;
-
-  const ReusableTimerWidget({
-    super.key,
-    required this.timerModel,
-    required this.onRemove,
-    required this.onUpdateTarget,
-  });
-
+class const ReusableTimerWidget({
+  super.key,
+  required final TimerModel timerModel,
+  required final VoidCallback onRemove,
+  required final VoidCallback onUpdateTarget,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -34,8 +28,10 @@ class ReusableTimerWidget extends StatelessWidget {
                   title: Text(
                     timerModel.name,
                     style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.headlineLarge?.fontSize,
+                      fontSize: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.fontSize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -45,31 +41,37 @@ class ReusableTimerWidget extends StatelessWidget {
                       Text(
                         'Time Passed: ${timerProvider.currentInterval.inSeconds} seconds',
                         style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.labelLarge?.fontSize,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.fontSize,
                         ),
                       ),
                       if (timerModel.target != null)
-                        Text('Target: ${timerModel.target!.inMinutes} minutes',
-                            style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.fontSize,
-                                color: Colors.green)),
+                        Text(
+                          'Target: ${timerModel.target!.inMinutes} minutes',
+                          style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.fontSize,
+                            color: Colors.green,
+                          ),
+                        ),
                       if (timerModel.target == null)
                         TextButton(
                           onPressed: onUpdateTarget,
-                          child: const Text('Add Target',
-                              style: TextStyle(color: Colors.red)),
+                          child: const Text(
+                            'Add Target',
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8.0,
-                        children: timerModel.tags
-                                ?.map((tag) => Chip(
-                                      label: Text(tag),
-                                    ))
+                        children:
+                            timerModel.tags
+                                ?.map((tag) => Chip(label: Text(tag)))
                                 .toList() ??
                             [],
                       ),
@@ -101,9 +103,7 @@ class ReusableTimerWidget extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final List<Widget> actions = [
       IconButton(
-        icon: Icon(
-          timerProvider.isRunning ? Icons.pause : Icons.play_arrow,
-        ),
+        icon: Icon(timerProvider.isRunning ? Icons.pause : Icons.play_arrow),
         tooltip: timerProvider.isRunning ? 'Pause' : 'Start',
         onPressed: () {
           timerProvider.startOrPauseTimer();
@@ -194,10 +194,7 @@ class ReusableTimerWidget extends StatelessWidget {
               value: 'ManageTagsAction',
               child: Text('Manage Tags'),
             ),
-            const PopupMenuItem(
-              value: 'DeleteAction',
-              child: Text('Delete'),
-            ),
+            const PopupMenuItem(value: 'DeleteAction', child: Text('Delete')),
           ],
         ),
       );
@@ -207,8 +204,10 @@ class ReusableTimerWidget extends StatelessWidget {
   }
 
   void _manageTagsDialog(BuildContext context) {
-    final timerProvider =
-        Provider.of<TimerListProvider>(context, listen: false);
+    final timerProvider = Provider.of<TimerListProvider>(
+      context,
+      listen: false,
+    );
     timerProvider.initializeTags(timerModel.tags);
 
     showDialog(
@@ -240,12 +239,14 @@ class ReusableTimerWidget extends StatelessWidget {
                   return Wrap(
                     spacing: 8.0,
                     children: provider.updatedTags
-                        .map((tag) => Chip(
-                              label: Text(tag),
-                              onDeleted: () {
-                                provider.removeTag(tag);
-                              },
-                            ))
+                        .map(
+                          (tag) => Chip(
+                            label: Text(tag),
+                            onDeleted: () {
+                              provider.removeTag(tag);
+                            },
+                          ),
+                        )
                         .toList(),
                   );
                 },

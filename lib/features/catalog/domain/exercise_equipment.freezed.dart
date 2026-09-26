@@ -68,7 +68,7 @@ class _$ExerciseEquipmentProfileCopyWithImpl<$Res>
     implements $ExerciseEquipmentProfileCopyWith<$Res> {
   _$ExerciseEquipmentProfileCopyWithImpl(this._self, this._then);
 
-  final ExerciseEquipmentProfile _self;
+  ExerciseEquipmentProfile _self;
   final $Res Function(ExerciseEquipmentProfile) _then;
 
   /// Create a copy of ExerciseEquipmentProfile
@@ -259,8 +259,8 @@ extension ExerciseEquipmentProfilePatterns on ExerciseEquipmentProfile {
 @JsonSerializable()
 class _ExerciseEquipmentProfile implements ExerciseEquipmentProfile {
   const _ExerciseEquipmentProfile(
-      {final List<EquipmentType> requiredEquipment = const [],
-      final List<EquipmentType> optionalEquipment = const []})
+      {List<EquipmentType> requiredEquipment = const [],
+      List<EquipmentType> optionalEquipment = const []})
       : _requiredEquipment = requiredEquipment,
         _optionalEquipment = optionalEquipment;
   factory _ExerciseEquipmentProfile.fromJson(Map<String, dynamic> json) =>

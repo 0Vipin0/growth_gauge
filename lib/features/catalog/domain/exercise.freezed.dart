@@ -135,7 +135,7 @@ abstract mixin class $ExerciseCopyWith<$Res> {
 class _$ExerciseCopyWithImpl<$Res> implements $ExerciseCopyWith<$Res> {
   _$ExerciseCopyWithImpl(this._self, this._then);
 
-  final Exercise _self;
+  Exercise _self;
   final $Res Function(Exercise) _then;
 
   /// Create a copy of Exercise
@@ -532,7 +532,7 @@ class _Exercise implements Exercise {
   const _Exercise(
       {required this.id,
       required this.name,
-      final List<String> aliases = const [],
+      List<String> aliases = const [],
       this.description = '',
       this.status = ExerciseStatus.active,
       this.sourceType = ExerciseSourceType.system,
@@ -544,7 +544,7 @@ class _Exercise implements Exercise {
       this.classification = const ExerciseClassification(),
       this.execution = const ExerciseExecutionProfile(),
       this.equipment = const ExerciseEquipmentProfile(),
-      final List<ExerciseRelationship> relationships = const [],
+      List<ExerciseRelationship> relationships = const [],
       this.measurementProfile = const ExerciseMeasurementProfile()})
       : _aliases = aliases,
         _relationships = relationships;

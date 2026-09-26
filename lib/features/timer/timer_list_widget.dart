@@ -9,9 +9,7 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'reusable_timer_widget.dart';
 
-class TimerListWidget extends StatelessWidget {
-  const TimerListWidget({super.key});
-
+class const TimerListWidget({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerListProvider = Provider.of<TimerListProvider>(context);
@@ -185,8 +183,8 @@ class TimerListWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color:
                               Theme.of(context).brightness == Brightness.light
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).primaryColorLight,
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColorLight,
                           shape: BoxShape.circle,
                         ),
                       ),

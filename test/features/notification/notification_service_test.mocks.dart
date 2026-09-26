@@ -3,13 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i3;
 
 import 'package:flutter/material.dart' as _i5;
-import 'package:growth_gauge/features/notification/notification_service.dart'
-    as _i2;
+
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:timezone/timezone.dart' as _i4;
+
+import 'package:growth_gauge/features/notification/notification_service.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -37,43 +40,31 @@ class MockNotificationServiceBase extends _i1.Mock
 
   @override
   _i3.Future<void> initializeTimeZone() => (super.noSuchMethod(
-        Invocation.method(
-          #initializeTimeZone,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+    Invocation.method(#initializeTimeZone, []),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> initializeNotificationSettings() => (super.noSuchMethod(
-        Invocation.method(
-          #initializeNotificationSettings,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+    Invocation.method(#initializeNotificationSettings, []),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> requestPlatformPermissions() => (super.noSuchMethod(
-        Invocation.method(
-          #requestPlatformPermissions,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+    Invocation.method(#requestPlatformPermissions, []),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> isAndroidPermissionGranted() => (super.noSuchMethod(
-        Invocation.method(
-          #isAndroidPermissionGranted,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+    Invocation.method(#isAndroidPermissionGranted, []),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> scheduleNotification({
@@ -82,22 +73,17 @@ class MockNotificationServiceBase extends _i1.Mock
     required String? body,
     required _i4.TZDateTime? scheduledTime,
     String? sound,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #scheduleNotification,
-          [],
-          {
-            #id: id,
-            #title: title,
-            #body: body,
-            #scheduledTime: scheduledTime,
-            #sound: sound,
-          },
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  }) => (super.noSuchMethod(
+    Invocation.method(#scheduleNotification, [], {
+      #id: id,
+      #title: title,
+      #body: body,
+      #scheduledTime: scheduledTime,
+      #sound: sound,
+    }),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> scheduleDailyNotification({
@@ -106,20 +92,15 @@ class MockNotificationServiceBase extends _i1.Mock
     required String? body,
     required _i5.TimeOfDay? time,
     String? sound,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #scheduleDailyNotification,
-          [],
-          {
-            #id: id,
-            #title: title,
-            #body: body,
-            #time: time,
-            #sound: sound,
-          },
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  }) => (super.noSuchMethod(
+    Invocation.method(#scheduleDailyNotification, [], {
+      #id: id,
+      #title: title,
+      #body: body,
+      #time: time,
+      #sound: sound,
+    }),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 }

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../counter/counter.dart';
 import 'abstract_chart_provider.dart';
 
-class CounterChartProvider extends AbstractChartProvider<CounterModel> {
+class CounterChartProvider() extends AbstractChartProvider<CounterModel> {
   bool isProcessed = false;
 
   @override

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 mixin NavigationHelper {
-  static Future<void> navigateTo(BuildContext context, String routeName,
-      {Object? arguments}) async {
+  static Future<void> navigateTo(
+    BuildContext context,
+    String routeName, {
+    Object? arguments,
+  }) async {
     if (Navigator.canPop(context)) {
       Navigator.popAndPushNamed(context, routeName, arguments: arguments);
     } else {
@@ -16,15 +19,23 @@ mixin NavigationHelper {
     }
   }
 
-  static Future<void> replaceWith(BuildContext context, String routeName,
-      {Object? arguments}) async {
+  static Future<void> replaceWith(
+    BuildContext context,
+    String routeName, {
+    Object? arguments,
+  }) async {
     Navigator.pushReplacementNamed(context, routeName, arguments: arguments);
   }
 
-  static Future<void> clearAndNavigateTo(BuildContext context, String routeName,
-      {Object? arguments}) async {
+  static Future<void> clearAndNavigateTo(
+    BuildContext context,
+    String routeName, {
+    Object? arguments,
+  }) async {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        routeName, (Route<dynamic> route) => false,
-        arguments: arguments);
+      routeName,
+      (Route<dynamic> route) => false,
+      arguments: arguments,
+    );
   }
 }

@@ -7,7 +7,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-abstract class NotificationServiceBase {
+abstract class NotificationServiceBase() {
   Future<void> initializeTimeZone();
   Future<void> initializeNotificationSettings();
   Future<void> requestPlatformPermissions();
@@ -28,16 +28,17 @@ abstract class NotificationServiceBase {
   });
 }
 
-class NotificationService extends NotificationServiceBase {
+class NotificationService() extends NotificationServiceBase {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool notificationsEnabled = false;
 
   @override
   Future<void> initializeTimeZone() async {
-    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+    final TimezoneInfo currentTimeZone =
+        await FlutterTimezone.getLocalTimezone();
     tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+    tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
   }
 
   @override
@@ -51,22 +52,24 @@ class NotificationService extends NotificationServiceBase {
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
-      android: initializationSettingsAndroid,
-      windows: const WindowsInitializationSettings(
-        iconPath: 'assets/images/icon.png',
-        appName: 'Growth Gauge',
-        guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
-        appUserModelId: 'Com.GrowthGauge',
-      ),
-      linux: LinuxInitializationSettings(
-        defaultActionName: 'Open',
-        defaultIcon: AssetsLinuxIcon('assets/images/icon.png'),
-      ),
-      macOS: const DarwinInitializationSettings(),
-      iOS: const DarwinInitializationSettings(),
-    );
+          android: initializationSettingsAndroid,
+          windows: const WindowsInitializationSettings(
+            iconPath: 'assets/images/icon.png',
+            appName: 'Growth Gauge',
+            guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
+            appUserModelId: 'Com.GrowthGauge',
+          ),
+          linux: LinuxInitializationSettings(
+            defaultActionName: 'Open',
+            defaultIcon: AssetsLinuxIcon('assets/images/icon.png'),
+          ),
+          macOS: const DarwinInitializationSettings(),
+          iOS: const DarwinInitializationSettings(),
+        );
 
-    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await _flutterLocalNotificationsPlugin.initialize(
+      settings: initializationSettings,
+    );
     await isAndroidPermissionGranted();
     await _requestPermissions();
   }
@@ -105,9 +108,7 @@ class NotificationService extends NotificationServiceBase {
       sound: sound,
     );
 
-    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-      sound: sound,
-    );
+    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(sound: sound);
 
     final platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
@@ -118,11 +119,11 @@ class NotificationService extends NotificationServiceBase {
     );
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledTime,
-      platformChannelSpecifics,
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduledTime,
+      notificationDetails: platformChannelSpecifics,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
@@ -159,9 +160,11 @@ class NotificationService extends NotificationServiceBase {
   @override
   Future<void> isAndroidPermissionGranted() async {
     if (Platform.isAndroid) {
-      final bool granted = await _flutterLocalNotificationsPlugin
+      final bool granted =
+          await _flutterLocalNotificationsPlugin
               .resolvePlatformSpecificImplementation<
-                  AndroidFlutterLocalNotificationsPlugin>()
+                AndroidFlutterLocalNotificationsPlugin
+              >()
               ?.areNotificationsEnabled() ??
           false;
 
@@ -178,28 +181,23 @@ class NotificationService extends NotificationServiceBase {
     if (Platform.isIOS || Platform.isMacOS) {
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-              MacOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
+            MacOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
     } else if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
           _flutterLocalNotificationsPlugin
               .resolvePlatformSpecificImplementation<
-                  AndroidFlutterLocalNotificationsPlugin>();
+                AndroidFlutterLocalNotificationsPlugin
+              >();
 
-      final bool? grantedNotificationPermission =
-          await androidImplementation?.requestNotificationsPermission();
+      final bool? grantedNotificationPermission = await androidImplementation
+          ?.requestNotificationsPermission();
       notificationsEnabled = grantedNotificationPermission ?? false;
     }
   }

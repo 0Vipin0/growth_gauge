@@ -7,23 +7,23 @@ part of 'target_set.dart';
 // **************************************************************************
 
 _TargetSet _$TargetSetFromJson(Map<String, dynamic> json) => _TargetSet(
-      id: json['id'] as String,
-      setNumber: (json['setNumber'] as num).toInt(),
-      setType: $enumDecodeNullable(_$SetTypeEnumMap, json['setType']) ??
-          SetType.working,
-      targetWeight: (json['targetWeight'] as num?)?.toDouble(),
-      targetReps: (json['targetReps'] as num?)?.toInt(),
-      targetDurationSeconds: (json['targetDurationSeconds'] as num?)?.toInt(),
-      targetDistanceMeters: (json['targetDistanceMeters'] as num?)?.toDouble(),
-      targetCalories: (json['targetCalories'] as num?)?.toInt(),
-      targetRpe: (json['targetRpe'] as num?)?.toDouble(),
-      targetRir: (json['targetRir'] as num?)?.toInt(),
-      percentageOf1Rm: (json['percentageOf1Rm'] as num?)?.toDouble(),
-      restPolicy: json['restPolicy'] == null
-          ? null
-          : RestPolicy.fromJson(json['restPolicy'] as Map<String, dynamic>),
-      notes: json['notes'] as String?,
-    );
+  id: json['id'] as String,
+  setNumber: (json['setNumber'] as num).toInt(),
+  setType:
+      $enumDecodeNullable(_$SetTypeEnumMap, json['setType']) ?? SetType.working,
+  targetWeight: (json['targetWeight'] as num?)?.toDouble(),
+  targetReps: (json['targetReps'] as num?)?.toInt(),
+  targetDurationSeconds: (json['targetDurationSeconds'] as num?)?.toInt(),
+  targetDistanceMeters: (json['targetDistanceMeters'] as num?)?.toDouble(),
+  targetCalories: (json['targetCalories'] as num?)?.toInt(),
+  targetRpe: (json['targetRpe'] as num?)?.toDouble(),
+  targetRir: (json['targetRir'] as num?)?.toInt(),
+  percentageOf1Rm: (json['percentageOf1Rm'] as num?)?.toDouble(),
+  restPolicy: json['restPolicy'] == null
+      ? null
+      : RestPolicy.fromJson(json['restPolicy'] as Map<String, dynamic>),
+  notes: json['notes'] as String?,
+);
 
 Map<String, dynamic> _$TargetSetToJson(_TargetSet instance) =>
     <String, dynamic>{

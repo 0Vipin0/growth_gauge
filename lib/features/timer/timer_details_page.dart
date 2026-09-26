@@ -6,16 +6,13 @@ import '../chart/chart.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class TimerDetailsPage extends StatefulWidget {
-  final TimerModel timer;
-
-  const TimerDetailsPage({super.key, required this.timer});
-
+class const TimerDetailsPage({super.key, required final TimerModel timer})
+    extends StatefulWidget {
   @override
   State<TimerDetailsPage> createState() => _TimerDetailsPageState();
 }
 
-class _TimerDetailsPageState extends State<TimerDetailsPage> {
+class _TimerDetailsPageState() extends State<TimerDetailsPage> {
   DurationInterval _selectedInterval =
       DurationInterval.minute; // Default interval
 
@@ -41,8 +38,10 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    final timerProvider =
-                        Provider.of<TimerListProvider>(context, listen: false);
+                    final timerProvider = Provider.of<TimerListProvider>(
+                      context,
+                      listen: false,
+                    );
                     timerProvider.initializeTags(widget.timer.tags);
 
                     showDialog(
@@ -75,12 +74,14 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                                   return Wrap(
                                     spacing: 8.0,
                                     children: provider.updatedTags
-                                        .map((tag) => Chip(
-                                              label: Text(tag),
-                                              onDeleted: () {
-                                                provider.removeTag(tag);
-                                              },
-                                            ))
+                                        .map(
+                                          (tag) => Chip(
+                                            label: Text(tag),
+                                            onDeleted: () {
+                                              provider.removeTag(tag);
+                                            },
+                                          ),
+                                        )
                                         .toList(),
                                   );
                                 },
@@ -113,12 +114,11 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                   builder: (context, provider, child) {
                     return Wrap(
                       spacing: 8.0,
-                      children: provider
+                      children:
+                          provider
                               .getTimer(widget.timer)
                               .tags
-                              ?.map((tag) => Chip(
-                                    label: Text(tag),
-                                  ))
+                              ?.map((tag) => Chip(label: Text(tag)))
                               .toList() ??
                           [],
                     );
@@ -148,9 +148,9 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       BaseHeatmapWidget(
                         heatmapData: Provider.of<TimerListProvider>(context)
                             .extractCountsByDayPerDurationInterval(
-                          widget.timer,
-                          _selectedInterval,
-                        ), // Replace with actual heatmap data
+                              widget.timer,
+                              _selectedInterval,
+                            ), // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -170,9 +170,9 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
                       BaseHeatmapWidget(
                         heatmapData: Provider.of<TimerListProvider>(context)
                             .extractCountsByDayPerDurationInterval(
-                          widget.timer,
-                          _selectedInterval,
-                        ), // Replace with actual heatmap data
+                              widget.timer,
+                              _selectedInterval,
+                            ), // Replace with actual heatmap data
                       ),
                     ],
                   );
@@ -204,8 +204,10 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
               });
               Provider.of<TimerChartProvider>(context, listen: false).interval =
                   _selectedInterval;
-              Provider.of<TimerChartProvider>(context, listen: false)
-                  .processDataForChart(
+              Provider.of<TimerChartProvider>(
+                context,
+                listen: false,
+              ).processDataForChart(
                 Provider.of<TimerListProvider>(
                   context,
                   listen: false,
@@ -232,42 +234,28 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
   }
 }
 
-class HeatmapPage extends StatelessWidget {
-  final TimerModel timer;
-  final DurationInterval durationInterval;
-
-  const HeatmapPage({
-    super.key,
-    required this.timer,
-    required this.durationInterval,
-  });
-
+class const HeatmapPage({
+  super.key,
+  required final TimerModel timer,
+  required final DurationInterval durationInterval,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: BaseHeatmapWidget(
-        heatmapData: Provider.of<TimerListProvider>(
-          context,
-        ).extractCountsByDayPerDurationInterval(
-          timer,
-          durationInterval,
-        ),
+        heatmapData: Provider.of<TimerListProvider>(context)
+            .extractCountsByDayPerDurationInterval(timer, durationInterval),
       ),
     );
   }
 }
 
-class ChartPage extends StatelessWidget {
-  final TimerModel timer;
-  final DurationInterval durationInterval;
-
-  const ChartPage({
-    super.key,
-    required this.timer,
-    required this.durationInterval,
-  });
-
+class const ChartPage({
+  super.key,
+  required final TimerModel timer,
+  required final DurationInterval durationInterval,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -290,7 +278,8 @@ class ChartPage extends StatelessWidget {
             builder: (context, chartProvider, child) {
               chartProvider.interval = durationInterval;
               final barGroups = chartProvider.processDataForChart(timer);
-              final maxY = barGroups
+              final maxY =
+                  barGroups
                       .map((group) => group.barRods.first.toY)
                       .fold(0.0, (max, y) => y > max ? y : max) +
                   5;

@@ -4,12 +4,12 @@ import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
 import 'authentication_service.dart';
 
-class PinAuthScreen extends StatefulWidget {
+class const PinAuthScreen() extends StatefulWidget {
   @override
   _PinAuthScreenState createState() => _PinAuthScreenState();
 }
 
-class _PinAuthScreenState extends State<PinAuthScreen> {
+class _PinAuthScreenState() extends State<PinAuthScreen> {
   final AuthenticationService _authService = AuthenticationService();
   final TextEditingController _pinController = TextEditingController();
   String? _errorMessage;

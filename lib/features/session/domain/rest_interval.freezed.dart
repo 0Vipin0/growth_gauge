@@ -109,7 +109,7 @@ abstract mixin class $RestIntervalCopyWith<$Res> {
 class _$RestIntervalCopyWithImpl<$Res> implements $RestIntervalCopyWith<$Res> {
   _$RestIntervalCopyWithImpl(this._self, this._then);
 
-  final RestInterval _self;
+  RestInterval _self;
   final $Res Function(RestInterval) _then;
 
   /// Create a copy of RestInterval

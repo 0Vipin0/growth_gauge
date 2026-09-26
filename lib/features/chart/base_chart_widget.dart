@@ -1,21 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BaseChartWidget extends StatelessWidget {
-  final List<BarChartGroupData> barGroups;
-  final String Function(int) dayLabel;
-  final double yAxisInterval;
-
-  const BaseChartWidget({
-    super.key,
-    required this.barGroups,
-    required this.dayLabel,
-    required this.yAxisInterval,
-  });
-
+class const BaseChartWidget({
+  super.key,
+  required final List<BarChartGroupData> barGroups,
+  required final String Function(int) dayLabel,
+  required final double yAxisInterval,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final maxY = barGroups
+    final maxY =
+        barGroups
             .map((group) => group.barRods.first.toY)
             .fold(0.0, (max, y) => y > max ? y : max) +
         5;
@@ -63,20 +58,21 @@ class BaseChartWidget extends StatelessWidget {
           barGroups: barGroups,
           barTouchData: BarTouchData(
             touchTooltipData: BarTouchTooltipData(
-              getTooltipItem: (
-                BarChartGroupData group,
-                int groupIndex,
-                BarChartRodData rod,
-                int rodIndex,
-              ) {
-                return BarTooltipItem(
-                  rod.toY.toInt().toString(),
-                  const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
-              },
+              getTooltipItem:
+                  (
+                    BarChartGroupData group,
+                    int groupIndex,
+                    BarChartRodData rod,
+                    int rodIndex,
+                  ) {
+                    return BarTooltipItem(
+                      rod.toY.toInt().toString(),
+                      const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
             ),
           ),
         ),

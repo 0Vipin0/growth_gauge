@@ -18,7 +18,7 @@ _WorkoutTemplate _$WorkoutTemplateFromJson(Map<String, dynamic> json) =>
       isArchived: json['isArchived'] as bool? ?? false,
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
+          const [],
     );
 
 Map<String, dynamic> _$WorkoutTemplateToJson(_WorkoutTemplate instance) =>

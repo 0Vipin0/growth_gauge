@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../utils/navigation_helper.dart';
@@ -7,15 +8,13 @@ import '../common/presentation/widgets/tag_input_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class EditCounterPage extends StatefulWidget {
-  final CounterModel counter;
-  const EditCounterPage({super.key, required this.counter});
-
+class const EditCounterPage({super.key, required final CounterModel counter})
+    extends StatefulWidget {
   @override
   State<EditCounterPage> createState() => _EditCounterPageState();
 }
 
-class _EditCounterPageState extends State<EditCounterPage> {
+class _EditCounterPageState() extends State<EditCounterPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
@@ -28,8 +27,9 @@ class _EditCounterPageState extends State<EditCounterPage> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.counter.name);
-    _descriptionController =
-        TextEditingController(text: widget.counter.description);
+    _descriptionController = TextEditingController(
+      text: widget.counter.description,
+    );
     _count = widget.counter.count;
     _target = widget.counter.target;
     _tags = List.from(widget.counter.tags ?? []);
@@ -38,10 +38,7 @@ class _EditCounterPageState extends State<EditCounterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Counter'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Edit Counter'), centerTitle: true),
       body: ResponsiveFormLayout(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

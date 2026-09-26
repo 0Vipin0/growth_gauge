@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +32,8 @@ mixin AppRoutes {
     onboarding: (_) => const OnboardingScreen(),
     home: (_) => const HomePage(),
     settings: (_) => const SettingsPage(),
-    biometricAuth: (_) => BiometricAuthScreen(),
-    pinAuth: (_) => PinAuthScreen(),
+    biometricAuth: (_) => const BiometricAuthScreen(),
+    pinAuth: (_) => const PinAuthScreen(),
     exerciseCatalog: (context) {
       final database = Provider.of<AppDatabase>(context, listen: false);
       final repository = ExerciseRepository(database);
@@ -66,9 +67,7 @@ mixin AppRoutes {
     }
     return MaterialPageRoute(
       builder: (_) => Scaffold(
-        body: Center(
-          child: Text('No route defined for ${routeSettings.name}'),
-        ),
+        body: Center(child: Text('No route defined for ${routeSettings.name}')),
       ),
     );
   }

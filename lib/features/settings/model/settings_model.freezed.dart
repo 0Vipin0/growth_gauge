@@ -83,7 +83,7 @@ class _$SettingsModelCopyWithImpl<$Res>
     implements $SettingsModelCopyWith<$Res> {
   _$SettingsModelCopyWithImpl(this._self, this._then);
 
-  final SettingsModel _self;
+  SettingsModel _self;
   final $Res Function(SettingsModel) _then;
 
   /// Create a copy of SettingsModel

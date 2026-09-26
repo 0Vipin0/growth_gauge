@@ -7,11 +7,11 @@ part 'exercise_equipment.g.dart';
 
 @freezed
 abstract class ExerciseEquipmentProfile with _$ExerciseEquipmentProfile {
-  const factory ExerciseEquipmentProfile({
+  const factory({
     @Default([]) List<EquipmentType> requiredEquipment,
     @Default([]) List<EquipmentType> optionalEquipment,
   }) = _ExerciseEquipmentProfile;
 
-  factory ExerciseEquipmentProfile.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ExerciseEquipmentProfileFromJson(json);
 }

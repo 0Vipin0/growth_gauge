@@ -72,7 +72,7 @@ class _$ExerciseRelationshipCopyWithImpl<$Res>
     implements $ExerciseRelationshipCopyWith<$Res> {
   _$ExerciseRelationshipCopyWithImpl(this._self, this._then);
 
-  final ExerciseRelationship _self;
+  ExerciseRelationship _self;
   final $Res Function(ExerciseRelationship) _then;
 
   /// Create a copy of ExerciseRelationship

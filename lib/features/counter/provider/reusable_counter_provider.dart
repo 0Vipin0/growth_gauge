@@ -4,11 +4,9 @@ import 'package:uuid/uuid.dart';
 
 import '../model/model.dart';
 
-class ReusableCounterProvider with ChangeNotifier {
-  CounterModel counter;
+class ReusableCounterProvider({required var CounterModel counter})
+    with ChangeNotifier {
   final Uuid _uuid = const Uuid();
-
-  ReusableCounterProvider({required this.counter});
 
   int get count => counter.count;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -8,14 +9,12 @@ import '../common/presentation/widgets/tag_input_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class AddCounterPage extends StatefulWidget {
-  const AddCounterPage({super.key});
-
+class const AddCounterPage({super.key}) extends StatefulWidget {
   @override
   State<AddCounterPage> createState() => _AddCounterPageState();
 }
 
-class _AddCounterPageState extends State<AddCounterPage> {
+class _AddCounterPageState() extends State<AddCounterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -27,10 +26,7 @@ class _AddCounterPageState extends State<AddCounterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Counter'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('New Counter'), centerTitle: true),
       body: ResponsiveFormLayout(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

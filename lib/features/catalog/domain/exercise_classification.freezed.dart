@@ -83,7 +83,7 @@ class _$ExerciseClassificationCopyWithImpl<$Res>
     implements $ExerciseClassificationCopyWith<$Res> {
   _$ExerciseClassificationCopyWithImpl(this._self, this._then);
 
-  final ExerciseClassification _self;
+  ExerciseClassification _self;
   final $Res Function(ExerciseClassification) _then;
 
   /// Create a copy of ExerciseClassification
@@ -304,10 +304,10 @@ extension ExerciseClassificationPatterns on ExerciseClassification {
 @JsonSerializable()
 class _ExerciseClassification implements ExerciseClassification {
   const _ExerciseClassification(
-      {final List<BodyRegion> bodyRegions = const [],
-      final List<MuscleGroup> primaryMuscles = const [],
-      final List<MuscleGroup> secondaryMuscles = const [],
-      final List<MovementPattern> movementPatterns = const [],
+      {List<BodyRegion> bodyRegions = const [],
+      List<MuscleGroup> primaryMuscles = const [],
+      List<MuscleGroup> secondaryMuscles = const [],
+      List<MovementPattern> movementPatterns = const [],
       this.laterality = 'BILATERAL'})
       : _bodyRegions = bodyRegions,
         _primaryMuscles = primaryMuscles,

@@ -109,7 +109,7 @@ class _$ExerciseMeasurementProfileCopyWithImpl<$Res>
     implements $ExerciseMeasurementProfileCopyWith<$Res> {
   _$ExerciseMeasurementProfileCopyWithImpl(this._self, this._then);
 
-  final ExerciseMeasurementProfile _self;
+  ExerciseMeasurementProfile _self;
   final $Res Function(ExerciseMeasurementProfile) _then;
 
   /// Create a copy of ExerciseMeasurementProfile
@@ -398,7 +398,7 @@ extension ExerciseMeasurementProfilePatterns on ExerciseMeasurementProfile {
 class _ExerciseMeasurementProfile implements ExerciseMeasurementProfile {
   const _ExerciseMeasurementProfile(
       {this.defaultMetricType = MetricType.weightAndReps,
-      final List<MetricType> supportedMetricTypes = const [
+      List<MetricType> supportedMetricTypes = const [
         MetricType.weightAndReps
       ],
       this.supportsWeight = true,

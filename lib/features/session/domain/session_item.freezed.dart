@@ -76,7 +76,7 @@ abstract mixin class $SessionItemCopyWith<$Res> {
 class _$SessionItemCopyWithImpl<$Res> implements $SessionItemCopyWith<$Res> {
   _$SessionItemCopyWithImpl(this._self, this._then);
 
-  final SessionItem _self;
+  SessionItem _self;
   final $Res Function(SessionItem) _then;
 
   /// Create a copy of SessionItem
@@ -294,7 +294,7 @@ class _SessionItem implements SessionItem {
       required this.sourceTemplateItemId,
       required this.exerciseId,
       required this.order,
-      final List<ExecutionSet> sets = const [],
+      List<ExecutionSet> sets = const [],
       this.notes})
       : _sets = sets;
   factory _SessionItem.fromJson(Map<String, dynamic> json) =>

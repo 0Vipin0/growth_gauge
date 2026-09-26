@@ -9,21 +9,26 @@ part of 'settings_model.dart';
 _SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
     _SettingsModel(
       themeName: $enumDecode(_$AppThemeNameEnumMap, json['themeName']),
-      fontSize: $enumDecodeNullable(_$AppFontSizeEnumMap, json['fontSize']) ??
+      fontSize:
+          $enumDecodeNullable(_$AppFontSizeEnumMap, json['fontSize']) ??
           AppFontSize.medium,
       fontFamily:
           $enumDecodeNullable(_$AppFontFamilyEnumMap, json['fontFamily']) ??
-              AppFontFamily.roboto,
+          AppFontFamily.roboto,
       exportFormat:
           $enumDecodeNullable(_$ExportFormatEnumMap, json['exportFormat']) ??
-              ExportFormat.json,
-      authenticationType: $enumDecodeNullable(
-              _$AuthenticationTypeEnumMap, json['authenticationType']) ??
+          ExportFormat.json,
+      authenticationType:
+          $enumDecodeNullable(
+            _$AuthenticationTypeEnumMap,
+            json['authenticationType'],
+          ) ??
           AuthenticationType.none,
       notificationTime: json['notificationTime'] == null
           ? null
-          : const TimeOfDayConverter()
-              .fromJson(json['notificationTime'] as String?),
+          : const TimeOfDayConverter().fromJson(
+              json['notificationTime'] as String?,
+            ),
     );
 
 Map<String, dynamic> _$SettingsModelToJson(_SettingsModel instance) =>
@@ -34,8 +39,9 @@ Map<String, dynamic> _$SettingsModelToJson(_SettingsModel instance) =>
       'exportFormat': _$ExportFormatEnumMap[instance.exportFormat]!,
       'authenticationType':
           _$AuthenticationTypeEnumMap[instance.authenticationType]!,
-      'notificationTime':
-          const TimeOfDayConverter().toJson(instance.notificationTime),
+      'notificationTime': const TimeOfDayConverter().toJson(
+        instance.notificationTime,
+      ),
     };
 
 const _$AppThemeNameEnumMap = {

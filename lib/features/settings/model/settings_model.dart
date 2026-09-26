@@ -9,7 +9,10 @@ part 'settings_model.freezed.dart';
 
 part 'settings_model.g.dart';
 
-enum ExportFormat { json, csv }
+enum ExportFormat() {
+  json,
+  csv,
+}
 
 extension ExportFormatExtension on ExportFormat {
   String getLabel() {
@@ -22,7 +25,11 @@ extension ExportFormatExtension on ExportFormat {
   }
 }
 
-enum AuthenticationType { none, pin, biometric }
+enum AuthenticationType() {
+  none,
+  pin,
+  biometric,
+}
 
 extension AuthenticationTypeExtension on AuthenticationType {
   String getLabel() {
@@ -38,8 +45,8 @@ extension AuthenticationTypeExtension on AuthenticationType {
 }
 
 @freezed
-class SettingsModel with _$SettingsModel {
-  const factory SettingsModel({
+abstract class SettingsModel with _$SettingsModel {
+  const factory({
     required AppThemeName themeName,
     @Default(AppFontSize.medium) AppFontSize fontSize,
     @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
@@ -48,20 +55,17 @@ class SettingsModel with _$SettingsModel {
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
   }) = _SettingsModel;
 
-  factory SettingsModel.fromJson(Map<String, dynamic> json) =>
-      _$SettingsModelFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
 }
 
 extension SettingsModelExtension on SettingsModel {
   AppTheme get appTheme => AppTheme(
-        themeName: themeName,
-        fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
-      );
+    themeName: themeName,
+    fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
+  );
 }
 
-class TimeOfDayConverter implements JsonConverter<TimeOfDay?, String?> {
-  const TimeOfDayConverter();
-
+class const TimeOfDayConverter() implements JsonConverter<TimeOfDay?, String?> {
   @override
   TimeOfDay? fromJson(String? json) {
     if (json == null) return null;

@@ -11,15 +11,16 @@ _TemplateItem _$TemplateItemFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       exerciseId: json['exerciseId'] as String,
       order: (json['order'] as num).toInt(),
-      targetSets: (json['targetSets'] as List<dynamic>?)
+      targetSets:
+          (json['targetSets'] as List<dynamic>?)
               ?.map((e) => TargetSet.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       substitutionExerciseIds:
           (json['substitutionExerciseIds'] as List<dynamic>?)
-                  ?.map((e) => e as String)
-                  .toList() ??
-              const [],
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       coachNotes: json['coachNotes'] as String?,
     );
 

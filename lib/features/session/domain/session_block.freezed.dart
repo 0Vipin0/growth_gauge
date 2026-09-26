@@ -96,7 +96,7 @@ abstract mixin class $SessionBlockCopyWith<$Res> {
 class _$SessionBlockCopyWithImpl<$Res> implements $SessionBlockCopyWith<$Res> {
   _$SessionBlockCopyWithImpl(this._self, this._then);
 
-  final SessionBlock _self;
+  SessionBlock _self;
   final $Res Function(SessionBlock) _then;
 
   /// Create a copy of SessionBlock
@@ -380,7 +380,7 @@ class _SessionBlock implements SessionBlock {
       this.rounds = 1,
       this.timeCapSeconds,
       this.transitionSeconds,
-      final List<SessionItem> items = const [],
+      List<SessionItem> items = const [],
       this.notes})
       : _items = items;
   factory _SessionBlock.fromJson(Map<String, dynamic> json) =>

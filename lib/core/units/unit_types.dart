@@ -1,10 +1,7 @@
 /// Supported weight units for presentation.
-enum WeightUnit {
+enum WeightUnit(final String symbol) {
   kilograms('kg'),
   pounds('lb');
-
-  final String symbol;
-  const WeightUnit(this.symbol);
 
   static WeightUnit fromString(String val) {
     return switch (val.trim().toLowerCase()) {
@@ -15,13 +12,10 @@ enum WeightUnit {
 }
 
 /// Supported distance units for presentation.
-enum DistanceUnit {
+enum DistanceUnit(final String symbol) {
   meters('m'),
   kilometers('km'),
   miles('mi');
-
-  final String symbol;
-  const DistanceUnit(this.symbol);
 
   static DistanceUnit fromString(String val) {
     return switch (val.trim().toLowerCase()) {
@@ -33,12 +27,9 @@ enum DistanceUnit {
 }
 
 /// Supported height units for presentation.
-enum HeightUnit {
+enum HeightUnit(final String symbol) {
   centimeters('cm'),
   feetAndInches('ft_in');
-
-  final String symbol;
-  const HeightUnit(this.symbol);
 
   static HeightUnit fromString(String val) {
     return switch (val.trim().toLowerCase()) {
@@ -49,12 +40,9 @@ enum HeightUnit {
 }
 
 /// Supported temperature units.
-enum TemperatureUnit {
+enum TemperatureUnit(final String symbol) {
   celsius('°C'),
   fahrenheit('°F');
-
-  final String symbol;
-  const TemperatureUnit(this.symbol);
 
   static TemperatureUnit fromString(String val) {
     return switch (val.trim().toLowerCase()) {

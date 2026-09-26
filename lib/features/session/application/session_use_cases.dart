@@ -20,19 +20,11 @@ import '../infrastructure/session_repository.dart';
 
 /// Commands for a live workout. Each successful command persists the full
 /// aggregate before notifying event subscribers.
-class SessionUseCases {
-  const SessionUseCases({
-    required ITemplateRepository templates,
-    required IWorkoutSessionRepository sessions,
-    required DomainEventDispatcher events,
-  })  : _templates = templates,
-        _sessions = sessions,
-        _events = events;
-
-  final ITemplateRepository _templates;
-  final IWorkoutSessionRepository _sessions;
-  final DomainEventDispatcher _events;
-
+class const SessionUseCases({
+  required final ITemplateRepository _templates,
+  required final IWorkoutSessionRepository _sessions,
+  required final DomainEventDispatcher _events,
+}) {
   Future<Result<WorkoutSession, Failure>> createFromRevision({
     required String revisionId,
     required String userId,
@@ -43,9 +35,12 @@ class SessionUseCases {
     }
     final revision = revisionResult.dataOrNull!;
     if (revision.status != TemplateRevisionStatus.published) {
-      return Result.error(ConflictFailure(
+      return Result.error(
+        ConflictFailure(
           'A workout must be created from a published template revision',
-          revisionId));
+          revisionId,
+        ),
+      );
     }
     final templateResult = await _templates.getTemplate(revision.templateId);
     if (templateResult.isError) {
@@ -65,7 +60,8 @@ class SessionUseCases {
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.draft) {
       return Result.error(
-          ConflictFailure('Only a draft session can be started', id));
+        ConflictFailure('Only a draft session can be started', id),
+      );
     }
     final now = AppClock.nowUtc();
     final starting = session.copyWith(
@@ -82,26 +78,36 @@ class SessionUseCases {
     return Result.success(active);
   }
 
-  Future<Result<WorkoutSession, Failure>> pause(String id,
-      {InterruptionReason reason = InterruptionReason.userPause}) async {
+  Future<Result<WorkoutSession, Failure>> pause(
+    String id, {
+    InterruptionReason reason = InterruptionReason.userPause,
+  }) async {
     final found = await _get(id);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
       return Result.error(
-          ConflictFailure('Only an active session can be paused', id));
+        ConflictFailure('Only an active session can be paused', id),
+      );
     }
     final now = AppClock.nowUtc();
     final restIntervals = session.restIntervals
-        .map((rest) => rest.endedAt == null
-            ? rest.copyWith(
-                endedAt: now,
-                actualDurationSeconds: now.difference(rest.startedAt).inSeconds,
-              )
-            : rest)
+        .map(
+          (rest) => rest.endedAt == null
+              ? rest.copyWith(
+                  endedAt: now,
+                  actualDurationSeconds: now
+                      .difference(rest.startedAt)
+                      .inSeconds,
+                )
+              : rest,
+        )
         .toList();
-    final restClosureAudits =
-        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final restClosureAudits = _restClosureAudits(
+      id,
+      session.restIntervals,
+      restIntervals,
+    );
     final updated = session.copyWith(
       status: SessionStatus.paused,
       pausedAt: now,
@@ -112,14 +118,14 @@ class SessionUseCases {
           startedAt: now,
           reason: reason,
           userInitiated: reason == InterruptionReason.userPause,
-        )
+        ),
       ],
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [
         ...session.audits,
         ...restClosureAudits,
-        _audit(id, AuditAction.paused)
+        _audit(id, AuditAction.paused),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -133,13 +139,15 @@ class SessionUseCases {
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.paused) {
       return Result.error(
-          ConflictFailure('Only a paused session can be resumed', id));
+        ConflictFailure('Only a paused session can be resumed', id),
+      );
     }
     final now = AppClock.nowUtc();
     final interruptions = [...session.interruptions];
     if (interruptions.isNotEmpty && interruptions.last.endedAt == null) {
-      interruptions[interruptions.length - 1] =
-          interruptions.last.copyWith(endedAt: now);
+      interruptions[interruptions.length - 1] = interruptions.last.copyWith(
+        endedAt: now,
+      );
     }
     final updated = session.copyWith(
       status: SessionStatus.inProgress,
@@ -175,7 +183,8 @@ class SessionUseCases {
         rpe == null &&
         rir == null) {
       return const Result.error(
-          ValidationFailure('Enter at least one set measurement'));
+        ValidationFailure('Enter at least one set measurement'),
+      );
     }
     if ((weight != null && (!weight.isFinite || weight < 0)) ||
         (reps != null && reps < 0) ||
@@ -185,15 +194,22 @@ class SessionUseCases {
         (calories != null && calories < 0) ||
         (rpe != null && (!rpe.isFinite || rpe < 0 || rpe > 10)) ||
         (rir != null && rir < 0)) {
-      return const Result.error(ValidationFailure(
-          'Set measurements must be non-negative and RPE must be between 0 and 10'));
+      return const Result.error(
+        ValidationFailure(
+          'Set measurements must be non-negative and RPE must be between 0 and 10',
+        ),
+      );
     }
     final found = await _get(sessionId);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Sets can only be recorded in an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Sets can only be recorded in an active session',
+          sessionId,
+        ),
+      );
     }
     ExecutionSet? oldSet;
     final blocks = <SessionBlock>[];
@@ -208,22 +224,29 @@ class SessionUseCases {
           }
           if (set.status == ExecutionSetStatus.completed ||
               set.status == ExecutionSetStatus.skipped) {
-            return Result.error(ConflictFailure(
-                'A completed or skipped set cannot be logged again', setId));
+            return Result.error(
+              ConflictFailure(
+                'A completed or skipped set cannot be logged again',
+                setId,
+              ),
+            );
           }
           oldSet = set;
-          sets.add(set.copyWith(
-            actualWeight: weight ?? set.actualWeight,
-            actualReps: reps ?? set.actualReps,
-            actualDurationSeconds: durationSeconds ?? set.actualDurationSeconds,
-            actualDistanceMeters: distanceMeters ?? set.actualDistanceMeters,
-            actualCalories: calories ?? set.actualCalories,
-            rpe: rpe ?? set.rpe,
-            rir: rir ?? set.rir,
-            startedAt: set.startedAt ?? AppClock.nowUtc(),
-            completedAt: AppClock.nowUtc(),
-            status: ExecutionSetStatus.completed,
-          ));
+          sets.add(
+            set.copyWith(
+              actualWeight: weight ?? set.actualWeight,
+              actualReps: reps ?? set.actualReps,
+              actualDurationSeconds:
+                  durationSeconds ?? set.actualDurationSeconds,
+              actualDistanceMeters: distanceMeters ?? set.actualDistanceMeters,
+              actualCalories: calories ?? set.actualCalories,
+              rpe: rpe ?? set.rpe,
+              rir: rir ?? set.rir,
+              startedAt: set.startedAt ?? AppClock.nowUtc(),
+              completedAt: AppClock.nowUtc(),
+              status: ExecutionSetStatus.completed,
+            ),
+          );
         }
         items.add(item.copyWith(sets: sets));
       }
@@ -244,19 +267,23 @@ class SessionUseCases {
       blocks: blocks,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'ExecutionSet',
-            entityId: setId,
-            actorId: actorId,
-            previousValue: oldSet.toJson(),
-            newValue: updatedSet.toJson(),
-            reason: reason)
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'ExecutionSet',
+          entityId: setId,
+          actorId: actorId,
+          previousValue: oldSet.toJson(),
+          newValue: updatedSet.toJson(),
+          reason: reason,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
-    _events
-        .publish(ExecutionSetCompleted(aggregateId: sessionId, setId: setId));
+    _events.publish(
+      ExecutionSetCompleted(aggregateId: sessionId, setId: setId),
+    );
     return Result.success(updated);
   }
 
@@ -268,8 +295,12 @@ class SessionUseCases {
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Rest can only start during an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Rest can only start during an active session',
+          sessionId,
+        ),
+      );
     }
     ExecutionSet? executionSet;
     for (final block in session.blocks) {
@@ -281,27 +312,40 @@ class SessionUseCases {
     }
     if (executionSet == null) {
       return Result.error(
-          NotFoundFailure('Execution set not found', executionSetId));
+        NotFoundFailure('Execution set not found', executionSetId),
+      );
     }
     if (executionSet.status != ExecutionSetStatus.completed) {
-      return Result.error(ConflictFailure(
-          'Rest can only start after the set is completed', executionSetId));
+      return Result.error(
+        ConflictFailure(
+          'Rest can only start after the set is completed',
+          executionSetId,
+        ),
+      );
     }
     if (executionSet.plannedRestSeconds <= 0) {
-      return const Result.error(ValidationFailure(
-          'This set does not have a positive planned rest duration'));
+      return const Result.error(
+        ValidationFailure(
+          'This set does not have a positive planned rest duration',
+        ),
+      );
     }
     final minimumSeconds = executionSet.restMinimumSeconds ?? 0;
     final maximumSeconds = executionSet.restMaximumSeconds;
     if (executionSet.plannedRestSeconds < minimumSeconds ||
         (maximumSeconds != null &&
             executionSet.plannedRestSeconds > maximumSeconds)) {
-      return Result.error(ValidationFailure(
-          'Planned rest must be within the policy limits', executionSet.id));
+      return Result.error(
+        ValidationFailure(
+          'Planned rest must be within the policy limits',
+          executionSet.id,
+        ),
+      );
     }
     if (session.restIntervals.any((rest) => rest.endedAt == null)) {
       return Result.error(
-          ConflictFailure('A rest interval is already active', sessionId));
+        ConflictFailure('A rest interval is already active', sessionId),
+      );
     }
     final rest = RestInterval(
       id: UniqueId.generate().value,
@@ -317,8 +361,12 @@ class SessionUseCases {
       restIntervals: [...session.restIntervals, rest],
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.created,
-            entityType: 'RestInterval', entityId: rest.id)
+        _audit(
+          sessionId,
+          AuditAction.created,
+          entityType: 'RestInterval',
+          entityId: rest.id,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -327,41 +375,63 @@ class SessionUseCases {
     return Result.success(updated);
   }
 
-  Future<Result<WorkoutSession, Failure>> extendRest(String sessionId,
-      {String? restIntervalId, int extensionSeconds = 15}) async {
+  Future<Result<WorkoutSession, Failure>> extendRest(
+    String sessionId, {
+    String? restIntervalId,
+    int extensionSeconds = 15,
+  }) async {
     if (extensionSeconds <= 0) {
       return const Result.error(
-          ValidationFailure('Rest extension must be greater than zero'));
+        ValidationFailure('Rest extension must be greater than zero'),
+      );
     }
     final found = await _get(sessionId);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Rest can only be extended during an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Rest can only be extended during an active session',
+          sessionId,
+        ),
+      );
     }
     final index = restIntervalId == null
         ? session.restIntervals.lastIndexWhere((rest) => rest.endedAt == null)
         : session.restIntervals.indexWhere(
-            (rest) => rest.id == restIntervalId && rest.endedAt == null);
+            (rest) => rest.id == restIntervalId && rest.endedAt == null,
+          );
     if (index < 0) {
-      return Result.error(NotFoundFailure(
-          'Active rest interval not found', restIntervalId ?? sessionId));
+      return Result.error(
+        NotFoundFailure(
+          'Active rest interval not found',
+          restIntervalId ?? sessionId,
+        ),
+      );
     }
     final activeRest = session.restIntervals[index];
     if (!activeRest.allowExtend) {
-      return Result.error(ConflictFailure(
-          'This rest policy does not allow extensions', activeRest.id));
+      return Result.error(
+        ConflictFailure(
+          'This rest policy does not allow extensions',
+          activeRest.id,
+        ),
+      );
     }
     final requestedDuration =
         activeRest.plannedDurationSeconds + extensionSeconds;
-    final extendedDuration = activeRest.maximumDurationSeconds != null &&
+    final extendedDuration =
+        activeRest.maximumDurationSeconds != null &&
             requestedDuration > activeRest.maximumDurationSeconds!
         ? activeRest.maximumDurationSeconds!
         : requestedDuration;
     if (extendedDuration <= activeRest.plannedDurationSeconds) {
-      return Result.error(ConflictFailure(
-          'The maximum rest duration has been reached', activeRest.id));
+      return Result.error(
+        ConflictFailure(
+          'The maximum rest duration has been reached',
+          activeRest.id,
+        ),
+      );
     }
     final intervals = [...session.restIntervals];
     intervals[index] = activeRest.copyWith(
@@ -372,12 +442,15 @@ class SessionUseCases {
       restIntervals: intervals,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'RestInterval',
-            entityId: activeRest.id,
-            field: 'plannedDurationSeconds',
-            previousValue: activeRest.plannedDurationSeconds,
-            newValue: extendedDuration)
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'RestInterval',
+          entityId: activeRest.id,
+          field: 'plannedDurationSeconds',
+          previousValue: activeRest.plannedDurationSeconds,
+          newValue: extendedDuration,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -385,33 +458,49 @@ class SessionUseCases {
     return Result.success(updated);
   }
 
-  Future<Result<WorkoutSession, Failure>> skipRest(String sessionId,
-      {String? restIntervalId}) async {
+  Future<Result<WorkoutSession, Failure>> skipRest(
+    String sessionId, {
+    String? restIntervalId,
+  }) async {
     final found = await _get(sessionId);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Rest can only be skipped during an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Rest can only be skipped during an active session',
+          sessionId,
+        ),
+      );
     }
     final index = restIntervalId == null
         ? session.restIntervals.lastIndexWhere((rest) => rest.endedAt == null)
         : session.restIntervals.indexWhere(
-            (rest) => rest.id == restIntervalId && rest.endedAt == null);
+            (rest) => rest.id == restIntervalId && rest.endedAt == null,
+          );
     if (index < 0) {
-      return Result.error(NotFoundFailure(
-          'Active rest interval not found', restIntervalId ?? sessionId));
+      return Result.error(
+        NotFoundFailure(
+          'Active rest interval not found',
+          restIntervalId ?? sessionId,
+        ),
+      );
     }
     final activeRest = session.restIntervals[index];
     if (!activeRest.allowSkip) {
-      return Result.error(ConflictFailure(
-          'This rest policy does not allow skipping', activeRest.id));
+      return Result.error(
+        ConflictFailure(
+          'This rest policy does not allow skipping',
+          activeRest.id,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final elapsed = now.difference(activeRest.startedAt).inSeconds;
     if (elapsed < activeRest.minimumDurationSeconds) {
       return Result.error(
-          ConflictFailure('Minimum rest time has not elapsed', activeRest.id));
+        ConflictFailure('Minimum rest time has not elapsed', activeRest.id),
+      );
     }
     final intervals = [...session.restIntervals];
     intervals[index] = activeRest.copyWith(
@@ -424,17 +513,21 @@ class SessionUseCases {
       restIntervals: intervals,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'RestInterval',
-            entityId: activeRest.id,
-            previousValue: activeRest.toJson(),
-            newValue: intervals[index].toJson())
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'RestInterval',
+          entityId: activeRest.id,
+          previousValue: activeRest.toJson(),
+          newValue: intervals[index].toJson(),
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     _events.publish(
-        RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id));
+      RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id),
+    );
     return Result.success(updated);
   }
 
@@ -464,39 +557,50 @@ class SessionUseCases {
         (rir != null && rir < 0) ||
         (percentageOf1Rm != null &&
             (!percentageOf1Rm.isFinite || percentageOf1Rm < 0))) {
-      return const Result.error(ValidationFailure(
-          'Targets must be non-negative and RPE must be between 0 and 10'));
+      return const Result.error(
+        ValidationFailure(
+          'Targets must be non-negative and RPE must be between 0 and 10',
+        ),
+      );
     }
     final found = await _get(sessionId);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress &&
         session.status != SessionStatus.paused) {
-      return Result.error(ConflictFailure(
-          'Targets can only be changed in an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Targets can only be changed in an active session',
+          sessionId,
+        ),
+      );
     }
     ExecutionSet? oldSet;
     final blocks = session.blocks
-        .map((block) => block.copyWith(
-              items: block.items
-                  .map((item) => item.copyWith(
-                        sets: item.sets.map((set) {
-                          if (set.id != setId) return set;
-                          oldSet = set;
-                          return set.copyWith(
-                            targetWeight: weight,
-                            targetReps: reps,
-                            targetDurationSeconds: durationSeconds,
-                            targetDistanceMeters: distanceMeters,
-                            targetCalories: calories,
-                            targetRpe: rpe,
-                            targetRir: rir,
-                            percentageOf1Rm: percentageOf1Rm,
-                          );
-                        }).toList(),
-                      ))
-                  .toList(),
-            ))
+        .map(
+          (block) => block.copyWith(
+            items: block.items
+                .map(
+                  (item) => item.copyWith(
+                    sets: item.sets.map((set) {
+                      if (set.id != setId) return set;
+                      oldSet = set;
+                      return set.copyWith(
+                        targetWeight: weight,
+                        targetReps: reps,
+                        targetDurationSeconds: durationSeconds,
+                        targetDistanceMeters: distanceMeters,
+                        targetCalories: calories,
+                        targetRpe: rpe,
+                        targetRir: rir,
+                        percentageOf1Rm: percentageOf1Rm,
+                      );
+                    }).toList(),
+                  ),
+                )
+                .toList(),
+          ),
+        )
         .toList();
     final previousSet = oldSet;
     if (previousSet == null) {
@@ -504,8 +608,12 @@ class SessionUseCases {
     }
     if (previousSet.status == ExecutionSetStatus.completed ||
         previousSet.status == ExecutionSetStatus.skipped) {
-      return Result.error(ConflictFailure(
-          'Targets cannot be changed on a completed or skipped set', setId));
+      return Result.error(
+        ConflictFailure(
+          'Targets cannot be changed on a completed or skipped set',
+          setId,
+        ),
+      );
     }
     var updatedSet = previousSet;
     for (final block in blocks) {
@@ -519,14 +627,17 @@ class SessionUseCases {
       blocks: blocks,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'ExecutionSet',
-            entityId: setId,
-            actorId: actorId,
-            field: 'target',
-            previousValue: previousSet.toJson(),
-            newValue: updatedSet.toJson(),
-            reason: reason)
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'ExecutionSet',
+          entityId: setId,
+          actorId: actorId,
+          field: 'target',
+          previousValue: previousSet.toJson(),
+          newValue: updatedSet.toJson(),
+          reason: reason,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -534,22 +645,33 @@ class SessionUseCases {
     return Result.success(updated);
   }
 
-  Future<Result<WorkoutSession, Failure>> finishRest(String sessionId,
-      {String? restIntervalId}) async {
+  Future<Result<WorkoutSession, Failure>> finishRest(
+    String sessionId, {
+    String? restIntervalId,
+  }) async {
     final found = await _get(sessionId);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Rest can only finish during an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Rest can only finish during an active session',
+          sessionId,
+        ),
+      );
     }
     final index = restIntervalId == null
         ? session.restIntervals.lastIndexWhere((rest) => rest.endedAt == null)
         : session.restIntervals.indexWhere(
-            (rest) => rest.id == restIntervalId && rest.endedAt == null);
+            (rest) => rest.id == restIntervalId && rest.endedAt == null,
+          );
     if (index < 0) {
-      return Result.error(NotFoundFailure(
-          'Active rest interval not found', restIntervalId ?? sessionId));
+      return Result.error(
+        NotFoundFailure(
+          'Active rest interval not found',
+          restIntervalId ?? sessionId,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final intervals = [...session.restIntervals];
@@ -557,12 +679,17 @@ class SessionUseCases {
     final elapsed = now.difference(activeRest.startedAt).inSeconds;
     if (elapsed < activeRest.minimumDurationSeconds) {
       return Result.error(
-          ConflictFailure('Minimum rest time has not elapsed', activeRest.id));
+        ConflictFailure('Minimum rest time has not elapsed', activeRest.id),
+      );
     }
     final skipped = elapsed < activeRest.plannedDurationSeconds;
     if (skipped && !activeRest.allowSkip) {
-      return Result.error(ConflictFailure(
-          'This rest policy does not allow ending early', activeRest.id));
+      return Result.error(
+        ConflictFailure(
+          'This rest policy does not allow ending early',
+          activeRest.id,
+        ),
+      );
     }
     intervals[index] = activeRest.copyWith(
       endedAt: now,
@@ -574,18 +701,22 @@ class SessionUseCases {
       restIntervals: intervals,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'RestInterval',
-            entityId: activeRest.id,
-            previousValue: activeRest.toJson(),
-            newValue: intervals[index].toJson())
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'RestInterval',
+          entityId: activeRest.id,
+          previousValue: activeRest.toJson(),
+          newValue: intervals[index].toJson(),
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     if (skipped) {
       _events.publish(
-          RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id));
+        RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id),
+      );
     } else {
       _events.publish(RestCompleted(aggregateId: sessionId));
     }
@@ -598,8 +729,13 @@ class SessionUseCases {
     String? actorId,
     String? reason,
   }) {
-    return _changeSetStatus(sessionId, setId, ExecutionSetStatus.skipped,
-        actorId: actorId, reason: reason);
+    return _changeSetStatus(
+      sessionId,
+      setId,
+      ExecutionSetStatus.skipped,
+      actorId: actorId,
+      reason: reason,
+    );
   }
 
   Future<Result<WorkoutSession, Failure>> deleteSet({
@@ -612,19 +748,26 @@ class SessionUseCases {
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Sets can only be deleted in an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Sets can only be deleted in an active session',
+          sessionId,
+        ),
+      );
     }
     ExecutionSet? removed;
     final blocks = session.blocks
-        .map((block) => block.copyWith(
-                items: block.items.map((item) {
+        .map(
+          (block) => block.copyWith(
+            items: block.items.map((item) {
               final sets = item.sets.where((set) {
                 if (set.id == setId) removed = set;
                 return set.id != setId;
               }).toList();
               return item.copyWith(sets: sets);
-            }).toList()))
+            }).toList(),
+          ),
+        )
         .toList();
     final removedSet = removed;
     if (removedSet == null) {
@@ -634,8 +777,12 @@ class SessionUseCases {
         .where((rest) => rest.executionSetId == setId)
         .toList();
     if (relatedRestIntervals.any((rest) => rest.endedAt == null)) {
-      return Result.error(ConflictFailure(
-          'Finish the active rest interval before deleting this set', setId));
+      return Result.error(
+        ConflictFailure(
+          'Finish the active rest interval before deleting this set',
+          setId,
+        ),
+      );
     }
     final updated = session.copyWith(
       blocks: blocks,
@@ -644,21 +791,26 @@ class SessionUseCases {
           .toList(),
       audits: [
         ...session.audits,
-        ...relatedRestIntervals.map((rest) => _audit(
-              sessionId,
-              AuditAction.deleted,
-              entityType: 'RestInterval',
-              entityId: rest.id,
-              actorId: actorId,
-              previousValue: rest.toJson(),
-              reason: 'Parent execution set deleted',
-            )),
-        _audit(sessionId, AuditAction.deleted,
-            entityType: 'ExecutionSet',
-            entityId: setId,
+        ...relatedRestIntervals.map(
+          (rest) => _audit(
+            sessionId,
+            AuditAction.deleted,
+            entityType: 'RestInterval',
+            entityId: rest.id,
             actorId: actorId,
-            previousValue: removedSet.toJson(),
-            reason: reason)
+            previousValue: rest.toJson(),
+            reason: 'Parent execution set deleted',
+          ),
+        ),
+        _audit(
+          sessionId,
+          AuditAction.deleted,
+          entityType: 'ExecutionSet',
+          entityId: setId,
+          actorId: actorId,
+          previousValue: removedSet.toJson(),
+          reason: reason,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -678,24 +830,35 @@ class SessionUseCases {
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Sets can only be changed in an active session', sessionId));
+      return Result.error(
+        ConflictFailure(
+          'Sets can only be changed in an active session',
+          sessionId,
+        ),
+      );
     }
     ExecutionSet? oldSet;
     final blocks = session.blocks
-        .map((block) => block.copyWith(
+        .map(
+          (block) => block.copyWith(
             items: block.items
-                .map((item) => item.copyWith(
-                        sets: item.sets.map((set) {
+                .map(
+                  (item) => item.copyWith(
+                    sets: item.sets.map((set) {
                       if (set.id != setId) return set;
                       oldSet = set;
                       return set.copyWith(
-                          status: status,
-                          completedAt: status == ExecutionSetStatus.skipped
-                              ? AppClock.nowUtc()
-                              : set.completedAt);
-                    }).toList()))
-                .toList()))
+                        status: status,
+                        completedAt: status == ExecutionSetStatus.skipped
+                            ? AppClock.nowUtc()
+                            : set.completedAt,
+                      );
+                    }).toList(),
+                  ),
+                )
+                .toList(),
+          ),
+        )
         .toList();
     final previousSet = oldSet;
     if (previousSet == null) {
@@ -703,27 +866,32 @@ class SessionUseCases {
     }
     if (previousSet.status != ExecutionSetStatus.planned &&
         previousSet.status != ExecutionSetStatus.inProgress) {
-      return Result.error(ConflictFailure(
-          'Only a planned or active set can be skipped', setId));
+      return Result.error(
+        ConflictFailure('Only a planned or active set can be skipped', setId),
+      );
     }
     final updated = session.copyWith(
       blocks: blocks,
       audits: [
         ...session.audits,
-        _audit(sessionId, AuditAction.updated,
-            entityType: 'ExecutionSet',
-            entityId: setId,
-            actorId: actorId,
-            previousValue: previousSet.toJson(),
-            newValue: {'status': status.name},
-            reason: reason)
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'ExecutionSet',
+          entityId: setId,
+          actorId: actorId,
+          previousValue: previousSet.toJson(),
+          newValue: {'status': status.name},
+          reason: reason,
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     if (status == ExecutionSetStatus.skipped) {
-      _events
-          .publish(ExecutionSetSkipped(aggregateId: sessionId, setId: setId));
+      _events.publish(
+        ExecutionSetSkipped(aggregateId: sessionId, setId: setId),
+      );
     }
     return Result.success(updated);
   }
@@ -734,25 +902,37 @@ class SessionUseCases {
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress &&
         session.status != SessionStatus.paused) {
-      return Result.error(ConflictFailure(
-          'Only an active or paused session can be completed', id));
+      return Result.error(
+        ConflictFailure(
+          'Only an active or paused session can be completed',
+          id,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final restIntervals = session.restIntervals
-        .map((rest) => rest.endedAt == null
-            ? rest.copyWith(
-                endedAt: now,
-                actualDurationSeconds: now.difference(rest.startedAt).inSeconds,
-              )
-            : rest)
+        .map(
+          (rest) => rest.endedAt == null
+              ? rest.copyWith(
+                  endedAt: now,
+                  actualDurationSeconds: now
+                      .difference(rest.startedAt)
+                      .inSeconds,
+                )
+              : rest,
+        )
         .toList();
     final interruptions = [...session.interruptions];
     if (interruptions.isNotEmpty && interruptions.last.endedAt == null) {
-      interruptions[interruptions.length - 1] =
-          interruptions.last.copyWith(endedAt: now);
+      interruptions[interruptions.length - 1] = interruptions.last.copyWith(
+        endedAt: now,
+      );
     }
-    final restClosureAudits =
-        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final restClosureAudits = _restClosureAudits(
+      id,
+      session.restIntervals,
+      restIntervals,
+    );
     final completing = session.copyWith(
       status: SessionStatus.completing,
       completedAt: now,
@@ -762,7 +942,7 @@ class SessionUseCases {
       audits: [
         ...session.audits,
         ...restClosureAudits,
-        _audit(id, AuditAction.completed)
+        _audit(id, AuditAction.completed),
       ],
     );
     final prepared = await _sessions.save(completing);
@@ -774,8 +954,10 @@ class SessionUseCases {
     return Result.success(completed);
   }
 
-  Future<Result<WorkoutSession, Failure>> cancel(String id,
-      {String? reason}) async {
+  Future<Result<WorkoutSession, Failure>> cancel(
+    String id, {
+    String? reason,
+  }) async {
     final found = await _get(id);
     if (found.isError) return found;
     final session = found.dataOrNull!;
@@ -783,13 +965,20 @@ class SessionUseCases {
         session.status != SessionStatus.starting &&
         session.status != SessionStatus.inProgress &&
         session.status != SessionStatus.paused) {
-      return Result.error(ConflictFailure(
-          'This session cannot be cancelled from its current state', id));
+      return Result.error(
+        ConflictFailure(
+          'This session cannot be cancelled from its current state',
+          id,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final restIntervals = _closeRestIntervals(session, now);
-    final restClosureAudits =
-        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final restClosureAudits = _restClosureAudits(
+      id,
+      session.restIntervals,
+      restIntervals,
+    );
     final updated = session.copyWith(
       status: SessionStatus.cancelled,
       interruptions: _closeInterruptions(session, now),
@@ -798,7 +987,7 @@ class SessionUseCases {
       audits: [
         ...session.audits,
         ...restClosureAudits,
-        _audit(id, AuditAction.cancelled, reason: reason)
+        _audit(id, AuditAction.cancelled, reason: reason),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -807,20 +996,29 @@ class SessionUseCases {
     return Result.success(updated);
   }
 
-  Future<Result<WorkoutSession, Failure>> abandon(String id,
-      {String? reason}) async {
+  Future<Result<WorkoutSession, Failure>> abandon(
+    String id, {
+    String? reason,
+  }) async {
     final found = await _get(id);
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.inProgress &&
         session.status != SessionStatus.paused) {
-      return Result.error(ConflictFailure(
-          'Only an active or paused session can be abandoned', id));
+      return Result.error(
+        ConflictFailure(
+          'Only an active or paused session can be abandoned',
+          id,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final restIntervals = _closeRestIntervals(session, now);
-    final restClosureAudits =
-        _restClosureAudits(id, session.restIntervals, restIntervals);
+    final restClosureAudits = _restClosureAudits(
+      id,
+      session.restIntervals,
+      restIntervals,
+    );
     final updated = session.copyWith(
       status: SessionStatus.abandoned,
       interruptions: _closeInterruptions(session, now),
@@ -829,7 +1027,7 @@ class SessionUseCases {
       audits: [
         ...session.audits,
         ...restClosureAudits,
-        _audit(id, AuditAction.abandoned, reason: reason)
+        _audit(id, AuditAction.abandoned, reason: reason),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -848,8 +1046,12 @@ class SessionUseCases {
     if (found.isError) return found;
     final session = found.dataOrNull!;
     if (session.status != SessionStatus.starting) {
-      return Result.error(ConflictFailure(
-          'Only a starting session can be recovered this way', id));
+      return Result.error(
+        ConflictFailure(
+          'Only a starting session can be recovered this way',
+          id,
+        ),
+      );
     }
     final now = AppClock.nowUtc();
     final interruption = SessionInterruption(
@@ -865,9 +1067,12 @@ class SessionUseCases {
       interruptions: [...session.interruptions, interruption],
       audits: [
         ...session.audits,
-        _audit(id, AuditAction.paused,
-            actorType: AuditActorType.system,
-            reason: 'Recovered after an application interruption')
+        _audit(
+          id,
+          AuditAction.paused,
+          actorType: AuditActorType.system,
+          reason: 'Recovered after an application interruption',
+        ),
       ],
     );
     final saved = await _sessions.save(updated);
@@ -890,12 +1095,17 @@ class SessionUseCases {
     final now = AppClock.nowUtc();
     final completedAt = session.completedAt ?? now;
     final restIntervals = _closeRestIntervals(session, completedAt);
-    final restClosureAudits =
-        _restClosureAudits(id, session.restIntervals, restIntervals);
-    final hasCompletionAudit = session.audits.any((entry) =>
-        entry.action == AuditAction.completed &&
-        entry.entityType == 'WorkoutSession' &&
-        entry.entityId == id);
+    final restClosureAudits = _restClosureAudits(
+      id,
+      session.restIntervals,
+      restIntervals,
+    );
+    final hasCompletionAudit = session.audits.any(
+      (entry) =>
+          entry.action == AuditAction.completed &&
+          entry.entityType == 'WorkoutSession' &&
+          entry.entityId == id,
+    );
     final completed = session.copyWith(
       status: SessionStatus.completed,
       completedAt: completedAt,
@@ -906,9 +1116,12 @@ class SessionUseCases {
         ...session.audits,
         ...restClosureAudits,
         if (!hasCompletionAudit)
-          _audit(id, AuditAction.completed,
-              actorType: AuditActorType.system,
-              reason: 'Completion finalized during recovery')
+          _audit(
+            id,
+            AuditAction.completed,
+            actorType: AuditActorType.system,
+            reason: 'Completion finalized during recovery',
+          ),
       ],
     );
     final saved = await _sessions.save(completed);
@@ -921,47 +1134,66 @@ class SessionUseCases {
       _sessions.getById(id);
 
   List<SessionInterruption> _closeInterruptions(
-      WorkoutSession session, DateTime at) {
+    WorkoutSession session,
+    DateTime at,
+  ) {
     return session.interruptions
-        .map((interruption) => interruption.endedAt == null
-            ? interruption.copyWith(endedAt: at)
-            : interruption)
+        .map(
+          (interruption) => interruption.endedAt == null
+              ? interruption.copyWith(endedAt: at)
+              : interruption,
+        )
         .toList();
   }
 
   List<RestInterval> _closeRestIntervals(WorkoutSession session, DateTime at) {
     return session.restIntervals
-        .map((rest) => rest.endedAt == null
-            ? rest.copyWith(
-                endedAt: at,
-                actualDurationSeconds: at.difference(rest.startedAt).inSeconds,
-              )
-            : rest)
+        .map(
+          (rest) => rest.endedAt == null
+              ? rest.copyWith(
+                  endedAt: at,
+                  actualDurationSeconds: at
+                      .difference(rest.startedAt)
+                      .inSeconds,
+                )
+              : rest,
+        )
         .toList();
   }
 
-  List<AuditEntry> _restClosureAudits(String sessionId,
-      List<RestInterval> previous, List<RestInterval> updated) {
+  List<AuditEntry> _restClosureAudits(
+    String sessionId,
+    List<RestInterval> previous,
+    List<RestInterval> updated,
+  ) {
     final previousById = {
-      for (final interval in previous) interval.id: interval
+      for (final interval in previous) interval.id: interval,
     };
-    return updated.where((interval) {
-      final oldInterval = previousById[interval.id];
-      return oldInterval != null &&
-          oldInterval.endedAt == null &&
-          interval.endedAt != null;
-    }).map((interval) {
-      return _audit(sessionId, AuditAction.updated,
-          entityType: 'RestInterval',
-          entityId: interval.id,
-          previousValue: previousById[interval.id]!.toJson(),
-          newValue: interval.toJson(),
-          reason: 'Rest interval closed with session lifecycle');
-    }).toList();
+    return updated
+        .where((interval) {
+          final oldInterval = previousById[interval.id];
+          return oldInterval != null &&
+              oldInterval.endedAt == null &&
+              interval.endedAt != null;
+        })
+        .map((interval) {
+          return _audit(
+            sessionId,
+            AuditAction.updated,
+            entityType: 'RestInterval',
+            entityId: interval.id,
+            previousValue: previousById[interval.id]!.toJson(),
+            newValue: interval.toJson(),
+            reason: 'Rest interval closed with session lifecycle',
+          );
+        })
+        .toList();
   }
 
   List<SessionBlock> _withRestTotals(
-      List<SessionBlock> blocks, List<RestInterval> restIntervals) {
+    List<SessionBlock> blocks,
+    List<RestInterval> restIntervals,
+  ) {
     final secondsBySet = <String, int>{};
     for (final interval in restIntervals) {
       final seconds = interval.actualDurationSeconds;
@@ -974,74 +1206,87 @@ class SessionUseCases {
     }
     if (secondsBySet.isEmpty) return blocks;
     return blocks
-        .map((block) => block.copyWith(
-              items: block.items
-                  .map((item) => item.copyWith(
-                        sets: item.sets
-                            .map((set) => secondsBySet.containsKey(set.id)
-                                ? set.copyWith(
-                                    actualRestSeconds: secondsBySet[set.id])
-                                : set)
-                            .toList(),
-                      ))
-                  .toList(),
-            ))
+        .map(
+          (block) => block.copyWith(
+            items: block.items
+                .map(
+                  (item) => item.copyWith(
+                    sets: item.sets
+                        .map(
+                          (set) => secondsBySet.containsKey(set.id)
+                              ? set.copyWith(
+                                  actualRestSeconds: secondsBySet[set.id],
+                                )
+                              : set,
+                        )
+                        .toList(),
+                  ),
+                )
+                .toList(),
+          ),
+        )
         .toList();
   }
 
-  WorkoutSession _cloneRevision(WorkoutTemplateRevision revision,
-      WorkoutTemplate template, String userId) {
+  WorkoutSession _cloneRevision(
+    WorkoutTemplateRevision revision,
+    WorkoutTemplate template,
+    String userId,
+  ) {
     final blocks = revision.blocks
-        .map((block) => SessionBlock(
-              id: UniqueId.generate().value,
-              sourceTemplateBlockId: block.id,
-              name: block.name,
-              type: block.type,
-              rounds: block.rounds,
-              timeCapSeconds: block.timeCapSeconds,
-              transitionSeconds: block.transitionSeconds,
-              notes: block.notes,
-              items: block.items
-                  .map((item) => SessionItem(
-                        id: UniqueId.generate().value,
-                        sourceTemplateItemId: item.id,
-                        exerciseId: item.exerciseId,
-                        order: item.order,
-                        notes: item.coachNotes,
-                        sets: item.targetSets
-                            .map((target) => ExecutionSet(
-                                  id: UniqueId.generate().value,
-                                  sourceTemplateSetId: target.id,
-                                  setNumber: target.setNumber,
-                                  setType: target.setType,
-                                  targetWeight: target.targetWeight,
-                                  targetReps: target.targetReps,
-                                  targetDurationSeconds:
-                                      target.targetDurationSeconds,
-                                  targetDistanceMeters:
-                                      target.targetDistanceMeters,
-                                  targetCalories: target.targetCalories,
-                                  targetRpe: target.targetRpe,
-                                  targetRir: target.targetRir,
-                                  percentageOf1Rm: target.percentageOf1Rm,
-                                  plannedRestSeconds:
-                                      target.restPolicy?.targetSeconds ?? 0,
-                                  restAutoStart:
-                                      target.restPolicy?.autoStart ?? false,
-                                  restAllowSkip:
-                                      target.restPolicy?.allowSkip ?? true,
-                                  restAllowExtend:
-                                      target.restPolicy?.allowExtend ?? true,
-                                  restMinimumSeconds:
-                                      target.restPolicy?.minimumSeconds,
-                                  restMaximumSeconds:
-                                      target.restPolicy?.maximumSeconds,
-                                  notes: target.notes,
-                                ))
-                            .toList(),
-                      ))
-                  .toList(),
-            ))
+        .map(
+          (block) => SessionBlock(
+            id: UniqueId.generate().value,
+            sourceTemplateBlockId: block.id,
+            name: block.name,
+            type: block.type,
+            rounds: block.rounds,
+            timeCapSeconds: block.timeCapSeconds,
+            transitionSeconds: block.transitionSeconds,
+            notes: block.notes,
+            items: block.items
+                .map(
+                  (item) => SessionItem(
+                    id: UniqueId.generate().value,
+                    sourceTemplateItemId: item.id,
+                    exerciseId: item.exerciseId,
+                    order: item.order,
+                    notes: item.coachNotes,
+                    sets: item.targetSets
+                        .map(
+                          (target) => ExecutionSet(
+                            id: UniqueId.generate().value,
+                            sourceTemplateSetId: target.id,
+                            setNumber: target.setNumber,
+                            setType: target.setType,
+                            targetWeight: target.targetWeight,
+                            targetReps: target.targetReps,
+                            targetDurationSeconds: target.targetDurationSeconds,
+                            targetDistanceMeters: target.targetDistanceMeters,
+                            targetCalories: target.targetCalories,
+                            targetRpe: target.targetRpe,
+                            targetRir: target.targetRir,
+                            percentageOf1Rm: target.percentageOf1Rm,
+                            plannedRestSeconds:
+                                target.restPolicy?.targetSeconds ?? 0,
+                            restAutoStart:
+                                target.restPolicy?.autoStart ?? false,
+                            restAllowSkip: target.restPolicy?.allowSkip ?? true,
+                            restAllowExtend:
+                                target.restPolicy?.allowExtend ?? true,
+                            restMinimumSeconds:
+                                target.restPolicy?.minimumSeconds,
+                            restMaximumSeconds:
+                                target.restPolicy?.maximumSeconds,
+                            notes: target.notes,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+                .toList(),
+          ),
+        )
         .toList();
     final id = UniqueId.generate().value;
     final now = AppClock.nowUtc();
@@ -1068,18 +1313,17 @@ class SessionUseCases {
     Object? previousValue,
     Object? newValue,
     String? reason,
-  }) =>
-      AuditEntry(
-        id: UniqueId.generate().value,
-        timestamp: AppClock.nowUtc(),
-        actorType: actorType,
-        action: action,
-        actorId: actorId,
-        entityType: entityType,
-        entityId: entityId ?? sessionId,
-        field: field,
-        previousValue: previousValue,
-        newValue: newValue,
-        reason: reason,
-      );
+  }) => AuditEntry(
+    id: UniqueId.generate().value,
+    timestamp: AppClock.nowUtc(),
+    actorType: actorType,
+    action: action,
+    actorId: actorId,
+    entityType: entityType,
+    entityId: entityId ?? sessionId,
+    field: field,
+    previousValue: previousValue,
+    newValue: newValue,
+    reason: reason,
+  );
 }

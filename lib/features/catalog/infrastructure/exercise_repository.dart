@@ -7,7 +7,7 @@ import '../domain/exercise.dart';
 import 'exercise_document_adapter.dart';
 
 /// Abstract contract for exercise persistence operations.
-abstract class IExerciseRepository {
+abstract class IExerciseRepository() {
   Future<Result<void, Failure>> save(Exercise exercise);
   Future<Result<Exercise, Failure>> findById(String id);
   Future<Result<List<Exercise>, Failure>> findAll();
@@ -24,14 +24,14 @@ abstract class IExerciseRepository {
 class ExerciseRepository implements IExerciseRepository {
   final IDocumentStore<Exercise> _store;
 
-  ExerciseRepository(AppDatabase db)
-      : _store = DriftDocumentStore<Exercise>(
-          database: db,
-          adapter: const ExerciseDocumentAdapter(),
-        );
+  new(AppDatabase db)
+    : _store = DriftDocumentStore<Exercise>(
+        database: db,
+        adapter: const ExerciseDocumentAdapter(),
+      );
 
   /// Internal constructor used in tests with a pre-built store.
-  ExerciseRepository.withStore(this._store);
+  new withStore(this._store);
 
   @override
   Future<Result<void, Failure>> save(Exercise exercise) =>

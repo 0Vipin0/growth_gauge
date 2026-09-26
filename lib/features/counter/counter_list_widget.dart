@@ -9,9 +9,7 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'reusable_counter_widget.dart';
 
-class CounterListWidget extends StatelessWidget {
-  const CounterListWidget({super.key});
-
+class const CounterListWidget({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counterListProvider = Provider.of<CounterListProvider>(context);
@@ -152,7 +150,8 @@ class CounterListWidget extends StatelessWidget {
         decoration: const InputDecoration(
           labelText: 'Search Counters',
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16))),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
         ),
         onChanged: (value) {
           counterListProvider.filterCountersByText(value);
@@ -182,8 +181,8 @@ class CounterListWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color:
                               Theme.of(context).brightness == Brightness.light
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).primaryColorLight,
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColorLight,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -283,9 +282,7 @@ class CounterListWidget extends StatelessWidget {
                   Provider.of<CounterListProvider>(
                     context,
                     listen: false,
-                  ).updateCounter(
-                    counter.copyWith(target: newTarget),
-                  );
+                  ).updateCounter(counter.copyWith(target: newTarget));
                 }
                 Navigator.of(context).pop();
               },

@@ -7,21 +7,21 @@ part of 'audit_entry.dart';
 // **************************************************************************
 
 _AuditEntry _$AuditEntryFromJson(Map<String, dynamic> json) => _AuditEntry(
-      id: json['id'] as String,
-      timestamp: DateTime.parse(json['timestamp'] as String),
-      actorType:
-          $enumDecodeNullable(_$AuditActorTypeEnumMap, json['actorType']) ??
-              AuditActorType.user,
-      actorId: json['actorId'] as String?,
-      action: $enumDecode(_$AuditActionEnumMap, json['action']),
-      entityType: json['entityType'] as String,
-      entityId: json['entityId'] as String,
-      field: json['field'] as String?,
-      previousValue: json['previousValue'],
-      newValue: json['newValue'],
-      reason: json['reason'] as String?,
-      correlationId: json['correlationId'] as String?,
-    );
+  id: json['id'] as String,
+  timestamp: DateTime.parse(json['timestamp'] as String),
+  actorType:
+      $enumDecodeNullable(_$AuditActorTypeEnumMap, json['actorType']) ??
+      AuditActorType.user,
+  actorId: json['actorId'] as String?,
+  action: $enumDecode(_$AuditActionEnumMap, json['action']),
+  entityType: json['entityType'] as String,
+  entityId: json['entityId'] as String,
+  field: json['field'] as String?,
+  previousValue: json['previousValue'],
+  newValue: json['newValue'],
+  reason: json['reason'] as String?,
+  correlationId: json['correlationId'] as String?,
+);
 
 Map<String, dynamic> _$AuditEntryToJson(_AuditEntry instance) =>
     <String, dynamic>{

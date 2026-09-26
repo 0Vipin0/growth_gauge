@@ -2,31 +2,17 @@ import 'package:intl/intl.dart';
 
 import 'timer_model.dart';
 
-class FlatTimerModel {
-  FlatTimerModel({
-    required this.id,
-    required this.name,
-    required this.interval,
-    required this.description,
-    required this.target,
-    required this.logAction,
-    required this.logTimestamp,
-    required this.logInterval,
-  });
-
-  final String id;
-  final String name;
-  final Duration interval;
-  final String description;
-  final String target;
-  final String logAction;
-  final DateTime logTimestamp;
-  final Duration logInterval;
-
-  factory FlatTimerModel.fromTimerModel(
-    TimerModel timerModel,
-    TimerLog timerLog,
-  ) {
+class FlatTimerModel({
+  required final String id,
+  required final String name,
+  required final Duration interval,
+  required final String description,
+  required final String target,
+  required final String logAction,
+  required final DateTime logTimestamp,
+  required final Duration logInterval,
+}) {
+  factory fromTimerModel(TimerModel timerModel, TimerLog timerLog) {
     return FlatTimerModel(
       id: timerModel.id,
       name: timerModel.name,

@@ -8,7 +8,7 @@ part 'target_set.g.dart';
 
 @freezed
 abstract class TargetSet with _$TargetSet {
-  const factory TargetSet({
+  const factory({
     required String id,
     required int setNumber,
     @Default(SetType.working) SetType setType,
@@ -24,6 +24,5 @@ abstract class TargetSet with _$TargetSet {
     String? notes,
   }) = _TargetSet;
 
-  factory TargetSet.fromJson(Map<String, dynamic> json) =>
-      _$TargetSetFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$TargetSetFromJson(json);
 }

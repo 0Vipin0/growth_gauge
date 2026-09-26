@@ -10,12 +10,14 @@ _WorkoutBlock _$WorkoutBlockFromJson(Map<String, dynamic> json) =>
     _WorkoutBlock(
       id: json['id'] as String,
       name: json['name'] as String,
-      type: $enumDecodeNullable(_$WorkoutBlockTypeEnumMap, json['type']) ??
+      type:
+          $enumDecodeNullable(_$WorkoutBlockTypeEnumMap, json['type']) ??
           WorkoutBlockType.standard,
       rounds: (json['rounds'] as num?)?.toInt() ?? 1,
       timeCapSeconds: (json['timeCapSeconds'] as num?)?.toInt(),
       transitionSeconds: (json['transitionSeconds'] as num?)?.toInt(),
-      items: (json['items'] as List<dynamic>?)
+      items:
+          (json['items'] as List<dynamic>?)
               ?.map((e) => TemplateItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],

@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/core/error/failures.dart';
 import 'package:growth_gauge/features/template/application/template_use_cases.dart';
-import 'package:growth_gauge/features/template/domain/template_enums.dart';
 import 'package:growth_gauge/features/template/domain/target_set.dart';
+import 'package:growth_gauge/features/template/domain/template_enums.dart';
 import 'package:growth_gauge/features/template/domain/workout_block.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
@@ -22,11 +23,14 @@ void main() {
     tearDown(() async => database.close());
 
     test('creates a template with its initial draft revision', () async {
-      final result =
-          await useCases.create(name: 'Upper body', createdById: 'user-1');
+      final result = await useCases.create(
+        name: 'Upper body',
+        createdById: 'user-1',
+      );
       final template = result.dataOrNull!;
-      final revision =
-          await repository.getRevision(template.currentRevisionId!);
+      final revision = await repository.getRevision(
+        template.currentRevisionId!,
+      );
 
       expect(template.name, 'Upper body');
       expect(revision.dataOrNull!.templateId, template.id);
@@ -41,11 +45,7 @@ void main() {
     });
 
     test('target sets serialize calorie prescriptions', () {
-      final target = TargetSet(
-        id: 'set-1',
-        setNumber: 1,
-        targetCalories: 120,
-      );
+      const target = TargetSet(id: 'set-1', setNumber: 1, targetCalories: 120);
 
       final restored = TargetSet.fromJson(target.toJson());
 
@@ -53,12 +53,13 @@ void main() {
     });
 
     test('updates and publishes a draft revision', () async {
-      final template =
-          (await useCases.create(name: 'Leg day', createdById: 'user-1'))
-              .dataOrNull!;
-      final revision =
-          (await repository.getRevision(template.currentRevisionId!))
-              .dataOrNull!;
+      final template = (await useCases.create(
+        name: 'Leg day',
+        createdById: 'user-1',
+      )).dataOrNull!;
+      final revision = (await repository.getRevision(
+        template.currentRevisionId!,
+      )).dataOrNull!;
       const block = WorkoutBlock(id: 'block-1', name: 'Main lifts');
 
       final updated = await useCases.updateDraftBlocks(revision.id, [block]);
@@ -68,54 +69,65 @@ void main() {
       expect(updated.dataOrNull!.blocks, [block]);
       expect(published.isSuccess, isTrue);
       expect(
-          savedRevision.dataOrNull!.status, TemplateRevisionStatus.published);
+        savedRevision.dataOrNull!.status,
+        TemplateRevisionStatus.published,
+      );
       expect(
-          (await repository.getTemplate(template.id))
-              .dataOrNull!
-              .currentRevisionId,
-          revision.id);
-    });
-
-    test('published revisions cannot be edited directly or through use cases',
-        () async {
-      final template =
-          (await useCases.create(name: 'Push day', createdById: 'user-1'))
-              .dataOrNull!;
-      final revision =
-          (await repository.getRevision(template.currentRevisionId!))
-              .dataOrNull!;
-      await useCases.publish(revision.id);
-
-      final directSave = await repository
-          .saveRevision(revision.copyWith(changeSummary: 'tampered'));
-      final update = await useCases.updateDraftBlocks(
-          revision.id, [const WorkoutBlock(id: 'block-1', name: 'Changed')]);
-
-      expect(directSave.errorOrNull, isA<ConflictFailure>());
-      expect(update.errorOrNull, isA<ConflictFailure>());
+        (await repository.getTemplate(template.id))
+            .dataOrNull!
+            .currentRevisionId,
+        revision.id,
+      );
     });
 
     test(
-        'editing a published template creates the next draft and preserves history',
-        () async {
-      final template =
-          (await useCases.create(name: 'Full body', createdById: 'user-1'))
-              .dataOrNull!;
-      final original =
-          (await repository.getRevision(template.currentRevisionId!))
-              .dataOrNull!;
+      'published revisions cannot be edited directly or through use cases',
+      () async {
+        final template = (await useCases.create(
+          name: 'Push day',
+          createdById: 'user-1',
+        )).dataOrNull!;
+        final revision = (await repository.getRevision(
+          template.currentRevisionId!,
+        )).dataOrNull!;
+        await useCases.publish(revision.id);
+
+        final directSave = await repository.saveRevision(
+          revision.copyWith(changeSummary: 'tampered'),
+        );
+        final update = await useCases.updateDraftBlocks(revision.id, [
+          const WorkoutBlock(id: 'block-1', name: 'Changed'),
+        ]);
+
+        expect(directSave.errorOrNull, isA<ConflictFailure>());
+        expect(update.errorOrNull, isA<ConflictFailure>());
+      },
+    );
+
+    test('editing a published template creates the next draft and preserves history', () async {
+      final template = (await useCases.create(
+        name: 'Full body',
+        createdById: 'user-1',
+      )).dataOrNull!;
+      final original = (await repository.getRevision(
+        template.currentRevisionId!,
+      )).dataOrNull!;
       await useCases.publish(original.id);
 
-      final nextDraft = await useCases.createDraftFromCurrent(template.id,
-          changeSummary: 'Progression update');
+      final nextDraft = await useCases.createDraftFromCurrent(
+        template.id,
+        changeSummary: 'Progression update',
+      );
       final revisions = await repository.getRevisions(template.id);
 
       expect(nextDraft.dataOrNull!.revisionNumber, 2);
       expect(nextDraft.dataOrNull!.status, TemplateRevisionStatus.draft);
       expect(nextDraft.dataOrNull!.changeSummary, 'Progression update');
       expect(revisions.dataOrNull, hasLength(2));
-      expect((await repository.getRevision(original.id)).dataOrNull!.status,
-          TemplateRevisionStatus.published);
+      expect(
+        (await repository.getRevision(original.id)).dataOrNull!.status,
+        TemplateRevisionStatus.published,
+      );
     });
   });
 }

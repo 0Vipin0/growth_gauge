@@ -9,61 +9,97 @@ class $DocumentsTable extends Documents
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $DocumentsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _collectionMeta =
-      const VerificationMeta('collection');
+  static const VerificationMeta _collectionMeta = const VerificationMeta(
+    'collection',
+  );
   @override
   late final GeneratedColumn<String> collection = GeneratedColumn<String>(
-      'collection', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'collection',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _jsonDataMeta =
-      const VerificationMeta('jsonData');
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _jsonDataMeta = const VerificationMeta(
+    'jsonData',
+  );
   @override
   late final GeneratedColumn<String> jsonData = GeneratedColumn<String>(
-      'json_data', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _schemaVersionMeta =
-      const VerificationMeta('schemaVersion');
+    'json_data',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _schemaVersionMeta = const VerificationMeta(
+    'schemaVersion',
+  );
   @override
   late final GeneratedColumn<int> schemaVersion = GeneratedColumn<int>(
-      'schema_version', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(1));
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
+    'schema_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-      'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _updatedAtMeta =
-      const VerificationMeta('updatedAt');
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-      'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   @override
-  List<GeneratedColumn> get $columns =>
-      [collection, id, jsonData, schemaVersion, createdAt, updatedAt];
+  List<GeneratedColumn> get $columns => [
+    collection,
+    id,
+    jsonData,
+    schemaVersion,
+    createdAt,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'documents';
   @override
-  VerificationContext validateIntegrity(Insertable<Document> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<Document> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('collection')) {
       context.handle(
-          _collectionMeta,
-          collection.isAcceptableOrUnknown(
-              data['collection']!, _collectionMeta));
+        _collectionMeta,
+        collection.isAcceptableOrUnknown(data['collection']!, _collectionMeta),
+      );
     } else if (isInserting) {
       context.missing(_collectionMeta);
     }
@@ -73,26 +109,35 @@ class $DocumentsTable extends Documents
       context.missing(_idMeta);
     }
     if (data.containsKey('json_data')) {
-      context.handle(_jsonDataMeta,
-          jsonData.isAcceptableOrUnknown(data['json_data']!, _jsonDataMeta));
+      context.handle(
+        _jsonDataMeta,
+        jsonData.isAcceptableOrUnknown(data['json_data']!, _jsonDataMeta),
+      );
     } else if (isInserting) {
       context.missing(_jsonDataMeta);
     }
     if (data.containsKey('schema_version')) {
       context.handle(
+        _schemaVersionMeta,
+        schemaVersion.isAcceptableOrUnknown(
+          data['schema_version']!,
           _schemaVersionMeta,
-          schemaVersion.isAcceptableOrUnknown(
-              data['schema_version']!, _schemaVersionMeta));
+        ),
+      );
     }
     if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
-      context.handle(_updatedAtMeta,
-          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
@@ -105,18 +150,30 @@ class $DocumentsTable extends Documents
   Document map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Document(
-      collection: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}collection'])!,
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      jsonData: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}json_data'])!,
-      schemaVersion: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}schema_version'])!,
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
-      updatedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      collection: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}collection'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      jsonData: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}json_data'],
+      )!,
+      schemaVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}schema_version'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -144,13 +201,14 @@ class Document extends DataClass implements Insertable<Document> {
 
   /// UTC update timestamp.
   final DateTime updatedAt;
-  const Document(
-      {required this.collection,
-      required this.id,
-      required this.jsonData,
-      required this.schemaVersion,
-      required this.createdAt,
-      required this.updatedAt});
+  const Document({
+    required this.collection,
+    required this.id,
+    required this.jsonData,
+    required this.schemaVersion,
+    required this.createdAt,
+    required this.updatedAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -174,8 +232,10 @@ class Document extends DataClass implements Insertable<Document> {
     );
   }
 
-  factory Document.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Document.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Document(
       collection: serializer.fromJson<String>(json['collection']),
@@ -199,25 +259,26 @@ class Document extends DataClass implements Insertable<Document> {
     };
   }
 
-  Document copyWith(
-          {String? collection,
-          String? id,
-          String? jsonData,
-          int? schemaVersion,
-          DateTime? createdAt,
-          DateTime? updatedAt}) =>
-      Document(
-        collection: collection ?? this.collection,
-        id: id ?? this.id,
-        jsonData: jsonData ?? this.jsonData,
-        schemaVersion: schemaVersion ?? this.schemaVersion,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
+  Document copyWith({
+    String? collection,
+    String? id,
+    String? jsonData,
+    int? schemaVersion,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => Document(
+    collection: collection ?? this.collection,
+    id: id ?? this.id,
+    jsonData: jsonData ?? this.jsonData,
+    schemaVersion: schemaVersion ?? this.schemaVersion,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
   Document copyWithCompanion(DocumentsCompanion data) {
     return Document(
-      collection:
-          data.collection.present ? data.collection.value : this.collection,
+      collection: data.collection.present
+          ? data.collection.value
+          : this.collection,
       id: data.id.present ? data.id.value : this.id,
       jsonData: data.jsonData.present ? data.jsonData.value : this.jsonData,
       schemaVersion: data.schemaVersion.present
@@ -243,7 +304,13 @@ class Document extends DataClass implements Insertable<Document> {
 
   @override
   int get hashCode => Object.hash(
-      collection, id, jsonData, schemaVersion, createdAt, updatedAt);
+    collection,
+    id,
+    jsonData,
+    schemaVersion,
+    createdAt,
+    updatedAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -281,11 +348,11 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     required DateTime createdAt,
     required DateTime updatedAt,
     this.rowid = const Value.absent(),
-  })  : collection = Value(collection),
-        id = Value(id),
-        jsonData = Value(jsonData),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+  }) : collection = Value(collection),
+       id = Value(id),
+       jsonData = Value(jsonData),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
   static Insertable<Document> custom({
     Expression<String>? collection,
     Expression<String>? id,
@@ -306,14 +373,15 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     });
   }
 
-  DocumentsCompanion copyWith(
-      {Value<String>? collection,
-      Value<String>? id,
-      Value<String>? jsonData,
-      Value<int>? schemaVersion,
-      Value<DateTime>? createdAt,
-      Value<DateTime>? updatedAt,
-      Value<int>? rowid}) {
+  DocumentsCompanion copyWith({
+    Value<String>? collection,
+    Value<String>? id,
+    Value<String>? jsonData,
+    Value<int>? schemaVersion,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
     return DocumentsCompanion(
       collection: collection ?? this.collection,
       id: id ?? this.id,
@@ -407,22 +475,34 @@ class $$DocumentsTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get collection => $composableBuilder(
-      column: $table.collection, builder: (column) => ColumnFilters(column));
+    column: $table.collection,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get jsonData => $composableBuilder(
-      column: $table.jsonData, builder: (column) => ColumnFilters(column));
+    column: $table.jsonData,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<int> get schemaVersion => $composableBuilder(
-      column: $table.schemaVersion, builder: (column) => ColumnFilters(column));
+    column: $table.schemaVersion,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
-      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
 class $$DocumentsTableOrderingComposer
@@ -435,23 +515,34 @@ class $$DocumentsTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get collection => $composableBuilder(
-      column: $table.collection, builder: (column) => ColumnOrderings(column));
+    column: $table.collection,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get jsonData => $composableBuilder(
-      column: $table.jsonData, builder: (column) => ColumnOrderings(column));
+    column: $table.jsonData,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<int> get schemaVersion => $composableBuilder(
-      column: $table.schemaVersion,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.schemaVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$DocumentsTableAnnotationComposer
@@ -464,7 +555,9 @@ class $$DocumentsTableAnnotationComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   GeneratedColumn<String> get collection => $composableBuilder(
-      column: $table.collection, builder: (column) => column);
+    column: $table.collection,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
@@ -473,7 +566,9 @@ class $$DocumentsTableAnnotationComposer
       $composableBuilder(column: $table.jsonData, builder: (column) => column);
 
   GeneratedColumn<int> get schemaVersion => $composableBuilder(
-      column: $table.schemaVersion, builder: (column) => column);
+    column: $table.schemaVersion,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -482,20 +577,24 @@ class $$DocumentsTableAnnotationComposer
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
-class $$DocumentsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $DocumentsTable,
-    Document,
-    $$DocumentsTableFilterComposer,
-    $$DocumentsTableOrderingComposer,
-    $$DocumentsTableAnnotationComposer,
-    $$DocumentsTableCreateCompanionBuilder,
-    $$DocumentsTableUpdateCompanionBuilder,
-    (Document, BaseReferences<_$AppDatabase, $DocumentsTable, Document>),
-    Document,
-    PrefetchHooks Function()> {
+class $$DocumentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DocumentsTable,
+          Document,
+          $$DocumentsTableFilterComposer,
+          $$DocumentsTableOrderingComposer,
+          $$DocumentsTableAnnotationComposer,
+          $$DocumentsTableCreateCompanionBuilder,
+          $$DocumentsTableUpdateCompanionBuilder,
+          (Document, BaseReferences<_$AppDatabase, $DocumentsTable, Document>),
+          Document,
+          PrefetchHooks Function()
+        > {
   $$DocumentsTableTableManager(_$AppDatabase db, $DocumentsTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -504,61 +603,64 @@ class $$DocumentsTableTableManager extends RootTableManager<
               $$DocumentsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$DocumentsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> collection = const Value.absent(),
-            Value<String> id = const Value.absent(),
-            Value<String> jsonData = const Value.absent(),
-            Value<int> schemaVersion = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<DateTime> updatedAt = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DocumentsCompanion(
-            collection: collection,
-            id: id,
-            jsonData: jsonData,
-            schemaVersion: schemaVersion,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String collection,
-            required String id,
-            required String jsonData,
-            Value<int> schemaVersion = const Value.absent(),
-            required DateTime createdAt,
-            required DateTime updatedAt,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              DocumentsCompanion.insert(
-            collection: collection,
-            id: id,
-            jsonData: jsonData,
-            schemaVersion: schemaVersion,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<String> collection = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> jsonData = const Value.absent(),
+                Value<int> schemaVersion = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentsCompanion(
+                collection: collection,
+                id: id,
+                jsonData: jsonData,
+                schemaVersion: schemaVersion,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String collection,
+                required String id,
+                required String jsonData,
+                Value<int> schemaVersion = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => DocumentsCompanion.insert(
+                collection: collection,
+                id: id,
+                jsonData: jsonData,
+                schemaVersion: schemaVersion,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $$DocumentsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $DocumentsTable,
-    Document,
-    $$DocumentsTableFilterComposer,
-    $$DocumentsTableOrderingComposer,
-    $$DocumentsTableAnnotationComposer,
-    $$DocumentsTableCreateCompanionBuilder,
-    $$DocumentsTableUpdateCompanionBuilder,
-    (Document, BaseReferences<_$AppDatabase, $DocumentsTable, Document>),
-    Document,
-    PrefetchHooks Function()>;
+typedef $$DocumentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DocumentsTable,
+      Document,
+      $$DocumentsTableFilterComposer,
+      $$DocumentsTableOrderingComposer,
+      $$DocumentsTableAnnotationComposer,
+      $$DocumentsTableCreateCompanionBuilder,
+      $$DocumentsTableUpdateCompanionBuilder,
+      (Document, BaseReferences<_$AppDatabase, $DocumentsTable, Document>),
+      Document,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

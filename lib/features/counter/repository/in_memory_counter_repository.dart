@@ -1,7 +1,7 @@
 import '../model/model.dart';
 import 'counter_repository.dart';
 
-class InMemoryCounterRepository implements CounterRepository {
+class InMemoryCounterRepository() implements CounterRepository {
   List<CounterModel> _counters = [];
 
   @override

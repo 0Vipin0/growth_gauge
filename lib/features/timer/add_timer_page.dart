@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,14 +10,12 @@ import '../common/presentation/widgets/time_control_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class AddTimerPage extends StatefulWidget {
-  const AddTimerPage({super.key});
-
+class const AddTimerPage({super.key}) extends StatefulWidget {
   @override
   State<AddTimerPage> createState() => _AddTimerPageState();
 }
 
-class _AddTimerPageState extends State<AddTimerPage> {
+class _AddTimerPageState() extends State<AddTimerPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -34,10 +33,7 @@ class _AddTimerPageState extends State<AddTimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Timer'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('New Timer'), centerTitle: true),
       body: ResponsiveFormLayout(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -72,8 +68,10 @@ class _AddTimerPageState extends State<AddTimerPage> {
                   },
                 ),
                 const SizedBox(height: 16),
-                const Text('Set Timer Duration',
-                    style: TextStyle(fontSize: 16)),
+                const Text(
+                  'Set Timer Duration',
+                  style: TextStyle(fontSize: 16),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -95,8 +93,10 @@ class _AddTimerPageState extends State<AddTimerPage> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('Set Target Duration (Optional)',
-                    style: TextStyle(fontSize: 16)),
+                const Text(
+                  'Set Target Duration (Optional)',
+                  style: TextStyle(fontSize: 16),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

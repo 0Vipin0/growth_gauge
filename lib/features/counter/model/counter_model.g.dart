@@ -31,10 +31,10 @@ Map<String, dynamic> _$CounterModelToJson(_CounterModel instance) =>
     };
 
 _CounterLog _$CounterLogFromJson(Map<String, dynamic> json) => _CounterLog(
-      id: json['id'] as String,
-      action: json['action'] as String,
-      timestamp: DateTime.parse(json['timestamp'] as String),
-    );
+  id: json['id'] as String,
+  action: json['action'] as String,
+  timestamp: DateTime.parse(json['timestamp'] as String),
+);
 
 Map<String, dynamic> _$CounterLogToJson(_CounterLog instance) =>
     <String, dynamic>{

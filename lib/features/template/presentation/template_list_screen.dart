@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/events/domain_event_dispatcher.dart';
-import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -12,25 +12,19 @@ import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
 import 'template_detail_screen.dart';
 
-class TemplateListScreen extends StatefulWidget {
-  const TemplateListScreen(
-      {super.key,
-      required this.repository,
-      required this.exerciseRepository,
-      required this.sessionRepository,
-      required this.useCases,
-      required this.userId});
-  final ITemplateRepository repository;
-  final IExerciseRepository exerciseRepository;
-  final IWorkoutSessionRepository sessionRepository;
-  final TemplateUseCases useCases;
-  final String userId;
-
+class const TemplateListScreen({
+  super.key,
+  required final ITemplateRepository repository,
+  required final IExerciseRepository exerciseRepository,
+  required final IWorkoutSessionRepository sessionRepository,
+  required final TemplateUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<TemplateListScreen> createState() => _TemplateListScreenState();
 }
 
-class _TemplateListScreenState extends State<TemplateListScreen> {
+class _TemplateListScreenState() extends State<TemplateListScreen> {
   late Stream<List<WorkoutTemplate>> _templates;
 
   @override
@@ -58,9 +52,9 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
     final recovered = await sessionUseCases.recoverIncomplete(session.id);
     if (recovered.isError) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(recovered.errorOrNull!.message)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(recovered.errorOrNull!.message)));
       }
       await events.dispose();
       return;
@@ -74,39 +68,47 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
       await events.dispose();
       return;
     }
-    await Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => ActiveSessionScreen(
-        session: session,
-        useCases: sessionUseCases,
-        exerciseRepository: widget.exerciseRepository,
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ActiveSessionScreen(
+          session: session,
+          useCases: sessionUseCases,
+          exerciseRepository: widget.exerciseRepository,
+        ),
       ),
-    ));
+    );
     await events.dispose();
   }
 
   Future<void> _create() async {
     final name = TextEditingController();
     final result = await showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: const Text('New workout template'),
-              content: TextField(
-                  controller: name,
-                  autofocus: true,
-                  decoration: const InputDecoration(labelText: 'Name')),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel')),
-                FilledButton(
-                    onPressed: () => Navigator.pop(context, name.text),
-                    child: const Text('Create'))
-              ],
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('New workout template'),
+        content: TextField(
+          controller: name,
+          autofocus: true,
+          decoration: const InputDecoration(labelText: 'Name'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, name.text),
+            child: const Text('Create'),
+          ),
+        ],
+      ),
+    );
     name.dispose();
     if (result == null || !mounted) return;
-    final created =
-        await widget.useCases.create(name: result, createdById: widget.userId);
+    final created = await widget.useCases.create(
+      name: result,
+      createdById: widget.userId,
+    );
     if (created.isError && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(created.errorOrNull!.message)));
@@ -115,47 +117,55 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Workout templates')),
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: _create,
-            icon: const Icon(Icons.add),
-            label: const Text('New template')),
-        body: StreamBuilder<List<WorkoutTemplate>>(
-          stream: _templates,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(child: Text('Could not load templates'));
-            }
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final templates =
-                snapshot.data!.where((t) => !t.isArchived).toList();
-            if (templates.isEmpty) {
-              return const Center(
-                  child: Text('Create a template to start planning workouts'));
-            }
-            return ListView.builder(
-                itemCount: templates.length,
-                itemBuilder: (context, i) {
-                  final template = templates[i];
-                  return ListTile(
-                    leading: const CircleAvatar(child: Icon(Icons.view_agenda)),
-                    title: Text(template.name),
-                    subtitle: Text(template.description.isEmpty
-                        ? 'No description'
-                        : template.description),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => TemplateDetailScreen(
-                            template: template,
-                            repository: widget.repository,
-                            exerciseRepository: widget.exerciseRepository,
-                            useCases: widget.useCases,
-                            userId: widget.userId))),
-                  );
-                });
+    appBar: AppBar(title: const Text('Workout templates')),
+    floatingActionButton: FloatingActionButton.extended(
+      onPressed: _create,
+      icon: const Icon(Icons.add),
+      label: const Text('New template'),
+    ),
+    body: StreamBuilder<List<WorkoutTemplate>>(
+      stream: _templates,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Center(child: Text('Could not load templates'));
+        }
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final templates = snapshot.data!.where((t) => !t.isArchived).toList();
+        if (templates.isEmpty) {
+          return const Center(
+            child: Text('Create a template to start planning workouts'),
+          );
+        }
+        return ListView.builder(
+          itemCount: templates.length,
+          itemBuilder: (context, i) {
+            final template = templates[i];
+            return ListTile(
+              leading: const CircleAvatar(child: Icon(Icons.view_agenda)),
+              title: Text(template.name),
+              subtitle: Text(
+                template.description.isEmpty
+                    ? 'No description'
+                    : template.description,
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => TemplateDetailScreen(
+                    template: template,
+                    repository: widget.repository,
+                    exerciseRepository: widget.exerciseRepository,
+                    useCases: widget.useCases,
+                    userId: widget.userId,
+                  ),
+                ),
+              ),
+            );
           },
-        ),
-      );
+        );
+      },
+    ),
+  );
 }

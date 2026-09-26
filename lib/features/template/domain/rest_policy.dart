@@ -5,7 +5,7 @@ part 'rest_policy.g.dart';
 
 @freezed
 abstract class RestPolicy with _$RestPolicy {
-  const factory RestPolicy({
+  const factory({
     required String id,
     @Default('Standard Rest') String name,
     required int targetSeconds,
@@ -16,6 +16,5 @@ abstract class RestPolicy with _$RestPolicy {
     @Default(true) bool allowExtend,
   }) = _RestPolicy;
 
-  factory RestPolicy.fromJson(Map<String, dynamic> json) =>
-      _$RestPolicyFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$RestPolicyFromJson(json);
 }

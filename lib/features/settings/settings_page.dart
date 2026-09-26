@@ -9,9 +9,7 @@ import 'config/config.dart';
 import 'model/model.dart';
 import 'settings_provider.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
+class const SettingsPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
@@ -36,16 +34,11 @@ class SettingsPage extends StatelessWidget {
         final isBiometricAvailable = snapshot.data ?? false;
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Settings'),
-            centerTitle: true,
-          ),
+          appBar: AppBar(title: const Text('Settings'), centerTitle: true),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -153,8 +146,9 @@ class SettingsPage extends StatelessWidget {
                   title: const Text('Notification Time'),
                   trailing: TextButton(
                     child: Text(
-                      settingsProvider.settings.notificationTime
-                              ?.format(context) ??
+                      settingsProvider.settings.notificationTime?.format(
+                            context,
+                          ) ??
                           'Set Time',
                     ),
                     onPressed: () async {
@@ -162,7 +156,7 @@ class SettingsPage extends StatelessWidget {
                         context: context,
                         initialTime:
                             settingsProvider.settings.notificationTime ??
-                                TimeOfDay.now(),
+                            TimeOfDay.now(),
                       );
                       if (pickedTime != null) {
                         settingsProvider.updateNotificationTime(pickedTime);
@@ -199,13 +193,15 @@ class SettingsPage extends StatelessWidget {
                   title: const Text('Authentication Type'),
                   trailing: DropdownButton<AuthenticationType>(
                     value: settingsProvider.settings.authenticationType,
-                    items: AuthenticationType.values
-                        .map((AuthenticationType mode) {
+                    items: AuthenticationType.values.map((
+                      AuthenticationType mode,
+                    ) {
                       return DropdownMenuItem<AuthenticationType>(
                         value: mode,
                         child: Text(
                           mode.getLabel(),
-                          style: mode == AuthenticationType.biometric &&
+                          style:
+                              mode == AuthenticationType.biometric &&
                                   !isBiometricAvailable
                               ? const TextStyle(color: Colors.grey)
                               : null,
@@ -219,7 +215,8 @@ class SettingsPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  'Biometric authentication is not available on this device.'),
+                                'Biometric authentication is not available on this device.',
+                              ),
                             ),
                           );
                           return;
@@ -231,7 +228,8 @@ class SettingsPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  'You will now be redirected to set your PIN and login again.'),
+                                'You will now be redirected to set your PIN and login again.',
+                              ),
                             ),
                           );
                           Timer(const Duration(seconds: 2), () {
@@ -244,7 +242,8 @@ class SettingsPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  'Pin Authentication data has been cleared.'),
+                                'Pin Authentication data has been cleared.',
+                              ),
                             ),
                           );
                         }

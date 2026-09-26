@@ -1,16 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/core/database/document_adapter.dart';
 import 'package:growth_gauge/core/database/drift_document_store.dart';
 import 'package:growth_gauge/core/error/failures.dart';
 
-class SampleUser {
-  final String id;
-  final String name;
-  final int age;
-
-  SampleUser({required this.id, required this.name, required this.age});
-
+class SampleUser({
+  required final String id,
+  required final String name,
+  required final int age,
+}) {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -23,7 +22,7 @@ class SampleUser {
   int get hashCode => Object.hash(id, name, age);
 }
 
-class SampleUserAdapter extends DocumentAdapter<SampleUser> {
+class SampleUserAdapter() extends DocumentAdapter<SampleUser> {
   @override
   String get collection => 'users';
 
@@ -35,17 +34,17 @@ class SampleUserAdapter extends DocumentAdapter<SampleUser> {
 
   @override
   Map<String, dynamic> toJson(SampleUser entity) => {
-        'id': entity.id,
-        'name': entity.name,
-        'age': entity.age,
-      };
+    'id': entity.id,
+    'name': entity.name,
+    'age': entity.age,
+  };
 
   @override
   SampleUser fromJson(Map<String, dynamic> json) => SampleUser(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        age: json['age'] as int,
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    age: json['age'] as int,
+  );
 }
 
 void main() {
@@ -75,19 +74,22 @@ void main() {
       expect(fetchResult.dataOrNull, equals(user));
     });
 
-    test('getById returns NotFoundFailure when entity does not exist',
-        () async {
-      final result = await store.getById('non-existent-id');
-      expect(result.isError, isTrue);
-      expect(result.errorOrNull, isA<NotFoundFailure>());
-    });
-
     test(
-        'second upsert with same ID updates entity in-place without duplicating rows',
-        () async {
+      'getById returns NotFoundFailure when entity does not exist',
+      () async {
+        final result = await store.getById('non-existent-id');
+        expect(result.isError, isTrue);
+        expect(result.errorOrNull, isA<NotFoundFailure>());
+      },
+    );
+
+    test('second upsert with same ID updates entity in-place without duplicating rows', () async {
       final userV1 = SampleUser(id: 'user-001', name: 'Sarah', age: 30);
-      final userV2 =
-          SampleUser(id: 'user-001', name: 'Sarah Mitchell', age: 31);
+      final userV2 = SampleUser(
+        id: 'user-001',
+        name: 'Sarah Mitchell',
+        age: 31,
+      );
 
       await store.upsert(userV1);
       await store.upsert(userV2);
@@ -123,8 +125,9 @@ void main() {
 
     test('watchAll emits reactive updates when documents are added', () async {
       final emissions = <List<SampleUser>>[];
-      final subscription =
-          store.watchAll().listen((list) => emissions.add(list));
+      final subscription = store.watchAll().listen(
+        (list) => emissions.add(list),
+      );
 
       await Future<void>.delayed(const Duration(milliseconds: 30));
       expect(emissions.last, isEmpty);

@@ -86,7 +86,7 @@ abstract mixin class $RestPolicyCopyWith<$Res> {
 class _$RestPolicyCopyWithImpl<$Res> implements $RestPolicyCopyWith<$Res> {
   _$RestPolicyCopyWithImpl(this._self, this._then);
 
-  final RestPolicy _self;
+  RestPolicy _self;
   final $Res Function(RestPolicy) _then;
 
   /// Create a copy of RestPolicy

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../utils/navigation_helper.dart';
@@ -8,15 +9,13 @@ import '../common/presentation/widgets/time_control_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class EditTimerPage extends StatefulWidget {
-  final TimerModel timer;
-  const EditTimerPage({super.key, required this.timer});
-
+class const EditTimerPage({super.key, required final TimerModel timer})
+    extends StatefulWidget {
   @override
   State<EditTimerPage> createState() => _EditTimerPageState();
 }
 
-class _EditTimerPageState extends State<EditTimerPage> {
+class _EditTimerPageState() extends State<EditTimerPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
@@ -35,8 +34,9 @@ class _EditTimerPageState extends State<EditTimerPage> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.timer.name);
-    _descriptionController =
-        TextEditingController(text: widget.timer.description);
+    _descriptionController = TextEditingController(
+      text: widget.timer.description,
+    );
 
     // Initialize duration from interval
     final interval = widget.timer.interval;
@@ -70,10 +70,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Timer'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Edit Timer'), centerTitle: true),
       body: ResponsiveFormLayout(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -108,8 +105,10 @@ class _EditTimerPageState extends State<EditTimerPage> {
                   },
                 ),
                 const SizedBox(height: 16),
-                const Text('Set Timer Duration',
-                    style: TextStyle(fontSize: 16)),
+                const Text(
+                  'Set Timer Duration',
+                  style: TextStyle(fontSize: 16),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -131,8 +130,10 @@ class _EditTimerPageState extends State<EditTimerPage> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('Set Target Duration (Optional)',
-                    style: TextStyle(fontSize: 16)),
+                const Text(
+                  'Set Target Duration (Optional)',
+                  style: TextStyle(fontSize: 16),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

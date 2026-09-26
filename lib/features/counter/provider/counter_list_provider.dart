@@ -6,13 +6,13 @@ import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
-class CounterListProvider with ChangeNotifier {
-  final CounterRepository repository;
-  final NotificationService notificationService;
+class CounterListProvider({
+  required final CounterRepository repository,
+  required final NotificationService notificationService,
+}) with ChangeNotifier {
   List<CounterModel> _counters = [];
 
-  CounterListProvider(
-      {required this.repository, required this.notificationService}) {
+  this {
     _loadCounters();
   }
 
@@ -90,12 +90,13 @@ class CounterListProvider with ChangeNotifier {
 
   void _triggerNotification({required String title, required String body}) {
     notificationService.scheduleNotification(
-        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-        title: title,
-        body: body,
-        scheduledTime:
-            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
-        sound: 'assets/sounds/simple_notification.mp3');
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime: tz.TZDateTime.now(tz.local)
+          .add(const Duration(seconds: 3)),
+      sound: 'assets/sounds/simple_notification.mp3',
+    );
   }
 
   void removeCounter(CounterModel counter) {
@@ -155,7 +156,7 @@ class CounterListProvider with ChangeNotifier {
       rows.add(flattenedData.toCsvRow());
     }
 
-    return const ListToCsvConverter().convert(rows);
+    return Csv().encode(rows);
   }
 
   List<CounterModel> _filteredCounters = [];
@@ -168,9 +169,11 @@ class CounterListProvider with ChangeNotifier {
       _filteredCounters = [];
     } else {
       _filteredCounters = _counters
-          .where((counter) =>
-              counter.tags != null &&
-              counter.tags!.any((tag) => tags.contains(tag)))
+          .where(
+            (counter) =>
+                counter.tags != null &&
+                counter.tags!.any((tag) => tags.contains(tag)),
+          )
           .toList();
     }
     notifyListeners();

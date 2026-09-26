@@ -9,11 +9,11 @@ part 'app_database.g.dart';
 /// The primary application database managing authoritative document storage
 /// and materialized relational analytics read models.
 @DriftDatabase(tables: [Documents])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
+class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
+  this : super(e ?? _openConnection());
 
   /// Creates an isolated in-memory SQLite database instance for testing.
-  factory AppDatabase.inMemory() {
+  factory inMemory() {
     return AppDatabase(NativeDatabase.memory());
   }
 

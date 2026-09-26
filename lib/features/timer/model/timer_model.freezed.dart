@@ -86,7 +86,7 @@ abstract mixin class $TimerModelCopyWith<$Res> {
 class _$TimerModelCopyWithImpl<$Res> implements $TimerModelCopyWith<$Res> {
   _$TimerModelCopyWithImpl(this._self, this._then);
 
-  final TimerModel _self;
+  TimerModel _self;
   final $Res Function(TimerModel) _then;
 
   /// Create a copy of TimerModel
@@ -327,9 +327,9 @@ class _TimerModel implements TimerModel {
       required this.name,
       required this.interval,
       required this.description,
-      final List<TimerLog> logs = const [],
+      List<TimerLog> logs = const [],
       this.target,
-      final List<String>? tags})
+      List<String>? tags})
       : _logs = logs,
         _tags = tags;
   factory _TimerModel.fromJson(Map<String, dynamic> json) =>
@@ -536,7 +536,7 @@ abstract mixin class $TimerLogCopyWith<$Res> {
 class _$TimerLogCopyWithImpl<$Res> implements $TimerLogCopyWith<$Res> {
   _$TimerLogCopyWithImpl(this._self, this._then);
 
-  final TimerLog _self;
+  TimerLog _self;
   final $Res Function(TimerLog) _then;
 
   /// Create a copy of TimerLog

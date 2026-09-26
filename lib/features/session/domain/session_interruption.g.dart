@@ -15,19 +15,19 @@ _SessionInterruption _$SessionInterruptionFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['endedAt'] as String),
       reason:
           $enumDecodeNullable(_$InterruptionReasonEnumMap, json['reason']) ??
-              InterruptionReason.other,
+          InterruptionReason.other,
       userInitiated: json['userInitiated'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$SessionInterruptionToJson(
-        _SessionInterruption instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'startedAt': instance.startedAt.toIso8601String(),
-      'endedAt': instance.endedAt?.toIso8601String(),
-      'reason': _$InterruptionReasonEnumMap[instance.reason]!,
-      'userInitiated': instance.userInitiated,
-    };
+  _SessionInterruption instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'startedAt': instance.startedAt.toIso8601String(),
+  'endedAt': instance.endedAt?.toIso8601String(),
+  'reason': _$InterruptionReasonEnumMap[instance.reason]!,
+  'userInitiated': instance.userInitiated,
+};
 
 const _$InterruptionReasonEnumMap = {
   InterruptionReason.userPause: 'userPause',

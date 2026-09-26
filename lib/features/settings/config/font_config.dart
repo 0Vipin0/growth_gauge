@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-enum AppFontSize { small, medium, large, extraLarge }
+enum AppFontSize() {
+  small,
+  medium,
+  large,
+  extraLarge,
+}
 
 extension AppFontSizeExtension on AppFontSize {
   double getSize() {
@@ -30,7 +35,13 @@ extension AppFontSizeExtension on AppFontSize {
   }
 }
 
-enum AppFontFamily { roboto, openSans, lato, montserrat, ceraPro }
+enum AppFontFamily() {
+  roboto,
+  openSans,
+  lato,
+  montserrat,
+  ceraPro,
+}
 
 extension AppFontFamilyExtension on AppFontFamily {
   String get fontFamilyName {
@@ -64,13 +75,11 @@ extension AppFontFamilyExtension on AppFontFamily {
   }
 }
 
-class AppFontTheme {
-  final AppFontFamily fontFamily;
-  final AppFontSize fontSize;
-  final TextTheme textTheme;
-
-  AppFontTheme({required this.fontFamily, required this.fontSize})
-      : textTheme = _buildTextTheme(fontFamily, fontSize);
+class AppFontTheme({
+  required final AppFontFamily fontFamily,
+  required final AppFontSize fontSize,
+}) {
+  final TextTheme textTheme = _buildTextTheme(fontFamily, fontSize);
 
   static TextTheme _buildTextTheme(
     AppFontFamily fontFamily,

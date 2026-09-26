@@ -128,7 +128,7 @@ class _$WorkoutSessionCopyWithImpl<$Res>
     implements $WorkoutSessionCopyWith<$Res> {
   _$WorkoutSessionCopyWithImpl(this._self, this._then);
 
-  final WorkoutSession _self;
+  WorkoutSession _self;
   final $Res Function(WorkoutSession) _then;
 
   /// Create a copy of WorkoutSession
@@ -481,10 +481,10 @@ class _WorkoutSession implements WorkoutSession {
       this.pausedAt,
       this.completedAt,
       required this.createdAt,
-      final List<SessionBlock> blocks = const [],
-      final List<SessionInterruption> interruptions = const [],
-      final List<RestInterval> restIntervals = const [],
-      final List<AuditEntry> audits = const [],
+      List<SessionBlock> blocks = const [],
+      List<SessionInterruption> interruptions = const [],
+      List<RestInterval> restIntervals = const [],
+      List<AuditEntry> audits = const [],
       this.sessionNotes})
       : _blocks = blocks,
         _interruptions = interruptions,

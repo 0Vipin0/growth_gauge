@@ -7,7 +7,7 @@ part 'session_interruption.g.dart';
 
 @freezed
 abstract class SessionInterruption with _$SessionInterruption {
-  const factory SessionInterruption({
+  const factory({
     required String id,
     required DateTime startedAt,
     DateTime? endedAt,
@@ -15,6 +15,6 @@ abstract class SessionInterruption with _$SessionInterruption {
     @Default(true) bool userInitiated,
   }) = _SessionInterruption;
 
-  factory SessionInterruption.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$SessionInterruptionFromJson(json);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:growth_gauge/core/ids/unique_id.dart';
 
 void main() {
@@ -18,11 +19,13 @@ void main() {
       expect(customId.isUuidV4, isFalse);
     });
 
-    test('from() throws ArgumentError for empty or whitespace-only strings',
-        () {
-      expect(() => UniqueId.from(''), throwsArgumentError);
-      expect(() => UniqueId.from('   '), throwsArgumentError);
-    });
+    test(
+      'from() throws ArgumentError for empty or whitespace-only strings',
+      () {
+        expect(() => UniqueId.from(''), throwsArgumentError);
+        expect(() => UniqueId.from('   '), throwsArgumentError);
+      },
+    );
 
     test('equality holds for matching values', () {
       final id1 = UniqueId.from('test-id-123');

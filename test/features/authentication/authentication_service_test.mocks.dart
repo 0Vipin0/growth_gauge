@@ -3,11 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'dart:async' as _i3;
+
+import 'package:mockito/mockito.dart' as _i1;
 
 import 'package:growth_gauge/features/authentication/authentication_service.dart'
     as _i2;
-import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,47 +37,32 @@ class MockAuthenticationServiceBase extends _i1.Mock
 
   @override
   _i3.Future<bool> canAuthenticateWithBiometrics() => (super.noSuchMethod(
-        Invocation.method(
-          #canAuthenticateWithBiometrics,
-          [],
-        ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+    Invocation.method(#canAuthenticateWithBiometrics, []),
+    returnValue: _i3.Future<bool>.value(false),
+  ) as _i3.Future<bool>);
 
   @override
   _i3.Future<bool> authenticateWithBiometrics() => (super.noSuchMethod(
-        Invocation.method(
-          #authenticateWithBiometrics,
-          [],
-        ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+    Invocation.method(#authenticateWithBiometrics, []),
+    returnValue: _i3.Future<bool>.value(false),
+  ) as _i3.Future<bool>);
 
   @override
   _i3.Future<String?> getSavedPin() => (super.noSuchMethod(
-        Invocation.method(
-          #getSavedPin,
-          [],
-        ),
-        returnValue: _i3.Future<String?>.value(),
-      ) as _i3.Future<String?>);
+    Invocation.method(#getSavedPin, []),
+    returnValue: _i3.Future<String?>.value(),
+  ) as _i3.Future<String?>);
 
   @override
   _i3.Future<void> savePin(String? pin) => (super.noSuchMethod(
-        Invocation.method(
-          #savePin,
-          [pin],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+    Invocation.method(#savePin, [pin]),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 
   @override
   _i3.Future<bool> authenticateWithPin(String? pin) => (super.noSuchMethod(
-        Invocation.method(
-          #authenticateWithPin,
-          [pin],
-        ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+    Invocation.method(#authenticateWithPin, [pin]),
+    returnValue: _i3.Future<bool>.value(false),
+  ) as _i3.Future<bool>);
 }

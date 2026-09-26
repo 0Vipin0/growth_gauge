@@ -13,7 +13,8 @@ _WorkoutSession _$WorkoutSessionFromJson(Map<String, dynamic> json) =>
       templateId: json['templateId'] as String,
       templateRevisionId: json['templateRevisionId'] as String,
       templateName: json['templateName'] as String,
-      status: $enumDecodeNullable(_$SessionStatusEnumMap, json['status']) ??
+      status:
+          $enumDecodeNullable(_$SessionStatusEnumMap, json['status']) ??
           SessionStatus.draft,
       startedAt: json['startedAt'] == null
           ? null
@@ -25,20 +26,25 @@ _WorkoutSession _$WorkoutSessionFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['completedAt'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      blocks: (json['blocks'] as List<dynamic>?)
+      blocks:
+          (json['blocks'] as List<dynamic>?)
               ?.map((e) => SessionBlock.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      interruptions: (json['interruptions'] as List<dynamic>?)
-              ?.map((e) =>
-                  SessionInterruption.fromJson(e as Map<String, dynamic>))
+      interruptions:
+          (json['interruptions'] as List<dynamic>?)
+              ?.map(
+                (e) => SessionInterruption.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
-      restIntervals: (json['restIntervals'] as List<dynamic>?)
+      restIntervals:
+          (json['restIntervals'] as List<dynamic>?)
               ?.map((e) => RestInterval.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      audits: (json['audits'] as List<dynamic>?)
+      audits:
+          (json['audits'] as List<dynamic>?)
               ?.map((e) => AuditEntry.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],

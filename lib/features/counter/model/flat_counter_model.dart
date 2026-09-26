@@ -2,27 +2,16 @@ import 'package:intl/intl.dart';
 
 import 'counter_model.dart';
 
-class FlatCounterModel {
-  final String counterId;
-  final String counterName;
-  final int counterCount;
-  final String counterDescription;
-  final int target;
-  final String logId;
-  final String logAction;
-  final DateTime logTimestamp;
-
-  FlatCounterModel({
-    required this.counterId,
-    required this.counterName,
-    required this.counterCount,
-    required this.counterDescription,
-    required this.target,
-    required this.logId,
-    required this.logAction,
-    required this.logTimestamp,
-  });
-
+class FlatCounterModel({
+  required final String counterId,
+  required final String counterName,
+  required final int counterCount,
+  required final String counterDescription,
+  required final int target,
+  required final String logId,
+  required final String logAction,
+  required final DateTime logTimestamp,
+}) {
   static FlatCounterModel fromCounterModel(
     CounterModel counter,
     CounterLog log,

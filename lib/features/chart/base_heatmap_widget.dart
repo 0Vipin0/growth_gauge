@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
-class BaseHeatmapWidget extends StatelessWidget {
-  final Map<DateTime, int> heatmapData;
-
-  const BaseHeatmapWidget({
-    super.key,
-    required this.heatmapData,
-  });
-
+class const BaseHeatmapWidget({
+  super.key,
+  required final Map<DateTime, int> heatmapData,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).brightness == Brightness.light

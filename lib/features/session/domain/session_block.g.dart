@@ -11,12 +11,14 @@ _SessionBlock _$SessionBlockFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       sourceTemplateBlockId: json['sourceTemplateBlockId'] as String,
       name: json['name'] as String,
-      type: $enumDecodeNullable(_$WorkoutBlockTypeEnumMap, json['type']) ??
+      type:
+          $enumDecodeNullable(_$WorkoutBlockTypeEnumMap, json['type']) ??
           WorkoutBlockType.standard,
       rounds: (json['rounds'] as num?)?.toInt() ?? 1,
       timeCapSeconds: (json['timeCapSeconds'] as num?)?.toInt(),
       transitionSeconds: (json['transitionSeconds'] as num?)?.toInt(),
-      items: (json['items'] as List<dynamic>?)
+      items:
+          (json['items'] as List<dynamic>?)
               ?.map((e) => SessionItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],

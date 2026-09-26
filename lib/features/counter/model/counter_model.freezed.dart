@@ -86,7 +86,7 @@ abstract mixin class $CounterModelCopyWith<$Res> {
 class _$CounterModelCopyWithImpl<$Res> implements $CounterModelCopyWith<$Res> {
   _$CounterModelCopyWithImpl(this._self, this._then);
 
-  final CounterModel _self;
+  CounterModel _self;
   final $Res Function(CounterModel) _then;
 
   /// Create a copy of CounterModel
@@ -309,9 +309,9 @@ class _CounterModel implements CounterModel {
       required this.name,
       required this.count,
       required this.description,
-      required final List<CounterLog> logs,
+      required List<CounterLog> logs,
       this.target,
-      final List<String>? tags})
+      List<String>? tags})
       : _logs = logs,
         _tags = tags;
   factory _CounterModel.fromJson(Map<String, dynamic> json) =>
@@ -515,7 +515,7 @@ abstract mixin class $CounterLogCopyWith<$Res> {
 class _$CounterLogCopyWithImpl<$Res> implements $CounterLogCopyWith<$Res> {
   _$CounterLogCopyWithImpl(this._self, this._then);
 
-  final CounterLog _self;
+  CounterLog _self;
   final $Res Function(CounterLog) _then;
 
   /// Create a copy of CounterLog

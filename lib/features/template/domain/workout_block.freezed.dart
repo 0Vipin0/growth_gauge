@@ -91,7 +91,7 @@ abstract mixin class $WorkoutBlockCopyWith<$Res> {
 class _$WorkoutBlockCopyWithImpl<$Res> implements $WorkoutBlockCopyWith<$Res> {
   _$WorkoutBlockCopyWithImpl(this._self, this._then);
 
-  final WorkoutBlock _self;
+  WorkoutBlock _self;
   final $Res Function(WorkoutBlock) _then;
 
   /// Create a copy of WorkoutBlock
@@ -363,7 +363,7 @@ class _WorkoutBlock implements WorkoutBlock {
       this.rounds = 1,
       this.timeCapSeconds,
       this.transitionSeconds,
-      final List<TemplateItem> items = const [],
+      List<TemplateItem> items = const [],
       this.notes})
       : _items = items;
   factory _WorkoutBlock.fromJson(Map<String, dynamic> json) =>

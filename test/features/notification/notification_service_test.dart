@@ -24,20 +24,24 @@ void main() {
         .thenAnswer((_) => Future.value());
     when(mockNotificationService.isAndroidPermissionGranted())
         .thenAnswer((_) => Future.value());
-    when(mockNotificationService.scheduleNotification(
-      id: anyNamed('id'),
-      title: anyNamed('title'),
-      body: anyNamed('body'),
-      scheduledTime: anyNamed('scheduledTime'),
-      sound: anyNamed('sound'),
-    )).thenAnswer((_) => Future.value());
-    when(mockNotificationService.scheduleDailyNotification(
-      id: anyNamed('id'),
-      title: anyNamed('title'),
-      body: anyNamed('body'),
-      time: anyNamed('time'),
-      sound: anyNamed('sound'),
-    )).thenAnswer((_) => Future.value());
+    when(
+      mockNotificationService.scheduleNotification(
+        id: anyNamed('id'),
+        title: anyNamed('title'),
+        body: anyNamed('body'),
+        scheduledTime: anyNamed('scheduledTime'),
+        sound: anyNamed('sound'),
+      ),
+    ).thenAnswer((_) => Future.value());
+    when(
+      mockNotificationService.scheduleDailyNotification(
+        id: anyNamed('id'),
+        title: anyNamed('title'),
+        body: anyNamed('body'),
+        time: anyNamed('time'),
+        sound: anyNamed('sound'),
+      ),
+    ).thenAnswer((_) => Future.value());
 
     // Initialize tz.local for timezone-related tests
     tz.initializeTimeZones();
@@ -64,42 +68,50 @@ void main() {
     verify(mockNotificationService.isAndroidPermissionGranted()).called(1);
   });
 
-  test('scheduleNotification should be called with correct parameters',
-      () async {
-    final tz.TZDateTime scheduledTime =
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10));
-    await mockNotificationService.scheduleNotification(
-      id: 1,
-      title: 'Test Title',
-      body: 'Test Body',
-      scheduledTime: scheduledTime,
-      sound: 'test_sound',
-    );
-    verify(mockNotificationService.scheduleNotification(
-      id: 1,
-      title: 'Test Title',
-      body: 'Test Body',
-      scheduledTime: scheduledTime,
-      sound: 'test_sound',
-    )).called(1);
-  });
+  test(
+    'scheduleNotification should be called with correct parameters',
+    () async {
+      final tz.TZDateTime scheduledTime = tz.TZDateTime.now(tz.local)
+          .add(const Duration(seconds: 10));
+      await mockNotificationService.scheduleNotification(
+        id: 1,
+        title: 'Test Title',
+        body: 'Test Body',
+        scheduledTime: scheduledTime,
+        sound: 'test_sound',
+      );
+      verify(
+        mockNotificationService.scheduleNotification(
+          id: 1,
+          title: 'Test Title',
+          body: 'Test Body',
+          scheduledTime: scheduledTime,
+          sound: 'test_sound',
+        ),
+      ).called(1);
+    },
+  );
 
-  test('scheduleDailyNotification should be called with correct parameters',
-      () async {
-    final TimeOfDay time = TimeOfDay.now();
-    await mockNotificationService.scheduleDailyNotification(
-      id: 1,
-      title: 'Daily Test Title',
-      body: 'Daily Test Body',
-      time: time,
-      sound: 'daily_test_sound',
-    );
-    verify(mockNotificationService.scheduleDailyNotification(
-      id: 1,
-      title: 'Daily Test Title',
-      body: 'Daily Test Body',
-      time: time,
-      sound: 'daily_test_sound',
-    )).called(1);
-  });
+  test(
+    'scheduleDailyNotification should be called with correct parameters',
+    () async {
+      final TimeOfDay time = TimeOfDay.now();
+      await mockNotificationService.scheduleDailyNotification(
+        id: 1,
+        title: 'Daily Test Title',
+        body: 'Daily Test Body',
+        time: time,
+        sound: 'daily_test_sound',
+      );
+      verify(
+        mockNotificationService.scheduleDailyNotification(
+          id: 1,
+          title: 'Daily Test Title',
+          body: 'Daily Test Body',
+          time: time,
+          sound: 'daily_test_sound',
+        ),
+      ).called(1);
+    },
+  );
 }

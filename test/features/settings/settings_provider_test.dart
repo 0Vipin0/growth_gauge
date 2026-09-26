@@ -8,7 +8,7 @@ import 'package:growth_gauge/features/timer/repository/repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MockNotificationService extends Mock implements NotificationService {}
+class MockNotificationService() extends Mock implements NotificationService;
 
 void main() {
   late CounterListProvider mockCounterListProvider;
@@ -21,11 +21,13 @@ void main() {
     await SharedPreferencesHelper.init();
     mockNotificationService = MockNotificationService();
     mockCounterListProvider = CounterListProvider(
-        notificationService: mockNotificationService,
-        repository: InMemoryCounterRepository());
+      notificationService: mockNotificationService,
+      repository: InMemoryCounterRepository(),
+    );
     mockTimerListProvider = TimerListProvider(
-        notificationService: mockNotificationService,
-        repository: InMemoryTimerRepository());
+      notificationService: mockNotificationService,
+      repository: InMemoryTimerRepository(),
+    );
     provider = SettingsProvider(
       counterListProvider: mockCounterListProvider,
       timerListProvider: mockTimerListProvider,

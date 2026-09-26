@@ -204,7 +204,7 @@ abstract mixin class $ExecutionSetCopyWith<$Res> {
 class _$ExecutionSetCopyWithImpl<$Res> implements $ExecutionSetCopyWith<$Res> {
   _$ExecutionSetCopyWithImpl(this._self, this._then);
 
-  final ExecutionSet _self;
+  ExecutionSet _self;
   final $Res Function(ExecutionSet) _then;
 
   /// Create a copy of ExecutionSet

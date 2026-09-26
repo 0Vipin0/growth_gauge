@@ -7,42 +7,48 @@ part of 'exercise_classification.dart';
 // **************************************************************************
 
 _ExerciseClassification _$ExerciseClassificationFromJson(
-        Map<String, dynamic> json) =>
-    _ExerciseClassification(
-      bodyRegions: (json['bodyRegions'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$BodyRegionEnumMap, e))
-              .toList() ??
-          const [],
-      primaryMuscles: (json['primaryMuscles'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$MuscleGroupEnumMap, e))
-              .toList() ??
-          const [],
-      secondaryMuscles: (json['secondaryMuscles'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$MuscleGroupEnumMap, e))
-              .toList() ??
-          const [],
-      movementPatterns: (json['movementPatterns'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$MovementPatternEnumMap, e))
-              .toList() ??
-          const [],
-      laterality: json['laterality'] as String? ?? 'BILATERAL',
-    );
+  Map<String, dynamic> json,
+) => _ExerciseClassification(
+  bodyRegions:
+      (json['bodyRegions'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$BodyRegionEnumMap, e))
+          .toList() ??
+      const [],
+  primaryMuscles:
+      (json['primaryMuscles'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$MuscleGroupEnumMap, e))
+          .toList() ??
+      const [],
+  secondaryMuscles:
+      (json['secondaryMuscles'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$MuscleGroupEnumMap, e))
+          .toList() ??
+      const [],
+  movementPatterns:
+      (json['movementPatterns'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$MovementPatternEnumMap, e))
+          .toList() ??
+      const [],
+  laterality: json['laterality'] as String? ?? 'BILATERAL',
+);
 
 Map<String, dynamic> _$ExerciseClassificationToJson(
-        _ExerciseClassification instance) =>
-    <String, dynamic>{
-      'bodyRegions':
-          instance.bodyRegions.map((e) => _$BodyRegionEnumMap[e]!).toList(),
-      'primaryMuscles':
-          instance.primaryMuscles.map((e) => _$MuscleGroupEnumMap[e]!).toList(),
-      'secondaryMuscles': instance.secondaryMuscles
-          .map((e) => _$MuscleGroupEnumMap[e]!)
-          .toList(),
-      'movementPatterns': instance.movementPatterns
-          .map((e) => _$MovementPatternEnumMap[e]!)
-          .toList(),
-      'laterality': instance.laterality,
-    };
+  _ExerciseClassification instance,
+) => <String, dynamic>{
+  'bodyRegions': instance.bodyRegions
+      .map((e) => _$BodyRegionEnumMap[e]!)
+      .toList(),
+  'primaryMuscles': instance.primaryMuscles
+      .map((e) => _$MuscleGroupEnumMap[e]!)
+      .toList(),
+  'secondaryMuscles': instance.secondaryMuscles
+      .map((e) => _$MuscleGroupEnumMap[e]!)
+      .toList(),
+  'movementPatterns': instance.movementPatterns
+      .map((e) => _$MovementPatternEnumMap[e]!)
+      .toList(),
+  'laterality': instance.laterality,
+};
 
 const _$BodyRegionEnumMap = {
   BodyRegion.upperBody: 'UPPER_BODY',

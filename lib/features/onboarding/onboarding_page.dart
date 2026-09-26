@@ -7,14 +7,12 @@ import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
 import '../settings/settings.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
-
+class const OnboardingScreen({super.key}) extends StatefulWidget {
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState() extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
 
   int _currentPage = 0;
@@ -80,7 +78,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth > kMobileScreenSize ? 16.0 : 2.0),
+                horizontal: screenWidth > kMobileScreenSize ? 16.0 : 2.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -88,9 +87,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: _currentPage == 0
                         ? null
                         : () => _pageController.previousPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            ),
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          ),
                     child: Text(
                       'Back',
                       style: TextStyle(

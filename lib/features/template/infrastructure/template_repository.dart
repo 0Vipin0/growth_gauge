@@ -8,7 +8,7 @@ import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
 import 'template_document_adapters.dart';
 
-abstract interface class ITemplateRepository {
+abstract interface class ITemplateRepository() {
   Future<Result<void, Failure>> saveTemplate(WorkoutTemplate value);
   Future<Result<WorkoutTemplate, Failure>> getTemplate(String id);
   Future<Result<List<WorkoutTemplate>, Failure>> getTemplates();
@@ -16,19 +16,21 @@ abstract interface class ITemplateRepository {
   Future<Result<void, Failure>> saveRevision(WorkoutTemplateRevision value);
   Future<Result<WorkoutTemplateRevision, Failure>> getRevision(String id);
   Future<Result<List<WorkoutTemplateRevision>, Failure>> getRevisions(
-      String templateId);
+    String templateId,
+  );
 }
 
-class TemplateRepository implements ITemplateRepository {
-  TemplateRepository(AppDatabase db)
-      : _templates = DriftDocumentStore<WorkoutTemplate>(
-            database: db, adapter: const WorkoutTemplateDocumentAdapter()),
-        _revisions = DriftDocumentStore<WorkoutTemplateRevision>(
-            database: db,
-            adapter: const WorkoutTemplateRevisionDocumentAdapter());
-
-  final IDocumentStore<WorkoutTemplate> _templates;
-  final IDocumentStore<WorkoutTemplateRevision> _revisions;
+class TemplateRepository(AppDatabase db) implements ITemplateRepository {
+  final IDocumentStore<WorkoutTemplate> _templates =
+      DriftDocumentStore<WorkoutTemplate>(
+        database: db,
+        adapter: const WorkoutTemplateDocumentAdapter(),
+      );
+  final IDocumentStore<WorkoutTemplateRevision> _revisions =
+      DriftDocumentStore<WorkoutTemplateRevision>(
+        database: db,
+        adapter: const WorkoutTemplateRevisionDocumentAdapter(),
+      );
 
   @override
   Future<Result<void, Failure>> saveTemplate(WorkoutTemplate value) =>
@@ -43,15 +45,17 @@ class TemplateRepository implements ITemplateRepository {
   Stream<List<WorkoutTemplate>> watchTemplates() => _templates.watchAll();
   @override
   Future<Result<void, Failure>> saveRevision(
-      WorkoutTemplateRevision value) async {
+    WorkoutTemplateRevision value,
+  ) async {
     final existing = await _revisions.getById(value.id);
     if (existing.isError && existing.errorOrNull is! NotFoundFailure) {
       return Result.error(existing.errorOrNull!);
     }
     if (existing.isSuccess &&
         existing.dataOrNull!.status == TemplateRevisionStatus.published) {
-      return Result.error(ConflictFailure(
-          'Published template revisions are immutable', value.id));
+      return Result.error(
+        ConflictFailure('Published template revisions are immutable', value.id),
+      );
     }
     return _revisions.upsert(value);
   }
@@ -61,10 +65,13 @@ class TemplateRepository implements ITemplateRepository {
       _revisions.getById(id);
   @override
   Future<Result<List<WorkoutTemplateRevision>, Failure>> getRevisions(
-      String templateId) async {
+    String templateId,
+  ) async {
     final result = await _revisions.getAll();
-    return result.map((items) =>
-        items.where((item) => item.templateId == templateId).toList()
-          ..sort((a, b) => a.revisionNumber.compareTo(b.revisionNumber)));
+    return result.map(
+      (items) =>
+          items.where((item) => item.templateId == templateId).toList()
+            ..sort((a, b) => a.revisionNumber.compareTo(b.revisionNumber)),
+    );
   }
 }

@@ -9,18 +9,12 @@ import 'edit_counter_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class ReusableCounterWidget extends StatelessWidget {
-  final CounterModel counterModel;
-  final VoidCallback onRemove;
-  final VoidCallback onUpdateTarget;
-
-  const ReusableCounterWidget({
-    super.key,
-    required this.counterModel,
-    required this.onRemove,
-    required this.onUpdateTarget,
-  });
-
+class const ReusableCounterWidget({
+  super.key,
+  required final CounterModel counterModel,
+  required final VoidCallback onRemove,
+  required final VoidCallback onUpdateTarget,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -39,28 +33,39 @@ class ReusableCounterWidget extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Count: ${counterProvider.count}',
-                      style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.labelLarge?.fontSize,
-                      )),
+                  Text(
+                    'Count: ${counterProvider.count}',
+                    style: TextStyle(
+                      fontSize: Theme.of(context)
+                          .textTheme
+                          .labelLarge
+                          ?.fontSize,
+                    ),
+                  ),
                   if (counterModel.target != null)
-                    Text('Target: ${counterModel.target}',
-                        style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.labelMedium?.fontSize,
-                          color: Colors.green,
-                        )),
+                    Text(
+                      'Target: ${counterModel.target}',
+                      style: TextStyle(
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.fontSize,
+                        color: Colors.green,
+                      ),
+                    ),
                   if (counterModel.target == null)
                     TextButton(
                       onPressed: onUpdateTarget,
-                      child: const Text('Add Target',
-                          style: TextStyle(color: Colors.red)),
+                      child: const Text(
+                        'Add Target',
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8.0,
-                    children: counterModel.tags
+                    children:
+                        counterModel.tags
                             ?.map((tag) => Chip(label: Text(tag)))
                             .toList() ??
                         [],
@@ -95,8 +100,10 @@ class ReusableCounterWidget extends StatelessWidget {
         tooltip: 'Decrease',
         onPressed: () {
           counterProvider.decreaseCounter();
-          Provider.of<CounterListProvider>(context, listen: false)
-              .updateCounter(counterProvider.counter);
+          Provider.of<CounterListProvider>(
+            context,
+            listen: false,
+          ).updateCounter(counterProvider.counter);
         },
       ),
       IconButton(
@@ -104,8 +111,10 @@ class ReusableCounterWidget extends StatelessWidget {
         tooltip: 'Increase',
         onPressed: () {
           counterProvider.increaseCounter();
-          Provider.of<CounterListProvider>(context, listen: false)
-              .updateCounter(counterProvider.counter);
+          Provider.of<CounterListProvider>(
+            context,
+            listen: false,
+          ).updateCounter(counterProvider.counter);
         },
       ),
     ];
@@ -178,10 +187,7 @@ class ReusableCounterWidget extends StatelessWidget {
               value: 'ManageTagsAction',
               child: Text('Manage Tags'),
             ),
-            const PopupMenuItem(
-              value: 'DeleteAction',
-              child: Text('Delete'),
-            ),
+            const PopupMenuItem(value: 'DeleteAction', child: Text('Delete')),
           ],
         ),
       );
@@ -191,8 +197,10 @@ class ReusableCounterWidget extends StatelessWidget {
   }
 
   void _manageTagsDialog(BuildContext context) {
-    final counterProvider =
-        Provider.of<CounterListProvider>(context, listen: false);
+    final counterProvider = Provider.of<CounterListProvider>(
+      context,
+      listen: false,
+    );
     counterProvider.initializeTags(counterModel.tags);
 
     showDialog(
@@ -224,12 +232,14 @@ class ReusableCounterWidget extends StatelessWidget {
                   return Wrap(
                     spacing: 8.0,
                     children: provider.updatedTags
-                        .map((tag) => Chip(
-                              label: Text(tag),
-                              onDeleted: () {
-                                provider.removeTag(tag);
-                              },
-                            ))
+                        .map(
+                          (tag) => Chip(
+                            label: Text(tag),
+                            onDeleted: () {
+                              provider.removeTag(tag);
+                            },
+                          ),
+                        )
                         .toList(),
                   );
                 },

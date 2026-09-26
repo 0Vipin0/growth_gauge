@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AppThemeName {
+enum AppThemeName() {
   light,
   lightMediumContrast,
   lightHighContrast,
@@ -28,12 +28,10 @@ extension AppThemeNameExtension on AppThemeName {
   }
 }
 
-class AppColorTheme {
-  final AppThemeName name;
-  final ColorScheme colorScheme;
-
-  const AppColorTheme({required this.name, required this.colorScheme});
-}
+class const AppColorTheme({
+  required final AppThemeName name,
+  required final ColorScheme colorScheme,
+});
 
 List<AppColorTheme> appColorThemes = [
   const AppColorTheme(

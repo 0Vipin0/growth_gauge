@@ -11,7 +11,8 @@ _ExecutionSet _$ExecutionSetFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       sourceTemplateSetId: json['sourceTemplateSetId'] as String?,
       setNumber: (json['setNumber'] as num).toInt(),
-      setType: $enumDecodeNullable(_$SetTypeEnumMap, json['setType']) ??
+      setType:
+          $enumDecodeNullable(_$SetTypeEnumMap, json['setType']) ??
           SetType.working,
       targetWeight: (json['targetWeight'] as num?)?.toDouble(),
       targetReps: (json['targetReps'] as num?)?.toInt(),
@@ -36,7 +37,7 @@ _ExecutionSet _$ExecutionSetFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['completedAt'] as String),
       status:
           $enumDecodeNullable(_$ExecutionSetStatusEnumMap, json['status']) ??
-              ExecutionSetStatus.planned,
+          ExecutionSetStatus.planned,
       plannedRestSeconds: (json['plannedRestSeconds'] as num?)?.toInt() ?? 0,
       restAutoStart: json['restAutoStart'] as bool? ?? false,
       restAllowSkip: json['restAllowSkip'] as bool? ?? true,

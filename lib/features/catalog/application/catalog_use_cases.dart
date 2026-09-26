@@ -10,11 +10,7 @@ import '../domain/exercise_relationship.dart';
 import '../domain/measurement_profile.dart';
 import '../infrastructure/exercise_repository.dart';
 
-class CatalogUseCases {
-  const CatalogUseCases(this._repository);
-
-  final IExerciseRepository _repository;
-
+class const CatalogUseCases(final IExerciseRepository _repository) {
   Future<Result<List<Exercise>, Failure>> list({
     String query = '',
     BodyRegion? bodyRegion,
@@ -35,8 +31,9 @@ class CatalogUseCases {
           return false;
         }
         if (movementPattern != null &&
-            !exercise.classification.movementPatterns
-                .contains(movementPattern)) {
+            !exercise.classification.movementPatterns.contains(
+              movementPattern,
+            )) {
           return false;
         }
         if (equipment != null &&
@@ -51,8 +48,9 @@ class CatalogUseCases {
         }
         if (normalized.isNotEmpty &&
             !exercise.name.toLowerCase().contains(normalized) &&
-            !exercise.aliases
-                .any((alias) => alias.toLowerCase().contains(normalized))) {
+            !exercise.aliases.any(
+              (alias) => alias.toLowerCase().contains(normalized),
+            )) {
           return false;
         }
         return true;
@@ -73,7 +71,8 @@ class CatalogUseCases {
     final cleanName = name.trim();
     if (cleanName.isEmpty) {
       return const Result.error(
-          ValidationFailure('Exercise name is required', 'name'));
+        ValidationFailure('Exercise name is required', 'name'),
+      );
     }
     final now = AppClock.nowUtc();
     final exercise = Exercise(
@@ -86,8 +85,9 @@ class CatalogUseCases {
       updatedAt: now,
       classification: ExerciseClassification(
         bodyRegions: bodyRegion == null ? const [] : [bodyRegion],
-        movementPatterns:
-            movementPattern == null ? const [] : [movementPattern],
+        movementPatterns: movementPattern == null
+            ? const []
+            : [movementPattern],
         primaryMuscles: primaryMuscle == null ? const [] : [primaryMuscle],
       ),
       equipment: ExerciseEquipmentProfile(
@@ -97,11 +97,13 @@ class CatalogUseCases {
         defaultMetricType: metricType,
         supportedMetricTypes: [metricType],
         supportsWeight: metricType == MetricType.weightAndReps,
-        supportsReps: metricType == MetricType.weightAndReps ||
+        supportsReps:
+            metricType == MetricType.weightAndReps ||
             metricType == MetricType.countBased,
         supportsDuration:
             metricType == MetricType.timeBased || metricType == MetricType.pace,
-        supportsDistance: metricType == MetricType.distanceBased ||
+        supportsDistance:
+            metricType == MetricType.distanceBased ||
             metricType == MetricType.pace,
         supportsCalories: metricType == MetricType.calories,
       ),
@@ -121,7 +123,8 @@ class CatalogUseCases {
   }) async {
     if (sourceExerciseId == targetExerciseId) {
       return const Result.error(
-          ValidationFailure('An exercise cannot be related to itself'));
+        ValidationFailure('An exercise cannot be related to itself'),
+      );
     }
     final sourceResult = await _repository.findById(sourceExerciseId);
     if (sourceResult.isError) return Result.error(sourceResult.errorOrNull!);
@@ -130,14 +133,24 @@ class CatalogUseCases {
     final source = sourceResult.dataOrNull!;
     if (source.sourceType == ExerciseSourceType.system ||
         source.createdById != actorId) {
-      return Result.error(ConflictFailure(
-          'Only the owner can edit exercise relationships', sourceExerciseId));
+      return Result.error(
+        ConflictFailure(
+          'Only the owner can edit exercise relationships',
+          sourceExerciseId,
+        ),
+      );
     }
-    if (source.relationships.any((relationship) =>
-        relationship.targetExerciseId == targetExerciseId &&
-        relationship.type == type)) {
-      return Result.error(ConflictFailure(
-          'This exercise relationship already exists', targetExerciseId));
+    if (source.relationships.any(
+      (relationship) =>
+          relationship.targetExerciseId == targetExerciseId &&
+          relationship.type == type,
+    )) {
+      return Result.error(
+        ConflictFailure(
+          'This exercise relationship already exists',
+          targetExerciseId,
+        ),
+      );
     }
     final updated = source.copyWith(
       relationships: [
@@ -165,22 +178,28 @@ class CatalogUseCases {
     final source = sourceResult.dataOrNull!;
     if (source.sourceType == ExerciseSourceType.system ||
         source.createdById != actorId) {
-      return Result.error(ConflictFailure(
-          'Only the owner can edit exercise relationships', sourceExerciseId));
+      return Result.error(
+        ConflictFailure(
+          'Only the owner can edit exercise relationships',
+          sourceExerciseId,
+        ),
+      );
     }
     final remaining = source.relationships
-        .where((relationship) =>
-            relationship.targetExerciseId != targetExerciseId ||
-            relationship.type != type)
+        .where(
+          (relationship) =>
+              relationship.targetExerciseId != targetExerciseId ||
+              relationship.type != type,
+        )
         .toList();
     if (remaining.length == source.relationships.length) {
       return Result.error(
-          NotFoundFailure('Exercise relationship not found', targetExerciseId));
+        NotFoundFailure('Exercise relationship not found', targetExerciseId),
+      );
     }
-    return _repository.save(source.copyWith(
-      relationships: remaining,
-      updatedAt: AppClock.nowUtc(),
-    ));
+    return _repository.save(
+      source.copyWith(relationships: remaining, updatedAt: AppClock.nowUtc()),
+    );
   }
 
   Future<Result<void, Failure>> archive(String id) async {
@@ -189,9 +208,14 @@ class CatalogUseCases {
     final exercise = found.dataOrNull!;
     if (exercise.sourceType == ExerciseSourceType.system) {
       return Result.error(
-          ConflictFailure('System exercises cannot be changed', id));
+        ConflictFailure('System exercises cannot be changed', id),
+      );
     }
-    return _repository.save(exercise.copyWith(
-        status: ExerciseStatus.archived, updatedAt: AppClock.nowUtc()));
+    return _repository.save(
+      exercise.copyWith(
+        status: ExerciseStatus.archived,
+        updatedAt: AppClock.nowUtc(),
+      ),
+    );
   }
 }

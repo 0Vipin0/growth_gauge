@@ -119,7 +119,7 @@ abstract mixin class $TargetSetCopyWith<$Res> {
 class _$TargetSetCopyWithImpl<$Res> implements $TargetSetCopyWith<$Res> {
   _$TargetSetCopyWithImpl(this._self, this._then);
 
-  final TargetSet _self;
+  TargetSet _self;
   final $Res Function(TargetSet) _then;
 
   /// Create a copy of TargetSet

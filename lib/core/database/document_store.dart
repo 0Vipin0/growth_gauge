@@ -2,7 +2,7 @@ import '../error/failures.dart';
 import '../error/result.dart';
 
 /// Generic interface for an authoritative document store managing domain aggregate roots.
-abstract class IDocumentStore<T> {
+abstract class IDocumentStore<T>() {
   /// Inserts or updates an entity in the document store.
   Future<Result<void, Failure>> upsert(T entity);
 

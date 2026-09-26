@@ -8,14 +8,13 @@ import '../../utils/navigation_helper.dart';
 import '../authentication/authentication_service.dart';
 import '../settings/settings.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+class const SplashScreen({super.key}) extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState()
+    extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _logoController;
   late AnimationController _titleController;
@@ -81,8 +80,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _handlePostOnboardingNavigation() {
-    final SettingsProvider settingsProvider =
-        Provider.of<SettingsProvider>(context, listen: false);
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(
+      context,
+      listen: false,
+    );
 
     if (settingsProvider.settings.authenticationType ==
         AuthenticationType.none) {
@@ -94,14 +95,17 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _navigateToAuthentication() async {
     final AuthenticationService authService = AuthenticationService();
-    final SettingsProvider settingsProvider =
-        Provider.of<SettingsProvider>(context, listen: false);
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(
+      context,
+      listen: false,
+    );
 
-    final bool isBiometricAvailable =
-        await authService.canAuthenticateWithBiometrics();
+    final bool isBiometricAvailable = await authService
+        .canAuthenticateWithBiometrics();
 
-    final String route =
-        isBiometricAvailable ? AppRoutes.biometricAuth : AppRoutes.pinAuth;
+    final String route = isBiometricAvailable
+        ? AppRoutes.biometricAuth
+        : AppRoutes.pinAuth;
 
     settingsProvider.updateAuthenticationType(
       isBiometricAvailable

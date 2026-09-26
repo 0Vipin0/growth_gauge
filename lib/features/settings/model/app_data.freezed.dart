@@ -65,7 +65,7 @@ abstract mixin class $AppDataCopyWith<$Res> {
 class _$AppDataCopyWithImpl<$Res> implements $AppDataCopyWith<$Res> {
   _$AppDataCopyWithImpl(this._self, this._then);
 
-  final AppData _self;
+  AppData _self;
   final $Res Function(AppData) _then;
 
   /// Create a copy of AppData
@@ -262,8 +262,8 @@ extension AppDataPatterns on AppData {
 class _AppData implements AppData {
   _AppData(
       {this.version = 1,
-      final List<CounterModel> counters = const [],
-      final List<TimerModel> timers = const []})
+      List<CounterModel> counters = const [],
+      List<TimerModel> timers = const []})
       : _counters = counters,
         _timers = timers;
   factory _AppData.fromJson(Map<String, dynamic> json) =>

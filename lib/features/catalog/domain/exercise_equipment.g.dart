@@ -7,28 +7,30 @@ part of 'exercise_equipment.dart';
 // **************************************************************************
 
 _ExerciseEquipmentProfile _$ExerciseEquipmentProfileFromJson(
-        Map<String, dynamic> json) =>
-    _ExerciseEquipmentProfile(
-      requiredEquipment: (json['requiredEquipment'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$EquipmentTypeEnumMap, e))
-              .toList() ??
-          const [],
-      optionalEquipment: (json['optionalEquipment'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$EquipmentTypeEnumMap, e))
-              .toList() ??
-          const [],
-    );
+  Map<String, dynamic> json,
+) => _ExerciseEquipmentProfile(
+  requiredEquipment:
+      (json['requiredEquipment'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$EquipmentTypeEnumMap, e))
+          .toList() ??
+      const [],
+  optionalEquipment:
+      (json['optionalEquipment'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$EquipmentTypeEnumMap, e))
+          .toList() ??
+      const [],
+);
 
 Map<String, dynamic> _$ExerciseEquipmentProfileToJson(
-        _ExerciseEquipmentProfile instance) =>
-    <String, dynamic>{
-      'requiredEquipment': instance.requiredEquipment
-          .map((e) => _$EquipmentTypeEnumMap[e]!)
-          .toList(),
-      'optionalEquipment': instance.optionalEquipment
-          .map((e) => _$EquipmentTypeEnumMap[e]!)
-          .toList(),
-    };
+  _ExerciseEquipmentProfile instance,
+) => <String, dynamic>{
+  'requiredEquipment': instance.requiredEquipment
+      .map((e) => _$EquipmentTypeEnumMap[e]!)
+      .toList(),
+  'optionalEquipment': instance.optionalEquipment
+      .map((e) => _$EquipmentTypeEnumMap[e]!)
+      .toList(),
+};
 
 const _$EquipmentTypeEnumMap = {
   EquipmentType.barbell: 'BARBELL',

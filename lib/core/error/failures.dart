@@ -1,12 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 /// Base class for all domain and infrastructure failures.
-abstract class Failure extends Equatable {
-  final String message;
-  final Object? cause;
-
-  const Failure(this.message, [this.cause]);
-
+abstract class const Failure(final String message, [final Object? cause])
+    extends Equatable {
   @override
   List<Object?> get props => [message, cause];
 
@@ -16,36 +12,31 @@ abstract class Failure extends Equatable {
 }
 
 /// Represents a failure occurring in SQLite or document store persistence.
-class DatabaseFailure extends Failure {
-  const DatabaseFailure(super.message, [super.cause]);
-}
+class const DatabaseFailure(super.message, [super.cause]) extends Failure;
 
 /// Represents an entity that was requested but could not be located.
-class NotFoundFailure extends Failure {
-  final String entityId;
-
-  const NotFoundFailure(super.message, this.entityId, [super.cause]);
-
+class const NotFoundFailure(super.message, final String entityId, [super.cause])
+    extends Failure {
   @override
   List<Object?> get props => [message, entityId, cause];
 }
 
 /// Represents a business rule or invariant validation error.
-class ValidationFailure extends Failure {
-  final String? invalidField;
-
-  const ValidationFailure(super.message, [this.invalidField, super.cause]);
-
+class const ValidationFailure(
+  super.message, [
+  final String? invalidField,
+  super.cause,
+]) extends Failure {
   @override
   List<Object?> get props => [message, invalidField, cause];
 }
 
 /// Represents a state or ID conflict error.
-class ConflictFailure extends Failure {
-  final String conflictId;
-
-  const ConflictFailure(super.message, this.conflictId, [super.cause]);
-
+class const ConflictFailure(
+  super.message,
+  final String conflictId, [
+  super.cause,
+]) extends Failure {
   @override
   List<Object?> get props => [message, conflictId, cause];
 }

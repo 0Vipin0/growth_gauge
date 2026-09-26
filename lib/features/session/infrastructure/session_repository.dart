@@ -7,19 +7,19 @@ import '../domain/session_enums.dart';
 import '../domain/workout_session.dart';
 import 'session_document_adapter.dart';
 
-abstract interface class IWorkoutSessionRepository {
+abstract interface class IWorkoutSessionRepository() {
   Future<Result<void, Failure>> save(WorkoutSession session);
   Future<Result<WorkoutSession, Failure>> getById(String id);
   Future<Result<List<WorkoutSession>, Failure>> listUnfinished(String userId);
 }
 
 class WorkoutSessionRepository implements IWorkoutSessionRepository {
-  WorkoutSessionRepository(AppDatabase database)
-      : _store = DriftDocumentStore<WorkoutSession>(
-          database: database,
-          adapter: const SessionDocumentAdapter(),
-        );
-  WorkoutSessionRepository.withStore(this._store);
+  new(AppDatabase database)
+    : _store = DriftDocumentStore<WorkoutSession>(
+        database: database,
+        adapter: const SessionDocumentAdapter(),
+      );
+  new withStore(this._store);
 
   final IDocumentStore<WorkoutSession> _store;
 
@@ -31,15 +31,20 @@ class WorkoutSessionRepository implements IWorkoutSessionRepository {
       _store.getById(id);
   @override
   Future<Result<List<WorkoutSession>, Failure>> listUnfinished(
-      String userId) async {
+    String userId,
+  ) async {
     final result = await _store.getAll();
-    return result.map((sessions) => sessions
-        .where((session) =>
-            session.userId == userId &&
-            session.status != SessionStatus.draft &&
-            session.status != SessionStatus.completed &&
-            session.status != SessionStatus.cancelled &&
-            session.status != SessionStatus.abandoned)
-        .toList());
+    return result.map(
+      (sessions) => sessions
+          .where(
+            (session) =>
+                session.userId == userId &&
+                session.status != SessionStatus.draft &&
+                session.status != SessionStatus.completed &&
+                session.status != SessionStatus.cancelled &&
+                session.status != SessionStatus.abandoned,
+          )
+          .toList(),
+    );
   }
 }

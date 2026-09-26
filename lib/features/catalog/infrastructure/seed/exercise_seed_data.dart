@@ -7,27 +7,24 @@ import '../../domain/exercise_equipment.dart';
 ///
 /// These 7 exercises are seeded on first launch if the catalog is empty.
 /// IDs match the [Persona_Worked_Example.json] fixture.
-class ExerciseSeedData {
-  const ExerciseSeedData._();
-
+class const ExerciseSeedData._() {
   static final _epoch = DateTime.utc(2024);
 
   static List<Exercise> get all => [
-        _squat,
-        _deadlift,
-        _benchPress,
-        _ohp,
-        _barbellRow,
-        _pullUp,
-        _dumbbellRdl,
-      ];
+    _squat,
+    _deadlift,
+    _benchPress,
+    _ohp,
+    _barbellRow,
+    _pullUp,
+    _dumbbellRdl,
+  ];
 
   static final _squat = Exercise(
     id: 'exercise-squat-001',
     name: 'Barbell Back Squat',
     aliases: ['back squat', 'squat'],
-    description:
-        'Compound lower-body movement with the barbell loaded on the upper back.',
+    description: 'Compound lower-body movement with the barbell loaded on the upper back.',
     createdAt: _epoch,
     updatedAt: _epoch,
     classification: const ExerciseClassification(

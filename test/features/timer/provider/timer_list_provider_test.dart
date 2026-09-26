@@ -5,7 +5,7 @@ import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
 import 'package:growth_gauge/features/timer/repository/repository.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNotificationService extends Mock implements NotificationService {}
+class MockNotificationService() extends Mock implements NotificationService;
 
 final testTimers = [
   TimerModel(
@@ -16,15 +16,17 @@ final testTimers = [
     target: const Duration(minutes: 10),
     logs: [
       TimerLog(
-          id: 'log1',
-          action: 'Started',
-          timestamp: DateTime(2025, 4, 28),
-          interval: const Duration(minutes: 2)),
+        id: 'log1',
+        action: 'Started',
+        timestamp: DateTime(2025, 4, 28),
+        interval: const Duration(minutes: 2),
+      ),
       TimerLog(
-          id: 'log2',
-          action: 'Paused',
-          timestamp: DateTime(2025, 4, 29),
-          interval: const Duration(minutes: 3)),
+        id: 'log2',
+        action: 'Paused',
+        timestamp: DateTime(2025, 4, 29),
+        interval: const Duration(minutes: 3),
+      ),
     ],
     tags: ['tag1', 'tag2'],
   ),
@@ -36,10 +38,11 @@ final testTimers = [
     target: const Duration(minutes: 20),
     logs: [
       TimerLog(
-          id: 'log3',
-          action: 'Started',
-          timestamp: DateTime(2025, 4, 27),
-          interval: const Duration(minutes: 5)),
+        id: 'log3',
+        action: 'Started',
+        timestamp: DateTime(2025, 4, 27),
+        interval: const Duration(minutes: 5),
+      ),
     ],
     tags: ['tag3'],
   ),
@@ -60,10 +63,11 @@ final testTimers = [
     target: const Duration(minutes: 10),
     logs: [
       TimerLog(
-          id: 'log4',
-          action: 'Started',
-          timestamp: DateTime(2025, 4, 30),
-          interval: const Duration(minutes: 4)),
+        id: 'log4',
+        action: 'Started',
+        timestamp: DateTime(2025, 4, 30),
+        interval: const Duration(minutes: 4),
+      ),
     ],
     tags: ['tag4'],
   ),

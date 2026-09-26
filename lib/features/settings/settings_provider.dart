@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../../features/notification/notification_service.dart';
 import '../counter/counter.dart';
+import '../notification/notification_service.dart';
 import '../timer/timer.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 
-class SettingsProvider with ChangeNotifier {
+class SettingsProvider({
+  required final CounterListProvider _counterListProvider,
+  required final TimerListProvider _timerListProvider,
+  required final NotificationService _notificationService,
+}) with ChangeNotifier {
   SettingsModel _settings;
-
-  final CounterListProvider _counterListProvider;
-  final TimerListProvider _timerListProvider;
-  final NotificationService _notificationService;
 
   bool _isExporting = false;
 
@@ -36,14 +36,7 @@ class SettingsProvider with ChangeNotifier {
   final LocalAuthentication _localAuth = LocalAuthentication();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  SettingsProvider(
-      {required CounterListProvider counterListProvider,
-      required TimerListProvider timerListProvider,
-      required NotificationService notificationService})
-      : _settings = const SettingsModel(themeName: AppThemeName.light),
-        _notificationService = notificationService,
-        _counterListProvider = counterListProvider,
-        _timerListProvider = timerListProvider {
+  this : _settings = const SettingsModel(themeName: AppThemeName.light) {
     loadSettingsFromStorage();
   }
 
@@ -91,12 +84,12 @@ class SettingsProvider with ChangeNotifier {
   void updateNotificationTime(TimeOfDay time) {
     _settings = _settings.copyWith(notificationTime: time);
     _notificationService.scheduleDailyNotification(
-        id: 1,
-        title: 'Keep the Growth going forever!',
-        body:
-            'Log the items that you have progressed today and keep up the good work!!',
-        time: time,
-        sound: 'assets/sounds/simple_notification.mp3');
+      id: 1,
+      title: 'Keep the Growth going forever!',
+      body: 'Log the items that you have progressed today and keep up the good work!!',
+      time: time,
+      sound: 'assets/sounds/simple_notification.mp3',
+    );
     saveSettingsToStorage();
     notifyListeners();
   }
@@ -163,8 +156,9 @@ class SettingsProvider with ChangeNotifier {
     AuthenticationType authenticationType = AuthenticationType.none; // Default
     if (authenticationTypeString != null) {
       try {
-        authenticationType =
-            AuthenticationType.values.byName(authenticationTypeString);
+        authenticationType = AuthenticationType.values.byName(
+          authenticationTypeString,
+        );
       } catch (e) {
         debugPrint(
           'Error loading authenticationType from storage: $e, using default None authentication type.',
@@ -205,9 +199,11 @@ class SettingsProvider with ChangeNotifier {
     await SharedPreferencesHelper.setFontFamily(_settings.fontFamily.name);
     await SharedPreferencesHelper.setExportFormat(_settings.exportFormat.name);
     await SharedPreferencesHelper.setAuthenticationType(
-        _settings.authenticationType.name);
+      _settings.authenticationType.name,
+    );
     await SharedPreferencesHelper.setNotificationTime(
-        '${_settings.notificationTime?.hour}:${_settings.notificationTime?.minute}');
+      '${_settings.notificationTime?.hour}:${_settings.notificationTime?.minute}',
+    );
   }
 
   Future<void> exportData() async {
@@ -220,14 +216,18 @@ class SettingsProvider with ChangeNotifier {
       ); // Pass parameters
       final exportJson = jsonEncode(appData.toJson());
 
-      final String? filePath = await _getSaveFilePath();
-      if (filePath == null) {
+      final Uri? savedFile = await FilePicker.saveFile(
+        dialogTitle: 'Save Export File',
+        allowedExtensions: ['json'],
+        type: FileType.custom,
+        fileName: 'DataExport.json',
+        bytes: utf8.encode(exportJson),
+      );
+      if (savedFile == null) {
         exportMessage = 'Export Cancelled';
         return;
       }
 
-      final file = File(filePath);
-      await file.writeAsString(exportJson);
       exportMessage = 'Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting data: $e';
@@ -244,28 +244,21 @@ class SettingsProvider with ChangeNotifier {
     return AppData(counters: counters, timers: timers);
   }
 
-  Future<String?> _getSaveFilePath() async {
-    final String? filePath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Save Export File',
-      allowedExtensions: ['json'],
-      type: FileType.custom,
-      fileName: 'DataExport.json', // Default filename
-    );
-    return filePath;
-  }
-
   Future<void> importData() async {
     _isImporting = true;
     notifyListeners();
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(
+      final List<PlatformFile> result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
 
-      if (result != null && result.files.isNotEmpty) {
-        final File file = File(result.files.single.path!);
-        final String importJson = await file.readAsString();
+      if (result.isNotEmpty) {
+        final PlatformFile selectedFile = result.single;
+        final String? path = selectedFile.path;
+        final String importJson = path == null
+            ? utf8.decode(await selectedFile.readAsBytes())
+            : await File(path).readAsString();
         await _processImportData(
           importJson,
           _counterListProvider.importCountersFromData,
@@ -347,16 +340,15 @@ class SettingsProvider with ChangeNotifier {
     if (_counterListProvider.counters.isEmpty) return;
 
     try {
-      final String? filePath = await _getCsvSaveFilePath(
+      final Uri? savedFile = await _saveCsvFile(
         suggestedName: 'counters.csv',
+        contents: _counterListProvider.convertToCSV(),
       );
-      if (filePath == null) {
+      if (savedFile == null) {
         exportMessage = 'Export Cancelled';
         return;
       }
 
-      final file = File(filePath);
-      await file.writeAsString(_counterListProvider.convertToCSV());
       exportMessage = 'Counter Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting counter data: $e';
@@ -368,16 +360,15 @@ class SettingsProvider with ChangeNotifier {
     if (_timerListProvider.timers.isEmpty) return;
 
     try {
-      final String? filePath = await _getCsvSaveFilePath(
+      final Uri? savedFile = await _saveCsvFile(
         suggestedName: 'timers.csv',
+        contents: _timerListProvider.convertToCSV(),
       );
-      if (filePath == null) {
+      if (savedFile == null) {
         exportMessage = 'Export Cancelled';
         return;
       }
 
-      final file = File(filePath);
-      await file.writeAsString(_timerListProvider.convertToCSV());
       exportMessage = 'Timer Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting timer data: $e';
@@ -385,14 +376,17 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> _getCsvSaveFilePath({String? suggestedName}) async {
-    final String? filePath = await FilePicker.platform.saveFile(
+  Future<Uri?> _saveCsvFile({
+    required String suggestedName,
+    required String contents,
+  }) {
+    return FilePicker.saveFile(
       dialogTitle: 'Save Export File',
-      allowedExtensions: ['json'],
+      allowedExtensions: ['csv'],
       type: FileType.custom,
       fileName: suggestedName,
+      bytes: utf8.encode(contents),
     );
-    return filePath;
   }
 
   void clearAppData() {

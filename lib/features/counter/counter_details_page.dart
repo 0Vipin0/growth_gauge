@@ -6,11 +6,8 @@ import '../chart/chart.dart';
 import 'model/model.dart';
 import 'provider/counter_list_provider.dart';
 
-class CounterDetailsPage extends StatelessWidget {
-  final CounterModel counter;
-
-  const CounterDetailsPage({super.key, required this.counter});
-
+class const CounterDetailsPage({super.key, required final CounterModel counter})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +28,9 @@ class CounterDetailsPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     final counterProvider = Provider.of<CounterListProvider>(
-                        context,
-                        listen: false);
+                      context,
+                      listen: false,
+                    );
                     counterProvider.initializeTags(counter.tags);
 
                     showDialog(
@@ -65,12 +63,14 @@ class CounterDetailsPage extends StatelessWidget {
                                   return Wrap(
                                     spacing: 8.0,
                                     children: provider.updatedTags
-                                        .map((tag) => Chip(
-                                              label: Text(tag),
-                                              onDeleted: () {
-                                                provider.removeTag(tag);
-                                              },
-                                            ))
+                                        .map(
+                                          (tag) => Chip(
+                                            label: Text(tag),
+                                            onDeleted: () {
+                                              provider.removeTag(tag);
+                                            },
+                                          ),
+                                        )
                                         .toList(),
                                   );
                                 },
@@ -103,12 +103,11 @@ class CounterDetailsPage extends StatelessWidget {
                   builder: (context, provider, child) {
                     return Wrap(
                       spacing: 8.0,
-                      children: provider
+                      children:
+                          provider
                               .getCounter(counter)
                               .tags
-                              ?.map((tag) => Chip(
-                                    label: Text(tag),
-                                  ))
+                              ?.map((tag) => Chip(label: Text(tag)))
                               .toList() ??
                           [],
                     );
@@ -128,9 +127,8 @@ class CounterDetailsPage extends StatelessWidget {
                         child: ChartPage(counter: counter),
                       ),
                       BaseHeatmapWidget(
-                        heatmapData: Provider.of<CounterListProvider>(
-                          context,
-                        ).extractCountsByDay(counter),
+                        heatmapData: Provider.of<CounterListProvider>(context)
+                            .extractCountsByDay(counter),
                       ),
                     ],
                   );
@@ -161,11 +159,8 @@ class CounterDetailsPage extends StatelessWidget {
   }
 }
 
-class HeatmapPage extends StatelessWidget {
-  final CounterModel counter;
-
-  const HeatmapPage({super.key, required this.counter});
-
+class const HeatmapPage({super.key, required final CounterModel counter})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -178,11 +173,8 @@ class HeatmapPage extends StatelessWidget {
   }
 }
 
-class ChartPage extends StatelessWidget {
-  final CounterModel counter;
-
-  const ChartPage({super.key, required this.counter});
-
+class const ChartPage({super.key, required final CounterModel counter})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -199,7 +191,8 @@ class ChartPage extends StatelessWidget {
           Consumer<CounterChartProvider>(
             builder: (context, chartProvider, child) {
               final barGroups = chartProvider.processDataForChart(counter);
-              final maxY = barGroups
+              final maxY =
+                  barGroups
                       .map((group) => group.barRods.first.toY)
                       .fold(0.0, (max, y) => y > max ? y : max) +
                   5;

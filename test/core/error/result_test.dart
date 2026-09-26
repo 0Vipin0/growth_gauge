@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:growth_gauge/core/error/failures.dart';
 import 'package:growth_gauge/core/error/result.dart';
 
@@ -50,8 +51,9 @@ void main() {
 
       expect(flatMapped.dataOrNull, equals('Value: 10'));
 
-      const errorResult =
-          Result<int, Failure>.error(DatabaseFailure('Disk error'));
+      const errorResult = Result<int, Failure>.error(
+        DatabaseFailure('Disk error'),
+      );
       final errorChain = errorResult.flatMap(
         (data) => Result<String, Failure>.success('Value: $data'),
       );

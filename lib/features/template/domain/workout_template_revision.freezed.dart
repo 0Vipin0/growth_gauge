@@ -95,7 +95,7 @@ class _$WorkoutTemplateRevisionCopyWithImpl<$Res>
     implements $WorkoutTemplateRevisionCopyWith<$Res> {
   _$WorkoutTemplateRevisionCopyWithImpl(this._self, this._then);
 
-  final WorkoutTemplateRevision _self;
+  WorkoutTemplateRevision _self;
   final $Res Function(WorkoutTemplateRevision) _then;
 
   /// Create a copy of WorkoutTemplateRevision
@@ -365,7 +365,7 @@ class _WorkoutTemplateRevision implements WorkoutTemplateRevision {
       required this.templateId,
       required this.revisionNumber,
       this.status = TemplateRevisionStatus.draft,
-      final List<WorkoutBlock> blocks = const [],
+      List<WorkoutBlock> blocks = const [],
       required this.createdById,
       required this.createdAt,
       this.changeSummary = ''})

@@ -102,7 +102,7 @@ class _$WorkoutTemplateCopyWithImpl<$Res>
     implements $WorkoutTemplateCopyWith<$Res> {
   _$WorkoutTemplateCopyWithImpl(this._self, this._then);
 
-  final WorkoutTemplate _self;
+  WorkoutTemplate _self;
   final $Res Function(WorkoutTemplate) _then;
 
   /// Create a copy of WorkoutTemplate
@@ -387,7 +387,7 @@ class _WorkoutTemplate implements WorkoutTemplate {
       required this.createdAt,
       required this.updatedAt,
       this.isArchived = false,
-      final List<String> tags = const []})
+      List<String> tags = const []})
       : _tags = tags;
   factory _WorkoutTemplate.fromJson(Map<String, dynamic> json) =>
       _$WorkoutTemplateFromJson(json);

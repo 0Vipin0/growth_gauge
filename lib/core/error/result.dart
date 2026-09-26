@@ -1,14 +1,12 @@
 import 'failures.dart';
 
 /// A functional Result monad representing either a [Success] or an [Error].
-sealed class Result<T, E extends Failure> {
-  const Result();
-
+sealed class const Result<T, E extends Failure>() {
   /// Creates a successful result holding [data].
-  const factory Result.success(T data) = Success<T, E>;
+  const factory success(T data) = Success<T, E>;
 
   /// Creates an error result holding [failure].
-  const factory Result.error(E failure) = Error<T, E>;
+  const factory error(E failure) = Error<T, E>;
 
   /// Returns true if this is a [Success].
   bool get isSuccess => this is Success<T, E>;
@@ -18,15 +16,15 @@ sealed class Result<T, E extends Failure> {
 
   /// Returns the data if successful, or null if error.
   T? get dataOrNull => switch (this) {
-        Success(data: final d) => d,
-        Error() => null,
-      };
+    Success(data: final d) => d,
+    Error() => null,
+  };
 
   /// Returns the failure if error, or null if success.
   E? get errorOrNull => switch (this) {
-        Success() => null,
-        Error(failure: final f) => f,
-      };
+    Success() => null,
+    Error(failure: final f) => f,
+  };
 
   /// Pattern-matches over the result.
   R when<R>({
@@ -57,10 +55,8 @@ sealed class Result<T, E extends Failure> {
 }
 
 /// Represents the successful outcome of an operation.
-final class Success<T, E extends Failure> extends Result<T, E> {
-  final T data;
-  const Success(this.data);
-
+final class const Success<T, E extends Failure>(final T data)
+    extends Result<T, E> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -76,10 +72,8 @@ final class Success<T, E extends Failure> extends Result<T, E> {
 }
 
 /// Represents the failed outcome of an operation.
-final class Error<T, E extends Failure> extends Result<T, E> {
-  final E failure;
-  const Error(this.failure);
-
+final class const Error<T, E extends Failure>(final E failure)
+    extends Result<T, E> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

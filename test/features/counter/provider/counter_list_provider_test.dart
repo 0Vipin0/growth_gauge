@@ -5,7 +5,7 @@ import 'package:growth_gauge/features/counter/repository/repository.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNotificationService extends Mock implements NotificationService {}
+class MockNotificationService() extends Mock implements NotificationService;
 
 final testCounter = CounterModel(
   id: '1',
@@ -26,9 +26,15 @@ final testCounters = [
     target: 10,
     logs: [
       CounterLog(
-          id: 'log1', action: 'Incremented', timestamp: DateTime(2025, 4, 28)),
+        id: 'log1',
+        action: 'Incremented',
+        timestamp: DateTime(2025, 4, 28),
+      ),
       CounterLog(
-          id: 'log2', action: 'Decremented', timestamp: DateTime(2025, 4, 29)),
+        id: 'log2',
+        action: 'Decremented',
+        timestamp: DateTime(2025, 4, 29),
+      ),
     ],
     tags: ['tag1', 'tag2'],
   ),
@@ -40,7 +46,10 @@ final testCounters = [
     target: 20,
     logs: [
       CounterLog(
-          id: 'log3', action: 'Incremented', timestamp: DateTime(2025, 4, 27)),
+        id: 'log3',
+        action: 'Incremented',
+        timestamp: DateTime(2025, 4, 27),
+      ),
     ],
     tags: ['tag3'],
   ),
@@ -61,7 +70,10 @@ final testCounters = [
     target: 10,
     logs: [
       CounterLog(
-          id: 'log4', action: 'Incremented', timestamp: DateTime(2025, 4, 30)),
+        id: 'log4',
+        action: 'Incremented',
+        timestamp: DateTime(2025, 4, 30),
+      ),
     ],
     tags: ['tag4'],
   ),

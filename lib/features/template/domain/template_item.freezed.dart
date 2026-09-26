@@ -85,7 +85,7 @@ abstract mixin class $TemplateItemCopyWith<$Res> {
 class _$TemplateItemCopyWithImpl<$Res> implements $TemplateItemCopyWith<$Res> {
   _$TemplateItemCopyWithImpl(this._self, this._then);
 
-  final TemplateItem _self;
+  TemplateItem _self;
   final $Res Function(TemplateItem) _then;
 
   /// Create a copy of TemplateItem
@@ -317,8 +317,8 @@ class _TemplateItem implements TemplateItem {
       {required this.id,
       required this.exerciseId,
       required this.order,
-      final List<TargetSet> targetSets = const [],
-      final List<String> substitutionExerciseIds = const [],
+      List<TargetSet> targetSets = const [],
+      List<String> substitutionExerciseIds = const [],
       this.coachNotes})
       : _targetSets = targetSets,
         _substitutionExerciseIds = substitutionExerciseIds;

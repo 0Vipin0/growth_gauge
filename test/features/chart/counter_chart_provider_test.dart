@@ -21,9 +21,10 @@ void main() {
         description: 'Test Description',
         logs: [
           CounterLog(
-              id: 'log1',
-              action: 'Incremented',
-              timestamp: DateTime(2025, 4, 28)),
+            id: 'log1',
+            action: 'Incremented',
+            timestamp: DateTime(2025, 4, 28),
+          ),
         ],
         tags: [],
       );
@@ -37,13 +38,10 @@ void main() {
 
     test('getDayOfWeek', () {
       // Act
-      final day = withClock(
-        Clock.fixed(DateTime(2000)),
-        () {
-          // This will always return 'Sun' for the fixed date
-          return provider.getDayOfWeek(0);
-        },
-      );
+      final day = withClock(Clock.fixed(DateTime(2000)), () {
+        // This will always return 'Sun' for the fixed date
+        return provider.getDayOfWeek(0);
+      });
 
       // Assert
       expect(day, 'Sun');

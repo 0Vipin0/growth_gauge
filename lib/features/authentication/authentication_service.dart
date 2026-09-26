@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
-abstract class AuthenticationServiceBase {
+abstract class AuthenticationServiceBase() {
   Future<bool> canAuthenticateWithBiometrics();
   Future<bool> authenticateWithBiometrics();
   Future<String?> getSavedPin();
@@ -11,7 +11,7 @@ abstract class AuthenticationServiceBase {
   Future<bool> authenticateWithPin(String pin);
 }
 
-class AuthenticationService implements AuthenticationServiceBase {
+class AuthenticationService() implements AuthenticationServiceBase {
   final LocalAuthentication _auth = LocalAuthentication();
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
@@ -30,7 +30,7 @@ class AuthenticationService implements AuthenticationServiceBase {
     try {
       return await _auth.authenticate(
         localizedReason: 'Authenticate to access the app',
-        options: const AuthenticationOptions(biometricOnly: true),
+        biometricOnly: true,
       );
     } catch (e) {
       debugPrint('Biometric authentication error: $e');
