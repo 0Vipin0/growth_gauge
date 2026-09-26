@@ -262,6 +262,18 @@ class SessionUseCases {
       return Result.error(
           NotFoundFailure('Execution set not found', executionSetId));
     }
+    if (executionSet.plannedRestSeconds <= 0) {
+      return const Result.error(ValidationFailure(
+          'This set does not have a positive planned rest duration'));
+    }
+    final minimumSeconds = executionSet.restMinimumSeconds ?? 0;
+    final maximumSeconds = executionSet.restMaximumSeconds;
+    if (executionSet.plannedRestSeconds < minimumSeconds ||
+        (maximumSeconds != null &&
+            executionSet.plannedRestSeconds > maximumSeconds)) {
+      return Result.error(ValidationFailure(
+          'Planned rest must be within the policy limits', executionSet.id));
+    }
     if (session.restIntervals.any((rest) => rest.endedAt == null)) {
       return Result.error(
           ConflictFailure('A rest interval is already active', sessionId));
@@ -271,12 +283,127 @@ class SessionUseCases {
       executionSetId: executionSetId,
       startedAt: AppClock.nowUtc(),
       plannedDurationSeconds: executionSet.plannedRestSeconds,
+      minimumDurationSeconds: minimumSeconds,
+      maximumDurationSeconds: maximumSeconds,
+      allowSkip: executionSet.restAllowSkip,
+      allowExtend: executionSet.restAllowExtend,
     );
     final updated =
         session.copyWith(restIntervals: [...session.restIntervals, rest]);
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     _events.publish(RestStarted(aggregateId: sessionId));
+    return Result.success(updated);
+  }
+
+  Future<Result<WorkoutSession, Failure>> extendRest(String sessionId,
+      {String? restIntervalId, int extensionSeconds = 15}) async {
+    if (extensionSeconds <= 0) {
+      return const Result.error(
+          ValidationFailure('Rest extension must be greater than zero'));
+    }
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) {
+      return Result.error(ConflictFailure(
+          'Rest can only be extended during an active session', sessionId));
+    }
+    final index = restIntervalId == null
+        ? session.restIntervals.lastIndexWhere((rest) => rest.endedAt == null)
+        : session.restIntervals.indexWhere(
+            (rest) => rest.id == restIntervalId && rest.endedAt == null);
+    if (index < 0) {
+      return Result.error(NotFoundFailure(
+          'Active rest interval not found', restIntervalId ?? sessionId));
+    }
+    final activeRest = session.restIntervals[index];
+    if (!activeRest.allowExtend) {
+      return Result.error(ConflictFailure(
+          'This rest policy does not allow extensions', activeRest.id));
+    }
+    final requestedDuration =
+        activeRest.plannedDurationSeconds + extensionSeconds;
+    final extendedDuration = activeRest.maximumDurationSeconds != null &&
+            requestedDuration > activeRest.maximumDurationSeconds!
+        ? activeRest.maximumDurationSeconds!
+        : requestedDuration;
+    if (extendedDuration <= activeRest.plannedDurationSeconds) {
+      return Result.error(ConflictFailure(
+          'The maximum rest duration has been reached', activeRest.id));
+    }
+    final intervals = [...session.restIntervals];
+    intervals[index] = activeRest.copyWith(
+      plannedDurationSeconds: extendedDuration,
+    );
+    final updated = session.copyWith(
+      restIntervals: intervals,
+      audits: [
+        ...session.audits,
+        _audit(sessionId, AuditAction.updated,
+            entityType: 'RestInterval',
+            entityId: activeRest.id,
+            field: 'plannedDurationSeconds',
+            previousValue: activeRest.plannedDurationSeconds,
+            newValue: extendedDuration)
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    return saved.isError
+        ? Result.error(saved.errorOrNull!)
+        : Result.success(updated);
+  }
+
+  Future<Result<WorkoutSession, Failure>> skipRest(String sessionId,
+      {String? restIntervalId}) async {
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) {
+      return Result.error(ConflictFailure(
+          'Rest can only be skipped during an active session', sessionId));
+    }
+    final index = restIntervalId == null
+        ? session.restIntervals.lastIndexWhere((rest) => rest.endedAt == null)
+        : session.restIntervals.indexWhere(
+            (rest) => rest.id == restIntervalId && rest.endedAt == null);
+    if (index < 0) {
+      return Result.error(NotFoundFailure(
+          'Active rest interval not found', restIntervalId ?? sessionId));
+    }
+    final activeRest = session.restIntervals[index];
+    if (!activeRest.allowSkip) {
+      return Result.error(ConflictFailure(
+          'This rest policy does not allow skipping', activeRest.id));
+    }
+    final now = AppClock.nowUtc();
+    final elapsed = now.difference(activeRest.startedAt).inSeconds;
+    if (elapsed < activeRest.minimumDurationSeconds) {
+      return Result.error(
+          ConflictFailure('Minimum rest time has not elapsed', activeRest.id));
+    }
+    final intervals = [...session.restIntervals];
+    intervals[index] = activeRest.copyWith(
+      endedAt: now,
+      actualDurationSeconds: elapsed,
+      skipped: true,
+    );
+    final updated = session.copyWith(
+      restIntervals: intervals,
+      audits: [
+        ...session.audits,
+        _audit(sessionId, AuditAction.updated,
+            entityType: 'RestInterval',
+            entityId: activeRest.id,
+            field: 'skipped',
+            previousValue: false,
+            newValue: true)
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    _events.publish(
+        RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id));
     return Result.success(updated);
   }
 
@@ -391,9 +518,20 @@ class SessionUseCases {
     final now = AppClock.nowUtc();
     final intervals = [...session.restIntervals];
     final activeRest = intervals[index];
+    final elapsed = now.difference(activeRest.startedAt).inSeconds;
+    if (elapsed < activeRest.minimumDurationSeconds) {
+      return Result.error(
+          ConflictFailure('Minimum rest time has not elapsed', activeRest.id));
+    }
+    final skipped = elapsed < activeRest.plannedDurationSeconds;
+    if (skipped && !activeRest.allowSkip) {
+      return Result.error(ConflictFailure(
+          'This rest policy does not allow ending early', activeRest.id));
+    }
     intervals[index] = activeRest.copyWith(
       endedAt: now,
-      actualDurationSeconds: now.difference(activeRest.startedAt).inSeconds,
+      actualDurationSeconds: elapsed,
+      skipped: skipped,
     );
     final updated = session.copyWith(
       restIntervals: intervals,
@@ -408,7 +546,12 @@ class SessionUseCases {
     );
     final saved = await _sessions.save(updated);
     if (saved.isError) return Result.error(saved.errorOrNull!);
-    _events.publish(RestCompleted(aggregateId: sessionId));
+    if (skipped) {
+      _events.publish(
+          RestSkipped(aggregateId: sessionId, restIntervalId: activeRest.id));
+    } else {
+      _events.publish(RestCompleted(aggregateId: sessionId));
+    }
     return Result.success(updated);
   }
 
@@ -450,10 +593,29 @@ class SessionUseCases {
     if (removedSet == null) {
       return Result.error(NotFoundFailure('Execution set not found', setId));
     }
+    final relatedRestIntervals = session.restIntervals
+        .where((rest) => rest.executionSetId == setId)
+        .toList();
+    if (relatedRestIntervals.any((rest) => rest.endedAt == null)) {
+      return Result.error(ConflictFailure(
+          'Finish the active rest interval before deleting this set', setId));
+    }
     final updated = session.copyWith(
       blocks: blocks,
+      restIntervals: session.restIntervals
+          .where((rest) => rest.executionSetId != setId)
+          .toList(),
       audits: [
         ...session.audits,
+        ...relatedRestIntervals.map((rest) => _audit(
+              sessionId,
+              AuditAction.deleted,
+              entityType: 'RestInterval',
+              entityId: rest.id,
+              actorId: actorId,
+              previousValue: rest.toJson(),
+              reason: 'Parent execution set deleted',
+            )),
         _audit(sessionId, AuditAction.deleted,
             entityType: 'ExecutionSet',
             entityId: setId,
@@ -751,6 +913,16 @@ class SessionUseCases {
                                   percentageOf1Rm: target.percentageOf1Rm,
                                   plannedRestSeconds:
                                       target.restPolicy?.targetSeconds ?? 0,
+                                  restAutoStart:
+                                      target.restPolicy?.autoStart ?? false,
+                                  restAllowSkip:
+                                      target.restPolicy?.allowSkip ?? true,
+                                  restAllowExtend:
+                                      target.restPolicy?.allowExtend ?? true,
+                                  restMinimumSeconds:
+                                      target.restPolicy?.minimumSeconds,
+                                  restMaximumSeconds:
+                                      target.restPolicy?.maximumSeconds,
                                   notes: target.notes,
                                 ))
                             .toList(),

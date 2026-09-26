@@ -36,6 +36,15 @@ class RestCompleted extends DomainEvent {
   String get eventType => 'RestCompleted';
 }
 
+class RestSkipped extends DomainEvent {
+  RestSkipped({required super.aggregateId, required this.restIntervalId});
+  final String restIntervalId;
+  @override
+  String get eventType => 'RestSkipped';
+  @override
+  List<Object?> get props => [...super.props, restIntervalId];
+}
+
 class WorkoutSessionCancelled extends DomainEvent {
   WorkoutSessionCancelled({required super.aggregateId});
   @override

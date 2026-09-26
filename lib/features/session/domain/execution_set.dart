@@ -31,6 +31,11 @@ abstract class ExecutionSet with _$ExecutionSet {
     DateTime? completedAt,
     @Default(ExecutionSetStatus.planned) ExecutionSetStatus status,
     @Default(0) int plannedRestSeconds,
+    @Default(false) bool restAutoStart,
+    @Default(true) bool restAllowSkip,
+    @Default(true) bool restAllowExtend,
+    int? restMinimumSeconds,
+    int? restMaximumSeconds,
     int? actualRestSeconds,
     String? notes,
   }) = _ExecutionSet;

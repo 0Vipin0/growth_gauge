@@ -12,6 +12,11 @@ abstract class RestInterval with _$RestInterval {
     DateTime? endedAt,
     required int plannedDurationSeconds,
     int? actualDurationSeconds,
+    @Default(0) int minimumDurationSeconds,
+    int? maximumDurationSeconds,
+    @Default(true) bool allowSkip,
+    @Default(true) bool allowExtend,
+    @Default(false) bool skipped,
   }) = _RestInterval;
 
   factory RestInterval.fromJson(Map<String, dynamic> json) =>

@@ -36,6 +36,11 @@ mixin _$ExecutionSet {
   DateTime? get completedAt;
   ExecutionSetStatus get status;
   int get plannedRestSeconds;
+  bool get restAutoStart;
+  bool get restAllowSkip;
+  bool get restAllowExtend;
+  int? get restMinimumSeconds;
+  int? get restMaximumSeconds;
   int? get actualRestSeconds;
   String? get notes;
 
@@ -94,6 +99,16 @@ mixin _$ExecutionSet {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.plannedRestSeconds, plannedRestSeconds) ||
                 other.plannedRestSeconds == plannedRestSeconds) &&
+            (identical(other.restAutoStart, restAutoStart) ||
+                other.restAutoStart == restAutoStart) &&
+            (identical(other.restAllowSkip, restAllowSkip) ||
+                other.restAllowSkip == restAllowSkip) &&
+            (identical(other.restAllowExtend, restAllowExtend) ||
+                other.restAllowExtend == restAllowExtend) &&
+            (identical(other.restMinimumSeconds, restMinimumSeconds) ||
+                other.restMinimumSeconds == restMinimumSeconds) &&
+            (identical(other.restMaximumSeconds, restMaximumSeconds) ||
+                other.restMaximumSeconds == restMaximumSeconds) &&
             (identical(other.actualRestSeconds, actualRestSeconds) ||
                 other.actualRestSeconds == actualRestSeconds) &&
             (identical(other.notes, notes) || other.notes == notes));
@@ -125,13 +140,18 @@ mixin _$ExecutionSet {
         completedAt,
         status,
         plannedRestSeconds,
+        restAutoStart,
+        restAllowSkip,
+        restAllowExtend,
+        restMinimumSeconds,
+        restMaximumSeconds,
         actualRestSeconds,
         notes
       ]);
 
   @override
   String toString() {
-    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
+    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
   }
 }
 
@@ -164,6 +184,11 @@ abstract mixin class $ExecutionSetCopyWith<$Res> {
       DateTime? completedAt,
       ExecutionSetStatus status,
       int plannedRestSeconds,
+      bool restAutoStart,
+      bool restAllowSkip,
+      bool restAllowExtend,
+      int? restMinimumSeconds,
+      int? restMaximumSeconds,
       int? actualRestSeconds,
       String? notes});
 }
@@ -202,6 +227,11 @@ class _$ExecutionSetCopyWithImpl<$Res> implements $ExecutionSetCopyWith<$Res> {
     Object? completedAt = freezed,
     Object? status = null,
     Object? plannedRestSeconds = null,
+    Object? restAutoStart = null,
+    Object? restAllowSkip = null,
+    Object? restAllowExtend = null,
+    Object? restMinimumSeconds = freezed,
+    Object? restMaximumSeconds = freezed,
     Object? actualRestSeconds = freezed,
     Object? notes = freezed,
   }) {
@@ -294,6 +324,26 @@ class _$ExecutionSetCopyWithImpl<$Res> implements $ExecutionSetCopyWith<$Res> {
           ? _self.plannedRestSeconds
           : plannedRestSeconds // ignore: cast_nullable_to_non_nullable
               as int,
+      restAutoStart: null == restAutoStart
+          ? _self.restAutoStart
+          : restAutoStart // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restAllowSkip: null == restAllowSkip
+          ? _self.restAllowSkip
+          : restAllowSkip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restAllowExtend: null == restAllowExtend
+          ? _self.restAllowExtend
+          : restAllowExtend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restMinimumSeconds: freezed == restMinimumSeconds
+          ? _self.restMinimumSeconds
+          : restMinimumSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      restMaximumSeconds: freezed == restMaximumSeconds
+          ? _self.restMaximumSeconds
+          : restMaximumSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
       actualRestSeconds: freezed == actualRestSeconds
           ? _self.actualRestSeconds
           : actualRestSeconds // ignore: cast_nullable_to_non_nullable
@@ -422,6 +472,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             DateTime? completedAt,
             ExecutionSetStatus status,
             int plannedRestSeconds,
+            bool restAutoStart,
+            bool restAllowSkip,
+            bool restAllowExtend,
+            int? restMinimumSeconds,
+            int? restMaximumSeconds,
             int? actualRestSeconds,
             String? notes)?
         $default, {
@@ -453,6 +508,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             _that.completedAt,
             _that.status,
             _that.plannedRestSeconds,
+            _that.restAutoStart,
+            _that.restAllowSkip,
+            _that.restAllowExtend,
+            _that.restMinimumSeconds,
+            _that.restMaximumSeconds,
             _that.actualRestSeconds,
             _that.notes);
       case _:
@@ -498,6 +558,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             DateTime? completedAt,
             ExecutionSetStatus status,
             int plannedRestSeconds,
+            bool restAutoStart,
+            bool restAllowSkip,
+            bool restAllowExtend,
+            int? restMinimumSeconds,
+            int? restMaximumSeconds,
             int? actualRestSeconds,
             String? notes)
         $default,
@@ -528,6 +593,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             _that.completedAt,
             _that.status,
             _that.plannedRestSeconds,
+            _that.restAutoStart,
+            _that.restAllowSkip,
+            _that.restAllowExtend,
+            _that.restMinimumSeconds,
+            _that.restMaximumSeconds,
             _that.actualRestSeconds,
             _that.notes);
       case _:
@@ -572,6 +642,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             DateTime? completedAt,
             ExecutionSetStatus status,
             int plannedRestSeconds,
+            bool restAutoStart,
+            bool restAllowSkip,
+            bool restAllowExtend,
+            int? restMinimumSeconds,
+            int? restMaximumSeconds,
             int? actualRestSeconds,
             String? notes)?
         $default,
@@ -602,6 +677,11 @@ extension ExecutionSetPatterns on ExecutionSet {
             _that.completedAt,
             _that.status,
             _that.plannedRestSeconds,
+            _that.restAutoStart,
+            _that.restAllowSkip,
+            _that.restAllowExtend,
+            _that.restMinimumSeconds,
+            _that.restMaximumSeconds,
             _that.actualRestSeconds,
             _that.notes);
       case _:
@@ -636,6 +716,11 @@ class _ExecutionSet implements ExecutionSet {
       this.completedAt,
       this.status = ExecutionSetStatus.planned,
       this.plannedRestSeconds = 0,
+      this.restAutoStart = false,
+      this.restAllowSkip = true,
+      this.restAllowExtend = true,
+      this.restMinimumSeconds,
+      this.restMaximumSeconds,
       this.actualRestSeconds,
       this.notes});
   factory _ExecutionSet.fromJson(Map<String, dynamic> json) =>
@@ -688,6 +773,19 @@ class _ExecutionSet implements ExecutionSet {
   @override
   @JsonKey()
   final int plannedRestSeconds;
+  @override
+  @JsonKey()
+  final bool restAutoStart;
+  @override
+  @JsonKey()
+  final bool restAllowSkip;
+  @override
+  @JsonKey()
+  final bool restAllowExtend;
+  @override
+  final int? restMinimumSeconds;
+  @override
+  final int? restMaximumSeconds;
   @override
   final int? actualRestSeconds;
   @override
@@ -752,6 +850,16 @@ class _ExecutionSet implements ExecutionSet {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.plannedRestSeconds, plannedRestSeconds) ||
                 other.plannedRestSeconds == plannedRestSeconds) &&
+            (identical(other.restAutoStart, restAutoStart) ||
+                other.restAutoStart == restAutoStart) &&
+            (identical(other.restAllowSkip, restAllowSkip) ||
+                other.restAllowSkip == restAllowSkip) &&
+            (identical(other.restAllowExtend, restAllowExtend) ||
+                other.restAllowExtend == restAllowExtend) &&
+            (identical(other.restMinimumSeconds, restMinimumSeconds) ||
+                other.restMinimumSeconds == restMinimumSeconds) &&
+            (identical(other.restMaximumSeconds, restMaximumSeconds) ||
+                other.restMaximumSeconds == restMaximumSeconds) &&
             (identical(other.actualRestSeconds, actualRestSeconds) ||
                 other.actualRestSeconds == actualRestSeconds) &&
             (identical(other.notes, notes) || other.notes == notes));
@@ -783,13 +891,18 @@ class _ExecutionSet implements ExecutionSet {
         completedAt,
         status,
         plannedRestSeconds,
+        restAutoStart,
+        restAllowSkip,
+        restAllowExtend,
+        restMinimumSeconds,
+        restMaximumSeconds,
         actualRestSeconds,
         notes
       ]);
 
   @override
   String toString() {
-    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
+    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
   }
 }
 
@@ -824,6 +937,11 @@ abstract mixin class _$ExecutionSetCopyWith<$Res>
       DateTime? completedAt,
       ExecutionSetStatus status,
       int plannedRestSeconds,
+      bool restAutoStart,
+      bool restAllowSkip,
+      bool restAllowExtend,
+      int? restMinimumSeconds,
+      int? restMaximumSeconds,
       int? actualRestSeconds,
       String? notes});
 }
@@ -863,6 +981,11 @@ class __$ExecutionSetCopyWithImpl<$Res>
     Object? completedAt = freezed,
     Object? status = null,
     Object? plannedRestSeconds = null,
+    Object? restAutoStart = null,
+    Object? restAllowSkip = null,
+    Object? restAllowExtend = null,
+    Object? restMinimumSeconds = freezed,
+    Object? restMaximumSeconds = freezed,
     Object? actualRestSeconds = freezed,
     Object? notes = freezed,
   }) {
@@ -955,6 +1078,26 @@ class __$ExecutionSetCopyWithImpl<$Res>
           ? _self.plannedRestSeconds
           : plannedRestSeconds // ignore: cast_nullable_to_non_nullable
               as int,
+      restAutoStart: null == restAutoStart
+          ? _self.restAutoStart
+          : restAutoStart // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restAllowSkip: null == restAllowSkip
+          ? _self.restAllowSkip
+          : restAllowSkip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restAllowExtend: null == restAllowExtend
+          ? _self.restAllowExtend
+          : restAllowExtend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restMinimumSeconds: freezed == restMinimumSeconds
+          ? _self.restMinimumSeconds
+          : restMinimumSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      restMaximumSeconds: freezed == restMaximumSeconds
+          ? _self.restMaximumSeconds
+          : restMaximumSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
       actualRestSeconds: freezed == actualRestSeconds
           ? _self.actualRestSeconds
           : actualRestSeconds // ignore: cast_nullable_to_non_nullable

@@ -6,6 +6,7 @@ import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../../../features/catalog/infrastructure/exercise_repository.dart';
 import '../application/session_use_cases.dart';
+import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
 import '../domain/session_enums.dart';
 import '../domain/session_item.dart';
@@ -28,20 +29,77 @@ class ActiveSessionScreen extends StatefulWidget {
   State<ActiveSessionScreen> createState() => _ActiveSessionScreenState();
 }
 
-class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
+class _ActiveSessionScreenState extends State<ActiveSessionScreen>
+    with WidgetsBindingObserver {
   late WorkoutSession _session = widget.session;
+  late final WorkoutSessionBloc _sessionBloc;
+  StreamSubscription<WorkoutSessionState>? _sessionSubscription;
   Timer? _ticker;
   DateTime _now = DateTime.now().toUtc();
   bool _busy = false;
+  bool _backgroundPausePending = false;
   final Map<String, String> _exerciseNames = {};
+  final Set<String> _finishingRestIds = {};
 
   @override
   void initState() {
     super.initState();
-    _loadExerciseNames();
-    _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() => _now = DateTime.now().toUtc());
+    _sessionBloc = WorkoutSessionBloc(
+      initialSession: widget.session,
+    );
+    _sessionSubscription = _sessionBloc.stream.listen((state) {
+      if (!mounted) return;
+      setState(() {
+        _session = state.session;
+        _busy = state.isBusy;
+      });
     });
+    WidgetsBinding.instance.addObserver(this);
+    _loadExerciseNames();
+    _ticker = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _backgroundPausePending = false;
+      return;
+    }
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden) {
+      _pauseForBackground();
+    }
+  }
+
+  Future<void> _pauseForBackground() async {
+    if (_backgroundPausePending ||
+        _session.status != SessionStatus.inProgress) {
+      return;
+    }
+    _backgroundPausePending = true;
+    while (_busy && mounted) {
+      await Future<void>.delayed(const Duration(milliseconds: 25));
+    }
+    if (!mounted || _session.status != SessionStatus.inProgress) return;
+    await _apply(() => widget.useCases.pause(
+          _session.id,
+          reason: InterruptionReason.applicationBackground,
+        ));
+  }
+
+  void _tick() {
+    if (!mounted) return;
+    final now = DateTime.now().toUtc();
+    setState(() => _now = now);
+    for (final rest in _session.restIntervals.where((entry) =>
+        entry.endedAt == null &&
+        !now.isBefore(entry.startedAt
+            .add(Duration(seconds: entry.plannedDurationSeconds))))) {
+      if (!_finishingRestIds.add(rest.id)) continue;
+      _apply(() =>
+              widget.useCases.finishRest(_session.id, restIntervalId: rest.id))
+          .whenComplete(() => _finishingRestIds.remove(rest.id));
+    }
   }
 
   Future<void> _loadExerciseNames() async {
@@ -64,24 +122,23 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
   @override
   void dispose() {
     _ticker?.cancel();
+    unawaited(_sessionSubscription?.cancel());
+    unawaited(_sessionBloc.close());
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  Future<void> _apply<T>(Future<Result<T, Failure>> Function() action) async {
-    if (_busy) return;
-    setState(() => _busy = true);
-    final result = await action();
-    if (!mounted) return;
-    setState(() {
-      _busy = false;
-      final updated = result.dataOrNull;
-      if (updated is WorkoutSession) _session = updated;
-    });
+  Future<Result<WorkoutSession, Failure>?> _apply(
+      Future<Result<WorkoutSession, Failure>> Function() action) async {
+    if (_sessionBloc.state.isBusy) return null;
+    final result = await _sessionBloc.execute(action);
+    if (!mounted || result == null) return result;
     if (result.isError) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result.errorOrNull!.message)),
       );
     }
+    return result;
   }
 
   Future<void> _record(ExecutionSet set) async {
@@ -150,7 +207,7 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
     rpe.dispose();
     rir.dispose();
     if (values == null) return;
-    await _apply(() => widget.useCases.recordSet(
+    final result = await _apply(() => widget.useCases.recordSet(
           sessionId: _session.id,
           setId: set.id,
           weight: values.$1,
@@ -161,6 +218,12 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
           rpe: values.$6,
           rir: values.$7,
         ));
+    if (result?.isSuccess == true &&
+        set.restAutoStart &&
+        set.plannedRestSeconds > 0) {
+      await _apply(() => widget.useCases
+          .startRest(sessionId: _session.id, executionSetId: set.id));
+    }
   }
 
   Future<void> _editTarget(ExecutionSet set) async {
@@ -201,6 +264,31 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
           rpe: set.targetRpe,
           rir: set.targetRir,
           percentageOf1Rm: set.percentageOf1Rm,
+        ));
+  }
+
+  Future<void> _deleteSet(ExecutionSet set) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete set ${set.setNumber}?'),
+        content: const Text(
+            'The set will be removed from this session. Its audit history will be retained.'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Keep set')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Delete set')),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    await _apply(() => widget.useCases.deleteSet(
+          sessionId: _session.id,
+          setId: set.id,
+          reason: 'User deleted set from active session',
         ));
   }
 
@@ -354,8 +442,10 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
                     item: item,
                     exerciseName:
                         _exerciseNames[item.exerciseId] ?? item.exerciseId,
+                    actionsEnabled: !_busy && !paused,
                     onRecord: _record,
                     onEditTarget: _editTarget,
+                    onDelete: _deleteSet,
                     onSkip: (set) => _apply(() => widget.useCases
                         .skipSet(sessionId: _session.id, setId: set.id)),
                     onRest: (set) => _apply(() => widget.useCases.startRest(
@@ -374,13 +464,45 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen> {
                         'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}'),
                     subtitle: Text(
                         'Target ${_duration(rest.plannedDurationSeconds)}'),
-                    trailing: FilledButton(
-                        onPressed: _busy
+                    trailing: Wrap(spacing: 4, children: [
+                      if (rest.allowExtend)
+                        IconButton(
+                          tooltip: 'Extend rest by 15 seconds',
+                          onPressed: _busy ||
+                                  (rest.maximumDurationSeconds != null &&
+                                      rest.plannedDurationSeconds >=
+                                          rest.maximumDurationSeconds!)
+                              ? null
+                              : () => _apply(() => widget.useCases.extendRest(
+                                  _session.id,
+                                  restIntervalId: rest.id)),
+                          icon: const Icon(Icons.add_circle_outline),
+                        ),
+                      if (rest.allowSkip)
+                        TextButton(
+                          onPressed: _busy ||
+                                  _now.difference(rest.startedAt).inSeconds <
+                                      rest.minimumDurationSeconds
+                              ? null
+                              : () => _apply(() => widget.useCases.skipRest(
+                                  _session.id,
+                                  restIntervalId: rest.id)),
+                          child: const Text('Skip'),
+                        ),
+                      FilledButton(
+                        onPressed: _busy ||
+                                _now.difference(rest.startedAt).inSeconds <
+                                    rest.minimumDurationSeconds ||
+                                (!rest.allowSkip &&
+                                    _now.difference(rest.startedAt).inSeconds <
+                                        rest.plannedDurationSeconds)
                             ? null
                             : () => _apply(() => widget.useCases.finishRest(
                                 _session.id,
                                 restIntervalId: rest.id)),
-                        child: const Text('Done')),
+                        child: const Text('Done'),
+                      ),
+                    ]),
                   ),
                 ),
             ],
@@ -403,15 +525,19 @@ class _ExerciseCard extends StatelessWidget {
   const _ExerciseCard(
       {required this.item,
       required this.exerciseName,
+      required this.actionsEnabled,
       required this.onRecord,
       required this.onEditTarget,
+      required this.onDelete,
       required this.onSkip,
       required this.onRest});
 
   final SessionItem item;
   final String exerciseName;
+  final bool actionsEnabled;
   final ValueChanged<ExecutionSet> onRecord;
   final ValueChanged<ExecutionSet> onEditTarget;
+  final ValueChanged<ExecutionSet> onDelete;
   final ValueChanged<ExecutionSet> onSkip;
   final ValueChanged<ExecutionSet> onRest;
 
@@ -431,31 +557,55 @@ class _ExerciseCard extends StatelessWidget {
                 subtitle: Text(set.status.name.toUpperCase()),
                 trailing: set.status == ExecutionSetStatus.completed ||
                         set.status == ExecutionSetStatus.skipped
-                    ? const Icon(Icons.check_circle_outline)
-                    : Wrap(spacing: 2, children: [
-                        IconButton(
-                            tooltip: 'Edit target',
-                            onPressed: () => onEditTarget(set),
-                            icon: const Icon(Icons.edit_outlined)),
-                        IconButton(
-                            tooltip: 'Log set',
-                            onPressed: () => onRecord(set),
-                            icon: const Icon(Icons.check)),
-                        if (set.plannedRestSeconds > 0)
-                          IconButton(
-                              tooltip: 'Start rest',
-                              onPressed: () => onRest(set),
-                              icon: const Icon(Icons.timer_outlined)),
-                        IconButton(
-                            tooltip: 'Skip set',
-                            onPressed: () => onSkip(set),
-                            icon: const Icon(Icons.skip_next)),
-                      ]),
+                    ? PopupMenuButton<_SetAction>(
+                        enabled: actionsEnabled,
+                        onSelected: (_) => onDelete(set),
+                        itemBuilder: (context) => const [
+                          PopupMenuItem(
+                              value: _SetAction.delete,
+                              child: Text('Delete set')),
+                        ],
+                      )
+                    : PopupMenuButton<_SetAction>(
+                        enabled: actionsEnabled,
+                        onSelected: (action) {
+                          switch (action) {
+                            case _SetAction.editTarget:
+                              onEditTarget(set);
+                            case _SetAction.record:
+                              onRecord(set);
+                            case _SetAction.startRest:
+                              onRest(set);
+                            case _SetAction.skip:
+                              onSkip(set);
+                            case _SetAction.delete:
+                              onDelete(set);
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                              value: _SetAction.editTarget,
+                              child: Text('Edit target')),
+                          const PopupMenuItem(
+                              value: _SetAction.record, child: Text('Log set')),
+                          if (set.plannedRestSeconds > 0)
+                            const PopupMenuItem(
+                                value: _SetAction.startRest,
+                                child: Text('Start rest')),
+                          const PopupMenuItem(
+                              value: _SetAction.skip, child: Text('Skip set')),
+                          const PopupMenuItem(
+                              value: _SetAction.delete,
+                              child: Text('Delete set')),
+                        ],
+                      ),
               ),
           ]),
         ),
       );
 }
+
+enum _SetAction { editTarget, record, startRest, skip, delete }
 
 class _Metric extends StatelessWidget {
   const _Metric({required this.label, required this.value});

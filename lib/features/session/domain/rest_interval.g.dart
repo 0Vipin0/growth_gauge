@@ -16,6 +16,12 @@ _RestInterval _$RestIntervalFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['endedAt'] as String),
       plannedDurationSeconds: (json['plannedDurationSeconds'] as num).toInt(),
       actualDurationSeconds: (json['actualDurationSeconds'] as num?)?.toInt(),
+      minimumDurationSeconds:
+          (json['minimumDurationSeconds'] as num?)?.toInt() ?? 0,
+      maximumDurationSeconds: (json['maximumDurationSeconds'] as num?)?.toInt(),
+      allowSkip: json['allowSkip'] as bool? ?? true,
+      allowExtend: json['allowExtend'] as bool? ?? true,
+      skipped: json['skipped'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$RestIntervalToJson(_RestInterval instance) =>
@@ -26,4 +32,9 @@ Map<String, dynamic> _$RestIntervalToJson(_RestInterval instance) =>
       'endedAt': instance.endedAt?.toIso8601String(),
       'plannedDurationSeconds': instance.plannedDurationSeconds,
       'actualDurationSeconds': instance.actualDurationSeconds,
+      'minimumDurationSeconds': instance.minimumDurationSeconds,
+      'maximumDurationSeconds': instance.maximumDurationSeconds,
+      'allowSkip': instance.allowSkip,
+      'allowExtend': instance.allowExtend,
+      'skipped': instance.skipped,
     };

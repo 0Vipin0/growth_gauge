@@ -37,6 +37,11 @@ _ExecutionSet _$ExecutionSetFromJson(Map<String, dynamic> json) =>
           $enumDecodeNullable(_$ExecutionSetStatusEnumMap, json['status']) ??
               ExecutionSetStatus.planned,
       plannedRestSeconds: (json['plannedRestSeconds'] as num?)?.toInt() ?? 0,
+      restAutoStart: json['restAutoStart'] as bool? ?? false,
+      restAllowSkip: json['restAllowSkip'] as bool? ?? true,
+      restAllowExtend: json['restAllowExtend'] as bool? ?? true,
+      restMinimumSeconds: (json['restMinimumSeconds'] as num?)?.toInt(),
+      restMaximumSeconds: (json['restMaximumSeconds'] as num?)?.toInt(),
       actualRestSeconds: (json['actualRestSeconds'] as num?)?.toInt(),
       notes: json['notes'] as String?,
     );
@@ -65,6 +70,11 @@ Map<String, dynamic> _$ExecutionSetToJson(_ExecutionSet instance) =>
       'completedAt': instance.completedAt?.toIso8601String(),
       'status': _$ExecutionSetStatusEnumMap[instance.status]!,
       'plannedRestSeconds': instance.plannedRestSeconds,
+      'restAutoStart': instance.restAutoStart,
+      'restAllowSkip': instance.restAllowSkip,
+      'restAllowExtend': instance.restAllowExtend,
+      'restMinimumSeconds': instance.restMinimumSeconds,
+      'restMaximumSeconds': instance.restMaximumSeconds,
       'actualRestSeconds': instance.actualRestSeconds,
       'notes': instance.notes,
     };

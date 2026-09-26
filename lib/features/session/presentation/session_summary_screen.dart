@@ -9,6 +9,7 @@ class SessionSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final completedAt = session.completedAt ?? DateTime.now().toUtc();
     final completedSets = session.blocks
         .expand((block) => block.items)
         .expand((item) => item.sets)
@@ -19,9 +20,10 @@ class SessionSummaryScreen extends StatelessWidget {
         .expand((item) => item.sets)
         .where((set) => set.status.name == 'skipped')
         .length;
-    final wall = session.completedAt == null || session.startedAt == null
-        ? 0
-        : session.completedAt!.difference(session.startedAt!).inSeconds;
+    final wall = session.elapsedWallClockSecondsAt(completedAt);
+    final active = session.elapsedActiveSecondsAt(completedAt);
+    final rest = session.restIntervals.fold<int>(
+        0, (total, interval) => total + (interval.actualDurationSeconds ?? 0));
     return Scaffold(
       appBar: AppBar(title: const Text('Workout summary')),
       body: Center(
@@ -35,6 +37,8 @@ class SessionSummaryScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Text('$completedSets sets completed · $skippedSets skipped'),
             Text('Elapsed time: ${Duration(seconds: wall).inMinutes} min'),
+            Text('Active time: ${Duration(seconds: active).inMinutes} min'),
+            Text('Rest time: ${Duration(seconds: rest).inMinutes} min'),
             const SizedBox(height: 24),
             FilledButton(
                 onPressed: () =>

@@ -20,6 +20,11 @@ mixin _$RestInterval {
   DateTime? get endedAt;
   int get plannedDurationSeconds;
   int? get actualDurationSeconds;
+  int get minimumDurationSeconds;
+  int? get maximumDurationSeconds;
+  bool get allowSkip;
+  bool get allowExtend;
+  bool get skipped;
 
   /// Create a copy of RestInterval
   /// with the given fields replaced by the non-null parameter values.
@@ -46,17 +51,37 @@ mixin _$RestInterval {
             (identical(other.plannedDurationSeconds, plannedDurationSeconds) ||
                 other.plannedDurationSeconds == plannedDurationSeconds) &&
             (identical(other.actualDurationSeconds, actualDurationSeconds) ||
-                other.actualDurationSeconds == actualDurationSeconds));
+                other.actualDurationSeconds == actualDurationSeconds) &&
+            (identical(other.minimumDurationSeconds, minimumDurationSeconds) ||
+                other.minimumDurationSeconds == minimumDurationSeconds) &&
+            (identical(other.maximumDurationSeconds, maximumDurationSeconds) ||
+                other.maximumDurationSeconds == maximumDurationSeconds) &&
+            (identical(other.allowSkip, allowSkip) ||
+                other.allowSkip == allowSkip) &&
+            (identical(other.allowExtend, allowExtend) ||
+                other.allowExtend == allowExtend) &&
+            (identical(other.skipped, skipped) || other.skipped == skipped));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, executionSetId, startedAt,
-      endedAt, plannedDurationSeconds, actualDurationSeconds);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      executionSetId,
+      startedAt,
+      endedAt,
+      plannedDurationSeconds,
+      actualDurationSeconds,
+      minimumDurationSeconds,
+      maximumDurationSeconds,
+      allowSkip,
+      allowExtend,
+      skipped);
 
   @override
   String toString() {
-    return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds)';
+    return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds, minimumDurationSeconds: $minimumDurationSeconds, maximumDurationSeconds: $maximumDurationSeconds, allowSkip: $allowSkip, allowExtend: $allowExtend, skipped: $skipped)';
   }
 }
 
@@ -72,7 +97,12 @@ abstract mixin class $RestIntervalCopyWith<$Res> {
       DateTime startedAt,
       DateTime? endedAt,
       int plannedDurationSeconds,
-      int? actualDurationSeconds});
+      int? actualDurationSeconds,
+      int minimumDurationSeconds,
+      int? maximumDurationSeconds,
+      bool allowSkip,
+      bool allowExtend,
+      bool skipped});
 }
 
 /// @nodoc
@@ -93,6 +123,11 @@ class _$RestIntervalCopyWithImpl<$Res> implements $RestIntervalCopyWith<$Res> {
     Object? endedAt = freezed,
     Object? plannedDurationSeconds = null,
     Object? actualDurationSeconds = freezed,
+    Object? minimumDurationSeconds = null,
+    Object? maximumDurationSeconds = freezed,
+    Object? allowSkip = null,
+    Object? allowExtend = null,
+    Object? skipped = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -119,6 +154,26 @@ class _$RestIntervalCopyWithImpl<$Res> implements $RestIntervalCopyWith<$Res> {
           ? _self.actualDurationSeconds
           : actualDurationSeconds // ignore: cast_nullable_to_non_nullable
               as int?,
+      minimumDurationSeconds: null == minimumDurationSeconds
+          ? _self.minimumDurationSeconds
+          : minimumDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      maximumDurationSeconds: freezed == maximumDurationSeconds
+          ? _self.maximumDurationSeconds
+          : maximumDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      allowSkip: null == allowSkip
+          ? _self.allowSkip
+          : allowSkip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      allowExtend: null == allowExtend
+          ? _self.allowExtend
+          : allowExtend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      skipped: null == skipped
+          ? _self.skipped
+          : skipped // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -222,7 +277,12 @@ extension RestIntervalPatterns on RestInterval {
             DateTime startedAt,
             DateTime? endedAt,
             int plannedDurationSeconds,
-            int? actualDurationSeconds)?
+            int? actualDurationSeconds,
+            int minimumDurationSeconds,
+            int? maximumDurationSeconds,
+            bool allowSkip,
+            bool allowExtend,
+            bool skipped)?
         $default, {
     required TResult orElse(),
   }) {
@@ -235,7 +295,12 @@ extension RestIntervalPatterns on RestInterval {
             _that.startedAt,
             _that.endedAt,
             _that.plannedDurationSeconds,
-            _that.actualDurationSeconds);
+            _that.actualDurationSeconds,
+            _that.minimumDurationSeconds,
+            _that.maximumDurationSeconds,
+            _that.allowSkip,
+            _that.allowExtend,
+            _that.skipped);
       case _:
         return orElse();
     }
@@ -262,7 +327,12 @@ extension RestIntervalPatterns on RestInterval {
             DateTime startedAt,
             DateTime? endedAt,
             int plannedDurationSeconds,
-            int? actualDurationSeconds)
+            int? actualDurationSeconds,
+            int minimumDurationSeconds,
+            int? maximumDurationSeconds,
+            bool allowSkip,
+            bool allowExtend,
+            bool skipped)
         $default,
   ) {
     final _that = this;
@@ -274,7 +344,12 @@ extension RestIntervalPatterns on RestInterval {
             _that.startedAt,
             _that.endedAt,
             _that.plannedDurationSeconds,
-            _that.actualDurationSeconds);
+            _that.actualDurationSeconds,
+            _that.minimumDurationSeconds,
+            _that.maximumDurationSeconds,
+            _that.allowSkip,
+            _that.allowExtend,
+            _that.skipped);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -300,7 +375,12 @@ extension RestIntervalPatterns on RestInterval {
             DateTime startedAt,
             DateTime? endedAt,
             int plannedDurationSeconds,
-            int? actualDurationSeconds)?
+            int? actualDurationSeconds,
+            int minimumDurationSeconds,
+            int? maximumDurationSeconds,
+            bool allowSkip,
+            bool allowExtend,
+            bool skipped)?
         $default,
   ) {
     final _that = this;
@@ -312,7 +392,12 @@ extension RestIntervalPatterns on RestInterval {
             _that.startedAt,
             _that.endedAt,
             _that.plannedDurationSeconds,
-            _that.actualDurationSeconds);
+            _that.actualDurationSeconds,
+            _that.minimumDurationSeconds,
+            _that.maximumDurationSeconds,
+            _that.allowSkip,
+            _that.allowExtend,
+            _that.skipped);
       case _:
         return null;
     }
@@ -328,7 +413,12 @@ class _RestInterval implements RestInterval {
       required this.startedAt,
       this.endedAt,
       required this.plannedDurationSeconds,
-      this.actualDurationSeconds});
+      this.actualDurationSeconds,
+      this.minimumDurationSeconds = 0,
+      this.maximumDurationSeconds,
+      this.allowSkip = true,
+      this.allowExtend = true,
+      this.skipped = false});
   factory _RestInterval.fromJson(Map<String, dynamic> json) =>
       _$RestIntervalFromJson(json);
 
@@ -344,6 +434,20 @@ class _RestInterval implements RestInterval {
   final int plannedDurationSeconds;
   @override
   final int? actualDurationSeconds;
+  @override
+  @JsonKey()
+  final int minimumDurationSeconds;
+  @override
+  final int? maximumDurationSeconds;
+  @override
+  @JsonKey()
+  final bool allowSkip;
+  @override
+  @JsonKey()
+  final bool allowExtend;
+  @override
+  @JsonKey()
+  final bool skipped;
 
   /// Create a copy of RestInterval
   /// with the given fields replaced by the non-null parameter values.
@@ -374,17 +478,37 @@ class _RestInterval implements RestInterval {
             (identical(other.plannedDurationSeconds, plannedDurationSeconds) ||
                 other.plannedDurationSeconds == plannedDurationSeconds) &&
             (identical(other.actualDurationSeconds, actualDurationSeconds) ||
-                other.actualDurationSeconds == actualDurationSeconds));
+                other.actualDurationSeconds == actualDurationSeconds) &&
+            (identical(other.minimumDurationSeconds, minimumDurationSeconds) ||
+                other.minimumDurationSeconds == minimumDurationSeconds) &&
+            (identical(other.maximumDurationSeconds, maximumDurationSeconds) ||
+                other.maximumDurationSeconds == maximumDurationSeconds) &&
+            (identical(other.allowSkip, allowSkip) ||
+                other.allowSkip == allowSkip) &&
+            (identical(other.allowExtend, allowExtend) ||
+                other.allowExtend == allowExtend) &&
+            (identical(other.skipped, skipped) || other.skipped == skipped));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, executionSetId, startedAt,
-      endedAt, plannedDurationSeconds, actualDurationSeconds);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      executionSetId,
+      startedAt,
+      endedAt,
+      plannedDurationSeconds,
+      actualDurationSeconds,
+      minimumDurationSeconds,
+      maximumDurationSeconds,
+      allowSkip,
+      allowExtend,
+      skipped);
 
   @override
   String toString() {
-    return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds)';
+    return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds, minimumDurationSeconds: $minimumDurationSeconds, maximumDurationSeconds: $maximumDurationSeconds, allowSkip: $allowSkip, allowExtend: $allowExtend, skipped: $skipped)';
   }
 }
 
@@ -402,7 +526,12 @@ abstract mixin class _$RestIntervalCopyWith<$Res>
       DateTime startedAt,
       DateTime? endedAt,
       int plannedDurationSeconds,
-      int? actualDurationSeconds});
+      int? actualDurationSeconds,
+      int minimumDurationSeconds,
+      int? maximumDurationSeconds,
+      bool allowSkip,
+      bool allowExtend,
+      bool skipped});
 }
 
 /// @nodoc
@@ -424,6 +553,11 @@ class __$RestIntervalCopyWithImpl<$Res>
     Object? endedAt = freezed,
     Object? plannedDurationSeconds = null,
     Object? actualDurationSeconds = freezed,
+    Object? minimumDurationSeconds = null,
+    Object? maximumDurationSeconds = freezed,
+    Object? allowSkip = null,
+    Object? allowExtend = null,
+    Object? skipped = null,
   }) {
     return _then(_RestInterval(
       id: null == id
@@ -450,6 +584,26 @@ class __$RestIntervalCopyWithImpl<$Res>
           ? _self.actualDurationSeconds
           : actualDurationSeconds // ignore: cast_nullable_to_non_nullable
               as int?,
+      minimumDurationSeconds: null == minimumDurationSeconds
+          ? _self.minimumDurationSeconds
+          : minimumDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      maximumDurationSeconds: freezed == maximumDurationSeconds
+          ? _self.maximumDurationSeconds
+          : maximumDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      allowSkip: null == allowSkip
+          ? _self.allowSkip
+          : allowSkip // ignore: cast_nullable_to_non_nullable
+              as bool,
+      allowExtend: null == allowExtend
+          ? _self.allowExtend
+          : allowExtend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      skipped: null == skipped
+          ? _self.skipped
+          : skipped // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
