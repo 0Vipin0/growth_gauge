@@ -13,6 +13,8 @@ class SessionDocumentAdapter implements DocumentAdapter<WorkoutSession> {
   @override
   DateTime? getCreatedAt(WorkoutSession entity) => entity.createdAt;
   @override
+  DateTime? getUpdatedAt(WorkoutSession entity) => null;
+  @override
   Map<String, dynamic> toJson(WorkoutSession entity) => entity.toJson();
   @override
   WorkoutSession fromJson(Map<String, dynamic> json) =>

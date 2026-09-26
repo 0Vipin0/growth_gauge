@@ -32,7 +32,9 @@ abstract class WorkoutSession with _$WorkoutSession {
 
   factory WorkoutSession.fromJson(Map<String, dynamic> json) =>
       _$WorkoutSessionFromJson(json);
+}
 
+extension WorkoutSessionDuration on WorkoutSession {
   int elapsedWallClockSecondsAt(DateTime now) {
     final start = startedAt;
     if (start == null) return 0;

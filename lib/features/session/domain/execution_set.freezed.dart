@@ -15,6 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExecutionSet {
   String get id;
+  String? get sourceTemplateSetId;
   int get setNumber;
   SetType get setType;
   double? get targetWeight;
@@ -41,6 +42,8 @@ mixin _$ExecutionSet {
   bool get restAllowExtend;
   int? get restMinimumSeconds;
   int? get restMaximumSeconds;
+
+  /// Sum of recorded actual durations for this set's rest intervals.
   int? get actualRestSeconds;
   String? get notes;
 
@@ -61,6 +64,8 @@ mixin _$ExecutionSet {
         (other.runtimeType == runtimeType &&
             other is ExecutionSet &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.sourceTemplateSetId, sourceTemplateSetId) ||
+                other.sourceTemplateSetId == sourceTemplateSetId) &&
             (identical(other.setNumber, setNumber) ||
                 other.setNumber == setNumber) &&
             (identical(other.setType, setType) || other.setType == setType) &&
@@ -119,6 +124,7 @@ mixin _$ExecutionSet {
   int get hashCode => Object.hashAll([
         runtimeType,
         id,
+        sourceTemplateSetId,
         setNumber,
         setType,
         targetWeight,
@@ -151,7 +157,7 @@ mixin _$ExecutionSet {
 
   @override
   String toString() {
-    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
+    return 'ExecutionSet(id: $id, sourceTemplateSetId: $sourceTemplateSetId, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
   }
 }
 
@@ -163,6 +169,7 @@ abstract mixin class $ExecutionSetCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String? sourceTemplateSetId,
       int setNumber,
       SetType setType,
       double? targetWeight,
@@ -206,6 +213,7 @@ class _$ExecutionSetCopyWithImpl<$Res> implements $ExecutionSetCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
+    Object? sourceTemplateSetId = freezed,
     Object? setNumber = null,
     Object? setType = null,
     Object? targetWeight = freezed,
@@ -240,6 +248,10 @@ class _$ExecutionSetCopyWithImpl<$Res> implements $ExecutionSetCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      sourceTemplateSetId: freezed == sourceTemplateSetId
+          ? _self.sourceTemplateSetId
+          : sourceTemplateSetId // ignore: cast_nullable_to_non_nullable
+              as String?,
       setNumber: null == setNumber
           ? _self.setNumber
           : setNumber // ignore: cast_nullable_to_non_nullable
@@ -451,6 +463,7 @@ extension ExecutionSetPatterns on ExecutionSet {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             String id,
+            String? sourceTemplateSetId,
             int setNumber,
             SetType setType,
             double? targetWeight,
@@ -487,6 +500,7 @@ extension ExecutionSetPatterns on ExecutionSet {
       case _ExecutionSet() when $default != null:
         return $default(
             _that.id,
+            _that.sourceTemplateSetId,
             _that.setNumber,
             _that.setType,
             _that.targetWeight,
@@ -537,6 +551,7 @@ extension ExecutionSetPatterns on ExecutionSet {
   TResult when<TResult extends Object?>(
     TResult Function(
             String id,
+            String? sourceTemplateSetId,
             int setNumber,
             SetType setType,
             double? targetWeight,
@@ -572,6 +587,7 @@ extension ExecutionSetPatterns on ExecutionSet {
       case _ExecutionSet():
         return $default(
             _that.id,
+            _that.sourceTemplateSetId,
             _that.setNumber,
             _that.setType,
             _that.targetWeight,
@@ -621,6 +637,7 @@ extension ExecutionSetPatterns on ExecutionSet {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             String id,
+            String? sourceTemplateSetId,
             int setNumber,
             SetType setType,
             double? targetWeight,
@@ -656,6 +673,7 @@ extension ExecutionSetPatterns on ExecutionSet {
       case _ExecutionSet() when $default != null:
         return $default(
             _that.id,
+            _that.sourceTemplateSetId,
             _that.setNumber,
             _that.setType,
             _that.targetWeight,
@@ -695,6 +713,7 @@ extension ExecutionSetPatterns on ExecutionSet {
 class _ExecutionSet implements ExecutionSet {
   const _ExecutionSet(
       {required this.id,
+      this.sourceTemplateSetId,
       required this.setNumber,
       this.setType = SetType.working,
       this.targetWeight,
@@ -728,6 +747,8 @@ class _ExecutionSet implements ExecutionSet {
 
   @override
   final String id;
+  @override
+  final String? sourceTemplateSetId;
   @override
   final int setNumber;
   @override
@@ -786,6 +807,8 @@ class _ExecutionSet implements ExecutionSet {
   final int? restMinimumSeconds;
   @override
   final int? restMaximumSeconds;
+
+  /// Sum of recorded actual durations for this set's rest intervals.
   @override
   final int? actualRestSeconds;
   @override
@@ -812,6 +835,8 @@ class _ExecutionSet implements ExecutionSet {
         (other.runtimeType == runtimeType &&
             other is _ExecutionSet &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.sourceTemplateSetId, sourceTemplateSetId) ||
+                other.sourceTemplateSetId == sourceTemplateSetId) &&
             (identical(other.setNumber, setNumber) ||
                 other.setNumber == setNumber) &&
             (identical(other.setType, setType) || other.setType == setType) &&
@@ -870,6 +895,7 @@ class _ExecutionSet implements ExecutionSet {
   int get hashCode => Object.hashAll([
         runtimeType,
         id,
+        sourceTemplateSetId,
         setNumber,
         setType,
         targetWeight,
@@ -902,7 +928,7 @@ class _ExecutionSet implements ExecutionSet {
 
   @override
   String toString() {
-    return 'ExecutionSet(id: $id, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
+    return 'ExecutionSet(id: $id, sourceTemplateSetId: $sourceTemplateSetId, setNumber: $setNumber, setType: $setType, targetWeight: $targetWeight, targetReps: $targetReps, targetDurationSeconds: $targetDurationSeconds, targetDistanceMeters: $targetDistanceMeters, targetCalories: $targetCalories, targetRpe: $targetRpe, targetRir: $targetRir, percentageOf1Rm: $percentageOf1Rm, actualWeight: $actualWeight, actualReps: $actualReps, actualDurationSeconds: $actualDurationSeconds, actualDistanceMeters: $actualDistanceMeters, actualCalories: $actualCalories, rpe: $rpe, rir: $rir, startedAt: $startedAt, completedAt: $completedAt, status: $status, plannedRestSeconds: $plannedRestSeconds, restAutoStart: $restAutoStart, restAllowSkip: $restAllowSkip, restAllowExtend: $restAllowExtend, restMinimumSeconds: $restMinimumSeconds, restMaximumSeconds: $restMaximumSeconds, actualRestSeconds: $actualRestSeconds, notes: $notes)';
   }
 }
 
@@ -916,6 +942,7 @@ abstract mixin class _$ExecutionSetCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
+      String? sourceTemplateSetId,
       int setNumber,
       SetType setType,
       double? targetWeight,
@@ -960,6 +987,7 @@ class __$ExecutionSetCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
+    Object? sourceTemplateSetId = freezed,
     Object? setNumber = null,
     Object? setType = null,
     Object? targetWeight = freezed,
@@ -994,6 +1022,10 @@ class __$ExecutionSetCopyWithImpl<$Res>
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      sourceTemplateSetId: freezed == sourceTemplateSetId
+          ? _self.sourceTemplateSetId
+          : sourceTemplateSetId // ignore: cast_nullable_to_non_nullable
+              as String?,
       setNumber: null == setNumber
           ? _self.setNumber
           : setNumber // ignore: cast_nullable_to_non_nullable

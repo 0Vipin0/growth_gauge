@@ -10,6 +10,7 @@ part 'execution_set.g.dart';
 abstract class ExecutionSet with _$ExecutionSet {
   const factory ExecutionSet({
     required String id,
+    String? sourceTemplateSetId,
     required int setNumber,
     @Default(SetType.working) SetType setType,
     double? targetWeight,
@@ -36,6 +37,7 @@ abstract class ExecutionSet with _$ExecutionSet {
     @Default(true) bool restAllowExtend,
     int? restMinimumSeconds,
     int? restMaximumSeconds,
+
     /// Sum of recorded actual durations for this set's rest intervals.
     int? actualRestSeconds,
     String? notes,

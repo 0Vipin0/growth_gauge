@@ -942,7 +942,9 @@ class SessionUseCases {
 
   List<AuditEntry> _restClosureAudits(String sessionId,
       List<RestInterval> previous, List<RestInterval> updated) {
-    final previousById = {for (final interval in previous) interval.id: interval};
+    final previousById = {
+      for (final interval in previous) interval.id: interval
+    };
     return updated.where((interval) {
       final oldInterval = previousById[interval.id];
       return oldInterval != null &&
@@ -1009,6 +1011,7 @@ class SessionUseCases {
                         sets: item.targetSets
                             .map((target) => ExecutionSet(
                                   id: UniqueId.generate().value,
+                                  sourceTemplateSetId: target.id,
                                   setNumber: target.setNumber,
                                   setType: target.setType,
                                   targetWeight: target.targetWeight,

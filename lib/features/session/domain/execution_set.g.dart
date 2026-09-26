@@ -9,6 +9,7 @@ part of 'execution_set.dart';
 _ExecutionSet _$ExecutionSetFromJson(Map<String, dynamic> json) =>
     _ExecutionSet(
       id: json['id'] as String,
+      sourceTemplateSetId: json['sourceTemplateSetId'] as String?,
       setNumber: (json['setNumber'] as num).toInt(),
       setType: $enumDecodeNullable(_$SetTypeEnumMap, json['setType']) ??
           SetType.working,
@@ -49,6 +50,7 @@ _ExecutionSet _$ExecutionSetFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ExecutionSetToJson(_ExecutionSet instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'sourceTemplateSetId': instance.sourceTemplateSetId,
       'setNumber': instance.setNumber,
       'setType': _$SetTypeEnumMap[instance.setType]!,
       'targetWeight': instance.targetWeight,
