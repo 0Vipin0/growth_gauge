@@ -6,8 +6,7 @@ part of 'app_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AppDataImpl _$$AppDataImplFromJson(Map<String, dynamic> json) =>
-    _$AppDataImpl(
+_AppData _$AppDataFromJson(Map<String, dynamic> json) => _AppData(
       version: (json['version'] as num?)?.toInt() ?? 1,
       counters: (json['counters'] as List<dynamic>?)
               ?.map((e) => CounterModel.fromJson(e as Map<String, dynamic>))
@@ -19,8 +18,7 @@ _$AppDataImpl _$$AppDataImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$AppDataImplToJson(_$AppDataImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AppDataToJson(_AppData instance) => <String, dynamic>{
       'version': instance.version,
       'counters': instance.counters,
       'timers': instance.timers,

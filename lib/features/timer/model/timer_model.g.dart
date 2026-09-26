@@ -6,8 +6,7 @@ part of 'timer_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
-    _$TimerModelImpl(
+_TimerModel _$TimerModelFromJson(Map<String, dynamic> json) => _TimerModel(
       id: json['id'] as String,
       name: json['name'] as String,
       interval: Duration(microseconds: (json['interval'] as num).toInt()),
@@ -22,7 +21,7 @@ _$TimerModelImpl _$$TimerModelImplFromJson(Map<String, dynamic> json) =>
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
+Map<String, dynamic> _$TimerModelToJson(_TimerModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -33,16 +32,14 @@ Map<String, dynamic> _$$TimerModelImplToJson(_$TimerModelImpl instance) =>
       'tags': instance.tags,
     };
 
-_$TimerLogImpl _$$TimerLogImplFromJson(Map<String, dynamic> json) =>
-    _$TimerLogImpl(
+_TimerLog _$TimerLogFromJson(Map<String, dynamic> json) => _TimerLog(
       id: json['id'] as String,
       action: json['action'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
       interval: Duration(microseconds: (json['interval'] as num).toInt()),
     );
 
-Map<String, dynamic> _$$TimerLogImplToJson(_$TimerLogImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TimerLogToJson(_TimerLog instance) => <String, dynamic>{
       'id': instance.id,
       'action': instance.action,
       'timestamp': instance.timestamp.toIso8601String(),

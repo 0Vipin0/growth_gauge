@@ -6,8 +6,8 @@ part of 'settings_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
-    _$SettingsModelImpl(
+_SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
+    _SettingsModel(
       themeName: $enumDecode(_$AppThemeNameEnumMap, json['themeName']),
       fontSize: $enumDecodeNullable(_$AppFontSizeEnumMap, json['fontSize']) ??
           AppFontSize.medium,
@@ -26,7 +26,7 @@ _$SettingsModelImpl _$$SettingsModelImplFromJson(Map<String, dynamic> json) =>
               .fromJson(json['notificationTime'] as String?),
     );
 
-Map<String, dynamic> _$$SettingsModelImplToJson(_$SettingsModelImpl instance) =>
+Map<String, dynamic> _$SettingsModelToJson(_SettingsModel instance) =>
     <String, dynamic>{
       'themeName': _$AppThemeNameEnumMap[instance.themeName]!,
       'fontSize': _$AppFontSizeEnumMap[instance.fontSize]!,

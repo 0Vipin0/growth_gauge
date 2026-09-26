@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,114 +9,68 @@ part of 'timer_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-TimerModel _$TimerModelFromJson(Map<String, dynamic> json) {
-  return _TimerModel.fromJson(json);
-}
 
 /// @nodoc
 mixin _$TimerModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  Duration get interval => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  List<TimerLog> get logs => throw _privateConstructorUsedError;
-  Duration? get target => throw _privateConstructorUsedError;
-  List<String>? get tags => throw _privateConstructorUsedError;
-
-  /// Serializes this TimerModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get name;
+  Duration get interval;
+  String get description;
+  List<TimerLog> get logs;
+  Duration? get target;
+  List<String>? get tags;
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TimerModelCopyWith<TimerModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TimerModelCopyWith<$Res> {
-  factory $TimerModelCopyWith(
-          TimerModel value, $Res Function(TimerModel) then) =
-      _$TimerModelCopyWithImpl<$Res, TimerModel>;
-  @useResult
-  $Res call(
-      {String id,
-      String name,
-      Duration interval,
-      String description,
-      List<TimerLog> logs,
-      Duration? target,
-      List<String>? tags});
-}
-
-/// @nodoc
-class _$TimerModelCopyWithImpl<$Res, $Val extends TimerModel>
-    implements $TimerModelCopyWith<$Res> {
-  _$TimerModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TimerModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $TimerModelCopyWith<TimerModel> get copyWith =>
+      _$TimerModelCopyWithImpl<TimerModel>(this as TimerModel, _$identity);
+
+  /// Serializes this TimerModel to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? interval = null,
-    Object? description = null,
-    Object? logs = null,
-    Object? target = freezed,
-    Object? tags = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      interval: null == interval
-          ? _value.interval
-          : interval // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      logs: null == logs
-          ? _value.logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<TimerLog>,
-      target: freezed == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as Duration?,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TimerModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.interval, interval) ||
+                other.interval == interval) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other.logs, logs) &&
+            (identical(other.target, target) || other.target == target) &&
+            const DeepCollectionEquality().equals(other.tags, tags));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      interval,
+      description,
+      const DeepCollectionEquality().hash(logs),
+      target,
+      const DeepCollectionEquality().hash(tags));
+
+  @override
+  String toString() {
+    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 }
 
 /// @nodoc
-abstract class _$$TimerModelImplCopyWith<$Res>
-    implements $TimerModelCopyWith<$Res> {
-  factory _$$TimerModelImplCopyWith(
-          _$TimerModelImpl value, $Res Function(_$TimerModelImpl) then) =
-      __$$TimerModelImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $TimerModelCopyWith<$Res> {
+  factory $TimerModelCopyWith(
+          TimerModel value, $Res Function(TimerModel) _then) =
+      _$TimerModelCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -129,12 +83,11 @@ abstract class _$$TimerModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TimerModelImplCopyWithImpl<$Res>
-    extends _$TimerModelCopyWithImpl<$Res, _$TimerModelImpl>
-    implements _$$TimerModelImplCopyWith<$Res> {
-  __$$TimerModelImplCopyWithImpl(
-      _$TimerModelImpl _value, $Res Function(_$TimerModelImpl) _then)
-      : super(_value, _then);
+class _$TimerModelCopyWithImpl<$Res> implements $TimerModelCopyWith<$Res> {
+  _$TimerModelCopyWithImpl(this._self, this._then);
+
+  final TimerModel _self;
+  final $Res Function(TimerModel) _then;
 
   /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -149,43 +102,227 @@ class __$$TimerModelImplCopyWithImpl<$Res>
     Object? target = freezed,
     Object? tags = freezed,
   }) {
-    return _then(_$TimerModelImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       interval: null == interval
-          ? _value.interval
+          ? _self.interval
           : interval // ignore: cast_nullable_to_non_nullable
               as Duration,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       logs: null == logs
-          ? _value._logs
+          ? _self.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<TimerLog>,
       target: freezed == target
-          ? _value.target
+          ? _self.target
           : target // ignore: cast_nullable_to_non_nullable
               as Duration?,
       tags: freezed == tags
-          ? _value._tags
+          ? _self.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [TimerModel].
+extension TimerModelPatterns on TimerModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TimerModel value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TimerModel value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_TimerModel value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String name,
+            Duration interval,
+            String description,
+            List<TimerLog> logs,
+            Duration? target,
+            List<String>? tags)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel() when $default != null:
+        return $default(_that.id, _that.name, _that.interval, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String name,
+            Duration interval,
+            String description,
+            List<TimerLog> logs,
+            Duration? target,
+            List<String>? tags)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel():
+        return $default(_that.id, _that.name, _that.interval, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            String name,
+            Duration interval,
+            String description,
+            List<TimerLog> logs,
+            Duration? target,
+            List<String>? tags)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerModel() when $default != null:
+        return $default(_that.id, _that.name, _that.interval, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$TimerModelImpl implements _TimerModel {
-  _$TimerModelImpl(
+class _TimerModel implements TimerModel {
+  _TimerModel(
       {required this.id,
       required this.name,
       required this.interval,
@@ -195,9 +332,8 @@ class _$TimerModelImpl implements _TimerModel {
       final List<String>? tags})
       : _logs = logs,
         _tags = tags;
-
-  factory _$TimerModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimerModelImplFromJson(json);
+  factory _TimerModel.fromJson(Map<String, dynamic> json) =>
+      _$TimerModelFromJson(json);
 
   @override
   final String id;
@@ -228,16 +364,26 @@ class _$TimerModelImpl implements _TimerModel {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Create a copy of TimerModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$TimerModelCopyWith<_TimerModel> get copyWith =>
+      __$TimerModelCopyWithImpl<_TimerModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TimerModelToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimerModelImpl &&
+            other is _TimerModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.interval, interval) ||
@@ -261,209 +407,105 @@ class _$TimerModelImpl implements _TimerModel {
       target,
       const DeepCollectionEquality().hash(_tags));
 
-  /// Create a copy of TimerModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
-      __$$TimerModelImplCopyWithImpl<_$TimerModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TimerModelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _TimerModel implements TimerModel {
-  factory _TimerModel(
-      {required final String id,
-      required final String name,
-      required final Duration interval,
-      required final String description,
-      final List<TimerLog> logs,
-      final Duration? target,
-      final List<String>? tags}) = _$TimerModelImpl;
-
-  factory _TimerModel.fromJson(Map<String, dynamic> json) =
-      _$TimerModelImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  Duration get interval;
-  @override
-  String get description;
-  @override
-  List<TimerLog> get logs;
-  @override
-  Duration? get target;
-  @override
-  List<String>? get tags;
-
-  /// Create a copy of TimerModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TimerModelImplCopyWith<_$TimerModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-TimerLog _$TimerLogFromJson(Map<String, dynamic> json) {
-  return _TimerLog.fromJson(json);
-}
-
-/// @nodoc
-mixin _$TimerLog {
-  String get id => throw _privateConstructorUsedError;
-  String get action => throw _privateConstructorUsedError;
-  DateTime get timestamp => throw _privateConstructorUsedError;
-  Duration get interval => throw _privateConstructorUsedError;
-
-  /// Serializes this TimerLog to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of TimerLog
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $TimerLogCopyWith<TimerLog> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TimerLogCopyWith<$Res> {
-  factory $TimerLogCopyWith(TimerLog value, $Res Function(TimerLog) then) =
-      _$TimerLogCopyWithImpl<$Res, TimerLog>;
-  @useResult
-  $Res call({String id, String action, DateTime timestamp, Duration interval});
-}
-
-/// @nodoc
-class _$TimerLogCopyWithImpl<$Res, $Val extends TimerLog>
-    implements $TimerLogCopyWith<$Res> {
-  _$TimerLogCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TimerLog
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? action = null,
-    Object? timestamp = null,
-    Object? interval = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      interval: null == interval
-          ? _value.interval
-          : interval // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ) as $Val);
+  String toString() {
+    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 }
 
 /// @nodoc
-abstract class _$$TimerLogImplCopyWith<$Res>
-    implements $TimerLogCopyWith<$Res> {
-  factory _$$TimerLogImplCopyWith(
-          _$TimerLogImpl value, $Res Function(_$TimerLogImpl) then) =
-      __$$TimerLogImplCopyWithImpl<$Res>;
+abstract mixin class _$TimerModelCopyWith<$Res>
+    implements $TimerModelCopyWith<$Res> {
+  factory _$TimerModelCopyWith(
+          _TimerModel value, $Res Function(_TimerModel) _then) =
+      __$TimerModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String action, DateTime timestamp, Duration interval});
+  $Res call(
+      {String id,
+      String name,
+      Duration interval,
+      String description,
+      List<TimerLog> logs,
+      Duration? target,
+      List<String>? tags});
 }
 
 /// @nodoc
-class __$$TimerLogImplCopyWithImpl<$Res>
-    extends _$TimerLogCopyWithImpl<$Res, _$TimerLogImpl>
-    implements _$$TimerLogImplCopyWith<$Res> {
-  __$$TimerLogImplCopyWithImpl(
-      _$TimerLogImpl _value, $Res Function(_$TimerLogImpl) _then)
-      : super(_value, _then);
+class __$TimerModelCopyWithImpl<$Res> implements _$TimerModelCopyWith<$Res> {
+  __$TimerModelCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of TimerLog
+  final _TimerModel _self;
+  final $Res Function(_TimerModel) _then;
+
+  /// Create a copy of TimerModel
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? action = null,
-    Object? timestamp = null,
+    Object? name = null,
     Object? interval = null,
+    Object? description = null,
+    Object? logs = null,
+    Object? target = freezed,
+    Object? tags = freezed,
   }) {
-    return _then(_$TimerLogImpl(
+    return _then(_TimerModel(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       interval: null == interval
-          ? _value.interval
+          ? _self.interval
           : interval // ignore: cast_nullable_to_non_nullable
               as Duration,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      logs: null == logs
+          ? _self._logs
+          : logs // ignore: cast_nullable_to_non_nullable
+              as List<TimerLog>,
+      target: freezed == target
+          ? _self.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      tags: freezed == tags
+          ? _self._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$TimerLogImpl implements _TimerLog {
-  _$TimerLogImpl(
-      {required this.id,
-      required this.action,
-      required this.timestamp,
-      required this.interval});
+mixin _$TimerLog {
+  String get id;
+  String get action;
+  DateTime get timestamp;
+  Duration get interval;
 
-  factory _$TimerLogImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimerLogImplFromJson(json);
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $TimerLogCopyWith<TimerLog> get copyWith =>
+      _$TimerLogCopyWithImpl<TimerLog>(this as TimerLog, _$identity);
 
-  @override
-  final String id;
-  @override
-  final String action;
-  @override
-  final DateTime timestamp;
-  @override
-  final Duration interval;
-
-  @override
-  String toString() {
-    return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
-  }
+  /// Serializes this TimerLog to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimerLogImpl &&
+            other is TimerLog &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.action, action) || other.action == action) &&
             (identical(other.timestamp, timestamp) ||
@@ -476,45 +518,328 @@ class _$TimerLogImpl implements _TimerLog {
   @override
   int get hashCode => Object.hash(runtimeType, id, action, timestamp, interval);
 
-  /// Create a copy of TimerLog
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TimerLogImplCopyWith<_$TimerLogImpl> get copyWith =>
-      __$$TimerLogImplCopyWithImpl<_$TimerLogImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TimerLogImplToJson(
-      this,
-    );
+  String toString() {
+    return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
   }
 }
 
-abstract class _TimerLog implements TimerLog {
-  factory _TimerLog(
-      {required final String id,
-      required final String action,
-      required final DateTime timestamp,
-      required final Duration interval}) = _$TimerLogImpl;
+/// @nodoc
+abstract mixin class $TimerLogCopyWith<$Res> {
+  factory $TimerLogCopyWith(TimerLog value, $Res Function(TimerLog) _then) =
+      _$TimerLogCopyWithImpl;
+  @useResult
+  $Res call({String id, String action, DateTime timestamp, Duration interval});
+}
 
-  factory _TimerLog.fromJson(Map<String, dynamic> json) =
-      _$TimerLogImpl.fromJson;
+/// @nodoc
+class _$TimerLogCopyWithImpl<$Res> implements $TimerLogCopyWith<$Res> {
+  _$TimerLogCopyWithImpl(this._self, this._then);
+
+  final TimerLog _self;
+  final $Res Function(TimerLog) _then;
+
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? action = null,
+    Object? timestamp = null,
+    Object? interval = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _self.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      interval: null == interval
+          ? _self.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [TimerLog].
+extension TimerLogPatterns on TimerLog {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TimerLog value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TimerLog value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_TimerLog value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id, String action, DateTime timestamp, Duration interval)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog() when $default != null:
+        return $default(
+            _that.id, _that.action, _that.timestamp, _that.interval);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id, String action, DateTime timestamp, Duration interval)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog():
+        return $default(
+            _that.id, _that.action, _that.timestamp, _that.interval);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id, String action, DateTime timestamp, Duration interval)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimerLog() when $default != null:
+        return $default(
+            _that.id, _that.action, _that.timestamp, _that.interval);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _TimerLog implements TimerLog {
+  _TimerLog(
+      {required this.id,
+      required this.action,
+      required this.timestamp,
+      required this.interval});
+  factory _TimerLog.fromJson(Map<String, dynamic> json) =>
+      _$TimerLogFromJson(json);
 
   @override
-  String get id;
+  final String id;
   @override
-  String get action;
+  final String action;
   @override
-  DateTime get timestamp;
+  final DateTime timestamp;
   @override
-  Duration get interval;
+  final Duration interval;
 
   /// Create a copy of TimerLog
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TimerLogImplCopyWith<_$TimerLogImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$TimerLogCopyWith<_TimerLog> get copyWith =>
+      __$TimerLogCopyWithImpl<_TimerLog>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TimerLogToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TimerLog &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.action, action) || other.action == action) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.interval, interval) ||
+                other.interval == interval));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, action, timestamp, interval);
+
+  @override
+  String toString() {
+    return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$TimerLogCopyWith<$Res>
+    implements $TimerLogCopyWith<$Res> {
+  factory _$TimerLogCopyWith(_TimerLog value, $Res Function(_TimerLog) _then) =
+      __$TimerLogCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String id, String action, DateTime timestamp, Duration interval});
+}
+
+/// @nodoc
+class __$TimerLogCopyWithImpl<$Res> implements _$TimerLogCopyWith<$Res> {
+  __$TimerLogCopyWithImpl(this._self, this._then);
+
+  final _TimerLog _self;
+  final $Res Function(_TimerLog) _then;
+
+  /// Create a copy of TimerLog
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? action = null,
+    Object? timestamp = null,
+    Object? interval = null,
+  }) {
+    return _then(_TimerLog(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _self.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      interval: null == interval
+          ? _self.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+// dart format on

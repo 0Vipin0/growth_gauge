@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,114 +9,68 @@ part of 'counter_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-CounterModel _$CounterModelFromJson(Map<String, dynamic> json) {
-  return _CounterModel.fromJson(json);
-}
 
 /// @nodoc
 mixin _$CounterModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  List<CounterLog> get logs => throw _privateConstructorUsedError;
-  int? get target => throw _privateConstructorUsedError;
-  List<String>? get tags => throw _privateConstructorUsedError;
-
-  /// Serializes this CounterModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get name;
+  int get count;
+  String get description;
+  List<CounterLog> get logs;
+  int? get target;
+  List<String>? get tags;
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CounterModelCopyWith<CounterModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CounterModelCopyWith<$Res> {
-  factory $CounterModelCopyWith(
-          CounterModel value, $Res Function(CounterModel) then) =
-      _$CounterModelCopyWithImpl<$Res, CounterModel>;
-  @useResult
-  $Res call(
-      {String id,
-      String name,
-      int count,
-      String description,
-      List<CounterLog> logs,
-      int? target,
-      List<String>? tags});
-}
-
-/// @nodoc
-class _$CounterModelCopyWithImpl<$Res, $Val extends CounterModel>
-    implements $CounterModelCopyWith<$Res> {
-  _$CounterModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CounterModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $CounterModelCopyWith<CounterModel> get copyWith =>
+      _$CounterModelCopyWithImpl<CounterModel>(
+          this as CounterModel, _$identity);
+
+  /// Serializes this CounterModel to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? count = null,
-    Object? description = null,
-    Object? logs = null,
-    Object? target = freezed,
-    Object? tags = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      logs: null == logs
-          ? _value.logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<CounterLog>,
-      target: freezed == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as int?,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CounterModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other.logs, logs) &&
+            (identical(other.target, target) || other.target == target) &&
+            const DeepCollectionEquality().equals(other.tags, tags));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      count,
+      description,
+      const DeepCollectionEquality().hash(logs),
+      target,
+      const DeepCollectionEquality().hash(tags));
+
+  @override
+  String toString() {
+    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 }
 
 /// @nodoc
-abstract class _$$CounterModelImplCopyWith<$Res>
-    implements $CounterModelCopyWith<$Res> {
-  factory _$$CounterModelImplCopyWith(
-          _$CounterModelImpl value, $Res Function(_$CounterModelImpl) then) =
-      __$$CounterModelImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $CounterModelCopyWith<$Res> {
+  factory $CounterModelCopyWith(
+          CounterModel value, $Res Function(CounterModel) _then) =
+      _$CounterModelCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -129,12 +83,11 @@ abstract class _$$CounterModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CounterModelImplCopyWithImpl<$Res>
-    extends _$CounterModelCopyWithImpl<$Res, _$CounterModelImpl>
-    implements _$$CounterModelImplCopyWith<$Res> {
-  __$$CounterModelImplCopyWithImpl(
-      _$CounterModelImpl _value, $Res Function(_$CounterModelImpl) _then)
-      : super(_value, _then);
+class _$CounterModelCopyWithImpl<$Res> implements $CounterModelCopyWith<$Res> {
+  _$CounterModelCopyWithImpl(this._self, this._then);
+
+  final CounterModel _self;
+  final $Res Function(CounterModel) _then;
 
   /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.
@@ -149,43 +102,209 @@ class __$$CounterModelImplCopyWithImpl<$Res>
     Object? target = freezed,
     Object? tags = freezed,
   }) {
-    return _then(_$CounterModelImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       count: null == count
-          ? _value.count
+          ? _self.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       logs: null == logs
-          ? _value._logs
+          ? _self.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<CounterLog>,
       target: freezed == target
-          ? _value.target
+          ? _self.target
           : target // ignore: cast_nullable_to_non_nullable
               as int?,
       tags: freezed == tags
-          ? _value._tags
+          ? _self.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [CounterModel].
+extension CounterModelPatterns on CounterModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_CounterModel value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_CounterModel value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_CounterModel value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String name, int count, String description,
+            List<CounterLog> logs, int? target, List<String>? tags)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel() when $default != null:
+        return $default(_that.id, _that.name, _that.count, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String name, int count, String description,
+            List<CounterLog> logs, int? target, List<String>? tags)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel():
+        return $default(_that.id, _that.name, _that.count, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String name, int count, String description,
+            List<CounterLog> logs, int? target, List<String>? tags)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterModel() when $default != null:
+        return $default(_that.id, _that.name, _that.count, _that.description,
+            _that.logs, _that.target, _that.tags);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$CounterModelImpl implements _CounterModel {
-  _$CounterModelImpl(
+class _CounterModel implements CounterModel {
+  _CounterModel(
       {required this.id,
       required this.name,
       required this.count,
@@ -195,9 +314,8 @@ class _$CounterModelImpl implements _CounterModel {
       final List<String>? tags})
       : _logs = logs,
         _tags = tags;
-
-  factory _$CounterModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CounterModelImplFromJson(json);
+  factory _CounterModel.fromJson(Map<String, dynamic> json) =>
+      _$CounterModelFromJson(json);
 
   @override
   final String id;
@@ -227,16 +345,26 @@ class _$CounterModelImpl implements _CounterModel {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Create a copy of CounterModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$CounterModelCopyWith<_CounterModel> get copyWith =>
+      __$CounterModelCopyWithImpl<_CounterModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CounterModelToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CounterModelImpl &&
+            other is _CounterModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.count, count) || other.count == count) &&
@@ -259,194 +387,105 @@ class _$CounterModelImpl implements _CounterModel {
       target,
       const DeepCollectionEquality().hash(_tags));
 
-  /// Create a copy of CounterModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CounterModelImplCopyWith<_$CounterModelImpl> get copyWith =>
-      __$$CounterModelImplCopyWithImpl<_$CounterModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CounterModelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CounterModel implements CounterModel {
-  factory _CounterModel(
-      {required final String id,
-      required final String name,
-      required final int count,
-      required final String description,
-      required final List<CounterLog> logs,
-      final int? target,
-      final List<String>? tags}) = _$CounterModelImpl;
-
-  factory _CounterModel.fromJson(Map<String, dynamic> json) =
-      _$CounterModelImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  int get count;
-  @override
-  String get description;
-  @override
-  List<CounterLog> get logs;
-  @override
-  int? get target;
-  @override
-  List<String>? get tags;
-
-  /// Create a copy of CounterModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CounterModelImplCopyWith<_$CounterModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CounterLog _$CounterLogFromJson(Map<String, dynamic> json) {
-  return _CounterLog.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CounterLog {
-  String get id => throw _privateConstructorUsedError;
-  String get action => throw _privateConstructorUsedError;
-  DateTime get timestamp => throw _privateConstructorUsedError;
-
-  /// Serializes this CounterLog to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CounterLog
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CounterLogCopyWith<CounterLog> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CounterLogCopyWith<$Res> {
-  factory $CounterLogCopyWith(
-          CounterLog value, $Res Function(CounterLog) then) =
-      _$CounterLogCopyWithImpl<$Res, CounterLog>;
-  @useResult
-  $Res call({String id, String action, DateTime timestamp});
-}
-
-/// @nodoc
-class _$CounterLogCopyWithImpl<$Res, $Val extends CounterLog>
-    implements $CounterLogCopyWith<$Res> {
-  _$CounterLogCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CounterLog
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? action = null,
-    Object? timestamp = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+  String toString() {
+    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
   }
 }
 
 /// @nodoc
-abstract class _$$CounterLogImplCopyWith<$Res>
-    implements $CounterLogCopyWith<$Res> {
-  factory _$$CounterLogImplCopyWith(
-          _$CounterLogImpl value, $Res Function(_$CounterLogImpl) then) =
-      __$$CounterLogImplCopyWithImpl<$Res>;
+abstract mixin class _$CounterModelCopyWith<$Res>
+    implements $CounterModelCopyWith<$Res> {
+  factory _$CounterModelCopyWith(
+          _CounterModel value, $Res Function(_CounterModel) _then) =
+      __$CounterModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String action, DateTime timestamp});
+  $Res call(
+      {String id,
+      String name,
+      int count,
+      String description,
+      List<CounterLog> logs,
+      int? target,
+      List<String>? tags});
 }
 
 /// @nodoc
-class __$$CounterLogImplCopyWithImpl<$Res>
-    extends _$CounterLogCopyWithImpl<$Res, _$CounterLogImpl>
-    implements _$$CounterLogImplCopyWith<$Res> {
-  __$$CounterLogImplCopyWithImpl(
-      _$CounterLogImpl _value, $Res Function(_$CounterLogImpl) _then)
-      : super(_value, _then);
+class __$CounterModelCopyWithImpl<$Res>
+    implements _$CounterModelCopyWith<$Res> {
+  __$CounterModelCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of CounterLog
+  final _CounterModel _self;
+  final $Res Function(_CounterModel) _then;
+
+  /// Create a copy of CounterModel
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? action = null,
-    Object? timestamp = null,
+    Object? name = null,
+    Object? count = null,
+    Object? description = null,
+    Object? logs = null,
+    Object? target = freezed,
+    Object? tags = freezed,
   }) {
-    return _then(_$CounterLogImpl(
+    return _then(_CounterModel(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      count: null == count
+          ? _self.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      logs: null == logs
+          ? _self._logs
+          : logs // ignore: cast_nullable_to_non_nullable
+              as List<CounterLog>,
+      target: freezed == target
+          ? _self.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as int?,
+      tags: freezed == tags
+          ? _self._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$CounterLogImpl implements _CounterLog {
-  _$CounterLogImpl(
-      {required this.id, required this.action, required this.timestamp});
+mixin _$CounterLog {
+  String get id;
+  String get action;
+  DateTime get timestamp;
 
-  factory _$CounterLogImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CounterLogImplFromJson(json);
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $CounterLogCopyWith<CounterLog> get copyWith =>
+      _$CounterLogCopyWithImpl<CounterLog>(this as CounterLog, _$identity);
 
-  @override
-  final String id;
-  @override
-  final String action;
-  @override
-  final DateTime timestamp;
-
-  @override
-  String toString() {
-    return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
-  }
+  /// Serializes this CounterLog to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CounterLogImpl &&
+            other is CounterLog &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.action, action) || other.action == action) &&
             (identical(other.timestamp, timestamp) ||
@@ -457,42 +496,304 @@ class _$CounterLogImpl implements _CounterLog {
   @override
   int get hashCode => Object.hash(runtimeType, id, action, timestamp);
 
-  /// Create a copy of CounterLog
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CounterLogImplCopyWith<_$CounterLogImpl> get copyWith =>
-      __$$CounterLogImplCopyWithImpl<_$CounterLogImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CounterLogImplToJson(
-      this,
-    );
+  String toString() {
+    return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
   }
 }
 
-abstract class _CounterLog implements CounterLog {
-  factory _CounterLog(
-      {required final String id,
-      required final String action,
-      required final DateTime timestamp}) = _$CounterLogImpl;
+/// @nodoc
+abstract mixin class $CounterLogCopyWith<$Res> {
+  factory $CounterLogCopyWith(
+          CounterLog value, $Res Function(CounterLog) _then) =
+      _$CounterLogCopyWithImpl;
+  @useResult
+  $Res call({String id, String action, DateTime timestamp});
+}
 
-  factory _CounterLog.fromJson(Map<String, dynamic> json) =
-      _$CounterLogImpl.fromJson;
+/// @nodoc
+class _$CounterLogCopyWithImpl<$Res> implements $CounterLogCopyWith<$Res> {
+  _$CounterLogCopyWithImpl(this._self, this._then);
+
+  final CounterLog _self;
+  final $Res Function(CounterLog) _then;
+
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? action = null,
+    Object? timestamp = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _self.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [CounterLog].
+extension CounterLogPatterns on CounterLog {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_CounterLog value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_CounterLog value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_CounterLog value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String action, DateTime timestamp)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog() when $default != null:
+        return $default(_that.id, _that.action, _that.timestamp);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String action, DateTime timestamp) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog():
+        return $default(_that.id, _that.action, _that.timestamp);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String action, DateTime timestamp)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CounterLog() when $default != null:
+        return $default(_that.id, _that.action, _that.timestamp);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _CounterLog implements CounterLog {
+  _CounterLog(
+      {required this.id, required this.action, required this.timestamp});
+  factory _CounterLog.fromJson(Map<String, dynamic> json) =>
+      _$CounterLogFromJson(json);
 
   @override
-  String get id;
+  final String id;
   @override
-  String get action;
+  final String action;
   @override
-  DateTime get timestamp;
+  final DateTime timestamp;
 
   /// Create a copy of CounterLog
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CounterLogImplCopyWith<_$CounterLogImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$CounterLogCopyWith<_CounterLog> get copyWith =>
+      __$CounterLogCopyWithImpl<_CounterLog>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CounterLogToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _CounterLog &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.action, action) || other.action == action) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, action, timestamp);
+
+  @override
+  String toString() {
+    return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$CounterLogCopyWith<$Res>
+    implements $CounterLogCopyWith<$Res> {
+  factory _$CounterLogCopyWith(
+          _CounterLog value, $Res Function(_CounterLog) _then) =
+      __$CounterLogCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String id, String action, DateTime timestamp});
+}
+
+/// @nodoc
+class __$CounterLogCopyWithImpl<$Res> implements _$CounterLogCopyWith<$Res> {
+  __$CounterLogCopyWithImpl(this._self, this._then);
+
+  final _CounterLog _self;
+  final $Res Function(_CounterLog) _then;
+
+  /// Create a copy of CounterLog
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? action = null,
+    Object? timestamp = null,
+  }) {
+    return _then(_CounterLog(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      action: null == action
+          ? _self.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+// dart format on

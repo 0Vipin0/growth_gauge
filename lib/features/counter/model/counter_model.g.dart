@@ -6,8 +6,8 @@ part of 'counter_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CounterModelImpl _$$CounterModelImplFromJson(Map<String, dynamic> json) =>
-    _$CounterModelImpl(
+_CounterModel _$CounterModelFromJson(Map<String, dynamic> json) =>
+    _CounterModel(
       id: json['id'] as String,
       name: json['name'] as String,
       count: (json['count'] as num).toInt(),
@@ -19,7 +19,7 @@ _$CounterModelImpl _$$CounterModelImplFromJson(Map<String, dynamic> json) =>
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$CounterModelImplToJson(_$CounterModelImpl instance) =>
+Map<String, dynamic> _$CounterModelToJson(_CounterModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -30,14 +30,13 @@ Map<String, dynamic> _$$CounterModelImplToJson(_$CounterModelImpl instance) =>
       'tags': instance.tags,
     };
 
-_$CounterLogImpl _$$CounterLogImplFromJson(Map<String, dynamic> json) =>
-    _$CounterLogImpl(
+_CounterLog _$CounterLogFromJson(Map<String, dynamic> json) => _CounterLog(
       id: json['id'] as String,
       action: json['action'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
     );
 
-Map<String, dynamic> _$$CounterLogImplToJson(_$CounterLogImpl instance) =>
+Map<String, dynamic> _$CounterLogToJson(_CounterLog instance) =>
     <String, dynamic>{
       'id': instance.id,
       'action': instance.action,
