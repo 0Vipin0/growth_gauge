@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import '../../domain/muscle_volume_stat.dart';
 
 /// Renders a weekly volume breakdown bar chart using fl_chart.
-class VolumeBarChart extends StatelessWidget {
-  final List<MuscleVolumeStat> stats;
-
-  const VolumeBarChart({super.key, required this.stats});
-
+class const VolumeBarChart({
+  super.key,
+  required final List<MuscleVolumeStat> stats,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (stats.isEmpty) {

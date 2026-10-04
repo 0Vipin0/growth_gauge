@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'core/database/app_database.dart';
+import 'features/analytics/application/analytics_cubit.dart';
+import 'features/analytics/application/analytics_queries.dart';
+import 'features/analytics/infrastructure/analytics_dao.dart';
+import 'features/analytics/presentation/screens/analytics_dashboard_screen.dart';
+import 'features/analytics/projection/projection_rebuilder.dart';
 import 'features/authentication/authentication.dart';
 import 'features/catalog/application/catalog_use_cases.dart';
 import 'features/catalog/infrastructure/exercise_repository.dart';
@@ -26,14 +32,15 @@ mixin AppRoutes {
   static const String pinAuth = '/pin_auth';
   static const String exerciseCatalog = '/exercise_catalog';
   static const String workoutTemplates = '/workout_templates';
+  static const String analytics = '/analytics';
 
   static final Map<String, Widget Function(BuildContext)> _routes = {
     splash: (_) => const SplashScreen(),
     onboarding: (_) => const OnboardingScreen(),
     home: (_) => const HomePage(),
     settings: (_) => const SettingsPage(),
-    biometricAuth: (_) => BiometricAuthScreen(),
-    pinAuth: (_) => PinAuthScreen(),
+    biometricAuth: (_) => const BiometricAuthScreen(),
+    pinAuth: (_) => const PinAuthScreen(),
     exerciseCatalog: (context) {
       final database = Provider.of<AppDatabase>(context, listen: false);
       final repository = ExerciseRepository(database);
@@ -52,6 +59,16 @@ mixin AppRoutes {
         sessionRepository: WorkoutSessionRepository(database),
         useCases: TemplateUseCases(repository),
         userId: 'local-user',
+      );
+    },
+    analytics: (context) {
+      final queries = AnalyticsQueries(
+        dao: Provider.of<AnalyticsDao>(context, listen: false),
+        rebuilder: Provider.of<ProjectionRebuilder>(context, listen: false),
+      );
+      return BlocProvider(
+        create: (_) => AnalyticsCubit(queries: queries),
+        child: const AnalyticsDashboardScreen(),
       );
     },
   };

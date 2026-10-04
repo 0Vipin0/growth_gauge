@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'exercise_set_metric.dart';
@@ -9,6 +9,7 @@ part of 'exercise_set_metric.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ExerciseSetMetricCopyWith<ExerciseSetMetric> get copyWith => _$ExerciseSetMetri
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseSetMetric&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.weightKg, weightKg) || other.weightKg == weightKg)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.volumeLoad, volumeLoad) || other.volumeLoad == volumeLoad)&&(identical(other.estimated1Rm, estimated1Rm) || other.estimated1Rm == estimated1Rm)&&(identical(other.rpe, rpe) || other.rpe == rpe)&&(identical(other.rir, rir) || other.rir == rir)&&(identical(other.setType, setType) || other.setType == setType));
+  final _this = this as ExerciseSetMetric;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseSetMetric&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.exerciseId, _this.exerciseId) || other.exerciseId == _this.exerciseId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.weightKg, _this.weightKg) || other.weightKg == _this.weightKg)&&(identical(other.reps, _this.reps) || other.reps == _this.reps)&&(identical(other.volumeLoad, _this.volumeLoad) || other.volumeLoad == _this.volumeLoad)&&(identical(other.estimated1Rm, _this.estimated1Rm) || other.estimated1Rm == _this.estimated1Rm)&&(identical(other.rpe, _this.rpe) || other.rpe == _this.rpe)&&(identical(other.rir, _this.rir) || other.rir == _this.rir)&&(identical(other.setType, _this.setType) || other.setType == _this.setType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,exerciseId,userId,timestamp,weightKg,reps,volumeLoad,estimated1Rm,rpe,rir,setType);
+int get hashCode {
+  final _this = this as ExerciseSetMetric;
+  return Object.hash(runtimeType,_this.id,_this.sessionId,_this.exerciseId,_this.userId,_this.timestamp,_this.weightKg,_this.reps,_this.volumeLoad,_this.estimated1Rm,_this.rpe,_this.rir,_this.setType);
+}
 
 @override
 String toString() {
-  return 'ExerciseSetMetric(id: $id, sessionId: $sessionId, exerciseId: $exerciseId, userId: $userId, timestamp: $timestamp, weightKg: $weightKg, reps: $reps, volumeLoad: $volumeLoad, estimated1Rm: $estimated1Rm, rpe: $rpe, rir: $rir, setType: $setType)';
+  final _this = this as ExerciseSetMetric;
+  return 'ExerciseSetMetric(id: ${_this.id}, sessionId: ${_this.sessionId}, exerciseId: ${_this.exerciseId}, userId: ${_this.userId}, timestamp: ${_this.timestamp}, weightKg: ${_this.weightKg}, reps: ${_this.reps}, volumeLoad: ${_this.volumeLoad}, estimated1Rm: ${_this.estimated1Rm}, rpe: ${_this.rpe}, rir: ${_this.rir}, setType: ${_this.setType})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ExerciseSetMetricCopyWithImpl<$Res>
 /// Create a copy of ExerciseSetMetric
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sessionId = null,Object? exerciseId = null,Object? userId = null,Object? timestamp = null,Object? weightKg = freezed,Object? reps = freezed,Object? volumeLoad = freezed,Object? estimated1Rm = freezed,Object? rpe = freezed,Object? rir = freezed,Object? setType = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExerciseSetMetric(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
@@ -243,16 +249,18 @@ _$ExerciseSetMetricCopyWith<_ExerciseSetMetric> get copyWith => __$ExerciseSetMe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseSetMetric&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.weightKg, weightKg) || other.weightKg == weightKg)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.volumeLoad, volumeLoad) || other.volumeLoad == volumeLoad)&&(identical(other.estimated1Rm, estimated1Rm) || other.estimated1Rm == estimated1Rm)&&(identical(other.rpe, rpe) || other.rpe == rpe)&&(identical(other.rir, rir) || other.rir == rir)&&(identical(other.setType, setType) || other.setType == setType));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseSetMetric&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.weightKg, weightKg) || other.weightKg == weightKg)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.volumeLoad, volumeLoad) || other.volumeLoad == volumeLoad)&&(identical(other.estimated1Rm, estimated1Rm) || other.estimated1Rm == estimated1Rm)&&(identical(other.rpe, rpe) || other.rpe == rpe)&&(identical(other.rir, rir) || other.rir == rir)&&(identical(other.setType, setType) || other.setType == setType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,exerciseId,userId,timestamp,weightKg,reps,volumeLoad,estimated1Rm,rpe,rir,setType);
+int get hashCode {
+    return Object.hash(runtimeType,id,sessionId,exerciseId,userId,timestamp,weightKg,reps,volumeLoad,estimated1Rm,rpe,rir,setType);
+}
 
 @override
 String toString() {
-  return 'ExerciseSetMetric(id: $id, sessionId: $sessionId, exerciseId: $exerciseId, userId: $userId, timestamp: $timestamp, weightKg: $weightKg, reps: $reps, volumeLoad: $volumeLoad, estimated1Rm: $estimated1Rm, rpe: $rpe, rir: $rir, setType: $setType)';
+    return 'ExerciseSetMetric(id: $id, sessionId: $sessionId, exerciseId: $exerciseId, userId: $userId, timestamp: $timestamp, weightKg: $weightKg, reps: $reps, volumeLoad: $volumeLoad, estimated1Rm: $estimated1Rm, rpe: $rpe, rir: $rir, setType: $setType)';
 }
 
 

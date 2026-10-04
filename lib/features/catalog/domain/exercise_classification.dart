@@ -7,7 +7,7 @@ part 'exercise_classification.g.dart';
 
 @freezed
 abstract class ExerciseClassification with _$ExerciseClassification {
-  const factory ExerciseClassification({
+  const factory({
     @Default([]) List<BodyRegion> bodyRegions,
     @Default([]) List<MuscleGroup> primaryMuscles,
     @Default([]) List<MuscleGroup> secondaryMuscles,
@@ -15,6 +15,6 @@ abstract class ExerciseClassification with _$ExerciseClassification {
     @Default('BILATERAL') String laterality, // BILATERAL or UNILATERAL
   }) = _ExerciseClassification;
 
-  factory ExerciseClassification.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ExerciseClassificationFromJson(json);
 }

@@ -7,22 +7,17 @@ import '../infrastructure/exercise_repository.dart';
 import 'custom_exercise_screen.dart';
 import 'exercise_detail_screen.dart';
 
-class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({
-    super.key,
-    required this.repository,
-    required this.useCases,
-    required this.userId,
-  });
-  final IExerciseRepository repository;
-  final CatalogUseCases useCases;
-  final String userId;
-
+class const CatalogScreen({
+  super.key,
+  required final IExerciseRepository repository,
+  required final CatalogUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogScreenState extends State<CatalogScreen> {
+class _CatalogScreenState() extends State<CatalogScreen> {
   late Future<List<Exercise>> _exercises;
   String _query = '';
   BodyRegion? _bodyRegion;

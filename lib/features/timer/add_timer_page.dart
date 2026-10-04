@@ -10,14 +10,12 @@ import '../common/presentation/widgets/time_control_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class AddTimerPage extends StatefulWidget {
-  const AddTimerPage({super.key});
-
+class const AddTimerPage({super.key}) extends StatefulWidget {
   @override
   State<AddTimerPage> createState() => _AddTimerPageState();
 }
 
-class _AddTimerPageState extends State<AddTimerPage> {
+class _AddTimerPageState() extends State<AddTimerPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();

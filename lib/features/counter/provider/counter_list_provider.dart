@@ -6,15 +6,13 @@ import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
-class CounterListProvider with ChangeNotifier {
-  final CounterRepository repository;
-  final NotificationService notificationService;
+class CounterListProvider({
+  required final CounterRepository repository,
+  required final NotificationService notificationService,
+}) with ChangeNotifier {
   List<CounterModel> _counters = [];
 
-  CounterListProvider({
-    required this.repository,
-    required this.notificationService,
-  }) {
+  this {
     _loadCounters();
   }
 

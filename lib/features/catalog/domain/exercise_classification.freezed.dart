@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'exercise_classification.dart';
@@ -9,6 +9,7 @@ part of 'exercise_classification.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ExerciseClassificationCopyWith<ExerciseClassification> get copyWith => _$Exerci
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseClassification&&const DeepCollectionEquality().equals(other.bodyRegions, bodyRegions)&&const DeepCollectionEquality().equals(other.primaryMuscles, primaryMuscles)&&const DeepCollectionEquality().equals(other.secondaryMuscles, secondaryMuscles)&&const DeepCollectionEquality().equals(other.movementPatterns, movementPatterns)&&(identical(other.laterality, laterality) || other.laterality == laterality));
+  final _this = this as ExerciseClassification;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseClassification&&const DeepCollectionEquality().equals(other.bodyRegions, _this.bodyRegions)&&const DeepCollectionEquality().equals(other.primaryMuscles, _this.primaryMuscles)&&const DeepCollectionEquality().equals(other.secondaryMuscles, _this.secondaryMuscles)&&const DeepCollectionEquality().equals(other.movementPatterns, _this.movementPatterns)&&(identical(other.laterality, _this.laterality) || other.laterality == _this.laterality));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(bodyRegions),const DeepCollectionEquality().hash(primaryMuscles),const DeepCollectionEquality().hash(secondaryMuscles),const DeepCollectionEquality().hash(movementPatterns),laterality);
+int get hashCode {
+  final _this = this as ExerciseClassification;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.bodyRegions),const DeepCollectionEquality().hash(_this.primaryMuscles),const DeepCollectionEquality().hash(_this.secondaryMuscles),const DeepCollectionEquality().hash(_this.movementPatterns),_this.laterality);
+}
 
 @override
 String toString() {
-  return 'ExerciseClassification(bodyRegions: $bodyRegions, primaryMuscles: $primaryMuscles, secondaryMuscles: $secondaryMuscles, movementPatterns: $movementPatterns, laterality: $laterality)';
+  final _this = this as ExerciseClassification;
+  return 'ExerciseClassification(bodyRegions: ${_this.bodyRegions}, primaryMuscles: ${_this.primaryMuscles}, secondaryMuscles: ${_this.secondaryMuscles}, movementPatterns: ${_this.movementPatterns}, laterality: ${_this.laterality})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ExerciseClassificationCopyWithImpl<$Res>
 /// Create a copy of ExerciseClassification
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? bodyRegions = null,Object? primaryMuscles = null,Object? secondaryMuscles = null,Object? movementPatterns = null,Object? laterality = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExerciseClassification(
 bodyRegions: null == bodyRegions ? _self.bodyRegions : bodyRegions // ignore: cast_nullable_to_non_nullable
 as List<BodyRegion>,primaryMuscles: null == primaryMuscles ? _self.primaryMuscles : primaryMuscles // ignore: cast_nullable_to_non_nullable
 as List<MuscleGroup>,secondaryMuscles: null == secondaryMuscles ? _self.secondaryMuscles : secondaryMuscles // ignore: cast_nullable_to_non_nullable
@@ -213,7 +219,7 @@ return $default(_that.bodyRegions,_that.primaryMuscles,_that.secondaryMuscles,_t
 @JsonSerializable()
 
 class _ExerciseClassification implements ExerciseClassification {
-  const _ExerciseClassification({final  List<BodyRegion> bodyRegions = const [], final  List<MuscleGroup> primaryMuscles = const [], final  List<MuscleGroup> secondaryMuscles = const [], final  List<MovementPattern> movementPatterns = const [], this.laterality = 'BILATERAL'}): _bodyRegions = bodyRegions,_primaryMuscles = primaryMuscles,_secondaryMuscles = secondaryMuscles,_movementPatterns = movementPatterns;
+  const _ExerciseClassification({ List<BodyRegion> bodyRegions = const [],  List<MuscleGroup> primaryMuscles = const [],  List<MuscleGroup> secondaryMuscles = const [],  List<MovementPattern> movementPatterns = const [], this.laterality = 'BILATERAL'}): _bodyRegions = bodyRegions,_primaryMuscles = primaryMuscles,_secondaryMuscles = secondaryMuscles,_movementPatterns = movementPatterns;
   factory _ExerciseClassification.fromJson(Map<String, dynamic> json) => _$ExerciseClassificationFromJson(json);
 
  final  List<BodyRegion> _bodyRegions;
@@ -259,16 +265,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseClassification&&const DeepCollectionEquality().equals(other._bodyRegions, _bodyRegions)&&const DeepCollectionEquality().equals(other._primaryMuscles, _primaryMuscles)&&const DeepCollectionEquality().equals(other._secondaryMuscles, _secondaryMuscles)&&const DeepCollectionEquality().equals(other._movementPatterns, _movementPatterns)&&(identical(other.laterality, laterality) || other.laterality == laterality));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseClassification&&const DeepCollectionEquality().equals(other.bodyRegions, _bodyRegions)&&const DeepCollectionEquality().equals(other.primaryMuscles, _primaryMuscles)&&const DeepCollectionEquality().equals(other.secondaryMuscles, _secondaryMuscles)&&const DeepCollectionEquality().equals(other.movementPatterns, _movementPatterns)&&(identical(other.laterality, laterality) || other.laterality == laterality));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_bodyRegions),const DeepCollectionEquality().hash(_primaryMuscles),const DeepCollectionEquality().hash(_secondaryMuscles),const DeepCollectionEquality().hash(_movementPatterns),laterality);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_bodyRegions),const DeepCollectionEquality().hash(_primaryMuscles),const DeepCollectionEquality().hash(_secondaryMuscles),const DeepCollectionEquality().hash(_movementPatterns),laterality);
+}
 
 @override
 String toString() {
-  return 'ExerciseClassification(bodyRegions: $bodyRegions, primaryMuscles: $primaryMuscles, secondaryMuscles: $secondaryMuscles, movementPatterns: $movementPatterns, laterality: $laterality)';
+    return 'ExerciseClassification(bodyRegions: $bodyRegions, primaryMuscles: $primaryMuscles, secondaryMuscles: $secondaryMuscles, movementPatterns: $movementPatterns, laterality: $laterality)';
 }
 
 

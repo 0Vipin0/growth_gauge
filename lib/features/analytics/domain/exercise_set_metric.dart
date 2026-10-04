@@ -5,7 +5,7 @@ part 'exercise_set_metric.freezed.dart';
 /// Immutable read model for a single completed set's analytics data.
 @freezed
 abstract class ExerciseSetMetric with _$ExerciseSetMetric {
-  const factory ExerciseSetMetric({
+  const factory({
     required String id,
     required String sessionId,
     required String exerciseId,

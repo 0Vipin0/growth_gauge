@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'session_interruption.dart';
@@ -9,6 +9,7 @@ part of 'session_interruption.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $SessionInterruptionCopyWith<SessionInterruption> get copyWith => _$SessionInter
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionInterruption&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.userInitiated, userInitiated) || other.userInitiated == userInitiated));
+  final _this = this as SessionInterruption;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionInterruption&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.reason, _this.reason) || other.reason == _this.reason)&&(identical(other.userInitiated, _this.userInitiated) || other.userInitiated == _this.userInitiated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,startedAt,endedAt,reason,userInitiated);
+int get hashCode {
+  final _this = this as SessionInterruption;
+  return Object.hash(runtimeType,_this.id,_this.startedAt,_this.endedAt,_this.reason,_this.userInitiated);
+}
 
 @override
 String toString() {
-  return 'SessionInterruption(id: $id, startedAt: $startedAt, endedAt: $endedAt, reason: $reason, userInitiated: $userInitiated)';
+  final _this = this as SessionInterruption;
+  return 'SessionInterruption(id: ${_this.id}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, reason: ${_this.reason}, userInitiated: ${_this.userInitiated})';
 }
 
 
@@ -66,7 +72,7 @@ class _$SessionInterruptionCopyWithImpl<$Res>
 /// Create a copy of SessionInterruption
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? startedAt = null,Object? endedAt = freezed,Object? reason = null,Object? userInitiated = null,}) {
-  return _then(_self.copyWith(
+  return _then(SessionInterruption(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
@@ -235,16 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionInterruption&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.userInitiated, userInitiated) || other.userInitiated == userInitiated));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionInterruption&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.userInitiated, userInitiated) || other.userInitiated == userInitiated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,startedAt,endedAt,reason,userInitiated);
+int get hashCode {
+    return Object.hash(runtimeType,id,startedAt,endedAt,reason,userInitiated);
+}
 
 @override
 String toString() {
-  return 'SessionInterruption(id: $id, startedAt: $startedAt, endedAt: $endedAt, reason: $reason, userInitiated: $userInitiated)';
+    return 'SessionInterruption(id: $id, startedAt: $startedAt, endedAt: $endedAt, reason: $reason, userInitiated: $userInitiated)';
 }
 
 

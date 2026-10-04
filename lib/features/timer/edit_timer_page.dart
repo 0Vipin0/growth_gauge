@@ -9,15 +9,13 @@ import '../common/presentation/widgets/time_control_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class EditTimerPage extends StatefulWidget {
-  final TimerModel timer;
-  const EditTimerPage({super.key, required this.timer});
-
+class const EditTimerPage({super.key, required final TimerModel timer})
+    extends StatefulWidget {
   @override
   State<EditTimerPage> createState() => _EditTimerPageState();
 }
 
-class _EditTimerPageState extends State<EditTimerPage> {
+class _EditTimerPageState() extends State<EditTimerPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;

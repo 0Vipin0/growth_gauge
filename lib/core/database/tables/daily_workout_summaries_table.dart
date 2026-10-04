@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 /// Stores pre-aggregated session-level totals for fast dashboard queries.
 /// This table is derived — the source of truth is the WorkoutSession JSON document.
 @DataClassName('DailyWorkoutSummaryRow')
-class DailyWorkoutSummaries extends Table {
+class DailyWorkoutSummaries() extends Table {
   /// Primary key: composite of sessionId and summary tag.
   TextColumn get id => text()();
 

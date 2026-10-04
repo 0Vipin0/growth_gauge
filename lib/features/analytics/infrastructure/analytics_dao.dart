@@ -12,11 +12,7 @@ import '../domain/personal_record.dart';
 /// All queries are scoped to a [userId] and return typed domain read models.
 /// Queries use Drift's reactive `watch()` streams so the UI auto-updates when
 /// the projector writes new rows.
-class AnalyticsDao {
-  final AppDatabase _db;
-
-  AnalyticsDao(this._db);
-
+class AnalyticsDao(final AppDatabase _db) {
   // ---------------------------------------------------------------------------
   // Workout History
   // ---------------------------------------------------------------------------

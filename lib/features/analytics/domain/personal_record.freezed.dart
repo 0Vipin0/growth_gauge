@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'personal_record.dart';
@@ -9,6 +9,7 @@ part of 'personal_record.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PersonalRecordCopyWith<PersonalRecord> get copyWith => _$PersonalRecordCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PersonalRecord&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.prType, prType) || other.prType == prType)&&(identical(other.value, value) || other.value == value)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.setId, setId) || other.setId == setId)&&(identical(other.achievedAt, achievedAt) || other.achievedAt == achievedAt)&&(identical(other.replacesRecordId, replacesRecordId) || other.replacesRecordId == replacesRecordId));
+  final _this = this as PersonalRecord;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PersonalRecord&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.exerciseId, _this.exerciseId) || other.exerciseId == _this.exerciseId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.prType, _this.prType) || other.prType == _this.prType)&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.setId, _this.setId) || other.setId == _this.setId)&&(identical(other.achievedAt, _this.achievedAt) || other.achievedAt == _this.achievedAt)&&(identical(other.replacesRecordId, _this.replacesRecordId) || other.replacesRecordId == _this.replacesRecordId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,exerciseId,userId,prType,value,sessionId,setId,achievedAt,replacesRecordId);
+int get hashCode {
+  final _this = this as PersonalRecord;
+  return Object.hash(runtimeType,_this.id,_this.exerciseId,_this.userId,_this.prType,_this.value,_this.sessionId,_this.setId,_this.achievedAt,_this.replacesRecordId);
+}
 
 @override
 String toString() {
-  return 'PersonalRecord(id: $id, exerciseId: $exerciseId, userId: $userId, prType: $prType, value: $value, sessionId: $sessionId, setId: $setId, achievedAt: $achievedAt, replacesRecordId: $replacesRecordId)';
+  final _this = this as PersonalRecord;
+  return 'PersonalRecord(id: ${_this.id}, exerciseId: ${_this.exerciseId}, userId: ${_this.userId}, prType: ${_this.prType}, value: ${_this.value}, sessionId: ${_this.sessionId}, setId: ${_this.setId}, achievedAt: ${_this.achievedAt}, replacesRecordId: ${_this.replacesRecordId})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PersonalRecordCopyWithImpl<$Res>
 /// Create a copy of PersonalRecord
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? exerciseId = null,Object? userId = null,Object? prType = null,Object? value = null,Object? sessionId = null,Object? setId = freezed,Object? achievedAt = null,Object? replacesRecordId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(PersonalRecord(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ _$PersonalRecordCopyWith<_PersonalRecord> get copyWith => __$PersonalRecordCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PersonalRecord&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.prType, prType) || other.prType == prType)&&(identical(other.value, value) || other.value == value)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.setId, setId) || other.setId == setId)&&(identical(other.achievedAt, achievedAt) || other.achievedAt == achievedAt)&&(identical(other.replacesRecordId, replacesRecordId) || other.replacesRecordId == replacesRecordId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PersonalRecord&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.prType, prType) || other.prType == prType)&&(identical(other.value, value) || other.value == value)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.setId, setId) || other.setId == setId)&&(identical(other.achievedAt, achievedAt) || other.achievedAt == achievedAt)&&(identical(other.replacesRecordId, replacesRecordId) || other.replacesRecordId == replacesRecordId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,exerciseId,userId,prType,value,sessionId,setId,achievedAt,replacesRecordId);
+int get hashCode {
+    return Object.hash(runtimeType,id,exerciseId,userId,prType,value,sessionId,setId,achievedAt,replacesRecordId);
+}
 
 @override
 String toString() {
-  return 'PersonalRecord(id: $id, exerciseId: $exerciseId, userId: $userId, prType: $prType, value: $value, sessionId: $sessionId, setId: $setId, achievedAt: $achievedAt, replacesRecordId: $replacesRecordId)';
+    return 'PersonalRecord(id: $id, exerciseId: $exerciseId, userId: $userId, prType: $prType, value: $value, sessionId: $sessionId, setId: $setId, achievedAt: $achievedAt, replacesRecordId: $replacesRecordId)';
 }
 
 

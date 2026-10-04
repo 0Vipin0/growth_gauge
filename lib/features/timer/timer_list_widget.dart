@@ -9,9 +9,7 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'reusable_timer_widget.dart';
 
-class TimerListWidget extends StatelessWidget {
-  const TimerListWidget({super.key});
-
+class const TimerListWidget({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final timerListProvider = Provider.of<TimerListProvider>(context);

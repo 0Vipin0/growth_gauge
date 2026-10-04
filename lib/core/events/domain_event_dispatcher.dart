@@ -4,11 +4,9 @@ import 'domain_event.dart';
 
 /// In-memory asynchronous event bus for dispatching domain events to listeners
 /// (such as analytics projectors, notifications, and recovery handlers).
-class DomainEventDispatcher {
-  final StreamController<DomainEvent> _controller;
-
-  DomainEventDispatcher({StreamController<DomainEvent>? controller})
-    : _controller = controller ?? StreamController<DomainEvent>.broadcast();
+class DomainEventDispatcher({StreamController<DomainEvent>? controller}) {
+  final StreamController<DomainEvent> _controller =
+      controller ?? StreamController<DomainEvent>.broadcast();
 
   /// Exposes the raw event stream.
   Stream<DomainEvent> get stream => _controller.stream;

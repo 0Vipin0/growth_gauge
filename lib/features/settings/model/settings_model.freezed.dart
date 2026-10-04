@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'settings_model.dart';
@@ -9,6 +9,7 @@ part of 'settings_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $SettingsModelCopyWith<SettingsModel> get copyWith => _$SettingsModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeName, themeName) || other.themeName == themeName)&&(identical(other.fontSize, fontSize) || other.fontSize == fontSize)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.exportFormat, exportFormat) || other.exportFormat == exportFormat)&&(identical(other.authenticationType, authenticationType) || other.authenticationType == authenticationType)&&(identical(other.notificationTime, notificationTime) || other.notificationTime == notificationTime));
+  final _this = this as SettingsModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeName, _this.themeName) || other.themeName == _this.themeName)&&(identical(other.fontSize, _this.fontSize) || other.fontSize == _this.fontSize)&&(identical(other.fontFamily, _this.fontFamily) || other.fontFamily == _this.fontFamily)&&(identical(other.exportFormat, _this.exportFormat) || other.exportFormat == _this.exportFormat)&&(identical(other.authenticationType, _this.authenticationType) || other.authenticationType == _this.authenticationType)&&(identical(other.notificationTime, _this.notificationTime) || other.notificationTime == _this.notificationTime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeName,fontSize,fontFamily,exportFormat,authenticationType,notificationTime);
+int get hashCode {
+  final _this = this as SettingsModel;
+  return Object.hash(runtimeType,_this.themeName,_this.fontSize,_this.fontFamily,_this.exportFormat,_this.authenticationType,_this.notificationTime);
+}
 
 @override
 String toString() {
-  return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
+  final _this = this as SettingsModel;
+  return 'SettingsModel(themeName: ${_this.themeName}, fontSize: ${_this.fontSize}, fontFamily: ${_this.fontFamily}, exportFormat: ${_this.exportFormat}, authenticationType: ${_this.authenticationType}, notificationTime: ${_this.notificationTime})';
 }
 
 
@@ -66,7 +72,7 @@ class _$SettingsModelCopyWithImpl<$Res>
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? themeName = null,Object? fontSize = null,Object? fontFamily = null,Object? exportFormat = null,Object? authenticationType = null,Object? notificationTime = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SettingsModel(
 themeName: null == themeName ? _self.themeName : themeName // ignore: cast_nullable_to_non_nullable
 as AppThemeName,fontSize: null == fontSize ? _self.fontSize : fontSize // ignore: cast_nullable_to_non_nullable
 as AppFontSize,fontFamily: null == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeName, themeName) || other.themeName == themeName)&&(identical(other.fontSize, fontSize) || other.fontSize == fontSize)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.exportFormat, exportFormat) || other.exportFormat == exportFormat)&&(identical(other.authenticationType, authenticationType) || other.authenticationType == authenticationType)&&(identical(other.notificationTime, notificationTime) || other.notificationTime == notificationTime));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeName, themeName) || other.themeName == themeName)&&(identical(other.fontSize, fontSize) || other.fontSize == fontSize)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.exportFormat, exportFormat) || other.exportFormat == exportFormat)&&(identical(other.authenticationType, authenticationType) || other.authenticationType == authenticationType)&&(identical(other.notificationTime, notificationTime) || other.notificationTime == notificationTime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeName,fontSize,fontFamily,exportFormat,authenticationType,notificationTime);
+int get hashCode {
+    return Object.hash(runtimeType,themeName,fontSize,fontFamily,exportFormat,authenticationType,notificationTime);
+}
 
 @override
 String toString() {
-  return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
+    return 'SettingsModel(themeName: $themeName, fontSize: $fontSize, fontFamily: $fontFamily, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
 }
 
 

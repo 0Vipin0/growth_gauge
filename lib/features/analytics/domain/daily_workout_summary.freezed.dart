@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'daily_workout_summary.dart';
@@ -9,6 +9,7 @@ part of 'daily_workout_summary.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $DailyWorkoutSummaryCopyWith<DailyWorkoutSummary> get copyWith => _$DailyWorkout
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DailyWorkoutSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.durationSeconds, durationSeconds) || other.durationSeconds == durationSeconds)&&(identical(other.activeSeconds, activeSeconds) || other.activeSeconds == activeSeconds)&&(identical(other.volumeLoadKg, volumeLoadKg) || other.volumeLoadKg == volumeLoadKg)&&(identical(other.totalCompletedSets, totalCompletedSets) || other.totalCompletedSets == totalCompletedSets)&&(identical(other.totalCompletedReps, totalCompletedReps) || other.totalCompletedReps == totalCompletedReps)&&(identical(other.averageRpe, averageRpe) || other.averageRpe == averageRpe));
+  final _this = this as DailyWorkoutSummary;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DailyWorkoutSummary&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.templateName, _this.templateName) || other.templateName == _this.templateName)&&(identical(other.durationSeconds, _this.durationSeconds) || other.durationSeconds == _this.durationSeconds)&&(identical(other.activeSeconds, _this.activeSeconds) || other.activeSeconds == _this.activeSeconds)&&(identical(other.volumeLoadKg, _this.volumeLoadKg) || other.volumeLoadKg == _this.volumeLoadKg)&&(identical(other.totalCompletedSets, _this.totalCompletedSets) || other.totalCompletedSets == _this.totalCompletedSets)&&(identical(other.totalCompletedReps, _this.totalCompletedReps) || other.totalCompletedReps == _this.totalCompletedReps)&&(identical(other.averageRpe, _this.averageRpe) || other.averageRpe == _this.averageRpe));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,sessionId,userId,templateName,durationSeconds,activeSeconds,volumeLoadKg,totalCompletedSets,totalCompletedReps,averageRpe);
+int get hashCode {
+  final _this = this as DailyWorkoutSummary;
+  return Object.hash(runtimeType,_this.id,_this.date,_this.sessionId,_this.userId,_this.templateName,_this.durationSeconds,_this.activeSeconds,_this.volumeLoadKg,_this.totalCompletedSets,_this.totalCompletedReps,_this.averageRpe);
+}
 
 @override
 String toString() {
-  return 'DailyWorkoutSummary(id: $id, date: $date, sessionId: $sessionId, userId: $userId, templateName: $templateName, durationSeconds: $durationSeconds, activeSeconds: $activeSeconds, volumeLoadKg: $volumeLoadKg, totalCompletedSets: $totalCompletedSets, totalCompletedReps: $totalCompletedReps, averageRpe: $averageRpe)';
+  final _this = this as DailyWorkoutSummary;
+  return 'DailyWorkoutSummary(id: ${_this.id}, date: ${_this.date}, sessionId: ${_this.sessionId}, userId: ${_this.userId}, templateName: ${_this.templateName}, durationSeconds: ${_this.durationSeconds}, activeSeconds: ${_this.activeSeconds}, volumeLoadKg: ${_this.volumeLoadKg}, totalCompletedSets: ${_this.totalCompletedSets}, totalCompletedReps: ${_this.totalCompletedReps}, averageRpe: ${_this.averageRpe})';
 }
 
 
@@ -63,7 +69,7 @@ class _$DailyWorkoutSummaryCopyWithImpl<$Res>
 /// Create a copy of DailyWorkoutSummary
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? date = null,Object? sessionId = null,Object? userId = null,Object? templateName = null,Object? durationSeconds = null,Object? activeSeconds = null,Object? volumeLoadKg = null,Object? totalCompletedSets = null,Object? totalCompletedReps = null,Object? averageRpe = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(DailyWorkoutSummary(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
@@ -241,16 +247,18 @@ _$DailyWorkoutSummaryCopyWith<_DailyWorkoutSummary> get copyWith => __$DailyWork
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DailyWorkoutSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.durationSeconds, durationSeconds) || other.durationSeconds == durationSeconds)&&(identical(other.activeSeconds, activeSeconds) || other.activeSeconds == activeSeconds)&&(identical(other.volumeLoadKg, volumeLoadKg) || other.volumeLoadKg == volumeLoadKg)&&(identical(other.totalCompletedSets, totalCompletedSets) || other.totalCompletedSets == totalCompletedSets)&&(identical(other.totalCompletedReps, totalCompletedReps) || other.totalCompletedReps == totalCompletedReps)&&(identical(other.averageRpe, averageRpe) || other.averageRpe == averageRpe));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DailyWorkoutSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.durationSeconds, durationSeconds) || other.durationSeconds == durationSeconds)&&(identical(other.activeSeconds, activeSeconds) || other.activeSeconds == activeSeconds)&&(identical(other.volumeLoadKg, volumeLoadKg) || other.volumeLoadKg == volumeLoadKg)&&(identical(other.totalCompletedSets, totalCompletedSets) || other.totalCompletedSets == totalCompletedSets)&&(identical(other.totalCompletedReps, totalCompletedReps) || other.totalCompletedReps == totalCompletedReps)&&(identical(other.averageRpe, averageRpe) || other.averageRpe == averageRpe));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,date,sessionId,userId,templateName,durationSeconds,activeSeconds,volumeLoadKg,totalCompletedSets,totalCompletedReps,averageRpe);
+int get hashCode {
+    return Object.hash(runtimeType,id,date,sessionId,userId,templateName,durationSeconds,activeSeconds,volumeLoadKg,totalCompletedSets,totalCompletedReps,averageRpe);
+}
 
 @override
 String toString() {
-  return 'DailyWorkoutSummary(id: $id, date: $date, sessionId: $sessionId, userId: $userId, templateName: $templateName, durationSeconds: $durationSeconds, activeSeconds: $activeSeconds, volumeLoadKg: $volumeLoadKg, totalCompletedSets: $totalCompletedSets, totalCompletedReps: $totalCompletedReps, averageRpe: $averageRpe)';
+    return 'DailyWorkoutSummary(id: $id, date: $date, sessionId: $sessionId, userId: $userId, templateName: $templateName, durationSeconds: $durationSeconds, activeSeconds: $activeSeconds, volumeLoadKg: $volumeLoadKg, totalCompletedSets: $totalCompletedSets, totalCompletedReps: $totalCompletedReps, averageRpe: $averageRpe)';
 }
 
 

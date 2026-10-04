@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../../../core/events/domain_event_dispatcher.dart';
-import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -12,26 +14,19 @@ import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
 import 'template_detail_screen.dart';
 
-class TemplateListScreen extends StatefulWidget {
-  const TemplateListScreen({
-    super.key,
-    required this.repository,
-    required this.exerciseRepository,
-    required this.sessionRepository,
-    required this.useCases,
-    required this.userId,
-  });
-  final ITemplateRepository repository;
-  final IExerciseRepository exerciseRepository;
-  final IWorkoutSessionRepository sessionRepository;
-  final TemplateUseCases useCases;
-  final String userId;
-
+class const TemplateListScreen({
+  super.key,
+  required final ITemplateRepository repository,
+  required final IExerciseRepository exerciseRepository,
+  required final IWorkoutSessionRepository sessionRepository,
+  required final TemplateUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<TemplateListScreen> createState() => _TemplateListScreenState();
 }
 
-class _TemplateListScreenState extends State<TemplateListScreen> {
+class _TemplateListScreenState() extends State<TemplateListScreen> {
   late Stream<List<WorkoutTemplate>> _templates;
 
   @override
@@ -49,7 +44,7 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
     if (selected == null || !mounted) {
       return;
     }
-    final events = DomainEventDispatcher();
+    final events = context.read<DomainEventDispatcher>();
     final sessionUseCases = SessionUseCases(
       templates: widget.repository,
       sessions: widget.sessionRepository,
@@ -63,16 +58,13 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
           context,
         ).showSnackBar(SnackBar(content: Text(recovered.errorOrNull!.message)));
       }
-      await events.dispose();
       return;
     }
     session = recovered.dataOrNull!;
     if (session.status == SessionStatus.completed) {
-      await events.dispose();
       return;
     }
     if (!mounted) {
-      await events.dispose();
       return;
     }
     await Navigator.of(context).push(
@@ -84,7 +76,6 @@ class _TemplateListScreenState extends State<TemplateListScreen> {
         ),
       ),
     );
-    await events.dispose();
   }
 
   Future<void> _create() async {

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 /// Supported workout block formats.
-enum WorkoutBlockType {
+enum WorkoutBlockType() {
   @JsonValue('STANDARD')
   standard,
   @JsonValue('SUPERSET')
@@ -27,7 +27,7 @@ enum WorkoutBlockType {
 }
 
 /// Classification of a set within an exercise prescription.
-enum SetType {
+enum SetType() {
   @JsonValue('WARMUP')
   warmup,
   @JsonValue('WORKING')
@@ -47,7 +47,7 @@ enum SetType {
 }
 
 /// Lifecycle status of a workout template revision.
-enum TemplateRevisionStatus {
+enum TemplateRevisionStatus() {
   @JsonValue('DRAFT')
   draft,
   @JsonValue('PUBLISHED')

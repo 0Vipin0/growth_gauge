@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../routes.dart';
 
-class FitnessHubPage extends StatelessWidget {
-  const FitnessHubPage({super.key});
-
+class const FitnessHubPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('Strength & conditioning')),
@@ -36,6 +34,15 @@ class FitnessHubPage extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () =>
                 Navigator.of(context).pushNamed(AppRoutes.workoutTemplates),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.insights),
+            title: const Text('Analytics & progress'),
+            subtitle: const Text('Review workout history, volume, and PRs'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.analytics),
           ),
         ),
       ],

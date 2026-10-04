@@ -8,14 +8,13 @@ import '../../utils/navigation_helper.dart';
 import '../authentication/authentication_service.dart';
 import '../settings/settings.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+class const SplashScreen({super.key}) extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState()
+    extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _logoController;
   late AnimationController _titleController;

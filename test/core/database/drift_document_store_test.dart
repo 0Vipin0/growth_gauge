@@ -5,13 +5,11 @@ import 'package:growth_gauge/core/database/document_adapter.dart';
 import 'package:growth_gauge/core/database/drift_document_store.dart';
 import 'package:growth_gauge/core/error/failures.dart';
 
-class SampleUser {
-  final String id;
-  final String name;
-  final int age;
-
-  SampleUser({required this.id, required this.name, required this.age});
-
+class SampleUser({
+  required final String id,
+  required final String name,
+  required final int age,
+}) {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -24,7 +22,7 @@ class SampleUser {
   int get hashCode => Object.hash(id, name, age);
 }
 
-class SampleUserAdapter extends DocumentAdapter<SampleUser> {
+class SampleUserAdapter() extends DocumentAdapter<SampleUser> {
   @override
   String get collection => 'users';
 

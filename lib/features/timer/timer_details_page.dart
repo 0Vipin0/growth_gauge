@@ -6,16 +6,13 @@ import '../chart/chart.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class TimerDetailsPage extends StatefulWidget {
-  final TimerModel timer;
-
-  const TimerDetailsPage({super.key, required this.timer});
-
+class const TimerDetailsPage({super.key, required final TimerModel timer})
+    extends StatefulWidget {
   @override
   State<TimerDetailsPage> createState() => _TimerDetailsPageState();
 }
 
-class _TimerDetailsPageState extends State<TimerDetailsPage> {
+class _TimerDetailsPageState() extends State<TimerDetailsPage> {
   DurationInterval _selectedInterval =
       DurationInterval.minute; // Default interval
 
@@ -237,16 +234,11 @@ class _TimerDetailsPageState extends State<TimerDetailsPage> {
   }
 }
 
-class HeatmapPage extends StatelessWidget {
-  final TimerModel timer;
-  final DurationInterval durationInterval;
-
-  const HeatmapPage({
-    super.key,
-    required this.timer,
-    required this.durationInterval,
-  });
-
+class const HeatmapPage({
+  super.key,
+  required final TimerModel timer,
+  required final DurationInterval durationInterval,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -259,16 +251,11 @@ class HeatmapPage extends StatelessWidget {
   }
 }
 
-class ChartPage extends StatelessWidget {
-  final TimerModel timer;
-  final DurationInterval durationInterval;
-
-  const ChartPage({
-    super.key,
-    required this.timer,
-    required this.durationInterval,
-  });
-
+class const ChartPage({
+  super.key,
+  required final TimerModel timer,
+  required final DurationInterval durationInterval,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(

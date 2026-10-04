@@ -8,15 +8,13 @@ import '../common/presentation/widgets/tag_input_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class EditCounterPage extends StatefulWidget {
-  final CounterModel counter;
-  const EditCounterPage({super.key, required this.counter});
-
+class const EditCounterPage({super.key, required final CounterModel counter})
+    extends StatefulWidget {
   @override
   State<EditCounterPage> createState() => _EditCounterPageState();
 }
 
-class _EditCounterPageState extends State<EditCounterPage> {
+class _EditCounterPageState() extends State<EditCounterPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;

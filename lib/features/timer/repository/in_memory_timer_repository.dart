@@ -1,7 +1,7 @@
 import '../model/timer_model.dart';
 import 'timer_repository.dart';
 
-class InMemoryTimerRepository implements TimerRepository {
+class InMemoryTimerRepository() implements TimerRepository {
   List<TimerModel> _timers = [];
 
   @override

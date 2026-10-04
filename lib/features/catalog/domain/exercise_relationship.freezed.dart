@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'exercise_relationship.dart';
@@ -9,6 +9,7 @@ part of 'exercise_relationship.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ExerciseRelationshipCopyWith<ExerciseRelationship> get copyWith => _$ExerciseRe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseRelationship&&(identical(other.sourceExerciseId, sourceExerciseId) || other.sourceExerciseId == sourceExerciseId)&&(identical(other.targetExerciseId, targetExerciseId) || other.targetExerciseId == targetExerciseId)&&(identical(other.type, type) || other.type == type)&&(identical(other.reason, reason) || other.reason == reason));
+  final _this = this as ExerciseRelationship;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseRelationship&&(identical(other.sourceExerciseId, _this.sourceExerciseId) || other.sourceExerciseId == _this.sourceExerciseId)&&(identical(other.targetExerciseId, _this.targetExerciseId) || other.targetExerciseId == _this.targetExerciseId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.reason, _this.reason) || other.reason == _this.reason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sourceExerciseId,targetExerciseId,type,reason);
+int get hashCode {
+  final _this = this as ExerciseRelationship;
+  return Object.hash(runtimeType,_this.sourceExerciseId,_this.targetExerciseId,_this.type,_this.reason);
+}
 
 @override
 String toString() {
-  return 'ExerciseRelationship(sourceExerciseId: $sourceExerciseId, targetExerciseId: $targetExerciseId, type: $type, reason: $reason)';
+  final _this = this as ExerciseRelationship;
+  return 'ExerciseRelationship(sourceExerciseId: ${_this.sourceExerciseId}, targetExerciseId: ${_this.targetExerciseId}, type: ${_this.type}, reason: ${_this.reason})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ExerciseRelationshipCopyWithImpl<$Res>
 /// Create a copy of ExerciseRelationship
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sourceExerciseId = null,Object? targetExerciseId = null,Object? type = null,Object? reason = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ExerciseRelationship(
 sourceExerciseId: null == sourceExerciseId ? _self.sourceExerciseId : sourceExerciseId // ignore: cast_nullable_to_non_nullable
 as String,targetExerciseId: null == targetExerciseId ? _self.targetExerciseId : targetExerciseId // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseRelationship&&(identical(other.sourceExerciseId, sourceExerciseId) || other.sourceExerciseId == sourceExerciseId)&&(identical(other.targetExerciseId, targetExerciseId) || other.targetExerciseId == targetExerciseId)&&(identical(other.type, type) || other.type == type)&&(identical(other.reason, reason) || other.reason == reason));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseRelationship&&(identical(other.sourceExerciseId, sourceExerciseId) || other.sourceExerciseId == sourceExerciseId)&&(identical(other.targetExerciseId, targetExerciseId) || other.targetExerciseId == targetExerciseId)&&(identical(other.type, type) || other.type == type)&&(identical(other.reason, reason) || other.reason == reason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sourceExerciseId,targetExerciseId,type,reason);
+int get hashCode {
+    return Object.hash(runtimeType,sourceExerciseId,targetExerciseId,type,reason);
+}
 
 @override
 String toString() {
-  return 'ExerciseRelationship(sourceExerciseId: $sourceExerciseId, targetExerciseId: $targetExerciseId, type: $type, reason: $reason)';
+    return 'ExerciseRelationship(sourceExerciseId: $sourceExerciseId, targetExerciseId: $targetExerciseId, type: $type, reason: $reason)';
 }
 
 

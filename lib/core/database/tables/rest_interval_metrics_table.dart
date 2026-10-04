@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 /// One row per completed [RestInterval]. Supports future rest-adherence
 /// analytics (planned vs actual rest, skip rate, average rest by exercise).
 @DataClassName('RestIntervalMetricRow')
-class RestIntervalMetrics extends Table {
+class RestIntervalMetrics() extends Table {
   /// RestInterval ID (matches the session document).
   TextColumn get id => text()();
 

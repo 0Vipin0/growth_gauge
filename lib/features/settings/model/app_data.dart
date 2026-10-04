@@ -11,12 +11,11 @@ part 'app_data.g.dart';
 
 @freezed
 abstract class AppData with _$AppData {
-  factory AppData({
+  factory({
     @Default(1) int version, // Version 1 for initial structure
     @Default([]) List<CounterModel> counters,
     @Default([]) List<TimerModel> timers,
   }) = _AppData;
 
-  factory AppData.fromJson(Map<String, dynamic> json) =>
-      _$AppDataFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AppDataFromJson(json);
 }

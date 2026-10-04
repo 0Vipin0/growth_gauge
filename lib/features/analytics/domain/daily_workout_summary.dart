@@ -5,7 +5,7 @@ part 'daily_workout_summary.freezed.dart';
 /// Immutable read model returned from [AnalyticsDao] for dashboard display.
 @freezed
 abstract class DailyWorkoutSummary with _$DailyWorkoutSummary {
-  const factory DailyWorkoutSummary({
+  const factory({
     required String id,
     required DateTime date,
     required String sessionId,

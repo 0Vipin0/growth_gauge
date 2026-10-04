@@ -3674,6 +3674,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MuscleVolumeBreakdownsTable(this);
   late final $RestIntervalMetricsTable restIntervalMetrics =
       $RestIntervalMetricsTable(this);
+  late final Index muscleVolumeUserWeekStart = Index(
+    'muscle_volume_user_week_start',
+    'CREATE INDEX muscle_volume_user_week_start ON muscle_volume_breakdowns (user_id, week_start_date)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3685,6 +3689,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     personalRecords,
     muscleVolumeBreakdowns,
     restIntervalMetrics,
+    muscleVolumeUserWeekStart,
   ];
 }
 
@@ -3882,7 +3887,16 @@ class $$DocumentsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$DocumentsTable, Document>(table),
+                  BaseReferences<_$AppDatabase, $DocumentsTable, Document>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -4222,7 +4236,19 @@ class $$DailyWorkoutSummariesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<
+                    $DailyWorkoutSummariesTable,
+                    DailyWorkoutSummaryRow
+                  >(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $DailyWorkoutSummariesTable,
+                    DailyWorkoutSummaryRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -4574,7 +4600,18 @@ class $$ExerciseSetMetricsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$ExerciseSetMetricsTable, ExerciseSetMetricRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $ExerciseSetMetricsTable,
+                    ExerciseSetMetricRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -4866,7 +4903,16 @@ class $$PersonalRecordsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$PersonalRecordsTable, PersonalRecordRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $PersonalRecordsTable,
+                    PersonalRecordRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -5144,7 +5190,19 @@ class $$MuscleVolumeBreakdownsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<
+                    $MuscleVolumeBreakdownsTable,
+                    MuscleVolumeBreakdownRow
+                  >(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $MuscleVolumeBreakdownsTable,
+                    MuscleVolumeBreakdownRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -5465,7 +5523,18 @@ class $$RestIntervalMetricsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$RestIntervalMetricsTable, RestIntervalMetricRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $RestIntervalMetricsTable,
+                    RestIntervalMetricRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),

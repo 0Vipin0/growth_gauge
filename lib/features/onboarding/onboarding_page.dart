@@ -7,14 +7,12 @@ import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
 import '../settings/settings.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
-
+class const OnboardingScreen({super.key}) extends StatefulWidget {
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState() extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
 
   int _currentPage = 0;

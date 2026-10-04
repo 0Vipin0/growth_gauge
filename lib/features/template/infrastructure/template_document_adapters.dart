@@ -2,9 +2,8 @@ import '../../../core/database/document_adapter.dart';
 import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
 
-class WorkoutTemplateDocumentAdapter
+class const WorkoutTemplateDocumentAdapter()
     implements DocumentAdapter<WorkoutTemplate> {
-  const WorkoutTemplateDocumentAdapter();
   @override
   String get collection => 'workout_templates';
   @override
@@ -22,9 +21,8 @@ class WorkoutTemplateDocumentAdapter
   Map<String, dynamic> toJson(WorkoutTemplate entity) => entity.toJson();
 }
 
-class WorkoutTemplateRevisionDocumentAdapter
+class const WorkoutTemplateRevisionDocumentAdapter()
     implements DocumentAdapter<WorkoutTemplateRevision> {
-  const WorkoutTemplateRevisionDocumentAdapter();
   @override
   String get collection => 'workout_template_revisions';
   @override

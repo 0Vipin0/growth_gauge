@@ -494,10 +494,8 @@ _createTemplate(
   return (template: template, revision: revision);
 }
 
-class _FailCompletedSaveOnce implements IWorkoutSessionRepository {
-  _FailCompletedSaveOnce(this._delegate);
-
-  final IWorkoutSessionRepository _delegate;
+class _FailCompletedSaveOnce(final IWorkoutSessionRepository _delegate)
+    implements IWorkoutSessionRepository {
   bool _failed = false;
 
   @override

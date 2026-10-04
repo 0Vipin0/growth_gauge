@@ -4,7 +4,7 @@ import '../../settings/config/config.dart';
 import '../model/model.dart';
 import 'timer_repository.dart';
 
-class SharedPreferencesTimerRepository implements TimerRepository {
+class SharedPreferencesTimerRepository() implements TimerRepository {
   @override
   Future<List<TimerModel>> getTimers() async {
     final String? timersJson = SharedPreferencesHelper.getTimers();

@@ -4,11 +4,7 @@ import 'exercise_repository.dart';
 import 'seed/exercise_seed_data.dart';
 
 /// Installs the bundled catalog exactly once, only when no exercises exist.
-class CatalogSeeder {
-  const CatalogSeeder(this._repository);
-
-  final IExerciseRepository _repository;
-
+class const CatalogSeeder(final IExerciseRepository _repository) {
   Future<Result<int, Failure>> seedIfEmpty() async {
     final count = await _repository.count();
     if (count.isError) return Result.error(count.errorOrNull!);

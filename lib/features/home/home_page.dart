@@ -16,14 +16,12 @@ import '../template/infrastructure/template_repository.dart';
 import '../timer/timer.dart';
 import 'fitness_hub_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+class const HomePage({super.key}) extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState() extends State<HomePage> {
   @override
   void initState() {
     super.initState();
@@ -40,35 +38,30 @@ class _HomePageState extends State<HomePage> {
       result.dataOrNull!,
     );
     if (selected == null || !mounted) return;
-    final events = DomainEventDispatcher();
+    final events = Provider.of<DomainEventDispatcher>(context, listen: false);
     final useCases = SessionUseCases(
       templates: TemplateRepository(database),
       sessions: sessionRepository,
       events: events,
     );
-    try {
-      final recovery = await useCases.recoverIncomplete(selected.id);
-      if (!mounted) return;
-      if (recovery.isError) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(recovery.errorOrNull!.message)));
-        return;
-      }
-      final session = recovery.dataOrNull!;
-      if (session.status == SessionStatus.completed) return;
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => ActiveSessionScreen(
-            session: session,
-            useCases: useCases,
-            exerciseRepository: ExerciseRepository(database),
-          ),
-        ),
-      );
-    } finally {
-      await events.dispose();
+    final recovery = await useCases.recoverIncomplete(selected.id);
+    if (!mounted) return;
+    if (recovery.isError) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(recovery.errorOrNull!.message)));
+      return;
     }
+    final session = recovery.dataOrNull!;
+    if (session.status == SessionStatus.completed) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ActiveSessionScreen(
+          session: session,
+          useCases: useCases,
+          exerciseRepository: ExerciseRepository(database),
+        ),
+      ),
+    );
   }
 
   @override
@@ -85,14 +78,12 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class MobileHomePage extends StatefulWidget {
-  const MobileHomePage({super.key});
-
+class const MobileHomePage({super.key}) extends StatefulWidget {
   @override
   State<MobileHomePage> createState() => _MobileHomePageState();
 }
 
-class _MobileHomePageState extends State<MobileHomePage> {
+class _MobileHomePageState() extends State<MobileHomePage> {
   int _selectedIndex = 0;
 
   final PageController _pageController = PageController();
@@ -157,14 +148,12 @@ class _MobileHomePageState extends State<MobileHomePage> {
   }
 }
 
-class DesktopHomePage extends StatefulWidget {
-  const DesktopHomePage({super.key});
-
+class const DesktopHomePage({super.key}) extends StatefulWidget {
   @override
   State<DesktopHomePage> createState() => _DesktopHomePageState();
 }
 
-class _DesktopHomePageState extends State<DesktopHomePage> {
+class _DesktopHomePageState() extends State<DesktopHomePage> {
   int _selectedIndex = 0;
 
   bool _isRailExtended = false;

@@ -5,7 +5,7 @@ part 'exercise_execution.g.dart';
 
 @freezed
 abstract class ExerciseExecutionProfile with _$ExerciseExecutionProfile {
-  const factory ExerciseExecutionProfile({
+  const factory({
     @Default([]) List<String> setupInstructions,
     @Default([]) List<String> executionInstructions,
     String? breathingInstructions,
@@ -14,6 +14,6 @@ abstract class ExerciseExecutionProfile with _$ExerciseExecutionProfile {
     String? rangeOfMotion,
   }) = _ExerciseExecutionProfile;
 
-  factory ExerciseExecutionProfile.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ExerciseExecutionProfileFromJson(json);
 }

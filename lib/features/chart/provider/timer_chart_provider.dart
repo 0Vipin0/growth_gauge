@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../timer/model/model.dart';
 import 'abstract_chart_provider.dart';
 
-class TimerChartProvider extends AbstractChartProvider<TimerModel> {
+class TimerChartProvider() extends AbstractChartProvider<TimerModel> {
   late DurationInterval interval;
   bool isProcessed = false;
 

@@ -5,18 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/core/events/domain_event.dart';
 import 'package:growth_gauge/core/events/domain_event_dispatcher.dart';
 
-class SampleWorkoutEvent extends DomainEvent {
-  final String sessionName;
-
-  SampleWorkoutEvent({required super.aggregateId, required this.sessionName});
-
+class const SampleWorkoutEvent({
+  required super.aggregateId,
+  required final String sessionName,
+}) extends DomainEvent {
   @override
   String get eventType => 'SampleWorkoutEvent';
 }
 
-class AnotherDomainEvent extends DomainEvent {
-  AnotherDomainEvent({required super.aggregateId});
-
+class const AnotherDomainEvent({required super.aggregateId})
+    extends DomainEvent {
   @override
   String get eventType => 'AnotherDomainEvent';
 }

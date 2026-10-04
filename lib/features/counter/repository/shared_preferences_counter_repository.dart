@@ -5,7 +5,7 @@ import 'package:growth_gauge/features/settings/config/config.dart';
 import '../model/model.dart';
 import 'counter_repository.dart';
 
-class SharedPreferencesCounterRepository implements CounterRepository {
+class SharedPreferencesCounterRepository() implements CounterRepository {
   @override
   Future<List<CounterModel>> loadCounters() async {
     final String? countersJson = SharedPreferencesHelper.getCounters();

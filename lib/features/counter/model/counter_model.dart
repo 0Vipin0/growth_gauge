@@ -5,7 +5,7 @@ part 'counter_model.g.dart';
 
 @freezed
 abstract class CounterModel with _$CounterModel {
-  factory CounterModel({
+  factory({
     required String id,
     required String name,
     required int count,
@@ -15,18 +15,16 @@ abstract class CounterModel with _$CounterModel {
     List<String>? tags, // New property for tags
   }) = _CounterModel;
 
-  factory CounterModel.fromJson(Map<String, dynamic> json) =>
-      _$CounterModelFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$CounterModelFromJson(json);
 }
 
 @freezed
 abstract class CounterLog with _$CounterLog {
-  factory CounterLog({
+  factory({
     required String id,
     required String action,
     required DateTime timestamp,
   }) = _CounterLog;
 
-  factory CounterLog.fromJson(Map<String, dynamic> json) =>
-      _$CounterLogFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$CounterLogFromJson(json);
 }

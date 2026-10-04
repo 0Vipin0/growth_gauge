@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../../features/notification/notification_service.dart';
 import '../counter/counter.dart';
+import '../notification/notification_service.dart';
 import '../timer/timer.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 
-class SettingsProvider with ChangeNotifier {
+class SettingsProvider({
+  required final CounterListProvider _counterListProvider,
+  required final TimerListProvider _timerListProvider,
+  required final NotificationService _notificationService,
+}) with ChangeNotifier {
   SettingsModel _settings;
-
-  final CounterListProvider _counterListProvider;
-  final TimerListProvider _timerListProvider;
-  final NotificationService _notificationService;
 
   bool _isExporting = false;
 
@@ -36,11 +36,7 @@ class SettingsProvider with ChangeNotifier {
   final LocalAuthentication _localAuth = LocalAuthentication();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  SettingsProvider({
-    required this._counterListProvider,
-    required this._timerListProvider,
-    required this._notificationService,
-  }) : _settings = const SettingsModel(themeName: AppThemeName.light) {
+  this : _settings = const SettingsModel(themeName: AppThemeName.light) {
     loadSettingsFromStorage();
   }
 

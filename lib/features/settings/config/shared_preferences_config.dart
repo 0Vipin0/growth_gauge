@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesKeys {
+class SharedPreferencesKeys() {
   static const String countersStorageKey = 'counters';
   static const String timersStorageKey = 'timers';
   static const String hasCompletedOnboarding = 'hasCompletedOnboarding';

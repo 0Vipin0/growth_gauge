@@ -13,7 +13,7 @@ part 'exercise.g.dart';
 /// The authoritative aggregate root for an exercise catalog item.
 @freezed
 abstract class Exercise with _$Exercise {
-  const factory Exercise({
+  const factory({
     required String id,
     required String name,
     @Default([]) List<String> aliases,
@@ -33,6 +33,5 @@ abstract class Exercise with _$Exercise {
     ExerciseMeasurementProfile measurementProfile,
   }) = _Exercise;
 
-  factory Exercise.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
 }

@@ -2,13 +2,11 @@ import 'unit_types.dart';
 
 /// Provides mathematically exact bidirectional conversions between
 /// canonical domain units (kg, m, cm, °C) and display units.
-class UnitConverter {
+class const UnitConverter._() {
   static const double _lbPerKg = 2.2046226218487757;
   static const double _kgPerLb = 0.45359237;
   static const double _metersPerMile = 1609.344;
   static const double _cmPerInch = 2.54;
-
-  const UnitConverter._();
 
   // --- Weight Conversions (Canonical: Kilograms) ---
 

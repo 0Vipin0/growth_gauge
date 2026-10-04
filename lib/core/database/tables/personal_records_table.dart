@@ -6,7 +6,7 @@ import 'package:drift/drift.dart';
 /// an existing one the [replacesRecordId] field links the chain. Old PR rows
 /// are kept for historical display ("previous best").
 @DataClassName('PersonalRecordRow')
-class PersonalRecords extends Table {
+class PersonalRecords() extends Table {
   /// UUID generated at projection time.
   TextColumn get id => text()();
 

@@ -8,17 +8,11 @@ import 'analytics_projector.dart';
 ///
 /// Use when analytics data is stale, corrupted, or a schema change requires
 /// a full re-projection from the authoritative session documents.
-class ProjectionRebuilder {
-  final AppDatabase _db;
-  final IWorkoutSessionRepository _sessionRepo;
-  final AnalyticsProjector _projector;
-
-  ProjectionRebuilder({
-    required this._db,
-    required this._sessionRepo,
-    required this._projector,
-  });
-
+class ProjectionRebuilder({
+  required final AppDatabase _db,
+  required final IWorkoutSessionRepository _sessionRepo,
+  required final AnalyticsProjector _projector,
+}) {
   /// Clears all five analytics tables and re-projects all completed sessions.
   ///
   /// Returns the number of sessions projected.

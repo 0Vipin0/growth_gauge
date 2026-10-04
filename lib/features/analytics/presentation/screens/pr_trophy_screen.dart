@@ -7,14 +7,12 @@ import '../../domain/analytics_enums.dart';
 import '../widgets/pr_badge_card.dart';
 
 /// Screen listing all earned PR trophies and personal achievements.
-class PrTrophyScreen extends StatefulWidget {
-  const PrTrophyScreen({super.key});
-
+class const PrTrophyScreen({super.key}) extends StatefulWidget {
   @override
   State<PrTrophyScreen> createState() => _PrTrophyScreenState();
 }
 
-class _PrTrophyScreenState extends State<PrTrophyScreen> {
+class _PrTrophyScreenState() extends State<PrTrophyScreen> {
   PrType? _selectedFilter;
 
   @override

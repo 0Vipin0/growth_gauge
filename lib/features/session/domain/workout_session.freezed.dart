@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'workout_session.dart';
@@ -9,6 +9,7 @@ part of 'workout_session.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $WorkoutSessionCopyWith<WorkoutSession> get copyWith => _$WorkoutSessionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.templateRevisionId, templateRevisionId) || other.templateRevisionId == templateRevisionId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.pausedAt, pausedAt) || other.pausedAt == pausedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.blocks, blocks)&&const DeepCollectionEquality().equals(other.interruptions, interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, restIntervals)&&const DeepCollectionEquality().equals(other.audits, audits)&&(identical(other.sessionNotes, sessionNotes) || other.sessionNotes == sessionNotes));
+  final _this = this as WorkoutSession;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.templateId, _this.templateId) || other.templateId == _this.templateId)&&(identical(other.templateRevisionId, _this.templateRevisionId) || other.templateRevisionId == _this.templateRevisionId)&&(identical(other.templateName, _this.templateName) || other.templateName == _this.templateName)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.pausedAt, _this.pausedAt) || other.pausedAt == _this.pausedAt)&&(identical(other.completedAt, _this.completedAt) || other.completedAt == _this.completedAt)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.blocks, _this.blocks)&&const DeepCollectionEquality().equals(other.interruptions, _this.interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _this.restIntervals)&&const DeepCollectionEquality().equals(other.audits, _this.audits)&&(identical(other.sessionNotes, _this.sessionNotes) || other.sessionNotes == _this.sessionNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,templateId,templateRevisionId,templateName,status,startedAt,pausedAt,completedAt,createdAt,const DeepCollectionEquality().hash(blocks),const DeepCollectionEquality().hash(interruptions),const DeepCollectionEquality().hash(restIntervals),const DeepCollectionEquality().hash(audits),sessionNotes);
+int get hashCode {
+  final _this = this as WorkoutSession;
+  return Object.hash(runtimeType,_this.id,_this.userId,_this.templateId,_this.templateRevisionId,_this.templateName,_this.status,_this.startedAt,_this.pausedAt,_this.completedAt,_this.createdAt,const DeepCollectionEquality().hash(_this.blocks),const DeepCollectionEquality().hash(_this.interruptions),const DeepCollectionEquality().hash(_this.restIntervals),const DeepCollectionEquality().hash(_this.audits),_this.sessionNotes);
+}
 
 @override
 String toString() {
-  return 'WorkoutSession(id: $id, userId: $userId, templateId: $templateId, templateRevisionId: $templateRevisionId, templateName: $templateName, status: $status, startedAt: $startedAt, pausedAt: $pausedAt, completedAt: $completedAt, createdAt: $createdAt, blocks: $blocks, interruptions: $interruptions, restIntervals: $restIntervals, audits: $audits, sessionNotes: $sessionNotes)';
+  final _this = this as WorkoutSession;
+  return 'WorkoutSession(id: ${_this.id}, userId: ${_this.userId}, templateId: ${_this.templateId}, templateRevisionId: ${_this.templateRevisionId}, templateName: ${_this.templateName}, status: ${_this.status}, startedAt: ${_this.startedAt}, pausedAt: ${_this.pausedAt}, completedAt: ${_this.completedAt}, createdAt: ${_this.createdAt}, blocks: ${_this.blocks}, interruptions: ${_this.interruptions}, restIntervals: ${_this.restIntervals}, audits: ${_this.audits}, sessionNotes: ${_this.sessionNotes})';
 }
 
 
@@ -66,7 +72,7 @@ class _$WorkoutSessionCopyWithImpl<$Res>
 /// Create a copy of WorkoutSession
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? templateId = null,Object? templateRevisionId = null,Object? templateName = null,Object? status = null,Object? startedAt = freezed,Object? pausedAt = freezed,Object? completedAt = freezed,Object? createdAt = null,Object? blocks = null,Object? interruptions = null,Object? restIntervals = null,Object? audits = null,Object? sessionNotes = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(WorkoutSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,templateId: null == templateId ? _self.templateId : templateId // ignore: cast_nullable_to_non_nullable
@@ -223,7 +229,7 @@ return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,
 @JsonSerializable()
 
 class _WorkoutSession implements WorkoutSession {
-  const _WorkoutSession({required this.id, required this.userId, required this.templateId, required this.templateRevisionId, required this.templateName, this.status = SessionStatus.draft, this.startedAt, this.pausedAt, this.completedAt, required this.createdAt, final  List<SessionBlock> blocks = const [], final  List<SessionInterruption> interruptions = const [], final  List<RestInterval> restIntervals = const [], final  List<AuditEntry> audits = const [], this.sessionNotes}): _blocks = blocks,_interruptions = interruptions,_restIntervals = restIntervals,_audits = audits;
+  const _WorkoutSession({required this.id, required this.userId, required this.templateId, required this.templateRevisionId, required this.templateName, this.status = SessionStatus.draft, this.startedAt, this.pausedAt, this.completedAt, required this.createdAt,  List<SessionBlock> blocks = const [],  List<SessionInterruption> interruptions = const [],  List<RestInterval> restIntervals = const [],  List<AuditEntry> audits = const [], this.sessionNotes}): _blocks = blocks,_interruptions = interruptions,_restIntervals = restIntervals,_audits = audits;
   factory _WorkoutSession.fromJson(Map<String, dynamic> json) => _$WorkoutSessionFromJson(json);
 
 @override final  String id;
@@ -279,16 +285,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.templateRevisionId, templateRevisionId) || other.templateRevisionId == templateRevisionId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.pausedAt, pausedAt) || other.pausedAt == pausedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._blocks, _blocks)&&const DeepCollectionEquality().equals(other._interruptions, _interruptions)&&const DeepCollectionEquality().equals(other._restIntervals, _restIntervals)&&const DeepCollectionEquality().equals(other._audits, _audits)&&(identical(other.sessionNotes, sessionNotes) || other.sessionNotes == sessionNotes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.templateRevisionId, templateRevisionId) || other.templateRevisionId == templateRevisionId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.pausedAt, pausedAt) || other.pausedAt == pausedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.blocks, _blocks)&&const DeepCollectionEquality().equals(other.interruptions, _interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _restIntervals)&&const DeepCollectionEquality().equals(other.audits, _audits)&&(identical(other.sessionNotes, sessionNotes) || other.sessionNotes == sessionNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,templateId,templateRevisionId,templateName,status,startedAt,pausedAt,completedAt,createdAt,const DeepCollectionEquality().hash(_blocks),const DeepCollectionEquality().hash(_interruptions),const DeepCollectionEquality().hash(_restIntervals),const DeepCollectionEquality().hash(_audits),sessionNotes);
+int get hashCode {
+    return Object.hash(runtimeType,id,userId,templateId,templateRevisionId,templateName,status,startedAt,pausedAt,completedAt,createdAt,const DeepCollectionEquality().hash(_blocks),const DeepCollectionEquality().hash(_interruptions),const DeepCollectionEquality().hash(_restIntervals),const DeepCollectionEquality().hash(_audits),sessionNotes);
+}
 
 @override
 String toString() {
-  return 'WorkoutSession(id: $id, userId: $userId, templateId: $templateId, templateRevisionId: $templateRevisionId, templateName: $templateName, status: $status, startedAt: $startedAt, pausedAt: $pausedAt, completedAt: $completedAt, createdAt: $createdAt, blocks: $blocks, interruptions: $interruptions, restIntervals: $restIntervals, audits: $audits, sessionNotes: $sessionNotes)';
+    return 'WorkoutSession(id: $id, userId: $userId, templateId: $templateId, templateRevisionId: $templateRevisionId, templateName: $templateName, status: $status, startedAt: $startedAt, pausedAt: $pausedAt, completedAt: $completedAt, createdAt: $createdAt, blocks: $blocks, interruptions: $interruptions, restIntervals: $restIntervals, audits: $audits, sessionNotes: $sessionNotes)';
 }
 
 

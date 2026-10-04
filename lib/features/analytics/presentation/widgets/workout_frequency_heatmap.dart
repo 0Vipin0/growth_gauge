@@ -3,16 +3,11 @@ import 'package:flutter/material.dart';
 import '../../domain/daily_workout_summary.dart';
 
 /// GitHub-style calendar consistency grid for workout frequency.
-class WorkoutFrequencyHeatmap extends StatelessWidget {
-  final List<DailyWorkoutSummary> summaries;
-  final int daysToShow;
-
-  const WorkoutFrequencyHeatmap({
-    super.key,
-    required this.summaries,
-    this.daysToShow = 70, // 10 weeks
-  });
-
+class const WorkoutFrequencyHeatmap({
+  super.key,
+  required final List<DailyWorkoutSummary> summaries,
+  final int daysToShow = 70, // 10 weeks
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now().toUtc();

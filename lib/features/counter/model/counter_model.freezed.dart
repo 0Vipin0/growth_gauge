@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'counter_model.dart';
@@ -9,6 +9,7 @@ part of 'counter_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $CounterModelCopyWith<CounterModel> get copyWith => _$CounterModelCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CounterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.count, count) || other.count == count)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.logs, logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.tags, tags));
+  final _this = this as CounterModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CounterModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.count, _this.count) || other.count == _this.count)&&(identical(other.description, _this.description) || other.description == _this.description)&&const DeepCollectionEquality().equals(other.logs, _this.logs)&&(identical(other.target, _this.target) || other.target == _this.target)&&const DeepCollectionEquality().equals(other.tags, _this.tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,count,description,const DeepCollectionEquality().hash(logs),target,const DeepCollectionEquality().hash(tags));
+int get hashCode {
+  final _this = this as CounterModel;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.count,_this.description,const DeepCollectionEquality().hash(_this.logs),_this.target,const DeepCollectionEquality().hash(_this.tags));
+}
 
 @override
 String toString() {
-  return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
+  final _this = this as CounterModel;
+  return 'CounterModel(id: ${_this.id}, name: ${_this.name}, count: ${_this.count}, description: ${_this.description}, logs: ${_this.logs}, target: ${_this.target}, tags: ${_this.tags})';
 }
 
 
@@ -66,7 +72,7 @@ class _$CounterModelCopyWithImpl<$Res>
 /// Create a copy of CounterModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? count = null,Object? description = null,Object? logs = null,Object? target = freezed,Object? tags = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CounterModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
@@ -215,7 +221,7 @@ return $default(_that.id,_that.name,_that.count,_that.description,_that.logs,_th
 @JsonSerializable()
 
 class _CounterModel implements CounterModel {
-   _CounterModel({required this.id, required this.name, required this.count, required this.description, required final  List<CounterLog> logs, this.target, final  List<String>? tags}): _logs = logs,_tags = tags;
+   _CounterModel({required this.id, required this.name, required this.count, required this.description, required  List<CounterLog> logs, this.target,  List<String>? tags}): _logs = logs,_tags = tags;
   factory _CounterModel.fromJson(Map<String, dynamic> json) => _$CounterModelFromJson(json);
 
 @override final  String id;
@@ -253,16 +259,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CounterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.count, count) || other.count == count)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._logs, _logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other._tags, _tags));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CounterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.count, count) || other.count == count)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.logs, _logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.tags, _tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,count,description,const DeepCollectionEquality().hash(_logs),target,const DeepCollectionEquality().hash(_tags));
+int get hashCode {
+    return Object.hash(runtimeType,id,name,count,description,const DeepCollectionEquality().hash(_logs),target,const DeepCollectionEquality().hash(_tags));
+}
 
 @override
 String toString() {
-  return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
+    return 'CounterModel(id: $id, name: $name, count: $count, description: $description, logs: $logs, target: $target, tags: $tags)';
 }
 
 
@@ -323,16 +331,21 @@ $CounterLogCopyWith<CounterLog> get copyWith => _$CounterLogCopyWithImpl<Counter
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CounterLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  final _this = this as CounterLog;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CounterLog&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.action, _this.action) || other.action == _this.action)&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,timestamp);
+int get hashCode {
+  final _this = this as CounterLog;
+  return Object.hash(runtimeType,_this.id,_this.action,_this.timestamp);
+}
 
 @override
 String toString() {
-  return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
+  final _this = this as CounterLog;
+  return 'CounterLog(id: ${_this.id}, action: ${_this.action}, timestamp: ${_this.timestamp})';
 }
 
 
@@ -361,7 +374,7 @@ class _$CounterLogCopyWithImpl<$Res>
 /// Create a copy of CounterLog
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? action = null,Object? timestamp = null,}) {
-  return _then(_self.copyWith(
+  return _then(CounterLog(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
@@ -526,16 +539,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CounterLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CounterLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,timestamp);
+int get hashCode {
+    return Object.hash(runtimeType,id,action,timestamp);
+}
 
 @override
 String toString() {
-  return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
+    return 'CounterLog(id: $id, action: $action, timestamp: $timestamp)';
 }
 
 

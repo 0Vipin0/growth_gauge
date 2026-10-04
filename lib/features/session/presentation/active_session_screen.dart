@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
-import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/infrastructure/exercise_repository.dart';
 import '../application/session_use_cases.dart';
 import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
@@ -13,23 +13,18 @@ import '../domain/session_item.dart';
 import '../domain/workout_session.dart';
 import 'session_summary_screen.dart';
 
-class ActiveSessionScreen extends StatefulWidget {
-  const ActiveSessionScreen({
-    super.key,
-    required this.session,
-    required this.useCases,
-    required this.exerciseRepository,
-  });
-
-  final WorkoutSession session;
-  final SessionUseCases useCases;
-  final IExerciseRepository exerciseRepository;
-
+class const ActiveSessionScreen({
+  super.key,
+  required final WorkoutSession session,
+  required final SessionUseCases useCases,
+  required final IExerciseRepository exerciseRepository,
+}) extends StatefulWidget {
   @override
   State<ActiveSessionScreen> createState() => _ActiveSessionScreenState();
 }
 
-class _ActiveSessionScreenState extends State<ActiveSessionScreen>
+class _ActiveSessionScreenState()
+    extends State<ActiveSessionScreen>
     with WidgetsBindingObserver {
   late WorkoutSession _session = widget.session;
   late final WorkoutSessionBloc _sessionBloc;
@@ -620,27 +615,16 @@ class _ActiveSessionScreenState extends State<ActiveSessionScreen>
   }
 }
 
-class _ExerciseCard extends StatelessWidget {
-  const _ExerciseCard({
-    required this.item,
-    required this.exerciseName,
-    required this.actionsEnabled,
-    required this.onRecord,
-    required this.onEditTarget,
-    required this.onDelete,
-    required this.onSkip,
-    required this.onRest,
-  });
-
-  final SessionItem item;
-  final String exerciseName;
-  final bool actionsEnabled;
-  final ValueChanged<ExecutionSet> onRecord;
-  final ValueChanged<ExecutionSet> onEditTarget;
-  final ValueChanged<ExecutionSet> onDelete;
-  final ValueChanged<ExecutionSet> onSkip;
-  final ValueChanged<ExecutionSet> onRest;
-
+class const _ExerciseCard({
+  required final SessionItem item,
+  required final String exerciseName,
+  required final bool actionsEnabled,
+  required final ValueChanged<ExecutionSet> onRecord,
+  required final ValueChanged<ExecutionSet> onEditTarget,
+  required final ValueChanged<ExecutionSet> onDelete,
+  required final ValueChanged<ExecutionSet> onSkip,
+  required final ValueChanged<ExecutionSet> onRest,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -732,12 +716,16 @@ class _ExerciseCard extends StatelessWidget {
   );
 }
 
-enum _SetAction { editTarget, record, startRest, skip, delete }
+enum _SetAction() {
+  editTarget,
+  record,
+  startRest,
+  skip,
+  delete,
+}
 
-class _Metric extends StatelessWidget {
-  const _Metric({required this.label, required this.value});
-  final String label;
-  final String value;
+class const _Metric({required final String label, required final String value})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: [

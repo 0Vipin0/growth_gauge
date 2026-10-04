@@ -1,5 +1,5 @@
 /// Contract for adapting an aggregate entity to and from JSON for document storage.
-abstract class DocumentAdapter<T> {
+abstract class DocumentAdapter<T>() {
   /// The collection or namespace name (e.g. 'users', 'exercises').
   String get collection;
 

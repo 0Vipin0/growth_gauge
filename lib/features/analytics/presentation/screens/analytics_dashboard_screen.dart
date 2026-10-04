@@ -11,8 +11,20 @@ import 'pr_trophy_screen.dart';
 
 /// Central dashboard for analytics: weekly volume, workout frequency heatmap,
 /// and recent PR achievements.
-class AnalyticsDashboardScreen extends StatelessWidget {
-  const AnalyticsDashboardScreen({super.key});
+class const AnalyticsDashboardScreen({super.key}) extends StatefulWidget {
+  @override
+  State<AnalyticsDashboardScreen> createState() =>
+      _AnalyticsDashboardScreenState();
+}
+
+class _AnalyticsDashboardScreenState() extends State<AnalyticsDashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AnalyticsCubit>().triggerRebuild();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

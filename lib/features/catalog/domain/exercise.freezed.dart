@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'exercise.dart';
@@ -9,6 +9,7 @@ part of 'exercise.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ExerciseCopyWith<Exercise> get copyWith => _$ExerciseCopyWithImpl<Exercise>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.aliases, aliases)&&(identical(other.description, description) || other.description == description)&&(identical(other.status, status) || other.status == status)&&(identical(other.sourceType, sourceType) || other.sourceType == sourceType)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.forkedFromExerciseId, forkedFromExerciseId) || other.forkedFromExerciseId == forkedFromExerciseId)&&(identical(other.version, version) || other.version == version)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.classification, classification) || other.classification == classification)&&(identical(other.execution, execution) || other.execution == execution)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&const DeepCollectionEquality().equals(other.relationships, relationships)&&(identical(other.measurementProfile, measurementProfile) || other.measurementProfile == measurementProfile));
+  final _this = this as Exercise;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Exercise&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&const DeepCollectionEquality().equals(other.aliases, _this.aliases)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.sourceType, _this.sourceType) || other.sourceType == _this.sourceType)&&(identical(other.createdById, _this.createdById) || other.createdById == _this.createdById)&&(identical(other.forkedFromExerciseId, _this.forkedFromExerciseId) || other.forkedFromExerciseId == _this.forkedFromExerciseId)&&(identical(other.version, _this.version) || other.version == _this.version)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.classification, _this.classification) || other.classification == _this.classification)&&(identical(other.execution, _this.execution) || other.execution == _this.execution)&&(identical(other.equipment, _this.equipment) || other.equipment == _this.equipment)&&const DeepCollectionEquality().equals(other.relationships, _this.relationships)&&(identical(other.measurementProfile, _this.measurementProfile) || other.measurementProfile == _this.measurementProfile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(aliases),description,status,sourceType,createdById,forkedFromExerciseId,version,createdAt,updatedAt,classification,execution,equipment,const DeepCollectionEquality().hash(relationships),measurementProfile);
+int get hashCode {
+  final _this = this as Exercise;
+  return Object.hash(runtimeType,_this.id,_this.name,const DeepCollectionEquality().hash(_this.aliases),_this.description,_this.status,_this.sourceType,_this.createdById,_this.forkedFromExerciseId,_this.version,_this.createdAt,_this.updatedAt,_this.classification,_this.execution,_this.equipment,const DeepCollectionEquality().hash(_this.relationships),_this.measurementProfile);
+}
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, aliases: $aliases, description: $description, status: $status, sourceType: $sourceType, createdById: $createdById, forkedFromExerciseId: $forkedFromExerciseId, version: $version, createdAt: $createdAt, updatedAt: $updatedAt, classification: $classification, execution: $execution, equipment: $equipment, relationships: $relationships, measurementProfile: $measurementProfile)';
+  final _this = this as Exercise;
+  return 'Exercise(id: ${_this.id}, name: ${_this.name}, aliases: ${_this.aliases}, description: ${_this.description}, status: ${_this.status}, sourceType: ${_this.sourceType}, createdById: ${_this.createdById}, forkedFromExerciseId: ${_this.forkedFromExerciseId}, version: ${_this.version}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, classification: ${_this.classification}, execution: ${_this.execution}, equipment: ${_this.equipment}, relationships: ${_this.relationships}, measurementProfile: ${_this.measurementProfile})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ExerciseCopyWithImpl<$Res>
 /// Create a copy of Exercise
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? aliases = null,Object? description = null,Object? status = null,Object? sourceType = null,Object? createdById = freezed,Object? forkedFromExerciseId = freezed,Object? version = null,Object? createdAt = null,Object? updatedAt = null,Object? classification = null,Object? execution = null,Object? equipment = null,Object? relationships = null,Object? measurementProfile = null,}) {
-  return _then(_self.copyWith(
+  return _then(Exercise(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,aliases: null == aliases ? _self.aliases : aliases // ignore: cast_nullable_to_non_nullable
@@ -260,7 +266,7 @@ return $default(_that.id,_that.name,_that.aliases,_that.description,_that.status
 @JsonSerializable()
 
 class _Exercise implements Exercise {
-  const _Exercise({required this.id, required this.name, final  List<String> aliases = const [], this.description = '', this.status = ExerciseStatus.active, this.sourceType = ExerciseSourceType.system, this.createdById, this.forkedFromExerciseId, this.version = 1, required this.createdAt, required this.updatedAt, this.classification = const ExerciseClassification(), this.execution = const ExerciseExecutionProfile(), this.equipment = const ExerciseEquipmentProfile(), final  List<ExerciseRelationship> relationships = const [], this.measurementProfile = const ExerciseMeasurementProfile()}): _aliases = aliases,_relationships = relationships;
+  const _Exercise({required this.id, required this.name,  List<String> aliases = const [], this.description = '', this.status = ExerciseStatus.active, this.sourceType = ExerciseSourceType.system, this.createdById, this.forkedFromExerciseId, this.version = 1, required this.createdAt, required this.updatedAt, this.classification = const ExerciseClassification(), this.execution = const ExerciseExecutionProfile(), this.equipment = const ExerciseEquipmentProfile(),  List<ExerciseRelationship> relationships = const [], this.measurementProfile = const ExerciseMeasurementProfile()}): _aliases = aliases,_relationships = relationships;
   factory _Exercise.fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
 
 @override final  String id;
@@ -305,16 +311,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._aliases, _aliases)&&(identical(other.description, description) || other.description == description)&&(identical(other.status, status) || other.status == status)&&(identical(other.sourceType, sourceType) || other.sourceType == sourceType)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.forkedFromExerciseId, forkedFromExerciseId) || other.forkedFromExerciseId == forkedFromExerciseId)&&(identical(other.version, version) || other.version == version)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.classification, classification) || other.classification == classification)&&(identical(other.execution, execution) || other.execution == execution)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&const DeepCollectionEquality().equals(other._relationships, _relationships)&&(identical(other.measurementProfile, measurementProfile) || other.measurementProfile == measurementProfile));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Exercise&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.aliases, _aliases)&&(identical(other.description, description) || other.description == description)&&(identical(other.status, status) || other.status == status)&&(identical(other.sourceType, sourceType) || other.sourceType == sourceType)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.forkedFromExerciseId, forkedFromExerciseId) || other.forkedFromExerciseId == forkedFromExerciseId)&&(identical(other.version, version) || other.version == version)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.classification, classification) || other.classification == classification)&&(identical(other.execution, execution) || other.execution == execution)&&(identical(other.equipment, equipment) || other.equipment == equipment)&&const DeepCollectionEquality().equals(other.relationships, _relationships)&&(identical(other.measurementProfile, measurementProfile) || other.measurementProfile == measurementProfile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(_aliases),description,status,sourceType,createdById,forkedFromExerciseId,version,createdAt,updatedAt,classification,execution,equipment,const DeepCollectionEquality().hash(_relationships),measurementProfile);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(_aliases),description,status,sourceType,createdById,forkedFromExerciseId,version,createdAt,updatedAt,classification,execution,equipment,const DeepCollectionEquality().hash(_relationships),measurementProfile);
+}
 
 @override
 String toString() {
-  return 'Exercise(id: $id, name: $name, aliases: $aliases, description: $description, status: $status, sourceType: $sourceType, createdById: $createdById, forkedFromExerciseId: $forkedFromExerciseId, version: $version, createdAt: $createdAt, updatedAt: $updatedAt, classification: $classification, execution: $execution, equipment: $equipment, relationships: $relationships, measurementProfile: $measurementProfile)';
+    return 'Exercise(id: $id, name: $name, aliases: $aliases, description: $description, status: $status, sourceType: $sourceType, createdById: $createdById, forkedFromExerciseId: $forkedFromExerciseId, version: $version, createdAt: $createdAt, updatedAt: $updatedAt, classification: $classification, execution: $execution, equipment: $equipment, relationships: $relationships, measurementProfile: $measurementProfile)';
 }
 
 

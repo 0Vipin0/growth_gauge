@@ -6,12 +6,10 @@ import '../infrastructure/analytics_dao.dart';
 import '../projection/projection_rebuilder.dart';
 
 /// Application queries for visualization and statistics read models.
-class AnalyticsQueries {
-  final AnalyticsDao _dao;
-  final ProjectionRebuilder _rebuilder;
-
-  AnalyticsQueries({required this._dao, required this._rebuilder});
-
+class AnalyticsQueries({
+  required final AnalyticsDao _dao,
+  required final ProjectionRebuilder _rebuilder,
+}) {
   Stream<List<DailyWorkoutSummary>> watchWorkoutHistory(String userId) =>
       _dao.watchWorkoutHistory(userId);
 

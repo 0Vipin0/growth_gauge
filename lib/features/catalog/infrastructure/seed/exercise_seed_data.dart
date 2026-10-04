@@ -7,9 +7,7 @@ import '../../domain/exercise_equipment.dart';
 ///
 /// These 7 exercises are seeded on first launch if the catalog is empty.
 /// IDs match the [Persona_Worked_Example.json] fixture.
-class ExerciseSeedData {
-  const ExerciseSeedData._();
-
+class const ExerciseSeedData._() {
   static final _epoch = DateTime.utc(2024);
 
   static List<Exercise> get all => [

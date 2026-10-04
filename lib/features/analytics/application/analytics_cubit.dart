@@ -9,25 +9,15 @@ import '../domain/muscle_volume_stat.dart';
 import '../domain/personal_record.dart';
 import 'analytics_queries.dart';
 
-class AnalyticsState extends Equatable {
-  final bool isLoading;
-  final List<DailyWorkoutSummary> history;
-  final List<MuscleVolumeStat> weeklyVolume;
-  final List<PersonalRecord> personalRecords;
-  final List<ExerciseSetMetric> exerciseProgression;
-  final String? selectedExerciseId;
-  final String? errorMessage;
-
-  const AnalyticsState({
-    this.isLoading = false,
-    this.history = const [],
-    this.weeklyVolume = const [],
-    this.personalRecords = const [],
-    this.exerciseProgression = const [],
-    this.selectedExerciseId,
-    this.errorMessage,
-  });
-
+class const AnalyticsState({
+  final bool isLoading = false,
+  final List<DailyWorkoutSummary> history = const [],
+  final List<MuscleVolumeStat> weeklyVolume = const [],
+  final List<PersonalRecord> personalRecords = const [],
+  final List<ExerciseSetMetric> exerciseProgression = const [],
+  final String? selectedExerciseId,
+  final String? errorMessage,
+}) extends Equatable {
   AnalyticsState copyWith({
     bool? isLoading,
     List<DailyWorkoutSummary>? history,
@@ -60,17 +50,16 @@ class AnalyticsState extends Equatable {
   ];
 }
 
-class AnalyticsCubit extends Cubit<AnalyticsState> {
-  final AnalyticsQueries _queries;
-  final String _userId;
-
+class AnalyticsCubit({
+  required final AnalyticsQueries _queries,
+  final String _userId = 'local-user',
+}) extends Cubit<AnalyticsState> {
   StreamSubscription<List<DailyWorkoutSummary>>? _historySub;
   StreamSubscription<List<MuscleVolumeStat>>? _volumeSub;
   StreamSubscription<List<PersonalRecord>>? _prSub;
   StreamSubscription<List<ExerciseSetMetric>>? _progressionSub;
 
-  AnalyticsCubit({required this._queries, this._userId = 'local-user'})
-    : super(const AnalyticsState()) {
+  this : super(const AnalyticsState()) {
     _initStreams();
   }
 

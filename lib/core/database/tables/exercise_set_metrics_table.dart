@@ -6,7 +6,7 @@ import 'package:drift/drift.dart';
 /// needed to power progression charts and PR evaluation without re-parsing
 /// the full session document.
 @DataClassName('ExerciseSetMetricRow')
-class ExerciseSetMetrics extends Table {
+class ExerciseSetMetrics() extends Table {
   /// ExecutionSet ID (matches the session document).
   TextColumn get id => text()();
 

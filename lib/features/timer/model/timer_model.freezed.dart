@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'timer_model.dart';
@@ -9,6 +9,7 @@ part of 'timer_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $TimerModelCopyWith<TimerModel> get copyWith => _$TimerModelCopyWithImpl<TimerMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.interval, interval) || other.interval == interval)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.logs, logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.tags, tags));
+  final _this = this as TimerModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.interval, _this.interval) || other.interval == _this.interval)&&(identical(other.description, _this.description) || other.description == _this.description)&&const DeepCollectionEquality().equals(other.logs, _this.logs)&&(identical(other.target, _this.target) || other.target == _this.target)&&const DeepCollectionEquality().equals(other.tags, _this.tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,interval,description,const DeepCollectionEquality().hash(logs),target,const DeepCollectionEquality().hash(tags));
+int get hashCode {
+  final _this = this as TimerModel;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.interval,_this.description,const DeepCollectionEquality().hash(_this.logs),_this.target,const DeepCollectionEquality().hash(_this.tags));
+}
 
 @override
 String toString() {
-  return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
+  final _this = this as TimerModel;
+  return 'TimerModel(id: ${_this.id}, name: ${_this.name}, interval: ${_this.interval}, description: ${_this.description}, logs: ${_this.logs}, target: ${_this.target}, tags: ${_this.tags})';
 }
 
 
@@ -66,7 +72,7 @@ class _$TimerModelCopyWithImpl<$Res>
 /// Create a copy of TimerModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? interval = null,Object? description = null,Object? logs = null,Object? target = freezed,Object? tags = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TimerModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,interval: null == interval ? _self.interval : interval // ignore: cast_nullable_to_non_nullable
@@ -215,7 +221,7 @@ return $default(_that.id,_that.name,_that.interval,_that.description,_that.logs,
 @JsonSerializable()
 
 class _TimerModel implements TimerModel {
-   _TimerModel({required this.id, required this.name, required this.interval, required this.description, final  List<TimerLog> logs = const [], this.target, final  List<String>? tags}): _logs = logs,_tags = tags;
+   _TimerModel({required this.id, required this.name, required this.interval, required this.description,  List<TimerLog> logs = const [], this.target,  List<String>? tags}): _logs = logs,_tags = tags;
   factory _TimerModel.fromJson(Map<String, dynamic> json) => _$TimerModelFromJson(json);
 
 @override final  String id;
@@ -253,16 +259,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.interval, interval) || other.interval == interval)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._logs, _logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other._tags, _tags));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.interval, interval) || other.interval == interval)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.logs, _logs)&&(identical(other.target, target) || other.target == target)&&const DeepCollectionEquality().equals(other.tags, _tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,interval,description,const DeepCollectionEquality().hash(_logs),target,const DeepCollectionEquality().hash(_tags));
+int get hashCode {
+    return Object.hash(runtimeType,id,name,interval,description,const DeepCollectionEquality().hash(_logs),target,const DeepCollectionEquality().hash(_tags));
+}
 
 @override
 String toString() {
-  return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
+    return 'TimerModel(id: $id, name: $name, interval: $interval, description: $description, logs: $logs, target: $target, tags: $tags)';
 }
 
 
@@ -323,16 +331,21 @@ $TimerLogCopyWith<TimerLog> get copyWith => _$TimerLogCopyWithImpl<TimerLog>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.interval, interval) || other.interval == interval));
+  final _this = this as TimerLog;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerLog&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.action, _this.action) || other.action == _this.action)&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.interval, _this.interval) || other.interval == _this.interval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,timestamp,interval);
+int get hashCode {
+  final _this = this as TimerLog;
+  return Object.hash(runtimeType,_this.id,_this.action,_this.timestamp,_this.interval);
+}
 
 @override
 String toString() {
-  return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
+  final _this = this as TimerLog;
+  return 'TimerLog(id: ${_this.id}, action: ${_this.action}, timestamp: ${_this.timestamp}, interval: ${_this.interval})';
 }
 
 
@@ -361,7 +374,7 @@ class _$TimerLogCopyWithImpl<$Res>
 /// Create a copy of TimerLog
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? action = null,Object? timestamp = null,Object? interval = null,}) {
-  return _then(_self.copyWith(
+  return _then(TimerLog(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
@@ -528,16 +541,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimerLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.interval, interval) || other.interval == interval));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimerLog&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.interval, interval) || other.interval == interval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,timestamp,interval);
+int get hashCode {
+    return Object.hash(runtimeType,id,action,timestamp,interval);
+}
 
 @override
 String toString() {
-  return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
+    return 'TimerLog(id: $id, action: $action, timestamp: $timestamp, interval: $interval)';
 }
 
 

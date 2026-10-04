@@ -10,13 +10,7 @@ import 'analytics_enums.dart';
 /// [evaluateSessionVolumePR] query the current records in [AppDatabase]
 /// and return [PersonalRecordsCompanion] entries to be inserted inside the
 /// caller's transaction.
-class PRCalculator {
-  const PRCalculator();
-
-  // ---------------------------------------------------------------------------
-  // 1RM Formula Implementations (Section 27)
-  // ---------------------------------------------------------------------------
-
+class const PRCalculator() {
   /// Epley formula: w × (1 + r/30).
   ///
   /// Preferred for moderate rep ranges (1–10). Returns null when [reps] < 1.

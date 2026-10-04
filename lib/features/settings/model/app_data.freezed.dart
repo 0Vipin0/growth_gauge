@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'app_data.dart';
@@ -9,14 +9,14 @@ part of 'app_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$AppData {
 
- int get version;// Version 1 for initial structure
- List<CounterModel> get counters; List<TimerModel> get timers;
+ int get version; List<CounterModel> get counters; List<TimerModel> get timers;
 /// Create a copy of AppData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,21 @@ $AppDataCopyWith<AppData> get copyWith => _$AppDataCopyWithImpl<AppData>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppData&&(identical(other.version, version) || other.version == version)&&const DeepCollectionEquality().equals(other.counters, counters)&&const DeepCollectionEquality().equals(other.timers, timers));
+  final _this = this as AppData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppData&&(identical(other.version, _this.version) || other.version == _this.version)&&const DeepCollectionEquality().equals(other.counters, _this.counters)&&const DeepCollectionEquality().equals(other.timers, _this.timers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,const DeepCollectionEquality().hash(counters),const DeepCollectionEquality().hash(timers));
+int get hashCode {
+  final _this = this as AppData;
+  return Object.hash(runtimeType,_this.version,const DeepCollectionEquality().hash(_this.counters),const DeepCollectionEquality().hash(_this.timers));
+}
 
 @override
 String toString() {
-  return 'AppData(version: $version, counters: $counters, timers: $timers)';
+  final _this = this as AppData;
+  return 'AppData(version: ${_this.version}, counters: ${_this.counters}, timers: ${_this.timers})';
 }
 
 
@@ -67,7 +72,7 @@ class _$AppDataCopyWithImpl<$Res>
 /// Create a copy of AppData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? version = null,Object? counters = null,Object? timers = null,}) {
-  return _then(_self.copyWith(
+  return _then(AppData(
 version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as int,counters: null == counters ? _self.counters : counters // ignore: cast_nullable_to_non_nullable
 as List<CounterModel>,timers: null == timers ? _self.timers : timers // ignore: cast_nullable_to_non_nullable
@@ -212,13 +217,11 @@ return $default(_that.version,_that.counters,_that.timers);case _:
 @JsonSerializable()
 
 class _AppData implements AppData {
-   _AppData({this.version = 1, final  List<CounterModel> counters = const [], final  List<TimerModel> timers = const []}): _counters = counters,_timers = timers;
+   _AppData({this.version = 1,  List<CounterModel> counters = const [],  List<TimerModel> timers = const []}): _counters = counters,_timers = timers;
   factory _AppData.fromJson(Map<String, dynamic> json) => _$AppDataFromJson(json);
 
 @override@JsonKey() final  int version;
-// Version 1 for initial structure
  final  List<CounterModel> _counters;
-// Version 1 for initial structure
 @override@JsonKey() List<CounterModel> get counters {
   if (_counters is EqualUnmodifiableListView) return _counters;
   // ignore: implicit_dynamic_type
@@ -246,16 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppData&&(identical(other.version, version) || other.version == version)&&const DeepCollectionEquality().equals(other._counters, _counters)&&const DeepCollectionEquality().equals(other._timers, _timers));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppData&&(identical(other.version, version) || other.version == version)&&const DeepCollectionEquality().equals(other.counters, _counters)&&const DeepCollectionEquality().equals(other.timers, _timers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,version,const DeepCollectionEquality().hash(_counters),const DeepCollectionEquality().hash(_timers));
+int get hashCode {
+    return Object.hash(runtimeType,version,const DeepCollectionEquality().hash(_counters),const DeepCollectionEquality().hash(_timers));
+}
 
 @override
 String toString() {
-  return 'AppData(version: $version, counters: $counters, timers: $timers)';
+    return 'AppData(version: $version, counters: $counters, timers: $timers)';
 }
 
 

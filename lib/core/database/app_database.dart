@@ -23,16 +23,16 @@ part 'app_database.g.dart';
     RestIntervalMetrics,
   ],
 )
-class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
+class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
+  this : super(e ?? _openConnection());
 
   /// Creates an isolated in-memory SQLite database instance for testing.
-  factory AppDatabase.inMemory() {
+  factory inMemory() {
     return AppDatabase(NativeDatabase.memory());
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -44,6 +44,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(personalRecords);
         await m.createTable(muscleVolumeBreakdowns);
         await m.createTable(restIntervalMetrics);
+      }
+      if (from < 3) {
+        await customStatement(
+          'CREATE INDEX IF NOT EXISTS muscle_volume_user_week_start '
+          'ON muscle_volume_breakdowns (user_id, week_start_date)',
+        );
       }
     },
   );

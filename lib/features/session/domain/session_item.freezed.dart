@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'session_item.dart';
@@ -9,6 +9,7 @@ part of 'session_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $SessionItemCopyWith<SessionItem> get copyWith => _$SessionItemCopyWithImpl<Sess
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateItemId, sourceTemplateItemId) || other.sourceTemplateItemId == sourceTemplateItemId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other.sets, sets)&&(identical(other.notes, notes) || other.notes == notes));
+  final _this = this as SessionItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.sourceTemplateItemId, _this.sourceTemplateItemId) || other.sourceTemplateItemId == _this.sourceTemplateItemId)&&(identical(other.exerciseId, _this.exerciseId) || other.exerciseId == _this.exerciseId)&&(identical(other.order, _this.order) || other.order == _this.order)&&const DeepCollectionEquality().equals(other.sets, _this.sets)&&(identical(other.notes, _this.notes) || other.notes == _this.notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sourceTemplateItemId,exerciseId,order,const DeepCollectionEquality().hash(sets),notes);
+int get hashCode {
+  final _this = this as SessionItem;
+  return Object.hash(runtimeType,_this.id,_this.sourceTemplateItemId,_this.exerciseId,_this.order,const DeepCollectionEquality().hash(_this.sets),_this.notes);
+}
 
 @override
 String toString() {
-  return 'SessionItem(id: $id, sourceTemplateItemId: $sourceTemplateItemId, exerciseId: $exerciseId, order: $order, sets: $sets, notes: $notes)';
+  final _this = this as SessionItem;
+  return 'SessionItem(id: ${_this.id}, sourceTemplateItemId: ${_this.sourceTemplateItemId}, exerciseId: ${_this.exerciseId}, order: ${_this.order}, sets: ${_this.sets}, notes: ${_this.notes})';
 }
 
 
@@ -66,7 +72,7 @@ class _$SessionItemCopyWithImpl<$Res>
 /// Create a copy of SessionItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sourceTemplateItemId = null,Object? exerciseId = null,Object? order = null,Object? sets = null,Object? notes = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SessionItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sourceTemplateItemId: null == sourceTemplateItemId ? _self.sourceTemplateItemId : sourceTemplateItemId // ignore: cast_nullable_to_non_nullable
 as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
@@ -214,7 +220,7 @@ return $default(_that.id,_that.sourceTemplateItemId,_that.exerciseId,_that.order
 @JsonSerializable()
 
 class _SessionItem implements SessionItem {
-  const _SessionItem({required this.id, required this.sourceTemplateItemId, required this.exerciseId, required this.order, final  List<ExecutionSet> sets = const [], this.notes}): _sets = sets;
+  const _SessionItem({required this.id, required this.sourceTemplateItemId, required this.exerciseId, required this.order,  List<ExecutionSet> sets = const [], this.notes}): _sets = sets;
   factory _SessionItem.fromJson(Map<String, dynamic> json) => _$SessionItemFromJson(json);
 
 @override final  String id;
@@ -243,16 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateItemId, sourceTemplateItemId) || other.sourceTemplateItemId == sourceTemplateItemId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other._sets, _sets)&&(identical(other.notes, notes) || other.notes == notes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateItemId, sourceTemplateItemId) || other.sourceTemplateItemId == sourceTemplateItemId)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other.sets, _sets)&&(identical(other.notes, notes) || other.notes == notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sourceTemplateItemId,exerciseId,order,const DeepCollectionEquality().hash(_sets),notes);
+int get hashCode {
+    return Object.hash(runtimeType,id,sourceTemplateItemId,exerciseId,order,const DeepCollectionEquality().hash(_sets),notes);
+}
 
 @override
 String toString() {
-  return 'SessionItem(id: $id, sourceTemplateItemId: $sourceTemplateItemId, exerciseId: $exerciseId, order: $order, sets: $sets, notes: $notes)';
+    return 'SessionItem(id: $id, sourceTemplateItemId: $sourceTemplateItemId, exerciseId: $exerciseId, order: $order, sets: $sets, notes: $notes)';
 }
 
 

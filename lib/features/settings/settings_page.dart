@@ -9,9 +9,7 @@ import 'config/config.dart';
 import 'model/model.dart';
 import 'settings_provider.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
+class const SettingsPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);

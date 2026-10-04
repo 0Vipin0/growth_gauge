@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'workout_template_revision.dart';
@@ -9,6 +9,7 @@ part of 'workout_template_revision.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $WorkoutTemplateRevisionCopyWith<WorkoutTemplateRevision> get copyWith => _$Work
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutTemplateRevision&&(identical(other.id, id) || other.id == id)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.revisionNumber, revisionNumber) || other.revisionNumber == revisionNumber)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.blocks, blocks)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.changeSummary, changeSummary) || other.changeSummary == changeSummary));
+  final _this = this as WorkoutTemplateRevision;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutTemplateRevision&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.templateId, _this.templateId) || other.templateId == _this.templateId)&&(identical(other.revisionNumber, _this.revisionNumber) || other.revisionNumber == _this.revisionNumber)&&(identical(other.status, _this.status) || other.status == _this.status)&&const DeepCollectionEquality().equals(other.blocks, _this.blocks)&&(identical(other.createdById, _this.createdById) || other.createdById == _this.createdById)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.changeSummary, _this.changeSummary) || other.changeSummary == _this.changeSummary));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,templateId,revisionNumber,status,const DeepCollectionEquality().hash(blocks),createdById,createdAt,changeSummary);
+int get hashCode {
+  final _this = this as WorkoutTemplateRevision;
+  return Object.hash(runtimeType,_this.id,_this.templateId,_this.revisionNumber,_this.status,const DeepCollectionEquality().hash(_this.blocks),_this.createdById,_this.createdAt,_this.changeSummary);
+}
 
 @override
 String toString() {
-  return 'WorkoutTemplateRevision(id: $id, templateId: $templateId, revisionNumber: $revisionNumber, status: $status, blocks: $blocks, createdById: $createdById, createdAt: $createdAt, changeSummary: $changeSummary)';
+  final _this = this as WorkoutTemplateRevision;
+  return 'WorkoutTemplateRevision(id: ${_this.id}, templateId: ${_this.templateId}, revisionNumber: ${_this.revisionNumber}, status: ${_this.status}, blocks: ${_this.blocks}, createdById: ${_this.createdById}, createdAt: ${_this.createdAt}, changeSummary: ${_this.changeSummary})';
 }
 
 
@@ -66,7 +72,7 @@ class _$WorkoutTemplateRevisionCopyWithImpl<$Res>
 /// Create a copy of WorkoutTemplateRevision
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? templateId = null,Object? revisionNumber = null,Object? status = null,Object? blocks = null,Object? createdById = null,Object? createdAt = null,Object? changeSummary = null,}) {
-  return _then(_self.copyWith(
+  return _then(WorkoutTemplateRevision(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,templateId: null == templateId ? _self.templateId : templateId // ignore: cast_nullable_to_non_nullable
 as String,revisionNumber: null == revisionNumber ? _self.revisionNumber : revisionNumber // ignore: cast_nullable_to_non_nullable
@@ -216,7 +222,7 @@ return $default(_that.id,_that.templateId,_that.revisionNumber,_that.status,_tha
 @JsonSerializable()
 
 class _WorkoutTemplateRevision implements WorkoutTemplateRevision {
-  const _WorkoutTemplateRevision({required this.id, required this.templateId, required this.revisionNumber, this.status = TemplateRevisionStatus.draft, final  List<WorkoutBlock> blocks = const [], required this.createdById, required this.createdAt, this.changeSummary = ''}): _blocks = blocks;
+  const _WorkoutTemplateRevision({required this.id, required this.templateId, required this.revisionNumber, this.status = TemplateRevisionStatus.draft,  List<WorkoutBlock> blocks = const [], required this.createdById, required this.createdAt, this.changeSummary = ''}): _blocks = blocks;
   factory _WorkoutTemplateRevision.fromJson(Map<String, dynamic> json) => _$WorkoutTemplateRevisionFromJson(json);
 
 @override final  String id;
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutTemplateRevision&&(identical(other.id, id) || other.id == id)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.revisionNumber, revisionNumber) || other.revisionNumber == revisionNumber)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._blocks, _blocks)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.changeSummary, changeSummary) || other.changeSummary == changeSummary));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutTemplateRevision&&(identical(other.id, id) || other.id == id)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.revisionNumber, revisionNumber) || other.revisionNumber == revisionNumber)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.blocks, _blocks)&&(identical(other.createdById, createdById) || other.createdById == createdById)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.changeSummary, changeSummary) || other.changeSummary == changeSummary));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,templateId,revisionNumber,status,const DeepCollectionEquality().hash(_blocks),createdById,createdAt,changeSummary);
+int get hashCode {
+    return Object.hash(runtimeType,id,templateId,revisionNumber,status,const DeepCollectionEquality().hash(_blocks),createdById,createdAt,changeSummary);
+}
 
 @override
 String toString() {
-  return 'WorkoutTemplateRevision(id: $id, templateId: $templateId, revisionNumber: $revisionNumber, status: $status, blocks: $blocks, createdById: $createdById, createdAt: $createdAt, changeSummary: $changeSummary)';
+    return 'WorkoutTemplateRevision(id: $id, templateId: $templateId, revisionNumber: $revisionNumber, status: $status, blocks: $blocks, createdById: $createdById, createdAt: $createdAt, changeSummary: $changeSummary)';
 }
 
 

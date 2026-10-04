@@ -6,17 +6,17 @@ import '../../application/analytics_cubit.dart';
 import '../widgets/progression_line_chart.dart';
 
 /// Screen displaying 1RM estimated curve and set history for a selected exercise.
-class ExerciseProgressionScreen extends StatefulWidget {
-  final String? initialExerciseId;
-
-  const ExerciseProgressionScreen({super.key, this.initialExerciseId});
-
+class const ExerciseProgressionScreen({
+  super.key,
+  final String? initialExerciseId,
+}) extends StatefulWidget {
   @override
   State<ExerciseProgressionScreen> createState() =>
       _ExerciseProgressionScreenState();
 }
 
-class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
+class _ExerciseProgressionScreenState()
+    extends State<ExerciseProgressionScreen> {
   // Common standard exercises to quick-pick
   final List<Map<String, String>> _exercises = const [
     {'id': 'exercise-squat-001', 'name': 'Barbell Back Squat'},

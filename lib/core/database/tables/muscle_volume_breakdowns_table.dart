@@ -4,8 +4,12 @@ import 'package:drift/drift.dart';
 ///
 /// One row per (userId, muscleGroup, isoWeek). Enables the weekly volume
 /// bar chart broken down by muscle group without scanning session documents.
+@TableIndex(
+  name: 'muscle_volume_user_week_start',
+  columns: {#userId, #weekStartDate},
+)
 @DataClassName('MuscleVolumeBreakdownRow')
-class MuscleVolumeBreakdowns extends Table {
+class MuscleVolumeBreakdowns() extends Table {
   /// Composite key: "{userId}_{muscleGroup}_{isoYear}_{isoWeek}"
   TextColumn get id => text()();
 

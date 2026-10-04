@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/ids/unique_id.dart';
-import '../../../features/catalog/domain/exercise.dart';
-import '../../../features/catalog/domain/exercise_enums.dart';
-import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/domain/exercise.dart';
+import '../../catalog/domain/exercise_enums.dart';
+import '../../catalog/infrastructure/exercise_repository.dart';
 import '../application/template_use_cases.dart';
 import '../domain/rest_policy.dart';
 import '../domain/target_set.dart';
@@ -13,26 +13,19 @@ import '../domain/workout_block.dart';
 import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 
-class TemplateEditorScreen extends StatefulWidget {
-  const TemplateEditorScreen({
-    super.key,
-    required this.revision,
-    required this.repository,
-    required this.exerciseRepository,
-    required this.useCases,
-    required this.userId,
-  });
-  final WorkoutTemplateRevision revision;
-  final ITemplateRepository repository;
-  final IExerciseRepository exerciseRepository;
-  final TemplateUseCases useCases;
-  final String userId;
-
+class const TemplateEditorScreen({
+  super.key,
+  required final WorkoutTemplateRevision revision,
+  required final ITemplateRepository repository,
+  required final IExerciseRepository exerciseRepository,
+  required final TemplateUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<TemplateEditorScreen> createState() => _TemplateEditorScreenState();
 }
 
-class _TemplateEditorScreenState extends State<TemplateEditorScreen> {
+class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
   late List<WorkoutBlock> _blocks;
   bool _saving = false;
   @override

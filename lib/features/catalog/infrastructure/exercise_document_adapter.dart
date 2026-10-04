@@ -4,9 +4,7 @@ import '../domain/exercise.dart';
 /// Bridges [Exercise] aggregate root to the [DriftDocumentStore] JSON contract.
 ///
 /// Collection name: `'exercises'`
-class ExerciseDocumentAdapter implements DocumentAdapter<Exercise> {
-  const ExerciseDocumentAdapter();
-
+class const ExerciseDocumentAdapter() implements DocumentAdapter<Exercise> {
   @override
   String get collection => 'exercises';
 

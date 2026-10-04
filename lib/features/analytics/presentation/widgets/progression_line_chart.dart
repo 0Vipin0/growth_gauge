@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import '../../domain/exercise_set_metric.dart';
 
 /// Renders a 1RM estimated progression curve using fl_chart.
-class ProgressionLineChart extends StatelessWidget {
-  final List<ExerciseSetMetric> metrics;
-
-  const ProgressionLineChart({super.key, required this.metrics});
-
+class const ProgressionLineChart({
+  super.key,
+  required final List<ExerciseSetMetric> metrics,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final validMetrics = metrics

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/events/domain_event_dispatcher.dart';
-import '../../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/infrastructure/session_repository.dart';
 import '../../session/presentation/active_session_screen.dart';
@@ -15,26 +15,19 @@ import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 import 'template_editor_screen.dart';
 
-class TemplateDetailScreen extends StatefulWidget {
-  const TemplateDetailScreen({
-    super.key,
-    required this.template,
-    required this.repository,
-    required this.exerciseRepository,
-    required this.useCases,
-    required this.userId,
-  });
-  final WorkoutTemplate template;
-  final ITemplateRepository repository;
-  final IExerciseRepository exerciseRepository;
-  final TemplateUseCases useCases;
-  final String userId;
-
+class const TemplateDetailScreen({
+  super.key,
+  required final WorkoutTemplate template,
+  required final ITemplateRepository repository,
+  required final IExerciseRepository exerciseRepository,
+  required final TemplateUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<TemplateDetailScreen> createState() => _TemplateDetailScreenState();
 }
 
-class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
+class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
   late WorkoutTemplate _template;
   bool _starting = false;
 
@@ -87,7 +80,7 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
     if (_starting) return;
     setState(() => _starting = true);
     final database = Provider.of<AppDatabase>(context, listen: false);
-    final events = DomainEventDispatcher();
+    final events = context.read<DomainEventDispatcher>();
     final useCases = SessionUseCases(
       templates: widget.repository,
       sessions: WorkoutSessionRepository(database),
@@ -123,7 +116,6 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen> {
         ),
       );
     } finally {
-      await events.dispose();
       if (mounted) setState(() => _starting = false);
     }
   }

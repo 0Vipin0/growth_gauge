@@ -4,12 +4,12 @@ import '../../routes.dart';
 import '../../utils/navigation_helper.dart';
 import 'authentication_service.dart';
 
-class BiometricAuthScreen extends StatefulWidget {
+class const BiometricAuthScreen() extends StatefulWidget {
   @override
   _BiometricAuthScreenState createState() => _BiometricAuthScreenState();
 }
 
-class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
+class _BiometricAuthScreenState() extends State<BiometricAuthScreen> {
   final AuthenticationService _authService = AuthenticationService();
 
   @override

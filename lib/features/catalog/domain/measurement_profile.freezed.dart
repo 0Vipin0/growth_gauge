@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'measurement_profile.dart';
@@ -9,6 +9,7 @@ part of 'measurement_profile.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ExerciseMeasurementProfileCopyWith<ExerciseMeasurementProfile> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseMeasurementProfile&&(identical(other.defaultMetricType, defaultMetricType) || other.defaultMetricType == defaultMetricType)&&const DeepCollectionEquality().equals(other.supportedMetricTypes, supportedMetricTypes)&&(identical(other.supportsWeight, supportsWeight) || other.supportsWeight == supportsWeight)&&(identical(other.supportsReps, supportsReps) || other.supportsReps == supportsReps)&&(identical(other.supportsDuration, supportsDuration) || other.supportsDuration == supportsDuration)&&(identical(other.supportsDistance, supportsDistance) || other.supportsDistance == supportsDistance)&&(identical(other.supportsCalories, supportsCalories) || other.supportsCalories == supportsCalories)&&(identical(other.supportsRpe, supportsRpe) || other.supportsRpe == supportsRpe)&&(identical(other.supportsRir, supportsRir) || other.supportsRir == supportsRir)&&(identical(other.supportsTempo, supportsTempo) || other.supportsTempo == supportsTempo));
+  final _this = this as ExerciseMeasurementProfile;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseMeasurementProfile&&(identical(other.defaultMetricType, _this.defaultMetricType) || other.defaultMetricType == _this.defaultMetricType)&&const DeepCollectionEquality().equals(other.supportedMetricTypes, _this.supportedMetricTypes)&&(identical(other.supportsWeight, _this.supportsWeight) || other.supportsWeight == _this.supportsWeight)&&(identical(other.supportsReps, _this.supportsReps) || other.supportsReps == _this.supportsReps)&&(identical(other.supportsDuration, _this.supportsDuration) || other.supportsDuration == _this.supportsDuration)&&(identical(other.supportsDistance, _this.supportsDistance) || other.supportsDistance == _this.supportsDistance)&&(identical(other.supportsCalories, _this.supportsCalories) || other.supportsCalories == _this.supportsCalories)&&(identical(other.supportsRpe, _this.supportsRpe) || other.supportsRpe == _this.supportsRpe)&&(identical(other.supportsRir, _this.supportsRir) || other.supportsRir == _this.supportsRir)&&(identical(other.supportsTempo, _this.supportsTempo) || other.supportsTempo == _this.supportsTempo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,defaultMetricType,const DeepCollectionEquality().hash(supportedMetricTypes),supportsWeight,supportsReps,supportsDuration,supportsDistance,supportsCalories,supportsRpe,supportsRir,supportsTempo);
+int get hashCode {
+  final _this = this as ExerciseMeasurementProfile;
+  return Object.hash(runtimeType,_this.defaultMetricType,const DeepCollectionEquality().hash(_this.supportedMetricTypes),_this.supportsWeight,_this.supportsReps,_this.supportsDuration,_this.supportsDistance,_this.supportsCalories,_this.supportsRpe,_this.supportsRir,_this.supportsTempo);
+}
 
 @override
 String toString() {
-  return 'ExerciseMeasurementProfile(defaultMetricType: $defaultMetricType, supportedMetricTypes: $supportedMetricTypes, supportsWeight: $supportsWeight, supportsReps: $supportsReps, supportsDuration: $supportsDuration, supportsDistance: $supportsDistance, supportsCalories: $supportsCalories, supportsRpe: $supportsRpe, supportsRir: $supportsRir, supportsTempo: $supportsTempo)';
+  final _this = this as ExerciseMeasurementProfile;
+  return 'ExerciseMeasurementProfile(defaultMetricType: ${_this.defaultMetricType}, supportedMetricTypes: ${_this.supportedMetricTypes}, supportsWeight: ${_this.supportsWeight}, supportsReps: ${_this.supportsReps}, supportsDuration: ${_this.supportsDuration}, supportsDistance: ${_this.supportsDistance}, supportsCalories: ${_this.supportsCalories}, supportsRpe: ${_this.supportsRpe}, supportsRir: ${_this.supportsRir}, supportsTempo: ${_this.supportsTempo})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ExerciseMeasurementProfileCopyWithImpl<$Res>
 /// Create a copy of ExerciseMeasurementProfile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? defaultMetricType = null,Object? supportedMetricTypes = null,Object? supportsWeight = null,Object? supportsReps = null,Object? supportsDuration = null,Object? supportsDistance = null,Object? supportsCalories = null,Object? supportsRpe = null,Object? supportsRir = null,Object? supportsTempo = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExerciseMeasurementProfile(
 defaultMetricType: null == defaultMetricType ? _self.defaultMetricType : defaultMetricType // ignore: cast_nullable_to_non_nullable
 as MetricType,supportedMetricTypes: null == supportedMetricTypes ? _self.supportedMetricTypes : supportedMetricTypes // ignore: cast_nullable_to_non_nullable
 as List<MetricType>,supportsWeight: null == supportsWeight ? _self.supportsWeight : supportsWeight // ignore: cast_nullable_to_non_nullable
@@ -218,7 +224,7 @@ return $default(_that.defaultMetricType,_that.supportedMetricTypes,_that.support
 @JsonSerializable()
 
 class _ExerciseMeasurementProfile implements ExerciseMeasurementProfile {
-  const _ExerciseMeasurementProfile({this.defaultMetricType = MetricType.weightAndReps, final  List<MetricType> supportedMetricTypes = const [MetricType.weightAndReps], this.supportsWeight = true, this.supportsReps = true, this.supportsDuration = false, this.supportsDistance = false, this.supportsCalories = false, this.supportsRpe = true, this.supportsRir = true, this.supportsTempo = false}): _supportedMetricTypes = supportedMetricTypes;
+  const _ExerciseMeasurementProfile({this.defaultMetricType = MetricType.weightAndReps,  List<MetricType> supportedMetricTypes = const [MetricType.weightAndReps], this.supportsWeight = true, this.supportsReps = true, this.supportsDuration = false, this.supportsDistance = false, this.supportsCalories = false, this.supportsRpe = true, this.supportsRir = true, this.supportsTempo = false}): _supportedMetricTypes = supportedMetricTypes;
   factory _ExerciseMeasurementProfile.fromJson(Map<String, dynamic> json) => _$ExerciseMeasurementProfileFromJson(json);
 
 @override@JsonKey() final  MetricType defaultMetricType;
@@ -251,16 +257,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseMeasurementProfile&&(identical(other.defaultMetricType, defaultMetricType) || other.defaultMetricType == defaultMetricType)&&const DeepCollectionEquality().equals(other._supportedMetricTypes, _supportedMetricTypes)&&(identical(other.supportsWeight, supportsWeight) || other.supportsWeight == supportsWeight)&&(identical(other.supportsReps, supportsReps) || other.supportsReps == supportsReps)&&(identical(other.supportsDuration, supportsDuration) || other.supportsDuration == supportsDuration)&&(identical(other.supportsDistance, supportsDistance) || other.supportsDistance == supportsDistance)&&(identical(other.supportsCalories, supportsCalories) || other.supportsCalories == supportsCalories)&&(identical(other.supportsRpe, supportsRpe) || other.supportsRpe == supportsRpe)&&(identical(other.supportsRir, supportsRir) || other.supportsRir == supportsRir)&&(identical(other.supportsTempo, supportsTempo) || other.supportsTempo == supportsTempo));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseMeasurementProfile&&(identical(other.defaultMetricType, defaultMetricType) || other.defaultMetricType == defaultMetricType)&&const DeepCollectionEquality().equals(other.supportedMetricTypes, _supportedMetricTypes)&&(identical(other.supportsWeight, supportsWeight) || other.supportsWeight == supportsWeight)&&(identical(other.supportsReps, supportsReps) || other.supportsReps == supportsReps)&&(identical(other.supportsDuration, supportsDuration) || other.supportsDuration == supportsDuration)&&(identical(other.supportsDistance, supportsDistance) || other.supportsDistance == supportsDistance)&&(identical(other.supportsCalories, supportsCalories) || other.supportsCalories == supportsCalories)&&(identical(other.supportsRpe, supportsRpe) || other.supportsRpe == supportsRpe)&&(identical(other.supportsRir, supportsRir) || other.supportsRir == supportsRir)&&(identical(other.supportsTempo, supportsTempo) || other.supportsTempo == supportsTempo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,defaultMetricType,const DeepCollectionEquality().hash(_supportedMetricTypes),supportsWeight,supportsReps,supportsDuration,supportsDistance,supportsCalories,supportsRpe,supportsRir,supportsTempo);
+int get hashCode {
+    return Object.hash(runtimeType,defaultMetricType,const DeepCollectionEquality().hash(_supportedMetricTypes),supportsWeight,supportsReps,supportsDuration,supportsDistance,supportsCalories,supportsRpe,supportsRir,supportsTempo);
+}
 
 @override
 String toString() {
-  return 'ExerciseMeasurementProfile(defaultMetricType: $defaultMetricType, supportedMetricTypes: $supportedMetricTypes, supportsWeight: $supportsWeight, supportsReps: $supportsReps, supportsDuration: $supportsDuration, supportsDistance: $supportsDistance, supportsCalories: $supportsCalories, supportsRpe: $supportsRpe, supportsRir: $supportsRir, supportsTempo: $supportsTempo)';
+    return 'ExerciseMeasurementProfile(defaultMetricType: $defaultMetricType, supportedMetricTypes: $supportedMetricTypes, supportsWeight: $supportsWeight, supportsReps: $supportsReps, supportsDuration: $supportsDuration, supportsDistance: $supportsDistance, supportsCalories: $supportsCalories, supportsRpe: $supportsRpe, supportsRir: $supportsRir, supportsTempo: $supportsTempo)';
 }
 
 

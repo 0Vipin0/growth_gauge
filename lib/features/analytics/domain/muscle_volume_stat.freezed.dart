@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'muscle_volume_stat.dart';
@@ -9,6 +9,7 @@ part of 'muscle_volume_stat.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MuscleVolumeStatCopyWith<MuscleVolumeStat> get copyWith => _$MuscleVolumeStatCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MuscleVolumeStat&&(identical(other.muscleGroup, muscleGroup) || other.muscleGroup == muscleGroup)&&(identical(other.isoYear, isoYear) || other.isoYear == isoYear)&&(identical(other.isoWeek, isoWeek) || other.isoWeek == isoWeek)&&(identical(other.weekStartDate, weekStartDate) || other.weekStartDate == weekStartDate)&&(identical(other.totalVolumeKg, totalVolumeKg) || other.totalVolumeKg == totalVolumeKg)&&(identical(other.totalSets, totalSets) || other.totalSets == totalSets));
+  final _this = this as MuscleVolumeStat;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MuscleVolumeStat&&(identical(other.muscleGroup, _this.muscleGroup) || other.muscleGroup == _this.muscleGroup)&&(identical(other.isoYear, _this.isoYear) || other.isoYear == _this.isoYear)&&(identical(other.isoWeek, _this.isoWeek) || other.isoWeek == _this.isoWeek)&&(identical(other.weekStartDate, _this.weekStartDate) || other.weekStartDate == _this.weekStartDate)&&(identical(other.totalVolumeKg, _this.totalVolumeKg) || other.totalVolumeKg == _this.totalVolumeKg)&&(identical(other.totalSets, _this.totalSets) || other.totalSets == _this.totalSets));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,muscleGroup,isoYear,isoWeek,weekStartDate,totalVolumeKg,totalSets);
+int get hashCode {
+  final _this = this as MuscleVolumeStat;
+  return Object.hash(runtimeType,_this.muscleGroup,_this.isoYear,_this.isoWeek,_this.weekStartDate,_this.totalVolumeKg,_this.totalSets);
+}
 
 @override
 String toString() {
-  return 'MuscleVolumeStat(muscleGroup: $muscleGroup, isoYear: $isoYear, isoWeek: $isoWeek, weekStartDate: $weekStartDate, totalVolumeKg: $totalVolumeKg, totalSets: $totalSets)';
+  final _this = this as MuscleVolumeStat;
+  return 'MuscleVolumeStat(muscleGroup: ${_this.muscleGroup}, isoYear: ${_this.isoYear}, isoWeek: ${_this.isoWeek}, weekStartDate: ${_this.weekStartDate}, totalVolumeKg: ${_this.totalVolumeKg}, totalSets: ${_this.totalSets})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MuscleVolumeStatCopyWithImpl<$Res>
 /// Create a copy of MuscleVolumeStat
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? muscleGroup = null,Object? isoYear = null,Object? isoWeek = null,Object? weekStartDate = null,Object? totalVolumeKg = null,Object? totalSets = null,}) {
-  return _then(_self.copyWith(
+  return _then(MuscleVolumeStat(
 muscleGroup: null == muscleGroup ? _self.muscleGroup : muscleGroup // ignore: cast_nullable_to_non_nullable
 as String,isoYear: null == isoYear ? _self.isoYear : isoYear // ignore: cast_nullable_to_non_nullable
 as int,isoWeek: null == isoWeek ? _self.isoWeek : isoWeek // ignore: cast_nullable_to_non_nullable
@@ -231,16 +237,18 @@ _$MuscleVolumeStatCopyWith<_MuscleVolumeStat> get copyWith => __$MuscleVolumeSta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MuscleVolumeStat&&(identical(other.muscleGroup, muscleGroup) || other.muscleGroup == muscleGroup)&&(identical(other.isoYear, isoYear) || other.isoYear == isoYear)&&(identical(other.isoWeek, isoWeek) || other.isoWeek == isoWeek)&&(identical(other.weekStartDate, weekStartDate) || other.weekStartDate == weekStartDate)&&(identical(other.totalVolumeKg, totalVolumeKg) || other.totalVolumeKg == totalVolumeKg)&&(identical(other.totalSets, totalSets) || other.totalSets == totalSets));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MuscleVolumeStat&&(identical(other.muscleGroup, muscleGroup) || other.muscleGroup == muscleGroup)&&(identical(other.isoYear, isoYear) || other.isoYear == isoYear)&&(identical(other.isoWeek, isoWeek) || other.isoWeek == isoWeek)&&(identical(other.weekStartDate, weekStartDate) || other.weekStartDate == weekStartDate)&&(identical(other.totalVolumeKg, totalVolumeKg) || other.totalVolumeKg == totalVolumeKg)&&(identical(other.totalSets, totalSets) || other.totalSets == totalSets));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,muscleGroup,isoYear,isoWeek,weekStartDate,totalVolumeKg,totalSets);
+int get hashCode {
+    return Object.hash(runtimeType,muscleGroup,isoYear,isoWeek,weekStartDate,totalVolumeKg,totalSets);
+}
 
 @override
 String toString() {
-  return 'MuscleVolumeStat(muscleGroup: $muscleGroup, isoYear: $isoYear, isoWeek: $isoWeek, weekStartDate: $weekStartDate, totalVolumeKg: $totalVolumeKg, totalSets: $totalSets)';
+    return 'MuscleVolumeStat(muscleGroup: $muscleGroup, isoYear: $isoYear, isoWeek: $isoWeek, weekStartDate: $weekStartDate, totalVolumeKg: $totalVolumeKg, totalSets: $totalSets)';
 }
 
 

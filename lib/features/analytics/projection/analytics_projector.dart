@@ -18,19 +18,13 @@ import '../domain/pr_calculator.dart';
 ///
 /// **Idempotency guarantee:** every projection starts by deleting all existing
 /// rows for the session, so projecting the same session twice is safe.
-class AnalyticsProjector {
-  final AppDatabase _db;
-  final PRCalculator _prCalculator;
-  final IWorkoutSessionRepository _sessionRepo;
-  final IExerciseRepository _exerciseRepo;
+class AnalyticsProjector({
+  required final AppDatabase _db,
+  required final PRCalculator _prCalculator,
+  required final IWorkoutSessionRepository _sessionRepo,
+  required final IExerciseRepository _exerciseRepo,
+}) {
   StreamSubscription<WorkoutSessionCompleted>? _subscription;
-
-  AnalyticsProjector({
-    required this._db,
-    required this._prCalculator,
-    required this._sessionRepo,
-    required this._exerciseRepo,
-  });
 
   /// Subscribes to the global [DomainEventDispatcher].
   void start(DomainEventDispatcher dispatcher) {

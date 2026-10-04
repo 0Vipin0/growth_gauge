@@ -10,11 +10,7 @@ import '../domain/exercise_relationship.dart';
 import '../domain/measurement_profile.dart';
 import '../infrastructure/exercise_repository.dart';
 
-class CatalogUseCases {
-  const CatalogUseCases(this._repository);
-
-  final IExerciseRepository _repository;
-
+class const CatalogUseCases(final IExerciseRepository _repository) {
   Future<Result<List<Exercise>, Failure>> list({
     String query = '',
     BodyRegion? bodyRegion,

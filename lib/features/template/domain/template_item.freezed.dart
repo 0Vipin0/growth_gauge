@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'template_item.dart';
@@ -9,6 +9,7 @@ part of 'template_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $TemplateItemCopyWith<TemplateItem> get copyWith => _$TemplateItemCopyWithImpl<T
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TemplateItem&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other.targetSets, targetSets)&&const DeepCollectionEquality().equals(other.substitutionExerciseIds, substitutionExerciseIds)&&(identical(other.coachNotes, coachNotes) || other.coachNotes == coachNotes));
+  final _this = this as TemplateItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TemplateItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.exerciseId, _this.exerciseId) || other.exerciseId == _this.exerciseId)&&(identical(other.order, _this.order) || other.order == _this.order)&&const DeepCollectionEquality().equals(other.targetSets, _this.targetSets)&&const DeepCollectionEquality().equals(other.substitutionExerciseIds, _this.substitutionExerciseIds)&&(identical(other.coachNotes, _this.coachNotes) || other.coachNotes == _this.coachNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,exerciseId,order,const DeepCollectionEquality().hash(targetSets),const DeepCollectionEquality().hash(substitutionExerciseIds),coachNotes);
+int get hashCode {
+  final _this = this as TemplateItem;
+  return Object.hash(runtimeType,_this.id,_this.exerciseId,_this.order,const DeepCollectionEquality().hash(_this.targetSets),const DeepCollectionEquality().hash(_this.substitutionExerciseIds),_this.coachNotes);
+}
 
 @override
 String toString() {
-  return 'TemplateItem(id: $id, exerciseId: $exerciseId, order: $order, targetSets: $targetSets, substitutionExerciseIds: $substitutionExerciseIds, coachNotes: $coachNotes)';
+  final _this = this as TemplateItem;
+  return 'TemplateItem(id: ${_this.id}, exerciseId: ${_this.exerciseId}, order: ${_this.order}, targetSets: ${_this.targetSets}, substitutionExerciseIds: ${_this.substitutionExerciseIds}, coachNotes: ${_this.coachNotes})';
 }
 
 
@@ -66,7 +72,7 @@ class _$TemplateItemCopyWithImpl<$Res>
 /// Create a copy of TemplateItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? exerciseId = null,Object? order = null,Object? targetSets = null,Object? substitutionExerciseIds = null,Object? coachNotes = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TemplateItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,exerciseId: null == exerciseId ? _self.exerciseId : exerciseId // ignore: cast_nullable_to_non_nullable
 as String,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
@@ -214,7 +220,7 @@ return $default(_that.id,_that.exerciseId,_that.order,_that.targetSets,_that.sub
 @JsonSerializable()
 
 class _TemplateItem implements TemplateItem {
-  const _TemplateItem({required this.id, required this.exerciseId, required this.order, final  List<TargetSet> targetSets = const [], final  List<String> substitutionExerciseIds = const [], this.coachNotes}): _targetSets = targetSets,_substitutionExerciseIds = substitutionExerciseIds;
+  const _TemplateItem({required this.id, required this.exerciseId, required this.order,  List<TargetSet> targetSets = const [],  List<String> substitutionExerciseIds = const [], this.coachNotes}): _targetSets = targetSets,_substitutionExerciseIds = substitutionExerciseIds;
   factory _TemplateItem.fromJson(Map<String, dynamic> json) => _$TemplateItemFromJson(json);
 
 @override final  String id;
@@ -249,16 +255,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TemplateItem&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other._targetSets, _targetSets)&&const DeepCollectionEquality().equals(other._substitutionExerciseIds, _substitutionExerciseIds)&&(identical(other.coachNotes, coachNotes) || other.coachNotes == coachNotes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TemplateItem&&(identical(other.id, id) || other.id == id)&&(identical(other.exerciseId, exerciseId) || other.exerciseId == exerciseId)&&(identical(other.order, order) || other.order == order)&&const DeepCollectionEquality().equals(other.targetSets, _targetSets)&&const DeepCollectionEquality().equals(other.substitutionExerciseIds, _substitutionExerciseIds)&&(identical(other.coachNotes, coachNotes) || other.coachNotes == coachNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,exerciseId,order,const DeepCollectionEquality().hash(_targetSets),const DeepCollectionEquality().hash(_substitutionExerciseIds),coachNotes);
+int get hashCode {
+    return Object.hash(runtimeType,id,exerciseId,order,const DeepCollectionEquality().hash(_targetSets),const DeepCollectionEquality().hash(_substitutionExerciseIds),coachNotes);
+}
 
 @override
 String toString() {
-  return 'TemplateItem(id: $id, exerciseId: $exerciseId, order: $order, targetSets: $targetSets, substitutionExerciseIds: $substitutionExerciseIds, coachNotes: $coachNotes)';
+    return 'TemplateItem(id: $id, exerciseId: $exerciseId, order: $order, targetSets: $targetSets, substitutionExerciseIds: $substitutionExerciseIds, coachNotes: $coachNotes)';
 }
 
 

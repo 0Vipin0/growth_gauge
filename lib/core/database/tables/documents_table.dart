@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 
 /// The authoritative document storage table.
 /// Stores hierarchical domain aggregate roots in JSON format keyed by collection and ID.
-class Documents extends Table {
+class Documents() extends Table {
   /// The collection or namespace (e.g. 'users', 'exercises', 'templates', 'sessions').
   TextColumn get collection => text()();
 

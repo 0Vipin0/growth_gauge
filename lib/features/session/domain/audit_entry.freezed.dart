@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'audit_entry.dart';
@@ -9,6 +9,7 @@ part of 'audit_entry.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $AuditEntryCopyWith<AuditEntry> get copyWith => _$AuditEntryCopyWithImpl<AuditEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuditEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.actorType, actorType) || other.actorType == actorType)&&(identical(other.actorId, actorId) || other.actorId == actorId)&&(identical(other.action, action) || other.action == action)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.field, field) || other.field == field)&&const DeepCollectionEquality().equals(other.previousValue, previousValue)&&const DeepCollectionEquality().equals(other.newValue, newValue)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.correlationId, correlationId) || other.correlationId == correlationId));
+  final _this = this as AuditEntry;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuditEntry&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.actorType, _this.actorType) || other.actorType == _this.actorType)&&(identical(other.actorId, _this.actorId) || other.actorId == _this.actorId)&&(identical(other.action, _this.action) || other.action == _this.action)&&(identical(other.entityType, _this.entityType) || other.entityType == _this.entityType)&&(identical(other.entityId, _this.entityId) || other.entityId == _this.entityId)&&(identical(other.field, _this.field) || other.field == _this.field)&&const DeepCollectionEquality().equals(other.previousValue, _this.previousValue)&&const DeepCollectionEquality().equals(other.newValue, _this.newValue)&&(identical(other.reason, _this.reason) || other.reason == _this.reason)&&(identical(other.correlationId, _this.correlationId) || other.correlationId == _this.correlationId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,timestamp,actorType,actorId,action,entityType,entityId,field,const DeepCollectionEquality().hash(previousValue),const DeepCollectionEquality().hash(newValue),reason,correlationId);
+int get hashCode {
+  final _this = this as AuditEntry;
+  return Object.hash(runtimeType,_this.id,_this.timestamp,_this.actorType,_this.actorId,_this.action,_this.entityType,_this.entityId,_this.field,const DeepCollectionEquality().hash(_this.previousValue),const DeepCollectionEquality().hash(_this.newValue),_this.reason,_this.correlationId);
+}
 
 @override
 String toString() {
-  return 'AuditEntry(id: $id, timestamp: $timestamp, actorType: $actorType, actorId: $actorId, action: $action, entityType: $entityType, entityId: $entityId, field: $field, previousValue: $previousValue, newValue: $newValue, reason: $reason, correlationId: $correlationId)';
+  final _this = this as AuditEntry;
+  return 'AuditEntry(id: ${_this.id}, timestamp: ${_this.timestamp}, actorType: ${_this.actorType}, actorId: ${_this.actorId}, action: ${_this.action}, entityType: ${_this.entityType}, entityId: ${_this.entityId}, field: ${_this.field}, previousValue: ${_this.previousValue}, newValue: ${_this.newValue}, reason: ${_this.reason}, correlationId: ${_this.correlationId})';
 }
 
 
@@ -66,7 +72,7 @@ class _$AuditEntryCopyWithImpl<$Res>
 /// Create a copy of AuditEntry
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? timestamp = null,Object? actorType = null,Object? actorId = freezed,Object? action = null,Object? entityType = null,Object? entityId = null,Object? field = freezed,Object? previousValue = freezed,Object? newValue = freezed,Object? reason = freezed,Object? correlationId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AuditEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as DateTime,actorType: null == actorType ? _self.actorType : actorType // ignore: cast_nullable_to_non_nullable
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuditEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.actorType, actorType) || other.actorType == actorType)&&(identical(other.actorId, actorId) || other.actorId == actorId)&&(identical(other.action, action) || other.action == action)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.field, field) || other.field == field)&&const DeepCollectionEquality().equals(other.previousValue, previousValue)&&const DeepCollectionEquality().equals(other.newValue, newValue)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.correlationId, correlationId) || other.correlationId == correlationId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuditEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.actorType, actorType) || other.actorType == actorType)&&(identical(other.actorId, actorId) || other.actorId == actorId)&&(identical(other.action, action) || other.action == action)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.field, field) || other.field == field)&&const DeepCollectionEquality().equals(other.previousValue, previousValue)&&const DeepCollectionEquality().equals(other.newValue, newValue)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.correlationId, correlationId) || other.correlationId == correlationId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,timestamp,actorType,actorId,action,entityType,entityId,field,const DeepCollectionEquality().hash(previousValue),const DeepCollectionEquality().hash(newValue),reason,correlationId);
+int get hashCode {
+    return Object.hash(runtimeType,id,timestamp,actorType,actorId,action,entityType,entityId,field,const DeepCollectionEquality().hash(previousValue),const DeepCollectionEquality().hash(newValue),reason,correlationId);
+}
 
 @override
 String toString() {
-  return 'AuditEntry(id: $id, timestamp: $timestamp, actorType: $actorType, actorId: $actorId, action: $action, entityType: $entityType, entityId: $entityId, field: $field, previousValue: $previousValue, newValue: $newValue, reason: $reason, correlationId: $correlationId)';
+    return 'AuditEntry(id: $id, timestamp: $timestamp, actorType: $actorType, actorId: $actorId, action: $action, entityType: $entityType, entityId: $entityId, field: $field, previousValue: $previousValue, newValue: $newValue, reason: $reason, correlationId: $correlationId)';
 }
 
 

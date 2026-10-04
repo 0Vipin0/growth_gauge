@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'exercise_execution.dart';
@@ -9,6 +9,7 @@ part of 'exercise_execution.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ExerciseExecutionProfileCopyWith<ExerciseExecutionProfile> get copyWith => _$Ex
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseExecutionProfile&&const DeepCollectionEquality().equals(other.setupInstructions, setupInstructions)&&const DeepCollectionEquality().equals(other.executionInstructions, executionInstructions)&&(identical(other.breathingInstructions, breathingInstructions) || other.breathingInstructions == breathingInstructions)&&const DeepCollectionEquality().equals(other.techniqueCues, techniqueCues)&&(identical(other.tempo, tempo) || other.tempo == tempo)&&(identical(other.rangeOfMotion, rangeOfMotion) || other.rangeOfMotion == rangeOfMotion));
+  final _this = this as ExerciseExecutionProfile;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExerciseExecutionProfile&&const DeepCollectionEquality().equals(other.setupInstructions, _this.setupInstructions)&&const DeepCollectionEquality().equals(other.executionInstructions, _this.executionInstructions)&&(identical(other.breathingInstructions, _this.breathingInstructions) || other.breathingInstructions == _this.breathingInstructions)&&const DeepCollectionEquality().equals(other.techniqueCues, _this.techniqueCues)&&(identical(other.tempo, _this.tempo) || other.tempo == _this.tempo)&&(identical(other.rangeOfMotion, _this.rangeOfMotion) || other.rangeOfMotion == _this.rangeOfMotion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(setupInstructions),const DeepCollectionEquality().hash(executionInstructions),breathingInstructions,const DeepCollectionEquality().hash(techniqueCues),tempo,rangeOfMotion);
+int get hashCode {
+  final _this = this as ExerciseExecutionProfile;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.setupInstructions),const DeepCollectionEquality().hash(_this.executionInstructions),_this.breathingInstructions,const DeepCollectionEquality().hash(_this.techniqueCues),_this.tempo,_this.rangeOfMotion);
+}
 
 @override
 String toString() {
-  return 'ExerciseExecutionProfile(setupInstructions: $setupInstructions, executionInstructions: $executionInstructions, breathingInstructions: $breathingInstructions, techniqueCues: $techniqueCues, tempo: $tempo, rangeOfMotion: $rangeOfMotion)';
+  final _this = this as ExerciseExecutionProfile;
+  return 'ExerciseExecutionProfile(setupInstructions: ${_this.setupInstructions}, executionInstructions: ${_this.executionInstructions}, breathingInstructions: ${_this.breathingInstructions}, techniqueCues: ${_this.techniqueCues}, tempo: ${_this.tempo}, rangeOfMotion: ${_this.rangeOfMotion})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ExerciseExecutionProfileCopyWithImpl<$Res>
 /// Create a copy of ExerciseExecutionProfile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? setupInstructions = null,Object? executionInstructions = null,Object? breathingInstructions = freezed,Object? techniqueCues = null,Object? tempo = freezed,Object? rangeOfMotion = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ExerciseExecutionProfile(
 setupInstructions: null == setupInstructions ? _self.setupInstructions : setupInstructions // ignore: cast_nullable_to_non_nullable
 as List<String>,executionInstructions: null == executionInstructions ? _self.executionInstructions : executionInstructions // ignore: cast_nullable_to_non_nullable
 as List<String>,breathingInstructions: freezed == breathingInstructions ? _self.breathingInstructions : breathingInstructions // ignore: cast_nullable_to_non_nullable
@@ -214,7 +220,7 @@ return $default(_that.setupInstructions,_that.executionInstructions,_that.breath
 @JsonSerializable()
 
 class _ExerciseExecutionProfile implements ExerciseExecutionProfile {
-  const _ExerciseExecutionProfile({final  List<String> setupInstructions = const [], final  List<String> executionInstructions = const [], this.breathingInstructions, final  List<String> techniqueCues = const [], this.tempo, this.rangeOfMotion}): _setupInstructions = setupInstructions,_executionInstructions = executionInstructions,_techniqueCues = techniqueCues;
+  const _ExerciseExecutionProfile({ List<String> setupInstructions = const [],  List<String> executionInstructions = const [], this.breathingInstructions,  List<String> techniqueCues = const [], this.tempo, this.rangeOfMotion}): _setupInstructions = setupInstructions,_executionInstructions = executionInstructions,_techniqueCues = techniqueCues;
   factory _ExerciseExecutionProfile.fromJson(Map<String, dynamic> json) => _$ExerciseExecutionProfileFromJson(json);
 
  final  List<String> _setupInstructions;
@@ -255,16 +261,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseExecutionProfile&&const DeepCollectionEquality().equals(other._setupInstructions, _setupInstructions)&&const DeepCollectionEquality().equals(other._executionInstructions, _executionInstructions)&&(identical(other.breathingInstructions, breathingInstructions) || other.breathingInstructions == breathingInstructions)&&const DeepCollectionEquality().equals(other._techniqueCues, _techniqueCues)&&(identical(other.tempo, tempo) || other.tempo == tempo)&&(identical(other.rangeOfMotion, rangeOfMotion) || other.rangeOfMotion == rangeOfMotion));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExerciseExecutionProfile&&const DeepCollectionEquality().equals(other.setupInstructions, _setupInstructions)&&const DeepCollectionEquality().equals(other.executionInstructions, _executionInstructions)&&(identical(other.breathingInstructions, breathingInstructions) || other.breathingInstructions == breathingInstructions)&&const DeepCollectionEquality().equals(other.techniqueCues, _techniqueCues)&&(identical(other.tempo, tempo) || other.tempo == tempo)&&(identical(other.rangeOfMotion, rangeOfMotion) || other.rangeOfMotion == rangeOfMotion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_setupInstructions),const DeepCollectionEquality().hash(_executionInstructions),breathingInstructions,const DeepCollectionEquality().hash(_techniqueCues),tempo,rangeOfMotion);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_setupInstructions),const DeepCollectionEquality().hash(_executionInstructions),breathingInstructions,const DeepCollectionEquality().hash(_techniqueCues),tempo,rangeOfMotion);
+}
 
 @override
 String toString() {
-  return 'ExerciseExecutionProfile(setupInstructions: $setupInstructions, executionInstructions: $executionInstructions, breathingInstructions: $breathingInstructions, techniqueCues: $techniqueCues, tempo: $tempo, rangeOfMotion: $rangeOfMotion)';
+    return 'ExerciseExecutionProfile(setupInstructions: $setupInstructions, executionInstructions: $executionInstructions, breathingInstructions: $breathingInstructions, techniqueCues: $techniqueCues, tempo: $tempo, rangeOfMotion: $rangeOfMotion)';
 }
 
 

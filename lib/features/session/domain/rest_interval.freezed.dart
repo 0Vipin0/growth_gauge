@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'rest_interval.dart';
@@ -9,6 +9,7 @@ part of 'rest_interval.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $RestIntervalCopyWith<RestInterval> get copyWith => _$RestIntervalCopyWithImpl<R
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RestInterval&&(identical(other.id, id) || other.id == id)&&(identical(other.executionSetId, executionSetId) || other.executionSetId == executionSetId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.plannedDurationSeconds, plannedDurationSeconds) || other.plannedDurationSeconds == plannedDurationSeconds)&&(identical(other.actualDurationSeconds, actualDurationSeconds) || other.actualDurationSeconds == actualDurationSeconds)&&(identical(other.minimumDurationSeconds, minimumDurationSeconds) || other.minimumDurationSeconds == minimumDurationSeconds)&&(identical(other.maximumDurationSeconds, maximumDurationSeconds) || other.maximumDurationSeconds == maximumDurationSeconds)&&(identical(other.allowSkip, allowSkip) || other.allowSkip == allowSkip)&&(identical(other.allowExtend, allowExtend) || other.allowExtend == allowExtend)&&(identical(other.skipped, skipped) || other.skipped == skipped));
+  final _this = this as RestInterval;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RestInterval&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.executionSetId, _this.executionSetId) || other.executionSetId == _this.executionSetId)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.plannedDurationSeconds, _this.plannedDurationSeconds) || other.plannedDurationSeconds == _this.plannedDurationSeconds)&&(identical(other.actualDurationSeconds, _this.actualDurationSeconds) || other.actualDurationSeconds == _this.actualDurationSeconds)&&(identical(other.minimumDurationSeconds, _this.minimumDurationSeconds) || other.minimumDurationSeconds == _this.minimumDurationSeconds)&&(identical(other.maximumDurationSeconds, _this.maximumDurationSeconds) || other.maximumDurationSeconds == _this.maximumDurationSeconds)&&(identical(other.allowSkip, _this.allowSkip) || other.allowSkip == _this.allowSkip)&&(identical(other.allowExtend, _this.allowExtend) || other.allowExtend == _this.allowExtend)&&(identical(other.skipped, _this.skipped) || other.skipped == _this.skipped));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,executionSetId,startedAt,endedAt,plannedDurationSeconds,actualDurationSeconds,minimumDurationSeconds,maximumDurationSeconds,allowSkip,allowExtend,skipped);
+int get hashCode {
+  final _this = this as RestInterval;
+  return Object.hash(runtimeType,_this.id,_this.executionSetId,_this.startedAt,_this.endedAt,_this.plannedDurationSeconds,_this.actualDurationSeconds,_this.minimumDurationSeconds,_this.maximumDurationSeconds,_this.allowSkip,_this.allowExtend,_this.skipped);
+}
 
 @override
 String toString() {
-  return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds, minimumDurationSeconds: $minimumDurationSeconds, maximumDurationSeconds: $maximumDurationSeconds, allowSkip: $allowSkip, allowExtend: $allowExtend, skipped: $skipped)';
+  final _this = this as RestInterval;
+  return 'RestInterval(id: ${_this.id}, executionSetId: ${_this.executionSetId}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, plannedDurationSeconds: ${_this.plannedDurationSeconds}, actualDurationSeconds: ${_this.actualDurationSeconds}, minimumDurationSeconds: ${_this.minimumDurationSeconds}, maximumDurationSeconds: ${_this.maximumDurationSeconds}, allowSkip: ${_this.allowSkip}, allowExtend: ${_this.allowExtend}, skipped: ${_this.skipped})';
 }
 
 
@@ -66,7 +72,7 @@ class _$RestIntervalCopyWithImpl<$Res>
 /// Create a copy of RestInterval
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? executionSetId = null,Object? startedAt = null,Object? endedAt = freezed,Object? plannedDurationSeconds = null,Object? actualDurationSeconds = freezed,Object? minimumDurationSeconds = null,Object? maximumDurationSeconds = freezed,Object? allowSkip = null,Object? allowExtend = null,Object? skipped = null,}) {
-  return _then(_self.copyWith(
+  return _then(RestInterval(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,executionSetId: null == executionSetId ? _self.executionSetId : executionSetId // ignore: cast_nullable_to_non_nullable
 as String,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RestInterval&&(identical(other.id, id) || other.id == id)&&(identical(other.executionSetId, executionSetId) || other.executionSetId == executionSetId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.plannedDurationSeconds, plannedDurationSeconds) || other.plannedDurationSeconds == plannedDurationSeconds)&&(identical(other.actualDurationSeconds, actualDurationSeconds) || other.actualDurationSeconds == actualDurationSeconds)&&(identical(other.minimumDurationSeconds, minimumDurationSeconds) || other.minimumDurationSeconds == minimumDurationSeconds)&&(identical(other.maximumDurationSeconds, maximumDurationSeconds) || other.maximumDurationSeconds == maximumDurationSeconds)&&(identical(other.allowSkip, allowSkip) || other.allowSkip == allowSkip)&&(identical(other.allowExtend, allowExtend) || other.allowExtend == allowExtend)&&(identical(other.skipped, skipped) || other.skipped == skipped));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RestInterval&&(identical(other.id, id) || other.id == id)&&(identical(other.executionSetId, executionSetId) || other.executionSetId == executionSetId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.plannedDurationSeconds, plannedDurationSeconds) || other.plannedDurationSeconds == plannedDurationSeconds)&&(identical(other.actualDurationSeconds, actualDurationSeconds) || other.actualDurationSeconds == actualDurationSeconds)&&(identical(other.minimumDurationSeconds, minimumDurationSeconds) || other.minimumDurationSeconds == minimumDurationSeconds)&&(identical(other.maximumDurationSeconds, maximumDurationSeconds) || other.maximumDurationSeconds == maximumDurationSeconds)&&(identical(other.allowSkip, allowSkip) || other.allowSkip == allowSkip)&&(identical(other.allowExtend, allowExtend) || other.allowExtend == allowExtend)&&(identical(other.skipped, skipped) || other.skipped == skipped));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,executionSetId,startedAt,endedAt,plannedDurationSeconds,actualDurationSeconds,minimumDurationSeconds,maximumDurationSeconds,allowSkip,allowExtend,skipped);
+int get hashCode {
+    return Object.hash(runtimeType,id,executionSetId,startedAt,endedAt,plannedDurationSeconds,actualDurationSeconds,minimumDurationSeconds,maximumDurationSeconds,allowSkip,allowExtend,skipped);
+}
 
 @override
 String toString() {
-  return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds, minimumDurationSeconds: $minimumDurationSeconds, maximumDurationSeconds: $maximumDurationSeconds, allowSkip: $allowSkip, allowExtend: $allowExtend, skipped: $skipped)';
+    return 'RestInterval(id: $id, executionSetId: $executionSetId, startedAt: $startedAt, endedAt: $endedAt, plannedDurationSeconds: $plannedDurationSeconds, actualDurationSeconds: $actualDurationSeconds, minimumDurationSeconds: $minimumDurationSeconds, maximumDurationSeconds: $maximumDurationSeconds, allowSkip: $allowSkip, allowExtend: $allowExtend, skipped: $skipped)';
 }
 
 

@@ -7,7 +7,7 @@ part 'personal_record.freezed.dart';
 /// Immutable read model representing one personal record achievement.
 @freezed
 abstract class PersonalRecord with _$PersonalRecord {
-  const factory PersonalRecord({
+  const factory({
     required String id,
     required String exerciseId,
     required String userId,

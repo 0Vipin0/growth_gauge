@@ -1,5 +1,5 @@
 /// Distinct personal record categories tracked per exercise.
-enum PrType {
+enum PrType() {
   /// Heaviest absolute weight lifted in a single set.
   maxWeight,
 

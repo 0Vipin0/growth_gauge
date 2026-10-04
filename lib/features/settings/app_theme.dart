@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'config/config.dart';
 
-class AppTheme {
-  final AppThemeName themeName;
-  final AppFontTheme fontTheme;
-
-  AppTheme({required this.themeName, required this.fontTheme});
-
+class AppTheme({
+  required final AppThemeName themeName,
+  required final AppFontTheme fontTheme,
+}) {
   ThemeData getThemeData() {
     final appColorTheme = appColorThemes.firstWhere(
       (theme) => theme.name == themeName,

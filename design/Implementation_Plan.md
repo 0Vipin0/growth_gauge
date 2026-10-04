@@ -89,7 +89,7 @@ flowchart TD
 | **Phase 1** | Dependencies & Core Foundation | `[x] COMPLETED` | 6 | 6 |
 | **Phase 2** | Exercise Catalog & Templates | `[x] COMPLETED` | 7 | 7 |
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[x] COMPLETED` | 8 | 8 |
-| **Phase 4** | Materialized Analytics & Drift Projections | `[~] PARTIALLY COMPLETED` | 5 | 7 |
+| **Phase 4** | Materialized Analytics & Drift Projections | `[x] COMPLETED` | 7 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[ ] NOT STARTED` | 0 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[ ] NOT STARTED` | 0 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[ ] NOT STARTED` | 0 | 4 |
@@ -139,7 +139,7 @@ dev_dependencies:
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 1.1** | Configure Dependencies | `[x] COMPLETED` | Added `drift: ^2.31.0`, `drift_flutter: ^0.2.8`, `drift_dev: ^2.31.0`, `sqlite3_flutter_libs: ^0.5.42`, `flutter_bloc: ^9.1.1`, `bloc: ^9.2.1`, `equatable: ^2.0.7`, `path: ^1.9.1`. Resolved with `freezed: ^3.2.5`. |
+| **Step 1.1** | Configure Dependencies | `[x] COMPLETED` | Added current Drift dependencies (`drift`/`drift_dev: ^2.35.1`, `drift_flutter: ^0.3.1`, `sqlite3_flutter_libs: ^0.6.0+eol`) alongside `flutter_bloc: ^9.1.1`, `bloc: ^9.2.1`, `equatable: ^2.0.7`, and `path: ^1.9.1`. Upgraded code generation to Freezed `^4.0.2`; removed the unused `build_test: any` constraint that prevented analyzer 14 and Flutter SDK test tooling from resolving together. |
 | **Step 1.2** | Core Primitives | `[x] COMPLETED` | Implemented `UniqueId`, `AppClock`, `Failure` hierarchy, `Result<T, Failure>` monad, and `UnitConverter`. |
 | **Step 1.3** | Domain Event Dispatcher | `[x] COMPLETED` | Implemented `DomainEvent` and `DomainEventDispatcher` with asynchronous typed subscription handling. |
 | **Step 1.4** | Drift Document Store | `[x] COMPLETED` | Defined `Documents` table, `AppDatabase`, `DocumentAdapter<T>`, `IDocumentStore<T>`, and `DriftDocumentStore<T>`. |
@@ -455,23 +455,20 @@ class AnalyticsProjector {
 ### 7.4 Phase 4 Step-by-Step Execution Sequence
 
 1. **Step 4.1: Drift Analytics Tables & Migration** `[x]`
-   - Add analytical tables to `AppDatabase` schema.
-   - Run `build_runner` to generate DAOs and table classes.
+   - Added all analytical tables and generated Drift code. Schema version 3 adds a composite `(user_id, week_start_date)` index for weekly muscle volume, with an upgrade migration for existing databases. Freezed 4 generates collection constructor parameters accepted by the Flutter compiler; no post-generation normalization is required.
 2. **Step 4.2: PR Calculation Engine** `[x]`
    - Implement `PRCalculator` with 1RM formulas and PR comparison logic.
    - Write unit tests verifying 1RM calculation accuracy and tie-breaking.
-3. **Step 4.3: Analytics Projector & Event Subscription** `[~] PARTIAL`
-   - Implemented `AnalyticsProjector` with transactional, idempotent projection of completed sessions, set metrics, rest metrics, summaries, muscle volume, and PRs. `start()` subscribes to `WorkoutSessionCompleted`.
-   - **Remaining:** Instantiate and start the projector in app startup/dependency wiring so completion events trigger it in normal app use; ensure shutdown cancels the subscription.
+3. **Step 4.3: Analytics Projector & Event Subscription** `[x]`
+   - `AnalyticsProjector` transactionally projects completed sessions, set/rest metrics, summaries, muscle volume, and PRs. App startup starts it on the shared `DomainEventDispatcher`; session start and recovery flows publish through that same dispatcher. Provider teardown stops the subscription.
 4. **Step 4.4: Analytics Rebuilder** `[x]`
    - `ProjectionRebuilder` clears analytics read models and replays completed sessions sequentially.
 5. **Step 4.5: Analytics DAO & Query Handlers** `[x]`
    - Implemented reactive Drift queries for progression, volume, PRs, workout history/frequency, and rest metrics.
-6. **Step 4.6: Analytics Presentation UI (fl_chart)** `[~] PARTIAL`
-   - Implemented analytics dashboard, progression and volume charts, PR trophy UI, and frequency heatmap.
-   - **Remaining:** Wire the screens and `AnalyticsCubit` into application navigation/providers.
-7. **Step 4.7: Automated Projection & Rebuild Tests** `[x] IMPLEMENTED; NOT VERIFIED IN THIS PASS`
-   - Added analytics DAO, projector/rebuilder, PR calculator, and widget tests, including projection idempotency and rebuild coverage. These tests still need to be run in a functioning Flutter/Dart environment.
+6. **Step 4.6: Analytics Presentation UI (fl_chart)** `[x]`
+   - Implemented analytics dashboard, progression and volume charts, PR trophy UI, and frequency heatmap. Registered the screen in app routing and added an Analytics & Progress entry in the Training hub. Dashboard entry rebuilds projections from completed session documents so existing workouts are included.
+7. **Step 4.7: Automated Projection & Rebuild Tests** `[x]`
+   - Analytics DAO, projector/rebuilder, PR calculator, widget, and volume-query benchmark tests pass. Coverage includes projection idempotency and rebuild parity.
 
 ---
 
@@ -484,7 +481,7 @@ class AnalyticsProjector {
 | **Analytics Rebuild** | Full wipe and replay | Wiping all relational analytics tables and running `RebuildAnalyticsUseCase` reproduces 100% identical analytical read data from session documents. |
 | **Chart Query Performance** | Query latency benchmark | Querying 1 year of workout volume metrics executes in $< 15$ ms from SQLite indexed tables. |
 
-**Verification note (2026-10-04):** Dart static analysis completes without compile-time errors after resolving dependencies and regenerating code. Four informational lints remain (the existing static-only `AppClock` class and unnecessary `async` in two tests, plus import ordering in the PR screen). Analytics tests and the chart performance benchmark have not been run in this pass. Phase 4 remains partial until app startup/navigation wiring is added and tests run successfully.
+**Verification results (2026-10-04):** Dart static analysis exits 0 with no errors (informational lint suggestions remain). `flutter build windows --no-pub` succeeds and produces `build/windows/x64/runner/Release/GrowthGauge.exe`. The five analytics test files pass (26 tests). The 52-week volume query benchmark returned 1,060 rows from 10,400 stored rows, with 5.83 ms median and 8.35 ms p95 over 50 measured reads, meeting the 15 ms target. Freezed 4.0.2 and the compatible Drift toolchain regenerate collection constructor parameters without the previous Windows compiler error.
 
 ---
 

@@ -9,14 +9,12 @@ import '../common/presentation/widgets/tag_input_widget.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class AddCounterPage extends StatefulWidget {
-  const AddCounterPage({super.key});
-
+class const AddCounterPage({super.key}) extends StatefulWidget {
   @override
   State<AddCounterPage> createState() => _AddCounterPageState();
 }
 
-class _AddCounterPageState extends State<AddCounterPage> {
+class _AddCounterPageState() extends State<AddCounterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();

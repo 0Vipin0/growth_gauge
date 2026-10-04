@@ -9,18 +9,12 @@ import 'edit_counter_page.dart';
 import 'model/model.dart';
 import 'provider/provider.dart';
 
-class ReusableCounterWidget extends StatelessWidget {
-  final CounterModel counterModel;
-  final VoidCallback onRemove;
-  final VoidCallback onUpdateTarget;
-
-  const ReusableCounterWidget({
-    super.key,
-    required this.counterModel,
-    required this.onRemove,
-    required this.onUpdateTarget,
-  });
-
+class const ReusableCounterWidget({
+  super.key,
+  required final CounterModel counterModel,
+  required final VoidCallback onRemove,
+  required final VoidCallback onUpdateTarget,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

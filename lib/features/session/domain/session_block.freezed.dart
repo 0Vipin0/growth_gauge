@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'session_block.dart';
@@ -9,6 +9,7 @@ part of 'session_block.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $SessionBlockCopyWith<SessionBlock> get copyWith => _$SessionBlockCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateBlockId, sourceTemplateBlockId) || other.sourceTemplateBlockId == sourceTemplateBlockId)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.rounds, rounds) || other.rounds == rounds)&&(identical(other.timeCapSeconds, timeCapSeconds) || other.timeCapSeconds == timeCapSeconds)&&(identical(other.transitionSeconds, transitionSeconds) || other.transitionSeconds == transitionSeconds)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.notes, notes) || other.notes == notes));
+  final _this = this as SessionBlock;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionBlock&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.sourceTemplateBlockId, _this.sourceTemplateBlockId) || other.sourceTemplateBlockId == _this.sourceTemplateBlockId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.rounds, _this.rounds) || other.rounds == _this.rounds)&&(identical(other.timeCapSeconds, _this.timeCapSeconds) || other.timeCapSeconds == _this.timeCapSeconds)&&(identical(other.transitionSeconds, _this.transitionSeconds) || other.transitionSeconds == _this.transitionSeconds)&&const DeepCollectionEquality().equals(other.items, _this.items)&&(identical(other.notes, _this.notes) || other.notes == _this.notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sourceTemplateBlockId,name,type,rounds,timeCapSeconds,transitionSeconds,const DeepCollectionEquality().hash(items),notes);
+int get hashCode {
+  final _this = this as SessionBlock;
+  return Object.hash(runtimeType,_this.id,_this.sourceTemplateBlockId,_this.name,_this.type,_this.rounds,_this.timeCapSeconds,_this.transitionSeconds,const DeepCollectionEquality().hash(_this.items),_this.notes);
+}
 
 @override
 String toString() {
-  return 'SessionBlock(id: $id, sourceTemplateBlockId: $sourceTemplateBlockId, name: $name, type: $type, rounds: $rounds, timeCapSeconds: $timeCapSeconds, transitionSeconds: $transitionSeconds, items: $items, notes: $notes)';
+  final _this = this as SessionBlock;
+  return 'SessionBlock(id: ${_this.id}, sourceTemplateBlockId: ${_this.sourceTemplateBlockId}, name: ${_this.name}, type: ${_this.type}, rounds: ${_this.rounds}, timeCapSeconds: ${_this.timeCapSeconds}, transitionSeconds: ${_this.transitionSeconds}, items: ${_this.items}, notes: ${_this.notes})';
 }
 
 
@@ -66,7 +72,7 @@ class _$SessionBlockCopyWithImpl<$Res>
 /// Create a copy of SessionBlock
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sourceTemplateBlockId = null,Object? name = null,Object? type = null,Object? rounds = null,Object? timeCapSeconds = freezed,Object? transitionSeconds = freezed,Object? items = null,Object? notes = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SessionBlock(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sourceTemplateBlockId: null == sourceTemplateBlockId ? _self.sourceTemplateBlockId : sourceTemplateBlockId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -217,7 +223,7 @@ return $default(_that.id,_that.sourceTemplateBlockId,_that.name,_that.type,_that
 @JsonSerializable()
 
 class _SessionBlock implements SessionBlock {
-  const _SessionBlock({required this.id, required this.sourceTemplateBlockId, required this.name, this.type = WorkoutBlockType.standard, this.rounds = 1, this.timeCapSeconds, this.transitionSeconds, final  List<SessionItem> items = const [], this.notes}): _items = items;
+  const _SessionBlock({required this.id, required this.sourceTemplateBlockId, required this.name, this.type = WorkoutBlockType.standard, this.rounds = 1, this.timeCapSeconds, this.transitionSeconds,  List<SessionItem> items = const [], this.notes}): _items = items;
   factory _SessionBlock.fromJson(Map<String, dynamic> json) => _$SessionBlockFromJson(json);
 
 @override final  String id;
@@ -249,16 +255,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateBlockId, sourceTemplateBlockId) || other.sourceTemplateBlockId == sourceTemplateBlockId)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.rounds, rounds) || other.rounds == rounds)&&(identical(other.timeCapSeconds, timeCapSeconds) || other.timeCapSeconds == timeCapSeconds)&&(identical(other.transitionSeconds, transitionSeconds) || other.transitionSeconds == transitionSeconds)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.notes, notes) || other.notes == notes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.sourceTemplateBlockId, sourceTemplateBlockId) || other.sourceTemplateBlockId == sourceTemplateBlockId)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.rounds, rounds) || other.rounds == rounds)&&(identical(other.timeCapSeconds, timeCapSeconds) || other.timeCapSeconds == timeCapSeconds)&&(identical(other.transitionSeconds, transitionSeconds) || other.transitionSeconds == transitionSeconds)&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.notes, notes) || other.notes == notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sourceTemplateBlockId,name,type,rounds,timeCapSeconds,transitionSeconds,const DeepCollectionEquality().hash(_items),notes);
+int get hashCode {
+    return Object.hash(runtimeType,id,sourceTemplateBlockId,name,type,rounds,timeCapSeconds,transitionSeconds,const DeepCollectionEquality().hash(_items),notes);
+}
 
 @override
 String toString() {
-  return 'SessionBlock(id: $id, sourceTemplateBlockId: $sourceTemplateBlockId, name: $name, type: $type, rounds: $rounds, timeCapSeconds: $timeCapSeconds, transitionSeconds: $transitionSeconds, items: $items, notes: $notes)';
+    return 'SessionBlock(id: $id, sourceTemplateBlockId: $sourceTemplateBlockId, name: $name, type: $type, rounds: $rounds, timeCapSeconds: $timeCapSeconds, transitionSeconds: $transitionSeconds, items: $items, notes: $notes)';
 }
 
 
