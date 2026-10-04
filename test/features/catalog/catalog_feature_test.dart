@@ -19,7 +19,7 @@ void main() {
       useCases = CatalogUseCases(repository);
     });
 
-    tearDown(() async => database.close());
+    tearDown(() async => await database.close());
 
     test(
       'seeds standard exercises once and leaves a non-empty catalog alone',

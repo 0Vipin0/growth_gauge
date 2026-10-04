@@ -1,3 +1,5 @@
+// ignore_for_file: use_primary_constructors
+
 import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,10 +11,7 @@ part 'settings_model.freezed.dart';
 
 part 'settings_model.g.dart';
 
-enum ExportFormat() {
-  json,
-  csv,
-}
+enum ExportFormat { json, csv }
 
 extension ExportFormatExtension on ExportFormat {
   String getLabel() {
@@ -25,11 +24,7 @@ extension ExportFormatExtension on ExportFormat {
   }
 }
 
-enum AuthenticationType() {
-  none,
-  pin,
-  biometric,
-}
+enum AuthenticationType { none, pin, biometric }
 
 extension AuthenticationTypeExtension on AuthenticationType {
   String getLabel() {
@@ -55,17 +50,20 @@ abstract class SettingsModel with _$SettingsModel {
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
   }) = _SettingsModel;
 
-  factory fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
+  factory fromJson(Map<String, dynamic> json) =>
+      _$SettingsModelFromJson(json);
 }
 
 extension SettingsModelExtension on SettingsModel {
   AppTheme get appTheme => AppTheme(
-    themeName: themeName,
-    fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
-  );
+        themeName: themeName,
+        fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
+      );
 }
 
-class const TimeOfDayConverter() implements JsonConverter<TimeOfDay?, String?> {
+class TimeOfDayConverter implements JsonConverter<TimeOfDay?, String?> {
+  const new();
+
   @override
   TimeOfDay? fromJson(String? json) {
     if (json == null) return null;

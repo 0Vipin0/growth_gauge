@@ -30,7 +30,7 @@ class AuthenticationService() implements AuthenticationServiceBase {
     try {
       return await _auth.authenticate(
         localizedReason: 'Authenticate to access the app',
-        biometricOnly: true,
+        // options: const AuthenticationOptions(biometricOnly: true),
       );
     } catch (e) {
       debugPrint('Biometric authentication error: $e');

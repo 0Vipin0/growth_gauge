@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/analytics_cubit.dart';
@@ -11,21 +10,7 @@ import 'pr_trophy_screen.dart';
 
 /// Central dashboard for analytics: weekly volume, workout frequency heatmap,
 /// and recent PR achievements.
-class const AnalyticsDashboardScreen({super.key}) extends StatefulWidget {
-  @override
-  State<AnalyticsDashboardScreen> createState() =>
-      _AnalyticsDashboardScreenState();
-}
-
-class _AnalyticsDashboardScreenState() extends State<AnalyticsDashboardScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) context.read<AnalyticsCubit>().triggerRebuild();
-    });
-  }
-
+class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +52,7 @@ class _AnalyticsDashboardScreenState() extends State<AnalyticsDashboardScreen> {
               final messenger = ScaffoldMessenger.of(context);
               await context.read<AnalyticsCubit>().triggerRebuild();
               messenger.showSnackBar(
-                const SnackBar(
-                  content: Text('Analytics rebuilt successfully.'),
-                ),
+                const SnackBar(content: Text('Analytics rebuilt successfully.')),
               );
             },
           ),
@@ -104,8 +87,9 @@ class _AnalyticsDashboardScreenState() extends State<AnalyticsDashboardScreen> {
                   children: [
                     Text(
                       'Recent Personal Records',
-                      style: Theme.of(context).textTheme.titleMedium
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -133,9 +117,9 @@ class _AnalyticsDashboardScreenState() extends State<AnalyticsDashboardScreen> {
                     ),
                   )
                 else
-                  ...state.personalRecords
-                      .take(5)
-                      .map((pr) => PrBadgeCard(record: pr)),
+                  ...state.personalRecords.take(5).map(
+                        (pr) => PrBadgeCard(record: pr),
+                      ),
               ],
             ),
           );

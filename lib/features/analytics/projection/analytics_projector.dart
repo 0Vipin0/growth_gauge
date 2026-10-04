@@ -19,11 +19,11 @@ import '../domain/pr_calculator.dart';
 /// **Idempotency guarantee:** every projection starts by deleting all existing
 /// rows for the session, so projecting the same session twice is safe.
 class AnalyticsProjector({
-  required final AppDatabase _db,
-  required final PRCalculator _prCalculator,
-  required final IWorkoutSessionRepository _sessionRepo,
-  required final IExerciseRepository _exerciseRepo,
-}) {
+    required final AppDatabase _db,
+    required final PRCalculator _prCalculator,
+    required final IWorkoutSessionRepository _sessionRepo,
+    required final IExerciseRepository _exerciseRepo,
+  }) {
   StreamSubscription<WorkoutSessionCompleted>? _subscription;
 
   /// Subscribes to the global [DomainEventDispatcher].
@@ -38,7 +38,7 @@ class AnalyticsProjector({
   }
 
   /// Cancels the event subscription. Call on app teardown.
-  Future<void> stop() async => _subscription?.cancel();
+  Future<void> stop() async => await _subscription?.cancel();
 
   /// Projects a single session by ID. May be called directly by the rebuilder.
   Future<void> projectById(String sessionId) async {

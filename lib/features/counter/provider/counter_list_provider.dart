@@ -1,3 +1,5 @@
+// ignore_for_file: use_primary_constructors
+
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -6,13 +8,13 @@ import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
-class CounterListProvider({
-  required final CounterRepository repository,
-  required final NotificationService notificationService,
-}) with ChangeNotifier {
+class CounterListProvider with ChangeNotifier {
+  final CounterRepository repository;
+  final NotificationService notificationService;
   List<CounterModel> _counters = [];
 
-  this {
+  new(
+      {required this.repository, required this.notificationService}) {
     _loadCounters();
   }
 
@@ -90,13 +92,12 @@ class CounterListProvider({
 
   void _triggerNotification({required String title, required String body}) {
     notificationService.scheduleNotification(
-      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-      title: title,
-      body: body,
-      scheduledTime: tz.TZDateTime.now(tz.local)
-          .add(const Duration(seconds: 3)),
-      sound: 'assets/sounds/simple_notification.mp3',
-    );
+        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+        title: title,
+        body: body,
+        scheduledTime:
+            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+        sound: 'assets/sounds/simple_notification.mp3');
   }
 
   void removeCounter(CounterModel counter) {
@@ -169,11 +170,9 @@ class CounterListProvider({
       _filteredCounters = [];
     } else {
       _filteredCounters = _counters
-          .where(
-            (counter) =>
-                counter.tags != null &&
-                counter.tags!.any((tag) => tags.contains(tag)),
-          )
+          .where((counter) =>
+              counter.tags != null &&
+              counter.tags!.any((tag) => tags.contains(tag)))
           .toList();
     }
     notifyListeners();

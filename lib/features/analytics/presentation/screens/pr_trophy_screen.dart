@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_primary_constructors
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/analytics_cubit.dart';
@@ -12,29 +13,28 @@ class const PrTrophyScreen({super.key}) extends StatefulWidget {
   State<PrTrophyScreen> createState() => _PrTrophyScreenState();
 }
 
-class _PrTrophyScreenState() extends State<PrTrophyScreen> {
+class _PrTrophyScreenState extends State<PrTrophyScreen> {
   PrType? _selectedFilter;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Personal Record Trophies')),
+      appBar: AppBar(
+        title: const Text('Personal Record Trophies'),
+      ),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
         builder: (context, state) {
           final prs = _selectedFilter == null
               ? state.personalRecords
               : state.personalRecords
-                    .where((p) => p.prType == _selectedFilter)
-                    .toList();
+                  .where((p) => p.prType == _selectedFilter)
+                  .toList();
 
           return Column(
             children: [
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   children: [
                     FilterChip(
@@ -56,8 +56,7 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
                         child: FilterChip(
                           label: Text(name),
                           selected: _selectedFilter == type,
-                          onSelected: (_) =>
-                              setState(() => _selectedFilter = type),
+                          onSelected: (_) => setState(() => _selectedFilter = type),
                         ),
                       );
                     }),

@@ -17,5 +17,6 @@ abstract class AppData with _$AppData {
     @Default([]) List<TimerModel> timers,
   }) = _AppData;
 
-  factory fromJson(Map<String, dynamic> json) => _$AppDataFromJson(json);
+  factory fromJson(Map<String, dynamic> json) =>
+      _$AppDataFromJson(json);
 }

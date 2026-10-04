@@ -1,40 +1,37 @@
 import '../../../core/events/domain_event.dart';
 
-class const WorkoutSessionStarted({required super.aggregateId})
-    extends DomainEvent {
+class  WorkoutSessionStarted({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionStarted';
 }
 
-class const WorkoutSessionPaused({required super.aggregateId})
-    extends DomainEvent {
+class  WorkoutSessionPaused({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionPaused';
 }
 
-class const WorkoutSessionResumed({required super.aggregateId})
-    extends DomainEvent {
+class  WorkoutSessionResumed({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionResumed';
 }
 
-class const WorkoutSessionCompleted({required super.aggregateId})
+class  WorkoutSessionCompleted({required super.aggregateId})
     extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionCompleted';
 }
 
-class const RestStarted({required super.aggregateId}) extends DomainEvent {
+class RestStarted({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'RestStarted';
 }
 
-class const RestCompleted({required super.aggregateId}) extends DomainEvent {
+class RestCompleted({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'RestCompleted';
 }
 
-class const RestSkipped({
+class RestSkipped({
   required super.aggregateId,
   required final String restIntervalId,
 }) extends DomainEvent {
@@ -44,19 +41,19 @@ class const RestSkipped({
   List<Object?> get props => [...super.props, restIntervalId];
 }
 
-class const WorkoutSessionCancelled({required super.aggregateId})
+class WorkoutSessionCancelled({required super.aggregateId})
     extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionCancelled';
 }
 
-class const WorkoutSessionAbandoned({required super.aggregateId})
+class WorkoutSessionAbandoned({required super.aggregateId})
     extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionAbandoned';
 }
 
-class const ExecutionSetCompleted({
+class ExecutionSetCompleted({
   required super.aggregateId,
   required final String setId,
 }) extends DomainEvent {
@@ -66,7 +63,7 @@ class const ExecutionSetCompleted({
   List<Object?> get props => [...super.props, setId];
 }
 
-class const ExecutionSetSkipped({
+class  ExecutionSetSkipped({
   required super.aggregateId,
   required final String setId,
 }) extends DomainEvent {
@@ -76,7 +73,7 @@ class const ExecutionSetSkipped({
   List<Object?> get props => [...super.props, setId];
 }
 
-class const ExecutionSetDeleted({
+class ExecutionSetDeleted({
   required super.aggregateId,
   required final String setId,
 }) extends DomainEvent {
