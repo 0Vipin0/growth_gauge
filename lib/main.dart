@@ -30,8 +30,11 @@ void main() async {
   runApp(DependencyProvider(database: database));
 }
 
-class const DependencyProvider({super.key, required final AppDatabase database})
-    extends StatelessWidget {
+class DependencyProvider extends StatelessWidget {
+  const DependencyProvider({super.key, required this.database});
+
+  final AppDatabase database;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -58,7 +61,9 @@ class const DependencyProvider({super.key, required final AppDatabase database})
   }
 }
 
-class const MyApp({super.key}) extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SettingsProvider>(

@@ -7,7 +7,7 @@ part 'session_item.g.dart';
 
 @freezed
 abstract class SessionItem with _$SessionItem {
-  const factory({
+  const factory SessionItem({
     required String id,
     required String sourceTemplateItemId,
     required String exerciseId,
@@ -16,5 +16,6 @@ abstract class SessionItem with _$SessionItem {
     String? notes,
   }) = _SessionItem;
 
-  factory fromJson(Map<String, dynamic> json) => _$SessionItemFromJson(json);
+  factory SessionItem.fromJson(Map<String, dynamic> json) =>
+      _$SessionItemFromJson(json);
 }

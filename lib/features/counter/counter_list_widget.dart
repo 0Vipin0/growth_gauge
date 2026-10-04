@@ -9,7 +9,9 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'reusable_counter_widget.dart';
 
-class const CounterListWidget({super.key}) extends StatelessWidget {
+class CounterListWidget extends StatelessWidget {
+  const CounterListWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     final counterListProvider = Provider.of<CounterListProvider>(context);

@@ -10,11 +10,12 @@ import 'document_adapter.dart';
 import 'document_store.dart';
 
 /// Drift-backed implementation of [IDocumentStore].
-class DriftDocumentStore<T>({
-  required AppDatabase database,
-  required final DocumentAdapter<T> _adapter,
-}) implements IDocumentStore<T> {
-  final AppDatabase _db = database;
+class DriftDocumentStore<T> implements IDocumentStore<T> {
+  final AppDatabase _db;
+  final DocumentAdapter<T> _adapter;
+
+  DriftDocumentStore({required AppDatabase database, required this._adapter})
+    : _db = database;
 
   @override
   Future<Result<void, Failure>> upsert(T entity) async {

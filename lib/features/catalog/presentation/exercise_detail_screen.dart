@@ -5,18 +5,24 @@ import '../domain/exercise.dart';
 import '../domain/exercise_enums.dart';
 import '../infrastructure/exercise_repository.dart';
 
-class const ExerciseDetailScreen({
-  super.key,
-  required final Exercise exercise,
-  required final IExerciseRepository repository,
-  required final CatalogUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+class ExerciseDetailScreen extends StatefulWidget {
+  const ExerciseDetailScreen({
+    super.key,
+    required this.exercise,
+    required this.repository,
+    required this.useCases,
+    required this.userId,
+  });
+  final Exercise exercise;
+  final IExerciseRepository repository;
+  final CatalogUseCases useCases;
+  final String userId;
+
   @override
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
 }
 
-class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
+class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   late Exercise _exercise;
 
   @override

@@ -32,8 +32,8 @@ mixin AppRoutes {
     onboarding: (_) => const OnboardingScreen(),
     home: (_) => const HomePage(),
     settings: (_) => const SettingsPage(),
-    biometricAuth: (_) => const BiometricAuthScreen(),
-    pinAuth: (_) => const PinAuthScreen(),
+    biometricAuth: (_) => BiometricAuthScreen(),
+    pinAuth: (_) => PinAuthScreen(),
     exerciseCatalog: (context) {
       final database = Provider.of<AppDatabase>(context, listen: false);
       final repository = ExerciseRepository(database);

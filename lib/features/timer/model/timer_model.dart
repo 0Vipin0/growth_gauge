@@ -5,7 +5,7 @@ part 'timer_model.g.dart';
 
 @freezed
 abstract class TimerModel with _$TimerModel {
-  factory({
+  factory TimerModel({
     required String id,
     required String name,
     required Duration interval,
@@ -15,17 +15,19 @@ abstract class TimerModel with _$TimerModel {
     List<String>? tags, // New property for tags
   }) = _TimerModel;
 
-  factory fromJson(Map<String, dynamic> json) => _$TimerModelFromJson(json);
+  factory TimerModel.fromJson(Map<String, dynamic> json) =>
+      _$TimerModelFromJson(json);
 }
 
 @freezed
 abstract class TimerLog with _$TimerLog {
-  factory({
+  factory TimerLog({
     required String id,
     required String action,
     required DateTime timestamp,
     required Duration interval,
   }) = _TimerLog;
 
-  factory fromJson(Map<String, dynamic> json) => _$TimerLogFromJson(json);
+  factory TimerLog.fromJson(Map<String, dynamic> json) =>
+      _$TimerLogFromJson(json);
 }

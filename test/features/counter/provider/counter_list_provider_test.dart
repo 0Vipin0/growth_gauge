@@ -5,7 +5,7 @@ import 'package:growth_gauge/features/counter/repository/repository.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNotificationService() extends Mock implements NotificationService;
+class MockNotificationService extends Mock implements NotificationService {}
 
 final testCounter = CounterModel(
   id: '1',

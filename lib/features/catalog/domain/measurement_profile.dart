@@ -7,7 +7,7 @@ part 'measurement_profile.g.dart';
 
 @freezed
 abstract class ExerciseMeasurementProfile with _$ExerciseMeasurementProfile {
-  const factory({
+  const factory ExerciseMeasurementProfile({
     @Default(MetricType.weightAndReps) MetricType defaultMetricType,
     @Default([MetricType.weightAndReps]) List<MetricType> supportedMetricTypes,
     @Default(true) bool supportsWeight,
@@ -20,6 +20,6 @@ abstract class ExerciseMeasurementProfile with _$ExerciseMeasurementProfile {
     @Default(false) bool supportsTempo,
   }) = _ExerciseMeasurementProfile;
 
-  factory fromJson(Map<String, dynamic> json) =>
+  factory ExerciseMeasurementProfile.fromJson(Map<String, dynamic> json) =>
       _$ExerciseMeasurementProfileFromJson(json);
 }

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class const TimeControlWidget({
-  super.key,
-  required final String label,
-  required final int value,
-  required final ValueChanged<int> onChanged,
-}) extends StatelessWidget {
+class TimeControlWidget extends StatelessWidget {
+  final String label;
+  final int value;
+  final ValueChanged<int> onChanged;
+
+  const TimeControlWidget({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Column(

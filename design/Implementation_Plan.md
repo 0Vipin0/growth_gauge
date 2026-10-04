@@ -89,7 +89,7 @@ flowchart TD
 | **Phase 1** | Dependencies & Core Foundation | `[x] COMPLETED` | 6 | 6 |
 | **Phase 2** | Exercise Catalog & Templates | `[x] COMPLETED` | 7 | 7 |
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[x] COMPLETED` | 8 | 8 |
-| **Phase 4** | Materialized Analytics & Drift Projections | `[ ] NOT STARTED` | 0 | 7 |
+| **Phase 4** | Materialized Analytics & Drift Projections | `[~] PARTIALLY COMPLETED` | 5 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[ ] NOT STARTED` | 0 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[ ] NOT STARTED` | 0 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[ ] NOT STARTED` | 0 | 4 |
@@ -454,23 +454,24 @@ class AnalyticsProjector {
 
 ### 7.4 Phase 4 Step-by-Step Execution Sequence
 
-1. **Step 4.1: Drift Analytics Tables & Migration**
+1. **Step 4.1: Drift Analytics Tables & Migration** `[x]`
    - Add analytical tables to `AppDatabase` schema.
    - Run `build_runner` to generate DAOs and table classes.
-2. **Step 4.2: PR Calculation Engine**
+2. **Step 4.2: PR Calculation Engine** `[x]`
    - Implement `PRCalculator` with 1RM formulas and PR comparison logic.
    - Write unit tests verifying 1RM calculation accuracy and tie-breaking.
-3. **Step 4.3: Analytics Projector & Event Subscription**
-   - Implement `AnalyticsProjector` wrapping atomic Drift transactions.
-   - Wire `DomainEventDispatcher` to trigger projector on `WorkoutSessionCompletedEvent`.
-4. **Step 4.4: Analytics Rebuilder**
-   - Implement `RebuildAnalyticsUseCase` to clear analytics tables and sequentially project all sessions.
-5. **Step 4.5: Analytics DAO & Query Handlers**
-   - Implement queries for: 1RM history by exercise, weekly volume per muscle, recent PRs, and frequency.
-6. **Step 4.6: Analytics Presentation UI (fl_chart)**
-   - Build `AnalyticsDashboardScreen`, `VolumeBarChart`, `ProgressionLineChart`, and `PRTrophyScreen`.
-7. **Step 4.7: Automated Projection & Rebuild Tests**
-   - Test projection idempotency and analytics rebuilder parity.
+3. **Step 4.3: Analytics Projector & Event Subscription** `[~] PARTIAL`
+   - Implemented `AnalyticsProjector` with transactional, idempotent projection of completed sessions, set metrics, rest metrics, summaries, muscle volume, and PRs. `start()` subscribes to `WorkoutSessionCompleted`.
+   - **Remaining:** Instantiate and start the projector in app startup/dependency wiring so completion events trigger it in normal app use; ensure shutdown cancels the subscription.
+4. **Step 4.4: Analytics Rebuilder** `[x]`
+   - `ProjectionRebuilder` clears analytics read models and replays completed sessions sequentially.
+5. **Step 4.5: Analytics DAO & Query Handlers** `[x]`
+   - Implemented reactive Drift queries for progression, volume, PRs, workout history/frequency, and rest metrics.
+6. **Step 4.6: Analytics Presentation UI (fl_chart)** `[~] PARTIAL`
+   - Implemented analytics dashboard, progression and volume charts, PR trophy UI, and frequency heatmap.
+   - **Remaining:** Wire the screens and `AnalyticsCubit` into application navigation/providers.
+7. **Step 4.7: Automated Projection & Rebuild Tests** `[x] IMPLEMENTED; NOT VERIFIED IN THIS PASS`
+   - Added analytics DAO, projector/rebuilder, PR calculator, and widget tests, including projection idempotency and rebuild coverage. These tests still need to be run in a functioning Flutter/Dart environment.
 
 ---
 
@@ -482,6 +483,8 @@ class AnalyticsProjector {
 | **PR Detection** | New PR achievement | Logging a 100 kg x 5 squat after a previous 90 kg x 5 correctly records `MAX_WEIGHT` and `ESTIMATED_1RM` records pointing to the new set. |
 | **Analytics Rebuild** | Full wipe and replay | Wiping all relational analytics tables and running `RebuildAnalyticsUseCase` reproduces 100% identical analytical read data from session documents. |
 | **Chart Query Performance** | Query latency benchmark | Querying 1 year of workout volume metrics executes in $< 15$ ms from SQLite indexed tables. |
+
+**Verification note (2026-10-04):** Dart static analysis completes without compile-time errors after resolving dependencies and regenerating code. Four informational lints remain (the existing static-only `AppClock` class and unnecessary `async` in two tests, plus import ordering in the PR screen). Analytics tests and the chart performance benchmark have not been run in this pass. Phase 4 remains partial until app startup/navigation wiring is added and tests run successfully.
 
 ---
 

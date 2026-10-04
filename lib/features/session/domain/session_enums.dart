@@ -1,4 +1,4 @@
-enum SessionStatus() {
+enum SessionStatus {
   draft,
   starting,
   inProgress,
@@ -9,7 +9,7 @@ enum SessionStatus() {
   abandoned,
 }
 
-enum InterruptionReason() {
+enum InterruptionReason {
   userPause,
   applicationBackground,
   phoneCall,
@@ -17,12 +17,9 @@ enum InterruptionReason() {
   other,
 }
 
-enum AuditActorType() {
-  user,
-  system,
-}
+enum AuditActorType { user, system }
 
-enum AuditAction() {
+enum AuditAction {
   created,
   updated,
   deleted,
@@ -34,9 +31,4 @@ enum AuditAction() {
   abandoned,
 }
 
-enum ExecutionSetStatus() {
-  planned,
-  inProgress,
-  completed,
-  skipped,
-}
+enum ExecutionSetStatus { planned, inProgress, completed, skipped }

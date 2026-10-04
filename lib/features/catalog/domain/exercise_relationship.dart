@@ -7,13 +7,13 @@ part 'exercise_relationship.g.dart';
 
 @freezed
 abstract class ExerciseRelationship with _$ExerciseRelationship {
-  const factory({
+  const factory ExerciseRelationship({
     required String sourceExerciseId,
     required String targetExerciseId,
     required RelationshipType type,
     String? reason,
   }) = _ExerciseRelationship;
 
-  factory fromJson(Map<String, dynamic> json) =>
+  factory ExerciseRelationship.fromJson(Map<String, dynamic> json) =>
       _$ExerciseRelationshipFromJson(json);
 }

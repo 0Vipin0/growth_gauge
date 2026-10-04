@@ -13,7 +13,7 @@ part 'workout_block.g.dart';
 /// item list is cycled during execution.
 @freezed
 abstract class WorkoutBlock with _$WorkoutBlock {
-  const factory({
+  const factory WorkoutBlock({
     required String id,
     required String name,
     @Default(WorkoutBlockType.standard) WorkoutBlockType type,
@@ -24,5 +24,6 @@ abstract class WorkoutBlock with _$WorkoutBlock {
     String? notes,
   }) = _WorkoutBlock;
 
-  factory fromJson(Map<String, dynamic> json) => _$WorkoutBlockFromJson(json);
+  factory WorkoutBlock.fromJson(Map<String, dynamic> json) =>
+      _$WorkoutBlockFromJson(json);
 }

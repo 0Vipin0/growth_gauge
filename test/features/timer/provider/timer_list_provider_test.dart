@@ -5,7 +5,7 @@ import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
 import 'package:growth_gauge/features/timer/repository/repository.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNotificationService() extends Mock implements NotificationService;
+class MockNotificationService extends Mock implements NotificationService {}
 
 final testTimers = [
   TimerModel(

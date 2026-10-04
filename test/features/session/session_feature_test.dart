@@ -494,8 +494,10 @@ _createTemplate(
   return (template: template, revision: revision);
 }
 
-class _FailCompletedSaveOnce(final IWorkoutSessionRepository _delegate)
-    implements IWorkoutSessionRepository {
+class _FailCompletedSaveOnce implements IWorkoutSessionRepository {
+  _FailCompletedSaveOnce(this._delegate);
+
+  final IWorkoutSessionRepository _delegate;
   bool _failed = false;
 
   @override
@@ -516,4 +518,10 @@ class _FailCompletedSaveOnce(final IWorkoutSessionRepository _delegate)
   @override
   Future<Result<List<WorkoutSession>, Failure>> listUnfinished(String userId) =>
       _delegate.listUnfinished(userId);
+
+  @override
+  Future<Result<List<WorkoutSession>, Failure>> listAll() {
+    // TODO: implement listAll
+    throw UnimplementedError();
+  }
 }

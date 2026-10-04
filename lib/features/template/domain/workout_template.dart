@@ -10,7 +10,7 @@ part 'workout_template.g.dart';
 /// is published it is immutable; editing creates a new revision.
 @freezed
 abstract class WorkoutTemplate with _$WorkoutTemplate {
-  const factory({
+  const factory WorkoutTemplate({
     required String id,
     required String name,
     @Default('') String description,
@@ -24,6 +24,6 @@ abstract class WorkoutTemplate with _$WorkoutTemplate {
     @Default([]) List<String> tags,
   }) = _WorkoutTemplate;
 
-  factory fromJson(Map<String, dynamic> json) =>
+  factory WorkoutTemplate.fromJson(Map<String, dynamic> json) =>
       _$WorkoutTemplateFromJson(json);
 }

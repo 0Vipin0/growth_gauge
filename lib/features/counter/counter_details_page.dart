@@ -6,8 +6,11 @@ import '../chart/chart.dart';
 import 'model/model.dart';
 import 'provider/counter_list_provider.dart';
 
-class const CounterDetailsPage({super.key, required final CounterModel counter})
-    extends StatelessWidget {
+class CounterDetailsPage extends StatelessWidget {
+  final CounterModel counter;
+
+  const CounterDetailsPage({super.key, required this.counter});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,8 +162,11 @@ class const CounterDetailsPage({super.key, required final CounterModel counter})
   }
 }
 
-class const HeatmapPage({super.key, required final CounterModel counter})
-    extends StatelessWidget {
+class HeatmapPage extends StatelessWidget {
+  final CounterModel counter;
+
+  const HeatmapPage({super.key, required this.counter});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -173,8 +179,11 @@ class const HeatmapPage({super.key, required final CounterModel counter})
   }
 }
 
-class const ChartPage({super.key, required final CounterModel counter})
-    extends StatelessWidget {
+class ChartPage extends StatelessWidget {
+  final CounterModel counter;
+
+  const ChartPage({super.key, required this.counter});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

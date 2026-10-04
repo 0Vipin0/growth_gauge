@@ -7,7 +7,7 @@ part 'audit_entry.g.dart';
 
 @freezed
 abstract class AuditEntry with _$AuditEntry {
-  const factory({
+  const factory AuditEntry({
     required String id,
     required DateTime timestamp,
     @Default(AuditActorType.user) AuditActorType actorType,
@@ -22,5 +22,6 @@ abstract class AuditEntry with _$AuditEntry {
     String? correlationId,
   }) = _AuditEntry;
 
-  factory fromJson(Map<String, dynamic> json) => _$AuditEntryFromJson(json);
+  factory AuditEntry.fromJson(Map<String, dynamic> json) =>
+      _$AuditEntryFromJson(json);
 }

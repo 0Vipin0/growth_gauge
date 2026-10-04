@@ -5,10 +5,12 @@ import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../domain/workout_session.dart';
 
-class const WorkoutSessionState({
-  required final WorkoutSession session,
-  final bool isBusy = false,
-}) extends Equatable {
+class WorkoutSessionState extends Equatable {
+  const WorkoutSessionState({required this.session, this.isBusy = false});
+
+  final WorkoutSession session;
+  final bool isBusy;
+
   WorkoutSessionState copyWith({WorkoutSession? session, bool? isBusy}) =>
       WorkoutSessionState(
         session: session ?? this.session,
@@ -20,9 +22,9 @@ class const WorkoutSessionState({
 }
 
 /// Owns the live session snapshot while serializing user commands.
-class WorkoutSessionBloc({required WorkoutSession initialSession})
-    extends Cubit<WorkoutSessionState> {
-  this : super(WorkoutSessionState(session: initialSession));
+class WorkoutSessionBloc extends Cubit<WorkoutSessionState> {
+  WorkoutSessionBloc({required WorkoutSession initialSession})
+    : super(WorkoutSessionState(session: initialSession));
 
   Future<Result<WorkoutSession, Failure>?> execute(
     Future<Result<WorkoutSession, Failure>> Function() command,

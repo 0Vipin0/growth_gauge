@@ -5,15 +5,21 @@ import '../domain/exercise.dart';
 import '../domain/exercise_enums.dart';
 import 'catalog_use_cases.dart';
 
-class const CatalogState({
-  final List<Exercise> exercises = const [],
-  final bool isLoading = false,
-  final String? failureMessage,
-});
+class CatalogState {
+  const CatalogState({
+    this.exercises = const [],
+    this.isLoading = false,
+    this.failureMessage,
+  });
+  final List<Exercise> exercises;
+  final bool isLoading;
+  final String? failureMessage;
+}
 
-class CatalogCubit(final CatalogUseCases _useCases)
-    extends Cubit<CatalogState> {
-  this : super(const CatalogState());
+class CatalogCubit extends Cubit<CatalogState> {
+  CatalogCubit(this._useCases) : super(const CatalogState());
+  final CatalogUseCases _useCases;
+
   Future<void> load({
     String query = '',
     BodyRegion? bodyRegion,
@@ -32,7 +38,7 @@ class CatalogCubit(final CatalogUseCases _useCases)
     switch (result) {
       case Success(data: final exercises):
         emit(CatalogState(exercises: exercises));
-      case Error(:final failure):
+      case Error(failure: final failure):
         emit(
           CatalogState(
             exercises: state.exercises,

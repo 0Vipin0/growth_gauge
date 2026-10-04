@@ -12,7 +12,7 @@ part 'workout_session.g.dart';
 /// Authoritative, self-contained runtime copy of one immutable template revision.
 @freezed
 abstract class WorkoutSession with _$WorkoutSession {
-  const factory({
+  const factory WorkoutSession({
     required String id,
     required String userId,
     required String templateId,
@@ -30,7 +30,8 @@ abstract class WorkoutSession with _$WorkoutSession {
     String? sessionNotes,
   }) = _WorkoutSession;
 
-  factory fromJson(Map<String, dynamic> json) => _$WorkoutSessionFromJson(json);
+  factory WorkoutSession.fromJson(Map<String, dynamic> json) =>
+      _$WorkoutSessionFromJson(json);
 }
 
 extension WorkoutSessionDuration on WorkoutSession {

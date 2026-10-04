@@ -2,16 +2,20 @@ import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
 /// Represents a stable, validated unique identifier in the domain.
-class const UniqueId._(final String value) extends Equatable {
+class UniqueId extends Equatable {
   static const Uuid _uuid = Uuid();
 
+  final String value;
+
+  const UniqueId._(this.value);
+
   /// Generates a new random UUIDv4 identifier.
-  factory generate() {
+  factory UniqueId.generate() {
     return UniqueId._(_uuid.v4());
   }
 
   /// Wraps an existing string identifier, ensuring it is non-empty.
-  factory from(String id) {
+  factory UniqueId.from(String id) {
     final trimmed = id.trim();
     if (trimmed.isEmpty) {
       throw ArgumentError.value(

@@ -1,8 +1,9 @@
 import '../../../core/database/document_adapter.dart';
 import '../domain/workout_session.dart';
 
-class const SessionDocumentAdapter()
-    implements DocumentAdapter<WorkoutSession> {
+class SessionDocumentAdapter implements DocumentAdapter<WorkoutSession> {
+  const SessionDocumentAdapter();
+
   @override
   String get collection => 'workout_sessions';
   @override

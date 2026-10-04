@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../routes.dart';
 
-class const FitnessHubPage({super.key}) extends StatelessWidget {
+class FitnessHubPage extends StatelessWidget {
+  const FitnessHubPage({super.key});
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('Strength & conditioning')),

@@ -5,16 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/core/events/domain_event.dart';
 import 'package:growth_gauge/core/events/domain_event_dispatcher.dart';
 
-class const SampleWorkoutEvent({
-  required super.aggregateId,
-  required final String sessionName,
-}) extends DomainEvent {
+class SampleWorkoutEvent extends DomainEvent {
+  final String sessionName;
+
+  SampleWorkoutEvent({required super.aggregateId, required this.sessionName});
+
   @override
   String get eventType => 'SampleWorkoutEvent';
 }
 
-class const AnotherDomainEvent({required super.aggregateId})
-    extends DomainEvent {
+class AnotherDomainEvent extends DomainEvent {
+  AnotherDomainEvent({required super.aggregateId});
+
   @override
   String get eventType => 'AnotherDomainEvent';
 }
@@ -43,12 +45,12 @@ void main() {
       });
 
       dispatcher.publish(
-        const SampleWorkoutEvent(aggregateId: 'sess-1', sessionName: 'Upper Body'),
+        SampleWorkoutEvent(aggregateId: 'sess-1', sessionName: 'Upper Body'),
       );
       // This should be filtered out by typed subscription
-      dispatcher.publish(const AnotherDomainEvent(aggregateId: 'other-1'));
+      dispatcher.publish(AnotherDomainEvent(aggregateId: 'other-1'));
       dispatcher.publish(
-        const SampleWorkoutEvent(aggregateId: 'sess-2', sessionName: 'Lower Body'),
+        SampleWorkoutEvent(aggregateId: 'sess-2', sessionName: 'Lower Body'),
       );
 
       await completer.future.timeout(const Duration(seconds: 2));
@@ -67,7 +69,7 @@ void main() {
       );
 
       dispatcher.publish(
-        const SampleWorkoutEvent(aggregateId: 's1', sessionName: 'A'),
+        SampleWorkoutEvent(aggregateId: 's1', sessionName: 'A'),
       );
       await Future<void>.delayed(const Duration(milliseconds: 20));
 
@@ -76,7 +78,7 @@ void main() {
       await subscription.cancel();
 
       dispatcher.publish(
-        const SampleWorkoutEvent(aggregateId: 's2', sessionName: 'B'),
+        SampleWorkoutEvent(aggregateId: 's2', sessionName: 'B'),
       );
       await Future<void>.delayed(const Duration(milliseconds: 20));
 

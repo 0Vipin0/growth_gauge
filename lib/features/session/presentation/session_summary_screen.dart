@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../domain/workout_session.dart';
 
-class const SessionSummaryScreen({
-  super.key,
-  required final WorkoutSession session,
-}) extends StatelessWidget {
+class SessionSummaryScreen extends StatelessWidget {
+  const SessionSummaryScreen({super.key, required this.session});
+
+  final WorkoutSession session;
+
   @override
   Widget build(BuildContext context) {
     final completedAt = session.completedAt ?? DateTime.now().toUtc();

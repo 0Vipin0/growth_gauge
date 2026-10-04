@@ -1,12 +1,14 @@
 import 'failures.dart';
 
 /// A functional Result monad representing either a [Success] or an [Error].
-sealed class const Result<T, E extends Failure>() {
+sealed class Result<T, E extends Failure> {
+  const Result();
+
   /// Creates a successful result holding [data].
-  const factory success(T data) = Success<T, E>;
+  const factory Result.success(T data) = Success<T, E>;
 
   /// Creates an error result holding [failure].
-  const factory error(E failure) = Error<T, E>;
+  const factory Result.error(E failure) = Error<T, E>;
 
   /// Returns true if this is a [Success].
   bool get isSuccess => this is Success<T, E>;
@@ -55,8 +57,10 @@ sealed class const Result<T, E extends Failure>() {
 }
 
 /// Represents the successful outcome of an operation.
-final class const Success<T, E extends Failure>(final T data)
-    extends Result<T, E> {
+final class Success<T, E extends Failure> extends Result<T, E> {
+  final T data;
+  const Success(this.data);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -72,8 +76,10 @@ final class const Success<T, E extends Failure>(final T data)
 }
 
 /// Represents the failed outcome of an operation.
-final class const Error<T, E extends Failure>(final E failure)
-    extends Result<T, E> {
+final class Error<T, E extends Failure> extends Result<T, E> {
+  final E failure;
+  const Error(this.failure);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

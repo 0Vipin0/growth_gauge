@@ -12,7 +12,7 @@ part 'template_item.g.dart';
 /// alternative exercise IDs in preference order.
 @freezed
 abstract class TemplateItem with _$TemplateItem {
-  const factory({
+  const factory TemplateItem({
     required String id,
     required String exerciseId,
     required int order,
@@ -21,5 +21,6 @@ abstract class TemplateItem with _$TemplateItem {
     String? coachNotes,
   }) = _TemplateItem;
 
-  factory fromJson(Map<String, dynamic> json) => _$TemplateItemFromJson(json);
+  factory TemplateItem.fromJson(Map<String, dynamic> json) =>
+      _$TemplateItemFromJson(json);
 }

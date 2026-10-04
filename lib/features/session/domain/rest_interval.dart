@@ -5,7 +5,7 @@ part 'rest_interval.g.dart';
 
 @freezed
 abstract class RestInterval with _$RestInterval {
-  const factory({
+  const factory RestInterval({
     required String id,
     required String executionSetId,
     required DateTime startedAt,
@@ -19,5 +19,6 @@ abstract class RestInterval with _$RestInterval {
     @Default(false) bool skipped,
   }) = _RestInterval;
 
-  factory fromJson(Map<String, dynamic> json) => _$RestIntervalFromJson(json);
+  factory RestInterval.fromJson(Map<String, dynamic> json) =>
+      _$RestIntervalFromJson(json);
 }

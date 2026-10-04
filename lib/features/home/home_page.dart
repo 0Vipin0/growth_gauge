@@ -16,12 +16,14 @@ import '../template/infrastructure/template_repository.dart';
 import '../timer/timer.dart';
 import 'fitness_hub_page.dart';
 
-class const HomePage({super.key}) extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState() extends State<HomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
@@ -83,12 +85,14 @@ class _HomePageState() extends State<HomePage> {
   }
 }
 
-class const MobileHomePage({super.key}) extends StatefulWidget {
+class MobileHomePage extends StatefulWidget {
+  const MobileHomePage({super.key});
+
   @override
   State<MobileHomePage> createState() => _MobileHomePageState();
 }
 
-class _MobileHomePageState() extends State<MobileHomePage> {
+class _MobileHomePageState extends State<MobileHomePage> {
   int _selectedIndex = 0;
 
   final PageController _pageController = PageController();
@@ -153,12 +157,14 @@ class _MobileHomePageState() extends State<MobileHomePage> {
   }
 }
 
-class const DesktopHomePage({super.key}) extends StatefulWidget {
+class DesktopHomePage extends StatefulWidget {
+  const DesktopHomePage({super.key});
+
   @override
   State<DesktopHomePage> createState() => _DesktopHomePageState();
 }
 
-class _DesktopHomePageState() extends State<DesktopHomePage> {
+class _DesktopHomePageState extends State<DesktopHomePage> {
   int _selectedIndex = 0;
 
   bool _isRailExtended = false;

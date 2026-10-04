@@ -1,23 +1,23 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../features/notification/notification_service.dart';
 import '../counter/counter.dart';
-import '../notification/notification_service.dart';
 import '../timer/timer.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 
-class SettingsProvider({
-  required final CounterListProvider _counterListProvider,
-  required final TimerListProvider _timerListProvider,
-  required final NotificationService _notificationService,
-}) with ChangeNotifier {
+class SettingsProvider with ChangeNotifier {
   SettingsModel _settings;
+
+  final CounterListProvider _counterListProvider;
+  final TimerListProvider _timerListProvider;
+  final NotificationService _notificationService;
 
   bool _isExporting = false;
 
@@ -36,7 +36,11 @@ class SettingsProvider({
   final LocalAuthentication _localAuth = LocalAuthentication();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  this : _settings = const SettingsModel(themeName: AppThemeName.light) {
+  SettingsProvider({
+    required this._counterListProvider,
+    required this._timerListProvider,
+    required this._notificationService,
+  }) : _settings = const SettingsModel(themeName: AppThemeName.light) {
     loadSettingsFromStorage();
   }
 
@@ -216,18 +220,15 @@ class SettingsProvider({
       ); // Pass parameters
       final exportJson = jsonEncode(appData.toJson());
 
-      final Uri? savedFile = await FilePicker.saveFile(
-        dialogTitle: 'Save Export File',
-        allowedExtensions: ['json'],
-        type: FileType.custom,
+      final savedFile = await _saveExportFile(
         fileName: 'DataExport.json',
-        bytes: utf8.encode(exportJson),
+        contents: exportJson,
+        mimeType: 'application/json',
       );
       if (savedFile == null) {
         exportMessage = 'Export Cancelled';
         return;
       }
-
       exportMessage = 'Data exported successfully!';
     } catch (e) {
       exportMessage = 'Error exporting data: $e';
@@ -244,21 +245,30 @@ class SettingsProvider({
     return AppData(counters: counters, timers: timers);
   }
 
+  Future<Uri?> _saveExportFile({
+    required String fileName,
+    required String contents,
+    required String mimeType,
+  }) {
+    return FilePicker.saveFile(
+      dialogTitle: 'Save Export File',
+      fileName: fileName,
+      bytes: Uint8List.fromList(utf8.encode(contents)),
+      mimeType: mimeType,
+    );
+  }
+
   Future<void> importData() async {
     _isImporting = true;
     notifyListeners();
     try {
-      final List<PlatformFile> result = await FilePicker.pickFiles(
+      final files = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
 
-      if (result.isNotEmpty) {
-        final PlatformFile selectedFile = result.single;
-        final String? path = selectedFile.path;
-        final String importJson = path == null
-            ? utf8.decode(await selectedFile.readAsBytes())
-            : await File(path).readAsString();
+      if (files.isNotEmpty) {
+        final String importJson = utf8.decode(await files.single.readAsBytes());
         await _processImportData(
           importJson,
           _counterListProvider.importCountersFromData,
@@ -340,9 +350,10 @@ class SettingsProvider({
     if (_counterListProvider.counters.isEmpty) return;
 
     try {
-      final Uri? savedFile = await _saveCsvFile(
-        suggestedName: 'counters.csv',
+      final savedFile = await _saveExportFile(
+        fileName: 'counters.csv',
         contents: _counterListProvider.convertToCSV(),
+        mimeType: 'text/csv',
       );
       if (savedFile == null) {
         exportMessage = 'Export Cancelled';
@@ -360,9 +371,10 @@ class SettingsProvider({
     if (_timerListProvider.timers.isEmpty) return;
 
     try {
-      final Uri? savedFile = await _saveCsvFile(
-        suggestedName: 'timers.csv',
+      final savedFile = await _saveExportFile(
+        fileName: 'timers.csv',
         contents: _timerListProvider.convertToCSV(),
+        mimeType: 'text/csv',
       );
       if (savedFile == null) {
         exportMessage = 'Export Cancelled';
@@ -374,19 +386,6 @@ class SettingsProvider({
       exportMessage = 'Error exporting timer data: $e';
     }
     notifyListeners();
-  }
-
-  Future<Uri?> _saveCsvFile({
-    required String suggestedName,
-    required String contents,
-  }) {
-    return FilePicker.saveFile(
-      dialogTitle: 'Save Export File',
-      allowedExtensions: ['csv'],
-      type: FileType.custom,
-      fileName: suggestedName,
-      bytes: utf8.encode(contents),
-    );
   }
 
   void clearAppData() {

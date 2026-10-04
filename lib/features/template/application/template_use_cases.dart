@@ -8,7 +8,10 @@ import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 
-class const TemplateUseCases(final ITemplateRepository _repository) {
+class TemplateUseCases {
+  const TemplateUseCases(this._repository);
+  final ITemplateRepository _repository;
+
   Future<Result<WorkoutTemplate, Failure>> create({
     required String name,
     required String createdById,

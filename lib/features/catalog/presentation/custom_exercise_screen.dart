@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise_enums.dart';
 
-class const CustomExerciseScreen({
-  super.key,
-  required final CatalogUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+class CustomExerciseScreen extends StatefulWidget {
+  const CustomExerciseScreen({
+    super.key,
+    required this.useCases,
+    required this.userId,
+  });
+  final CatalogUseCases useCases;
+  final String userId;
+
   @override
   State<CustomExerciseScreen> createState() => _CustomExerciseScreenState();
 }
 
-class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
+class _CustomExerciseScreenState extends State<CustomExerciseScreen> {
   final _formKey = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _description = TextEditingController();

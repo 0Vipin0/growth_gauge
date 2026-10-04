@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/events/domain_event_dispatcher.dart';
-import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../../features/catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -12,19 +12,26 @@ import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
 import 'template_detail_screen.dart';
 
-class const TemplateListScreen({
-  super.key,
-  required final ITemplateRepository repository,
-  required final IExerciseRepository exerciseRepository,
-  required final IWorkoutSessionRepository sessionRepository,
-  required final TemplateUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+class TemplateListScreen extends StatefulWidget {
+  const TemplateListScreen({
+    super.key,
+    required this.repository,
+    required this.exerciseRepository,
+    required this.sessionRepository,
+    required this.useCases,
+    required this.userId,
+  });
+  final ITemplateRepository repository;
+  final IExerciseRepository exerciseRepository;
+  final IWorkoutSessionRepository sessionRepository;
+  final TemplateUseCases useCases;
+  final String userId;
+
   @override
   State<TemplateListScreen> createState() => _TemplateListScreenState();
 }
 
-class _TemplateListScreenState() extends State<TemplateListScreen> {
+class _TemplateListScreenState extends State<TemplateListScreen> {
   late Stream<List<WorkoutTemplate>> _templates;
 
   @override

@@ -8,7 +8,7 @@ import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
 import 'template_document_adapters.dart';
 
-abstract interface class ITemplateRepository() {
+abstract interface class ITemplateRepository {
   Future<Result<void, Failure>> saveTemplate(WorkoutTemplate value);
   Future<Result<WorkoutTemplate, Failure>> getTemplate(String id);
   Future<Result<List<WorkoutTemplate>, Failure>> getTemplates();
@@ -20,17 +20,19 @@ abstract interface class ITemplateRepository() {
   );
 }
 
-class TemplateRepository(AppDatabase db) implements ITemplateRepository {
-  final IDocumentStore<WorkoutTemplate> _templates =
-      DriftDocumentStore<WorkoutTemplate>(
+class TemplateRepository implements ITemplateRepository {
+  TemplateRepository(AppDatabase db)
+    : _templates = DriftDocumentStore<WorkoutTemplate>(
         database: db,
         adapter: const WorkoutTemplateDocumentAdapter(),
-      );
-  final IDocumentStore<WorkoutTemplateRevision> _revisions =
-      DriftDocumentStore<WorkoutTemplateRevision>(
+      ),
+      _revisions = DriftDocumentStore<WorkoutTemplateRevision>(
         database: db,
         adapter: const WorkoutTemplateRevisionDocumentAdapter(),
       );
+
+  final IDocumentStore<WorkoutTemplate> _templates;
+  final IDocumentStore<WorkoutTemplateRevision> _revisions;
 
   @override
   Future<Result<void, Failure>> saveTemplate(WorkoutTemplate value) =>

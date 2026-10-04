@@ -15,7 +15,7 @@ part 'workout_template_revision.g.dart';
 /// document via [DriftDocumentStore].
 @freezed
 abstract class WorkoutTemplateRevision with _$WorkoutTemplateRevision {
-  const factory({
+  const factory WorkoutTemplateRevision({
     required String id,
     required String templateId,
     required int revisionNumber,
@@ -26,6 +26,6 @@ abstract class WorkoutTemplateRevision with _$WorkoutTemplateRevision {
     @Default('') String changeSummary,
   }) = _WorkoutTemplateRevision;
 
-  factory fromJson(Map<String, dynamic> json) =>
+  factory WorkoutTemplateRevision.fromJson(Map<String, dynamic> json) =>
       _$WorkoutTemplateRevisionFromJson(json);
 }

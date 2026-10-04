@@ -8,12 +8,18 @@ import 'model/model.dart';
 import 'provider/provider.dart';
 import 'timer_details_page.dart';
 
-class const ReusableTimerWidget({
-  super.key,
-  required final TimerModel timerModel,
-  required final VoidCallback onRemove,
-  required final VoidCallback onUpdateTarget,
-}) extends StatelessWidget {
+class ReusableTimerWidget extends StatelessWidget {
+  final TimerModel timerModel;
+  final VoidCallback onRemove;
+  final VoidCallback onUpdateTarget;
+
+  const ReusableTimerWidget({
+    super.key,
+    required this.timerModel,
+    required this.onRemove,
+    required this.onUpdateTarget,
+  });
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

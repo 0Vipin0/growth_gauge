@@ -1,12 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class const BaseChartWidget({
-  super.key,
-  required final List<BarChartGroupData> barGroups,
-  required final String Function(int) dayLabel,
-  required final double yAxisInterval,
-}) extends StatelessWidget {
+class BaseChartWidget extends StatelessWidget {
+  final List<BarChartGroupData> barGroups;
+  final String Function(int) dayLabel;
+  final double yAxisInterval;
+
+  const BaseChartWidget({
+    super.key,
+    required this.barGroups,
+    required this.dayLabel,
+    required this.yAxisInterval,
+  });
+
   @override
   Widget build(BuildContext context) {
     final maxY =

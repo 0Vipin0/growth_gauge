@@ -7,13 +7,15 @@ import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
-class TimerListProvider({
-  required final TimerRepository repository,
-  required final NotificationService notificationService,
-}) with ChangeNotifier {
+class TimerListProvider with ChangeNotifier {
+  final TimerRepository repository;
+  final NotificationService notificationService;
   List<TimerModel> _timers = [];
 
-  this {
+  TimerListProvider({
+    required this.repository,
+    required this.notificationService,
+  }) {
     _loadTimers();
   }
 

@@ -6,13 +6,13 @@ import 'package:uuid/uuid.dart';
 
 import '../model/model.dart';
 
-class ReusableTimerProvider({required var TimerModel timer})
-    with ChangeNotifier {
+class ReusableTimerProvider with ChangeNotifier {
+  TimerModel timer;
   Timer? _ticker;
   Duration _currentInterval = Duration.zero;
   final Uuid _uuid = const Uuid();
 
-  this {
+  ReusableTimerProvider({required this.timer}) {
     _currentInterval = timer.interval;
   }
 

@@ -8,7 +8,7 @@ part 'execution_set.g.dart';
 
 @freezed
 abstract class ExecutionSet with _$ExecutionSet {
-  const factory({
+  const factory ExecutionSet({
     required String id,
     String? sourceTemplateSetId,
     required int setNumber,
@@ -43,5 +43,6 @@ abstract class ExecutionSet with _$ExecutionSet {
     String? notes,
   }) = _ExecutionSet;
 
-  factory fromJson(Map<String, dynamic> json) => _$ExecutionSetFromJson(json);
+  factory ExecutionSet.fromJson(Map<String, dynamic> json) =>
+      _$ExecutionSetFromJson(json);
 }

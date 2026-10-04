@@ -7,19 +7,20 @@ import '../domain/session_enums.dart';
 import '../domain/workout_session.dart';
 import 'session_document_adapter.dart';
 
-abstract interface class IWorkoutSessionRepository() {
+abstract interface class IWorkoutSessionRepository {
   Future<Result<void, Failure>> save(WorkoutSession session);
   Future<Result<WorkoutSession, Failure>> getById(String id);
   Future<Result<List<WorkoutSession>, Failure>> listUnfinished(String userId);
+  Future<Result<List<WorkoutSession>, Failure>> listAll();
 }
 
 class WorkoutSessionRepository implements IWorkoutSessionRepository {
-  new(AppDatabase database)
+  WorkoutSessionRepository(AppDatabase database)
     : _store = DriftDocumentStore<WorkoutSession>(
         database: database,
         adapter: const SessionDocumentAdapter(),
       );
-  new withStore(this._store);
+  WorkoutSessionRepository.withStore(this._store);
 
   final IDocumentStore<WorkoutSession> _store;
 
@@ -47,4 +48,7 @@ class WorkoutSessionRepository implements IWorkoutSessionRepository {
           .toList(),
     );
   }
+
+  @override
+  Future<Result<List<WorkoutSession>, Failure>> listAll() => _store.getAll();
 }

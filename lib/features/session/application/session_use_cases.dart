@@ -20,11 +20,17 @@ import '../infrastructure/session_repository.dart';
 
 /// Commands for a live workout. Each successful command persists the full
 /// aggregate before notifying event subscribers.
-class const SessionUseCases({
-  required final ITemplateRepository _templates,
-  required final IWorkoutSessionRepository _sessions,
-  required final DomainEventDispatcher _events,
-}) {
+class SessionUseCases {
+  const SessionUseCases({
+    required this._templates,
+    required this._sessions,
+    required this._events,
+  });
+
+  final ITemplateRepository _templates;
+  final IWorkoutSessionRepository _sessions;
+  final DomainEventDispatcher _events;
+
   Future<Result<WorkoutSession, Failure>> createFromRevision({
     required String revisionId,
     required String userId,

@@ -8,7 +8,7 @@ part 'session_block.g.dart';
 
 @freezed
 abstract class SessionBlock with _$SessionBlock {
-  const factory({
+  const factory SessionBlock({
     required String id,
     required String sourceTemplateBlockId,
     required String name,
@@ -20,5 +20,6 @@ abstract class SessionBlock with _$SessionBlock {
     String? notes,
   }) = _SessionBlock;
 
-  factory fromJson(Map<String, dynamic> json) => _$SessionBlockFromJson(json);
+  factory SessionBlock.fromJson(Map<String, dynamic> json) =>
+      _$SessionBlockFromJson(json);
 }

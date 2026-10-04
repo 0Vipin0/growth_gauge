@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants.dart';
 
-class const ResponsiveFormLayout({super.key, required final Widget child})
-    extends StatelessWidget {
+class ResponsiveFormLayout extends StatelessWidget {
+  final Widget child;
+
+  const ResponsiveFormLayout({super.key, required this.child});
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

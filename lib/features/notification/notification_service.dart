@@ -7,7 +7,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-abstract class NotificationServiceBase() {
+abstract class NotificationServiceBase {
   Future<void> initializeTimeZone();
   Future<void> initializeNotificationSettings();
   Future<void> requestPlatformPermissions();
@@ -28,15 +28,14 @@ abstract class NotificationServiceBase() {
   });
 }
 
-class NotificationService() extends NotificationServiceBase {
+class NotificationService extends NotificationServiceBase {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool notificationsEnabled = false;
 
   @override
   Future<void> initializeTimeZone() async {
-    final TimezoneInfo currentTimeZone =
-        await FlutterTimezone.getLocalTimezone();
+    final currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
   }

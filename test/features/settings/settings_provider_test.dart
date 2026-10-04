@@ -8,7 +8,7 @@ import 'package:growth_gauge/features/timer/repository/repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MockNotificationService() extends Mock implements NotificationService;
+class MockNotificationService extends Mock implements NotificationService {}
 
 void main() {
   late CounterListProvider mockCounterListProvider;
