@@ -21,6 +21,5 @@ abstract class TemplateItem with _$TemplateItem {
     String? coachNotes,
   }) = _TemplateItem;
 
-  factory fromJson(Map<String, dynamic> json) =>
-      _$TemplateItemFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$TemplateItemFromJson(json);
 }

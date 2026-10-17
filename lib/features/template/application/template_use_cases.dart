@@ -9,14 +9,16 @@ import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 
 class const TemplateUseCases(final ITemplateRepository _repository) {
-  Future<Result<WorkoutTemplate, Failure>> create(
-      {required String name,
-      required String createdById,
-      String description = ''}) async {
+  Future<Result<WorkoutTemplate, Failure>> create({
+    required String name,
+    required String createdById,
+    String description = '',
+  }) async {
     final cleanName = name.trim();
     if (cleanName.isEmpty) {
       return const Result.error(
-          ValidationFailure('Template name is required', 'name'));
+        ValidationFailure('Template name is required', 'name'),
+      );
     }
     final now = AppClock.nowUtc();
     final templateId = UniqueId.generate().value;
@@ -44,8 +46,9 @@ class const TemplateUseCases(final ITemplateRepository _repository) {
   }
 
   Future<Result<WorkoutTemplateRevision, Failure>> createDraftFromCurrent(
-      String templateId,
-      {String changeSummary = ''}) async {
+    String templateId, {
+    String changeSummary = '',
+  }) async {
     final templateResult = await _repository.getTemplate(templateId);
     if (templateResult.isError) {
       return Result.error(templateResult.errorOrNull!);
@@ -61,17 +64,25 @@ class const TemplateUseCases(final ITemplateRepository _repository) {
       if (revision.id == template.currentRevisionId) current = revision;
     }
     if (current == null) {
-      return Result.error(NotFoundFailure('Current template revision not found',
-          template.currentRevisionId ?? templateId));
+      return Result.error(
+        NotFoundFailure(
+          'Current template revision not found',
+          template.currentRevisionId ?? templateId,
+        ),
+      );
     }
     if (current.status == TemplateRevisionStatus.draft) {
       return Result.error(
-          ConflictFailure('A draft revision already exists', current.id));
+        ConflictFailure('A draft revision already exists', current.id),
+      );
     }
     final draft = current.copyWith(
       id: UniqueId.generate().value,
-      revisionNumber: revisions.fold<int>(
-              0, (max, r) => r.revisionNumber > max ? r.revisionNumber : max) +
+      revisionNumber:
+          revisions.fold<int>(
+            0,
+            (max, r) => r.revisionNumber > max ? r.revisionNumber : max,
+          ) +
           1,
       status: TemplateRevisionStatus.draft,
       createdAt: AppClock.nowUtc(),
@@ -80,20 +91,25 @@ class const TemplateUseCases(final ITemplateRepository _repository) {
     final saved = await _repository.saveRevision(draft);
     if (saved.isError) return Result.error(saved.errorOrNull!);
     final updatedTemplate = template.copyWith(
-        currentRevisionId: draft.id, updatedAt: AppClock.nowUtc());
+      currentRevisionId: draft.id,
+      updatedAt: AppClock.nowUtc(),
+    );
     final updated = await _repository.saveTemplate(updatedTemplate);
     if (updated.isError) return Result.error(updated.errorOrNull!);
     return Result.success(draft);
   }
 
   Future<Result<WorkoutTemplateRevision, Failure>> updateDraftBlocks(
-      String revisionId, List<WorkoutBlock> blocks) async {
+    String revisionId,
+    List<WorkoutBlock> blocks,
+  ) async {
     final found = await _repository.getRevision(revisionId);
     if (found.isError) return Result.error(found.errorOrNull!);
     final revision = found.dataOrNull!;
     if (revision.status != TemplateRevisionStatus.draft) {
       return Result.error(
-          ConflictFailure('Only draft revisions can be edited', revisionId));
+        ConflictFailure('Only draft revisions can be edited', revisionId),
+      );
     }
     final updated = revision.copyWith(blocks: blocks);
     final saved = await _repository.saveRevision(updated);
@@ -108,16 +124,22 @@ class const TemplateUseCases(final ITemplateRepository _repository) {
     final revision = found.dataOrNull!;
     if (revision.status != TemplateRevisionStatus.draft) {
       return Result.error(
-          ConflictFailure('Only draft revisions can be published', revisionId));
+        ConflictFailure('Only draft revisions can be published', revisionId),
+      );
     }
     final published = await _repository.saveRevision(
-        revision.copyWith(status: TemplateRevisionStatus.published));
+      revision.copyWith(status: TemplateRevisionStatus.published),
+    );
     if (published.isError) return published;
     final templateResult = await _repository.getTemplate(revision.templateId);
     if (templateResult.isError) {
       return Result.error(templateResult.errorOrNull!);
     }
-    return await _repository.saveTemplate(templateResult.dataOrNull!
-        .copyWith(currentRevisionId: revisionId, updatedAt: AppClock.nowUtc()));
+    return await _repository.saveTemplate(
+      templateResult.dataOrNull!.copyWith(
+        currentRevisionId: revisionId,
+        updatedAt: AppClock.nowUtc(),
+      ),
+    );
   }
 }

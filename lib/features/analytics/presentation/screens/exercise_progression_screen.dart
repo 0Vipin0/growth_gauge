@@ -1,6 +1,7 @@
 // ignore_for_file: use_primary_constructors
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/analytics_cubit.dart';
@@ -8,11 +9,12 @@ import '../widgets/progression_line_chart.dart';
 
 /// Screen displaying 1RM estimated curve and set history for a selected exercise.
 class const ExerciseProgressionScreen({
-    super.key,
-    final String? initialExerciseId,
-  }) extends StatefulWidget {
+  super.key,
+  final String? initialExerciseId,
+}) extends StatefulWidget {
   @override
-  State<ExerciseProgressionScreen> createState() => _ExerciseProgressionScreenState();
+  State<ExerciseProgressionScreen> createState() =>
+      _ExerciseProgressionScreenState();
 }
 
 class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
@@ -39,15 +41,16 @@ class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Exercise Progression'),
-      ),
+      appBar: AppBar(title: const Text('Exercise Progression')),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
         builder: (context, state) {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
                 child: DropdownButtonFormField<String>(
                   initialValue: _currentExerciseId,
                   decoration: const InputDecoration(
@@ -76,9 +79,8 @@ class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
                     const SizedBox(height: 24),
                     Text(
                       'Completed Sets History',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     if (state.exerciseProgression.isEmpty)
@@ -106,7 +108,9 @@ class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
                             ),
                             title: Text(
                               '${set.weightKg?.toStringAsFixed(1) ?? 'BW'} kg × ${set.reps ?? 0} reps',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             subtitle: Text(
                               '${set.timestamp.year}-${set.timestamp.month.toString().padLeft(2, '0')}-${set.timestamp.day.toString().padLeft(2, '0')}'
@@ -116,7 +120,9 @@ class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
                               set.estimated1Rm != null
                                   ? '1RM ~ ${set.estimated1Rm!.toStringAsFixed(1)} kg'
                                   : '',
-                              style: const TextStyle(fontWeight: FontWeight.w600),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         );

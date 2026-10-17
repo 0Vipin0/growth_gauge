@@ -4,11 +4,11 @@ import '../ids/unique_id.dart';
 import '../time/app_clock.dart';
 
 /// Base class for all domain events across the application.
-abstract class DomainEvent({
-    String? eventId,
-    DateTime? occurredAt,
-    required final String aggregateId,
-  }) extends Equatable {
+abstract class const DomainEvent({
+  String? eventId,
+  DateTime? occurredAt,
+  required final String aggregateId,
+}) extends Equatable {
   final String eventId = eventId ?? UniqueId.generate().value;
   final DateTime occurredAt = occurredAt ?? AppClock.nowUtc();
 

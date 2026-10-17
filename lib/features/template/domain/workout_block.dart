@@ -24,6 +24,5 @@ abstract class WorkoutBlock with _$WorkoutBlock {
     String? notes,
   }) = _WorkoutBlock;
 
-  factory fromJson(Map<String, dynamic> json) =>
-      _$WorkoutBlockFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$WorkoutBlockFromJson(json);
 }

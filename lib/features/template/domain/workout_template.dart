@@ -14,6 +14,7 @@ abstract class WorkoutTemplate with _$WorkoutTemplate {
     required String id,
     required String name,
     @Default('') String description,
+
     /// The ID of the currently active (latest published or active draft) revision.
     String? currentRevisionId,
     required String createdById,

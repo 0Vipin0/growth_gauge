@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/analytics_cubit.dart';
@@ -52,7 +53,9 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
               final messenger = ScaffoldMessenger.of(context);
               await context.read<AnalyticsCubit>().triggerRebuild();
               messenger.showSnackBar(
-                const SnackBar(content: Text('Analytics rebuilt successfully.')),
+                const SnackBar(
+                  content: Text('Analytics rebuilt successfully.'),
+                ),
               );
             },
           ),
@@ -87,9 +90,8 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
                   children: [
                     Text(
                       'Recent Personal Records',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () {
@@ -117,9 +119,9 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
                     ),
                   )
                 else
-                  ...state.personalRecords.take(5).map(
-                        (pr) => PrBadgeCard(record: pr),
-                      ),
+                  ...state.personalRecords
+                      .take(5)
+                      .map((pr) => PrBadgeCard(record: pr)),
               ],
             ),
           );

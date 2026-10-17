@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +24,13 @@ import 'features/splash/splash.dart';
 import 'features/template/application/template_use_cases.dart';
 import 'features/template/infrastructure/template_repository.dart';
 import 'features/template/presentation/template_list_screen.dart';
+import 'features/user/application/goal_cubit.dart';
+import 'features/user/application/measurement_cubit.dart';
+import 'features/user/application/user_use_cases.dart';
+import 'features/user/infrastructure/user_repository.dart';
+import 'features/user/presentation/screens/goals_screen.dart';
+import 'features/user/presentation/screens/measurements_screen.dart';
+import 'features/user/presentation/screens/profile_screen.dart';
 
 mixin AppRoutes {
   static const String splash = '/';
@@ -33,6 +42,9 @@ mixin AppRoutes {
   static const String exerciseCatalog = '/exercise_catalog';
   static const String workoutTemplates = '/workout_templates';
   static const String analytics = '/analytics';
+  static const String profile = '/profile';
+  static const String goals = '/goals';
+  static const String measurements = '/measurements';
 
   static final Map<String, Widget Function(BuildContext)> _routes = {
     splash: (_) => const SplashScreen(),
@@ -67,8 +79,36 @@ mixin AppRoutes {
         rebuilder: Provider.of<ProjectionRebuilder>(context, listen: false),
       );
       return BlocProvider(
-        create: (_) => AnalyticsCubit(queries: queries),
+        create: (_) {
+          final cubit = AnalyticsCubit(queries: queries);
+          unawaited(cubit.triggerRebuild());
+          return cubit;
+        },
         child: const AnalyticsDashboardScreen(),
+      );
+    },
+    profile: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final repository = UserRepository(database);
+      final useCases = UserUseCases(repository);
+      return ProfileScreen(useCases: useCases);
+    },
+    goals: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final repository = UserRepository(database);
+      final useCases = UserUseCases(repository);
+      return BlocProvider(
+        create: (_) => GoalCubit(useCases: useCases),
+        child: const GoalsScreen(),
+      );
+    },
+    measurements: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final repository = UserRepository(database);
+      final useCases = UserUseCases(repository);
+      return BlocProvider(
+        create: (_) => MeasurementCubit(useCases: useCases),
+        child: const MeasurementsScreen(),
       );
     },
   };

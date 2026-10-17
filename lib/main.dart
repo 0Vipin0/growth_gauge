@@ -18,6 +18,8 @@ import 'features/notification/notification_service.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
 import 'features/timer/timer.dart';
+import 'features/user/application/user_use_cases.dart';
+import 'features/user/infrastructure/user_repository.dart';
 import 'routes.dart';
 
 final notificationService = NotificationService();
@@ -83,6 +85,10 @@ class const DependencyProvider({
             sessionRepo: sessions,
             projector: projector,
           ),
+        ),
+        Provider<UserRepository>(create: (_) => UserRepository(database)),
+        Provider<UserUseCases>(
+          create: (ctx) => UserUseCases(ctx.read<UserRepository>()),
         ),
         ChangeNotifierProvider(
           create: (_) => CounterListProvider(

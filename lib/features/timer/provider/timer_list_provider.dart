@@ -7,8 +7,10 @@ import '../../notification/notification_service.dart';
 import '../model/model.dart';
 import '../repository/repository.dart';
 
-class TimerListProvider(
-      {required final TimerRepository repository, required final NotificationService notificationService}) with ChangeNotifier {
+class TimerListProvider({
+  required final TimerRepository repository,
+  required final NotificationService notificationService,
+}) with ChangeNotifier {
   List<TimerModel> _timers = [];
 
   this {
@@ -26,9 +28,11 @@ class TimerListProvider(
       _filteredTimers = [];
     } else {
       _filteredTimers = _timers
-          .where((timer) =>
-              timer.tags != null &&
-              timer.tags!.any((tag) => tags.contains(tag)))
+          .where(
+            (timer) =>
+                timer.tags != null &&
+                timer.tags!.any((tag) => tags.contains(tag)),
+          )
           .toList();
     }
     notifyListeners();
@@ -127,12 +131,13 @@ class TimerListProvider(
 
   void _triggerNotification({required String title, required String body}) {
     notificationService.scheduleNotification(
-        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-        title: title,
-        body: body,
-        scheduledTime:
-            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
-        sound: 'assets/sounds/simple_notification.mp3');
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      title: title,
+      body: body,
+      scheduledTime: tz.TZDateTime.now(tz.local)
+          .add(const Duration(seconds: 3)),
+      sound: 'assets/sounds/simple_notification.mp3',
+    );
   }
 
   void addTimer(TimerModel newTimer) {

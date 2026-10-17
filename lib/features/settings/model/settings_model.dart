@@ -50,15 +50,14 @@ abstract class SettingsModel with _$SettingsModel {
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
   }) = _SettingsModel;
 
-  factory fromJson(Map<String, dynamic> json) =>
-      _$SettingsModelFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
 }
 
 extension SettingsModelExtension on SettingsModel {
   AppTheme get appTheme => AppTheme(
-        themeName: themeName,
-        fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
-      );
+    themeName: themeName,
+    fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
+  );
 }
 
 class TimeOfDayConverter implements JsonConverter<TimeOfDay?, String?> {

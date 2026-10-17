@@ -42,12 +42,12 @@ void main() {
       });
 
       dispatcher.publish(
-         SampleWorkoutEvent(aggregateId: 'sess-1', sessionName: 'Upper Body'),
+        SampleWorkoutEvent(aggregateId: 'sess-1', sessionName: 'Upper Body'),
       );
       // This should be filtered out by typed subscription
-      dispatcher.publish( AnotherDomainEvent(aggregateId: 'other-1'));
+      dispatcher.publish(AnotherDomainEvent(aggregateId: 'other-1'));
       dispatcher.publish(
-         SampleWorkoutEvent(aggregateId: 'sess-2', sessionName: 'Lower Body'),
+        SampleWorkoutEvent(aggregateId: 'sess-2', sessionName: 'Lower Body'),
       );
 
       await completer.future.timeout(const Duration(seconds: 2));
@@ -66,7 +66,7 @@ void main() {
       );
 
       dispatcher.publish(
-         SampleWorkoutEvent(aggregateId: 's1', sessionName: 'A'),
+        SampleWorkoutEvent(aggregateId: 's1', sessionName: 'A'),
       );
       await Future<void>.delayed(const Duration(milliseconds: 20));
 
@@ -75,7 +75,7 @@ void main() {
       await subscription.cancel();
 
       dispatcher.publish(
-         SampleWorkoutEvent(aggregateId: 's2', sessionName: 'B'),
+        SampleWorkoutEvent(aggregateId: 's2', sessionName: 'B'),
       );
       await Future<void>.delayed(const Duration(milliseconds: 20));
 

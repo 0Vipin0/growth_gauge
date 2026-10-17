@@ -45,6 +45,40 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed(AppRoutes.analytics),
           ),
         ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.flag),
+            title: const Text('Training goals'),
+            subtitle: const Text(
+              'Set targets and track strength & volume progress',
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.goals),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.straighten),
+            title: const Text('Body measurements'),
+            subtitle: const Text(
+              'Log weight, body composition, and circumferences',
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.measurements),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile & equipment'),
+            subtitle: const Text(
+              'Manage preferences, units, and available gear',
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.profile),
+          ),
+        ),
       ],
     ),
   );
