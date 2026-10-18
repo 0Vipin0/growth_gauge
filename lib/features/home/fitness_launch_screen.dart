@@ -29,8 +29,14 @@ class _FitnessLaunchScreenState() extends State<FitnessLaunchScreen> {
               );
             });
           }
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+          return Scaffold(
+            body: Center(
+              child: Semantics(
+                liveRegion: true,
+                label: 'Loading saved authentication settings',
+                child: const CircularProgressIndicator(),
+              ),
+            ),
           );
         },
       );

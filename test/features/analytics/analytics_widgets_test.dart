@@ -57,6 +57,7 @@ void main() {
     testWidgets('VolumeBarChart renders chart when stats provided', (
       tester,
     ) async {
+      final semantics = tester.ensureSemantics();
       final stats = [
         MuscleVolumeStat(
           muscleGroup: 'quads',
@@ -85,6 +86,13 @@ void main() {
       );
 
       expect(find.text('Weekly Volume by Muscle (kg)'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel(
+          'Weekly volume by muscle group. quads: 2000 kilograms, glutes: 1500 kilograms.',
+        ),
+        findsOneWidget,
+      );
+      semantics.dispose();
     });
 
     testWidgets(
@@ -106,6 +114,7 @@ void main() {
     testWidgets('ProgressionLineChart renders chart with valid metrics', (
       tester,
     ) async {
+      final semantics = tester.ensureSemantics();
       final metrics = [
         ExerciseSetMetric(
           id: 'set-1',
@@ -144,6 +153,13 @@ void main() {
       );
 
       expect(find.text('Estimated 1RM Progression (kg)'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel(
+          'Estimated one repetition maximum progression. 2 recorded sets, from 116.7 kilograms to 122.5 kilograms.',
+        ),
+        findsOneWidget,
+      );
+      semantics.dispose();
     });
 
     testWidgets('WorkoutFrequencyHeatmap renders grid and session count', (

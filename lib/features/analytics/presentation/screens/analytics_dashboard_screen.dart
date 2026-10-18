@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/presentation/widgets/responsive_layout.dart';
 import '../../application/analytics_cubit.dart';
 import '../widgets/pr_badge_card.dart';
 import '../widgets/volume_bar_chart.dart';
@@ -78,51 +79,53 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () => context.read<AnalyticsCubit>().triggerRebuild(),
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: [
-                WorkoutFrequencyHeatmap(summaries: state.history),
-                const SizedBox(height: 16),
-                VolumeBarChart(stats: state.weeklyVolume),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Recent Personal Records',
-                      style: Theme.of(context).textTheme.titleMedium
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider.value(
-                              value: context.read<AnalyticsCubit>(),
-                              child: const PrTrophyScreen(),
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Text('View All'),
-                    ),
-                  ],
-                ),
-                if (state.personalRecords.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.0),
-                    child: Center(
-                      child: Text(
-                        'Complete workouts to unlock PR trophies!',
-                        style: TextStyle(color: Colors.grey),
+            child: ResponsiveContent(
+              child: ListView(
+                padding: const EdgeInsets.all(16.0),
+                children: [
+                  WorkoutFrequencyHeatmap(summaries: state.history),
+                  const SizedBox(height: 16),
+                  VolumeBarChart(stats: state.weeklyVolume),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Recent Personal Records',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  )
-                else
-                  ...state.personalRecords
-                      .take(5)
-                      .map((pr) => PrBadgeCard(record: pr)),
-              ],
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider.value(
+                                value: context.read<AnalyticsCubit>(),
+                                child: const PrTrophyScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text('View All'),
+                      ),
+                    ],
+                  ),
+                  if (state.personalRecords.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24.0),
+                      child: Center(
+                        child: Text(
+                          'Complete workouts to unlock PR trophies!',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    )
+                  else
+                    ...state.personalRecords
+                        .take(5)
+                        .map((pr) => PrBadgeCard(record: pr)),
+                ],
+              ),
             ),
           );
         },

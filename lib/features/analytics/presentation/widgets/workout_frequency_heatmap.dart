@@ -32,8 +32,9 @@ class const WorkoutFrequencyHeatmap({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              runSpacing: 4,
               children: [
                 Text(
                   'Workout Frequency (Last 10 Weeks)',
@@ -76,13 +77,17 @@ class const WorkoutFrequencyHeatmap({
                         boxColor = Colors.green.shade700;
                       }
 
-                      return Container(
-                        width: 14,
-                        height: 14,
-                        margin: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: boxColor,
-                          borderRadius: BorderRadius.circular(3),
+                      return Semantics(
+                        label:
+                            '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}: $count workouts',
+                        child: Container(
+                          width: 14,
+                          height: 14,
+                          margin: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: boxColor,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
                         ),
                       );
                     }),

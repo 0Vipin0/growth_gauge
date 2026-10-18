@@ -152,6 +152,52 @@ void main() {
     await tester.pumpAndSettle();
     expect(router.routeInformationProvider.value.uri.path, appRouteHome);
   });
+
+  testWidgets('home navigation adapts from bottom bar to width-based rail', (
+    tester,
+  ) async {
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    router.go(appRouteHome);
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.pumpWidget(
+      _AppHarness(router: router, settingsCubit: settingsCubit),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(BottomNavigationBar), findsOneWidget);
+    await tester.tap(
+      find.descendant(
+        of: find.byType(BottomNavigationBar),
+        matching: find.text('Settings'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('App theme'), findsOneWidget);
+
+    await tester.binding.setSurfaceSize(const Size(800, 900));
+    await tester.pumpAndSettle();
+    expect(find.byType(NavigationRail), findsOneWidget);
+    expect(
+      tester.widget<NavigationRail>(find.byType(NavigationRail)).extended,
+      isFalse,
+    );
+    expect(
+      tester.widget<NavigationRail>(find.byType(NavigationRail)).selectedIndex,
+      1,
+    );
+
+    await tester.binding.setSurfaceSize(const Size(1440, 1000));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<NavigationRail>(find.byType(NavigationRail)).extended,
+      isTrue,
+    );
+    expect(
+      tester.widget<NavigationRail>(find.byType(NavigationRail)).selectedIndex,
+      1,
+    );
+    expect(tester.takeException(), isNull);
+  });
 }
 
 class const _AppHarness({

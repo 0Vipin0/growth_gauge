@@ -4,6 +4,7 @@ import '../../../core/ids/unique_id.dart';
 import '../../catalog/domain/exercise.dart';
 import '../../catalog/domain/exercise_enums.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/responsive_layout.dart';
 import '../application/template_use_cases.dart';
 import '../domain/rest_policy.dart';
 import '../domain/target_set.dart';
@@ -347,70 +348,74 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
         ),
       ),
     ),
-    body: _blocks.isEmpty
-        ? const Center(child: Text('Add a block to organise this workout'))
-        : ReorderableListView.builder(
-            padding: const EdgeInsets.all(12),
-            itemCount: _blocks.length,
-            onReorderItem: (oldIndex, newIndex) => setState(() {
-              final block = _blocks.removeAt(oldIndex);
-              _blocks.insert(newIndex, block);
-            }),
-            itemBuilder: (context, index) {
-              final block = _blocks[index];
-              return Card(
-                key: ValueKey(block.id),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: const Icon(Icons.drag_handle),
-                        title: Text(block.name),
-                        subtitle: Text(
-                          '${block.type.name} · ${block.rounds} round(s)',
-                        ),
-                        trailing: IconButton(
-                          tooltip: 'Remove block',
-                          icon: const Icon(Icons.delete_outline),
-                          onPressed: () =>
-                              setState(() => _blocks.removeAt(index)),
-                        ),
-                      ),
-                      ...block.items.asMap().entries.map((entry) {
-                        final itemIndex = entry.key;
-                        final item = entry.value;
-                        return ListTile(
-                          dense: true,
-                          leading: const Icon(Icons.fitness_center),
-                          title: FutureBuilder(
-                            future: widget.exerciseRepository.findById(
-                              item.exerciseId,
-                            ),
-                            builder: (context, snapshot) => Text(
-                              snapshot.data?.dataOrNull?.name ??
-                                  item.exerciseId,
-                            ),
+    body: ResponsiveContent(
+      maxWidth: 1100,
+      child: _blocks.isEmpty
+          ? const Center(child: Text('Add a block to organise this workout'))
+          : ReorderableListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: _blocks.length,
+              onReorderItem: (oldIndex, newIndex) => setState(() {
+                final block = _blocks.removeAt(oldIndex);
+                _blocks.insert(newIndex, block);
+              }),
+              itemBuilder: (context, index) {
+                final block = _blocks[index];
+                return Card(
+                  key: ValueKey(block.id),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.drag_handle),
+                          title: Text(block.name),
+                          subtitle: Text(
+                            '${block.type.name} · ${block.rounds} round(s)',
                           ),
-                          subtitle: Text(_prescriptionSummary(item)),
                           trailing: IconButton(
-                            tooltip: 'Remove exercise',
-                            icon: const Icon(Icons.close),
-                            onPressed: () => _removeExercise(index, itemIndex),
+                            tooltip: 'Remove block',
+                            icon: const Icon(Icons.delete_outline),
+                            onPressed: () =>
+                                setState(() => _blocks.removeAt(index)),
                           ),
-                        );
-                      }),
-                      TextButton.icon(
-                        onPressed: () => _addExercise(index),
-                        icon: const Icon(Icons.add),
-                        label: const Text('Add exercise'),
-                      ),
-                    ],
+                        ),
+                        ...block.items.asMap().entries.map((entry) {
+                          final itemIndex = entry.key;
+                          final item = entry.value;
+                          return ListTile(
+                            dense: true,
+                            leading: const Icon(Icons.fitness_center),
+                            title: FutureBuilder(
+                              future: widget.exerciseRepository.findById(
+                                item.exerciseId,
+                              ),
+                              builder: (context, snapshot) => Text(
+                                snapshot.data?.dataOrNull?.name ??
+                                    item.exerciseId,
+                              ),
+                            ),
+                            subtitle: Text(_prescriptionSummary(item)),
+                            trailing: IconButton(
+                              tooltip: 'Remove exercise',
+                              icon: const Icon(Icons.close),
+                              onPressed: () =>
+                                  _removeExercise(index, itemIndex),
+                            ),
+                          );
+                        }),
+                        TextButton.icon(
+                          onPressed: () => _addExercise(index),
+                          icon: const Icon(Icons.add),
+                          label: const Text('Add exercise'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
+    ),
   );
 
   String _prescriptionSummary(TemplateItem item) {

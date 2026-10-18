@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/presentation/widgets/responsive_layout.dart';
 import '../../application/measurement_cubit.dart';
 import '../../domain/user_enums.dart';
 
@@ -117,8 +118,9 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        runSpacing: 8,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,77 +157,73 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
 
               // ── Measurements List / Empty State ─────────────────────────────
               Expanded(
-                child: filtered.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.straighten,
-                              size: 64,
-                              color: Colors.grey.shade400,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'No measurements recorded yet',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'Log your measurements to track body progress over time.',
-                            ),
-                            const SizedBox(height: 24),
-                            FilledButton.icon(
-                              onPressed: () =>
-                                  _showLogDialog(context, state.selectedType),
-                              icon: const Icon(Icons.add),
-                              label: const Text('Log Measurement'),
-                            ),
-                          ],
-                        ),
-                      )
-                    : ListView.separated(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: filtered.length,
-                        separatorBuilder: (_, _) => const Divider(height: 1),
-                        itemBuilder: (context, index) {
-                          final item = filtered[index];
-                          return ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            leading: CircleAvatar(
-                              backgroundColor: theme.colorScheme.primary
-                                  .withValues(alpha: 0.1),
-                              child: Icon(
+                child: ResponsiveContent(
+                  maxWidth: 1000,
+                  child: filtered.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
                                 Icons.straighten,
-                                color: theme.colorScheme.primary,
-                                size: 20,
+                                size: 64,
+                                color: Colors.grey.shade400,
                               ),
-                            ),
-                            title: Text(
-                              '${item.value.toStringAsFixed(1)} ${item.unit}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                              const SizedBox(height: 16),
+                              Text(
+                                'No measurements recorded yet',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.grey.shade600,
+                                ),
                               ),
-                            ),
-                            subtitle: Text(
-                              '${_formatType(item.type)}${item.notes != null && item.notes!.isNotEmpty ? ' • ${item.notes}' : ''}',
-                            ),
-                            trailing: Text(
-                              item.recordedAt.toLocal().toString().split(
-                                ' ',
-                              )[0],
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: Colors.grey.shade600,
+                              const SizedBox(height: 8),
+                              const Text(
+                                'Log your measurements to track body progress over time.',
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                              const SizedBox(height: 24),
+                              FilledButton.icon(
+                                onPressed: () =>
+                                    _showLogDialog(context, state.selectedType),
+                                icon: const Icon(Icons.add),
+                                label: const Text('Log Measurement'),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: filtered.length,
+                          separatorBuilder: (_, _) => const Divider(height: 1),
+                          itemBuilder: (context, index) {
+                            final item = filtered[index];
+                            return ListTile(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              leading: CircleAvatar(
+                                backgroundColor: theme.colorScheme.primary
+                                    .withValues(alpha: 0.1),
+                                child: Icon(
+                                  Icons.straighten,
+                                  color: theme.colorScheme.primary,
+                                  size: 20,
+                                ),
+                              ),
+                              title: Text(
+                                '${item.value.toStringAsFixed(1)} ${item.unit}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${_formatType(item.type)}${item.notes != null && item.notes!.isNotEmpty ? ' • ${item.notes}' : ''}\n${item.recordedAt.toLocal().toString().split(' ')[0]}',
+                              ),
+                              isThreeLine: true,
+                            );
+                          },
+                        ),
+                ),
               ),
             ],
           );

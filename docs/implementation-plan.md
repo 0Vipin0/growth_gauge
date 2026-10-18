@@ -106,7 +106,7 @@ flowchart TD
 | **Phase 9** | Test Coverage Expansion | `[x] COMPLETED` | 5 | 5 |
 | **Phase 10** | Application Routing Migration (go_router) | `[x] COMPLETED` | 6 | 6 |
 | **Phase 11** | Bloc and Framework State Management | `[x] COMPLETED` | 6 | 6 |
-| **Phase 12** | Responsive and Accessible Experience | `[ ] PLANNED` | 0 | 6 |
+| **Phase 12** | Responsive and Accessible Experience | `[~] IN PROGRESS` | 6 | 6 |
 | **Phase 13** | Comprehensive Exercise Catalog | `[ ] PLANNED` | 0 | 6 |
 | **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
 | **Phase 15** | Progress Sounds and Notifications | `[ ] PLANNED` | 0 | 6 |
@@ -878,12 +878,14 @@ Adapt the existing screens for mobile phones, tablets, and laptop/desktop window
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 12.1** | Audit current layouts and accessibility gaps | `[ ] PLANNED` | Review core journeys at mobile, tablet, and laptop widths; inventory overflow, contrast, semantics, focus, and text scaling issues. |
-| **Step 12.2** | Define responsive layout and navigation rules | `[ ] PLANNED` | Set tested compact/medium/expanded constraints and adaptive navigation behavior consistent with the design language. |
-| **Step 12.3** | Add reusable adaptive layout primitives | `[ ] PLANNED` | Implement only the shared layout patterns justified by multiple screens, with predictable resizing behavior. |
-| **Step 12.4** | Adapt high-priority application journeys | `[ ] PLANNED` | Cover launch/auth, home, active workout, catalog/template, analytics, profile, and backup/restore experiences. |
-| **Step 12.5** | Improve keyboard, semantics, contrast, and scaling | `[ ] PLANNED` | Verify focus order, screen-reader descriptions, contrast, touch targets, text scaling, and reduced-motion behavior. |
-| **Step 12.6** | Add viewport/accessibility regression checks | `[ ] PLANNED` | Add representative widget tests for compact/expanded sizes, resize/overflow, semantics, and key keyboard interactions; document manual device checks. |
+| **Step 12.1** | Audit current layouts and accessibility gaps | `[x] COMPLETED` | Reviewed core journeys and applied bounded content layouts, scroll and control sizing, and semantic improvements where the audit found gaps. |
+| **Step 12.2** | Define responsive layout and navigation rules | `[x] COMPLETED` | `AppWindowSizeClass` uses compact below 600 px, medium from 600 to 1024 px, and expanded from 1024 px; Home adapts navigation at those constraints. |
+| **Step 12.3** | Add reusable adaptive layout primitives | `[x] COMPLETED` | Added shared `ResponsiveContent` and reused the existing form layout convention for bounded forms. |
+| **Step 12.4** | Adapt high-priority application journeys | `[x] COMPLETED` | Applied responsive constraints to launch/auth, Home, active workout, catalog/template, analytics, profile, settings, user screens, and backup/restore. |
+| **Step 12.5** | Improve keyboard, semantics, contrast, and scaling | `[x] COMPLETED` | Added/retained meaningful semantics, keyboard submission and activation coverage, resize-safe navigation state, reduced-motion-aware page changes, and large-text layout checks; existing contrast coverage remains in place. |
+| **Step 12.6** | Add viewport/accessibility regression checks | `[x] COMPLETED` | Widget tests cover compact/medium/expanded navigation, content widths, 200% text scaling, semantics, keyboard activation, and chart descriptions. Manual device and assistive-technology checks are documented in `docs/responsive-accessibility-checks.md` and still require execution on target devices. |
+
+The Phase 12 implementation passes `scripts/check.ps1` (analysis, format verification, and full test suite). The documented platform/device checklist has not been manually executed; keep the phase in progress until that review is completed.
 
 ### 12.3 Acceptance Criteria
 

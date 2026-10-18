@@ -59,60 +59,72 @@ class const VolumeBarChart({
       );
     }
 
-    return AspectRatio(
-      aspectRatio: 1.6,
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Weekly Volume by Muscle (kg)',
-                style: Theme.of(context).textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: BarChart(
-                  BarChartData(
-                    maxY: maxY,
-                    barGroups: barGroups,
-                    titlesData: FlTitlesData(
-                      leftTitles: const AxisTitles(),
-                      rightTitles: const AxisTitles(),
-                      topTitles: const AxisTitles(),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            final idx = value.toInt();
-                            if (idx < 0 || idx >= displayEntries.length) {
-                              return const SizedBox.shrink();
-                            }
-                            final name = displayEntries[idx].key;
-                            final shortName = name.length > 5
-                                ? name.substring(0, 5)
-                                : name;
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Text(
-                                shortName,
-                                style: const TextStyle(fontSize: 10),
-                              ),
-                            );
-                          },
+    final accessibleSummary = displayEntries
+        .map((entry) => '${entry.key}: ${entry.value.round()} kilograms')
+        .join(', ');
+
+    return Semantics(
+      container: true,
+      label: 'Weekly volume by muscle group. $accessibleSummary.',
+      child: ExcludeSemantics(
+        child: AspectRatio(
+          aspectRatio: 1.6,
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Weekly Volume by Muscle (kg)',
+                    style: Theme.of(context).textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: BarChart(
+                      BarChartData(
+                        maxY: maxY,
+                        barGroups: barGroups,
+                        titlesData: FlTitlesData(
+                          leftTitles: const AxisTitles(),
+                          rightTitles: const AxisTitles(),
+                          topTitles: const AxisTitles(),
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: (value, meta) {
+                                final idx = value.toInt();
+                                if (idx < 0 || idx >= displayEntries.length) {
+                                  return const SizedBox.shrink();
+                                }
+                                final name = displayEntries[idx].key;
+                                final shortName = name.length > 5
+                                    ? name.substring(0, 5)
+                                    : name;
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 6.0),
+                                  child: Text(
+                                    shortName,
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
+                        gridData: const FlGridData(show: false),
+                        borderData: FlBorderData(show: false),
                       ),
                     ),
-                    gridData: const FlGridData(show: false),
-                    borderData: FlBorderData(show: false),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

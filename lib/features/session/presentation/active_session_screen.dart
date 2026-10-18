@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/responsive_layout.dart';
 import '../application/session_use_cases.dart';
 import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
@@ -484,8 +485,10 @@ class _ActiveSessionScreenState()
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Wrap(
+                  alignment: WrapAlignment.spaceAround,
+                  spacing: 32,
+                  runSpacing: 12,
                   children: [
                     _Metric(
                       label: 'Active',
@@ -508,129 +511,132 @@ class _ActiveSessionScreenState()
               title: Text('Workout paused'),
             ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.only(bottom: 100),
-              children: [
-                for (final block in _session.blocks) ...[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
-                    child: Text(
-                      block.name,
-                      style: Theme.of(context).textTheme.titleLarge,
+            child: ResponsiveContent(
+              maxWidth: 1100,
+              child: ListView(
+                padding: const EdgeInsets.only(bottom: 100),
+                children: [
+                  for (final block in _session.blocks) ...[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+                      child: Text(
+                        block.name,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                     ),
-                  ),
-                  for (final item in block.items)
-                    _ExerciseCard(
-                      item: item,
-                      exerciseName:
-                          _exerciseNames[item.exerciseId] ?? item.exerciseId,
-                      actionsEnabled: !_busy && !paused,
-                      onRecord: _record,
-                      onEditTarget: _editTarget,
-                      onDelete: _deleteSet,
-                      onSkip: (set) => _apply(
-                        () => widget.useCases.skipSet(
-                          sessionId: _session.id,
-                          setId: set.id,
+                    for (final item in block.items)
+                      _ExerciseCard(
+                        item: item,
+                        exerciseName:
+                            _exerciseNames[item.exerciseId] ?? item.exerciseId,
+                        actionsEnabled: !_busy && !paused,
+                        onRecord: _record,
+                        onEditTarget: _editTarget,
+                        onDelete: _deleteSet,
+                        onSkip: (set) => _apply(
+                          () => widget.useCases.skipSet(
+                            sessionId: _session.id,
+                            setId: set.id,
+                          ),
+                        ),
+                        onRest: (set) => _apply(
+                          () => widget.useCases.startRest(
+                            sessionId: _session.id,
+                            executionSetId: set.id,
+                          ),
                         ),
                       ),
-                      onRest: (set) => _apply(
-                        () => widget.useCases.startRest(
-                          sessionId: _session.id,
-                          executionSetId: set.id,
+                  ],
+                  const SizedBox(height: 24),
+                  for (final rest in _session.restIntervals.where(
+                    (entry) => entry.endedAt == null,
+                  ))
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: ListTile(
+                        leading: const Icon(Icons.hourglass_top),
+                        title: Semantics(
+                          liveRegion: true,
+                          label:
+                              'Rest timer ${_duration(_now.difference(rest.startedAt).inSeconds)} of ${_duration(rest.plannedDurationSeconds)}',
+                          child: Text(
+                            'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}',
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Target ${_duration(rest.plannedDurationSeconds)}',
+                        ),
+                        trailing: Wrap(
+                          spacing: 4,
+                          children: [
+                            if (rest.allowExtend)
+                              IconButton(
+                                tooltip: 'Extend rest by 15 seconds',
+                                onPressed:
+                                    _busy ||
+                                        (rest.maximumDurationSeconds != null &&
+                                            rest.plannedDurationSeconds >=
+                                                rest.maximumDurationSeconds!)
+                                    ? null
+                                    : () => _apply(
+                                        () => widget.useCases.extendRest(
+                                          _session.id,
+                                          restIntervalId: rest.id,
+                                        ),
+                                      ),
+                                icon: const Icon(Icons.add_circle_outline),
+                              ),
+                            if (rest.allowSkip)
+                              TextButton(
+                                onPressed:
+                                    _busy ||
+                                        _now
+                                                .difference(rest.startedAt)
+                                                .inSeconds <
+                                            rest.minimumDurationSeconds
+                                    ? null
+                                    : () => _apply(
+                                        () => widget.useCases.skipRest(
+                                          _session.id,
+                                          restIntervalId: rest.id,
+                                        ),
+                                      ),
+                                child: const Text('Skip'),
+                              ),
+                            Semantics(
+                              button: true,
+                              label: 'Finish rest interval',
+                              child: FilledButton(
+                                onPressed:
+                                    _busy ||
+                                        _now
+                                                .difference(rest.startedAt)
+                                                .inSeconds <
+                                            rest.minimumDurationSeconds ||
+                                        (!rest.allowSkip &&
+                                            _now
+                                                    .difference(rest.startedAt)
+                                                    .inSeconds <
+                                                rest.plannedDurationSeconds)
+                                    ? null
+                                    : () => _apply(
+                                        () => widget.useCases.finishRest(
+                                          _session.id,
+                                          restIntervalId: rest.id,
+                                        ),
+                                      ),
+                                child: const Text('Done'),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                 ],
-                const SizedBox(height: 24),
-                for (final rest in _session.restIntervals.where(
-                  (entry) => entry.endedAt == null,
-                ))
-                  Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: ListTile(
-                      leading: const Icon(Icons.hourglass_top),
-                      title: Semantics(
-                        liveRegion: true,
-                        label:
-                            'Rest timer ${_duration(_now.difference(rest.startedAt).inSeconds)} of ${_duration(rest.plannedDurationSeconds)}',
-                        child: Text(
-                          'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}',
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Target ${_duration(rest.plannedDurationSeconds)}',
-                      ),
-                      trailing: Wrap(
-                        spacing: 4,
-                        children: [
-                          if (rest.allowExtend)
-                            IconButton(
-                              tooltip: 'Extend rest by 15 seconds',
-                              onPressed:
-                                  _busy ||
-                                      (rest.maximumDurationSeconds != null &&
-                                          rest.plannedDurationSeconds >=
-                                              rest.maximumDurationSeconds!)
-                                  ? null
-                                  : () => _apply(
-                                      () => widget.useCases.extendRest(
-                                        _session.id,
-                                        restIntervalId: rest.id,
-                                      ),
-                                    ),
-                              icon: const Icon(Icons.add_circle_outline),
-                            ),
-                          if (rest.allowSkip)
-                            TextButton(
-                              onPressed:
-                                  _busy ||
-                                      _now
-                                              .difference(rest.startedAt)
-                                              .inSeconds <
-                                          rest.minimumDurationSeconds
-                                  ? null
-                                  : () => _apply(
-                                      () => widget.useCases.skipRest(
-                                        _session.id,
-                                        restIntervalId: rest.id,
-                                      ),
-                                    ),
-                              child: const Text('Skip'),
-                            ),
-                          Semantics(
-                            button: true,
-                            label: 'Finish rest interval',
-                            child: FilledButton(
-                              onPressed:
-                                  _busy ||
-                                      _now
-                                              .difference(rest.startedAt)
-                                              .inSeconds <
-                                          rest.minimumDurationSeconds ||
-                                      (!rest.allowSkip &&
-                                          _now
-                                                  .difference(rest.startedAt)
-                                                  .inSeconds <
-                                              rest.plannedDurationSeconds)
-                                  ? null
-                                  : () => _apply(
-                                      () => widget.useCases.finishRest(
-                                        _session.id,
-                                        restIntervalId: rest.id,
-                                      ),
-                                    ),
-                              child: const Text('Done'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
+              ),
             ),
           ),
         ],

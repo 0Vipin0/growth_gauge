@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/responsive_layout.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -130,33 +131,36 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
             child: Text('Create a template to start planning workouts'),
           );
         }
-        return ListView.builder(
-          itemCount: templates.length,
-          itemBuilder: (context, i) {
-            final template = templates[i];
-            return ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.view_agenda)),
-              title: Text(template.name),
-              subtitle: Text(
-                template.description.isEmpty
-                    ? 'No description'
-                    : template.description,
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => TemplateDetailScreen(
-                    template: template,
-                    repository: widget.repository,
-                    exerciseRepository: widget.exerciseRepository,
-                    useCases: widget.useCases,
-                    sessionUseCases: widget.sessionUseCases,
-                    userId: widget.userId,
+        return ResponsiveContent(
+          maxWidth: 1100,
+          child: ListView.builder(
+            itemCount: templates.length,
+            itemBuilder: (context, i) {
+              final template = templates[i];
+              return ListTile(
+                leading: const CircleAvatar(child: Icon(Icons.view_agenda)),
+                title: Text(template.name),
+                subtitle: Text(
+                  template.description.isEmpty
+                      ? 'No description'
+                      : template.description,
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => TemplateDetailScreen(
+                      template: template,
+                      repository: widget.repository,
+                      exerciseRepository: widget.exerciseRepository,
+                      useCases: widget.useCases,
+                      sessionUseCases: widget.sessionUseCases,
+                      userId: widget.userId,
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/presentation/widgets/responsive_layout.dart';
 import '../../application/goal_cubit.dart';
 import '../../domain/training_goal.dart';
 import '../../domain/user_enums.dart';
@@ -30,29 +31,32 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
 
           if (state.goals.isEmpty) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.flag_outlined,
-                    size: 64,
-                    color: Colors.grey.shade400,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No goals set yet',
-                    style: Theme.of(context).textTheme.titleMedium
-                        ?.copyWith(color: Colors.grey.shade600),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text('Tap the button below to set your first goal.'),
-                  const SizedBox(height: 24),
-                  FilledButton.icon(
-                    onPressed: () => _showAddGoalDialog(context),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Add Goal'),
-                  ),
-                ],
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.flag_outlined,
+                      size: 64,
+                      color: Colors.grey.shade400,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No goals set yet',
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(color: Colors.grey.shade600),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text('Tap the button below to set your first goal.'),
+                    const SizedBox(height: 24),
+                    FilledButton.icon(
+                      onPressed: () => _showAddGoalDialog(context),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Goal'),
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -67,82 +71,85 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
               )
               .toList();
 
-          return ListView(
-            padding: const EdgeInsets.all(12),
-            children: [
-              if (activeGoals.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    'Active Goals (${activeGoals.length})',
-                    style: Theme.of(context).textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                ...activeGoals.map(
-                  (goal) => GoalProgressCard(
-                    goal: goal,
-                    onUpdateProgress: () =>
-                        _showUpdateProgressDialog(context, goal),
-                    onComplete: () =>
-                        context.read<GoalCubit>().completeGoal(goal.id),
-                    onAbandon: () =>
-                        context.read<GoalCubit>().abandonGoal(goal.id),
-                    onDelete: () =>
-                        context.read<GoalCubit>().deleteGoal(goal.id),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-              if (achievedGoals.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    'Achieved Goals (${achievedGoals.length})',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green.shade700,
+          return ResponsiveContent(
+            maxWidth: 1100,
+            child: ListView(
+              padding: const EdgeInsets.all(12),
+              children: [
+                if (activeGoals.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 8,
+                    ),
+                    child: Text(
+                      'Active Goals (${activeGoals.length})',
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-                ...achievedGoals.map(
-                  (goal) => GoalProgressCard(
-                    goal: goal,
-                    onDelete: () =>
-                        context.read<GoalCubit>().deleteGoal(goal.id),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-              if (otherGoals.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    'Archived / Abandoned (${otherGoals.length})',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
+                  ...activeGoals.map(
+                    (goal) => GoalProgressCard(
+                      goal: goal,
+                      onUpdateProgress: () =>
+                          _showUpdateProgressDialog(context, goal),
+                      onComplete: () =>
+                          context.read<GoalCubit>().completeGoal(goal.id),
+                      onAbandon: () =>
+                          context.read<GoalCubit>().abandonGoal(goal.id),
+                      onDelete: () =>
+                          context.read<GoalCubit>().deleteGoal(goal.id),
                     ),
                   ),
-                ),
-                ...otherGoals.map(
-                  (goal) => GoalProgressCard(
-                    goal: goal,
-                    onDelete: () =>
-                        context.read<GoalCubit>().deleteGoal(goal.id),
+                  const SizedBox(height: 16),
+                ],
+                if (achievedGoals.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 8,
+                    ),
+                    child: Text(
+                      'Achieved Goals (${achievedGoals.length})',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green.shade700,
+                      ),
+                    ),
                   ),
-                ),
+                  ...achievedGoals.map(
+                    (goal) => GoalProgressCard(
+                      goal: goal,
+                      onDelete: () =>
+                          context.read<GoalCubit>().deleteGoal(goal.id),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (otherGoals.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 8,
+                    ),
+                    child: Text(
+                      'Archived / Abandoned (${otherGoals.length})',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                  ...otherGoals.map(
+                    (goal) => GoalProgressCard(
+                      goal: goal,
+                      onDelete: () =>
+                          context.read<GoalCubit>().deleteGoal(goal.id),
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           );
         },
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
+import '../../common/presentation/widgets/responsive_form_layout.dart';
 import '../infrastructure/authentication_service.dart';
 
 class const PinAuthScreen() extends StatefulWidget {
@@ -51,14 +52,9 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
         centerTitle: true,
         title: const Text('PIN Authentication'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width > 600
-                  ? 400
-                  : double.infinity,
-            ),
+      body: ResponsiveFormLayout(
+        child: Center(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -74,6 +70,8 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
                     controller: _pinController,
                     obscureText: true,
                     keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) => _handlePinSubmission(),
                     decoration: InputDecoration(
                       labelText: 'Enter PIN',
                       errorText: _errorMessage,

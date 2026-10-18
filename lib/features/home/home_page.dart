@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:growth_gauge/utils/constants.dart';
-
 import '../catalog/infrastructure/exercise_repository.dart';
+import '../common/presentation/widgets/responsive_layout.dart';
 import '../session/application/session_use_cases.dart';
 import '../session/domain/session_enums.dart';
 import '../session/infrastructure/session_repository.dart';
@@ -23,10 +22,20 @@ class const HomePage({
 }
 
 class _HomePageState() extends State<HomePage> {
+  int _selectedIndex = 0;
+  bool? _railExtendedOverride;
+  final PageController _pageController = PageController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _offerRecovery());
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> _offerRecovery() async {
@@ -59,171 +68,104 @@ class _HomePageState() extends State<HomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > kTabletScreenSize) {
-          return const DesktopHomePage();
-        } else {
-          return const MobileHomePage();
-        }
-      },
-    );
-  }
-}
-
-class const MobileHomePage({super.key}) extends StatefulWidget {
-  @override
-  State<MobileHomePage> createState() => _MobileHomePageState();
-}
-
-class _MobileHomePageState() extends State<MobileHomePage> {
-  int _selectedIndex = 0;
-
-  final PageController _pageController = PageController();
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _selectDestination(int index) {
+    setState(() => _selectedIndex = index);
     _pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      duration: MediaQuery.disableAnimationsOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 300),
+      curve: MediaQuery.disableAnimationsOf(context)
+          ? Curves.linear
+          : Curves.easeInOut,
     );
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children: const [FitnessHubPage(), SettingsPage()],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Training',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        selectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        unselectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.primaryFixedDim,
-        ),
-      ),
-    );
-  }
-}
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final sizeClass = AppWindowSizeClass.fromWidth(constraints.maxWidth);
+      final isCompact = sizeClass == AppWindowSizeClass.compact;
+      final railExtended =
+          _railExtendedOverride ?? sizeClass == AppWindowSizeClass.expanded;
 
-class const DesktopHomePage({super.key}) extends StatefulWidget {
-  @override
-  State<DesktopHomePage> createState() => _DesktopHomePageState();
-}
-
-class _DesktopHomePageState() extends State<DesktopHomePage> {
-  int _selectedIndex = 0;
-
-  bool _isRailExtended = false;
-
-  final PageController _pageController = PageController();
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _onDestinationSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  void _toggleRail() {
-    setState(() {
-      _isRailExtended = !_isRailExtended;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            extended: _isRailExtended,
-            onDestinationSelected: _onDestinationSelected,
-            destinations: const <NavigationRailDestination>[
-              NavigationRailDestination(
-                icon: Icon(Icons.fitness_center),
-                label: Text('Training'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.settings),
-                label: Text('Settings'),
+      return FocusTraversalGroup(
+        child: Scaffold(
+          body: Row(
+            children: [
+              if (!isCompact) ...[
+                NavigationRail(
+                  selectedIndex: _selectedIndex,
+                  extended: railExtended,
+                  onDestinationSelected: _selectDestination,
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.fitness_center),
+                      label: Text('Training'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.settings),
+                      label: Text('Settings'),
+                    ),
+                  ],
+                  leading: IconButton(
+                    tooltip: railExtended ? 'Collapse' : 'Expand',
+                    icon: Icon(
+                      railExtended ? Icons.chevron_left : Icons.chevron_right,
+                    ),
+                    onPressed: () =>
+                        setState(() => _railExtendedOverride = !railExtended),
+                  ),
+                  selectedIconTheme: IconThemeData(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  selectedLabelTextStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  unselectedIconTheme: IconThemeData(
+                    color: Theme.of(context).colorScheme.primaryFixedDim,
+                  ),
+                  unselectedLabelTextStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.primaryFixedDim,
+                  ),
+                ),
+                const VerticalDivider(thickness: 1, width: 1),
+              ],
+              Expanded(
+                child: PageView(
+                  key: const PageStorageKey<String>('home-destinations'),
+                  controller: _pageController,
+                  onPageChanged: (index) =>
+                      setState(() => _selectedIndex = index),
+                  children: const [FitnessHubPage(), SettingsPage()],
+                ),
               ),
             ],
-            leading: IconButton(
-              tooltip: _isRailExtended ? 'Collapse' : 'Expand',
-              icon: Icon(
-                _isRailExtended ? Icons.chevron_left : Icons.chevron_right,
-              ),
-              onPressed: _toggleRail,
-            ),
-            selectedIconTheme: IconThemeData(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            selectedLabelTextStyle: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            unselectedIconTheme: IconThemeData(
-              color: Theme.of(context).colorScheme.primaryFixedDim,
-            ),
-            unselectedLabelTextStyle: TextStyle(
-              color: Theme.of(context).colorScheme.primaryFixedDim,
-            ),
           ),
-          const VerticalDivider(thickness: 1, width: 1),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              children: const [FitnessHubPage(), SettingsPage()],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+          bottomNavigationBar: isCompact
+              ? BottomNavigationBar(
+                  currentIndex: _selectedIndex,
+                  onTap: _selectDestination,
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.fitness_center),
+                      label: 'Training',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Settings',
+                    ),
+                  ],
+                  selectedIconTheme: IconThemeData(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  unselectedIconTheme: IconThemeData(
+                    color: Theme.of(context).colorScheme.primaryFixedDim,
+                  ),
+                )
+              : null,
+        ),
+      );
+    },
+  );
 }
