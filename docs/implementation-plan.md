@@ -89,6 +89,7 @@ flowchart TD
     P13 --> P14["Phase 14: Secure Local Authentication"]
     P14 --> P15["Phase 15: Progress Sounds and Notifications"]
     P15 --> P16["Phase 16: GitHub Actions Build Improvements"]
+    P16 --> P17["Phase 17: Adaptive Application Widget System"]
 ```
 
 ### Phase Progress Tracker
@@ -111,6 +112,7 @@ flowchart TD
 | **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
 | **Phase 15** | Progress Sounds and Notifications | `[ ] PLANNED` | 0 | 6 |
 | **Phase 16** | GitHub Actions Build Improvements | `[ ] PLANNED` | 0 | 6 |
+| **Phase 17** | Adaptive Application Widget System | `[ ] PLANNED` | 0 | 6 |
 
 ---
 
@@ -1026,3 +1028,38 @@ Review and improve CI and release automation using the repository's existing scr
 - Release builds cover the declared supported platforms, preserve signing secrets for trusted release jobs only, and publish complete artifacts only after required builds pass.
 - Workflow permissions are minimal, action versions have a maintainable pin/update policy, and caches do not hide failed or stale validation.
 - Workflow changes are syntax-validated and documented, and local scripts can reproduce the checks needed to diagnose CI failures.
+
+---
+
+## 20. Phase 17: Adaptive Application Widget System
+
+Create a reusable Growth Gauge widget library on top of Flutter's general-purpose widgets. It will provide consistent application components with platform-aware presentation where appropriate, so the same feature-level API can render with suitable Material or Cupertino behavior for the current operating system. Build on the existing Material 3 `FitnessTheme`, settings typography, responsive layout components, and shared common widgets; replace repeated feature-local patterns incrementally.
+
+### 17.1 Design-System Rules
+
+- Keep reusable components in a discoverable presentation/design-system boundary (for example, `lib/core/widgets/` or `lib/features/common/presentation/widgets/` after an inventory selects the best existing location). Do not create parallel widget libraries.
+- Define a small set of semantic design tokens for color, spacing, shape, elevation, sizing, motion, and typography. Derive light/dark/high-contrast themes and accessible states from these tokens instead of repeating literals in screens.
+- Expose stable, composable application APIs for primary/secondary/destructive/icon buttons, selectable/action chips, filter controls, text/form fields, loading/empty/error states, and common layout containers. Support labels, icons, enabled/loading/selected states, callbacks, and extension points without business logic in the widgets.
+- Use platform-aware Material/Cupertino variants only where interaction or convention materially differs. Prefer Flutter's theme and platform-adaptive components when they satisfy the design; do not fork every widget or infer the OS from device models. Provide a consistent fallback for platforms without a dedicated style.
+- Centralize typography roles and font-family configuration. Reuse existing bundled fonts and current user font settings where appropriate; define sensible system fallbacks, support text scaling, and avoid fixed-height text that clips at larger sizes.
+- Make controls keyboard-operable, screen-reader labeled, focus-visible, contrast-safe, and adequately sized for touch. Platform styling must not change the meaning or accessibility of a control.
+- Keep components presentation-only and easy to extend through composition and documented variants. Avoid a generic configuration framework or a new package unless a demonstrated requirement justifies it.
+
+### 17.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 17.1** | Audit theme, fonts, and repeated widget patterns | `[ ] PLANNED` | Inventory `FitnessTheme`, settings font configuration, responsive/common widgets, repeated buttons/chips/filters, and platform-specific differences. |
+| **Step 17.2** | Define tokens, typography roles, and platform policy | `[ ] PLANNED` | Document semantic tokens, font fallback/scaling, component variants, adaptive selection rules, and accessibility requirements. |
+| **Step 17.3** | Establish widget library boundary and APIs | `[ ] PLANNED` | Select the existing shared presentation location and define focused, composable component APIs with minimal dependencies. |
+| **Step 17.4** | Implement core controls and theme integration | `[ ] PLANNED` | Add button variants, chips, filter controls, form components, and common states, integrated with Material/Cupertino themes as appropriate. |
+| **Step 17.5** | Migrate representative screens incrementally | `[ ] PLANNED` | Migrate high-use controls in home, catalog, template, session, analytics, and settings; remove duplicate local styling when verified. |
+| **Step 17.6** | Add cross-platform widget and accessibility tests | `[ ] PLANNED` | Test platform overrides, themes, visual states, text scaling, focus/semantics, keyboard/touch affordances, and responsive behavior. |
+
+### 17.3 Acceptance Criteria
+
+- A documented application widget library provides consistent, reusable button, chip, filter, form, and feedback components, built on Flutter widgets and existing theme conventions.
+- Component APIs remain stable across supported operating systems and choose Material/Cupertino presentation only where appropriate; unsupported platforms retain a usable accessible fallback.
+- Typography uses centralized roles and bundled/system fallback fonts, respects settings and text scaling, and does not clip in supported responsive layouts.
+- Representative screens use the shared components, repeated hard-coded styling is reduced, and component tests cover supported platform variants, visual states, semantics, focus, and large text.
+- The library remains presentation-only, extensible through clear variants/composition, and introduces no unnecessary dependency or competing design system.

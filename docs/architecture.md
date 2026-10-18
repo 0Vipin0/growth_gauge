@@ -61,6 +61,8 @@ The Phase 8 structural pass moved authentication screens into `authentication/pr
 
 Phase 12 adds the shared `ResponsiveContent` width constraint and `AppWindowSizeClass` breakpoints in `features/common/presentation/widgets/responsive_layout.dart`. Home navigation uses a bottom bar in compact windows and a navigation rail in medium/expanded windows, while preserving destination state across resize. High-priority screens reuse the shared width constraint; adaptive semantics, reduced-motion behavior, and viewport regression coverage are documented in the implementation plan. Automated repository checks pass. Manual device and assistive-technology checks are documented but remain outstanding, so Phase 12 remains in progress.
 
+Phase 17 plans a shared Growth Gauge widget system built on Flutter's Material/Cupertino components, current `FitnessTheme`, and font settings. It will centralize reusable controls and typography while retaining accessible platform fallbacks; implementation and adoption remain planned.
+
 ## State management, presentation and navigation
 
 - Use `flutter_bloc`/`bloc` with Cubits or BLoCs for feature and application state. Use Flutter framework primitives for strictly local UI state; do not add another third-party state-management package. Phase 11 removes the transitional `provider` package after its state and composition uses are migrated.
