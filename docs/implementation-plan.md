@@ -102,7 +102,7 @@ flowchart TD
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[x] COMPLETED` | 4 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[x] COMPLETED` | 5 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[~] IN PROGRESS` | 3 | 4 |
-| **Phase 8** | Consistent Structure & Maintainability | `[ ] PLANNED` | 0 | 5 |
+| **Phase 8** | Consistent Structure & Maintainability | `[x] COMPLETED` | 5 | 5 |
 | **Phase 9** | Test Coverage Expansion | `[ ] PLANNED` | 0 | 5 |
 | **Phase 10** | Application Routing Migration (go_router) | `[ ] PLANNED` | 0 | 6 |
 | **Phase 11** | Bloc and Framework State Management | `[ ] PLANNED` | 0 | 6 |
@@ -751,11 +751,11 @@ This phase reduces structural drift across the existing feature-first codebase. 
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 8.1** | Baseline structure and convention inventory | `[ ] PLANNED` | Record existing patterns and exceptions by feature; identify duplicated or misplaced responsibilities. |
-| **Step 8.2** | Agree on maintainable conventions | `[ ] PLANNED` | Document a concise source-of-truth convention set consistent with the target architecture and current code. |
-| **Step 8.3** | Normalize high-value inconsistencies | `[ ] PLANNED` | Refactor only justified duplication/boundary violations in small, reviewable batches; preserve behavior. |
-| **Step 8.4** | Validate each refactor batch | `[ ] PLANNED` | Format changed Dart files, run scoped tests/analyzer, then repository checks where feasible. |
-| **Step 8.5** | Architecture and change review | `[ ] PLANNED` | Confirm dependency direction, generated code handling, scope, and architecture docs are consistent. |
+| **Step 8.1** | Baseline structure and convention inventory | `[x] COMPLETED` | Confirmed consistent layered boundaries in catalog, template, session, analytics, user, and portability; found authentication presentation/service and notification platform service at feature roots. Settings remains transitional as planned. |
+| **Step 8.2** | Agree on maintainable conventions | `[x] COMPLETED` | Documented file/test naming, layer ownership and dependency direction, imports/public APIs, composition, errors, and generated-file ownership in `docs/architecture.md`. |
+| **Step 8.3** | Normalize high-value inconsistencies | `[x] COMPLETED` | Moved authentication screens to `presentation/` and its service plus notification service to `infrastructure/`; updated feature exports and call sites without changing behavior. Deferred settings/provider, direct auth construction, and route composition to their assigned migration phases. |
+| **Step 8.4** | Validate each refactor batch | `[x] COMPLETED` | Regenerated Mockito mocks, formatted all changed Dart files, and ran `scripts/check.ps1`: analysis passed with no issues, all 229 Dart files passed format verification, and all 127 tests passed. |
+| **Step 8.5** | Architecture and change review | `[x] COMPLETED` | Reviewed imports, dependency direction, source/generated ownership, docs, and scope. No new dependencies, abstractions, or unrelated changes. |
 
 ### 8.3 Acceptance Criteria
 

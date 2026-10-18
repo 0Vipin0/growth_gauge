@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../notification/notification_service.dart';
+import '../notification/infrastructure/notification_service.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 

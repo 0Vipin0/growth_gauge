@@ -46,6 +46,18 @@ feature/
 
 Keep a feature simple when a layer is not needed; consistency means consistent boundaries and dependency direction, not empty folders or unnecessary abstractions. Shared domain support belongs in `core/` only when genuinely cross-feature. Shared presentation widgets may live under a common presentation location.
 
+## Repository conventions (Phase 8)
+
+- Use lowercase `snake_case.dart` filenames and `UpperCamelCase` types. Name tests after the behavior or source under test and keep them under the matching `test/core/`, `test/features/<feature>/`, or `test/integration/` path.
+- Place feature entities and invariants in `domain/`, operations and Cubit/BLoC state in `application/`, storage/platform adapters in `infrastructure/`, and screens/widgets in `presentation/`. Omit layers that have no responsibility; do not make widgets own persistence or business rules.
+- Keep dependencies flowing inward: domain has no Flutter or storage dependency; application depends on domain-facing contracts; infrastructure implements persistence and platform details; presentation calls application operations. Expected operation failures use the existing `Result<T, Failure>` convention where that contract is used.
+- Import the specific file/layer that owns a dependency. Keep feature barrel files only where a caller needs a deliberate feature-facing API; do not create barrels or public APIs solely for uniformity.
+- Construct long-lived services and repositories at the existing app composition boundary and inject them. Transitional settings/authentication wiring may still construct or expose providers/services in the legacy composition and should migrate with the relevant state/routing phase, not through an unrelated rewrite.
+- Edit source declarations only. Freezed, JSON serialization, Drift and Mockito generated files are owned by their generators; regenerate them when source annotations or declarations change.
+- Preserve existing error vocabulary and lifecycle cleanup. Translate expected domain/application failures at the presentation boundary; platform exceptions remain within platform adapters unless the feature contract requires a typed failure.
+
+The Phase 8 structural pass moved authentication screens into `authentication/presentation/`, the authentication service into `authentication/infrastructure/`, and the notification platform service into `notification/infrastructure/`. Direct call sites and generated Mockito imports now reference the owning layer. Settings remains intentionally transitional: its `ChangeNotifier` and configuration/model folders are retained for the planned Phase 11 state migration. Authentication screens still construct the service directly and app routing remains in `lib/routes.dart`; Phase 10/11/14 own those migrations.
+
 ## State management, presentation and navigation
 
 - Use `flutter_bloc`/`bloc` with Cubits or BLoCs for feature and application state. Use Flutter framework primitives for strictly local UI state; do not add another third-party state-management package. Phase 11 of `implementation-plan.md` removes the transitional `provider` package after its state and composition uses are migrated.

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../routes.dart';
-import '../../utils/navigation_helper.dart';
-import 'authentication_service.dart';
+import '../../../routes.dart';
+import '../../../utils/navigation_helper.dart';
+import '../infrastructure/authentication_service.dart';
 
 class const PinAuthScreen() extends StatefulWidget {
   @override

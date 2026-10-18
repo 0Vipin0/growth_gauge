@@ -12,7 +12,7 @@ import 'features/analytics/projection/analytics_projector.dart';
 import 'features/analytics/projection/projection_rebuilder.dart';
 import 'features/catalog/infrastructure/catalog_seeder.dart';
 import 'features/catalog/infrastructure/exercise_repository.dart';
-import 'features/notification/notification_service.dart';
+import 'features/notification/infrastructure/notification_service.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
 import 'features/user/application/user_use_cases.dart';

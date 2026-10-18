@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/notification/notification_service.dart';
+import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
 import 'package:growth_gauge/features/settings/config/config.dart';
 import 'package:growth_gauge/features/settings/model/model.dart';
 import 'package:growth_gauge/features/settings/settings_provider.dart';
