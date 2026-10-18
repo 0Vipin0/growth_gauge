@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:growth_gauge/app/app_routes.dart';
+import 'package:growth_gauge/core/app/app_routes.dart';
 import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/core/events/domain_event_dispatcher.dart';
 import 'package:growth_gauge/core/routing/app_router.dart';
