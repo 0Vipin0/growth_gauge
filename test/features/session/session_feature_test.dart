@@ -167,6 +167,88 @@ void main() {
     });
 
     test(
+      'skipping a set records the state and rejects a repeated skip',
+      () async {
+        final session = await createSession();
+        final setId = _onlySet(session).id;
+        final skippedEvents = <ExecutionSetSkipped>[];
+        final subscription = events.subscribe<ExecutionSetSkipped>(
+          skippedEvents.add,
+        );
+
+        final skipped = await sessionUseCases.skipSet(
+          sessionId: session.id,
+          setId: setId,
+          reason: 'Equipment unavailable',
+        );
+        final repeated = await sessionUseCases.skipSet(
+          sessionId: session.id,
+          setId: setId,
+        );
+        await Future<void>.delayed(Duration.zero);
+
+        expect(
+          _onlySet(skipped.dataOrNull!).status,
+          ExecutionSetStatus.skipped,
+        );
+        expect(skipped.dataOrNull!.audits.last.reason, 'Equipment unavailable');
+        expect(repeated.errorOrNull, isA<ConflictFailure>());
+        expect(skippedEvents.map((event) => event.setId), [setId]);
+        await subscription.cancel();
+      },
+    );
+
+    test(
+      'cannot delete a set during rest and removes its finished rest history',
+      () async {
+        final session = await createSession(
+          restPolicy: const RestPolicy(
+            id: 'deletion-rest-policy',
+            targetSeconds: 20,
+            minimumSeconds: 0,
+            autoStart: false,
+          ),
+        );
+        final setId = _onlySet(session).id;
+        await sessionUseCases.recordSet(
+          sessionId: session.id,
+          setId: setId,
+          reps: 8,
+        );
+        final rest = (await sessionUseCases.startRest(
+          sessionId: session.id,
+          executionSetId: setId,
+        )).dataOrNull!.restIntervals.single;
+
+        final activeRestDelete = await sessionUseCases.deleteSet(
+          sessionId: session.id,
+          setId: setId,
+        );
+        expect(activeRestDelete.errorOrNull, isA<ConflictFailure>());
+
+        await sessionUseCases.finishRest(session.id, restIntervalId: rest.id);
+        final deleted = await sessionUseCases.deleteSet(
+          sessionId: session.id,
+          setId: setId,
+          reason: 'Remove mistaken set',
+        );
+
+        expect(deleted.isSuccess, isTrue);
+        expect(deleted.dataOrNull!.blocks.single.items.single.sets, isEmpty);
+        expect(deleted.dataOrNull!.restIntervals, isEmpty);
+        expect(
+          deleted.dataOrNull!.audits.where(
+            (entry) =>
+                entry.entityType == 'RestInterval' &&
+                entry.action == AuditAction.deleted,
+          ),
+          hasLength(1),
+        );
+        expect(deleted.dataOrNull!.audits.last.reason, 'Remove mistaken set');
+      },
+    );
+
+    test(
       'pause and resume exclude application interruption from active time',
       () async {
         var now = DateTime.utc(2026, 9, 26, 10);
@@ -428,6 +510,19 @@ void main() {
         });
       },
     );
+
+    test('completed session cannot be completed a second time', () async {
+      final session = await createSession();
+
+      final completed = await sessionUseCases.complete(session.id);
+      final repeated = await sessionUseCases.complete(session.id);
+      final persisted = (await sessionRepository.getById(session.id))
+          .dataOrNull!;
+
+      expect(completed.dataOrNull!.status, SessionStatus.completed);
+      expect(repeated.errorOrNull, isA<ConflictFailure>());
+      expect(persisted.status, SessionStatus.completed);
+    });
   });
 }
 

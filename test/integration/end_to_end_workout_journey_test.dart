@@ -131,15 +131,6 @@ void main() {
 
         final envelope = await ExportDataUseCase(database: database)();
         final backup = jsonEncode(envelope.toJson());
-        await database.transaction(() async {
-          await database.delete(database.documents).go();
-          await database.delete(database.dailyWorkoutSummaries).go();
-          await database.delete(database.exerciseSetMetrics).go();
-          await database.delete(database.personalRecords).go();
-          await database.delete(database.muscleVolumeBreakdowns).go();
-          await database.delete(database.restIntervalMetrics).go();
-        });
-
         final rebuilder = ProjectionRebuilder(
           db: database,
           sessionRepo: sessions,
@@ -150,6 +141,32 @@ void main() {
           migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
           rebuildAnalytics: rebuilder.rebuildAll,
         );
+        final originalDocumentCount = await database
+            .select(database.documents)
+            .get()
+            .then((rows) => rows.length);
+        final tamperedBackup = Map<String, dynamic>.from(
+          jsonDecode(backup) as Map,
+        )..['unexpectedPayload'] = true;
+
+        await expectLater(
+          importer(jsonEncode(tamperedBackup)),
+          throwsFormatException,
+        );
+        expect(
+          await database.select(database.documents).get(),
+          hasLength(originalDocumentCount),
+        );
+
+        await database.transaction(() async {
+          await database.delete(database.documents).go();
+          await database.delete(database.dailyWorkoutSummaries).go();
+          await database.delete(database.exerciseSetMetrics).go();
+          await database.delete(database.personalRecords).go();
+          await database.delete(database.muscleVolumeBreakdowns).go();
+          await database.delete(database.restIntervalMetrics).go();
+        });
+
         final report = await importer(backup);
         expect(report.imported, greaterThan(0));
 

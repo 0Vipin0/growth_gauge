@@ -103,7 +103,7 @@ flowchart TD
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[x] COMPLETED` | 5 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[~] IN PROGRESS` | 3 | 4 |
 | **Phase 8** | Consistent Structure & Maintainability | `[x] COMPLETED` | 5 | 5 |
-| **Phase 9** | Test Coverage Expansion | `[ ] PLANNED` | 0 | 5 |
+| **Phase 9** | Test Coverage Expansion | `[x] COMPLETED` | 5 | 5 |
 | **Phase 10** | Application Routing Migration (go_router) | `[ ] PLANNED` | 0 | 6 |
 | **Phase 11** | Bloc and Framework State Management | `[ ] PLANNED` | 0 | 6 |
 | **Phase 12** | Responsive and Accessible Experience | `[ ] PLANNED` | 0 | 6 |
@@ -782,11 +782,11 @@ This phase adds behavior-focused regression tests where they provide the most ri
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 9.1** | Build behavior-to-test inventory | `[ ] PLANNED` | Map core and feature acceptance criteria to existing test cases; record gaps and risk priority. |
-| **Step 9.2** | Expand domain and application tests | `[ ] PLANNED` | Cover remaining invariants, boundary values, invalid transitions, expected failures, and state emissions. |
-| **Step 9.3** | Expand repository and migration tests | `[ ] PLANNED` | Cover serialization roundtrips, persistence edge cases, transaction behavior, schema/document migration failures, and import conflicts. |
-| **Step 9.4** | Expand widget and integration tests | `[ ] PLANNED` | Cover critical screen states/navigation outcomes and meaningful cross-feature journeys beyond the existing happy path. |
-| **Step 9.5** | Review coverage and test reliability | `[ ] PLANNED` | Inspect uncovered critical branches, remove flaky assumptions, and record suite/check results without setting an arbitrary percentage gate. |
+| **Step 9.1** | Build behavior-to-test inventory | `[x] COMPLETED` | Added `docs/test-coverage-inventory.md` mapping current critical behaviors, coverage locations, residual manual checks, and prioritized gaps. |
+| **Step 9.2** | Expand domain and application tests | `[x] COMPLETED` | Added skip/delete state-transition and terminal-session retry coverage; existing template/session invariants and Cubit validation/error tests are recorded in the inventory. |
+| **Step 9.3** | Expand repository and migration tests | `[x] COMPLETED` | Added on-disk Drift v1-to-v3 migration coverage, migration-registry rejection cases, malformed/future/empty-ID import no-write checks, overwrite handling, and typed equipment import. |
+| **Step 9.4** | Expand widget and integration tests | `[x] COMPLETED` | Existing empty/active widget states are inventoried; extended the full workout/analytics/backup journey to assert tampered backup rejection preserves existing documents before successful restore. Route-specific behavior stays with Phase 10. |
+| **Step 9.5** | Review coverage and test reliability | `[x] COMPLETED` | Reviewed `flutter test --coverage` diagnostically; targeted gaps in session set transitions and portability conflict/import branches were covered without a percentage gate. `scripts/check.ps1` passes analysis, format verification for 230 Dart files, and all 136 tests. New tests use fixed payloads, temporary/on-disk SQLite or in-memory Drift, and no timing thresholds. Hardware frame pacing remains a documented manual/release check. |
 
 ### 9.3 Acceptance Criteria
 

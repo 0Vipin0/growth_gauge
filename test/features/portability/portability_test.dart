@@ -9,6 +9,7 @@ import 'package:growth_gauge/features/portability/application/import_data_use_ca
 import 'package:growth_gauge/features/portability/domain/conflict_strategy.dart';
 import 'package:growth_gauge/features/portability/migration/checksum_validator.dart';
 import 'package:growth_gauge/features/portability/migration/migration_registry.dart';
+import 'package:growth_gauge/features/portability/migration/migration_step.dart';
 import 'package:growth_gauge/features/portability/migration/steps/migration_v1_to_v2.dart';
 import 'package:growth_gauge/features/portability/migration/steps/migration_v2_to_v3.dart';
 
@@ -86,6 +87,27 @@ void main() {
       expect(result.containsKey('templateRevisions'), isFalse);
     });
 
+    test('migration registry rejects unsupported version paths', () {
+      expect(
+        () =>
+            MigrationRegistry([])
+                .migrate(const {}, fromVersion: 1, toVersion: 3),
+        throwsFormatException,
+      );
+      expect(
+        () =>
+            MigrationRegistry([])
+                .migrate(const {}, fromVersion: 4, toVersion: 3),
+        throwsFormatException,
+      );
+      expect(
+        () =>
+            MigrationRegistry([_InvalidMigrationStep()])
+                .migrate(const {}, fromVersion: 1, toVersion: 2),
+        throwsFormatException,
+      );
+    });
+
     test(
       'import applies conflict strategies and keeps records valid',
       () async {
@@ -119,11 +141,75 @@ void main() {
           input,
           strategy: ConflictStrategy.duplicateWithNewId,
         );
+        final updatedPayload = <String, dynamic>{
+          'users': [
+            {
+              'id': 'user-1',
+              'status': 'SUSPENDED',
+              'createdAt': '2026-01-01T00:00:00.000Z',
+              'updatedAt': '2026-01-02T00:00:00.000Z',
+            },
+          ],
+        };
+        final overwritten = await importer(
+          jsonEncode({
+            'manifest': {
+              'formatVersion': 3,
+              'exportedAt': '2026-01-02T00:00:00.000Z',
+              'checksum': validator.checksum(updatedPayload),
+            },
+            ...updatedPayload,
+          }),
+          strategy: ConflictStrategy.overwrite,
+        );
+        final updatedDocument = await (database.select(
+          database.documents,
+        )..where((row) => row.id.equals('user-1'))).getSingle();
 
         expect(first.imported, 1);
         expect(skipped.skipped, 1);
         expect(copied.duplicated, 1);
+        expect(overwritten.overwritten, 1);
+        expect(
+          (jsonDecode(updatedDocument.jsonData)
+              as Map<String, dynamic>)['status'],
+          'SUSPENDED',
+        );
         expect(await database.select(database.documents).get(), hasLength(2));
+      },
+    );
+
+    test(
+      'imports typed equipment inventories as individual documents',
+      () async {
+        final payload = <String, dynamic>{
+          'equipment': [
+            {
+              'userId': 'equipment-user',
+              'ownedEquipment': ['DUMBBELL'],
+              'updatedAt': '2026-01-01T00:00:00.000Z',
+            },
+          ],
+        };
+        final input = jsonEncode({
+          'manifest': {
+            'formatVersion': 3,
+            'exportedAt': '2026-01-01T00:00:00.000Z',
+            'checksum': const ChecksumValidator().checksum(payload),
+          },
+          ...payload,
+        });
+        final importer = ImportDataUseCase(
+          database: database,
+          migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
+        );
+
+        final report = await importer(input);
+        final document = await database.select(database.documents).getSingle();
+
+        expect(report.imported, 1);
+        expect(document.collection, 'equipment_inventories');
+        expect(document.id, 'equipment-user');
       },
     );
 
@@ -152,6 +238,99 @@ void main() {
       await expectLater(importer(input), throwsFormatException);
       expect(await database.select(database.documents).get(), isEmpty);
     });
+
+    test(
+      'unsupported future export version is rejected before writing',
+      () async {
+        const validator = ChecksumValidator();
+        final payload = <String, dynamic>{'users': <dynamic>[]};
+        final input = jsonEncode({
+          'manifest': {
+            'formatVersion': 4,
+            'exportedAt': '2026-01-01T00:00:00.000Z',
+            'checksum': validator.checksum(payload),
+          },
+          ...payload,
+        });
+        final importer = ImportDataUseCase(
+          database: database,
+          migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
+        );
+
+        await expectLater(importer(input), throwsFormatException);
+        expect(await database.select(database.documents).get(), isEmpty);
+      },
+    );
+
+    test(
+      'document with an empty owner ID is rejected before writing',
+      () async {
+        final payload = <String, dynamic>{
+          'profiles': [
+            {'userId': ''},
+          ],
+        };
+        final input = jsonEncode({
+          'manifest': {
+            'formatVersion': 3,
+            'exportedAt': '2026-01-01T00:00:00.000Z',
+            'checksum': const ChecksumValidator().checksum(payload),
+          },
+          ...payload,
+        });
+        final importer = ImportDataUseCase(
+          database: database,
+          migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
+        );
+
+        await expectLater(importer(input), throwsFormatException);
+        expect(await database.select(database.documents).get(), isEmpty);
+      },
+    );
+
+    test(
+      'invalid typed document rejects the whole import before writes',
+      () async {
+        const validator = ChecksumValidator();
+        final payload = <String, dynamic>{
+          'users': [
+            {
+              'id': 'valid-user',
+              'status': 'ACTIVE',
+              'createdAt': '2026-01-01T00:00:00.000Z',
+              'updatedAt': '2026-01-01T00:00:00.000Z',
+            },
+          ],
+          'profiles': [
+            {'userId': 'valid-user', 'weightUnit': 'stones'},
+          ],
+        };
+        final input = jsonEncode({
+          'manifest': {
+            'formatVersion': 3,
+            'exportedAt': '2026-01-01T00:00:00.000Z',
+            'checksum': validator.checksum(payload),
+          },
+          ...payload,
+        });
+        final importer = ImportDataUseCase(
+          database: database,
+          migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
+        );
+
+        await expectLater(
+          importer(input),
+          throwsA(
+            anyOf(
+              isA<FormatException>(),
+              isA<TypeError>(),
+              isA<ArgumentError>(),
+            ),
+          ),
+        );
+        expect(await database.select(database.documents).get(), isEmpty);
+      },
+    );
 
     test(
       'reference fixture imports after computing its example checksum',
@@ -240,4 +419,15 @@ void main() {
       },
     );
   });
+}
+
+class _InvalidMigrationStep() implements MigrationStep {
+  @override
+  int get sourceVersion => 1;
+
+  @override
+  int get targetVersion => 1;
+
+  @override
+  Map<String, dynamic> migrate(Map<String, dynamic> payload) => payload;
 }
