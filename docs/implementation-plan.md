@@ -105,7 +105,7 @@ flowchart TD
 | **Phase 8** | Consistent Structure & Maintainability | `[x] COMPLETED` | 5 | 5 |
 | **Phase 9** | Test Coverage Expansion | `[x] COMPLETED` | 5 | 5 |
 | **Phase 10** | Application Routing Migration (go_router) | `[x] COMPLETED` | 6 | 6 |
-| **Phase 11** | Bloc and Framework State Management | `[ ] PLANNED` | 0 | 6 |
+| **Phase 11** | Bloc and Framework State Management | `[x] COMPLETED` | 6 | 6 |
 | **Phase 12** | Responsive and Accessible Experience | `[ ] PLANNED` | 0 | 6 |
 | **Phase 13** | Comprehensive Exercise Catalog | `[ ] PLANNED` | 0 | 6 |
 | **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
@@ -845,12 +845,12 @@ Consolidate application state management on the existing `flutter_bloc`/`bloc` p
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 11.1** | Inventory state and dependency composition | `[ ] PLANNED` | Categorize each Provider/ChangeNotifier use as app state, feature state, dependency injection, or local UI state. |
-| **Step 11.2** | Define state ownership conventions | `[ ] PLANNED` | Document Bloc versus Flutter-native state selection, lifecycle ownership, and app-level dependency composition. |
-| **Step 11.3** | Migrate settings and app-wide state | `[ ] PLANNED` | Migrate appearance/access preferences and notification-related state while preserving SharedPreferences and platform service boundaries. |
-| **Step 11.4** | Migrate remaining feature/composition call sites | `[ ] PLANNED` | Remove Provider usage incrementally; retain local framework state where it is appropriately scoped. |
-| **Step 11.5** | Add state migration regression tests | `[ ] PLANNED` | Cover state emissions, persistence, initialization, disposal, error handling, and key user-visible settings flows. |
-| **Step 11.6** | Remove dependency and verify | `[ ] PLANNED` | Remove `provider` from `pubspec.yaml` when unused; analyze imports and validate the app and test suite. |
+| **Step 11.1** | Inventory state and dependency composition | `[x] COMPLETED` | Migrated settings state and identified former Provider service-locator call sites for constructor injection. |
+| **Step 11.2** | Define state ownership conventions | `[x] COMPLETED` | Cubit owns shared settings transitions; Flutter state remains local; app composition owns long-lived services and injects them. |
+| **Step 11.3** | Migrate settings and app-wide state | `[x] COMPLETED` | Replaced SettingsProvider with SettingsCubit while retaining SharedPreferences, secure-storage, and notification-service boundaries. |
+| **Step 11.4** | Migrate remaining feature/composition call sites | `[x] COMPLETED` | Removed Provider-based service lookup from home and template flows and injected session/repository dependencies. |
+| **Step 11.5** | Add state migration regression tests | `[x] COMPLETED` | Added Cubit tests for load, emissions, persistence, notification scheduling, secure-storage cleanup, error fallback, and disposal. |
+| **Step 11.6** | Remove dependency and verify | `[x] COMPLETED` | Removed the direct dependency and all Provider API call sites; the lockfile retains Provider transitively. `scripts/check.ps1` passes analysis, format verification, and the full test suite. |
 
 ### 11.3 Acceptance Criteria
 

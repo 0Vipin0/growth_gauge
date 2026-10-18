@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:growth_gauge/app/app_routes.dart';
 import 'package:growth_gauge/core/database/app_database.dart';
+import 'package:growth_gauge/core/events/domain_event_dispatcher.dart';
 import 'package:growth_gauge/core/routing/app_router.dart';
 import 'package:growth_gauge/features/analytics/domain/pr_calculator.dart';
 import 'package:growth_gauge/features/analytics/infrastructure/analytics_dao.dart';
@@ -11,12 +13,15 @@ import 'package:growth_gauge/features/analytics/projection/projection_rebuilder.
 import 'package:growth_gauge/features/catalog/infrastructure/exercise_repository.dart';
 import 'package:growth_gauge/features/home/launch_route_resolver.dart';
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
+import 'package:growth_gauge/features/session/application/session_use_cases.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
-import 'package:growth_gauge/features/settings/settings.dart';
+import 'package:growth_gauge/features/settings/application/settings_cubit.dart';
+import 'package:growth_gauge/features/settings/config/config.dart';
+import 'package:growth_gauge/features/settings/model/settings_model.dart';
+import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 import 'package:growth_gauge/features/user/application/user_use_cases.dart';
 import 'package:growth_gauge/features/user/infrastructure/user_repository.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockNotificationService() extends Mock implements NotificationService;
@@ -24,7 +29,8 @@ class MockNotificationService() extends Mock implements NotificationService;
 void main() {
   late AppDatabase database;
   late GoRouter router;
-  late SettingsProvider settings;
+  late SettingsCubit settingsCubit;
+  late DomainEventDispatcher events;
 
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
@@ -32,6 +38,13 @@ void main() {
     database = AppDatabase.inMemory();
     final sessions = WorkoutSessionRepository(database);
     final exercises = ExerciseRepository(database);
+    final templates = TemplateRepository(database);
+    events = DomainEventDispatcher();
+    final sessionUseCases = SessionUseCases(
+      templates: templates,
+      sessions: sessions,
+      events: events,
+    );
     final projector = AnalyticsProjector(
       db: database,
       prCalculator: const PRCalculator(),
@@ -42,7 +55,10 @@ void main() {
       initialLocation: appRouteLaunch,
       routes: createAppRoutes(
         database: database,
+        exercises: exercises,
+        templates: templates,
         sessions: sessions,
+        sessionUseCases: sessionUseCases,
         analyticsDao: AnalyticsDao(database),
         projectionRebuilder: ProjectionRebuilder(
           db: database,
@@ -53,12 +69,15 @@ void main() {
       ),
     );
     router = routerController.router;
-    settings = SettingsProvider(notificationService: MockNotificationService());
+    settingsCubit = SettingsCubit(
+      notificationService: MockNotificationService(),
+    );
   });
 
   tearDown(() async {
-    settings.dispose();
+    await settingsCubit.close();
     router.dispose();
+    await events.dispose();
     await database.close();
   });
 
@@ -93,7 +112,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      _AppHarness(router: router, database: database, settings: settings),
+      _AppHarness(router: router, settingsCubit: settingsCubit),
     );
     router.go('/missing-destination');
     await tester.pumpAndSettle();
@@ -107,10 +126,9 @@ void main() {
   testWidgets('launch replaces itself with the saved authentication route', (
     tester,
   ) async {
-    settings.updateAuthenticationType(AuthenticationType.pin);
-    await settings.saveSettingsToStorage();
+    await settingsCubit.updateAuthenticationType(AuthenticationType.pin);
     await tester.pumpWidget(
-      _AppHarness(router: router, database: database, settings: settings),
+      _AppHarness(router: router, settingsCubit: settingsCubit),
     );
     await tester.pumpAndSettle();
 
@@ -122,7 +140,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      _AppHarness(router: router, database: database, settings: settings),
+      _AppHarness(router: router, settingsCubit: settingsCubit),
     );
     router.go(appRouteHome);
     await tester.pumpAndSettle();
@@ -138,15 +156,11 @@ void main() {
 
 class const _AppHarness({
   required final GoRouter router,
-  required final AppDatabase database,
-  required final SettingsProvider settings,
+  required final SettingsCubit settingsCubit,
 }) extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MultiProvider(
-    providers: [
-      Provider<AppDatabase>.value(value: database),
-      ChangeNotifierProvider<SettingsProvider>.value(value: settings),
-    ],
+  Widget build(BuildContext context) => BlocProvider<SettingsCubit>.value(
+    value: settingsCubit,
     child: MaterialApp.router(routerConfig: router),
   );
 }

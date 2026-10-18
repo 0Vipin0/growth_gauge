@@ -24,6 +24,7 @@ import '../features/portability/migration/migration_registry.dart';
 import '../features/portability/migration/steps/migration_v1_to_v2.dart';
 import '../features/portability/migration/steps/migration_v2_to_v3.dart';
 import '../features/portability/presentation/screens/backup_restore_screen.dart';
+import '../features/session/application/session_use_cases.dart';
 import '../features/session/infrastructure/session_repository.dart';
 import '../features/settings/settings_page.dart';
 import '../features/template/application/template_use_cases.dart';
@@ -39,14 +40,15 @@ import '../features/user/presentation/screens/profile_screen.dart';
 /// Creates application destinations and composes their feature dependencies.
 List<RouteBase> createAppRoutes({
   required AppDatabase database,
+  required ExerciseRepository exercises,
+  required TemplateRepository templates,
   required WorkoutSessionRepository sessions,
+  required SessionUseCases sessionUseCases,
   required AnalyticsDao analyticsDao,
   required ProjectionRebuilder projectionRebuilder,
   required UserUseCases userUseCases,
 }) {
-  final exercises = ExerciseRepository(database);
   final catalogUseCases = CatalogUseCases(exercises);
-  final templates = TemplateRepository(database);
   final templateUseCases = TemplateUseCases(templates);
   final analyticsQueries = AnalyticsQueries(
     dao: analyticsDao,
@@ -68,7 +70,11 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
-      builder: (_) => const HomePage(),
+      builder: (_) => HomePage(
+        sessionRepository: sessions,
+        sessionUseCases: sessionUseCases,
+        exerciseRepository: exercises,
+      ),
     ),
     appGoRoute(
       path: appRouteSettings,
@@ -101,6 +107,7 @@ List<RouteBase> createAppRoutes({
         repository: templates,
         exerciseRepository: exercises,
         sessionRepository: sessions,
+        sessionUseCases: sessionUseCases,
         useCases: templateUseCases,
         userId: 'local-user',
       ),

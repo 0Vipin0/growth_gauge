@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import '../../../core/events/domain_event_dispatcher.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
@@ -19,6 +16,7 @@ class const TemplateListScreen({
   required final ITemplateRepository repository,
   required final IExerciseRepository exerciseRepository,
   required final IWorkoutSessionRepository sessionRepository,
+  required final SessionUseCases sessionUseCases,
   required final TemplateUseCases useCases,
   required final String userId,
 }) extends StatefulWidget {
@@ -44,14 +42,10 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
     if (selected == null || !mounted) {
       return;
     }
-    final events = context.read<DomainEventDispatcher>();
-    final sessionUseCases = SessionUseCases(
-      templates: widget.repository,
-      sessions: widget.sessionRepository,
-      events: events,
-    );
     var session = selected;
-    final recovered = await sessionUseCases.recoverIncomplete(session.id);
+    final recovered = await widget.sessionUseCases.recoverIncomplete(
+      session.id,
+    );
     if (recovered.isError) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -71,7 +65,7 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
       MaterialPageRoute(
         builder: (_) => ActiveSessionScreen(
           session: session,
-          useCases: sessionUseCases,
+          useCases: widget.sessionUseCases,
           exerciseRepository: widget.exerciseRepository,
         ),
       ),
@@ -156,6 +150,7 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                     repository: widget.repository,
                     exerciseRepository: widget.exerciseRepository,
                     useCases: widget.useCases,
+                    sessionUseCases: widget.sessionUseCases,
                     userId: widget.userId,
                   ),
                 ),

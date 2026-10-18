@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
-import '../../../core/database/app_database.dart';
-import '../../../core/events/domain_event_dispatcher.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
-import '../../session/infrastructure/session_repository.dart';
 import '../../session/presentation/active_session_screen.dart';
 import '../application/template_use_cases.dart';
 import '../domain/template_enums.dart';
@@ -21,6 +16,7 @@ class const TemplateDetailScreen({
   required final ITemplateRepository repository,
   required final IExerciseRepository exerciseRepository,
   required final TemplateUseCases useCases,
+  required final SessionUseCases sessionUseCases,
   required final String userId,
 }) extends StatefulWidget {
   @override
@@ -79,15 +75,8 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
   Future<void> _start(WorkoutTemplateRevision revision) async {
     if (_starting) return;
     setState(() => _starting = true);
-    final database = Provider.of<AppDatabase>(context, listen: false);
-    final events = context.read<DomainEventDispatcher>();
-    final useCases = SessionUseCases(
-      templates: widget.repository,
-      sessions: WorkoutSessionRepository(database),
-      events: events,
-    );
     try {
-      final created = await useCases.createFromRevision(
+      final created = await widget.sessionUseCases.createFromRevision(
         revisionId: revision.id,
         userId: widget.userId,
       );
@@ -98,7 +87,9 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
         ).showSnackBar(SnackBar(content: Text(created.errorOrNull!.message)));
         return;
       }
-      final started = await useCases.start(created.dataOrNull!.id);
+      final started = await widget.sessionUseCases.start(
+        created.dataOrNull!.id,
+      );
       if (!mounted) return;
       if (started.isError) {
         ScaffoldMessenger.of(
@@ -110,7 +101,7 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
         MaterialPageRoute(
           builder: (_) => ActiveSessionScreen(
             session: started.dataOrNull!,
-            useCases: useCases,
+            useCases: widget.sessionUseCases,
             exerciseRepository: widget.exerciseRepository,
           ),
         ),

@@ -1,25 +1,38 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../../core/routing/app_router.dart';
+import 'application/settings_cubit.dart';
+import 'application/settings_state.dart';
 import 'config/config.dart';
 import 'model/model.dart';
-import 'settings_provider.dart';
 
 class const SettingsPage({super.key}) extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    final settings = context.watch<SettingsProvider>();
+  Widget build(BuildContext context) =>
+      BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) => _buildSettings(context, state),
+      );
+
+  Widget _buildSettings(BuildContext context, SettingsState state) {
+    final settings = state.settings;
+    final settingsCubit = context.read<SettingsCubit>();
     return Scaffold(
       appBar: AppBar(title: const Text('Settings'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          if (state.error != null)
+            ListTile(
+              leading: const Icon(Icons.warning_amber_outlined),
+              title: Text(state.error!),
+            ),
           ListTile(
             title: const Text('App theme'),
             trailing: DropdownButton<AppThemeName>(
-              value: settings.settings.themeName,
+              value: settings.themeName,
               items: AppThemeName.values
                   .map(
                     (value) => DropdownMenuItem(
@@ -29,14 +42,14 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   )
                   .toList(),
               onChanged: (value) {
-                if (value != null) settings.updateThemeName(value);
+                if (value != null) settingsCubit.updateThemeName(value);
               },
             ),
           ),
           ListTile(
             title: const Text('Font size'),
             trailing: DropdownButton<AppFontSize>(
-              value: settings.settings.fontSize,
+              value: settings.fontSize,
               items: AppFontSize.values
                   .map(
                     (value) => DropdownMenuItem(
@@ -46,14 +59,14 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   )
                   .toList(),
               onChanged: (value) {
-                if (value != null) settings.updateFontSize(value);
+                if (value != null) settingsCubit.updateFontSize(value);
               },
             ),
           ),
           ListTile(
             title: const Text('Font family'),
             trailing: DropdownButton<AppFontFamily>(
-              value: settings.settings.fontFamily,
+              value: settings.fontFamily,
               items: AppFontFamily.values
                   .map(
                     (value) => DropdownMenuItem(
@@ -63,7 +76,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   )
                   .toList(),
               onChanged: (value) {
-                if (value != null) settings.updateFontFamily(value);
+                if (value != null) settingsCubit.updateFontFamily(value);
               },
             ),
           ),
@@ -78,7 +91,9 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   context: context,
                   initialTime: settings.notificationTime ?? TimeOfDay.now(),
                 );
-                if (time != null) settings.updateNotificationTime(time);
+                if (time != null) {
+                  await settingsCubit.updateNotificationTime(time);
+                }
               },
             ),
           ),
@@ -92,7 +107,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
           ListTile(
             title: const Text('Authentication type'),
             trailing: DropdownButton<AuthenticationType>(
-              value: settings.settings.authenticationType,
+              value: settings.authenticationType,
               items: AuthenticationType.values
                   .map(
                     (value) => DropdownMenuItem(
@@ -103,9 +118,9 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   .toList(),
               onChanged: (value) async {
                 if (value == null) return;
-                final previous = settings.settings.authenticationType;
+                final previous = settings.authenticationType;
                 if (value == AuthenticationType.biometric &&
-                    !await settings.isBiometricAvailable()) {
+                    !await settingsCubit.isBiometricAvailable()) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -117,7 +132,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                   }
                   return;
                 }
-                settings.updateAuthenticationType(value);
+                await settingsCubit.updateAuthenticationType(value);
                 if (value == AuthenticationType.pin &&
                     previous == AuthenticationType.none &&
                     context.mounted) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import '../settings/settings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../settings/application/settings_cubit.dart';
+import '../settings/application/settings_state.dart';
 import 'launch_route_resolver.dart';
 
 /// Resolves saved access settings before opening the fitness home flow.
@@ -15,18 +17,21 @@ class _FitnessLaunchScreenState() extends State<FitnessLaunchScreen> {
   bool _navigated = false;
 
   @override
-  Widget build(BuildContext context) => Consumer<SettingsProvider>(
-    builder: (context, settings, _) {
-      if (settings.isReady && !_navigated) {
-        _navigated = true;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (!mounted) return;
-          context.go(
-            appRouteForAuthentication(settings.settings.authenticationType),
+  Widget build(BuildContext context) =>
+      BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          if (state.isReady && !_navigated) {
+            _navigated = true;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              context.go(
+                appRouteForAuthentication(state.settings.authenticationType),
+              );
+            });
+          }
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
           );
-        });
-      }
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    },
-  );
+        },
+      );
 }

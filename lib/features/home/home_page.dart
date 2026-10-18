@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:growth_gauge/utils/constants.dart';
-import 'package:provider/provider.dart';
 
-import '../../core/database/app_database.dart';
-import '../../core/events/domain_event_dispatcher.dart';
+import 'package:growth_gauge/utils/constants.dart';
+
 import '../catalog/infrastructure/exercise_repository.dart';
 import '../session/application/session_use_cases.dart';
 import '../session/domain/session_enums.dart';
 import '../session/infrastructure/session_repository.dart';
 import '../session/presentation/active_session_screen.dart';
 import '../session/presentation/session_recovery_dialog.dart';
-import '../settings/settings.dart';
-import '../template/infrastructure/template_repository.dart';
+import '../settings/settings_page.dart';
 import 'fitness_hub_page.dart';
 
-class const HomePage({super.key}) extends StatefulWidget {
+class const HomePage({
+  super.key,
+  required final IWorkoutSessionRepository sessionRepository,
+  required final SessionUseCases sessionUseCases,
+  required final IExerciseRepository exerciseRepository,
+  final String userId = 'local-user',
+}) extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -27,22 +30,16 @@ class _HomePageState() extends State<HomePage> {
   }
 
   Future<void> _offerRecovery() async {
-    final database = Provider.of<AppDatabase>(context, listen: false);
-    final sessionRepository = WorkoutSessionRepository(database);
-    final result = await sessionRepository.listUnfinished('local-user');
+    final result = await widget.sessionRepository.listUnfinished(widget.userId);
     if (!mounted || result.isError || result.dataOrNull!.isEmpty) return;
     final selected = await showSessionRecoveryDialog(
       context,
       result.dataOrNull!,
     );
     if (selected == null || !mounted) return;
-    final events = Provider.of<DomainEventDispatcher>(context, listen: false);
-    final useCases = SessionUseCases(
-      templates: TemplateRepository(database),
-      sessions: sessionRepository,
-      events: events,
+    final recovery = await widget.sessionUseCases.recoverIncomplete(
+      selected.id,
     );
-    final recovery = await useCases.recoverIncomplete(selected.id);
     if (!mounted) return;
     if (recovery.isError) {
       ScaffoldMessenger.of(context)
@@ -55,8 +52,8 @@ class _HomePageState() extends State<HomePage> {
       MaterialPageRoute(
         builder: (_) => ActiveSessionScreen(
           session: session,
-          useCases: useCases,
-          exerciseRepository: ExerciseRepository(database),
+          useCases: widget.sessionUseCases,
+          exerciseRepository: widget.exerciseRepository,
         ),
       ),
     );

@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import 'app/app_routes.dart';
 import 'core/database/app_database.dart';
@@ -15,21 +16,22 @@ import 'features/analytics/projection/projection_rebuilder.dart';
 import 'features/catalog/infrastructure/catalog_seeder.dart';
 import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/notification/infrastructure/notification_service.dart';
+import 'features/session/application/session_use_cases.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
+import 'features/template/infrastructure/template_repository.dart';
 import 'features/user/application/user_use_cases.dart';
 import 'features/user/infrastructure/user_repository.dart';
 
-final notificationService = NotificationService();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final notificationService = NotificationService();
   await notificationService.initializeTimeZone();
   await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
   final database = AppDatabase();
-  final seedResult = await CatalogSeeder(ExerciseRepository(database))
-      .seedIfEmpty();
+  final exercises = ExerciseRepository(database);
+  final seedResult = await CatalogSeeder(exercises).seedIfEmpty();
   if (seedResult.isError) {
     throw StateError(
       'Could not seed exercise catalog: ${seedResult.errorOrNull}',
@@ -37,7 +39,12 @@ void main() async {
   }
   final events = DomainEventDispatcher();
   final sessions = WorkoutSessionRepository(database);
-  final exercises = ExerciseRepository(database);
+  final templates = TemplateRepository(database);
+  final sessionUseCases = SessionUseCases(
+    templates: templates,
+    sessions: sessions,
+    events: events,
+  );
   final projector = AnalyticsProjector(
     db: database,
     prCalculator: const PRCalculator(),
@@ -55,81 +62,65 @@ void main() async {
     initialLocation: appRouteLaunch,
     routes: createAppRoutes(
       database: database,
+      exercises: exercises,
+      templates: templates,
       sessions: sessions,
+      sessionUseCases: sessionUseCases,
       analyticsDao: analyticsDao,
       projectionRebuilder: projectionRebuilder,
       userUseCases: userUseCases,
     ),
   ).router;
+  final settingsCubit = SettingsCubit(notificationService: notificationService);
   runApp(
-    DependencyProvider(
+    GrowthGaugeApp(
+      router: router,
+      settingsCubit: settingsCubit,
       database: database,
       events: events,
       projector: projector,
-      sessions: sessions,
-      analyticsDao: analyticsDao,
-      projectionRebuilder: projectionRebuilder,
-      userUseCases: userUseCases,
-      router: router,
     ),
   );
 }
 
-class const DependencyProvider({
+class const GrowthGaugeApp({
   super.key,
+  required final GoRouter router,
+  required final SettingsCubit settingsCubit,
   required final AppDatabase database,
   required final DomainEventDispatcher events,
   required final AnalyticsProjector projector,
-  required final WorkoutSessionRepository sessions,
-  required final AnalyticsDao analyticsDao,
-  required final ProjectionRebuilder projectionRebuilder,
-  required final UserUseCases userUseCases,
-  required final GoRouter router,
-}) extends StatelessWidget {
+}) extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AppDatabase>.value(value: database),
-        Provider<DomainEventDispatcher>(
-          create: (_) => events,
-          dispose: (_, dispatcher) => unawaited(dispatcher.dispose()),
-        ),
-        Provider<AnalyticsProjector>(
-          create: (_) => projector,
-          dispose: (_, analyticsProjector) =>
-              unawaited(analyticsProjector.stop()),
-        ),
-        Provider<WorkoutSessionRepository>.value(value: sessions),
-        Provider<AnalyticsDao>.value(value: analyticsDao),
-        Provider<ProjectionRebuilder>.value(value: projectionRebuilder),
-        Provider<UserUseCases>.value(value: userUseCases),
-        Provider<GoRouter>(
-          create: (_) => router,
-          dispose: (_, value) => value.dispose(),
-        ),
-        Provider<NotificationService>.value(value: notificationService),
-      ],
-      child: const MyApp(),
-    );
-  }
+  State<GrowthGaugeApp> createState() => _GrowthGaugeAppState();
 }
 
-class const MyApp({super.key}) extends StatelessWidget {
+class _GrowthGaugeAppState() extends State<GrowthGaugeApp> {
+  @override
+  void dispose() {
+    widget.router.dispose();
+    unawaited(widget.settingsCubit.close());
+    unawaited(_disposeServices());
+    super.dispose();
+  }
+
+  Future<void> _disposeServices() async {
+    await widget.projector.stop();
+    await widget.events.dispose();
+    await widget.database.close();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SettingsProvider>(
-      create: (_) => SettingsProvider(notificationService: notificationService),
-      child: Consumer<SettingsProvider>(
-        builder: (context, settingsProvider, child) {
-          final ThemeData themeData = settingsProvider.getThemeData();
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: 'Growth Gage App',
-            theme: themeData,
-            routerConfig: context.read<GoRouter>(),
-          );
-        },
+    return BlocProvider<SettingsCubit>.value(
+      value: widget.settingsCubit,
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) => MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'Growth Gage App',
+          theme: state.settings.appTheme.getThemeData(),
+          routerConfig: widget.router,
+        ),
       ),
     );
   }
