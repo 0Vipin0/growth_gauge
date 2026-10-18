@@ -1,21 +1,21 @@
 import '../../../core/events/domain_event.dart';
 
-class  WorkoutSessionStarted({required super.aggregateId}) extends DomainEvent {
+class WorkoutSessionStarted({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionStarted';
 }
 
-class  WorkoutSessionPaused({required super.aggregateId}) extends DomainEvent {
+class WorkoutSessionPaused({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionPaused';
 }
 
-class  WorkoutSessionResumed({required super.aggregateId}) extends DomainEvent {
+class WorkoutSessionResumed({required super.aggregateId}) extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionResumed';
 }
 
-class  WorkoutSessionCompleted({required super.aggregateId})
+class WorkoutSessionCompleted({required super.aggregateId})
     extends DomainEvent {
   @override
   String get eventType => 'WorkoutSessionCompleted';
@@ -63,7 +63,7 @@ class ExecutionSetCompleted({
   List<Object?> get props => [...super.props, setId];
 }
 
-class  ExecutionSetSkipped({
+class ExecutionSetSkipped({
   required super.aggregateId,
   required final String setId,
 }) extends DomainEvent {

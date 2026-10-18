@@ -34,19 +34,24 @@ class const GoalState({
   List<Object?> get props => [isLoading, goals, errorMessage];
 }
 
-class GoalCubit({
-  required final UserUseCases _useCases,
-  final String _userId = 'local-user',
-}) extends Cubit<GoalState> {
+class GoalCubit extends Cubit<GoalState> {
+  final UserUseCases? _useCases;
+  final String _userId;
   StreamSubscription<List<TrainingGoal>>? _subscription;
 
-  this : super(const GoalState()) {
+  // ignore: unnecessary_type_name_in_constructor
+  GoalCubit({required this._useCases, this._userId = 'local-user'})
+    : super(const GoalState()) {
     _initStream();
   }
 
+  /// Creates a preloaded cubit for presentation tests without a data stream.
+  // ignore: unnecessary_type_name_in_constructor
+  GoalCubit.seeded(super.seed) : _useCases = null, _userId = '';
+
   void _initStream() {
     emit(state.copyWith(isLoading: true));
-    _subscription = _useCases
+    _subscription = _useCases!
         .watchGoals(_userId)
         .listen(
           (goals) {
@@ -67,7 +72,9 @@ class GoalCubit({
     String unit = 'kg',
     DateTime? targetDate,
   }) async {
-    final result = await _useCases.createGoal(
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.createGoal(
       userId: _userId,
       type: type,
       name: name,
@@ -83,28 +90,36 @@ class GoalCubit({
   }
 
   Future<void> updateProgress(String goalId, double newValue) async {
-    final result = await _useCases.updateGoalProgress(goalId, newValue);
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.updateGoalProgress(goalId, newValue);
     if (result.isError) {
       emit(state.copyWith(errorMessage: result.errorOrNull!.message));
     }
   }
 
   Future<void> completeGoal(String goalId) async {
-    final result = await _useCases.completeGoal(goalId);
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.completeGoal(goalId);
     if (result.isError) {
       emit(state.copyWith(errorMessage: result.errorOrNull!.message));
     }
   }
 
   Future<void> abandonGoal(String goalId) async {
-    final result = await _useCases.abandonGoal(goalId);
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.abandonGoal(goalId);
     if (result.isError) {
       emit(state.copyWith(errorMessage: result.errorOrNull!.message));
     }
   }
 
   Future<void> deleteGoal(String goalId) async {
-    final result = await _useCases.deleteGoal(goalId);
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.deleteGoal(goalId);
     if (result.isError) {
       emit(state.copyWith(errorMessage: result.errorOrNull!.message));
     }

@@ -6,6 +6,7 @@ import 'package:growth_gauge/features/catalog/domain/exercise_enums.dart';
 import 'package:growth_gauge/features/user/domain/equipment_inventory.dart';
 import 'package:growth_gauge/features/user/domain/training_goal.dart';
 import 'package:growth_gauge/features/user/domain/training_profile.dart';
+import 'package:growth_gauge/features/user/domain/user_account.dart';
 import 'package:growth_gauge/features/user/domain/user_enums.dart';
 import 'package:growth_gauge/features/user/domain/user_measurement.dart';
 import 'package:growth_gauge/features/user/domain/user_profile.dart';
@@ -45,6 +46,19 @@ void main() {
       final streamFuture = repository.watchProfile('user-1').first;
       final streamed = await streamFuture;
       expect(streamed?.displayName, 'Test Athlete');
+    });
+
+    test('UserAccount persists through its document adapter', () async {
+      final account = UserAccount(
+        id: 'account-1',
+        createdAt: DateTime(2026),
+        updatedAt: DateTime(2026),
+      );
+
+      expect((await repository.saveAccount(account)).isSuccess, isTrue);
+      final loaded = await repository.getAccount(account.id);
+      expect(loaded.isSuccess, isTrue);
+      expect(loaded.dataOrNull, account);
     });
 
     test('TrainingProfile and WorkoutPreferences CRUD', () async {

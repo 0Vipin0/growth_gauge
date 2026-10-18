@@ -90,7 +90,7 @@ flowchart TD
 | **Phase 2** | Exercise Catalog & Templates | `[x] COMPLETED` | 7 | 7 |
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[x] COMPLETED` | 8 | 8 |
 | **Phase 4** | Materialized Analytics & Drift Projections | `[x] COMPLETED` | 7 | 7 |
-| **Phase 5** | User Profile, Goals & Physical Measurements | `[ ] NOT STARTED` | 0 | 4 |
+| **Phase 5** | User Profile, Goals & Physical Measurements | `[x] COMPLETED` | 4 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[ ] NOT STARTED` | 0 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[ ] NOT STARTED` | 0 | 4 |
 
@@ -529,6 +529,17 @@ Phase 5 establishes user-centric features: training profiles, equipment inventor
 2. Implement `UserRepository` managing `users`, `goals`, and `measurements` collections in Drift.
 3. Build UI screens for user profile, goal creation, and body measurement logging.
 4. Verify unit conversions match user preferences (`kg` vs `lb`).
+
+### 8.4 Phase 5 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 5.1** | User domain models and document persistence | `[x] IMPLEMENTED` | Freezed models and Drift document adapters cover accounts, profiles, training profiles, preferences, goals, measurements, and equipment inventories. `UserRepository` now exposes account persistence as well as the existing profile and collection operations. |
+| **Step 5.2** | Profile, goals, measurements, and equipment UI | `[x] IMPLEMENTED` | Profile/preferences and equipment inventory, goal management/progress, and append-only measurement logging screens are present and routed from the Training hub. |
+| **Step 5.3** | Canonical measurement unit handling | `[x] IMPLEMENTED` | Measurement inputs accept pounds and inches and normalize to kg/cm before persistence; body-fat percentages and custom units retain their appropriate units. Inputs with incompatible units are rejected. |
+| **Step 5.4** | User feature regression tests and verification | `[x] COMPLETED` | Repository, use-case, Cubit, and widget coverage passes (29 tests). Strict repository analysis reports no issues; scoped formatting verification passes. |
+
+**Verification (2026-10-18):** Phase 5 models, repositories, application state, screens, equipment selector, and navigation were already present. This pass completed the missing account repository operations and canonical measurement input conversion, and added focused regression cases. `flutter analyze --fatal-infos --fatal-warnings` passes repository-wide, all 29 tests in `test/features/user/` pass, and scoped Dart format verification passes. The provided link `design/Implementation_Plan.md` does not exist in this checkout; this canonical plan is `docs/implementation-plan.md`.
 
 ---
 

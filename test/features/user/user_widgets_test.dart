@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/features/catalog/domain/exercise_enums.dart';
 import 'package:growth_gauge/features/user/application/goal_cubit.dart';
 import 'package:growth_gauge/features/user/application/measurement_cubit.dart';
-import 'package:growth_gauge/features/user/application/user_use_cases.dart';
 import 'package:growth_gauge/features/user/domain/training_goal.dart';
 import 'package:growth_gauge/features/user/domain/user_enums.dart';
-import 'package:growth_gauge/features/user/infrastructure/user_repository.dart';
 import 'package:growth_gauge/features/user/presentation/screens/goals_screen.dart';
 import 'package:growth_gauge/features/user/presentation/screens/measurements_screen.dart';
 import 'package:growth_gauge/features/user/presentation/widgets/equipment_inventory_sheet.dart';
@@ -100,49 +97,68 @@ void main() {
     testWidgets('GoalsScreen renders empty state when no goals', (
       tester,
     ) async {
-      final db = AppDatabase.inMemory();
-      final repo = UserRepository(db);
-      final useCases = UserUseCases(repo);
-      final cubit = GoalCubit(useCases: useCases, userId: 'empty-user');
+      final cubit = GoalCubit.seeded(const GoalState());
 
       await tester.pumpWidget(
         MaterialApp(
-          home: BlocProvider.value(value: cubit, child: const GoalsScreen()),
+          home: BlocProvider<GoalCubit>.value(
+            value: cubit,
+            child: const GoalsScreen(),
+          ),
         ),
       );
 
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.text('No goals set yet'), findsOneWidget);
       expect(find.text('Add Goal'), findsOneWidget);
+    });
 
-      await cubit.close();
-      await db.close();
+    testWidgets('GoalsScreen renders active goals list', (tester) async {
+      final goal = TrainingGoal(
+        id: 'g-2',
+        userId: 'u-1',
+        type: GoalType.strength,
+        name: 'Squat 150kg',
+        startValue: 100,
+        targetValue: 150,
+        currentValue: 120,
+        startDate: DateTime(2026),
+        createdAt: DateTime(2026),
+      );
+      final cubit = GoalCubit.seeded(GoalState(goals: [goal]));
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<GoalCubit>.value(
+            value: cubit,
+            child: const GoalsScreen(),
+          ),
+        ),
+      );
+
+      await tester.pump();
+      expect(find.text('Active Goals (1)'), findsOneWidget);
+      expect(find.text('Squat 150kg'), findsOneWidget);
     });
 
     testWidgets('MeasurementsScreen renders filter chips and empty state', (
       tester,
     ) async {
-      final db = AppDatabase.inMemory();
-      final repo = UserRepository(db);
-      final useCases = UserUseCases(repo);
-      final cubit = MeasurementCubit(useCases: useCases, userId: 'empty-user');
+      final cubit = MeasurementCubit.seeded(const MeasurementState());
 
       await tester.pumpWidget(
         MaterialApp(
-          home: BlocProvider.value(
+          home: BlocProvider<MeasurementCubit>.value(
             value: cubit,
             child: const MeasurementsScreen(),
           ),
         ),
       );
 
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.text('All'), findsOneWidget);
       expect(find.text('Body Weight'), findsOneWidget);
       expect(find.text('No measurements recorded yet'), findsOneWidget);
-
-      await cubit.close();
-      await db.close();
     });
   });
 }

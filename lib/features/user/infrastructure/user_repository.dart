@@ -6,6 +6,7 @@ import '../../../core/error/result.dart';
 import '../domain/equipment_inventory.dart';
 import '../domain/training_goal.dart';
 import '../domain/training_profile.dart';
+import '../domain/user_account.dart';
 import '../domain/user_enums.dart';
 import '../domain/user_measurement.dart';
 import '../domain/user_profile.dart';
@@ -13,6 +14,9 @@ import '../domain/workout_preferences.dart';
 import 'user_document_adapters.dart';
 
 abstract interface class IUserRepository() {
+  Future<Result<void, Failure>> saveAccount(UserAccount account);
+  Future<Result<UserAccount, Failure>> getAccount(String id);
+
   Future<Result<void, Failure>> saveProfile(UserProfile profile);
   Future<Result<UserProfile, Failure>> getProfile(String userId);
   Stream<UserProfile?> watchProfile(String userId);
@@ -49,6 +53,7 @@ abstract interface class IUserRepository() {
 }
 
 class UserRepository implements IUserRepository {
+  final IDocumentStore<UserAccount> _accountStore;
   final IDocumentStore<UserProfile> _profileStore;
   final IDocumentStore<TrainingProfile> _trainingProfileStore;
   final IDocumentStore<WorkoutPreferences> _preferencesStore;
@@ -57,7 +62,11 @@ class UserRepository implements IUserRepository {
   final IDocumentStore<EquipmentInventory> _equipmentStore;
 
   new(AppDatabase db)
-    : _profileStore = DriftDocumentStore<UserProfile>(
+    : _accountStore = DriftDocumentStore<UserAccount>(
+        database: db,
+        adapter: const UserAccountAdapter(),
+      ),
+      _profileStore = DriftDocumentStore<UserProfile>(
         database: db,
         adapter: const UserProfileAdapter(),
       ),
@@ -83,6 +92,7 @@ class UserRepository implements IUserRepository {
       );
 
   new withStores({
+    required this._accountStore,
     required this._profileStore,
     required this._trainingProfileStore,
     required this._preferencesStore,
@@ -94,6 +104,14 @@ class UserRepository implements IUserRepository {
   // ---------------------------------------------------------------------------
   // Profile
   // ---------------------------------------------------------------------------
+
+  @override
+  Future<Result<void, Failure>> saveAccount(UserAccount account) =>
+      _accountStore.upsert(account);
+
+  @override
+  Future<Result<UserAccount, Failure>> getAccount(String id) =>
+      _accountStore.getById(id);
 
   @override
   Future<Result<void, Failure>> saveProfile(UserProfile profile) =>

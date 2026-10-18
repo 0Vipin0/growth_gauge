@@ -193,6 +193,37 @@ void main() {
         )).dataOrNull!;
         expect(latest.value, 74.2);
       });
+
+      test('normalizes pounds and inches to canonical metric units', () async {
+        final weight = await useCases.logMeasurement(
+          userId: 'user-42',
+          type: MeasurementType.bodyWeight,
+          value: 220.46226218487757,
+          unit: 'lb',
+        );
+        expect(weight.dataOrNull!.value, closeTo(100, 0.000001));
+        expect(weight.dataOrNull!.unit, 'kg');
+
+        final waist = await useCases.logMeasurement(
+          userId: 'user-42',
+          type: MeasurementType.waist,
+          value: 10,
+          unit: 'in',
+        );
+        expect(waist.dataOrNull!.value, 25.4);
+        expect(waist.dataOrNull!.unit, 'cm');
+      });
+
+      test('rejects units incompatible with measurement type', () async {
+        final result = await useCases.logMeasurement(
+          userId: 'user-42',
+          type: MeasurementType.bodyWeight,
+          value: 70,
+          unit: 'cm',
+        );
+        expect(result.isError, isTrue);
+        expect(result.errorOrNull, isA<ValidationFailure>());
+      });
     });
 
     group('Equipment Inventory orchestration', () {

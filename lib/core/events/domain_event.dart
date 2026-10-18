@@ -4,7 +4,9 @@ import '../ids/unique_id.dart';
 import '../time/app_clock.dart';
 
 /// Base class for all domain events across the application.
-abstract class const DomainEvent({
+// Event IDs and timestamps default to runtime-generated values.
+// ignore: prefer_const_constructors_in_immutables
+abstract class DomainEvent({
   String? eventId,
   DateTime? occurredAt,
   required final String aggregateId,

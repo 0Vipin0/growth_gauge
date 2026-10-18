@@ -47,19 +47,24 @@ class const MeasurementState({
   ];
 }
 
-class MeasurementCubit({
-  required final UserUseCases _useCases,
-  final String _userId = 'local-user',
-}) extends Cubit<MeasurementState> {
+class MeasurementCubit extends Cubit<MeasurementState> {
+  final UserUseCases? _useCases;
+  final String _userId;
   StreamSubscription<List<UserMeasurement>>? _subscription;
 
-  this : super(const MeasurementState()) {
+  // ignore: unnecessary_type_name_in_constructor
+  MeasurementCubit({required this._useCases, this._userId = 'local-user'})
+    : super(const MeasurementState()) {
     _initStream();
   }
 
+  /// Creates a preloaded cubit for presentation tests without a data stream.
+  // ignore: unnecessary_type_name_in_constructor
+  MeasurementCubit.seeded(super.seed) : _useCases = null, _userId = '';
+
   void _initStream() {
     emit(state.copyWith(isLoading: true));
-    _subscription = _useCases
+    _subscription = _useCases!
         .watchMeasurements(_userId)
         .listen(
           (measurements) {
@@ -82,7 +87,9 @@ class MeasurementCubit({
     DateTime? recordedAt,
     String? notes,
   }) async {
-    final result = await _useCases.logMeasurement(
+    final useCases = _useCases;
+    if (useCases == null) return;
+    final result = await useCases.logMeasurement(
       userId: _userId,
       type: type,
       value: value,

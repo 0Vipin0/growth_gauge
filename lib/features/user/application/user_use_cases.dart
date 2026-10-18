@@ -2,6 +2,8 @@ import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../../../core/ids/unique_id.dart';
 import '../../../core/time/app_clock.dart';
+import '../../../core/units/unit_converter.dart';
+import '../../../core/units/unit_types.dart';
 import '../../catalog/domain/exercise_enums.dart';
 import '../domain/equipment_inventory.dart';
 import '../domain/training_goal.dart';
@@ -199,12 +201,19 @@ class UserUseCases(final IUserRepository _repo) {
       );
     }
 
+    final canonical = _canonicalMeasurement(value, unit, type);
+    if (canonical == null) {
+      return const Result.error(
+        ValidationFailure('Unit is not valid for this measurement type.'),
+      );
+    }
+
     final measurement = UserMeasurement(
       id: UniqueId.generate().value,
       userId: userId,
       type: type,
-      value: value,
-      unit: unit,
+      value: canonical.value,
+      unit: canonical.unit,
       recordedAt: recordedAt ?? AppClock.nowUtc(),
       source: source,
       notes: notes,
@@ -213,6 +222,49 @@ class UserUseCases(final IUserRepository _repo) {
     final saveRes = await _repo.saveMeasurement(measurement);
     if (saveRes.isError) return Result.error(saveRes.errorOrNull!);
     return Result.success(measurement);
+  }
+
+  ({double value, String unit})? _canonicalMeasurement(
+    double value,
+    String unit,
+    MeasurementType type,
+  ) {
+    final normalized = unit.trim().toLowerCase();
+    switch (type) {
+      case MeasurementType.bodyWeight:
+        if (normalized == 'kg' || normalized == 'kilograms') {
+          return (value: value, unit: 'kg');
+        }
+        if (normalized == 'lb' ||
+            normalized == 'lbs' ||
+            normalized == 'pounds') {
+          return (
+            value: UnitConverter.weightToCanonical(value, WeightUnit.pounds),
+            unit: 'kg',
+          );
+        }
+      case MeasurementType.waist:
+      case MeasurementType.chest:
+      case MeasurementType.arm:
+      case MeasurementType.thigh:
+        if (normalized == 'cm' || normalized == 'centimeters') {
+          return (value: value, unit: 'cm');
+        }
+        if (normalized == 'in' ||
+            normalized == 'inch' ||
+            normalized == 'inches') {
+          return (value: UnitConverter.inchesToCm(value), unit: 'cm');
+        }
+      case MeasurementType.bodyFatPercent:
+        if (normalized == '%' ||
+            normalized == 'percent' ||
+            normalized == 'percentage') {
+          return (value: value, unit: '%');
+        }
+      case MeasurementType.custom:
+        if (normalized.isNotEmpty) return (value: value, unit: unit.trim());
+    }
+    return null;
   }
 
   Future<Result<List<UserMeasurement>, Failure>> listMeasurements(

@@ -7,7 +7,7 @@
 
 Growth Gauge is being refactored into an offline-first strength and conditioning tracker. The counter/timer application is legacy and deprecated: do not use it as a design reference for new work or extend it unless a migration step explicitly requires it. Existing code remains useful for understanding compatibility and migration needs.
 
-The architecture is a feature-first modular monolith with consistent feature boundaries and clean separation of domain, application, infrastructure and presentation concerns. Catalog, template, session and analytics form the implemented foundation described by the plan. User/profile/goals/measurements and portability are planned phases. Settings, notification and authentication are also planned for rewrite into the target conventions; the plan's module list should be extended to include them as work is sequenced. Do not copy their legacy implementations as patterns.
+The architecture is a feature-first modular monolith with consistent feature boundaries and clean separation of domain, application, infrastructure and presentation concerns. Catalog, template, session, analytics, and user/profile/goals/measurements form the implemented foundation described by the plan. Portability remains planned. Settings, notification and authentication are also planned for rewrite into the target conventions; the plan's module list should be extended to include them as work is sequenced. Do not copy their legacy implementations as patterns.
 
 ## Target structure
 
@@ -61,7 +61,7 @@ The planned app remains local-first and offline-first. No remote networking/API 
 - Store hierarchical exercise, template/revision and session aggregates as versioned JSON documents in the Drift `documents` table through typed adapters and repositories. Keep database schema migrations distinct from document-format migrations.
 - Treat source documents as authoritative. Analytics tables are derived/materialized read models and must be rebuildable from source history. Use domain events/projectors for incremental updates and a rebuild use case for recovery/import.
 - Keep repository contracts oriented around domain/application needs. Infrastructure implements storage and platform details; presentation does not issue SQL or serialize storage documents.
-- User/profile/preferences/goals/equipment/measurements are in the target design. The implementation plan's User feature is not yet marked started.
+- User/profile/preferences/goals/equipment/measurements are implemented in `features/user/`; see Phase 5 in the implementation plan for the current verification status.
 
 ## Dependency composition and platform services
 

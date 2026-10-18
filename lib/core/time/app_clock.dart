@@ -1,6 +1,8 @@
 import 'package:clock/clock.dart';
 
 /// Provides standardized UTC time handling and deterministic clock testing.
+// This class is a namespace for the shared clock helpers.
+// ignore: avoid_classes_with_only_static_members
 class const AppClock() {
   /// Returns current system time forced to UTC.
   static DateTime nowUtc() {
