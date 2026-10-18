@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../routes.dart';
 import '../settings/settings.dart';
+import 'launch_route_resolver.dart';
 
 /// Resolves saved access settings before opening the fitness home flow.
 class const FitnessLaunchScreen({super.key}) extends StatefulWidget {
@@ -21,12 +21,9 @@ class _FitnessLaunchScreenState() extends State<FitnessLaunchScreen> {
         _navigated = true;
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (!mounted) return;
-          final route = switch (settings.settings.authenticationType) {
-            AuthenticationType.pin => AppRoutes.pinAuth,
-            AuthenticationType.biometric => AppRoutes.biometricAuth,
-            AuthenticationType.none => AppRoutes.home,
-          };
-          Navigator.of(context).pushReplacementNamed(route);
+          context.go(
+            appRouteForAuthentication(settings.settings.authenticationType),
+          );
         });
       }
       return const Scaffold(body: Center(child: CircularProgressIndicator()));

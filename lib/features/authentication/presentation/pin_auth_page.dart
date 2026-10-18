@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../routes.dart';
-import '../../../utils/navigation_helper.dart';
+import '../../../core/routing/app_router.dart';
 import '../infrastructure/authentication_service.dart';
 
 class const PinAuthScreen() extends StatefulWidget {
@@ -39,7 +39,7 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
 
   void _navigateToHome() {
     if (mounted) {
-      NavigationHelper.replaceWith(context, AppRoutes.home);
+      context.go(appRouteHome);
     }
   }
 

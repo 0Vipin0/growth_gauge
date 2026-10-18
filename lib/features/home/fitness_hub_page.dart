@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../routes.dart';
+import '../../core/routing/app_router.dart';
 
 class const FitnessHubPage({super.key}) extends StatelessWidget {
   @override
@@ -22,8 +23,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
             title: const Text('Exercise catalog'),
             subtitle: const Text('Search, filter, and manage exercises'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.exerciseCatalog),
+            onTap: () => context.push(appRouteExerciseCatalog),
           ),
         ),
         Card(
@@ -32,8 +32,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
             title: const Text('Workout templates'),
             subtitle: const Text('Create and prescribe reusable plans'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.workoutTemplates),
+            onTap: () => context.push(appRouteWorkoutTemplates),
           ),
         ),
         Card(
@@ -42,7 +41,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
             title: const Text('Analytics & progress'),
             subtitle: const Text('Review workout history, volume, and PRs'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.analytics),
+            onTap: () => context.push(appRouteAnalytics),
           ),
         ),
         Card(
@@ -53,7 +52,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
               'Set targets and track strength & volume progress',
             ),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.goals),
+            onTap: () => context.push(appRouteGoals),
           ),
         ),
         Card(
@@ -64,8 +63,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
               'Log weight, body composition, and circumferences',
             ),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.measurements),
+            onTap: () => context.push(appRouteMeasurements),
           ),
         ),
         Card(
@@ -76,7 +74,7 @@ class const FitnessHubPage({super.key}) extends StatelessWidget {
               'Manage preferences, units, and available gear',
             ),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.profile),
+            onTap: () => context.push(appRouteProfile),
           ),
         ),
       ],

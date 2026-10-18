@@ -13,13 +13,14 @@ The architecture is a feature-first modular monolith with consistent feature bou
 
 ```text
 lib/
-├── app/                         # Bootstrap, routing, composition root, global theme
+├── app/                         # Bootstrap, app routes, composition root, global theme
 ├── core/
 │   ├── concurrency/             # IsolateRunner for serializable CPU-heavy work
 │   ├── database/                # Drift database, document store and read-model tables
 │   ├── error/                   # Failures and Result
 │   ├── events/                  # Domain events and dispatcher
 │   ├── ids/                     # IDs
+│   ├── routing/                 # Shared GoRouter behavior and route constants
 │   ├── time/                    # Clock and UTC helpers
 │   └── units/                   # Canonical unit conversions
 └── features/
@@ -56,14 +57,14 @@ Keep a feature simple when a layer is not needed; consistency means consistent b
 - Edit source declarations only. Freezed, JSON serialization, Drift and Mockito generated files are owned by their generators; regenerate them when source annotations or declarations change.
 - Preserve existing error vocabulary and lifecycle cleanup. Translate expected domain/application failures at the presentation boundary; platform exceptions remain within platform adapters unless the feature contract requires a typed failure.
 
-The Phase 8 structural pass moved authentication screens into `authentication/presentation/`, the authentication service into `authentication/infrastructure/`, and the notification platform service into `notification/infrastructure/`. Direct call sites and generated Mockito imports now reference the owning layer. Settings remains intentionally transitional: its `ChangeNotifier` and configuration/model folders are retained for the planned Phase 11 state migration. Authentication screens still construct the service directly and app routing remains in `lib/routes.dart`; Phase 10/11/14 own those migrations.
+The Phase 8 structural pass moved authentication screens into `authentication/presentation/`, the authentication service into `authentication/infrastructure/`, and the notification platform service into `notification/infrastructure/`. Direct call sites and generated Mockito imports now reference the owning layer. Settings remains intentionally transitional: its `ChangeNotifier` and configuration/model folders are retained for the planned Phase 11 state migration. Phase 10 moved shared router behavior into `lib/core/routing/` and app destination composition into `lib/app/`; authentication screens still construct their service directly, as tracked for later authentication hardening.
 
 ## State management, presentation and navigation
 
 - Use `flutter_bloc`/`bloc` with Cubits or BLoCs for feature and application state. Use Flutter framework primitives for strictly local UI state; do not add another third-party state-management package. Phase 11 of `implementation-plan.md` removes the transitional `provider` package after its state and composition uses are migrated.
 - Domain types should not depend on Flutter or persistence packages. Use immutable Freezed models where appropriate; use `Result<T, Failure>` for expected repository/use-case outcomes following the existing core convention.
 - Build feature screens from presentation widgets that invoke application operations and render state.
-- The current app uses `Navigator`, named routes and `page_transition`; these are transitional and are still the implemented behavior. Phase 10 of `implementation-plan.md` explicitly targets `go_router` and moves application route ownership into `lib/app/`. Until that phase is implemented, preserve the current navigation behavior. During migration, keep local dialogs and transient feature pushes on Flutter navigation when they are not application destinations.
+- Shared `go_router` lifecycle, path/name constants, page transition, and unmatched-path handling live in `lib/core/routing/app_router.dart`. App destination registrations and their feature dependency composition live in `lib/app/app_routes.dart`; core routing stays independent of feature modules. Fitness launch resolves saved access settings before replacing the launch location; successful authentication and workout completion return to Home. App destinations that should retain Home in history use `push`; local dialogs, editors, analytics detail pages, and live workout screens remain Flutter Navigator pushes. See [`route-inventory.md`](route-inventory.md) for the migration baseline and back-stack choices.
 - Presentation should adapt to available constraints across phone, tablet and laptop/desktop form factors. Phase 12 of `implementation-plan.md` defines the responsive layout, keyboard, semantics, and accessibility rollout; avoid device-model-specific layout assumptions.
 
 ## Persistence and data flow
@@ -78,7 +79,7 @@ The planned app remains local-first and offline-first. No remote networking/API 
 
 ## Dependency composition and platform services
 
-Use an explicit application composition root under `app/` to initialize platform capabilities and construct database, event dispatch, repositories, use cases and feature state objects. The current `main.dart` and Provider-based wiring predate this target and are transitional, not the target pattern. Avoid route-local ad hoc construction as modules are migrated; inject feature dependencies at the app boundary. No DI package is mandated by the implementation plan.
+Use an explicit application composition root under `app/` to initialize platform capabilities and construct database, event dispatch, repositories, use cases and feature state objects. `main.dart` initializes platform and core services, while app route composition creates route-scoped feature repositories/use cases once and reuses the long-lived session, analytics and user services passed from the root. Core routing owns only package-level navigation behavior and has no feature imports. Provider remains the current composition/state wiring and is transitional; Phase 11 owns its migration. No DI package is mandated by the implementation plan.
 
 Authentication credentials stay in secure storage, notification scheduling stays behind its service, and appearance/access preferences remain typed settings backed by shared preferences. The fitness launch route checks saved authentication settings before opening the home flow. Phase 14 of `implementation-plan.md` completes the local biometric/PIN fallback and hardens PIN verification/storage; Phase 15 completes opt-in, preference-controlled progress sounds and local notifications. These modules are not yet fully migrated to feature-layered Cubits/repositories; do not infer such a migration from the fitness feature modules.
 
@@ -109,7 +110,7 @@ Organize tests under `test/core/`, `test/features/<feature>/`, and `test/integra
 
 The implementation plan marks phases 1–6 complete and Phase 7 in progress pending device frame-pacing validation. The current repository passes `scripts/check.ps1` (analysis, formatting, and tests). The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
 
-The implementation plan's projected `app/` tree is not yet reflected in `lib/`; `main.dart` and named routes remain the composition boundary. Settings, notifications and authentication remain app services/providers and can be migrated incrementally if future work requires it.
+The `lib/app/` boundary now owns application routing and its route composition. `main.dart` still owns platform initialization and Provider-based state/dependency wiring, which Phase 11 will migrate. Settings, notifications and authentication remain app services/providers and can be migrated incrementally with their planned phases.
 
 ## Updating this reference
 

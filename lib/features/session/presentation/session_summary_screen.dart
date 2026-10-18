@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/routing/app_router.dart';
 
 import '../domain/workout_session.dart';
 
@@ -46,8 +49,7 @@ class const SessionSummaryScreen({
               Text('Rest time: ${Duration(seconds: rest).inMinutes} min'),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: () =>
-                    Navigator.of(context).popUntil((route) => route.isFirst),
+                onPressed: () => context.go(appRouteHome),
                 child: const Text('Done'),
               ),
             ],

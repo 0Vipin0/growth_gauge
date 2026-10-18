@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../routes.dart';
-import '../../../utils/navigation_helper.dart';
+import '../../../core/routing/app_router.dart';
 import '../infrastructure/authentication_service.dart';
 
 class const BiometricAuthScreen() extends StatefulWidget {
@@ -33,7 +33,7 @@ class _BiometricAuthScreenState() extends State<BiometricAuthScreen> {
   }
 
   void _navigateToHome() {
-    NavigationHelper.replaceWith(context, AppRoutes.home);
+    context.go(appRouteHome);
   }
 
   @override

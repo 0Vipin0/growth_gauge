@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/routing/app_router.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 import 'settings_provider.dart';
@@ -86,7 +87,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
             title: const Text('Backup and restore'),
             subtitle: const Text('Export or restore your Growth Gauge data'),
             trailing: const Icon(Icons.backup_outlined),
-            onTap: () => Navigator.of(context).pushNamed('/backup_restore'),
+            onTap: () => context.push(appRouteBackupRestore),
           ),
           ListTile(
             title: const Text('Authentication type'),
@@ -120,7 +121,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                 if (value == AuthenticationType.pin &&
                     previous == AuthenticationType.none &&
                     context.mounted) {
-                  Navigator.of(context).pushReplacementNamed('/pin_auth');
+                  context.go(appRoutePinAuth);
                 }
               },
             ),
