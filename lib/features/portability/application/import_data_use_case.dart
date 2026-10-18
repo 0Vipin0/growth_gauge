@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
+import '../../../core/concurrency/isolate_runner.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/ids/unique_id.dart';
 import '../../catalog/domain/exercise.dart';
@@ -26,36 +27,27 @@ class ImportDataUseCase({
   required final MigrationRegistry migrations,
   final Future<int> Function()? rebuildAnalytics,
   final ChecksumValidator? checksumValidator,
+  final IsolateRunner isolateRunner = const IsolateRunner(),
 }) {
   final AppDatabase _database = database;
   final MigrationRegistry _migrations = migrations;
   final Future<int> Function()? _rebuildAnalytics = rebuildAnalytics;
   final ChecksumValidator _checksumValidator =
       checksumValidator ?? const ChecksumValidator();
+  final IsolateRunner _isolateRunner = isolateRunner;
 
   Future<ImportReport> call(
     String json, {
     ConflictStrategy strategy = ConflictStrategy.keepExisting,
   }) async {
-    final decoded = jsonDecode(json);
-    if (decoded is! Map<String, dynamic> || decoded['manifest'] is! Map) {
-      throw const FormatException(
-        'The selected file is not a Growth Gauge export.',
-      );
-    }
-    final raw = Map<String, dynamic>.from(decoded);
-    final manifest = Map<String, dynamic>.from(raw.remove('manifest') as Map);
+    final (raw, manifest) = await _isolateRunner.run(_decodeAndValidateImport, (
+      json,
+      _checksumValidator,
+    ));
     final sourceVersion = manifest['formatVersion'];
     if (sourceVersion is! int || sourceVersion < 1) {
       throw const FormatException('Unsupported export format version.');
     }
-    final expectedChecksum = manifest['checksum']?.toString() ?? '';
-    if (!_checksumValidator.validates(raw, expectedChecksum)) {
-      throw const FormatException(
-        'Export checksum does not match its payload.',
-      );
-    }
-
     final migrated = _migrations.migrate(
       raw,
       fromVersion: sourceVersion,
@@ -560,4 +552,22 @@ class _PortableDocument(
   Map<String, dynamic> data,
 ) {
   Map<String, dynamic> data = data;
+}
+
+(Map<String, dynamic>, Map<String, dynamic>) _decodeAndValidateImport(
+  (String, ChecksumValidator) message,
+) {
+  final decoded = jsonDecode(message.$1);
+  if (decoded is! Map<String, dynamic> || decoded['manifest'] is! Map) {
+    throw const FormatException(
+      'The selected file is not a Growth Gauge export.',
+    );
+  }
+  final raw = Map<String, dynamic>.from(decoded);
+  final manifest = Map<String, dynamic>.from(raw.remove('manifest') as Map);
+  final expected = manifest['checksum']?.toString() ?? '';
+  if (!message.$2.validates(raw, expected)) {
+    throw const FormatException('Export checksum does not match its payload.');
+  }
+  return (raw, manifest);
 }

@@ -18,8 +18,8 @@ import 'features/authentication/authentication.dart';
 import 'features/catalog/application/catalog_use_cases.dart';
 import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/catalog/presentation/catalog_screen.dart';
+import 'features/home/fitness_launch_screen.dart';
 import 'features/home/home.dart';
-import 'features/onboarding/onboarding.dart';
 import 'features/portability/application/export_data_use_case.dart';
 import 'features/portability/application/import_data_use_case.dart';
 import 'features/portability/application/portability_cubit.dart';
@@ -30,7 +30,6 @@ import 'features/portability/migration/steps/migration_v2_to_v3.dart';
 import 'features/portability/presentation/screens/backup_restore_screen.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
-import 'features/splash/splash.dart';
 import 'features/template/application/template_use_cases.dart';
 import 'features/template/infrastructure/template_repository.dart';
 import 'features/template/presentation/template_list_screen.dart';
@@ -43,9 +42,8 @@ import 'features/user/presentation/screens/measurements_screen.dart';
 import 'features/user/presentation/screens/profile_screen.dart';
 
 mixin AppRoutes {
-  static const String splash = '/';
-  static const String onboarding = '/onboarding';
   static const String home = '/home';
+  static const String launch = '/launch';
   static const String settings = '/settings';
   static const String biometricAuth = '/biometric_auth';
   static const String pinAuth = '/pin_auth';
@@ -58,8 +56,7 @@ mixin AppRoutes {
   static const String backupRestore = '/backup_restore';
 
   static final Map<String, Widget Function(BuildContext)> _routes = {
-    splash: (_) => const SplashScreen(),
-    onboarding: (_) => const OnboardingScreen(),
+    launch: (_) => const FitnessLaunchScreen(),
     home: (_) => const HomePage(),
     settings: (_) => const SettingsPage(),
     backupRestore: (context) {

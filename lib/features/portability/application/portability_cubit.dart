@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/concurrency/isolate_runner.dart';
 import '../domain/conflict_strategy.dart';
 import '../domain/import_report.dart';
 import '../infrastructure/file_storage_service.dart';
@@ -19,10 +20,12 @@ class PortabilityCubit({
   required final ExportDataUseCase exportData,
   required final ImportDataUseCase importData,
   required final FileStorageService fileStorage,
+  final IsolateRunner isolateRunner = const IsolateRunner(),
 }) extends Cubit<PortabilityState> {
   final ExportDataUseCase _exportData = exportData;
   final ImportDataUseCase _importData = importData;
   final FileStorageService _fileStorage = fileStorage;
+  final IsolateRunner _isolateRunner = isolateRunner;
 
   this : super(const PortabilityState());
 
@@ -30,9 +33,8 @@ class PortabilityCubit({
     emit(const PortabilityState(isBusy: true));
     try {
       final envelope = await _exportData();
-      final uri = await _fileStorage.saveJson(
-        '${const JsonEncoder.withIndent('  ').convert(envelope.toJson())}\n',
-      );
+      final json = await _isolateRunner.run(_encodeEnvelope, envelope.toJson());
+      final uri = await _fileStorage.saveJson(json);
       emit(
         PortabilityState(
           message: uri == null ? 'Export cancelled.' : 'Backup saved.',
@@ -58,3 +60,6 @@ class PortabilityCubit({
     }
   }
 }
+
+String _encodeEnvelope(Map<String, dynamic> envelope) =>
+    '${const JsonEncoder.withIndent('  ').convert(envelope)}\n';

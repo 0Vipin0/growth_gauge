@@ -1,13 +1,13 @@
 # Growth Gauge: Target Architecture
 
-**Status:** Target architecture and implementation guidance. Reviewed 2026-10-04 against [`implementation-plan.md`](implementation-plan.md) and the current repository.  
+**Status:** Target architecture and implementation guidance. Reviewed 2026-10-18 against [`implementation-plan.md`](implementation-plan.md) and the current repository.
 **Authority:** Follow explicit user direction, this target reference, the implementation plan, then the code for existing behavior and migration detail. This file describes the intended architecture, not a claim that every listed feature is already complete.
 
 ## Product direction
 
-Growth Gauge is being refactored into an offline-first strength and conditioning tracker. The counter/timer application is legacy and deprecated: do not use it as a design reference for new work or extend it unless a migration step explicitly requires it. Existing code remains useful for understanding compatibility and migration needs.
+Growth Gauge is an offline-first strength and conditioning tracker. Legacy counter/timer/chart/splash/onboarding feature trees and routes have been removed. Do not reintroduce them as patterns for new work.
 
-The architecture is a feature-first modular monolith with consistent feature boundaries and clean separation of domain, application, infrastructure and presentation concerns. Catalog, template, session, analytics, and user/profile/goals/measurements form the implemented foundation described by the plan. Portability remains planned. Settings, notification and authentication are also planned for rewrite into the target conventions; the plan's module list should be extended to include them as work is sequenced. Do not copy their legacy implementations as patterns.
+The architecture is a feature-first modular monolith with consistent feature boundaries and clean separation of domain, application, infrastructure and presentation concerns. Catalog, template, session, analytics, user/profile/goals/measurements, and portability are implemented. Settings, notification, and authentication remain existing app services/providers rather than fully migrated feature layers; evolve them incrementally without restoring counter/timer behavior.
 
 ## Target structure
 
@@ -15,7 +15,7 @@ The architecture is a feature-first modular monolith with consistent feature bou
 lib/
 ├── app/                         # Bootstrap, routing, composition root, global theme
 ├── core/
-│   ├── concurrency/             # Isolate support when needed (planned)
+│   ├── concurrency/             # IsolateRunner for serializable CPU-heavy work
 │   ├── database/                # Drift database, document store and read-model tables
 │   ├── error/                   # Failures and Result
 │   ├── events/                  # Domain events and dispatcher
@@ -29,9 +29,9 @@ lib/
     ├── session/                 # Live workout, recovery and audit history
     ├── analytics/               # Projections, queries and visualizations
     ├── portability/             # Versioned backup/restore, migrations and conflict handling
-    ├── settings/                # Rewritten app/user configuration (planned)
-    ├── notification/            # Rewritten notification scheduling/preferences (planned)
-    └── authentication/          # Rewritten local authentication (planned)
+    ├── settings/                # Appearance and access preferences
+    ├── notification/            # Platform notification scheduling service
+    └── authentication/          # Local PIN and biometric flows
 ```
 
 Feature modules should use the same layer names where those concerns apply:
@@ -48,10 +48,11 @@ Keep a feature simple when a layer is not needed; consistency means consistent b
 
 ## State management, presentation and navigation
 
-- Use `flutter_bloc`/`bloc` with Cubits or BLoCs for application state. Keep state transitions and user operations in the application layer, not in widgets.
+- Use `flutter_bloc`/`bloc` with Cubits or BLoCs for feature and application state. Use Flutter framework primitives for strictly local UI state; do not add another third-party state-management package. Phase 11 of `implementation-plan.md` removes the transitional `provider` package after its state and composition uses are migrated.
 - Domain types should not depend on Flutter or persistence packages. Use immutable Freezed models where appropriate; use `Result<T, Failure>` for expected repository/use-case outcomes following the existing core convention.
 - Build feature screens from presentation widgets that invoke application operations and render state.
-- The current app uses `Navigator`, named routes and `page_transition`. The plan targets an `app/` composition area but does not specify a replacement router. Until routing is explicitly redesigned, preserve working navigation behavior while moving route ownership into the app boundary; do not add a router dependency without a stated need.
+- The current app uses `Navigator`, named routes and `page_transition`; these are transitional and are still the implemented behavior. Phase 10 of `implementation-plan.md` explicitly targets `go_router` and moves application route ownership into `lib/app/`. Until that phase is implemented, preserve the current navigation behavior. During migration, keep local dialogs and transient feature pushes on Flutter navigation when they are not application destinations.
+- Presentation should adapt to available constraints across phone, tablet and laptop/desktop form factors. Phase 12 of `implementation-plan.md` defines the responsive layout, keyboard, semantics, and accessibility rollout; avoid device-model-specific layout assumptions.
 
 ## Persistence and data flow
 
@@ -65,9 +66,9 @@ The planned app remains local-first and offline-first. No remote networking/API 
 
 ## Dependency composition and platform services
 
-Use an explicit application composition root under `app/` to initialize platform capabilities and construct database, event dispatch, repositories, use cases and feature state providers. The current `main.dart` and Provider-based wiring predate this target and are transitional, not the target pattern. Avoid route-local ad hoc construction as modules are migrated; inject feature dependencies at the app boundary. No DI package is mandated by the implementation plan.
+Use an explicit application composition root under `app/` to initialize platform capabilities and construct database, event dispatch, repositories, use cases and feature state objects. The current `main.dart` and Provider-based wiring predate this target and are transitional, not the target pattern. Avoid route-local ad hoc construction as modules are migrated; inject feature dependencies at the app boundary. No DI package is mandated by the implementation plan.
 
-Authentication, notification and settings are planned rewrites. Keep authentication credentials in the security boundary, notification scheduling behind an infrastructure service, and settings as typed configuration/preferences with explicit persistence. Their detailed contracts and sequencing are not yet defined in `implementation-plan.md`; establish those during the relevant design/implementation phase rather than treating current service/provider code as precedent.
+Authentication credentials stay in secure storage, notification scheduling stays behind its service, and appearance/access preferences remain typed settings backed by shared preferences. The fitness launch route checks saved authentication settings before opening the home flow. Phase 14 of `implementation-plan.md` completes the local biometric/PIN fallback and hardens PIN verification/storage; Phase 15 completes opt-in, preference-controlled progress sounds and local notifications. These modules are not yet fully migrated to feature-layered Cubits/repositories; do not infer such a migration from the fitness feature modules.
 
 ## Domain rules already established by the plan
 
@@ -80,22 +81,23 @@ Authentication, notification and settings are planned rewrites. Keep authenticat
 
 ## Dependencies and code generation
 
-Use dependencies already selected by the plan and present in the project: `flutter_bloc`/`bloc`, Drift, Freezed/JSON serialization, and `fl_chart` for visualizations. Portability uses `file_picker` for JSON file access and `crypto` for checksums. The plan also describes path provider and isolate work for future features. Do not add dependencies just because they appear in a proposal; confirm the target feature needs them and check `pubspec.yaml`/lockfile. Avoid retaining dependencies used only by deprecated counter/timer code after that legacy cleanup is performed.
+Use dependencies already selected by the plan and present in the project: `flutter_bloc`/`bloc`, Drift, Freezed/JSON serialization, and `fl_chart` for visualizations. Portability uses `file_picker` for JSON file access and `crypto` for checksums. `IsolateRunner` accepts top-level workers and serializable messages for CPU-heavy parsing, serialization, checksums, and rebuild ordering. Drift queries and projection transactions must stay on the isolate that owns the database connection. Direct-only CSV, heatmap, and Lottie dependencies from removed features have been pruned; `path_provider` remains transitive through other packages.
 
 Edit source declarations, not generated files. Drift, Freezed, JSON serialization and Mockito artifacts are generated with `build_runner`; use `./scripts/generate.ps1` on PowerShell or the documented equivalent.
 
 ## Tests and validation
 
-Organize tests under `test/core/` and `test/features/<feature>/` following the implementation plan and nearby current tests. Cover domain invariants, use cases/repositories, persistence, event-driven projections and presentation behavior at the appropriate boundary. The plan calls for an end-to-end workout and portability round-trip suite during hardening. Do not treat current full-suite failures in deprecated areas as a reason to reproduce their implementation patterns; record and address them as part of the migration.
+Organize tests under `test/core/`, `test/features/<feature>/`, and `test/integration/`. The integration test uses the real in-memory Drift repositories/use cases to cover catalog seeding, template creation, four logged sets, rest completion, analytics/PRs, and export/clear/import parity. Device-level frame pacing for a 1,000-session analytics rebuild remains a release-profile check.
 
 - `./scripts/check.ps1`: analysis, format verification and Flutter tests.
 - `./scripts/generate.ps1`: code generation.
+- Phase 16 of `implementation-plan.md` aligns GitHub Actions with the supported SDK and these local validation scripts, while hardening release permissions and artifacts.
 
 ## Status and source distinctions
 
-The implementation plan marks phases 1–4 complete and phases 5–7 not started. Its own execution log reports legacy full-suite compile failures. These statuses are planning assertions, not independent verification of the current checkout. Inspect source and tests before describing a particular capability as complete. The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
+The implementation plan marks phases 1–6 complete and Phase 7 in progress pending device frame-pacing validation. The current repository passes `scripts/check.ps1` (analysis, formatting, and tests). The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
 
-The implementation plan currently omits explicit design and sequencing for the settings, notification and authentication rewrites and uses a projected `app/` tree not yet reflected in `lib/`. Treat these as open plan gaps to resolve during refactoring, not as permission to retain legacy patterns.
+The implementation plan's projected `app/` tree is not yet reflected in `lib/`; `main.dart` and named routes remain the composition boundary. Settings, notifications and authentication remain app services/providers and can be migrated incrementally if future work requires it.
 
 ## Updating this reference
 

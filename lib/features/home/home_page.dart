@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../core/database/app_database.dart';
 import '../../core/events/domain_event_dispatcher.dart';
 import '../catalog/infrastructure/exercise_repository.dart';
-import '../counter/counter.dart';
 import '../session/application/session_use_cases.dart';
 import '../session/domain/session_enums.dart';
 import '../session/infrastructure/session_repository.dart';
@@ -13,7 +12,6 @@ import '../session/presentation/active_session_screen.dart';
 import '../session/presentation/session_recovery_dialog.dart';
 import '../settings/settings.dart';
 import '../template/infrastructure/template_repository.dart';
-import '../timer/timer.dart';
 import 'fitness_hub_page.dart';
 
 class const HomePage({super.key}) extends StatefulWidget {
@@ -115,19 +113,12 @@ class _MobileHomePageState() extends State<MobileHomePage> {
             _selectedIndex = index;
           });
         },
-        children: const [
-          CounterListWidget(),
-          TimerListWidget(),
-          FitnessHubPage(),
-          SettingsPage(),
-        ],
+        children: const [FitnessHubPage(), SettingsPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Counters'),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timers'),
           BottomNavigationBarItem(
             icon: Icon(Icons.fitness_center),
             label: 'Training',
@@ -194,14 +185,6 @@ class _DesktopHomePageState() extends State<DesktopHomePage> {
             onDestinationSelected: _onDestinationSelected,
             destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.list),
-                label: Text('Counters'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.timer),
-                label: Text('Timers'),
-              ),
-              NavigationRailDestination(
                 icon: Icon(Icons.fitness_center),
                 label: Text('Training'),
               ),
@@ -239,12 +222,7 @@ class _DesktopHomePageState() extends State<DesktopHomePage> {
                   _selectedIndex = index;
                 });
               },
-              children: const [
-                CounterListWidget(),
-                TimerListWidget(),
-                FitnessHubPage(),
-                SettingsPage(),
-              ],
+              children: const [FitnessHubPage(), SettingsPage()],
             ),
           ),
         ],

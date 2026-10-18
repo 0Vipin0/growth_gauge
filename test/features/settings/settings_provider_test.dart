@@ -1,99 +1,57 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_gauge/features/counter/counter.dart';
 import 'package:growth_gauge/features/notification/notification_service.dart';
 import 'package:growth_gauge/features/settings/config/config.dart';
+import 'package:growth_gauge/features/settings/model/model.dart';
 import 'package:growth_gauge/features/settings/settings_provider.dart';
-import 'package:growth_gauge/features/timer/provider/timer_list_provider.dart';
-import 'package:growth_gauge/features/timer/repository/repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockNotificationService() extends Mock implements NotificationService;
 
 void main() {
-  late CounterListProvider mockCounterListProvider;
-  late TimerListProvider mockTimerListProvider;
-  late MockNotificationService mockNotificationService;
   late SettingsProvider provider;
 
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
     await SharedPreferencesHelper.init();
-    mockNotificationService = MockNotificationService();
-    mockCounterListProvider = CounterListProvider(
-      notificationService: mockNotificationService,
-      repository: InMemoryCounterRepository(),
-    );
-    mockTimerListProvider = TimerListProvider(
-      notificationService: mockNotificationService,
-      repository: InMemoryTimerRepository(),
-    );
-    provider = SettingsProvider(
-      counterListProvider: mockCounterListProvider,
-      timerListProvider: mockTimerListProvider,
-      notificationService: mockNotificationService,
-    );
+    provider = SettingsProvider(notificationService: MockNotificationService());
   });
 
-  group('SettingsProvider Tests', () {
-    test('updateThemeName updates the theme and notifies listeners', () {
-      // Act
-      provider.updateThemeName(AppThemeName.dark);
+  test('updates the selected theme and notifies listeners', () {
+    var notifications = 0;
+    provider.addListener(() => notifications++);
 
-      // Assert
-      expect(provider.settings.themeName, AppThemeName.dark);
-    });
+    provider.updateThemeName(AppThemeName.darkHighContrast);
 
-    test('updateFontSize updates the font size and notifies listeners', () {
-      // Act
-      provider.updateFontSize(AppFontSize.large);
+    expect(provider.settings.themeName, AppThemeName.darkHighContrast);
+    expect(notifications, 1);
+  });
 
-      // Assert
-      expect(provider.settings.fontSize, AppFontSize.large);
-    });
+  test('loads saved appearance and authentication settings', () async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('themeName', 'lightHighContrast');
+    await prefs.setString('fontSize', 'large');
+    await prefs.setString('fontFamily', 'roboto');
+    await prefs.setString('authenticationType', 'pin');
+    await provider.loadSettingsFromStorage();
 
-    test('updateFontFamily updates the font family and notifies listeners', () {
-      // Act
-      provider.updateFontFamily(AppFontFamily.roboto);
+    expect(provider.settings.themeName, AppThemeName.lightHighContrast);
+    expect(provider.settings.fontSize, AppFontSize.large);
+    expect(provider.settings.authenticationType, AuthenticationType.pin);
+  });
 
-      // Assert
-      expect(provider.settings.fontFamily, AppFontFamily.roboto);
-    });
+  test('saves appearance and authentication settings', () async {
+    provider.updateThemeName(AppThemeName.dark);
+    provider.updateFontSize(AppFontSize.large);
+    provider.updateFontFamily(AppFontFamily.roboto);
+    provider.updateAuthenticationType(AuthenticationType.pin);
+    await provider.saveSettingsToStorage();
 
-    test('loadSettingsFromStorage', () async {
-      // Arrange
-      // Act
-      await provider.loadSettingsFromStorage();
-
-      // Assert
-      expect(provider.settings.themeName, AppThemeName.light);
-    });
-
-    test('toggleOnboarding', () {
-      // Act
-      provider.toggleOnboarding(false);
-
-      // Assert
-      expect(provider.isOnboardingComplete, isFalse);
-    });
-
-    test('exportDataToCsv', () async {
-      // Act
-      await provider.exportDataToCsv();
-
-      // Assert
-      expect(provider.exportMessage, 'Data exported successfully to CSV!');
-    });
-
-    test('saveSettingsToStorage saves settings correctly', () async {
-      // Act
-      await provider.saveSettingsToStorage();
-
-      // Assert
-      final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getString('themeName'), 'light');
-      expect(prefs.getString('fontSize'), 'medium');
-      expect(prefs.getString('fontFamily'), 'roboto');
-    });
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('themeName'), 'dark');
+    expect(prefs.getString('fontSize'), 'large');
+    expect(prefs.getString('fontFamily'), 'roboto');
+    expect(prefs.getString('authenticationType'), 'pin');
+    expect(prefs.containsKey('exportFormat'), isFalse);
   });
 }

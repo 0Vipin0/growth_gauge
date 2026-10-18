@@ -80,6 +80,15 @@ flowchart TD
     P4 --> P5["Phase 5: User Profile, Goals & Physical Measurements"]
     P5 --> P6["Phase 6: Portability Engine & Schema Migrations"]
     P6 --> P7["Phase 7: Hardening, Polish & Legacy Cleanup"]
+    P7 --> P8["Phase 8: Consistent Structure & Maintainability"]
+    P8 --> P9["Phase 9: Test Coverage Expansion"]
+    P9 --> P10["Phase 10: Application Routing Migration (go_router)"]
+    P10 --> P11["Phase 11: Bloc and Framework State Management"]
+    P11 --> P12["Phase 12: Responsive and Accessible Experience"]
+    P12 --> P13["Phase 13: Comprehensive Exercise Catalog"]
+    P13 --> P14["Phase 14: Secure Local Authentication"]
+    P14 --> P15["Phase 15: Progress Sounds and Notifications"]
+    P15 --> P16["Phase 16: GitHub Actions Build Improvements"]
 ```
 
 ### Phase Progress Tracker
@@ -92,7 +101,16 @@ flowchart TD
 | **Phase 4** | Materialized Analytics & Drift Projections | `[x] COMPLETED` | 7 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[x] COMPLETED` | 4 | 4 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[x] COMPLETED` | 5 | 5 |
-| **Phase 7** | Hardening, Polish & Legacy Cleanup | `[ ] NOT STARTED` | 0 | 4 |
+| **Phase 7** | Hardening, Polish & Legacy Cleanup | `[~] IN PROGRESS` | 3 | 4 |
+| **Phase 8** | Consistent Structure & Maintainability | `[ ] PLANNED` | 0 | 5 |
+| **Phase 9** | Test Coverage Expansion | `[ ] PLANNED` | 0 | 5 |
+| **Phase 10** | Application Routing Migration (go_router) | `[ ] PLANNED` | 0 | 6 |
+| **Phase 11** | Bloc and Framework State Management | `[ ] PLANNED` | 0 | 6 |
+| **Phase 12** | Responsive and Accessible Experience | `[ ] PLANNED` | 0 | 6 |
+| **Phase 13** | Comprehensive Exercise Catalog | `[ ] PLANNED` | 0 | 6 |
+| **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
+| **Phase 15** | Progress Sounds and Notifications | `[ ] PLANNED` | 0 | 6 |
+| **Phase 16** | GitHub Actions Build Improvements | `[ ] PLANNED` | 0 | 6 |
 
 ---
 
@@ -607,7 +625,7 @@ Export File (.json)
      - `OVERWRITE`: Replaces local document with incoming payload.
      - `DUPLICATE_WITH_NEW_ID`: Generates fresh UUIDs and updates all internal references.
 5. **Post-Import Analytics Rebuild:**
-   - Imports that add or replace workout sessions trigger `ProjectionRebuilder.rebuildAll()` after the authoritative documents commit. This uses the existing synchronous projection implementation; isolate offloading remains a Phase 7 performance item.
+   - Imports that add or replace workout sessions trigger `ProjectionRebuilder.rebuildAll()` after the authoritative documents commit. Phase 7 offloads portable CPU processing and session ordering; Drift projection I/O stays on the database isolate, with device frame profiling tracked as the remaining hardening check.
 
 ---
 
@@ -667,15 +685,16 @@ Phase 7 hardens the entire system for production release, ensures 60/120 FPS UI 
 
 ### 7.1 Architecture & Polish Rules
 1. **Background Isolate Offloading (Section 40 & Performance Strategy):**
-   - High-load operations (JSON serialization of large workout histories, SHA-256 calculation, analytics rebuilds) run via `Isolate.run()` to prevent main UI thread stutters.
+   - Large export payload parsing/sorting, JSON serialization, SHA-256 checksums, import JSON validation, and completed-session rebuild ordering run through `Isolate.run()` using primitive messages and top-level worker functions.
+     - Drift reads, writes, and analytics projections stay on the owning isolate because the active Drift database/SQLite connection cannot be sent to a worker isolate. A 1,000-session stress test now records elapsed time and event-loop pulse gaps; device frame pacing remains a release verification item.
 2. **Accessibility (a11y) & Haptics:**
    - Full screen reader semantics labels on active workout controls.
-   - High-contrast colors conforming to WCAG AA guidelines.
+   - Light/dark high-contrast color schemes use Material contrast levels and test text contrast pairs against WCAG AA (4.5:1).
    - Haptic vibration patterns on rest timer completion.
 3. **Legacy Pruning:**
    - Safely remove legacy counter/timer features (`lib/features/counter/`, `lib/features/timer/`, legacy routes) without leaving dead dependencies.
 4. **End-to-End Integration Suite:**
-   - Automated flow verifying: Seed Catalog -> Create Template -> Run Workout -> Log 4 Sets -> Complete -> Verify Analytics -> Export -> Clear DB -> Import -> Verify Identical Stats.
+   - Automated Flutter test flow verifies: Seed Catalog -> Create Template -> Run Workout -> Log 4 Sets -> Complete a Rest Interval -> Complete -> Verify Analytics/PRs -> Export -> Clear Documents and Read Models -> Import -> Verify Identical Stats.
 
 ---
 
@@ -698,7 +717,310 @@ Phase 7 hardens the entire system for production release, ensures 60/120 FPS UI 
 
 | Component | Test Case | Success Criteria |
 |---|---|---|
-| **Isolate Concurrency** | Rebuild analytics under load | Rebuilding 1,000 sessions runs in background isolate; UI animations maintain solid 60 FPS without dropping frames. |
-| **End-to-End Journey** | Full lifecycle integration | Routine creation -> active session -> rest timer -> PR calculation -> export -> import roundtrip completes with 100% data fidelity. |
-| **Static Analysis** | `dart analyze` | Zero errors, zero warnings, zero linter issues across entire codebase. |
-| **Legacy Removal** | Unused code verification | No references to old Counter/Timer classes remain; `pubspec.yaml` clean of unneeded packages. |
+| **Isolate Concurrency** | Rebuild analytics under load | Export/import CPU work and rebuild ordering run in worker isolates; Drift projections remain on the database isolate. The 1,000-session stress test passes and reports elapsed time and event-loop pulse gaps. The device 60 FPS profile acceptance is pending. |
+| **End-to-End Journey** | Full lifecycle integration | Completed in `test/integration/end_to_end_workout_journey_test.dart`; workout, rest, four logged sets, analytics/PRs, backup roundtrip, and restored stats are asserted. |
+| **Static Analysis** | `scripts/check.ps1` | Passed: zero analyzer infos/warnings/errors and format verification. Full test suite passed (127 tests, as recorded in Step 7.4). |
+| **Legacy Removal** | Unused code verification | Counter/timer/chart/splash/onboarding feature trees, routes, tests, shared-preference repositories, and direct-only CSV/heatmap/Lottie dependencies removed. `path_provider` remains transitive through dependencies, not direct. |
+
+### 7.4 Phase 7 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 7.1** | Offload portable data CPU work and rebuild ordering | `[~] PARTIAL` | Added `IsolateRunner`; top-level workers receive serializable primitive messages so Drift objects never cross isolate boundaries. Export payload preparation/checksum, import parsing/checksum validation, pretty JSON serialization, and session ordering are offloaded. The 1,000-session stress test passes. Projection writes remain on the Drift isolate; device frame profiling is pending. |
+| **Step 7.2** | Accessibility, contrast and rest completion feedback | `[x] COMPLETED` | Active timer, pause/resume and completion controls expose semantics; rest auto-completion triggers medium haptic feedback. Light/dark high-contrast text pairs have WCAG AA contrast tests. |
+| **Step 7.3** | Prune legacy features and refactor launch flow | `[x] COMPLETED` | Removed counter/timer/chart/splash/onboarding trees and dead routes/tests/repositories; launch now routes through saved authentication settings into the fitness home. Removed direct-only `csv`, `flutter_heatmap_calendar`, and `lottie` dependencies. |
+| **Step 7.4** | End-to-end portability journey and verification | `[x] COMPLETED` | Added `test/integration/end_to_end_workout_journey_test.dart` and a 1,000-session analytics rebuild stress test. `scripts/check.ps1` passes analysis, format check, and all 127 tests. The device-frame profiling portion remains pending and prevents Phase 7 from being fully closed. |
+
+**Remaining release check:** profile a rebuild of 1,000 completed sessions on a Flutter device and confirm animation frame pacing. The automated stress test runs this rebuild on the test host and reports elapsed time and 16 ms event-loop pulse gaps; its measured pulse gaps are diagnostic and are not a substitute for Flutter device `FrameTiming`. No Android/iOS device or hardware-rendered target was available in this environment. Drift query/projection transactions intentionally stay on the database isolate; only portable CPU processing and rebuild ordering are moved to worker isolates with the current architecture.
+
+---
+
+## 11. Phase 8: Consistent Structure & Maintainability
+
+This phase reduces structural drift across the existing feature-first codebase. It is an incremental consistency pass, not a wholesale rewrite: retain the domain/application/infrastructure/presentation boundaries already used by the core fitness features and migrate transitional settings, authentication, and notification code only where a concrete inconsistency or maintenance cost is found.
+
+### 8.1 Scope and Rules
+
+- Inventory representative files in catalog, template, session, analytics, user, portability, settings, authentication, and notification before proposing moves or renames.
+- Establish and document practical conventions for file/folder naming, public feature APIs, imports, state naming, repository/use-case boundaries, dependency construction, error handling, and generated-file ownership.
+- Keep domain code independent of Flutter and persistence. Keep widgets focused on rendering and user interaction; place feature operations in application code and platform/storage details in infrastructure.
+- Reuse existing `Result`, Drift adapters/repositories, Cubit/BLoC, and app-level dependency composition patterns where applicable. Do not add empty layers, wrappers, DI frameworks, or broad renames for cosmetic uniformity.
+- Make changes in small feature-scoped batches. Update `docs/architecture.md` when a real boundary or target convention changes; update this plan's tracker only as work is completed.
+
+### 8.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 8.1** | Baseline structure and convention inventory | `[ ] PLANNED` | Record existing patterns and exceptions by feature; identify duplicated or misplaced responsibilities. |
+| **Step 8.2** | Agree on maintainable conventions | `[ ] PLANNED` | Document a concise source-of-truth convention set consistent with the target architecture and current code. |
+| **Step 8.3** | Normalize high-value inconsistencies | `[ ] PLANNED` | Refactor only justified duplication/boundary violations in small, reviewable batches; preserve behavior. |
+| **Step 8.4** | Validate each refactor batch | `[ ] PLANNED` | Format changed Dart files, run scoped tests/analyzer, then repository checks where feasible. |
+| **Step 8.5** | Architecture and change review | `[ ] PLANNED` | Confirm dependency direction, generated code handling, scope, and architecture docs are consistent. |
+
+### 8.3 Acceptance Criteria
+
+- New and modified code has clear, predictable placement and naming, following the conventions documented in the repository.
+- No business logic is moved into widgets, no storage/UI dependencies are introduced into domain types, and feature boundaries remain understandable.
+- Each structural refactor has regression protection appropriate to its behavior and passes the relevant checks.
+- Any intentionally retained legacy/transitional pattern is documented with its migration trigger; unrelated files are not reformatted or moved.
+
+---
+
+## 12. Phase 9: Test Coverage Expansion
+
+This phase adds behavior-focused regression tests where they provide the most risk reduction. Existing coverage includes core primitives, feature acceptance tests, widgets, analytics performance, and one end-to-end workout/portability journey. The next step is to map untested critical behavior and failure paths rather than pursue a raw line-coverage target.
+
+### 9.1 Coverage Strategy
+
+- First inventory current tests and uncovered high-risk behavior; retain the existing `flutter_test`, Mockito, in-memory Drift, and integration-test conventions.
+- Prioritize domain invariants and use-case/repository failure paths, persistence/migration boundaries, state transitions and recovery, user-visible loading/empty/error states, and cross-feature workflows.
+- Prefer deterministic tests with controlled clocks, in-memory databases, explicit fakes, and stable fixtures. Avoid tests coupled to private implementation details or timing sleeps.
+- Add widget tests for important interaction and accessibility semantics where they exercise behavior not already covered by feature acceptance tests.
+- Run the current suite before and after each batch; use coverage output as a diagnostic to find unexercised behavior, not as the sole completion criterion.
+
+### 9.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 9.1** | Build behavior-to-test inventory | `[ ] PLANNED` | Map core and feature acceptance criteria to existing test cases; record gaps and risk priority. |
+| **Step 9.2** | Expand domain and application tests | `[ ] PLANNED` | Cover remaining invariants, boundary values, invalid transitions, expected failures, and state emissions. |
+| **Step 9.3** | Expand repository and migration tests | `[ ] PLANNED` | Cover serialization roundtrips, persistence edge cases, transaction behavior, schema/document migration failures, and import conflicts. |
+| **Step 9.4** | Expand widget and integration tests | `[ ] PLANNED` | Cover critical screen states/navigation outcomes and meaningful cross-feature journeys beyond the existing happy path. |
+| **Step 9.5** | Review coverage and test reliability | `[ ] PLANNED` | Inspect uncovered critical branches, remove flaky assumptions, and record suite/check results without setting an arbitrary percentage gate. |
+
+### 9.3 Acceptance Criteria
+
+- Every documented critical domain rule and important user journey maps to at least one automated test or an explicitly recorded manual/release check.
+- High-risk error, empty, boundary, and recovery paths identified by the inventory have appropriate regression tests.
+- The full existing suite remains green, new tests are deterministic, and `scripts/check.ps1` passes; test-only performance/coverage reports do not become brittle timing gates.
+
+---
+
+## 13. Phase 10: Application Routing Migration
+
+Adopt `go_router` as the application routing package and move route configuration out of the root-level `routes.dart` into the target `lib/app/` boundary. This follows the explicit routing requirement and the existing target directory plan. Preserve current authentication launch behavior, screen transitions where supported, and route-local feature dependencies while replacing scattered route strings and ad hoc route construction with a centrally defined, testable route table. This phase changes the routing dependency and therefore updates `docs/architecture.md` when implemented.
+
+### 10.1 Routing Rules
+
+- Put the router configuration and route-level composition under `lib/app/`; keep feature screens and feature operations in their existing feature modules.
+- Define stable path constants/names and typed path/query/extra data as needed; avoid passing unvalidated loosely typed arguments when route state can be modeled explicitly.
+- Keep dialogs and local transient pushes on Flutter navigation when they are not application destinations; migrate only app-level destinations and navigation flows.
+- Preserve launch-to-authentication-to-home decisions, deep-link-safe initial destinations, back-stack semantics, unknown-route handling, and existing feature access.
+- Reuse app-level dependencies rather than constructing repositories and use cases ad hoc in route builders. Do not add a second routing abstraction alongside `go_router`.
+- Add `go_router` as a direct dependency, remove `page_transition` only if equivalent transitions are implemented without it, and remove `NavigationHelper`/named-route code after all call sites are migrated and verified.
+
+### 10.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 10.1** | Route inventory and behavior baseline | `[ ] PLANNED` | Record all destinations, direct pushes, replacement/clear-stack flows, auth gates, and route results/arguments. |
+| **Step 10.2** | Define app router and dependency composition | `[ ] PLANNED` | Create the `go_router` configuration under `lib/app/`, register current destinations, and centralize route dependencies. |
+| **Step 10.3** | Migrate top-level navigation callers | `[ ] PLANNED` | Migrate home, settings, launch/auth, and feature-hub destinations; preserve intended stack behavior. |
+| **Step 10.4** | Migrate feature destinations and typed route data | `[ ] PLANNED` | Migrate catalog, template, analytics, profile, goals, measurements, and backup/restore flows. |
+| **Step 10.5** | Add router and navigation regression tests | `[ ] PLANNED` | Verify destination resolution, auth launch decisions, not-found behavior, route data, and key back-stack flows. |
+| **Step 10.6** | Remove legacy routing and validate | `[ ] PLANNED` | Remove `AppRoutes`, `NavigationHelper`, `onGenerateRoute`, and obsolete dependency if unused; update architecture docs and run project checks. |
+
+### 10.3 Acceptance Criteria
+
+- Every application destination has one discoverable route definition in the app boundary, with route-level dependency setup using app composition.
+- Current launch/authentication flow, user-visible destinations, required results/data, and back behavior are covered by router/widget tests and remain functional.
+- `lib/routes.dart`, named application route calls, and the bespoke `NavigationHelper` are removed when no longer referenced; local dialog/modal navigation remains valid.
+- No duplicate routing system remains; analysis, formatting, targeted tests, and `scripts/check.ps1` pass, and `docs/architecture.md` describes the implemented router accurately.
+
+---
+
+## 14. Phase 11: Bloc and Framework State Management
+
+Consolidate application state management on the existing `flutter_bloc`/`bloc` packages and Flutter framework primitives. Remove third-party state-management packages such as `provider` once their state and dependency-composition uses have been migrated. This does not mean every local widget state needs a Cubit: use Flutter primitives such as `StatefulWidget`, `ValueNotifier`, and `InheritedWidget` for tightly scoped UI state or lightweight framework composition, and Bloc/Cubit for feature or application state with meaningful transitions.
+
+### 11.1 Migration Rules
+
+- Inventory `Provider`, `ChangeNotifierProvider`, `Consumer`, `context.read/watch`, and other state-management APIs separately from dependency injection/composition uses; the current `provider` package serves both roles.
+- Move durable/shared settings state and user-visible asynchronous state to focused Cubits/BLoCs with explicit states and operations. Keep transient form/dialog/animation state local to the widget when it does not need application-level ownership.
+- Prefer constructor injection and the app composition root for repositories, services, and use cases. Use framework-provided `InheritedWidget`/`Listenable` only when a small composition or listenable contract is clearer than a Bloc.
+- Do not replace Provider with a different third-party state framework or create a parallel custom global state system. Preserve lifecycle cleanup, persistence, notification integration, and testability during each migration.
+- Remove the `provider` dependency and its imports only when no state or composition call sites remain; keep `flutter_bloc`/`bloc` as the sole third-party state-management packages.
+
+### 11.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 11.1** | Inventory state and dependency composition | `[ ] PLANNED` | Categorize each Provider/ChangeNotifier use as app state, feature state, dependency injection, or local UI state. |
+| **Step 11.2** | Define state ownership conventions | `[ ] PLANNED` | Document Bloc versus Flutter-native state selection, lifecycle ownership, and app-level dependency composition. |
+| **Step 11.3** | Migrate settings and app-wide state | `[ ] PLANNED` | Migrate appearance/access preferences and notification-related state while preserving SharedPreferences and platform service boundaries. |
+| **Step 11.4** | Migrate remaining feature/composition call sites | `[ ] PLANNED` | Remove Provider usage incrementally; retain local framework state where it is appropriately scoped. |
+| **Step 11.5** | Add state migration regression tests | `[ ] PLANNED` | Cover state emissions, persistence, initialization, disposal, error handling, and key user-visible settings flows. |
+| **Step 11.6** | Remove dependency and verify | `[ ] PLANNED` | Remove `provider` from `pubspec.yaml` when unused; analyze imports and validate the app and test suite. |
+
+### 11.3 Acceptance Criteria
+
+- No third-party state-management package other than `flutter_bloc`/`bloc` remains; `provider` has no imports or direct dependency entry.
+- Application and feature state with meaningful shared transitions is owned by Cubits/BLoCs; strictly local UI state uses Flutter framework primitives without unnecessary Cubits.
+- Dependency construction is explicit and lifecycle-safe at the app boundary or through constructor injection; state is not used as a service locator.
+- Settings, authentication, notification, and feature behavior remain covered by tests, and the repository checks pass.
+
+---
+
+## 15. Phase 12: Responsive and Accessible Experience
+
+Adapt the existing screens for mobile phones, tablets, and laptop/desktop windows while making accessibility behavior consistent across those form factors. Use available width, height, and input capabilities to choose layouts; do not assume that a device category always has a fixed size or orientation. Preserve the current visual language and feature flows while improving constraints, navigation, keyboard use, and semantics.
+
+### 12.1 Experience Rules
+
+- Use constraint-driven breakpoints and reusable responsive layout components; avoid hard-coded device model checks and duplicated screen implementations.
+- Define supported layout classes for compact, medium, and expanded windows. On expanded layouts, use the extra space deliberately (for example, constrained content widths, adaptive navigation, or two-pane detail flows) rather than stretching phone layouts across the screen.
+- Verify portrait and landscape behavior, window resizing, text scaling, safe areas, scrolling, and dialogs/sheets at representative viewport sizes.
+- Support touch targets and gestures on mobile, keyboard navigation and focus traversal on laptop/desktop, and adaptive input affordances where mouse/keyboard are available.
+- Apply semantic labels/roles/order, visible focus, sufficient contrast, scalable text, and reduced-motion-aware transitions. Respect platform accessibility settings where Flutter exposes them.
+- Keep breakpoints and shared responsive primitives in the existing presentation/common or app theme boundary only when they are genuinely reused; avoid speculative design-system layers.
+
+### 12.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 12.1** | Audit current layouts and accessibility gaps | `[ ] PLANNED` | Review core journeys at mobile, tablet, and laptop widths; inventory overflow, contrast, semantics, focus, and text scaling issues. |
+| **Step 12.2** | Define responsive layout and navigation rules | `[ ] PLANNED` | Set tested compact/medium/expanded constraints and adaptive navigation behavior consistent with the design language. |
+| **Step 12.3** | Add reusable adaptive layout primitives | `[ ] PLANNED` | Implement only the shared layout patterns justified by multiple screens, with predictable resizing behavior. |
+| **Step 12.4** | Adapt high-priority application journeys | `[ ] PLANNED` | Cover launch/auth, home, active workout, catalog/template, analytics, profile, and backup/restore experiences. |
+| **Step 12.5** | Improve keyboard, semantics, contrast, and scaling | `[ ] PLANNED` | Verify focus order, screen-reader descriptions, contrast, touch targets, text scaling, and reduced-motion behavior. |
+| **Step 12.6** | Add viewport/accessibility regression checks | `[ ] PLANNED` | Add representative widget tests for compact/expanded sizes, resize/overflow, semantics, and key keyboard interactions; document manual device checks. |
+
+### 12.3 Acceptance Criteria
+
+- Core journeys render without overflow or clipped actions at representative phone, tablet, and laptop viewport sizes, including resized windows and large text.
+- Expanded layouts use available space intentionally while compact layouts preserve usable controls and clear navigation.
+- Important actions are reachable by touch and keyboard, expose meaningful semantics and focus, and meet the repository's contrast/accessibility criteria.
+- Automated widget checks cover responsive states and documented manual checks cover platform/device behavior that cannot be reliably automated; `scripts/check.ps1` passes.
+
+---
+
+## 16. Phase 13: Comprehensive Exercise Catalog
+
+Expand the existing catalog seed data into a broad, balanced, searchable exercise library that exercises the taxonomy and measurement model already implemented. The deliverable is a high-quality maintained catalog with verified classifications, equipment, instructions, and metrics, rather than an uncurated maximum-count list. Preserve custom user-created exercises and the current idempotent catalog seeding behavior.
+
+### 13.1 Catalog Coverage and Data Rules
+
+- Build a coverage matrix across movement patterns, body regions, primary/secondary muscle groups, equipment, and supported measurement profiles; identify meaningful combinations currently missing from seed data.
+- Include varied exercise families where supported by the current domain: compound and isolation strength, bodyweight, barbell/dumbbell/kettlebell, cable, machine, bands, conditioning/cardio, mobility, and power/plyometric movements. Do not force categories the domain cannot represent; record any model changes as a separate justified design decision.
+- Provide consistent names, concise execution instructions, setup/safety cues where appropriate, aliases/search terms, equipment requirements, classification, and measurement fields required by the existing execution model.
+- Review classification and metric values for consistency, duplicate entries, unsuitable measurements, and invalid relationships. Add alternatives/regressions/progressions only when the relationship is meaningful and valid.
+- Keep seed data versioned, deterministic, and offline-first. Seeding must remain idempotent, must not overwrite user edits or custom exercises, and must define how newly added/updated system entries are reconciled on an existing installation.
+- Track data provenance and licensing for any externally sourced descriptions or media; use original/appropriately licensed text and do not add images or network dependencies without a separate requirement.
+
+### 13.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 13.1** | Audit current seed library and taxonomy | `[ ] PLANNED` | Count and classify current seeded exercises; identify supported taxonomy gaps and duplicate/weak records. |
+| **Step 13.2** | Define coverage matrix and metadata standard | `[ ] PLANNED` | Establish category coverage, required fields, naming/search conventions, and provenance rules. |
+| **Step 13.3** | Curate and validate exercise entries | `[ ] PLANNED` | Add balanced exercise families with consistent instructions, classifications, equipment, metrics, and valid relationships. |
+| **Step 13.4** | Reconcile versioned seed data safely | `[ ] PLANNED` | Ensure repeat seeding and upgrades add/update system-owned records without overwriting custom or user-modified data. |
+| **Step 13.5** | Add catalog quality and seeding tests | `[ ] PLANNED` | Verify taxonomy coverage, uniqueness, serialization, filter/search behavior, relationship integrity, and idempotent upgrade behavior. |
+| **Step 13.6** | Review catalog usability and documentation | `[ ] PLANNED` | Confirm catalog browsing/filtering remains usable and document coverage, provenance, and known taxonomy limitations. |
+
+### 13.3 Acceptance Criteria
+
+- The maintained catalog has a reviewed coverage matrix spanning each supported movement pattern, body region, equipment family, and measurement profile, with gaps explicitly justified.
+- Every seeded record passes validation for unique stable identity, required fields, valid classifications/metrics, and any referenced exercise relationships.
+- Seeding is repeatable and upgrade-safe, preserving user-created exercises and user edits while making new system entries available offline.
+- Search/filter and catalog detail behavior remain usable with the larger dataset; automated tests cover seed integrity, filters, and upgrade safety.
+
+---
+
+## 17. Phase 14: Secure Local Authentication
+
+Complete the existing local authentication flow with platform biometrics (including fingerprint where supported) and a PIN fallback. At setup and app launch/resume, check the device's actual biometric and secure-lock capabilities. When biometrics are unavailable or not enrolled, offer PIN setup and use PIN authentication; when a biometric attempt is cancelled or fails, keep an explicit PIN fallback available. Authentication must remain local and must not block access to recovery of the configured credential.
+
+### 14.1 Authentication Rules
+
+- Use the platform authentication prompt through `local_auth`; check biometric availability/type and device support, not only the presence of a biometric sensor. Distinguish unsupported, not enrolled, temporarily unavailable, cancelled, and failed outcomes for clear UI fallback.
+- Keep biometric templates and device credentials with the operating system. The app stores no biometric data and does not implement its own fingerprint matching.
+- Never persist a raw PIN. Store a salted verifier using a suitable password-based derivation approach and secure storage; do not log PINs or authentication secrets. Define a minimum PIN policy and failed-attempt throttling/lockout behavior that does not create an unrecoverable local account.
+- Provide a PIN route when biometric authentication is absent, unsupported, opted out, cancelled, or unavailable. Biometric failure must not silently authenticate or permanently prevent the user from selecting PIN.
+- Apply the lock policy consistently at cold launch and configured resume points, preserve secure navigation/back-stack behavior, and avoid exposing protected screens while authentication is pending.
+- Provide an explicit way to change/reset local authentication settings with re-authentication or a clear local recovery policy. Explain that local app lock is a device-level privacy feature, not a remote account or cloud identity.
+
+### 14.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 14.1** | Audit platform capability and current auth flows | `[ ] PLANNED` | Verify biometric types, device credential support, secure storage behavior, launch/resume routes, and supported platform differences. |
+| **Step 14.2** | Define auth policy and fallback states | `[ ] PLANNED` | Specify PIN setup/validation, biometric opt-in, cancellation/failure fallback, lock timing, retry limits, and reset behavior. |
+| **Step 14.3** | Harden PIN storage and validation | `[ ] PLANNED` | Replace raw PIN comparison/storage with a salted verifier, secure storage, input validation, and bounded failed-attempt handling. |
+| **Step 14.4** | Complete biometric and PIN flows | `[ ] PLANNED` | Wire setup, capability checks, launch/resume gate, explicit fallback, settings, and correct route-stack behavior. |
+| **Step 14.5** | Add authentication regression tests | `[ ] PLANNED` | Cover supported/unavailable/not-enrolled/cancelled/failed biometrics, PIN success/failure/throttling, and protected-route gating with platform fakes. |
+| **Step 14.6** | Validate platform behavior and document limits | `[ ] PLANNED` | Run supported-device checks, permission/platform configuration review, security review, and project validation. |
+
+### 14.3 Acceptance Criteria
+
+- Biometric authentication is offered only when the platform reports it usable; PIN remains available when biometric authentication is absent or unsuccessful.
+- The PIN is never stored or logged in raw form; secure storage, verifier comparison, retry throttling, and reset behavior have tests and documented policy.
+- Protected routes remain inaccessible until authentication succeeds, while users can recover from biometric cancellation/failure through the PIN path.
+- Tests cover expected platform capability and failure outcomes, and target-device checks verify system prompts and lifecycle behavior on supported platforms.
+
+---
+
+## 18. Phase 15: Progress Sounds and Notifications
+
+Finish the existing notification service and add opt-in, low-noise sound and local notification experiences that help users understand workout progress and stay motivated. Use session and analytics state as the source of truth. Keep essential status visible in the app, allow quiet operation, and avoid making permissions, sound, or notification delivery necessary for workout completion.
+
+### 15.1 Product and Platform Rules
+
+- Separate immediate in-workout audio cues from scheduled/background local notifications. Cues may report rest completion, set/session milestones, or user-configured progress; notifications may summarize meaningful progress or a chosen training reminder.
+- Make sound, vibration, notification categories, quiet hours, reminder schedule, and motivational messaging configurable. Respect OS notification permissions and system sound/Do Not Disturb settings; do not repeatedly prompt after denial.
+- Keep messages truthful, concise, privacy-aware on lock screens, and based on persisted session/analytics state. Avoid shame, pressure, excessive frequency, duplicate milestones, or notifications for every logged set by default.
+- Request notification permission contextually, explain its value first, and keep the core app usable when permission is denied. Provide a preview/test action and a clear disable-all control.
+- Use stable notification identifiers and cancel/reschedule when preferences change, reminders are disabled, or a workout is completed. Handle timezone and daylight-saving changes for scheduled reminders.
+- Keep audio assets small, licensed, bundled/offline where possible, and provide a silent option. Accessibility must not depend on hearing the sound; pair cues with visual/semantic feedback and haptics where supported.
+
+### 15.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 15.1** | Audit notification service and progress events | `[ ] PLANNED` | Map session lifecycle, rest completion, goal progress, analytics milestones, current settings, permissions, and platform plugin support. |
+| **Step 15.2** | Define motivation and notification preferences | `[ ] PLANNED` | Define opt-in categories, cadence/quiet hours, privacy-safe lock-screen text, sound controls, and suppression rules. |
+| **Step 15.3** | Implement in-workout sound and status cues | `[ ] PLANNED` | Add configurable milestone/rest cues with silent fallback, lifecycle-safe audio handling, and visual/semantic equivalents. |
+| **Step 15.4** | Complete local notifications and scheduling | `[ ] PLANNED` | Initialize platform plugins, request permissions contextually, schedule/cancel reminders, and handle timezone and preference updates. |
+| **Step 15.5** | Add progress summaries and deduplication | `[ ] PLANNED` | Create accurate opt-in summaries from persisted progress; prevent duplicate, stale, or excessive notifications. |
+| **Step 15.6** | Add service, preference, and platform tests | `[ ] PLANNED` | Test scheduling, permission denial, time changes, sound-off behavior, cancellation, deduplication, privacy text, and event-to-message mapping. |
+
+### 15.3 Acceptance Criteria
+
+- Users can configure sound and notification behavior independently, preview cues, choose quiet periods, and disable all optional alerts.
+- Rest/session feedback remains understandable without sound or notification permission; notification denial does not impair workout flows.
+- Notifications reflect persisted progress, respect frequency/privacy preferences, and are cancelled or updated when stale.
+- Service logic and settings have deterministic tests, with device checks for sound, permissions, scheduling, and lifecycle behavior on supported platforms.
+
+---
+
+## 19. Phase 16: GitHub Actions Build Improvements
+
+Review and improve CI and release automation using the repository's existing scripts as the source of truth. The current workflows duplicate check commands, pin different Flutter versions (`3.29.1` for pull requests and `3.38.4` for releases) below the project's declared Flutter minimum (`>=3.44.0`), limit pull request checks to `main`, and maintain separate release build/artifact upload logic. The target is consistent, secure, reproducible checks and clear release artifacts across supported platforms.
+
+### 16.1 CI/CD Rules
+
+- Align Flutter/Dart versions with `pubspec.yaml` and local scripts, preferably through one documented version source; avoid silently testing with an older SDK than the project requires.
+- Reuse `scripts/check` (or its documented equivalent) for analysis, format verification, and tests so local and CI behavior agree. Run code generation only when required and fail if generated source is stale rather than rewriting files invisibly.
+- Run checks for pull requests and relevant branch pushes, including forks where safe. Never expose release-signing secrets to untrusted PR code. Use concurrency cancellation for superseded checks when it does not interrupt a release.
+- Separate fast validation from platform builds where that improves feedback. Use a deliberate matrix for supported targets and install only platform build prerequisites in the corresponding jobs.
+- Minimize workflow and job token permissions; pin third-party actions to immutable commit SHAs where repository policy permits and document the update mechanism. Keep caches scoped and treat them as performance aids, not correctness inputs.
+- Make release builds tag-driven and reproducible, upload artifacts with explicit names/retention, validate artifact existence, and publish a release only after all required builds succeed. Keep signing secrets out of non-release jobs and avoid deprecated release steps.
+- Document supported build targets, required secrets, versioning/tag conventions, and how to reproduce failures locally. Do not add deployment or publishing targets beyond the project's stated release needs.
+
+### 16.2 Execution Status
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 16.1** | Inventory workflows, scripts, targets, and secrets | `[ ] PLANNED` | Map triggers, Flutter/JDK versions, platform dependencies, release permissions, signing secrets, artifacts, and duplicated commands. |
+| **Step 16.2** | Define CI version and validation source of truth | `[ ] PLANNED` | Align SDK/tooling with `pubspec.yaml`; route CI checks through the same validation scripts used locally. |
+| **Step 16.3** | Improve pull request validation | `[ ] PLANNED` | Add appropriate branch/push coverage, safe fork behavior, concurrency, caching, least-privilege permissions, and clear job summaries. |
+| **Step 16.4** | Refactor platform release builds and artifacts | `[ ] PLANNED` | Simplify the build matrix, separate secret-free builds from signing, verify artifact names/paths, and publish only after all required jobs pass. |
+| **Step 16.5** | Harden actions, secrets, and maintenance | `[ ] PLANNED` | Review action pinning/update policy, secret exposure, release token scope, and replacement of deprecated release actions. |
+| **Step 16.6** | Validate and document CI behavior | `[ ] PLANNED` | Validate workflow syntax and build/check commands, document local reproduction and release requirements, and review action permissions/security. |
+
+### 16.3 Acceptance Criteria
+
+- Pull request checks use the project-supported Flutter version and the same core validation commands developers run locally.
+- Release builds cover the declared supported platforms, preserve signing secrets for trusted release jobs only, and publish complete artifacts only after required builds pass.
+- Workflow permissions are minimal, action versions have a maintainable pin/update policy, and caches do not hide failed or stale validation.
+- Workflow changes are syntax-validated and documented, and local scripts can reproduce the checks needed to diagnose CI failures.

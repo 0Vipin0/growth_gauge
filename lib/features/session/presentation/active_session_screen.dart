@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
@@ -97,8 +98,17 @@ class _ActiveSessionScreenState()
     )) {
       if (!_finishingRestIds.add(rest.id)) continue;
       _apply(
-        () => widget.useCases.finishRest(_session.id, restIntervalId: rest.id),
-      ).whenComplete(() => _finishingRestIds.remove(rest.id));
+            () => widget.useCases.finishRest(
+              _session.id,
+              restIntervalId: rest.id,
+            ),
+          )
+          .then((result) {
+            if (result?.isSuccess == true) {
+              unawaited(HapticFeedback.mediumImpact());
+            }
+          })
+          .whenComplete(() => _finishingRestIds.remove(rest.id));
     }
   }
 
@@ -448,36 +458,47 @@ class _ActiveSessionScreenState()
       appBar: AppBar(
         title: Text(_session.templateName),
         actions: [
-          TextButton(
-            onPressed: _busy
-                ? null
-                : () => _apply(
-                    () => paused
-                        ? widget.useCases.resume(_session.id)
-                        : widget.useCases.pause(_session.id),
-                  ),
-            child: Text(paused ? 'Resume' : 'Pause'),
+          Semantics(
+            button: true,
+            label: paused ? 'Resume workout' : 'Pause workout',
+            child: TextButton(
+              onPressed: _busy
+                  ? null
+                  : () => _apply(
+                      () => paused
+                          ? widget.useCases.resume(_session.id)
+                          : widget.useCases.pause(_session.id),
+                    ),
+              child: Text(paused ? 'Resume' : 'Pause'),
+            ),
           ),
         ],
       ),
       body: Column(
         children: [
-          Material(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _Metric(
-                    label: 'Active',
-                    value: _duration(_session.elapsedActiveSecondsAt(_now)),
-                  ),
-                  _Metric(
-                    label: 'Elapsed',
-                    value: _duration(_session.elapsedWallClockSecondsAt(_now)),
-                  ),
-                ],
+          Semantics(
+            liveRegion: true,
+            label:
+                'Workout time. Active ${_duration(_session.elapsedActiveSecondsAt(_now))}, elapsed ${_duration(_session.elapsedWallClockSecondsAt(_now))}',
+            child: Material(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _Metric(
+                      label: 'Active',
+                      value: _duration(_session.elapsedActiveSecondsAt(_now)),
+                    ),
+                    _Metric(
+                      label: 'Elapsed',
+                      value: _duration(
+                        _session.elapsedWallClockSecondsAt(_now),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -532,8 +553,13 @@ class _ActiveSessionScreenState()
                     ),
                     child: ListTile(
                       leading: const Icon(Icons.hourglass_top),
-                      title: Text(
-                        'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}',
+                      title: Semantics(
+                        liveRegion: true,
+                        label:
+                            'Rest timer ${_duration(_now.difference(rest.startedAt).inSeconds)} of ${_duration(rest.plannedDurationSeconds)}',
+                        child: Text(
+                          'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}',
+                        ),
                       ),
                       subtitle: Text(
                         'Target ${_duration(rest.plannedDurationSeconds)}',
@@ -575,24 +601,30 @@ class _ActiveSessionScreenState()
                                     ),
                               child: const Text('Skip'),
                             ),
-                          FilledButton(
-                            onPressed:
-                                _busy ||
-                                    _now.difference(rest.startedAt).inSeconds <
-                                        rest.minimumDurationSeconds ||
-                                    (!rest.allowSkip &&
-                                        _now
-                                                .difference(rest.startedAt)
-                                                .inSeconds <
-                                            rest.plannedDurationSeconds)
-                                ? null
-                                : () => _apply(
-                                    () => widget.useCases.finishRest(
-                                      _session.id,
-                                      restIntervalId: rest.id,
+                          Semantics(
+                            button: true,
+                            label: 'Finish rest interval',
+                            child: FilledButton(
+                              onPressed:
+                                  _busy ||
+                                      _now
+                                              .difference(rest.startedAt)
+                                              .inSeconds <
+                                          rest.minimumDurationSeconds ||
+                                      (!rest.allowSkip &&
+                                          _now
+                                                  .difference(rest.startedAt)
+                                                  .inSeconds <
+                                              rest.plannedDurationSeconds)
+                                  ? null
+                                  : () => _apply(
+                                      () => widget.useCases.finishRest(
+                                        _session.id,
+                                        restIntervalId: rest.id,
+                                      ),
                                     ),
-                                  ),
-                            child: const Text('Done'),
+                              child: const Text('Done'),
+                            ),
                           ),
                         ],
                       ),
@@ -605,10 +637,14 @@ class _ActiveSessionScreenState()
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.all(16),
-        child: FilledButton.icon(
-          onPressed: _busy || paused ? null : _complete,
-          icon: const Icon(Icons.check),
-          label: const Text('Complete workout'),
+        child: Semantics(
+          button: true,
+          label: 'Complete workout',
+          child: FilledButton.icon(
+            onPressed: _busy || paused ? null : _complete,
+            icon: const Icon(Icons.check),
+            label: const Text('Complete workout'),
+          ),
         ),
       ),
     );

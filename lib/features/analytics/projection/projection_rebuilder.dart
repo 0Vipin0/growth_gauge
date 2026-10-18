@@ -1,3 +1,4 @@
+import '../../../core/concurrency/isolate_runner.dart';
 import '../../../core/database/app_database.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -12,7 +13,10 @@ class ProjectionRebuilder({
   required final AppDatabase _db,
   required final IWorkoutSessionRepository _sessionRepo,
   required final AnalyticsProjector _projector,
+  final IsolateRunner isolateRunner = const IsolateRunner(),
 }) {
+  final IsolateRunner _isolateRunner = isolateRunner;
+
   /// Clears all five analytics tables and re-projects all completed sessions.
   ///
   /// Returns the number of sessions projected.
@@ -30,20 +34,34 @@ class ProjectionRebuilder({
     final allResult = await _sessionRepo.listAll();
     if (allResult.isError) return 0;
 
-    final completed =
-        allResult.dataOrNull!
-            .where((s) => s.status == SessionStatus.completed)
-            .toList()
-          ..sort((a, b) {
-            final aTime = a.completedAt ?? a.createdAt;
-            final bTime = b.completedAt ?? b.createdAt;
-            return aTime.compareTo(bTime);
-          });
+    final sessions = allResult.dataOrNull!;
+    final sortInputs = sessions
+        .map(
+          (session) => (
+            session.id,
+            session.status.name,
+            (session.completedAt ?? session.createdAt).toIso8601String(),
+          ),
+        )
+        .toList(growable: false);
+    final orderedIds = await _isolateRunner.run(
+      _orderCompletedSessionIds,
+      sortInputs,
+    );
+    final byId = {for (final session in sessions) session.id: session};
 
-    for (final session in completed) {
-      await _projector.project(session);
+    for (final id in orderedIds) {
+      final session = byId[id];
+      if (session != null) await _projector.project(session);
     }
 
-    return completed.length;
+    return orderedIds.length;
   }
+}
+
+List<String> _orderCompletedSessionIds(List<(String, String, String)> inputs) {
+  final completed =
+      inputs.where((entry) => entry.$2 == SessionStatus.completed.name).toList()
+        ..sort((a, b) => a.$3.compareTo(b.$3));
+  return completed.map((entry) => entry.$1).toList();
 }

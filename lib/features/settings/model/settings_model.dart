@@ -13,17 +13,6 @@ part 'settings_model.g.dart';
 
 enum ExportFormat { json, csv }
 
-extension ExportFormatExtension on ExportFormat {
-  String getLabel() {
-    switch (this) {
-      case ExportFormat.json:
-        return 'JSON';
-      case ExportFormat.csv:
-        return 'CSV';
-    }
-  }
-}
-
 enum AuthenticationType { none, pin, biometric }
 
 extension AuthenticationTypeExtension on AuthenticationType {

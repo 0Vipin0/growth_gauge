@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/fitness_theme.dart';
 import 'config/config.dart';
 
 class AppTheme({
@@ -7,19 +8,18 @@ class AppTheme({
   required final AppFontTheme fontTheme,
 }) {
   ThemeData getThemeData() {
-    final appColorTheme = appColorThemes.firstWhere(
-      (theme) => theme.name == themeName,
-    );
-    return ThemeData(
-      useMaterial3: true,
-      brightness: appColorTheme.colorScheme.brightness,
-      colorScheme: appColorTheme.colorScheme,
-      textTheme: fontTheme.textTheme.apply(
-        bodyColor: appColorTheme.colorScheme.onSurface,
-        displayColor: appColorTheme.colorScheme.onSurface,
-      ),
-      scaffoldBackgroundColor: appColorTheme.colorScheme.surface,
-      canvasColor: appColorTheme.colorScheme.surface,
-    );
+    final dark = themeName.name.startsWith('dark');
+    final contrastLevel = themeName.name.endsWith('HighContrast')
+        ? 1.0
+        : themeName.name.endsWith('MediumContrast')
+        ? 0.5
+        : 0.0;
+    final textTheme = fontTheme.textTheme;
+    return dark
+        ? FitnessTheme.dark(textTheme: textTheme, contrastLevel: contrastLevel)
+        : FitnessTheme.light(
+            textTheme: textTheme,
+            contrastLevel: contrastLevel,
+          );
   }
 }

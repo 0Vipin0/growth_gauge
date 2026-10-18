@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:growth_gauge/core/database/app_database.dart';
@@ -290,6 +293,63 @@ void main() {
 
       expect(summariesAfter.length, summariesBefore.length);
       expect(prsAfter.length, prsBefore.length);
+    });
+
+    test('rebuildAll handles 1,000 completed sessions under event-loop load', () async {
+      final documents = List.generate(1000, (index) {
+        final completedAt = baseTime.add(Duration(minutes: index));
+        final session = buildTestSession(
+          id: 'session-profile-${index.toString().padLeft(4, '0')}',
+          userId: 'user-profile',
+          completedAt: completedAt,
+          squatWeight: 80 + (index % 80).toDouble(),
+          squatReps: 3 + index % 8,
+        );
+        return DocumentsCompanion.insert(
+          collection: 'workout_sessions',
+          id: session.id,
+          jsonData: jsonEncode(session.toJson()),
+          createdAt: session.createdAt,
+          updatedAt: completedAt,
+        );
+      });
+      await db.batch((batch) {
+        batch.insertAll(db.documents, documents);
+      });
+
+      var pulseCount = 0;
+      var longestPulseGap = Duration.zero;
+      final previousPulse = Stopwatch()..start();
+      final pulseTimer = Timer.periodic(const Duration(milliseconds: 16), (_) {
+        final gap = previousPulse.elapsed;
+        if (gap > longestPulseGap) longestPulseGap = gap;
+        previousPulse
+          ..reset()
+          ..start();
+        pulseCount++;
+      });
+      final stopwatch = Stopwatch()..start();
+      late final int rebuiltCount;
+      try {
+        rebuiltCount = await rebuilder.rebuildAll();
+      } finally {
+        stopwatch.stop();
+        pulseTimer.cancel();
+      }
+
+      final summaries = await db.select(db.dailyWorkoutSummaries).get();
+      final metrics = await db.select(db.exerciseSetMetrics).get();
+      expect(rebuiltCount, 1000);
+      expect(summaries, hasLength(1000));
+      expect(metrics, hasLength(2000));
+      expect(pulseCount, greaterThan(0));
+
+      // ignore: avoid_print
+      print(
+        'Analytics rebuild: 1,000 sessions in '
+        '${stopwatch.elapsedMilliseconds} ms; event-loop pulses: $pulseCount; '
+        'longest pulse gap: ${longestPulseGap.inMilliseconds} ms.',
+      );
     });
   });
 }
