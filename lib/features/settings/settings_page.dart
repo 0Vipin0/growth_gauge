@@ -166,6 +166,15 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                 ),
                 const Divider(),
                 ListTile(
+                  title: const Text('Backup and Restore'),
+                  subtitle: const Text(
+                    'Export or restore your Growth Gauge data',
+                  ),
+                  trailing: const Icon(Icons.backup_outlined),
+                  onTap: () =>
+                      Navigator.of(context).pushNamed('/backup_restore'),
+                ),
+                ListTile(
                   title: const Text('Export Data'),
                   trailing: settingsProvider.isExporting
                       ? const CircularProgressIndicator()

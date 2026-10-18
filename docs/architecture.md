@@ -28,7 +28,7 @@ lib/
     ├── template/                # Workout definitions and immutable revisions
     ├── session/                 # Live workout, recovery and audit history
     ├── analytics/               # Projections, queries and visualizations
-    ├── portability/             # Versioned backup/restore and conflict handling (planned)
+    ├── portability/             # Versioned backup/restore, migrations and conflict handling
     ├── settings/                # Rewritten app/user configuration (planned)
     ├── notification/            # Rewritten notification scheduling/preferences (planned)
     └── authentication/          # Rewritten local authentication (planned)
@@ -76,11 +76,11 @@ Authentication, notification and settings are planned rewrites. Keep authenticat
 - Session lifecycle, rest intervals, interruptions, recovery and append-only audit history are explicit domain concepts.
 - Persist session changes so interrupted workouts can be recovered after restart.
 - Analytics are projections, not the editing source of truth.
-- Portability is planned as versioned export/import with validation, sequential migrations, explicit conflict policy and analytics rebuild after import.
+- Portability uses a versioned JSON envelope with SHA-256 validation, sequential migrations, typed document validation, explicit conflict policy, atomic document writes and analytics rebuild after session imports.
 
 ## Dependencies and code generation
 
-Use dependencies already selected by the plan and present in the project: `flutter_bloc`/`bloc`, Drift, Freezed/JSON serialization, and `fl_chart` for visualizations. The plan also describes file picker and path provider for portability and isolate work for expensive tasks. Do not add dependencies just because they appear in a proposal; confirm the target feature needs them and check `pubspec.yaml`/lockfile. Avoid retaining dependencies used only by deprecated counter/timer code after that legacy cleanup is performed.
+Use dependencies already selected by the plan and present in the project: `flutter_bloc`/`bloc`, Drift, Freezed/JSON serialization, and `fl_chart` for visualizations. Portability uses `file_picker` for JSON file access and `crypto` for checksums. The plan also describes path provider and isolate work for future features. Do not add dependencies just because they appear in a proposal; confirm the target feature needs them and check `pubspec.yaml`/lockfile. Avoid retaining dependencies used only by deprecated counter/timer code after that legacy cleanup is performed.
 
 Edit source declarations, not generated files. Drift, Freezed, JSON serialization and Mockito artifacts are generated with `build_runner`; use `./scripts/generate.ps1` on PowerShell or the documented equivalent.
 

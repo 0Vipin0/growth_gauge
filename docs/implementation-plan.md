@@ -91,7 +91,7 @@ flowchart TD
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[x] COMPLETED` | 8 | 8 |
 | **Phase 4** | Materialized Analytics & Drift Projections | `[x] COMPLETED` | 7 | 7 |
 | **Phase 5** | User Profile, Goals & Physical Measurements | `[x] COMPLETED` | 4 | 4 |
-| **Phase 6** | Portability Engine, Export/Import & Migrations | `[ ] NOT STARTED` | 0 | 5 |
+| **Phase 6** | Portability Engine, Export/Import & Migrations | `[x] COMPLETED` | 5 | 5 |
 | **Phase 7** | Hardening, Polish & Legacy Cleanup | `[ ] NOT STARTED` | 0 | 4 |
 
 ---
@@ -575,7 +575,7 @@ Export File (.json)
 ```
 
 1. **Versioned External Contract (Section 32 & Rule 4):**
-   - Export schema follows the envelope defined in [`design/Persona_Worked_Example.json`](file:///h:/Apps/growth_gauge/design/Persona_Worked_Example.json):
+   - Export schema follows the envelope defined by the reference fixture [`docs/persona-worked-xample.json`](persona-worked-xample.json). The fixture's `sha256:example-only` value is illustrative and is recomputed when testing import:
      ```json
      {
        "manifest": {
@@ -607,7 +607,7 @@ Export File (.json)
      - `OVERWRITE`: Replaces local document with incoming payload.
      - `DUPLICATE_WITH_NEW_ID`: Generates fresh UUIDs and updates all internal references.
 5. **Post-Import Analytics Rebuild:**
-   - Every successful import automatically executes `RebuildAnalyticsUseCase` inside a background isolate to materialize fresh read models.
+   - Imports that add or replace workout sessions trigger `ProjectionRebuilder.rebuildAll()` after the authoritative documents commit. This uses the existing synchronous projection implementation; isolate offloading remains a Phase 7 performance item.
 
 ---
 
@@ -618,7 +618,7 @@ lib/
 └── features/
     └── portability/
         ├── domain/
-        │   ├── export_manifest.dart           # Freezed Manifest model (version, checksum, flags)
+        │   ├── export_manifest.dart           # Manifest model (version, checksum, flags)
         │   ├── export_envelope.dart           # Top-level JSON archive structure
         │   ├── import_report.dart             # Statistics of imported vs conflicted items
         │   └── conflict_strategy.dart         # ConflictResolutionStrategy enum
@@ -637,7 +637,7 @@ lib/
         │   └── checksum_validator.dart        # Crypto SHA-256 verification
         │
         ├── infrastructure/
-        │   └── file_storage_service.dart      # File picker & path_provider integration
+        │   └── file_storage_service.dart      # File picker based JSON read/write
         │
         └── presentation/
             ├── screens/
@@ -652,10 +652,12 @@ lib/
 
 | Component | Test Case | Success Criteria |
 |---|---|---|
-| **Export Validity** | Schema conformance | Exported JSON strictly adheres to the format in `design/Persona_Worked_Example.json`. |
-| **Checksum Verification** | Tamper detection | Modifying 1 byte of the JSON payload causes `ChecksumValidator` to reject import with `ValidationFailure`. |
-| **Fixture Ingestion** | Ingestion of reference fixture | Importing `Persona_Worked_Example.json` succeeds completely with 0 errors; all users, exercises, templates, sessions, and analytics materialize. |
+| **Export Validity** | Schema conformance | Exported JSON contains the version 3 manifest and all declared payload arrays; checksum matches the serialized payload. |
+| **Checksum Verification** | Tamper detection | Modifying the JSON payload causes `ChecksumValidator` to reject import with `FormatException` before any documents are written. |
+| **Fixture Ingestion** | Ingestion of reference fixture | Importing `docs/persona-worked-xample.json` succeeds after recomputing its illustrative checksum; records are normalized and typed before the atomic write. Session imports invoke the analytics rebuild callback. |
 | **Conflict Resolution** | `DUPLICATE_WITH_NEW_ID` check | Importing an existing routine with duplicate strategy produces an independent routine with remapped block/set IDs. |
+
+**Implemented:** Export, SHA-256 validation, chained v1→v2→v3 migration, typed payload validation, Drift transaction import, keep/overwrite/duplicate conflict strategies, reference-fixture normalization, file picker UI, and analytics rebuild wiring. Focused coverage lives in `test/features/portability/portability_test.dart`. The fixture test recalculates its placeholder checksum; unmodified placeholder fixtures are rejected as designed. Analytics rebuilding occurs after document commit, so a projection failure does not roll back the imported source documents.
 
 ---
 

@@ -7,4 +7,5 @@ cd "$project_root"
 
 flutter analyze --fatal-infos --fatal-warnings
 dart format --output=none --set-exit-if-changed .
-flutter test
+# Keep the performance benchmark isolated from concurrent test workloads.
+flutter test --concurrency=1

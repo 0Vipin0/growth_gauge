@@ -5,7 +5,7 @@ Run the `.ps1` files in PowerShell or the `.sh` files in Bash. They locate the p
 | Script | Purpose |
 |---|---|
 | `./scripts/setup.ps1` | Fetch Flutter dependencies. |
-| `./scripts/check.ps1` | Run the same analysis, formatting, and test checks used by pull request CI. |
+| `./scripts/check.ps1` | Run analysis and format checks, then run tests serially so timing benchmarks are not affected by concurrent test files. |
 | `./scripts/generate.ps1` | Regenerate Freezed, JSON serialization, and Drift code. |
 | `./scripts/run.ps1` | Run the app; forward optional Flutter arguments such as `-d windows`. |
 | `./scripts/build.ps1 windows` | Build for a target platform (`apk`, `appbundle`, `web`, `windows`, `linux`, or `macos`). |

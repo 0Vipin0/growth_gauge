@@ -9,8 +9,10 @@ import 'package:provider/provider.dart';
 import 'core/database/app_database.dart';
 import 'features/analytics/application/analytics_cubit.dart';
 import 'features/analytics/application/analytics_queries.dart';
+import 'features/analytics/domain/pr_calculator.dart';
 import 'features/analytics/infrastructure/analytics_dao.dart';
 import 'features/analytics/presentation/screens/analytics_dashboard_screen.dart';
+import 'features/analytics/projection/analytics_projector.dart';
 import 'features/analytics/projection/projection_rebuilder.dart';
 import 'features/authentication/authentication.dart';
 import 'features/catalog/application/catalog_use_cases.dart';
@@ -18,6 +20,14 @@ import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/catalog/presentation/catalog_screen.dart';
 import 'features/home/home.dart';
 import 'features/onboarding/onboarding.dart';
+import 'features/portability/application/export_data_use_case.dart';
+import 'features/portability/application/import_data_use_case.dart';
+import 'features/portability/application/portability_cubit.dart';
+import 'features/portability/infrastructure/file_storage_service.dart';
+import 'features/portability/migration/migration_registry.dart';
+import 'features/portability/migration/steps/migration_v1_to_v2.dart';
+import 'features/portability/migration/steps/migration_v2_to_v3.dart';
+import 'features/portability/presentation/screens/backup_restore_screen.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
 import 'features/splash/splash.dart';
@@ -45,12 +55,43 @@ mixin AppRoutes {
   static const String profile = '/profile';
   static const String goals = '/goals';
   static const String measurements = '/measurements';
+  static const String backupRestore = '/backup_restore';
 
   static final Map<String, Widget Function(BuildContext)> _routes = {
     splash: (_) => const SplashScreen(),
     onboarding: (_) => const OnboardingScreen(),
     home: (_) => const HomePage(),
     settings: (_) => const SettingsPage(),
+    backupRestore: (context) {
+      final database = Provider.of<AppDatabase>(context, listen: false);
+      final sessions = WorkoutSessionRepository(database);
+      final projector = AnalyticsProjector(
+        db: database,
+        prCalculator: const PRCalculator(),
+        sessionRepo: sessions,
+        exerciseRepo: ExerciseRepository(database),
+      );
+      final rebuilder = ProjectionRebuilder(
+        db: database,
+        sessionRepo: sessions,
+        projector: projector,
+      );
+      return BlocProvider(
+        create: (_) => PortabilityCubit(
+          exportData: ExportDataUseCase(database: database),
+          importData: ImportDataUseCase(
+            database: database,
+            migrations: MigrationRegistry([
+              MigrationV1ToV2(),
+              MigrationV2ToV3(),
+            ]),
+            rebuildAnalytics: rebuilder.rebuildAll,
+          ),
+          fileStorage: FileStorageService(),
+        ),
+        child: const BackupRestoreScreen(),
+      );
+    },
     biometricAuth: (_) => const BiometricAuthScreen(),
     pinAuth: (_) => const PinAuthScreen(),
     exerciseCatalog: (context) {

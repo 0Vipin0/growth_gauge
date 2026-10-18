@@ -8,7 +8,8 @@ try {
     dart format --output=none --set-exit-if-changed .
     if ($LASTEXITCODE -ne 0) { throw "dart format check failed with exit code $LASTEXITCODE" }
 
-    flutter test
+    # Keep the performance benchmark isolated from concurrent test workloads.
+    flutter test --concurrency=1
     if ($LASTEXITCODE -ne 0) { throw "flutter test failed with exit code $LASTEXITCODE" }
 }
 finally {
