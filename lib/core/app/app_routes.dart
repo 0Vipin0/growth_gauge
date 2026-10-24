@@ -70,7 +70,11 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
-      builder: (_) => const HomePage(),
+      builder: (_) => HomePage(
+        sessionRepository: sessions,
+        sessionUseCases: sessionUseCases,
+        exerciseRepository: exercises,
+      ),
     ),
     appGoRoute(
       path: appRouteSettings,
