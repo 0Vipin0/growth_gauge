@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TagInputWidget extends StatefulWidget {
-  final List<String> initialTags;
-  final ValueChanged<List<String>> onTagsChanged;
-
-  const TagInputWidget({
-    super.key,
-    required this.initialTags,
-    required this.onTagsChanged,
-  });
-
+class const TagInputWidget({
+  super.key,
+  required final List<String> initialTags,
+  required final ValueChanged<List<String>> onTagsChanged,
+}) extends StatefulWidget {
   @override
   State<TagInputWidget> createState() => _TagInputWidgetState();
 }
 
-class _TagInputWidgetState extends State<TagInputWidget> {
+class _TagInputWidgetState() extends State<TagInputWidget> {
   late List<String> _tags;
   final TextEditingController _tagController = TextEditingController();
 
