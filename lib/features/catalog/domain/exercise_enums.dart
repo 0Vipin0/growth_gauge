@@ -44,6 +44,8 @@ enum MuscleGroup() {
   lats,
   @JsonValue('TRAPS')
   traps,
+  @JsonValue('SHOULDERS')
+  shoulders,
   @JsonValue('FRONT_DELTS')
   frontDelts,
   @JsonValue('SIDE_DELTS')
@@ -68,6 +70,8 @@ enum MuscleGroup() {
   abs,
   @JsonValue('OBLIQUES')
   obliques,
+  @JsonValue('CORE')
+  core,
   @JsonValue('LOWER_BACK')
   lowerBack,
 }

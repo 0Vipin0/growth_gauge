@@ -61,6 +61,7 @@ const _$MuscleGroupEnumMap = {
   MuscleGroup.chest: 'CHEST',
   MuscleGroup.lats: 'LATS',
   MuscleGroup.traps: 'TRAPS',
+  MuscleGroup.shoulders: 'SHOULDERS',
   MuscleGroup.frontDelts: 'FRONT_DELTS',
   MuscleGroup.sideDelts: 'SIDE_DELTS',
   MuscleGroup.rearDelts: 'REAR_DELTS',
@@ -73,6 +74,7 @@ const _$MuscleGroupEnumMap = {
   MuscleGroup.calves: 'CALVES',
   MuscleGroup.abs: 'ABS',
   MuscleGroup.obliques: 'OBLIQUES',
+  MuscleGroup.core: 'CORE',
   MuscleGroup.lowerBack: 'LOWER_BACK',
 };
 
