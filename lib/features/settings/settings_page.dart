@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,9 +10,7 @@ import 'application/settings_state.dart';
 import 'config/config.dart';
 import 'model/model.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
+class const SettingsPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<SettingsCubit, SettingsState>(
@@ -35,10 +34,14 @@ class SettingsPage extends StatelessWidget {
               Card(
                 color: colorScheme.errorContainer,
                 child: ListTile(
-                  leading: Icon(Icons.warning_amber_outlined,
-                      color: colorScheme.onErrorContainer),
-                  title: Text(state.error!,
-                      style: TextStyle(color: colorScheme.onErrorContainer)),
+                  leading: Icon(
+                    Icons.warning_amber_outlined,
+                    color: colorScheme.onErrorContainer,
+                  ),
+                  title: Text(
+                    state.error!,
+                    style: TextStyle(color: colorScheme.onErrorContainer),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -51,7 +54,8 @@ class SettingsPage extends StatelessWidget {
               elevation: 0,
               color: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
@@ -141,7 +145,8 @@ class SettingsPage extends StatelessWidget {
               elevation: 0,
               color: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: _buildSettingItem(
@@ -180,7 +185,8 @@ class SettingsPage extends StatelessWidget {
               elevation: 0,
               color: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Column(
@@ -188,7 +194,8 @@ class SettingsPage extends StatelessWidget {
                     ListTile(
                       title: const Text('Backup and restore'),
                       subtitle: const Text(
-                          'Export or restore your Growth Gauge data'),
+                        'Export or restore your Growth Gauge data',
+                      ),
                       trailing: const Icon(Icons.backup_outlined),
                       onTap: () => context.push(appRouteBackupRestore),
                     ),
@@ -250,10 +257,10 @@ class SettingsPage extends StatelessWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 0.5,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        ),
       ),
     );
   }
@@ -272,21 +279,20 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.w500)),
-            const SizedBox(height: 2),
-            Text(subtitle,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    )),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: control,
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w500),
             ),
+            const SizedBox(height: 2),
+            Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(width: double.infinity, child: control),
           ],
         ),
       );
@@ -294,23 +300,23 @@ class SettingsPage extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.w500)),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w500),
+                  ),
                   const SizedBox(height: 2),
-                  Text(subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          )),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ],
               ),
             ),

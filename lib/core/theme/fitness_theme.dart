@@ -8,7 +8,6 @@ class const FitnessTheme._() {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF008732),
-          brightness: Brightness.light,
           primary: const Color(0xFF008732),
           onPrimary: Colors.white,
           secondary: const Color(0xFF45633F),
@@ -33,9 +32,13 @@ class const FitnessTheme._() {
           onPrimary: const Color(0xFF003913),
           secondary: const Color(0xFFB0CCA8),
           onSecondary: const Color(0xFF1D351A),
-          surface: const Color(0xFF0E1410), // True deep dark greenish-black background
+          surface: const Color(
+            0xFF0E1410,
+          ), // True deep dark greenish-black background
           onSurface: const Color(0xFFDFE3DD),
-          surfaceContainer: const Color(0xFF1A221C), // Card container dark background
+          surfaceContainer: const Color(
+            0xFF1A221C,
+          ), // Card container dark background
           error: const Color(0xFFFFB4AB),
           onError: const Color(0xFF690005),
           contrastLevel: contrastLevel,
