@@ -12,9 +12,9 @@ import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
 import '../domain/session_enums.dart';
 import '../domain/workout_session.dart';
-import '../widgets/active_exercise_card.dart';
-import '../widgets/workout_blocks_list.dart';
 import 'session_summary_screen.dart';
+import 'widgets/widgets.dart';
+
 
 class const ActiveSessionScreen({
     super.key,
