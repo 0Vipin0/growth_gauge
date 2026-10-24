@@ -4,7 +4,6 @@ import '../../../core/ids/unique_id.dart';
 import '../../catalog/domain/exercise.dart';
 import '../../catalog/domain/exercise_enums.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
-import '../../common/presentation/widgets/responsive_layout.dart';
 import '../application/template_use_cases.dart';
 import '../domain/rest_policy.dart';
 import '../domain/target_set.dart';
@@ -15,13 +14,13 @@ import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
 
 class const TemplateEditorScreen({
-  super.key,
-  required final WorkoutTemplateRevision revision,
-  required final ITemplateRepository repository,
-  required final IExerciseRepository exerciseRepository,
-  required final TemplateUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+    super.key,
+    required final WorkoutTemplateRevision revision,
+    required final ITemplateRepository repository,
+    required final IExerciseRepository exerciseRepository,
+    required final TemplateUseCases useCases,
+    required final String userId,
+  }) extends StatefulWidget {
   @override
   State<TemplateEditorScreen> createState() => _TemplateEditorScreenState();
 }
@@ -29,6 +28,7 @@ class const TemplateEditorScreen({
 class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
   late List<WorkoutBlock> _blocks;
   bool _saving = false;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +54,7 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                 autofocus: true,
                 decoration: const InputDecoration(labelText: 'Block name'),
               ),
+              const SizedBox(height: 12),
               DropdownButtonFormField<WorkoutBlockType>(
                 initialValue: type,
                 decoration: const InputDecoration(labelText: 'Block type'),
@@ -68,6 +69,7 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                 onChanged: (value) =>
                     setDialogState(() => type = value ?? type),
               ),
+              const SizedBox(height: 12),
               _numberField(rounds, 'Rounds'),
             ],
           ),
@@ -148,16 +150,26 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                     () => selectedExercise = value ?? selectedExercise,
                   ),
                 ),
+                const SizedBox(height: 12),
                 _numberField(setCountController, 'Sets'),
-                if (selectedExercise.measurementProfile.supportsReps)
+                if (selectedExercise.measurementProfile.supportsReps) ...[
+                  const SizedBox(height: 12),
                   _numberField(repsController, 'Reps'),
-                if (selectedExercise.measurementProfile.supportsDuration)
+                ],
+                if (selectedExercise.measurementProfile.supportsDuration) ...[
+                  const SizedBox(height: 12),
                   _numberField(durationController, 'Duration (seconds)'),
-                if (selectedExercise.measurementProfile.supportsDistance)
+                ],
+                if (selectedExercise.measurementProfile.supportsDistance) ...[
+                  const SizedBox(height: 12),
                   _decimalField(distanceController, 'Distance (metres)'),
-                if (selectedExercise.measurementProfile.supportsCalories)
+                ],
+                if (selectedExercise.measurementProfile.supportsCalories) ...[
+                  const SizedBox(height: 12),
                   _numberField(caloriesController, 'Calories'),
-                if (selectedExercise.measurementProfile.supportsWeight)
+                ],
+                if (selectedExercise.measurementProfile.supportsWeight) ...[
+                  const SizedBox(height: 12),
                   TextField(
                     controller: weightController,
                     keyboardType: const TextInputType.numberWithOptions(
@@ -167,6 +179,8 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                       labelText: 'Target weight (kg, optional)',
                     ),
                   ),
+                ],
+                const SizedBox(height: 12),
                 _numberField(restController, 'Rest (seconds)'),
               ],
             ),
@@ -317,106 +331,177 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text('Edit revision ${widget.revision.revisionNumber}'),
-    ),
-    floatingActionButton: FloatingActionButton.extended(
-      onPressed: _addBlock,
-      icon: const Icon(Icons.add),
-      label: const Text('Add block'),
-    ),
-    bottomNavigationBar: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: _saving ? null : () => _save(),
-                child: const Text('Save draft'),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: FilledButton(
-                onPressed: _saving ? null : () => _save(publish: true),
-                child: Text(_saving ? 'Saving…' : 'Publish revision'),
-              ),
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(
+        title: Text('Edit revision ${widget.revision.revisionNumber}'),
+        centerTitle: true,
       ),
-    ),
-    body: ResponsiveContent(
-      maxWidth: 1100,
-      child: _blocks.isEmpty
-          ? const Center(child: Text('Add a block to organise this workout'))
-          : ReorderableListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: _blocks.length,
-              onReorderItem: (oldIndex, newIndex) => setState(() {
-                final block = _blocks.removeAt(oldIndex);
-                _blocks.insert(newIndex, block);
-              }),
-              itemBuilder: (context, index) {
-                final block = _blocks[index];
-                return Card(
-                  key: ValueKey(block.id),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: const Icon(Icons.drag_handle),
-                          title: Text(block.name),
-                          subtitle: Text(
-                            '${block.type.name} · ${block.rounds} round(s)',
-                          ),
-                          trailing: IconButton(
-                            tooltip: 'Remove block',
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () =>
-                                setState(() => _blocks.removeAt(index)),
-                          ),
-                        ),
-                        ...block.items.asMap().entries.map((entry) {
-                          final itemIndex = entry.key;
-                          final item = entry.value;
-                          return ListTile(
-                            dense: true,
-                            leading: const Icon(Icons.fitness_center),
-                            title: FutureBuilder(
-                              future: widget.exerciseRepository.findById(
-                                item.exerciseId,
-                              ),
-                              builder: (context, snapshot) => Text(
-                                snapshot.data?.dataOrNull?.name ??
-                                    item.exerciseId,
-                              ),
-                            ),
-                            subtitle: Text(_prescriptionSummary(item)),
-                            trailing: IconButton(
-                              tooltip: 'Remove exercise',
-                              icon: const Icon(Icons.close),
-                              onPressed: () =>
-                                  _removeExercise(index, itemIndex),
-                            ),
-                          );
-                        }),
-                        TextButton.icon(
-                          onPressed: () => _addExercise(index),
-                          icon: const Icon(Icons.add),
-                          label: const Text('Add exercise'),
-                        ),
-                      ],
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _addBlock,
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        icon: const Icon(Icons.add),
+        label: const Text('Add block'),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        color: colorScheme.surface,
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: .center,
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _saving ? null : () => _save(),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                );
-              },
-            ),
-    ),
-  );
+                  child: const Text('Save draft'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: _saving ? null : () => _save(publish: true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(_saving ? 'Saving…' : 'Publish revision'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: _blocks.isEmpty
+                ? Center(
+                    child: Text(
+                      'Add a block to organise this workout',
+                      style: TextStyle(color: colorScheme.onSurfaceVariant),
+                    ),
+                  )
+                : ReorderableListView.builder(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth >= 900 ? 32 : 16,
+                      vertical: 20,
+                    ),
+                    itemCount: _blocks.length,
+                    onReorderItem: (oldIndex, newIndex) => setState(() {
+                      final block = _blocks.removeAt(oldIndex);
+                      _blocks.insert(newIndex, block);
+                    }),
+                    itemBuilder: (context, index) {
+                      final block = _blocks[index];
+                      return Padding(
+                        key: ValueKey(block.id),
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Card(
+                          elevation: 0,
+                          color: colorScheme.surfaceContainer,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.drag_handle,
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                  title: Text(
+                                    block.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    '${block.type.name} · ${block.rounds} round(s)',
+                                    style: TextStyle(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                    tooltip: 'Remove block',
+                                    icon: Icon(
+                                      Icons.delete_outline,
+                                      color: colorScheme.error,
+                                    ),
+                                    onPressed: () =>
+                                        setState(() => _blocks.removeAt(index)),
+                                  ),
+                                ),
+                                const Divider(height: 8),
+                                ...block.items.asMap().entries.map((entry) {
+                                  final itemIndex = entry.key;
+                                  final item = entry.value;
+                                  return ListTile(
+                                    dense: true,
+                                    leading: Icon(
+                                      Icons.fitness_center,
+                                      color: colorScheme.primary,
+                                    ),
+                                    title: FutureBuilder(
+                                      future: widget.exerciseRepository
+                                          .findById(item.exerciseId),
+                                      builder: (context, snapshot) => Text(
+                                        snapshot.data?.dataOrNull?.name ??
+                                            item.exerciseId,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    subtitle: Text(_prescriptionSummary(item)),
+                                    trailing: IconButton(
+                                      tooltip: 'Remove exercise',
+                                      icon: const Icon(Icons.close, size: 18),
+                                      onPressed: () =>
+                                          _removeExercise(index, itemIndex),
+                                    ),
+                                  );
+                                }),
+                                const SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: TextButton.icon(
+                                    onPressed: () => _addExercise(index),
+                                    icon: const Icon(Icons.add, size: 18),
+                                    label: const Text('Add exercise'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
 
   String _prescriptionSummary(TemplateItem item) {
     if (item.targetSets.isEmpty) return 'No sets prescribed';

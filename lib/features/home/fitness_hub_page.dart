@@ -289,7 +289,9 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
                             title: 'Full Body HIIT',
                             duration: '20 min',
                             calories: '220 kcal',
-                            onStart: () {},
+                            onStart: () {
+                              widget.onTemplateTap!();
+                            },
                           ),
                         ),
                         SizedBox(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../catalog/infrastructure/exercise_repository.dart';
-import '../../common/presentation/widgets/responsive_layout.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
@@ -13,14 +12,14 @@ import '../infrastructure/template_repository.dart';
 import 'template_detail_screen.dart';
 
 class const TemplateListScreen({
-  super.key,
-  required final ITemplateRepository repository,
-  required final IExerciseRepository exerciseRepository,
-  required final IWorkoutSessionRepository sessionRepository,
-  required final SessionUseCases sessionUseCases,
-  required final TemplateUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+    super.key,
+    required final ITemplateRepository repository,
+    required final IExerciseRepository exerciseRepository,
+    required final IWorkoutSessionRepository sessionRepository,
+    required final SessionUseCases sessionUseCases,
+    required final TemplateUseCases useCases,
+    required final String userId,
+  }) extends StatefulWidget {
   @override
   State<TemplateListScreen> createState() => _TemplateListScreenState();
 }
@@ -109,60 +108,144 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Workout templates')),
-    floatingActionButton: FloatingActionButton.extended(
-      onPressed: _create,
-      icon: const Icon(Icons.add),
-      label: const Text('New template'),
-    ),
-    body: StreamBuilder<List<WorkoutTemplate>>(
-      stream: _templates,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(child: Text('Could not load templates'));
-        }
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final templates = snapshot.data!.where((t) => !t.isArchived).toList();
-        if (templates.isEmpty) {
-          return const Center(
-            child: Text('Create a template to start planning workouts'),
-          );
-        }
-        return ResponsiveContent(
-          maxWidth: 1100,
-          child: ListView.builder(
-            itemCount: templates.length,
-            itemBuilder: (context, i) {
-              final template = templates[i];
-              return ListTile(
-                leading: const CircleAvatar(child: Icon(Icons.view_agenda)),
-                title: Text(template.name),
-                subtitle: Text(
-                  template.description.isEmpty
-                      ? 'No description'
-                      : template.description,
-                ),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => TemplateDetailScreen(
-                      template: template,
-                      repository: widget.repository,
-                      exerciseRepository: widget.exerciseRepository,
-                      useCases: widget.useCases,
-                      sessionUseCases: widget.sessionUseCases,
-                      userId: widget.userId,
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(title: const Text('Workout templates'), centerTitle: true),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _create,
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        icon: const Icon(Icons.add),
+        label: const Text('New template'),
+      ),
+      body: StreamBuilder<List<WorkoutTemplate>>(
+        stream: _templates,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(child: Text('Could not load templates'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final templates = snapshot.data!.where((t) => !t.isArchived).toList();
+          if (templates.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.view_agenda_outlined,
+                    size: 64,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Create a template to start planning workouts',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
+                ],
+              ),
+            );
+          }
+          return SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1000),
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth >= 900 ? 32 : 20,
+                    vertical: 24,
+                  ),
+                  itemCount: templates.length,
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
+                  itemBuilder: (context, i) {
+                    final template = templates[i];
+                    return Card(
+                      elevation: 0,
+                      color: colorScheme.surfaceContainer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => TemplateDetailScreen(
+                              template: template,
+                              repository: widget.repository,
+                              exerciseRepository: widget.exerciseRepository,
+                              useCases: widget.useCases,
+                              sessionUseCases: widget.sessionUseCases,
+                              userId: widget.userId,
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primaryContainer
+                                      .withValues(alpha: 0.3),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Icon(
+                                  Icons.view_agenda,
+                                  color: colorScheme.primary,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      template.name,
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: colorScheme.onSurface,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      template.description.isEmpty
+                                          ? 'No description'
+                                          : template.description,
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: colorScheme.onSurfaceVariant,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Icon(
+                                Icons.chevron_right,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-        );
-      },
-    ),
-  );
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
