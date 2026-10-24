@@ -1,23 +1,35 @@
+// ignore_for_file: use_primary_constructors
+
 import 'package:flutter/material.dart';
 
-enum ActivityTimeRange() {
-  week,
-  month,
-  year,
-}
+import '../template/domain/workout_template.dart';
+import '../template/infrastructure/template_repository.dart';
 
-class const FitnessHubPage({
-  super.key,
-  final VoidCallback? onProfileTap,
-  final VoidCallback? onAnalyticsTap,
-  final VoidCallback? onCatalogTap,
-  final VoidCallback? onTemplateTap,
-}) extends StatefulWidget {
+enum ActivityTimeRange { week, month, year }
+
+class FitnessHubPage extends StatefulWidget {
+  const new({
+    super.key,
+    this.onProfileTap,
+    this.onAnalyticsTap,
+    this.onCatalogTap,
+    this.onTemplateTap,
+    required this.templateRepository,
+    required this.onStartTemplate,
+  });
+
+  final VoidCallback? onProfileTap;
+  final VoidCallback? onAnalyticsTap;
+  final VoidCallback? onCatalogTap;
+  final VoidCallback? onTemplateTap;
+  final ITemplateRepository templateRepository;
+  final ValueChanged<WorkoutTemplate> onStartTemplate;
+
   @override
   State<FitnessHubPage> createState() => _FitnessHubPageState();
 }
 
-class _FitnessHubPageState() extends State<FitnessHubPage> {
+class _FitnessHubPageState extends State<FitnessHubPage> {
   late ActivityTimeRange _selectedTimeRange;
   int _timeOffset =
       0; // 0 = current period, negative = previous, positive = future
@@ -223,7 +235,6 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
                           color: colorScheme.onSurface,
                         ),
                       ),
-                      // Segmented Filter: Week / Month / Year
                       SegmentedButton<ActivityTimeRange>(
                         segments: const [
                           ButtonSegment(
@@ -243,7 +254,7 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
                         onSelectionChanged: (newSelection) {
                           setState(() {
                             _selectedTimeRange = newSelection.first;
-                            _timeOffset = 0; // reset offset when view changes
+                            _timeOffset = 0;
                           });
                         },
                         style: ButtonStyle(
@@ -257,55 +268,90 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-
-                // Activity Trends Card with Previous/Next Navigation Controls
                 _buildActivityTrendsCard(context, isDesktop),
 
                 const SizedBox(height: 32),
 
-                // 4. Quick Start Section
-                Text(
-                  'Quick Start',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
-                  ),
+                // 4. Quick Start Section with Dynamic Templates
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Quick Start',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: widget.onTemplateTap,
+                      child: const Text('See All'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 12),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final cardWidth = constraints.maxWidth > 650
-                        ? (constraints.maxWidth - 16) / 2
-                        : constraints.maxWidth;
-                    return Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
-                      children: [
-                        SizedBox(
-                          width: cardWidth,
-                          child: _buildQuickStartCard(
-                            context,
-                            category: 'HIGH INTENSITY',
-                            title: 'Full Body HIIT',
-                            duration: '20 min',
-                            calories: '220 kcal',
-                            onStart: () {
-                              widget.onTemplateTap!();
-                            },
-                          ),
+                FutureBuilder(
+                  future: widget.templateRepository.getTemplates(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(24.0),
+                          child: CircularProgressIndicator(),
                         ),
-                        SizedBox(
-                          width: cardWidth,
-                          child: _buildQuickStartCard(
-                            context,
-                            category: 'ENDURANCE',
-                            title: '5k Runner Progress',
-                            duration: '45 min',
-                            calories: '410 kcal',
-                            onStart: () {},
-                          ),
+                      );
+                    }
+
+                    if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data!.isError) {
+                      return Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceContainer,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ],
+                        child: const Text('No templates available.'),
+                      );
+                    }
+
+                    final templates = snapshot.data!.dataOrNull ?? [];
+                    if (templates.isEmpty) {
+                      return Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text('No templates available.'),
+                      );
+                    }
+
+                    final displayTemplates = templates.take(2).toList();
+
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cardWidth = constraints.maxWidth > 700
+                            ? (constraints.maxWidth - 16) / 2
+                            : constraints.maxWidth;
+                        return Wrap(
+                          spacing: 16,
+                          runSpacing: 16,
+                          children: displayTemplates.map((template) {
+                            return SizedBox(
+                              width: cardWidth,
+                              child: _buildQuickStartCard(
+                                context,
+                                category: 'WORKOUT',
+                                title: template.name,
+                                duration: '20 min',
+                                calories: '200 kcal',
+                                onStart: () => widget.onStartTemplate(template),
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      },
                     );
                   },
                 ),
@@ -452,7 +498,6 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
       ),
       child: Column(
         children: [
-          // Header with navigation arrows and current range label
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -486,7 +531,6 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
             ],
           ),
           const Divider(height: 24),
-          // Dynamic content based on selected range
           Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 650),
@@ -541,7 +585,6 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
 
   Widget _buildMonthView(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    // Simplified 4-week grid representation for the month view
     return Column(
       children: [
         Row(
@@ -784,7 +827,7 @@ class _FitnessHubPageState() extends State<FitnessHubPage> {
             ),
             const SizedBox(width: 16),
             IconButton.filled(
-              onPressed: () {},
+              onPressed: widget.onTemplateTap,
               style: IconButton.styleFrom(
                 backgroundColor: colorScheme.primary,
                 foregroundColor: colorScheme.onPrimary,

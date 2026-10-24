@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -11,6 +13,7 @@ import '../session/infrastructure/session_repository.dart';
 import '../session/presentation/active_session_screen.dart';
 import '../session/presentation/session_recovery_dialog.dart';
 import '../settings/settings_page.dart';
+import '../template/template.dart';
 import 'fitness_hub_page.dart';
 
 class const HomePage({
@@ -18,6 +21,7 @@ class const HomePage({
   required final IWorkoutSessionRepository sessionRepository,
   required final SessionUseCases sessionUseCases,
   required final IExerciseRepository exerciseRepository,
+  required final ITemplateRepository templateRepository,
   final String userId = 'local-user',
 }) extends StatefulWidget {
   @override
@@ -142,7 +146,92 @@ class _HomePageState() extends State<HomePage> {
                       setState(() => _selectedIndex = index),
                   children: [
                     FitnessHubPage(
-                      // Mapped Navigation Callbacks matching router routes
+                      templateRepository: widget.templateRepository,
+                      onStartTemplate: (template) async {
+                        // 1. Fetch all revisions for this template
+                        final revisionsResult = await widget.templateRepository
+                            .getRevisions(template.id);
+                        if (!mounted) return;
+                        if (revisionsResult.isError ||
+                            revisionsResult.dataOrNull!.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'No revisions found for this template',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final revisions = revisionsResult.dataOrNull!;
+
+                        // 2. Filter for published revisions and sort descending by revision number to get the latest complete one
+                        final publishedRevisions =
+                            revisions
+                                .where((rev) => rev.status.name == 'published')
+                                .toList()
+                              ..sort(
+                                (a, b) => b.revisionNumber.compareTo(
+                                  a.revisionNumber,
+                                ),
+                              );
+
+                        if (publishedRevisions.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'No published revision found for this template',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final targetRevision = publishedRevisions.first;
+
+                        // 3. Create session from the correct published revision
+                        final createResult = await widget.sessionUseCases
+                            .createFromRevision(
+                              revisionId: targetRevision.id,
+                              userId: widget.userId,
+                            );
+                        if (!mounted) return;
+                        if (createResult.isError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(createResult.errorOrNull!.message),
+                            ),
+                          );
+                          return;
+                        }
+
+                        // 4. Start session and navigate to active screen
+                        final session = createResult.dataOrNull!;
+                        final startResult = await widget.sessionUseCases.start(
+                          session.id,
+                        );
+                        if (!mounted) return;
+                        if (startResult.isError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(startResult.errorOrNull!.message),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final activeSession = startResult.dataOrNull!;
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ActiveSessionScreen(
+                              session: activeSession,
+                              useCases: widget.sessionUseCases,
+                              exerciseRepository: widget.exerciseRepository,
+                            ),
+                          ),
+                        );
+                      },
                       onProfileTap: () => context.push(appRouteProfile),
                       onAnalyticsTap: () => context.push(appRouteAnalytics),
                       onCatalogTap: () => context.push(appRouteExerciseCatalog),

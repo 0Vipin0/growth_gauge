@@ -37,7 +37,6 @@ import '../../features/user/presentation/screens/profile_screen.dart';
 import '../database/app_database.dart';
 import '../routing/app_router.dart';
 
-/// Creates application destinations and composes their feature dependencies.
 List<RouteBase> createAppRoutes({
   required AppDatabase database,
   required ExerciseRepository exercises,
@@ -74,6 +73,7 @@ List<RouteBase> createAppRoutes({
         sessionRepository: sessions,
         sessionUseCases: sessionUseCases,
         exerciseRepository: exercises,
+        templateRepository: templates, // <--- Added TemplateRepository here
       ),
     ),
     appGoRoute(
