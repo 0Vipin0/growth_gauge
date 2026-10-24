@@ -6,7 +6,10 @@ import '../../../core/routing/app_router.dart';
 import '../../common/presentation/widgets/responsive_layout.dart';
 import '../domain/workout_session.dart';
 
-class const SessionSummaryScreen({super.key, required final WorkoutSession session}) extends StatefulWidget {
+class const SessionSummaryScreen({
+  super.key,
+  required final WorkoutSession session,
+}) extends StatefulWidget {
   @override
   State<SessionSummaryScreen> createState() => _SessionSummaryScreenState();
 }
@@ -451,11 +454,11 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
 }
 
 class const _MoodOption({
-    required final IconData icon,
-    required final String label,
-    required final bool isSelected,
-    required final VoidCallback onTap,
-  }) extends StatelessWidget {
+  required final IconData icon,
+  required final String label,
+  required final bool isSelected,
+  required final VoidCallback onTap,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

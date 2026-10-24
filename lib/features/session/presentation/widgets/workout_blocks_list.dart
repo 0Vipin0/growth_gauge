@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../domain/execution_set.dart';
-import '../domain/session_enums.dart';
-import '../domain/workout_session.dart';
+import '../../domain/domain.dart';
 
 class const WorkoutBlocksList({
-    super.key,
-    required final WorkoutSession session,
-    required final Map<String, String> exerciseNames,
-    required final bool actionsEnabled,
-    required final ValueChanged<ExecutionSet> onRecord,
-    required final ValueChanged<ExecutionSet> onEditTarget,
-    required final ValueChanged<ExecutionSet> onDelete,
-    required final ValueChanged<ExecutionSet> onSkip,
-    required final ValueChanged<ExecutionSet> onRest,
-  }) extends StatelessWidget {
+  super.key,
+  required final WorkoutSession session,
+  required final Map<String, String> exerciseNames,
+  required final bool actionsEnabled,
+  required final ValueChanged<ExecutionSet> onRecord,
+  required final ValueChanged<ExecutionSet> onEditTarget,
+  required final ValueChanged<ExecutionSet> onDelete,
+  required final ValueChanged<ExecutionSet> onSkip,
+  required final ValueChanged<ExecutionSet> onRest,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -164,4 +162,10 @@ class const WorkoutBlocksList({
   }
 }
 
-enum _SetAction() { editTarget, record, startRest, skip, delete }
+enum _SetAction() {
+  editTarget,
+  record,
+  startRest,
+  skip,
+  delete,
+}

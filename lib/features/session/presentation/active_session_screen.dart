@@ -15,18 +15,18 @@ import '../domain/workout_session.dart';
 import 'session_summary_screen.dart';
 import 'widgets/widgets.dart';
 
-
 class const ActiveSessionScreen({
-    super.key,
-    required final WorkoutSession session,
-    required final SessionUseCases useCases,
-    required final IExerciseRepository exerciseRepository,
-  }) extends StatefulWidget {
+  super.key,
+  required final WorkoutSession session,
+  required final SessionUseCases useCases,
+  required final IExerciseRepository exerciseRepository,
+}) extends StatefulWidget {
   @override
   State<ActiveSessionScreen> createState() => _ActiveSessionScreenState();
 }
 
-class _ActiveSessionScreenState() extends State<ActiveSessionScreen>
+class _ActiveSessionScreenState()
+    extends State<ActiveSessionScreen>
     with WidgetsBindingObserver {
   late WorkoutSession _session = widget.session;
   late final WorkoutSessionBloc _sessionBloc;
