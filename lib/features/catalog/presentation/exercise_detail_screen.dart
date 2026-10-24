@@ -143,110 +143,225 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(_exercise.name)),
-    body: ListView(
-      padding: const EdgeInsets.all(20),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isDesktop = screenWidth >= 800;
+
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(title: Text(_exercise.name), centerTitle: true),
+      body: SafeArea(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 900),
+            child: ListView(
+              padding: EdgeInsets.symmetric(
+                horizontal: isDesktop ? 32.0 : 20.0,
+                vertical: 24.0,
+              ),
+              children: [
+                if (_exercise.description.isNotEmpty) ...[
+                  Text(
+                    _exercise.description,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+
+                // Movement & Body Region Metadata Grid
+                Card(
+                  elevation: 0,
+                  color: colorScheme.surfaceContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        _buildMetaRow(
+                          context,
+                          title: 'Movement Pattern',
+                          value: _exercise.classification.movementPatterns
+                              .map((e) => e.name)
+                              .join(', '),
+                        ),
+                        const Divider(height: 24),
+                        _buildMetaRow(
+                          context,
+                          title: 'Body Region',
+                          value: _exercise.classification.bodyRegions
+                              .map((e) => e.name)
+                              .join(', '),
+                        ),
+                        const Divider(height: 24),
+                        _buildMetaRow(
+                          context,
+                          title: 'Primary Muscles',
+                          value: _exercise.classification.primaryMuscles
+                              .map((e) => e.name)
+                              .join(', '),
+                        ),
+                        const Divider(height: 24),
+                        _buildMetaRow(
+                          context,
+                          title: 'Equipment Required',
+                          value: _exercise.equipment.requiredEquipment
+                              .map((e) => e.name)
+                              .join(', '),
+                        ),
+                        const Divider(height: 24),
+                        _buildMetaRow(
+                          context,
+                          title: 'Tracking Metric',
+                          value: _exercise
+                              .measurementProfile
+                              .defaultMetricType
+                              .name,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                if (_exercise.execution.techniqueCues.isNotEmpty) ...[
+                  const SizedBox(height: 28),
+                  Text(
+                    'Technique Cues',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    elevation: 0,
+                    color: colorScheme.surfaceContainer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      children: _exercise.execution.techniqueCues
+                          .map(
+                            (cue) => ListTile(
+                              leading: Icon(
+                                Icons.check_circle_outline,
+                                color: colorScheme.primary,
+                              ),
+                              title: Text(cue),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+
+                if (_exercise.relationships.isNotEmpty) ...[
+                  const SizedBox(height: 28),
+                  Text(
+                    'Related Exercises',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    elevation: 0,
+                    color: colorScheme.surfaceContainer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      children: _exercise.relationships
+                          .map(
+                            (relationship) => ListTile(
+                              leading: const Icon(Icons.link),
+                              title: FutureBuilder(
+                                future: widget.repository.findById(
+                                  relationship.targetExerciseId,
+                                ),
+                                builder: (context, snapshot) => Text(
+                                  snapshot.data?.dataOrNull?.name ??
+                                      relationship.targetExerciseId,
+                                ),
+                              ),
+                              subtitle: Text(
+                                relationship.type.name +
+                                    (relationship.reason == null
+                                        ? ''
+                                        : ' · ${relationship.reason}'),
+                              ),
+                              trailing:
+                                  _exercise.createdById == widget.userId &&
+                                      _exercise.sourceType !=
+                                          ExerciseSourceType.system
+                                  ? IconButton(
+                                      tooltip: 'Remove relationship',
+                                      icon: const Icon(Icons.link_off),
+                                      onPressed: () => _removeRelationship(
+                                        relationship.targetExerciseId,
+                                        relationship.type,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+
+                if (_exercise.sourceType != ExerciseSourceType.system &&
+                    _exercise.createdById == widget.userId)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: OutlinedButton.icon(
+                      onPressed: _addRelationship,
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      icon: const Icon(Icons.add_link),
+                      label: const Text('Add Related Exercise'),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMetaRow(
+    BuildContext context, {
+    required String title,
+    required String value,
+  }) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          _exercise.description,
-          style: Theme.of(context).textTheme.bodyLarge,
+          title,
+          style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
         ),
-        const SizedBox(height: 20),
-        _section(
-          context,
-          'Movement',
-          _exercise.classification.movementPatterns
-              .map((e) => e.name)
-              .join(', '),
-        ),
-        _section(
-          context,
-          'Body region',
-          _exercise.classification.bodyRegions.map((e) => e.name).join(', '),
-        ),
-        _section(
-          context,
-          'Primary muscles',
-          _exercise.classification.primaryMuscles.map((e) => e.name).join(', '),
-        ),
-        _section(
-          context,
-          'Equipment',
-          _exercise.equipment.requiredEquipment.map((e) => e.name).join(', '),
-        ),
-        _section(
-          context,
-          'Tracking',
-          _exercise.measurementProfile.defaultMetricType.name,
-        ),
-        if (_exercise.relationships.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          Text(
-            'Related exercises',
-            style: Theme.of(context).textTheme.titleMedium,
+        Flexible(
+          child: Text(
+            value.isEmpty ? 'Not specified' : value,
+            textAlign: TextAlign.end,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          ..._exercise.relationships.map(
-            (relationship) => ListTile(
-              leading: const Icon(Icons.link),
-              title: FutureBuilder(
-                future: widget.repository.findById(
-                  relationship.targetExerciseId,
-                ),
-                builder: (context, snapshot) => Text(
-                  snapshot.data?.dataOrNull?.name ??
-                      relationship.targetExerciseId,
-                ),
-              ),
-              subtitle: Text(
-                relationship.type.name +
-                    (relationship.reason == null
-                        ? ''
-                        : ' · ${relationship.reason}'),
-              ),
-              trailing:
-                  _exercise.createdById == widget.userId &&
-                      _exercise.sourceType != ExerciseSourceType.system
-                  ? IconButton(
-                      tooltip: 'Remove relationship',
-                      icon: const Icon(Icons.link_off),
-                      onPressed: () => _removeRelationship(
-                        relationship.targetExerciseId,
-                        relationship.type,
-                      ),
-                    )
-                  : null,
-            ),
-          ),
-        ],
-        if (_exercise.execution.techniqueCues.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          Text(
-            'Technique cues',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          ..._exercise.execution.techniqueCues.map(
-            (cue) =>
-                ListTile(leading: const Icon(Icons.check), title: Text(cue)),
-          ),
-        ],
-        if (_exercise.sourceType != ExerciseSourceType.system &&
-            _exercise.createdById == widget.userId)
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: OutlinedButton.icon(
-              onPressed: _addRelationship,
-              icon: const Icon(Icons.add_link),
-              label: const Text('Add related exercise'),
-            ),
-          ),
+        ),
       ],
-    ),
-  );
-
-  Widget _section(BuildContext context, String title, String value) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    title: Text(title, style: Theme.of(context).textTheme.labelLarge),
-    subtitle: Text(value.isEmpty ? 'Not specified' : value),
-  );
+    );
+  }
 }
