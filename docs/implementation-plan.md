@@ -250,6 +250,9 @@ Phase 3 implements the live workout tracking engine: copy-on-write execution, de
    $$\text{elapsedActiveSeconds} = \text{elapsedWallClockSeconds} - \sum \text{interruptionDurationSeconds}$$
 4. **Append-Only Audit Log:** Every set edit or deletion appends an immutable `AuditEntry`.
 5. **Crash Recovery:** Every set logged writes through to Drift; cold boot auto-detects uncompleted sessions and prompts recovery.
+6. **Interval Timer:** The session runtime must support reusable work, rest, and cooldown intervals for timed circuits/HIIT, with explicit transitions, pause/resume, skip/extend rules, and persisted recovery state. This extends the existing rest timer; it must not revive the removed standalone legacy timer module.
+7. **Daily Training Log:** A session/day may store optional mood, free-text notes, and perceived effort (RPE). These fields are persisted with the authoritative session/log record and projected to analytics where useful; RPE is optional and must not block session completion.
+8. **Voice Guidance:** Interval templates may provide spoken phase/countdown cues using platform text-to-speech. TTS is optional, configurable, lifecycle-safe, and always paired with visible cues; workout completion must not depend on audio.
 
 ### 6.2 Phase 3 File Manifest
 - `lib/features/session/domain/`: `workout_session.dart`, `session_block.dart`, `session_item.dart`, `execution_set.dart`, `rest_interval.dart`, `session_interruption.dart`, `audit_entry.dart`, `session_enums.dart`, `session_events.dart`.
@@ -257,6 +260,7 @@ Phase 3 implements the live workout tracking engine: copy-on-write execution, de
 - `lib/features/session/infrastructure/`: `session_document_adapter.dart`, `session_repository.dart`, `crash_recovery_service.dart`.
 - `lib/features/session/presentation/`: `active_session_screen.dart`, `session_summary_screen.dart`, `active_exercise_card.dart`, `execution_set_row.dart`, `rest_timer_overlay.dart`, `plate_calculator_sheet.dart`, `session_recovery_dialog.dart`.
 - Tests under `test/features/session/` verifying copy-on-write, state transitions, audit trail, and crash recovery.
+- Extend session/template models and UI for interval blocks with work/rest/cooldown durations, optional voice cue settings, and daily-log fields (`mood`, `notes`, `RPE`). Keep interval timing distinct from the existing post-set rest policy.
 
 ### 6.3 Phase 3 Execution Status
 
@@ -323,6 +327,9 @@ fl_chart Reactive Streams
 4. **Volume & Frequency Aggregations (Section 26):**
    - Calculates weekly set volume per muscle group.
    - Computes daily workout frequency for calendar heatmaps.
+5. **Streak Heatmaps and Flexible Windows:** Activity detail views must show consecutive active-day streaks and calendar heatmaps. Chart queries support 7-, 14-, 30-, and 90-day windows, with selected period clearly indicated.
+6. **Daily Log Analytics:** Mood, notes, and RPE are available in session/day history. Aggregate RPE only where meaningful; missing RPE or mood remains missing rather than being treated as zero.
+7. **Goal-Centric Dashboard:** Show count-based and time-based activities, grouped/sorted by supporting goal with progress against configured targets. Completed workouts and configured activity records remain the source of truth; do not restore generic legacy counter storage.
 
 ---
 
@@ -472,6 +479,16 @@ class AnalyticsProjector {
 
 ---
 
+### 7.3.1 Insight and Activity Detail Requirements
+
+- Provide a detail view for each tracked activity/goal with a calendar heatmap, consecutive-day streak calculation, and charts selectable for **7, 14, 30, or 90 days**. Default chart window: **NA — not specified in the legacy source**; allow the user to select a supported window.
+- The dashboard must support both activity progress, group/sort activities by the goal they support, and show progress bars against configured targets.
+- Daily entries can include mood, notes, and perceived exertion (RPE); show these alongside relevant history and ensure analytics handle missing values correctly.
+- Preserve the intent of the legacy weekly chart/heatmap features within the new fitness dashboard. Do not restore the legacy counter/timer pages or their Shared Preferences repositories.
+- Acceptance checks: all four chart windows return correctly bounded date ranges; heatmap streaks handle missed days, timezone/date boundaries, and empty history; goal progress handles zero/missing targets without division errors; daily log fields survive restart and JSON export/import.
+
+---
+
 ### 7.4 Phase 4 Step-by-Step Execution Sequence
 
 1. **Step 4.1: Drift Analytics Tables & Migration** `[x]`
@@ -527,6 +544,8 @@ Phase 5 establishes user-centric features: training profiles, equipment inventor
 1. **User Separation (Section 6 & Rule 6):** User preferences and goals are separate aggregates from workout execution. Modifying a goal or profile never rewrites completed workouts.
 2. **Equipment Inventory Filtering (Section 8):** Available equipment restricts exercise selection and routine suggestions without hiding catalog definitions.
 3. **Immutable Measurement Log (Section 10):** Historical body weight and caliper/tape measurements are append-only.
+4. **Fitness Assessment:** The legacy source requests a composite Fitness Score (examples: vitals, stamina, strength) based on user data and activity history. 
+5. **Goal-Centric Dashboard:** Count-based and time-based activities are listed, sorted/grouped by the goal they support, and display progress against target. Detail screens expose recent activity, streaks, charts, and daily logs.
 
 ### 8.2 Phase 5 File Manifest
 - `lib/features/user/domain/`: `user_account.dart`, `user_profile.dart`, `training_profile.dart`, `workout_preferences.dart`, `training_goal.dart`, `user_measurement.dart`, `equipment_inventory.dart`, `user_enums.dart`.
@@ -534,13 +553,15 @@ Phase 5 establishes user-centric features: training profiles, equipment inventor
 - `lib/features/user/infrastructure/`: `user_document_adapters.dart`, `user_repository.dart`.
 - `lib/features/user/presentation/`: `profile_screen.dart`, `goals_screen.dart`, `measurements_screen.dart`, `equipment_inventory_sheet.dart`, `goal_progress_card.dart`.
 - Tests under `test/features/user/` covering unit conversions, goal calculations, and document persistence.
+- Extend `TrainingProfile`/profile UI to capture baseline biometrics (at minimum height, weight, and resting heart rate where supplied) and training constraints such as injuries and equipment limitations. These fields inform assessment and exercise suggestions but must not be presented as medical diagnosis.
 
 ---
 
 ### 8.3 Detailed Specifications (Phase 5)
 
 #### A. Models (`lib/features/user/domain/`)
-- **`TrainingGoal`:** `type` (`strength`, `workoutFrequency`, `bodyWeight`), `startValue`, `targetValue`, `currentValue`, `startDate`, `targetDate`, `status` (`active`, `achieved`, `abandoned`).
+- **`TrainingGoal`:** `type` (`strength`, `workoutFrequency`, `bodyWeight`, and extensible count/time activity goals), `startValue`, `targetValue`, `currentValue`, `startDate`, `targetDate`, `status` (`active`, `achieved`, `abandoned`).
+- **`TrainingProfile`:** include optional baseline height, weight, resting heart rate and other supported baseline metrics, plus constraints/injuries and available-equipment limitations. Record units and timestamps where applicable; do not overwrite historical measurements when profile baselines change.
 - **`UserMeasurement`:** `type` (`bodyWeight`, `bodyFatPercentage`, `chestCm`, `waistCm`), `value` (stored in canonical kg/cm), `timestamp`.
 - **`EquipmentInventory`:** Selected `List<EquipmentType>` owned by user.
 
@@ -628,6 +649,7 @@ Export File (.json)
      - `DUPLICATE_WITH_NEW_ID`: Generates fresh UUIDs and updates all internal references.
 5. **Post-Import Analytics Rebuild:**
    - Imports that add or replace workout sessions trigger `ProjectionRebuilder.rebuildAll()` after the authoritative documents commit. Phase 7 offloads portable CPU processing and session ordering; Drift projection I/O stays on the database isolate, with device frame profiling tracked as the remaining hardening check.
+6. **CSV Export:** In addition to the versioned JSON archive used for backup/migration, provide CSV export for analysis in spreadsheet and data tools. CSV is a derived flat representation of activity/session, set metrics, and relevant timestamps/goals; document columns, units, escaping, and handling of optional values. JSON remains the lossless round-trip format.
 
 ---
 
@@ -661,12 +683,21 @@ lib/
         │
         └── presentation/
             ├── screens/
-            │   └── backup_restore_screen.dart # Export button, file picker, and progress indicator
+            │   └── backup_restore_screen.dart # JSON export/import and CSV export actions, file picker, and progress indicator
             └── widgets/
                 └── conflict_resolution_dialog.dart # Modal presenting detected collisions
 ```
 
 ---
+
+### 9.2.1 CSV Export Requirements
+
+CSV export is an additional analysis-oriented output; the existing JSON archive remains the backup and restore format.
+
+| Step | Action | Status | Notes |
+|---|---|---|---|
+| **Step 6.6** | Implement CSV activity/session export | `[ ] PLANNED` | Export relevant activity/session data in CSV for analysis. Exact columns, units, and selection options: **NA — not specified in the legacy feature source**. JSON remains the backup/restore format. |
+| **Step 6.7** | Validate CSV output | `[ ] PLANNED` | Test CSV formatting and handling of empty or optional values. Detailed compatibility requirements: **NA — not specified in the legacy feature source**. |
 
 ### 9.3 Phase 6 Verification & Acceptance Criteria
 
@@ -677,7 +708,11 @@ lib/
 | **Fixture Ingestion** | Ingestion of reference fixture | Importing `docs/persona-worked-xample.json` succeeds after recomputing its illustrative checksum; records are normalized and typed before the atomic write. Session imports invoke the analytics rebuild callback. |
 | **Conflict Resolution** | `DUPLICATE_WITH_NEW_ID` check | Importing an existing routine with duplicate strategy produces an independent routine with remapped block/set IDs. |
 
+**Additional acceptance requirements:** Keep CSV export separate from JSON backup/restore. 
+
 **Implemented:** Export, SHA-256 validation, chained v1→v2→v3 migration, typed payload validation, Drift transaction import, keep/overwrite/duplicate conflict strategies, reference-fixture normalization, file picker UI, and analytics rebuild wiring. Focused coverage lives in `test/features/portability/portability_test.dart`. The fixture test recalculates its placeholder checksum; unmodified placeholder fixtures are rejected as designed. Analytics rebuilding occurs after document commit, so a projection failure does not roll back the imported source documents.
+
+**Legacy parity addition:** Add CSV export as a separate analysis-oriented output, not a replacement for JSON backup/restore. 
 
 ---
 
@@ -874,6 +909,7 @@ Adapt the existing screens for mobile phones, tablets, and laptop/desktop window
 - Verify portrait and landscape behavior, window resizing, text scaling, safe areas, scrolling, and dialogs/sheets at representative viewport sizes.
 - Support touch targets and gestures on mobile, keyboard navigation and focus traversal on laptop/desktop, and adaptive input affordances where mouse/keyboard are available.
 - Apply semantic labels/roles/order, visible focus, sufficient contrast, scalable text, and reduced-motion-aware transitions. Respect platform accessibility settings where Flutter exposes them.
+- Settings must support the legacy-requested theme and font customization where compatible with the current app. Preserve settings across restarts if supported by the existing settings model; do not introduce a new architecture for this feature.
 - Keep breakpoints and shared responsive primitives in the existing presentation/common or app theme boundary only when they are genuinely reused; avoid speculative design-system layers.
 
 ### 12.2 Execution Status
@@ -971,7 +1007,7 @@ Finish the existing notification service and add opt-in, low-noise sound and loc
 ### 15.1 Product and Platform Rules
 
 - Separate immediate in-workout audio cues from scheduled/background local notifications. Cues may report rest completion, set/session milestones, or user-configured progress; notifications may summarize meaningful progress or a chosen training reminder.
-- Make sound, vibration, notification categories, quiet hours, reminder schedule, and motivational messaging configurable. Respect OS notification permissions and system sound/Do Not Disturb settings; do not repeatedly prompt after denial.
+- Make available reminder settings configurable. The legacy source specifies customizable scheduled local notifications that may reference current goals or progress. Make sound, vibration, notification categories, quiet hours, reminder schedule, and motivational messaging configurable. Respect OS notification permissions and avoid repeated prompts after denial.
 - Keep messages truthful, concise, privacy-aware on lock screens, and based on persisted session/analytics state. Avoid shame, pressure, excessive frequency, duplicate milestones, or notifications for every logged set by default.
 - Request notification permission contextually, explain its value first, and keep the core app usable when permission is denied. Provide a preview/test action and a clear disable-all control.
 - Use stable notification identifiers and cancel/reschedule when preferences change, reminders are disabled, or a workout is completed. Handle timezone and daylight-saving changes for scheduled reminders.
@@ -1041,7 +1077,7 @@ Create a reusable Growth Gauge widget library on top of Flutter's general-purpos
 - Define a small set of semantic design tokens for color, spacing, shape, elevation, sizing, motion, and typography. Derive light/dark/high-contrast themes and accessible states from these tokens instead of repeating literals in screens.
 - Expose stable, composable application APIs for primary/secondary/destructive/icon buttons, selectable/action chips, filter controls, text/form fields, loading/empty/error states, and common layout containers. Support labels, icons, enabled/loading/selected states, callbacks, and extension points without business logic in the widgets.
 - Use platform-aware Material/Cupertino variants only where interaction or convention materially differs. Prefer Flutter's theme and platform-adaptive components when they satisfy the design; do not fork every widget or infer the OS from device models. Provide a consistent fallback for platforms without a dedicated style.
-- Centralize typography roles and font-family configuration. Reuse existing bundled fonts and current user font settings where appropriate; define sensible system fallbacks, support text scaling, and avoid fixed-height text that clips at larger sizes.
+- Centralize typography roles and font-family configuration. Reuse existing bundled fonts and current user font settings where appropriate; define sensible system fallbacks, support text scaling, and avoid fixed-height text that clips at larger sizes. Font family and text size should be user-configurable in Settings as required by the legacy feature.
 - Make controls keyboard-operable, screen-reader labeled, focus-visible, contrast-safe, and adequately sized for touch. Platform styling must not change the meaning or accessibility of a control.
 - Keep components presentation-only and easy to extend through composition and documented variants. Avoid a generic configuration framework or a new package unless a demonstrated requirement justifies it.
 
@@ -1063,3 +1099,30 @@ Create a reusable Growth Gauge widget library on top of Flutter's general-purpos
 - Typography uses centralized roles and bundled/system fallback fonts, respects settings and text scaling, and does not clip in supported responsive layouts.
 - Representative screens use the shared components, repeated hard-coded styling is reduced, and component tests cover supported platform variants, visual states, semantics, focus, and large text.
 - The library remains presentation-only, extensible through clear variants/composition, and introduces no unnecessary dependency or competing design system.
+
+
+---
+
+## 21. Legacy Feature Parity Crosswalk (Retrofit Checklist)
+
+This crosswalk maps `features.md` into the existing phase structure. It does not reinstate the retired generic counter/timer implementation. Statuses below are requirements to verify against the implementation; they are not claims that work is complete.
+
+| Legacy / realigned requirement | Target phase(s) in this plan | Required coverage |
+|---|---|---|
+| Organized counters and timers / goal-centric activity list | Phases 3, 4, 5, 12 | Count- and time-based activities; goal grouping/sorting; progress bars; activity detail views. |
+| Heatmaps and 7-day charts | Phase 4 | Streak/calendar heatmaps plus 7/14/30/90-day charts and explicit date-window behavior. |
+| JSON and CSV export; restore/import | Phase 6 | Versioned lossless JSON export/import with checksum, migrations, conflicts, and rebuild; separate analysis-oriented CSV export. |
+| Persistent local storage | Phases 1, 6 | Keep the plan's existing Drift/SQLite storage architecture and schema-migration work; do not restore Shared Preferences as the fitness-record store. |
+| Themes and fonts | Phases 12, 17 | User-selectable themes and fonts; exact theme variants, font choices, and size presets: **NA — not specified in the legacy source**. |
+| Biometric lock with PIN fallback | Phase 14 | Native biometric capability checks, explicit PIN fallback, secure salted PIN verifier, throttling/recovery, protected-route gating. |
+| Scheduled local notifications | Phase 15 | Customizable scheduled local reminders; exact cadence choices and message templates: **NA — not specified in the legacy source**. |
+| Fitness profile and constraints | Phase 5 | Baseline height/weight/resting HR and supported metrics; injuries/constraints and equipment limitations. |
+| Fitness assessment score | Phase 5 (with Phase 4 analytics inputs) | Composite score based on user data/activity history; formula, weights, scale, and thresholds: **NA — not specified in the legacy source**. |
+| Daily log (mood, notes, RPE) | Phases 3, 4 | Persisted daily/session fields and display in history; nullable analytics handling. |
+| Preset/custom workout and interval timer | Phases 2, 3 | Saved routines/templates plus work/rest/cooldown interval blocks, pause/resume/recovery. |
+| Voice-guided coach (TTS) | Phases 3, 15 | Optional TTS interval cues, user controls, lifecycle safety, visual/semantic equivalents and silent mode. |
+| GitHub Actions build/release artifacts | Phase 16 | Consistent SDK/check commands, secure CI, tag-based release builds and verified downloadable artifacts. |
+
+### Cross-cutting acceptance gate
+
+Before declaring legacy parity complete, verify each row against code and tests, update the relevant phase tracker/status only after evidence exists, and record any deliberately deferred item. Do not change the current architecture or reintroduce `lib/features/counter/`, `lib/features/timer/`, legacy Shared Preferences repositories, or obsolete routes merely to achieve feature-name parity. Where a legacy feature’s detailed behavior is not specified, mark it **NA** rather than inventing requirements.
