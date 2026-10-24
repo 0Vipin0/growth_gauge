@@ -95,6 +95,7 @@ const _$SetTypeEnumMap = {
 
 const _$ExecutionSetStatusEnumMap = {
   ExecutionSetStatus.planned: 'planned',
+  ExecutionSetStatus.pending: 'pending',
   ExecutionSetStatus.inProgress: 'inProgress',
   ExecutionSetStatus.completed: 'completed',
   ExecutionSetStatus.skipped: 'skipped',

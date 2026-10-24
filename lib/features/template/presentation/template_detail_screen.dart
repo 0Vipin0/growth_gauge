@@ -11,14 +11,14 @@ import '../infrastructure/template_repository.dart';
 import 'template_editor_screen.dart';
 
 class const TemplateDetailScreen({
-    super.key,
-    required final WorkoutTemplate template,
-    required final ITemplateRepository repository,
-    required final IExerciseRepository exerciseRepository,
-    required final TemplateUseCases useCases,
-    required final SessionUseCases sessionUseCases,
-    required final String userId,
-  }) extends StatefulWidget {
+  super.key,
+  required final WorkoutTemplate template,
+  required final ITemplateRepository repository,
+  required final IExerciseRepository exerciseRepository,
+  required final TemplateUseCases useCases,
+  required final SessionUseCases sessionUseCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<TemplateDetailScreen> createState() => _TemplateDetailScreenState();
 }

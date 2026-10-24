@@ -11,22 +11,22 @@ import '../application/session_use_cases.dart';
 import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
 import '../domain/session_enums.dart';
-import '../domain/session_item.dart';
 import '../domain/workout_session.dart';
+import '../widgets/active_exercise_card.dart';
+import '../widgets/workout_blocks_list.dart';
 import 'session_summary_screen.dart';
 
 class const ActiveSessionScreen({
-  super.key,
-  required final WorkoutSession session,
-  required final SessionUseCases useCases,
-  required final IExerciseRepository exerciseRepository,
-}) extends StatefulWidget {
+    super.key,
+    required final WorkoutSession session,
+    required final SessionUseCases useCases,
+    required final IExerciseRepository exerciseRepository,
+  }) extends StatefulWidget {
   @override
   State<ActiveSessionScreen> createState() => _ActiveSessionScreenState();
 }
 
-class _ActiveSessionScreenState()
-    extends State<ActiveSessionScreen>
+class _ActiveSessionScreenState() extends State<ActiveSessionScreen>
     with WidgetsBindingObserver {
   late WorkoutSession _session = widget.session;
   late final WorkoutSessionBloc _sessionBloc;
@@ -35,6 +35,7 @@ class _ActiveSessionScreenState()
   DateTime _now = DateTime.now().toUtc();
   bool _busy = false;
   bool _backgroundPausePending = false;
+  int _activeSetIndex = 0;
   final Map<String, String> _exerciseNames = {};
   final Set<String> _finishingRestIds = {};
 
@@ -455,9 +456,42 @@ class _ActiveSessionScreenState()
   @override
   Widget build(BuildContext context) {
     final paused = _session.status == SessionStatus.paused;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final allSetsWithInfo = <({ExecutionSet set, String exerciseName})>[];
+    for (final block in _session.blocks) {
+      for (final item in block.items) {
+        final exName = _exerciseNames[item.exerciseId] ?? item.exerciseId;
+        for (final set in item.sets) {
+          allSetsWithInfo.add((set: set, exerciseName: exName));
+        }
+      }
+    }
+
+    if (_activeSetIndex >= allSetsWithInfo.length &&
+        allSetsWithInfo.isNotEmpty) {
+      _activeSetIndex = allSetsWithInfo.length - 1;
+    }
+    if (_activeSetIndex < 0) _activeSetIndex = 0;
+
+    final currentInfo = allSetsWithInfo.isNotEmpty
+        ? allSetsWithInfo[_activeSetIndex]
+        : null;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: Text(_session.templateName),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => _endSession(abandon: true),
+        ),
+        title: Text(
+          _session.templateName,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        centerTitle: true,
         actions: [
           Semantics(
             button: true,
@@ -475,304 +509,100 @@ class _ActiveSessionScreenState()
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Semantics(
-            liveRegion: true,
-            label:
-                'Workout time. Active ${_duration(_session.elapsedActiveSecondsAt(_now))}, elapsed ${_duration(_session.elapsedWallClockSecondsAt(_now))}',
-            child: Material(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Wrap(
-                  alignment: WrapAlignment.spaceAround,
-                  spacing: 32,
-                  runSpacing: 12,
-                  children: [
-                    _Metric(
-                      label: 'Active',
-                      value: _duration(_session.elapsedActiveSecondsAt(_now)),
-                    ),
-                    _Metric(
-                      label: 'Elapsed',
-                      value: _duration(
-                        _session.elapsedWallClockSecondsAt(_now),
-                      ),
-                    ),
-                  ],
+      body: ResponsiveContent(
+        maxWidth: 850,
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          children: [
+            // Focused Active Exercise Card with Timers & Action Buttons
+            ActiveExerciseCard(
+              exerciseName: currentInfo?.exerciseName ?? 'Workout Active',
+              currentSet: currentInfo?.set,
+              isBusy: _busy,
+              activeDurationText: _duration(
+                _session.elapsedActiveSecondsAt(_now),
+              ),
+              elapsedDurationText: _duration(
+                _session.elapsedWallClockSecondsAt(_now),
+              ),
+              onRecord: _record,
+              onEditTarget: _editTarget,
+              onDelete: _deleteSet,
+              onSkip: (set) => _apply(
+                () => widget.useCases.skipSet(
+                  sessionId: _session.id,
+                  setId: set.id,
+                ),
+              ),
+              onNext: () {
+                if (_activeSetIndex < allSetsWithInfo.length - 1) {
+                  setState(() => _activeSetIndex++);
+                }
+              },
+              onPrevious: () {
+                if (_activeSetIndex > 0) {
+                  setState(() => _activeSetIndex--);
+                }
+              },
+            ),
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 16),
+
+            // Full Workout Blocks & Sets List
+            WorkoutBlocksList(
+              session: _session,
+              exerciseNames: _exerciseNames,
+              actionsEnabled: !_busy && !paused,
+              onRecord: _record,
+              onEditTarget: _editTarget,
+              onDelete: _deleteSet,
+              onSkip: (set) => _apply(
+                () => widget.useCases.skipSet(
+                  sessionId: _session.id,
+                  setId: set.id,
+                ),
+              ),
+              onRest: (set) => _apply(
+                () => widget.useCases.startRest(
+                  sessionId: _session.id,
+                  executionSetId: set.id,
                 ),
               ),
             ),
-          ),
-          if (paused)
-            const ListTile(
-              leading: Icon(Icons.pause_circle_outline),
-              title: Text('Workout paused'),
-            ),
-          Expanded(
-            child: ResponsiveContent(
-              maxWidth: 1100,
-              child: ListView(
-                padding: const EdgeInsets.only(bottom: 100),
-                children: [
-                  for (final block in _session.blocks) ...[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
-                      child: Text(
-                        block.name,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                    for (final item in block.items)
-                      _ExerciseCard(
-                        item: item,
-                        exerciseName:
-                            _exerciseNames[item.exerciseId] ?? item.exerciseId,
-                        actionsEnabled: !_busy && !paused,
-                        onRecord: _record,
-                        onEditTarget: _editTarget,
-                        onDelete: _deleteSet,
-                        onSkip: (set) => _apply(
-                          () => widget.useCases.skipSet(
-                            sessionId: _session.id,
-                            setId: set.id,
-                          ),
-                        ),
-                        onRest: (set) => _apply(
-                          () => widget.useCases.startRest(
-                            sessionId: _session.id,
-                            executionSetId: set.id,
-                          ),
+            const SizedBox(height: 60),
+            SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 850),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: _busy || paused ? null : _complete,
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                  ],
-                  const SizedBox(height: 24),
-                  for (final rest in _session.restIntervals.where(
-                    (entry) => entry.endedAt == null,
-                  ))
-                    Card(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      child: ListTile(
-                        leading: const Icon(Icons.hourglass_top),
-                        title: Semantics(
-                          liveRegion: true,
-                          label:
-                              'Rest timer ${_duration(_now.difference(rest.startedAt).inSeconds)} of ${_duration(rest.plannedDurationSeconds)}',
-                          child: Text(
-                            'Rest ${_duration(_now.difference(rest.startedAt).inSeconds)}',
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Target ${_duration(rest.plannedDurationSeconds)}',
-                        ),
-                        trailing: Wrap(
-                          spacing: 4,
-                          children: [
-                            if (rest.allowExtend)
-                              IconButton(
-                                tooltip: 'Extend rest by 15 seconds',
-                                onPressed:
-                                    _busy ||
-                                        (rest.maximumDurationSeconds != null &&
-                                            rest.plannedDurationSeconds >=
-                                                rest.maximumDurationSeconds!)
-                                    ? null
-                                    : () => _apply(
-                                        () => widget.useCases.extendRest(
-                                          _session.id,
-                                          restIntervalId: rest.id,
-                                        ),
-                                      ),
-                                icon: const Icon(Icons.add_circle_outline),
-                              ),
-                            if (rest.allowSkip)
-                              TextButton(
-                                onPressed:
-                                    _busy ||
-                                        _now
-                                                .difference(rest.startedAt)
-                                                .inSeconds <
-                                            rest.minimumDurationSeconds
-                                    ? null
-                                    : () => _apply(
-                                        () => widget.useCases.skipRest(
-                                          _session.id,
-                                          restIntervalId: rest.id,
-                                        ),
-                                      ),
-                                child: const Text('Skip'),
-                              ),
-                            Semantics(
-                              button: true,
-                              label: 'Finish rest interval',
-                              child: FilledButton(
-                                onPressed:
-                                    _busy ||
-                                        _now
-                                                .difference(rest.startedAt)
-                                                .inSeconds <
-                                            rest.minimumDurationSeconds ||
-                                        (!rest.allowSkip &&
-                                            _now
-                                                    .difference(rest.startedAt)
-                                                    .inSeconds <
-                                                rest.plannedDurationSeconds)
-                                    ? null
-                                    : () => _apply(
-                                        () => widget.useCases.finishRest(
-                                          _session.id,
-                                          restIntervalId: rest.id,
-                                        ),
-                                      ),
-                                child: const Text('Done'),
-                              ),
-                            ),
-                          ],
+                      icon: const Icon(Icons.check),
+                      label: const Text(
+                        'Complete workout',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(16),
-        child: Semantics(
-          button: true,
-          label: 'Complete workout',
-          child: FilledButton.icon(
-            onPressed: _busy || paused ? null : _complete,
-            icon: const Icon(Icons.check),
-            label: const Text('Complete workout'),
-          ),
+          ],
         ),
       ),
     );
   }
-}
-
-class const _ExerciseCard({
-  required final SessionItem item,
-  required final String exerciseName,
-  required final bool actionsEnabled,
-  required final ValueChanged<ExecutionSet> onRecord,
-  required final ValueChanged<ExecutionSet> onEditTarget,
-  required final ValueChanged<ExecutionSet> onDelete,
-  required final ValueChanged<ExecutionSet> onSkip,
-  required final ValueChanged<ExecutionSet> onRest,
-}) extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Card(
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(exerciseName, style: Theme.of(context).textTheme.titleMedium),
-          for (final set in item.sets)
-            ListTile(
-              dense: true,
-              title: Text(
-                'Set ${set.setNumber}  ·  ${set.targetWeight == null ? '' : '${set.targetWeight} kg'} ${set.targetReps == null ? '' : '× ${set.targetReps}'}',
-              ),
-              subtitle: Text(set.status.name.toUpperCase()),
-              trailing: set.status == ExecutionSetStatus.completed
-                  ? PopupMenuButton<_SetAction>(
-                      enabled: actionsEnabled,
-                      onSelected: (action) {
-                        if (action == _SetAction.startRest) {
-                          onRest(set);
-                        } else {
-                          onDelete(set);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        if (set.plannedRestSeconds > 0)
-                          const PopupMenuItem(
-                            value: _SetAction.startRest,
-                            child: Text('Start rest'),
-                          ),
-                        const PopupMenuItem(
-                          value: _SetAction.delete,
-                          child: Text('Delete set'),
-                        ),
-                      ],
-                    )
-                  : set.status == ExecutionSetStatus.skipped
-                  ? PopupMenuButton<_SetAction>(
-                      enabled: actionsEnabled,
-                      onSelected: (_) => onDelete(set),
-                      itemBuilder: (context) => const [
-                        PopupMenuItem(
-                          value: _SetAction.delete,
-                          child: Text('Delete set'),
-                        ),
-                      ],
-                    )
-                  : PopupMenuButton<_SetAction>(
-                      enabled: actionsEnabled,
-                      onSelected: (action) {
-                        switch (action) {
-                          case _SetAction.editTarget:
-                            onEditTarget(set);
-                          case _SetAction.record:
-                            onRecord(set);
-                          case _SetAction.startRest:
-                            onRest(set);
-                          case _SetAction.skip:
-                            onSkip(set);
-                          case _SetAction.delete:
-                            onDelete(set);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: _SetAction.editTarget,
-                          child: Text('Edit target'),
-                        ),
-                        const PopupMenuItem(
-                          value: _SetAction.record,
-                          child: Text('Log set'),
-                        ),
-                        const PopupMenuItem(
-                          value: _SetAction.skip,
-                          child: Text('Skip set'),
-                        ),
-                        const PopupMenuItem(
-                          value: _SetAction.delete,
-                          child: Text('Delete set'),
-                        ),
-                      ],
-                    ),
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
-enum _SetAction() {
-  editTarget,
-  record,
-  startRest,
-  skip,
-  delete,
-}
-
-class const _Metric({required final String label, required final String value})
-    extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      Text(value, style: Theme.of(context).textTheme.titleLarge),
-      Text(label, style: Theme.of(context).textTheme.labelMedium),
-    ],
-  );
 }

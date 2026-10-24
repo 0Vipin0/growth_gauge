@@ -36,6 +36,7 @@ enum AuditAction() {
 
 enum ExecutionSetStatus() {
   planned,
+  pending,
   inProgress,
   completed,
   skipped,
