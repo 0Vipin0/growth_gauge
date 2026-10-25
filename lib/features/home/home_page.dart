@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/routing/app_router.dart';
+import '../analytics/analytics.dart';
 import '../catalog/infrastructure/exercise_repository.dart';
 import '../common/presentation/widgets/responsive_layout.dart';
 import '../session/application/session_use_cases.dart';
@@ -26,13 +27,14 @@ import 'fitness_hub_page.dart';
 /// On mount it checks for unfinished sessions and offers session recovery via
 /// [SessionRecoveryDialog].
 class const HomePage({
-  super.key,
-  required final IWorkoutSessionRepository sessionRepository,
-  required final SessionUseCases sessionUseCases,
-  required final IExerciseRepository exerciseRepository,
-  required final ITemplateRepository templateRepository,
-  final String userId = 'local-user',
-}) extends StatefulWidget {
+    super.key,
+    required final IWorkoutSessionRepository sessionRepository,
+    required final SessionUseCases sessionUseCases,
+    required final IExerciseRepository exerciseRepository,
+    required final ITemplateRepository templateRepository,
+    final List<DailyWorkoutSummary> workoutHistory = const [],
+    final String userId = 'local-user',
+  }) extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -195,6 +197,7 @@ class _HomePageState() extends State<HomePage> {
                     onPageChanged: (i) => setState(() => _selectedIndex = i),
                     fitnessHubPage: FitnessHubPage(
                       templateRepository: widget.templateRepository,
+                      workoutHistory: widget.workoutHistory,
                       onStartTemplate: _startTemplate,
                       onProfileTap: () => context.push(appRouteProfile),
                       onAnalyticsTap: () => context.push(appRouteAnalytics),

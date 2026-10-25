@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/analytics_cubit.dart';
 import '../../domain/analytics_enums.dart';
+import '../../domain/personal_record.dart';
 import '../widgets/pr_badge_card.dart';
 
 /// Screen listing all earned PR trophies and personal achievements,
-/// optimized for small, medium, and large screens with responsive constraints.
+/// featuring clear data segregation, multi-filter options, and sorting controls.
 class const PrTrophyScreen({super.key}) extends StatefulWidget {
   @override
   State<PrTrophyScreen> createState() => _PrTrophyScreenState();
@@ -15,6 +16,7 @@ class const PrTrophyScreen({super.key}) extends StatefulWidget {
 
 class _PrTrophyScreenState() extends State<PrTrophyScreen> {
   PrType? _selectedFilter;
+  String _sortBy = 'date_desc'; // 'date_desc', 'value_desc', 'exercise_asc'
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +32,24 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
       ),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
         builder: (context, state) {
+          // 1. Filter records
           final prs = _selectedFilter == null
-              ? state.personalRecords
+              ? List<PersonalRecord>.from(state.personalRecords)
               : state.personalRecords
                     .where((p) => p.prType == _selectedFilter)
                     .toList();
+
+          // 2. Sort records
+          prs.sort((a, b) {
+            if (_sortBy == 'date_desc') {
+              return b.achievedAt.compareTo(a.achievedAt);
+            } else if (_sortBy == 'value_desc') {
+              return b.value.compareTo(a.value);
+            } else if (_sortBy == 'exercise_asc') {
+              return a.exerciseId.compareTo(b.exerciseId);
+            }
+            return 0;
+          });
 
           return SafeArea(
             child: Align(
@@ -42,18 +57,60 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1000),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Filter Chips Bar
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
+                    // Controls Header: Filters & Sorting Dropdown
+                    Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth >= 900 ? 32 : 20,
                         vertical: 12.0,
                       ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Achievements (${prs.length})',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          DropdownButton<String>(
+                            value: _sortBy,
+                            underline: const SizedBox.shrink(),
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'date_desc',
+                                child: Text('Newest First'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'value_desc',
+                                child: Text('Highest Value'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'exercise_asc',
+                                child: Text('Exercise A-Z'),
+                              ),
+                            ],
+                            onChanged: (val) {
+                              if (val != null) {
+                                setState(() => _sortBy = val);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Filter Chips Bar
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth >= 900 ? 32 : 20,
+                      ),
+                      child: Row(
                         children: [
                           FilterChip(
-                            label: const Text('All'),
+                            label: const Text('All Trophies'),
                             selected: _selectedFilter == null,
                             onSelected: (_) =>
                                 setState(() => _selectedFilter = null),
@@ -80,6 +137,7 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 12),
 
                     // Trophies List / Empty State
                     Expanded(

@@ -12,7 +12,7 @@ import '../domain/personal_record.dart';
 /// All queries are scoped to a [userId] and return typed domain read models.
 /// Queries use Drift's reactive `watch()` streams so the UI auto-updates when
 /// the projector writes new rows.
-class AnalyticsDao(final AppDatabase _db) {
+class const AnalyticsDao(final AppDatabase _db) {
   // ---------------------------------------------------------------------------
   // Workout History
   // ---------------------------------------------------------------------------
@@ -135,7 +135,7 @@ class AnalyticsDao(final AppDatabase _db) {
   }
 
   // ---------------------------------------------------------------------------
-  // Row mappers
+  // Row mappers with safe fallbacks
   // ---------------------------------------------------------------------------
 
   DailyWorkoutSummary _mapSummary(DailyWorkoutSummaryRow row) =>
@@ -169,17 +169,25 @@ class AnalyticsDao(final AppDatabase _db) {
         setType: row.setType,
       );
 
-  PersonalRecord _mapPr(PersonalRecordRow row) => PersonalRecord(
-    id: row.id,
-    exerciseId: row.exerciseId,
-    userId: row.userId,
-    prType: PrType.values.firstWhere((e) => e.name == row.prType),
-    value: row.value,
-    sessionId: row.sessionId,
-    setId: row.setId,
-    achievedAt: row.achievedAt,
-    replacesRecordId: row.replacesRecordId,
-  );
+  PersonalRecord _mapPr(PersonalRecordRow row) {
+    // Safely parse PR type with a fallback to avoid crash on unexpected database string values
+    final parsedPrType = PrType.values.firstWhere(
+      (e) => e.name.toLowerCase() == row.prType.toLowerCase(),
+      orElse: () => PrType.maxWeight,
+    );
+
+    return PersonalRecord(
+      id: row.id,
+      exerciseId: row.exerciseId,
+      userId: row.userId,
+      prType: parsedPrType,
+      value: row.value,
+      sessionId: row.sessionId,
+      setId: row.setId,
+      achievedAt: row.achievedAt,
+      replacesRecordId: row.replacesRecordId,
+    );
+  }
 
   MuscleVolumeStat _mapMuscleVolume(MuscleVolumeBreakdownRow row) =>
       MuscleVolumeStat(

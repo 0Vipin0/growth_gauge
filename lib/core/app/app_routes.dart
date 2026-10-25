@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,11 +52,18 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
-      builder: (_, _) => HomePage(
-        sessionRepository: sessions,
-        sessionUseCases: sessionUseCases,
-        exerciseRepository: exercises,
-        templateRepository: templates,
+      builder: (_, _) => StreamBuilder<List<DailyWorkoutSummary>>(
+        stream: analyticsQueries.watchWorkoutHistory('local-user'),
+        builder: (context, snapshot) {
+          final workoutHistory = snapshot.data ?? [];
+          return HomePage(
+            sessionRepository: sessions,
+            sessionUseCases: sessionUseCases,
+            exerciseRepository: exercises,
+            templateRepository: templates,
+            workoutHistory: workoutHistory,
+          );
+        },
       ),
     ),
     appGoRoute(
