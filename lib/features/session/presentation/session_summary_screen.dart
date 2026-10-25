@@ -333,9 +333,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
-                      onPressed: () =>
-                          Navigator.of(context)
-                              .popUntil((route) => route.isFirst),
+                      onPressed: () => context.go(appRouteHome),
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../catalog/domain/exercise_enums.dart';
 
 /// Modal bottom sheet allowing users to toggle owned/accessible equipment.
@@ -66,7 +68,7 @@ class _EquipmentInventorySheetState() extends State<EquipmentInventorySheet> {
               TextButton(
                 onPressed: () {
                   widget.onSaved(_selected.toList());
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
                 child: const Text('Save'),
               ),

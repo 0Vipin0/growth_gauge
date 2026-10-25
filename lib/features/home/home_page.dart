@@ -10,7 +10,6 @@ import '../common/presentation/widgets/responsive_layout.dart';
 import '../session/application/session_use_cases.dart';
 import '../session/domain/session_enums.dart';
 import '../session/infrastructure/session_repository.dart';
-import '../session/presentation/active_session_screen.dart';
 import '../session/presentation/session_recovery_dialog.dart';
 import '../settings/settings_page.dart';
 import '../template/template.dart';
@@ -87,15 +86,7 @@ class _HomePageState() extends State<HomePage> {
     final session = recovery.dataOrNull!;
     if (session.status == SessionStatus.completed) return;
 
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ActiveSessionScreen(
-          session: session,
-          useCases: widget.sessionUseCases,
-          exerciseRepository: widget.exerciseRepository,
-        ),
-      ),
-    );
+    await context.push(appRouteActiveSession, extra: session);
   }
 
   // ---------------------------------------------------------------------------
@@ -145,15 +136,7 @@ class _HomePageState() extends State<HomePage> {
       return;
     }
 
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ActiveSessionScreen(
-          session: startResult.dataOrNull!,
-          useCases: widget.sessionUseCases,
-          exerciseRepository: widget.exerciseRepository,
-        ),
-      ),
-    );
+    await context.push(appRouteActiveSession, extra: startResult.dataOrNull);
   }
 
   void _showError(String message) {
@@ -242,11 +225,11 @@ class _HomePageState() extends State<HomePage> {
 
 /// Responsive navigation rail shown on medium and expanded layouts.
 class const _AppNavigationRail({
-    required final int selectedIndex,
-    required final bool extended,
-    required final ValueChanged<int> onDestinationSelected,
-    required final VoidCallback onToggleExtended,
-  }) extends StatelessWidget {
+  required final int selectedIndex,
+  required final bool extended,
+  required final ValueChanged<int> onDestinationSelected,
+  required final VoidCallback onToggleExtended,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -279,9 +262,9 @@ class const _AppNavigationRail({
 
 /// Bottom navigation bar shown on compact (mobile) layouts.
 class const _AppBottomNavigationBar({
-    required final int selectedIndex,
-    required final ValueChanged<int> onDestinationSelected,
-  }) extends StatelessWidget {
+  required final int selectedIndex,
+  required final ValueChanged<int> onDestinationSelected,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -303,10 +286,10 @@ class const _AppBottomNavigationBar({
 
 /// [PageView] hosting the two top-level destinations.
 class const _DestinationPageView({
-    required final PageController controller,
-    required final ValueChanged<int> onPageChanged,
-    required final Widget fitnessHubPage,
-  }) extends StatelessWidget {
+  required final PageController controller,
+  required final ValueChanged<int> onPageChanged,
+  required final Widget fitnessHubPage,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView(

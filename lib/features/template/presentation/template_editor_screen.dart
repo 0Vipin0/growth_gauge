@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../core/ids/unique_id.dart';
 import '../../catalog/domain/exercise.dart';
 import '../../catalog/domain/exercise_enums.dart';
@@ -326,7 +328,7 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
     }
     if (mounted) {
       setState(() => _saving = false);
-      Navigator.of(context).pop();
+      context.pop();
     }
   }
 

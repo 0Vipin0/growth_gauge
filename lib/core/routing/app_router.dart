@@ -14,6 +14,14 @@ const appRouteProfile = '/profile';
 const appRouteGoals = '/goals';
 const appRouteMeasurements = '/measurements';
 const appRouteBackupRestore = '/backup_restore';
+const appRouteActiveSession = '/active_session';
+const appRouteSessionSummary = '/session_summary';
+const appRoutePrTrophies = '/pr_trophies';
+const appRouteExerciseProgression = '/exercise_progression';
+const appRouteCustomExercise = '/custom_exercise';
+const appRouteExerciseDetail = '/exercise_detail';
+const appRouteTemplateDetail = '/template_detail';
+const appRouteTemplateEditor = '/template_editor';
 
 const appRouteNameLaunch = 'launch';
 const appRouteNameHome = 'home';
@@ -27,6 +35,14 @@ const appRouteNameProfile = 'profile';
 const appRouteNameGoals = 'goals';
 const appRouteNameMeasurements = 'measurements';
 const appRouteNameBackupRestore = 'backup-restore';
+const appRouteNameActiveSession = 'active-session';
+const appRouteNameSessionSummary = 'session-summary';
+const appRouteNamePrTrophies = 'pr-trophies';
+const appRouteNameExerciseProgression = 'exercise-progression';
+const appRouteNameCustomExercise = 'custom-exercise';
+const appRouteNameExerciseDetail = 'exercise-detail';
+const appRouteNameTemplateDetail = 'template-detail';
+const appRouteNameTemplateEditor = 'template-editor';
 
 /// Owns GoRouter lifecycle, the app-wide transition, and unmatched paths.
 class AppRouter({
@@ -46,13 +62,13 @@ class AppRouter({
 GoRoute appGoRoute({
   required String path,
   required String name,
-  required WidgetBuilder builder,
+  required GoRouterWidgetBuilder builder,
 }) => GoRoute(
   path: path,
   name: name,
   pageBuilder: (context, state) => CustomTransitionPage<void>(
     key: state.pageKey,
-    child: builder(context),
+    child: builder(context, state),
     transitionsBuilder: (context, animation, secondaryAnimation, child) =>
         FadeTransition(
           opacity: animation,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
+import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
-import '../../session/presentation/active_session_screen.dart';
 import '../application/template_use_cases.dart';
 import '../domain/template_enums.dart';
 import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
 import '../infrastructure/template_repository.dart';
-import 'template_editor_screen.dart';
 
 class const TemplateDetailScreen({
   super.key,
@@ -55,17 +56,7 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
       revision = draft.dataOrNull!;
     }
     if (!mounted) return;
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => TemplateEditorScreen(
-          revision: revision,
-          repository: widget.repository,
-          exerciseRepository: widget.exerciseRepository,
-          useCases: widget.useCases,
-          userId: widget.userId,
-        ),
-      ),
-    );
+    await context.push(appRouteTemplateEditor, extra: revision);
     final latest = await widget.repository.getTemplate(_template.id);
     if (latest.isSuccess && mounted) {
       setState(() => _template = latest.dataOrNull!);
@@ -97,15 +88,7 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
         ).showSnackBar(SnackBar(content: Text(started.errorOrNull!.message)));
         return;
       }
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => ActiveSessionScreen(
-            session: started.dataOrNull!,
-            useCases: widget.sessionUseCases,
-            exerciseRepository: widget.exerciseRepository,
-          ),
-        ),
-      );
+      await context.push(appRouteActiveSession, extra: started.dataOrNull);
     } finally {
       if (mounted) setState(() => _starting = false);
     }

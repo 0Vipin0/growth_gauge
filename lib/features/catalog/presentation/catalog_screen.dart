@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
+import '../../../core/routing/app_router.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_enums.dart';
 import '../infrastructure/exercise_repository.dart';
-import 'custom_exercise_screen.dart';
-import 'exercise_detail_screen.dart';
 
 class const CatalogScreen({
   super.key,
@@ -72,14 +73,7 @@ class _CatalogScreenState() extends State<CatalogScreen> {
       appBar: AppBar(title: const Text('Exercise catalog'), centerTitle: true),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final created = await Navigator.of(context).push<bool>(
-            MaterialPageRoute(
-              builder: (_) => CustomExerciseScreen(
-                useCases: widget.useCases,
-                userId: widget.userId,
-              ),
-            ),
-          );
+          final created = await context.push<bool>(appRouteCustomExercise);
           if (created == true && mounted) setState(_load);
         },
         backgroundColor: colorScheme.primary,
@@ -334,16 +328,7 @@ class _CatalogScreenState() extends State<CatalogScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => ExerciseDetailScreen(
-              exercise: exercise,
-              repository: widget.repository,
-              useCases: widget.useCases,
-              userId: widget.userId,
-            ),
-          ),
-        ),
+        onTap: () => context.push(appRouteExerciseDetail, extra: exercise),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../common/presentation/widgets/responsive_form_layout.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise_enums.dart';
@@ -229,7 +231,7 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
     } else {
-      Navigator.of(context).pop(true);
+      context.pop(true);
     }
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/routing/app_router.dart';
 import '../../../common/presentation/widgets/responsive_layout.dart';
 import '../../application/analytics_cubit.dart';
 import '../widgets/pr_badge_card.dart';
 import '../widgets/volume_bar_chart.dart';
 import '../widgets/workout_frequency_heatmap.dart';
-import 'exercise_progression_screen.dart';
-import 'pr_trophy_screen.dart';
 
 /// Central dashboard for analytics: weekly volume, workout frequency heatmap,
 /// and recent PR achievements.
@@ -23,13 +23,9 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
             icon: const Icon(Icons.emoji_events),
             tooltip: 'All PR Trophies',
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<AnalyticsCubit>(),
-                    child: const PrTrophyScreen(),
-                  ),
-                ),
+              context.push(
+                appRoutePrTrophies,
+                extra: context.read<AnalyticsCubit>(),
               );
             },
           ),
@@ -37,13 +33,9 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
             icon: const Icon(Icons.show_chart),
             tooltip: 'Exercise Progression',
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<AnalyticsCubit>(),
-                    child: const ExerciseProgressionScreen(),
-                  ),
-                ),
+              context.push(
+                appRouteExerciseProgression,
+                extra: context.read<AnalyticsCubit>(),
               );
             },
           ),
@@ -97,13 +89,9 @@ class const AnalyticsDashboardScreen({super.key}) extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<AnalyticsCubit>(),
-                                child: const PrTrophyScreen(),
-                              ),
-                            ),
+                          context.push(
+                            appRoutePrTrophies,
+                            extra: context.read<AnalyticsCubit>(),
                           );
                         },
                         child: const Text('View All'),

@@ -91,6 +91,35 @@ void main() {
       router.namedLocation(appRouteNameBackupRestore),
       appRouteBackupRestore,
     );
+    expect(
+      router.namedLocation(appRouteNameActiveSession),
+      appRouteActiveSession,
+    );
+    expect(
+      router.namedLocation(appRouteNameSessionSummary),
+      appRouteSessionSummary,
+    );
+    expect(router.namedLocation(appRouteNamePrTrophies), appRoutePrTrophies);
+    expect(
+      router.namedLocation(appRouteNameExerciseProgression),
+      appRouteExerciseProgression,
+    );
+    expect(
+      router.namedLocation(appRouteNameCustomExercise),
+      appRouteCustomExercise,
+    );
+    expect(
+      router.namedLocation(appRouteNameExerciseDetail),
+      appRouteExerciseDetail,
+    );
+    expect(
+      router.namedLocation(appRouteNameTemplateDetail),
+      appRouteTemplateDetail,
+    );
+    expect(
+      router.namedLocation(appRouteNameTemplateEditor),
+      appRouteTemplateEditor,
+    );
   });
 
   test(

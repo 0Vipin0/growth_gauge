@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
+import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../common/presentation/widgets/responsive_layout.dart';
 import '../application/session_use_cases.dart';
@@ -12,7 +15,6 @@ import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';
 import '../domain/session_enums.dart';
 import '../domain/workout_session.dart';
-import 'session_summary_screen.dart';
 import 'widgets/widgets.dart';
 
 class const ActiveSessionScreen({
@@ -391,7 +393,7 @@ class _ActiveSessionScreenState()
           .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
       return;
     }
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _complete() async {
@@ -438,11 +440,7 @@ class _ActiveSessionScreenState()
           .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
       return;
     }
-    await Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => SessionSummaryScreen(session: result.dataOrNull!),
-      ),
-    );
+    context.pushReplacement(appRouteSessionSummary, extra: result.dataOrNull);
   }
 
   String _duration(int seconds) {

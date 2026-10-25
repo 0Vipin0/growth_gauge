@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
+import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
-import '../../session/presentation/active_session_screen.dart';
 import '../../session/presentation/session_recovery_dialog.dart';
 import '../application/template_use_cases.dart';
 import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
-import 'template_detail_screen.dart';
 
 class const TemplateListScreen({
   super.key,
@@ -61,15 +62,7 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
     if (!mounted) {
       return;
     }
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ActiveSessionScreen(
-          session: session,
-          useCases: widget.sessionUseCases,
-          exerciseRepository: widget.exerciseRepository,
-        ),
-      ),
-    );
+    await context.push(appRouteActiveSession, extra: session);
   }
 
   Future<void> _create() async {
@@ -176,17 +169,9 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                       ),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => TemplateDetailScreen(
-                              template: template,
-                              repository: widget.repository,
-                              exerciseRepository: widget.exerciseRepository,
-                              useCases: widget.useCases,
-                              sessionUseCases: widget.sessionUseCases,
-                              userId: widget.userId,
-                            ),
-                          ),
+                        onTap: () => context.push(
+                          appRouteTemplateDetail,
+                          extra: template,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(16),

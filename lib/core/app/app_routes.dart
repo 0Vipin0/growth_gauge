@@ -3,37 +3,18 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/analytics/application/analytics_cubit.dart';
-import '../../features/analytics/application/analytics_queries.dart';
-import '../../features/analytics/infrastructure/analytics_dao.dart';
-import '../../features/analytics/presentation/screens/analytics_dashboard_screen.dart';
-import '../../features/analytics/projection/projection_rebuilder.dart';
+import '../../features/analytics/analytics.dart';
 import '../../features/authentication/authentication.dart';
-import '../../features/catalog/application/catalog_use_cases.dart';
-import '../../features/catalog/infrastructure/exercise_repository.dart';
-import '../../features/catalog/presentation/catalog_screen.dart';
+import '../../features/catalog/catalog.dart';
 import '../../features/home/fitness_launch_screen.dart';
 import '../../features/home/home.dart';
-import '../../features/portability/application/export_data_use_case.dart';
-import '../../features/portability/application/import_data_use_case.dart';
-import '../../features/portability/application/portability_cubit.dart';
-import '../../features/portability/infrastructure/file_storage_service.dart';
-import '../../features/portability/migration/migration_registry.dart';
 import '../../features/portability/migration/steps/migration_v1_to_v2.dart';
 import '../../features/portability/migration/steps/migration_v2_to_v3.dart';
-import '../../features/portability/presentation/screens/backup_restore_screen.dart';
-import '../../features/session/application/session_use_cases.dart';
-import '../../features/session/infrastructure/session_repository.dart';
-import '../../features/settings/settings_page.dart';
-import '../../features/template/application/template_use_cases.dart';
-import '../../features/template/infrastructure/template_repository.dart';
-import '../../features/template/presentation/template_list_screen.dart';
-import '../../features/user/application/goal_cubit.dart';
-import '../../features/user/application/measurement_cubit.dart';
-import '../../features/user/application/user_use_cases.dart';
-import '../../features/user/presentation/screens/goals_screen.dart';
-import '../../features/user/presentation/screens/measurements_screen.dart';
-import '../../features/user/presentation/screens/profile_screen.dart';
+import '../../features/portability/portability.dart';
+import '../../features/session/session.dart';
+import '../../features/settings/settings.dart';
+import '../../features/template/template.dart';
+import '../../features/user/user.dart';
 import '../database/app_database.dart';
 import '../routing/app_router.dart';
 
@@ -64,37 +45,37 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteLaunch,
       name: appRouteNameLaunch,
-      builder: (_) => const FitnessLaunchScreen(),
+      builder: (_, _) => const FitnessLaunchScreen(),
     ),
     appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
-      builder: (_) => HomePage(
+      builder: (_, _) => HomePage(
         sessionRepository: sessions,
         sessionUseCases: sessionUseCases,
         exerciseRepository: exercises,
-        templateRepository: templates, // <--- Added TemplateRepository here
+        templateRepository: templates,
       ),
     ),
     appGoRoute(
       path: appRouteSettings,
       name: appRouteNameSettings,
-      builder: (_) => const SettingsPage(),
+      builder: (_, _) => const SettingsPage(),
     ),
     appGoRoute(
       path: appRouteBiometricAuth,
       name: appRouteNameBiometricAuth,
-      builder: (_) => const BiometricAuthScreen(),
+      builder: (_, _) => const BiometricAuthScreen(),
     ),
     appGoRoute(
       path: appRoutePinAuth,
       name: appRouteNamePinAuth,
-      builder: (_) => const PinAuthScreen(),
+      builder: (_, _) => const PinAuthScreen(),
     ),
     appGoRoute(
       path: appRouteExerciseCatalog,
       name: appRouteNameExerciseCatalog,
-      builder: (_) => CatalogScreen(
+      builder: (_, _) => CatalogScreen(
         repository: exercises,
         useCases: catalogUseCases,
         userId: 'local-user',
@@ -103,7 +84,7 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteWorkoutTemplates,
       name: appRouteNameWorkoutTemplates,
-      builder: (_) => TemplateListScreen(
+      builder: (_, _) => TemplateListScreen(
         repository: templates,
         exerciseRepository: exercises,
         sessionRepository: sessions,
@@ -115,7 +96,7 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteAnalytics,
       name: appRouteNameAnalytics,
-      builder: (_) => BlocProvider(
+      builder: (_, _) => BlocProvider(
         create: (_) {
           final cubit = AnalyticsCubit(queries: analyticsQueries);
           unawaited(cubit.triggerRebuild());
@@ -127,12 +108,12 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteProfile,
       name: appRouteNameProfile,
-      builder: (_) => ProfileScreen(useCases: userUseCases),
+      builder: (_, _) => ProfileScreen(useCases: userUseCases),
     ),
     appGoRoute(
       path: appRouteGoals,
       name: appRouteNameGoals,
-      builder: (_) => BlocProvider(
+      builder: (_, _) => BlocProvider(
         create: (_) => GoalCubit(useCases: userUseCases),
         child: const GoalsScreen(),
       ),
@@ -140,7 +121,7 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteMeasurements,
       name: appRouteNameMeasurements,
-      builder: (_) => BlocProvider(
+      builder: (_, _) => BlocProvider(
         create: (_) => MeasurementCubit(useCases: userUseCases),
         child: const MeasurementsScreen(),
       ),
@@ -148,7 +129,7 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteBackupRestore,
       name: appRouteNameBackupRestore,
-      builder: (_) => BlocProvider(
+      builder: (_, _) => BlocProvider(
         create: (_) => PortabilityCubit(
           exportData: exportData,
           importData: importData,
@@ -156,6 +137,110 @@ List<RouteBase> createAppRoutes({
         ),
         child: const BackupRestoreScreen(),
       ),
+    ),
+    appGoRoute(
+      path: appRouteActiveSession,
+      name: appRouteNameActiveSession,
+      builder: (_, state) {
+        final session = state.extra! as WorkoutSession;
+        return ActiveSessionScreen(
+          session: session,
+          useCases: sessionUseCases,
+          exerciseRepository: exercises,
+        );
+      },
+    ),
+    appGoRoute(
+      path: appRouteSessionSummary,
+      name: appRouteNameSessionSummary,
+      builder: (_, state) {
+        final session = state.extra! as WorkoutSession;
+        return SessionSummaryScreen(session: session);
+      },
+    ),
+    appGoRoute(
+      path: appRoutePrTrophies,
+      name: appRouteNamePrTrophies,
+      builder: (_, state) {
+        final cubit = state.extra as AnalyticsCubit?;
+        return BlocProvider.value(
+          value: cubit ?? AnalyticsCubit(queries: analyticsQueries),
+          child: const PrTrophyScreen(),
+        );
+      },
+    ),
+    appGoRoute(
+      path: appRouteExerciseProgression,
+      name: appRouteNameExerciseProgression,
+      builder: (_, state) {
+        final extra = state.extra;
+        final AnalyticsCubit cubit;
+        String? initialExerciseId;
+        if (extra is AnalyticsCubit) {
+          cubit = extra;
+        } else if (extra is Map) {
+          cubit =
+              extra['cubit'] as AnalyticsCubit? ??
+              AnalyticsCubit(queries: analyticsQueries);
+          initialExerciseId = extra['initialExerciseId'] as String?;
+        } else {
+          cubit = AnalyticsCubit(queries: analyticsQueries);
+        }
+        return BlocProvider.value(
+          value: cubit,
+          child: ExerciseProgressionScreen(
+            initialExerciseId: initialExerciseId,
+          ),
+        );
+      },
+    ),
+    appGoRoute(
+      path: appRouteCustomExercise,
+      name: appRouteNameCustomExercise,
+      builder: (_, _) =>
+          CustomExerciseScreen(useCases: catalogUseCases, userId: 'local-user'),
+    ),
+    appGoRoute(
+      path: appRouteExerciseDetail,
+      name: appRouteNameExerciseDetail,
+      builder: (_, state) {
+        final exercise = state.extra! as Exercise;
+        return ExerciseDetailScreen(
+          exercise: exercise,
+          repository: exercises,
+          useCases: catalogUseCases,
+          userId: 'local-user',
+        );
+      },
+    ),
+    appGoRoute(
+      path: appRouteTemplateDetail,
+      name: appRouteNameTemplateDetail,
+      builder: (_, state) {
+        final template = state.extra! as WorkoutTemplate;
+        return TemplateDetailScreen(
+          template: template,
+          repository: templates,
+          exerciseRepository: exercises,
+          useCases: templateUseCases,
+          sessionUseCases: sessionUseCases,
+          userId: 'local-user',
+        );
+      },
+    ),
+    appGoRoute(
+      path: appRouteTemplateEditor,
+      name: appRouteNameTemplateEditor,
+      builder: (_, state) {
+        final revision = state.extra! as WorkoutTemplateRevision;
+        return TemplateEditorScreen(
+          revision: revision,
+          repository: templates,
+          exerciseRepository: exercises,
+          useCases: templateUseCases,
+          userId: 'local-user',
+        );
+      },
     ),
   ];
 }
