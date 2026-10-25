@@ -1,16 +1,19 @@
-// ignore_for_file: use_primary_constructors
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/presentation/widgets/responsive_layout.dart';
+import '../../../catalog/catalog.dart';
+import '../../../session/domain/session_enums.dart';
+import '../../../session/infrastructure/session_repository.dart';
 import '../../application/analytics_cubit.dart';
 import '../widgets/progression_line_chart.dart';
 
-/// Screen displaying 1RM estimated curve and set history for a selected exercise.
+/// Screen displaying 1RM estimated curve and set history for a selected exercise,
+/// with dynamic exercise selection derived from completed workout sessions.
 class const ExerciseProgressionScreen({
   super.key,
+  required final IWorkoutSessionRepository sessionRepository,
+  required final IExerciseRepository exerciseRepository,
   final String? initialExerciseId,
 }) extends StatefulWidget {
   @override
@@ -18,122 +21,237 @@ class const ExerciseProgressionScreen({
       _ExerciseProgressionScreenState();
 }
 
-class _ExerciseProgressionScreenState extends State<ExerciseProgressionScreen> {
-  // Common standard exercises to quick-pick
-  final List<Map<String, String>> _exercises = const [
-    {'id': 'exercise-squat-001', 'name': 'Barbell Back Squat'},
-    {'id': 'exercise-bench-001', 'name': 'Barbell Bench Press'},
-    {'id': 'exercise-deadlift-001', 'name': 'Conventional Deadlift'},
-    {'id': 'exercise-ohp-001', 'name': 'Overhead Press'},
-    {'id': 'exercise-row-001', 'name': 'Barbell Row'},
-    {'id': 'exercise-pullup-001', 'name': 'Pull-Up'},
-    {'id': 'exercise-rdl-001', 'name': 'Dumbbell RDL'},
-  ];
-
-  late String _currentExerciseId;
+class _ExerciseProgressionScreenState()
+    extends State<ExerciseProgressionScreen> {
+  List<Map<String, String>> _availableExercises = [];
+  String? _currentExerciseId;
+  bool _isLoadingExercises = true;
 
   @override
   void initState() {
     super.initState();
-    _currentExerciseId = widget.initialExerciseId ?? _exercises.first['id']!;
-    context.read<AnalyticsCubit>().selectExercise(_currentExerciseId);
+    _loadExercisesFromSessions();
+  }
+
+  Future<void> _loadExercisesFromSessions() async {
+    setState(() => _isLoadingExercises = true);
+
+    // 1. Fetch completed sessions
+    final sessionsResult = await widget.sessionRepository.listAll();
+    final completedSessions = (sessionsResult.dataOrNull ?? [])
+        .where((s) => s.status == SessionStatus.completed)
+        .toList();
+
+    // 2. Extract unique exercise IDs performed across all completed sessions
+    final exerciseIds = <String>{};
+    for (final session in completedSessions) {
+      for (final block in session.blocks) {
+        for (final item in block.items) {
+          exerciseIds.add(item.exerciseId);
+        }
+      }
+    }
+
+    // 3. Resolve names for each exercise ID via ExerciseRepository
+    final exercisesList = <Map<String, String>>[];
+    for (final id in exerciseIds) {
+      final res = await widget.exerciseRepository.findById(id);
+      final exercise = res.dataOrNull;
+      if (exercise != null) {
+        exercisesList.add({'id': exercise.id, 'name': exercise.name});
+      }
+    }
+
+    // Sort exercises alphabetically
+    exercisesList.sort((a, b) => a['name']!.compareTo(b['name']!));
+
+    if (!mounted) return;
+
+    setState(() {
+      _availableExercises = exercisesList;
+      _isLoadingExercises = false;
+
+      if (_availableExercises.isNotEmpty) {
+        // Select initial exercise ID or default to the first available exercise
+        _currentExerciseId =
+            widget.initialExerciseId != null &&
+                _availableExercises.any(
+                  (e) => e['id'] == widget.initialExerciseId,
+                )
+            ? widget.initialExerciseId!
+            : _availableExercises.first['id'];
+
+        context.read<AnalyticsCubit>().selectExercise(_currentExerciseId!);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Exercise Progression')),
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(
+        title: const Text('Exercise Progression'),
+        centerTitle: true,
+      ),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
         builder: (context, state) {
-          return ResponsiveContent(
-            maxWidth: 1100,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    initialValue: _currentExerciseId,
-                    decoration: const InputDecoration(
-                      labelText: 'Select Exercise',
-                      border: OutlineInputBorder(),
-                    ),
-                    items: _exercises.map((e) {
-                      return DropdownMenuItem<String>(
-                        value: e['id'],
-                        child: Text(e['name']!),
-                      );
-                    }).toList(),
-                    onChanged: (val) {
-                      if (val != null) {
-                        setState(() => _currentExerciseId = val);
-                        context.read<AnalyticsCubit>().selectExercise(val);
-                      }
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(16.0),
-                    children: [
-                      ProgressionLineChart(metrics: state.exerciseProgression),
-                      const SizedBox(height: 24),
-                      Text(
-                        'Completed Sets History',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+          return SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1000),
+                child: Column(
+                  children: [
+                    // Dynamic Exercise Dropdown Selection
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth >= 900 ? 32 : 20,
+                        vertical: 16.0,
                       ),
-                      const SizedBox(height: 8),
-                      if (state.exerciseProgression.isEmpty)
-                        const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(
-                            child: Text(
-                              'No completed sets logged yet for this exercise.',
-                              style: TextStyle(color: Colors.grey),
+                      child: _isLoadingExercises
+                          ? const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : DropdownButtonFormField<String>(
+                              initialValue: _currentExerciseId,
+                              decoration: InputDecoration(
+                                labelText: _availableExercises.isEmpty
+                                    ? 'No Completed Exercises Found'
+                                    : 'Select Exercise',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                filled: true,
+                                fillColor: colorScheme.surfaceContainer,
+                              ),
+                              items: _availableExercises.map((e) {
+                                return DropdownMenuItem<String>(
+                                  value: e['id'],
+                                  child: Text(e['name']!),
+                                );
+                              }).toList(),
+                              onChanged: _availableExercises.isEmpty
+                                  ? null
+                                  : (val) {
+                                      if (val != null) {
+                                        setState(
+                                          () => _currentExerciseId = val,
+                                        );
+                                        context
+                                            .read<AnalyticsCubit>()
+                                            .selectExercise(val);
+                                      }
+                                    },
+                            ),
+                    ),
+
+                    // Progression Chart & Completed Set History List
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth >= 900 ? 32 : 20,
+                          vertical: 8,
+                        ),
+                        children: [
+                          ProgressionLineChart(
+                            metrics: state.exerciseProgression,
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Completed Sets History',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        )
-                      else
-                        ...state.exerciseProgression.reversed.map((set) {
-                          return Card(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            child: ListTile(
-                              dense: true,
-                              leading: CircleAvatar(
-                                radius: 14,
-                                child: Text(
-                                  set.setType.substring(0, 1).toUpperCase(),
-                                  style: const TextStyle(fontSize: 10),
+                          const SizedBox(height: 12),
+                          if (state.exerciseProgression.isEmpty)
+                            Card(
+                              elevation: 0,
+                              color: colorScheme.surfaceContainer,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(24.0),
+                                child: Center(
+                                  child: Text(
+                                    'No completed sets logged yet for this exercise.',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
                                 ),
                               ),
-                              title: Text(
-                                '${set.weightKg?.toStringAsFixed(1) ?? 'BW'} kg × ${set.reps ?? 0} reps',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                            )
+                          else
+                            ...state.exerciseProgression.reversed.map((set) {
+                              return Card(
+                                elevation: 0,
+                                color: colorScheme.surfaceContainer,
+                                margin: const EdgeInsets.only(bottom: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                              ),
-                              subtitle: Text(
-                                '${set.timestamp.year}-${set.timestamp.month.toString().padLeft(2, '0')}-${set.timestamp.day.toString().padLeft(2, '0')}'
-                                '${set.rpe != null ? ' • RPE ${set.rpe}' : ''}',
-                              ),
-                              trailing: Text(
-                                set.estimated1Rm != null
-                                    ? '1RM ~ ${set.estimated1Rm!.toStringAsFixed(1)} kg'
-                                    : '',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundColor:
+                                        colorScheme.primaryContainer,
+                                    foregroundColor:
+                                        colorScheme.onPrimaryContainer,
+                                    radius: 16,
+                                    child: Text(
+                                      set.setType.isNotEmpty
+                                          ? set.setType
+                                                .substring(0, 1)
+                                                .toUpperCase()
+                                          : 'W',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    '${set.weightKg?.toStringAsFixed(1) ?? 'BW'} kg × ${set.reps ?? 0} reps',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    '${set.timestamp.year}-${set.timestamp.month.toString().padLeft(2, '0')}-${set.timestamp.day.toString().padLeft(2, '0')}'
+                                    '${set.rpe != null ? ' • RPE ${set.rpe}' : ''}',
+                                    style: TextStyle(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    set.estimated1Rm != null
+                                        ? '1RM ~ ${set.estimated1Rm!.toStringAsFixed(1)} kg'
+                                        : '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.primary,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }),
-                    ],
-                  ),
+                              );
+                            }),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },

@@ -10,6 +10,8 @@ class const WorkoutFrequencyHeatmap({
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final now = DateTime.now().toUtc();
     final today = DateTime.utc(now.year, now.month, now.day);
     final startDate = today.subtract(Duration(days: daysToShow - 1));
@@ -25,8 +27,9 @@ class const WorkoutFrequencyHeatmap({
     final weeks = (daysToShow / 7).ceil();
 
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
+      color: colorScheme.surfaceContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -38,14 +41,15 @@ class const WorkoutFrequencyHeatmap({
               children: [
                 Text(
                   'Workout Frequency (Last 10 Weeks)',
-                  style: Theme.of(context).textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   '${summaries.length} total',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -69,8 +73,7 @@ class const WorkoutFrequencyHeatmap({
 
                       Color boxColor;
                       if (count == 0) {
-                        boxColor = Theme.of(context).dividerColor
-                            .withValues(alpha: 0.2);
+                        boxColor = theme.dividerColor.withValues(alpha: 0.15);
                       } else if (count == 1) {
                         boxColor = Colors.green.shade400;
                       } else {

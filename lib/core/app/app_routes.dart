@@ -102,7 +102,10 @@ List<RouteBase> createAppRoutes({
           unawaited(cubit.triggerRebuild());
           return cubit;
         },
-        child: const AnalyticsDashboardScreen(),
+        child: AnalyticsDashboardScreen(
+          sessionRepository: sessions,
+          userId: 'local-user',
+        ),
       ),
     ),
     appGoRoute(
@@ -189,6 +192,8 @@ List<RouteBase> createAppRoutes({
         return BlocProvider.value(
           value: cubit,
           child: ExerciseProgressionScreen(
+            sessionRepository: sessions,
+            exerciseRepository: exercises,
             initialExerciseId: initialExerciseId,
           ),
         );

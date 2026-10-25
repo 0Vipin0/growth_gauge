@@ -63,8 +63,15 @@ class AnalyticsCubit({
     _initStreams();
   }
 
-  void _initStreams() {
+  Future<void> _initStreams() async {
     emit(state.copyWith(isLoading: true));
+
+    try {
+      // Rebuild projections on init so existing completed sessions populate analytics
+      await _queries.rebuildAnalytics();
+    } catch (e) {
+      emit(state.copyWith(errorMessage: e.toString()));
+    }
 
     _historySub = _queries
         .watchWorkoutHistory(_userId)
