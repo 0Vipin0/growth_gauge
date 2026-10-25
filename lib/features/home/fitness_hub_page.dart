@@ -1,38 +1,38 @@
-// ignore_for_file: use_primary_constructors
-
 import 'package:flutter/material.dart';
 
 import '../template/domain/workout_template.dart';
 import '../template/infrastructure/template_repository.dart';
 
-enum ActivityTimeRange { week, month, year }
+enum ActivityTimeRange() {
+  week,
+  month,
+  year,
+}
 
-class FitnessHubPage extends StatefulWidget {
-  const new({
-    super.key,
-    this.onProfileTap,
-    this.onAnalyticsTap,
-    this.onCatalogTap,
-    this.onTemplateTap,
-    required this.templateRepository,
-    required this.onStartTemplate,
-  });
+// ---------------------------------------------------------------------------
+// FitnessHubPage
+// ---------------------------------------------------------------------------
 
-  final VoidCallback? onProfileTap;
-  final VoidCallback? onAnalyticsTap;
-  final VoidCallback? onCatalogTap;
-  final VoidCallback? onTemplateTap;
-  final ITemplateRepository templateRepository;
-  final ValueChanged<WorkoutTemplate> onStartTemplate;
-
+/// The main fitness dashboard page.
+///
+/// Displays a weekly summary, activity trends with time-range navigation,
+/// quick-start workout templates, and an explore library banner.
+class const FitnessHubPage({
+  super.key,
+  final VoidCallback? onProfileTap,
+  final VoidCallback? onAnalyticsTap,
+  final VoidCallback? onCatalogTap,
+  final VoidCallback? onTemplateTap,
+  required final ITemplateRepository templateRepository,
+  required final ValueChanged<WorkoutTemplate> onStartTemplate,
+}) extends StatefulWidget {
   @override
   State<FitnessHubPage> createState() => _FitnessHubPageState();
 }
 
-class _FitnessHubPageState extends State<FitnessHubPage> {
+class _FitnessHubPageState() extends State<FitnessHubPage> {
   late ActivityTimeRange _selectedTimeRange;
-  int _timeOffset =
-      0; // 0 = current period, negative = previous, positive = future
+  int _timeOffset = 0;
   bool _initialized = false;
 
   @override
@@ -40,7 +40,6 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
     super.didChangeDependencies();
     if (!_initialized) {
       final screenWidth = MediaQuery.of(context).size.width;
-      // Default to Week on small screens, Month on large screens
       _selectedTimeRange = screenWidth >= 900
           ? ActivityTimeRange.month
           : ActivityTimeRange.week;
@@ -66,13 +65,11 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth >= 900;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Align(
           alignment: Alignment.topCenter,
@@ -84,282 +81,37 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
                 vertical: 24.0,
               ),
               children: [
-                // 1. User Header & Notification Bell
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: widget.onProfileTap,
-                          child: CircleAvatar(
-                            radius: 24,
-                            backgroundColor: colorScheme.primaryContainer,
-                            child: Icon(
-                              Icons.person,
-                              color: colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Good Morning,',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                            Text(
-                              'Alex Doe',
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.onSurface,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      style: IconButton.styleFrom(
-                        backgroundColor: colorScheme.surfaceContainerHighest,
-                        padding: const EdgeInsets.all(12),
-                      ),
-                      icon: Badge(
-                        label: const Text('1'),
-                        child: Icon(
-                          Icons.notifications_outlined,
-                          color: colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                _HubHeader(onProfileTap: widget.onProfileTap),
                 const SizedBox(height: 28),
-
-                // 2. This Week Section Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'This Week',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
-                      ),
-                    ),
-                    TextButton(onPressed: () {}, child: const Text('Details')),
-                  ],
+                _WeekSummarySection(isDesktop: isDesktop),
+                const SizedBox(height: 32),
+                _ActivityTrendsSection(
+                  selectedTimeRange: _selectedTimeRange,
+                  onAnalyticsTap: widget.onAnalyticsTap,
+                  onRangeChanged: (range) => setState(() {
+                    _selectedTimeRange = range;
+                    _timeOffset = 0;
+                  }),
                 ),
                 const SizedBox(height: 12),
-
-                // Perfectly Aligned "This Week" Grid using IntrinsicHeight
-                if (isDesktop)
-                  IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(flex: 3, child: _buildCaloriesCard(context)),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: _buildStatCard(
-                                  context,
-                                  icon: Icons.timer_outlined,
-                                  title: 'Active Time',
-                                  value: '5h 20m',
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Expanded(
-                                child: _buildStatCard(
-                                  context,
-                                  icon: Icons.fitness_center,
-                                  title: 'Workouts',
-                                  value: '4',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                else
-                  Column(
-                    children: [
-                      _buildCaloriesCard(context),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildStatCard(
-                              context,
-                              icon: Icons.timer_outlined,
-                              title: 'Active Time',
-                              value: '5h 20m',
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildStatCard(
-                              context,
-                              icon: Icons.fitness_center,
-                              title: 'Workouts',
-                              value: '4',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                const SizedBox(height: 32),
-
-                // 3. Activity Trends Section with View Selector & Paging
-                GestureDetector(
-                  onTap: widget.onAnalyticsTap,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Activity Trends',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onSurface,
-                        ),
-                      ),
-                      SegmentedButton<ActivityTimeRange>(
-                        segments: const [
-                          ButtonSegment(
-                            value: ActivityTimeRange.week,
-                            label: Text('Week'),
-                          ),
-                          ButtonSegment(
-                            value: ActivityTimeRange.month,
-                            label: Text('Month'),
-                          ),
-                          ButtonSegment(
-                            value: ActivityTimeRange.year,
-                            label: Text('Year'),
-                          ),
-                        ],
-                        selected: {_selectedTimeRange},
-                        onSelectionChanged: (newSelection) {
-                          setState(() {
-                            _selectedTimeRange = newSelection.first;
-                            _timeOffset = 0;
-                          });
-                        },
-                        style: ButtonStyle(
-                          visualDensity: VisualDensity.compact,
-                          textStyle: WidgetStateProperty.all(
-                            const TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                _ActivityTrendsCard(
+                  selectedTimeRange: _selectedTimeRange,
+                  timeOffset: _timeOffset,
+                  periodLabel: _getPeriodLabel(),
+                  onPrevious: () => setState(() => _timeOffset--),
+                  onNext: () => setState(() => _timeOffset++),
                 ),
-                const SizedBox(height: 12),
-                _buildActivityTrendsCard(context, isDesktop),
-
                 const SizedBox(height: 32),
-
-                // 4. Quick Start Section with Dynamic Templates
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Quick Start',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: widget.onTemplateTap,
-                      child: const Text('See All'),
-                    ),
-                  ],
+                _QuickStartSection(
+                  templateRepository: widget.templateRepository,
+                  onTemplateTap: widget.onTemplateTap,
+                  onStartTemplate: widget.onStartTemplate,
                 ),
-                const SizedBox(height: 12),
-                FutureBuilder(
-                  future: widget.templateRepository.getTemplates(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-
-                    if (snapshot.hasError ||
-                        !snapshot.hasData ||
-                        snapshot.data!.isError) {
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainer,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text('No templates available.'),
-                      );
-                    }
-
-                    final templates = snapshot.data!.dataOrNull ?? [];
-                    if (templates.isEmpty) {
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainer,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text('No templates available.'),
-                      );
-                    }
-
-                    final displayTemplates = templates.take(2).toList();
-
-                    return LayoutBuilder(
-                      builder: (context, constraints) {
-                        final cardWidth = constraints.maxWidth > 700
-                            ? (constraints.maxWidth - 16) / 2
-                            : constraints.maxWidth;
-                        return Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          children: displayTemplates.map((template) {
-                            return SizedBox(
-                              width: cardWidth,
-                              child: _buildQuickStartCard(
-                                context,
-                                category: 'WORKOUT',
-                                title: template.name,
-                                duration: '20 min',
-                                calories: '200 kcal',
-                                onStart: () => widget.onStartTemplate(template),
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      },
-                    );
-                  },
-                ),
-
                 const SizedBox(height: 32),
-
-                // 5. Explore Library Banner
-                _buildExploreBanner(context),
+                _ExploreBanner(
+                  onCatalogTap: widget.onCatalogTap,
+                  onTemplateTap: widget.onTemplateTap,
+                ),
                 const SizedBox(height: 24),
               ],
             ),
@@ -368,9 +120,192 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
       ),
     );
   }
+}
 
-  Widget _buildCaloriesCard(BuildContext context) {
+// ---------------------------------------------------------------------------
+// _HubHeader
+// ---------------------------------------------------------------------------
+
+/// Displays the user's avatar, greeting text, and a notification bell.
+class const _HubHeader({final VoidCallback? onProfileTap})
+    extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            InkWell(
+              onTap: onProfileTap,
+              child: CircleAvatar(
+                radius: 24,
+                backgroundColor: colorScheme.primaryContainer,
+                child: Icon(Icons.person, color: colorScheme.primary),
+              ),
+            ),
+            const SizedBox(width: 14),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Good Morning,',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                Text(
+                  'Alex Doe',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        IconButton(
+          onPressed: () {},
+          style: IconButton.styleFrom(
+            backgroundColor: colorScheme.surfaceContainerHighest,
+            padding: const EdgeInsets.all(12),
+          ),
+          icon: Badge(
+            label: const Text('1'),
+            child: Icon(
+              Icons.notifications_outlined,
+              color: colorScheme.onSurface,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// _WeekSummarySection
+// ---------------------------------------------------------------------------
+
+/// Shows the "This Week" header plus a responsive grid of stat cards.
+class const _WeekSummarySection({required final bool isDesktop})
+    extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'This Week',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
+            ),
+            TextButton(onPressed: () {}, child: const Text('Details')),
+          ],
+        ),
+        const SizedBox(height: 12),
+        if (isDesktop)
+          const _WeekSummaryDesktopGrid()
+        else
+          const _WeekSummaryMobileStack(),
+      ],
+    );
+  }
+}
+
+/// Desktop layout: calories card and stat cards side-by-side with equal height.
+class const _WeekSummaryDesktopGrid() extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(flex: 3, child: _CaloriesCard()),
+          SizedBox(width: 16),
+          Expanded(
+            flex: 2,
+            child: Column(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.timer_outlined,
+                    title: 'Active Time',
+                    value: '5h 20m',
+                  ),
+                ),
+                SizedBox(height: 12),
+                Expanded(
+                  child: _StatCard(
+                    icon: Icons.fitness_center,
+                    title: 'Workouts',
+                    value: '4',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Mobile layout: calories card on top, stat cards side-by-side below.
+class const _WeekSummaryMobileStack() extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        _CaloriesCard(),
+        SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _StatCard(
+                icon: Icons.timer_outlined,
+                title: 'Active Time',
+                value: '5h 20m',
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: _StatCard(
+                icon: Icons.fitness_center,
+                title: 'Workouts',
+                value: '4',
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// _CaloriesCard
+// ---------------------------------------------------------------------------
+
+/// Card showing total calories burned for the period with a circular progress
+/// indicator.
+class const _CaloriesCard() extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -436,14 +371,23 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
       ),
     );
   }
+}
 
-  Widget _buildStatCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
+// ---------------------------------------------------------------------------
+// _StatCard
+// ---------------------------------------------------------------------------
+
+/// Generic stat tile with an icon, title, and value.
+class const _StatCard({
+  required final IconData icon,
+  required final String title,
+  required final String value,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
@@ -475,7 +419,7 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
               const SizedBox(height: 2),
               Text(
                 value,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.onSurface,
                 ),
@@ -486,8 +430,72 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
       ),
     );
   }
+}
 
-  Widget _buildActivityTrendsCard(BuildContext context, bool isDesktop) {
+// ---------------------------------------------------------------------------
+// _ActivityTrendsSection
+// ---------------------------------------------------------------------------
+
+/// Section header for Activity Trends with the time-range SegmentedButton.
+class const _ActivityTrendsSection({
+  required final ActivityTimeRange selectedTimeRange,
+  required final ValueChanged<ActivityTimeRange> onRangeChanged,
+  final VoidCallback? onAnalyticsTap,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return GestureDetector(
+      onTap: onAnalyticsTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Activity Trends',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
+            ),
+          ),
+          SegmentedButton<ActivityTimeRange>(
+            segments: const [
+              ButtonSegment(value: ActivityTimeRange.week, label: Text('Week')),
+              ButtonSegment(
+                value: ActivityTimeRange.month,
+                label: Text('Month'),
+              ),
+              ButtonSegment(value: ActivityTimeRange.year, label: Text('Year')),
+            ],
+            selected: {selectedTimeRange},
+            onSelectionChanged: (newSelection) =>
+                onRangeChanged(newSelection.first),
+            style: ButtonStyle(
+              visualDensity: VisualDensity.compact,
+              textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 12)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// _ActivityTrendsCard
+// ---------------------------------------------------------------------------
+
+/// Card containing the period navigator (prev/next) and the time-range view.
+class const _ActivityTrendsCard({
+  required final ActivityTimeRange selectedTimeRange,
+  required final int timeOffset,
+  required final String periodLabel,
+  required final VoidCallback onPrevious,
+  required final VoidCallback onNext,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -503,8 +511,8 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left),
-                tooltip: 'Previous ${_selectedTimeRange.name}',
-                onPressed: () => setState(() => _timeOffset--),
+                tooltip: 'Previous ${selectedTimeRange.name}',
+                onPressed: onPrevious,
               ),
               Row(
                 children: [
@@ -515,7 +523,7 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    _getPeriodLabel(),
+                    periodLabel,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.onSurface,
@@ -525,8 +533,8 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right),
-                tooltip: 'Next ${_selectedTimeRange.name}',
-                onPressed: () => setState(() => _timeOffset++),
+                tooltip: 'Next ${selectedTimeRange.name}',
+                onPressed: onNext,
               ),
             ],
           ),
@@ -534,30 +542,40 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
           Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 650),
-              child: _selectedTimeRange == ActivityTimeRange.week
-                  ? _buildWeekView(context)
-                  : _selectedTimeRange == ActivityTimeRange.month
-                  ? _buildMonthView(context)
-                  : _buildYearView(context),
+              child: switch (selectedTimeRange) {
+                ActivityTimeRange.week => const _WeekView(),
+                ActivityTimeRange.month => const _MonthView(),
+                ActivityTimeRange.year => const _YearView(),
+              },
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildWeekView(BuildContext context) {
+// ---------------------------------------------------------------------------
+// _WeekView / _MonthView / _YearView
+// ---------------------------------------------------------------------------
+
+/// Seven-day bar visualization for the week time range.
+class const _WeekView() extends StatelessWidget {
+  static const _days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  static const _completed = [true, true, false, true, true, true, false];
+
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    final completed = [true, true, false, true, true, true, false];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(7, (index) {
+        final done = _completed[index];
         return Column(
           children: [
             Text(
-              days[index],
+              _days[index],
               style: TextStyle(
                 color: colorScheme.onSurfaceVariant,
                 fontSize: 12,
@@ -568,12 +586,12 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
               width: 40,
               height: 50,
               decoration: BoxDecoration(
-                color: completed[index]
+                color: done
                     ? colorScheme.primary
                     : colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: completed[index]
+              child: done
                   ? Icon(Icons.check, size: 20, color: colorScheme.onPrimary)
                   : null,
             ),
@@ -582,105 +600,202 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
       }),
     );
   }
+}
 
-  Widget _buildMonthView(BuildContext context) {
+/// Four-week summary for the month time range.
+class const _MonthView() extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: ['W1', 'W2', 'W3', 'W4'].map((week) {
+        return Column(
+          children: [
+            Text(
+              week,
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                '${4 + week.hashCode % 3} workouts',
+                style: TextStyle(color: colorScheme.onSurface, fontSize: 12),
+              ),
+            ),
+          ],
+        );
+      }).toList(),
+    );
+  }
+}
+
+/// Quarterly summary for the year time range.
+class const _YearView() extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: ['Q1', 'Q2', 'Q3', 'Q4'].map((q) {
+        return Column(
+          children: [
+            Text(
+              q,
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                '18 sessions',
+                style: TextStyle(color: colorScheme.onSurface, fontSize: 12),
+              ),
+            ),
+          ],
+        );
+      }).toList(),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// _QuickStartSection
+// ---------------------------------------------------------------------------
+
+/// Section header, FutureBuilder for templates, and responsive grid of cards.
+class const _QuickStartSection({
+  required final ITemplateRepository templateRepository,
+  required final ValueChanged<WorkoutTemplate> onStartTemplate,
+  final VoidCallback? onTemplateTap,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: ['W1', 'W2', 'W3', 'W4']
-              .map(
-                (week) => Column(
-                  children: [
-                    Text(
-                      week,
-                      style: TextStyle(
-                        color: colorScheme.onSurfaceVariant,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer.withValues(
-                          alpha: 0.4,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '${4 + week.hashCode % 3} workouts',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Quick Start',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
+            ),
+            TextButton(onPressed: onTemplateTap, child: const Text('See All')),
+          ],
+        ),
+        const SizedBox(height: 12),
+        FutureBuilder(
+          future: templateRepository.getTemplates(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: CircularProgressIndicator(),
                 ),
-              )
-              .toList(),
+              );
+            }
+
+            final templates = snapshot.hasData && !snapshot.data!.isError
+                ? snapshot.data!.dataOrNull ?? []
+                : <WorkoutTemplate>[];
+
+            if (templates.isEmpty) {
+              return _EmptyTemplatesCard(colorScheme: colorScheme);
+            }
+
+            final displayTemplates = templates.take(2).toList();
+
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final cardWidth = constraints.maxWidth > 700
+                    ? (constraints.maxWidth - 16) / 2
+                    : constraints.maxWidth;
+                return Wrap(
+                  spacing: 16,
+                  runSpacing: 16,
+                  children: displayTemplates.map((template) {
+                    return SizedBox(
+                      width: cardWidth,
+                      child: _QuickStartCard(
+                        category: 'WORKOUT',
+                        title: template.name,
+                        duration: '20 min',
+                        calories: '200 kcal',
+                        onStart: () => onStartTemplate(template),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            );
+          },
         ),
       ],
     );
   }
+}
 
-  Widget _buildYearView(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: quarters
-          .map(
-            (q) => Column(
-              children: [
-                Text(
-                  q,
-                  style: TextStyle(
-                    color: colorScheme.onSurfaceVariant,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    '18 sessions',
-                    style: TextStyle(
-                      color: colorScheme.onSurface,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-          .toList(),
+/// Placeholder shown when no templates are available.
+class const _EmptyTemplatesCard({required final ColorScheme colorScheme})
+    extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: const Text('No templates available.'),
     );
   }
+}
 
-  Widget _buildQuickStartCard(
-    BuildContext context, {
-    required String category,
-    required String title,
-    required String duration,
-    required String calories,
-    required VoidCallback onStart,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
+// ---------------------------------------------------------------------------
+// _QuickStartCard
+// ---------------------------------------------------------------------------
+
+/// Individual workout template card with category chip, metadata, and a Start
+/// button.
+class const _QuickStartCard({
+  required final String category,
+  required final String title,
+  required final String duration,
+  required final String calories,
+  required final VoidCallback onStart,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -709,7 +824,7 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
           const SizedBox(height: 24),
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
             ),
@@ -767,11 +882,24 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
       ),
     );
   }
+}
 
-  Widget _buildExploreBanner(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+// ---------------------------------------------------------------------------
+// _ExploreBanner
+// ---------------------------------------------------------------------------
+
+/// Full-width CTA banner to explore the exercise library / template catalog.
+class const _ExploreBanner({
+  final VoidCallback? onCatalogTap,
+  final VoidCallback? onTemplateTap,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return GestureDetector(
-      onTap: widget.onCatalogTap,
+      onTap: onCatalogTap,
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
@@ -809,7 +937,7 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
                   const SizedBox(height: 10),
                   Text(
                     'Explore Library',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.onSurface,
                     ),
@@ -827,7 +955,7 @@ class _FitnessHubPageState extends State<FitnessHubPage> {
             ),
             const SizedBox(width: 16),
             IconButton.filled(
-              onPressed: widget.onTemplateTap,
+              onPressed: onTemplateTap,
               style: IconButton.styleFrom(
                 backgroundColor: colorScheme.primary,
                 foregroundColor: colorScheme.onPrimary,
