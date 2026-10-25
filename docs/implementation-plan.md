@@ -85,11 +85,13 @@ flowchart TD
     P9 --> P10["Phase 10: Application Routing Migration (go_router)"]
     P10 --> P11["Phase 11: Bloc and Framework State Management"]
     P11 --> P12["Phase 12: Responsive and Accessible Experience"]
-    P12 --> P13["Phase 13: Comprehensive Exercise Catalog"]
+    P12 --> P13["Phase 13: Comprehensive Exercise Catalog & Steps"]
     P13 --> P14["Phase 14: Secure Local Authentication"]
-    P14 --> P15["Phase 15: Progress Sounds and Notifications"]
+    P14 --> P15["Phase 15: Progress Sounds, Growth Reminders & TTS Coach"]
     P15 --> P16["Phase 16: GitHub Actions Build Improvements"]
-    P16 --> P17["Phase 17: Adaptive Application Widget System"]
+    P16 --> P17["Phase 17: Adaptive Modular Widget System & Design System"]
+    P17 --> P18["Phase 18: Fitness Assessment Score & Biometric Intelligence"]
+    P18 --> P19["Phase 19: Local Network Peer Synchronization (LAN Sync)"]
 ```
 
 ### Phase Progress Tracker
@@ -108,11 +110,13 @@ flowchart TD
 | **Phase 10** | Application Routing Migration (go_router) | `[x] COMPLETED` | 6 | 6 |
 | **Phase 11** | Bloc and Framework State Management | `[x] COMPLETED` | 6 | 6 |
 | **Phase 12** | Responsive and Accessible Experience | `[~] IN PROGRESS` | 6 | 6 |
-| **Phase 13** | Comprehensive Exercise Catalog | `[ ] PLANNED` | 0 | 6 |
+| **Phase 13** | Comprehensive Exercise Catalog & Exercise Steps | `[ ] PLANNED` | 0 | 6 |
 | **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
-| **Phase 15** | Progress Sounds and Notifications | `[ ] PLANNED` | 0 | 6 |
+| **Phase 15** | Progress Sounds, Growth Reminders & TTS Coach | `[ ] PLANNED` | 0 | 6 |
 | **Phase 16** | GitHub Actions Build Improvements | `[ ] PLANNED` | 0 | 6 |
-| **Phase 17** | Adaptive Application Widget System | `[ ] PLANNED` | 0 | 6 |
+| **Phase 17** | Adaptive Modular Widget System & Design System | `[ ] PLANNED` | 0 | 6 |
+| **Phase 18** | Fitness Assessment Score & Biometric Intelligence | `[ ] PLANNED` | 0 | 6 |
+| **Phase 19** | Local Network Peer Synchronization (LAN Sync) | `[ ] PLANNED` | 0 | 5 |
 
 ---
 
@@ -853,7 +857,7 @@ Adopt `go_router` as the application routing package and separate shared router 
 | **Step 10.1** | Route inventory and behavior baseline | `[x] COMPLETED` | Documented destinations, entries, auth decisions, local transient flows, route data (none currently), and back-stack behavior in [`route-inventory.md`](route-inventory.md). |
 | **Step 10.2** | Define app router and dependency composition | `[x] COMPLETED` | Refined into `lib/core/routing/app_router.dart` for GoRouter lifecycle, stable path/name constants, transitions and not-found handling, plus `lib/app/app_routes.dart` for app destinations and feature dependencies. Core routing has no feature imports; route registrations are provided as `RouteBase` entries from app composition. |
 | **Step 10.3** | Migrate top-level navigation callers | `[x] COMPLETED` | Migrated launch/authentication, settings and training hub destinations; `go` replaces auth/launch/completion history and `push` preserves Home for feature destinations. |
-| **Step 10.4** | Migrate feature destinations and typed route data | `[x] COMPLETED` | Migrated catalog, templates, analytics, profile, goals, measurements and backup/restore. No app destination currently requires path, query or extra data; transient session/editor data remains local. |
+| **Step 10.4** | Migrate feature destinations and typed route data | `[x] COMPLETED` | Migrated catalog, templates, analytics, profile, goals, measurements, backup/restore, active session, session summary, PR trophies, exercise progression, custom exercise, exercise detail, template detail, and template editor. Replaced all imperative `MaterialPageRoute` instances with `context.push`, `context.pushReplacement`, and `context.pop`, leveraging `appGoRoute` with `state.extra`. |
 | **Step 10.5** | Add router and navigation regression tests | `[x] COMPLETED` | Tests cover named paths, saved-auth launch routing, auth selection, unmatched locations and app-destination push/pop behavior. |
 | **Step 10.6** | Remove legacy routing and validate | `[x] COMPLETED` | Removed `routes.dart`, `NavigationHelper`, named-route setup and `page_transition`; updated architecture and route inventory. `scripts/check.ps1` passed. |
 
