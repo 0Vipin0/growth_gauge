@@ -1,0 +1,121 @@
+# Growth Gauge: Target Architecture
+
+**Status:** Target architecture and implementation guidance. Reviewed 2026-10-18 against [`implementation-plan.md`](implementation-plan.md) and the current repository.
+**Authority:** Follow explicit user direction, this target reference, the implementation plan, then the code for existing behavior and migration detail. This file describes the intended architecture, not a claim that every listed feature is already complete.
+
+## Product direction
+
+Growth Gauge is an offline-first strength and conditioning tracker. Legacy counter/timer/chart/splash/onboarding feature trees and routes have been removed. Do not reintroduce them as patterns for new work.
+
+The architecture is a feature-first modular monolith with consistent feature boundaries and clean separation of domain, application, infrastructure and presentation concerns. Catalog, template, session, analytics, user/profile/goals/measurements, and portability are implemented. Settings, notification, and authentication remain existing app services/providers rather than fully migrated feature layers; evolve them incrementally without restoring counter/timer behavior.
+
+## Target structure
+
+```text
+lib/
+├── app/                         # Bootstrap, app routes, composition root, global theme
+├── core/
+│   ├── concurrency/             # IsolateRunner for serializable CPU-heavy work
+│   ├── database/                # Drift database, document store and read-model tables
+│   ├── error/                   # Failures and Result
+│   ├── events/                  # Domain events and dispatcher
+│   ├── ids/                     # IDs
+│   ├── routing/                 # Shared GoRouter behavior and route constants
+│   ├── time/                    # Clock and UTC helpers
+│   └── units/                   # Canonical unit conversions
+└── features/
+    ├── user/                    # Profile, training preferences, goals, equipment, measurements
+    ├── catalog/                 # Exercises and taxonomy
+    ├── template/                # Workout definitions and immutable revisions
+    ├── session/                 # Live workout, recovery and audit history
+    ├── analytics/               # Projections, queries and visualizations
+    ├── portability/             # Versioned backup/restore, migrations and conflict handling
+    ├── settings/                # Appearance and access preferences
+    ├── notification/            # Platform notification scheduling service
+    └── authentication/          # Local PIN and biometric flows
+```
+
+Feature modules should use the same layer names where those concerns apply:
+
+```text
+feature/
+├── domain/          # Entities/value objects, invariants, domain events
+├── application/     # Use cases, commands/queries, Cubit/BLoC state
+├── infrastructure/  # Repository implementations, adapters, platform services
+└── presentation/    # Screens and widgets
+```
+
+Keep a feature simple when a layer is not needed; consistency means consistent boundaries and dependency direction, not empty folders or unnecessary abstractions. Shared domain support belongs in `core/` only when genuinely cross-feature. Shared presentation widgets may live under a common presentation location.
+
+## Repository conventions (Phase 8)
+
+- Use lowercase `snake_case.dart` filenames and `UpperCamelCase` types. Name tests after the behavior or source under test and keep them under the matching `test/core/`, `test/features/<feature>/`, or `test/integration/` path.
+- Place feature entities and invariants in `domain/`, operations and Cubit/BLoC state in `application/`, storage/platform adapters in `infrastructure/`, and screens/widgets in `presentation/`. Omit layers that have no responsibility; do not make widgets own persistence or business rules.
+- Keep dependencies flowing inward: domain has no Flutter or storage dependency; application depends on domain-facing contracts; infrastructure implements persistence and platform details; presentation calls application operations. Expected operation failures use the existing `Result<T, Failure>` convention where that contract is used.
+- Import the specific file/layer that owns a dependency. Keep feature barrel files only where a caller needs a deliberate feature-facing API; do not create barrels or public APIs solely for uniformity.
+- Construct long-lived services and repositories at the existing app composition boundary and inject them. Transitional settings/authentication wiring may still construct or expose providers/services in the legacy composition and should migrate with the relevant state/routing phase, not through an unrelated rewrite.
+- Edit source declarations only. Freezed, JSON serialization, Drift and Mockito generated files are owned by their generators; regenerate them when source annotations or declarations change.
+- Preserve existing error vocabulary and lifecycle cleanup. Translate expected domain/application failures at the presentation boundary; platform exceptions remain within platform adapters unless the feature contract requires a typed failure.
+
+The Phase 8 structural pass moved authentication screens into `authentication/presentation/`, the authentication service into `authentication/infrastructure/`, and the notification platform service into `notification/infrastructure/`. Direct call sites and generated Mockito imports now reference the owning layer. Phase 10 moved shared router behavior into `lib/core/routing/` and app destination composition into `lib/app/`; authentication screens still construct their service directly, as tracked for later authentication hardening. Phase 11 replaces the settings `ChangeNotifier` with `SettingsCubit` and moves former Provider service lookups to constructor injection. Provider has no remaining direct dependency or API usage, and repository checks pass.
+
+Phase 12 adds the shared `ResponsiveContent` width constraint and `AppWindowSizeClass` breakpoints in `features/common/presentation/widgets/responsive_layout.dart`. Home navigation uses a bottom bar in compact windows and a navigation rail in medium/expanded windows, while preserving destination state across resize. High-priority screens reuse the shared width constraint; adaptive semantics, reduced-motion behavior, and viewport regression coverage are documented in the implementation plan. Automated repository checks pass. Manual device and assistive-technology checks are documented but remain outstanding, so Phase 12 remains in progress.
+
+Phase 17 plans a shared Growth Gauge widget system built on Flutter's Material/Cupertino components, current `FitnessTheme`, and font settings. It will centralize reusable controls and typography while retaining accessible platform fallbacks; implementation and adoption remain planned.
+
+## State management, presentation and navigation
+
+- Use `flutter_bloc`/`bloc` with Cubits or BLoCs for feature and application state. Use Flutter framework primitives for strictly local UI state; do not add another third-party state-management package. Phase 11 removes the transitional `provider` package after its state and composition uses are migrated.
+- Domain types should not depend on Flutter or persistence packages. Use immutable Freezed models where appropriate; use `Result<T, Failure>` for expected repository/use-case outcomes following the existing core convention.
+- Build feature screens from presentation widgets that invoke application operations and render state.
+- Shared `go_router` lifecycle, path/name constants, page transition, and unmatched-path handling live in `lib/core/routing/app_router.dart`. App destination registrations and their feature dependency composition live in `lib/app/app_routes.dart`; core routing stays independent of feature modules. Fitness launch resolves saved access settings before replacing the launch location; successful authentication and workout completion return to Home. App destinations that should retain Home in history use `push`; local dialogs, editors, analytics detail pages, and live workout screens remain Flutter Navigator pushes. See [`route-inventory.md`](route-inventory.md) for the migration baseline and back-stack choices.
+- Presentation should adapt to available constraints across phone, tablet and laptop/desktop form factors. Phase 12 adds compact/medium/expanded width classes and reusable max-width content constraints in `features/common/presentation/widgets/responsive_layout.dart`; its keyboard, semantics, and accessibility rollout is tracked in `implementation-plan.md`. Avoid device-model-specific layout assumptions.
+
+## Persistence and data flow
+
+The planned app remains local-first and offline-first. No remote networking/API layer is specified by the plan; do not assume one exists or introduce one without a separate architecture decision.
+
+- Drift/SQLite is the persistence engine for the authoritative document store and relational analytics read models.
+- Store hierarchical exercise, template/revision and session aggregates as versioned JSON documents in the Drift `documents` table through typed adapters and repositories. Keep database schema migrations distinct from document-format migrations.
+- Treat source documents as authoritative. Analytics tables are derived/materialized read models and must be rebuildable from source history. Use domain events/projectors for incremental updates and a rebuild use case for recovery/import.
+- Keep repository contracts oriented around domain/application needs. Infrastructure implements storage and platform details; presentation does not issue SQL or serialize storage documents.
+- User/profile/preferences/goals/equipment/measurements are implemented in `features/user/`; see Phase 5 in the implementation plan for the current verification status.
+
+## Dependency composition and platform services
+
+Use an explicit application composition root at `main.dart`/`app/` to initialize platform capabilities and construct database, event dispatch, repositories, use cases and feature state objects. `main.dart` initializes platform and core services, while app route composition creates route-scoped feature repositories/use cases once and reuses the long-lived session, analytics and user services passed from the root. Core routing owns only package-level navigation behavior and has no feature imports. Settings state is provided via `flutter_bloc`; repositories, notification services and use cases are passed through constructors at the composition boundary. Provider API usage and the direct dependency have been removed, and Phase 11 validation passes. No DI package is mandated by the implementation plan.
+
+Authentication credentials stay in secure storage, notification scheduling stays behind its service, and appearance/access preferences remain typed settings backed by shared preferences. The fitness launch route checks saved authentication settings before opening the home flow. Phase 14 of `implementation-plan.md` completes the local biometric/PIN fallback and hardens PIN verification/storage; Phase 15 completes opt-in, preference-controlled progress sounds and local notifications. These modules are not yet fully migrated to feature-layered Cubits/repositories; do not infer such a migration from the fitness feature modules.
+
+## Domain rules already established by the plan
+
+- Template revisions are immutable after publication. Editing produces a new draft revision.
+- Starting a session creates an independent copy of the selected template revision; live changes never mutate the template.
+- Session lifecycle, rest intervals, interruptions, recovery and append-only audit history are explicit domain concepts.
+- Persist session changes so interrupted workouts can be recovered after restart.
+- Analytics are projections, not the editing source of truth.
+- Portability uses a versioned JSON envelope with SHA-256 validation, sequential migrations, typed document validation, explicit conflict policy, atomic document writes and analytics rebuild after session imports.
+
+## Dependencies and code generation
+
+Use dependencies already selected by the plan and present in the project: `flutter_bloc`/`bloc`, Drift, Freezed/JSON serialization, and `fl_chart` for visualizations. Portability uses `file_picker` for JSON file access and `crypto` for checksums. `IsolateRunner` accepts top-level workers and serializable messages for CPU-heavy parsing, serialization, checksums, and rebuild ordering. Drift queries and projection transactions must stay on the isolate that owns the database connection. Direct-only CSV, heatmap, and Lottie dependencies from removed features have been pruned; `path_provider` remains transitive through other packages.
+
+Edit source declarations, not generated files. Drift, Freezed, JSON serialization and Mockito artifacts are generated with `build_runner`; use `./scripts/generate.ps1` on PowerShell or the documented equivalent.
+
+## Tests and validation
+
+Organize tests under `test/core/`, `test/features/<feature>/`, and `test/integration/`. The integration test uses the real in-memory Drift repositories/use cases to cover catalog seeding, template creation, four logged sets, rest completion, analytics/PRs, and export/clear/import parity. Device-level frame pacing for a 1,000-session analytics rebuild remains a release-profile check.
+
+- `./scripts/check.ps1`: analysis, format verification and Flutter tests.
+- `./scripts/generate.ps1`: code generation.
+- Phase 16 of `implementation-plan.md` aligns GitHub Actions with the supported SDK and these local validation scripts, while hardening release permissions and artifacts.
+
+## Status and source distinctions
+
+The implementation plan marks phases 1–6 complete and Phase 7 in progress pending device frame-pacing validation. The current repository passes `scripts/check.ps1` (analysis, formatting, and tests). The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
+
+The `lib/app/` boundary owns application routing and route composition. `main.dart` owns platform initialization, service construction, and lifecycle cleanup; settings state is supplied through `SettingsCubit`, while application dependencies are passed explicitly. Authentication hardening and notification preference expansion remain assigned to their later phases.
+
+## Updating this reference
+
+Update this document and the implementation plan when target module boundaries, dependency decisions or rollout status change. Label facts as implemented, in progress or planned, and keep legacy code clearly marked as deprecated until its removal is complete.

@@ -62,6 +62,20 @@ Growth Gauge is your personal companion for tracking tasks and time-based activi
     ```bash
     flutter run
     ```
+
+### PowerShell shortcuts
+
+For routine development commands, use the scripts in [`scripts/`](scripts/README.md):
+
+```powershell
+./scripts/setup.ps1
+./scripts/check.ps1
+./scripts/generate.ps1
+./scripts/run.ps1 -d windows
+./scripts/build.ps1 apk --split-per-abi
+```
+
+Bash equivalents are available in `scripts/` for Linux and macOS; see [the scripts guide](scripts/README.md).
     
 ## Latest Releases
 *  [Android][android]

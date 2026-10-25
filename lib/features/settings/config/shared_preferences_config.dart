@@ -1,13 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesKeys {
-  static const String countersStorageKey = 'counters';
-  static const String timersStorageKey = 'timers';
-  static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
+class SharedPreferencesKeys() {
   static const String themeName = 'themeName';
   static const String fontSize = 'fontSize';
   static const String fontFamily = 'fontFamily';
-  static const String exportFormat = 'exportFormat';
   static const String authenticationType = 'authenticationType';
   static const String notificationTime = 'notificationTime';
 }
@@ -27,37 +23,6 @@ mixin SharedPreferencesHelper {
       );
     }
     return _prefs!;
-  }
-
-  static String? getCounters() {
-    return instance.getString(SharedPreferencesKeys.countersStorageKey);
-  }
-
-  static Future<bool> setCounters(String value) {
-    return instance.setString(SharedPreferencesKeys.countersStorageKey, value);
-  }
-
-  static String? getTimers() {
-    return instance.getString(SharedPreferencesKeys.timersStorageKey);
-  }
-
-  static Future<bool> setTimers(String value) {
-    return instance.setString(SharedPreferencesKeys.timersStorageKey, value);
-  }
-
-  static Future<bool> removeTimers() {
-    return instance.remove(SharedPreferencesKeys.timersStorageKey);
-  }
-
-  static Future<bool?>? getHasCompletedOnboarding() async {
-    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding);
-  }
-
-  static Future<bool> setHasCompletedOnboarding(bool value) {
-    return instance.setBool(
-      SharedPreferencesKeys.hasCompletedOnboarding,
-      value,
-    );
   }
 
   static String? getThemeName() {
@@ -82,14 +47,6 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setFontFamily(String value) {
     return instance.setString(SharedPreferencesKeys.fontFamily, value);
-  }
-
-  static String? getExportFormat() {
-    return instance.getString(SharedPreferencesKeys.exportFormat);
-  }
-
-  static Future<bool> setExportFormat(String value) {
-    return instance.setString(SharedPreferencesKeys.exportFormat, value);
   }
 
   static String? getAuthenticationType() {
