@@ -20,43 +20,47 @@ import 'features/session/application/session_use_cases.dart';
 import 'features/session/infrastructure/session_repository.dart';
 import 'features/settings/settings.dart';
 import 'features/template/infrastructure/template_repository.dart';
+import 'features/template/infrastructure/template_seeder.dart';
 import 'features/user/application/user_use_cases.dart';
 import 'features/user/infrastructure/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final notificationService = NotificationService();
   await notificationService.initializeTimeZone();
   await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
+
   final database = AppDatabase();
   final exercises = ExerciseRepository(database);
-  final seedResult = await CatalogSeeder(exercises).seedIfEmpty();
-  if (seedResult.isError) {
-    throw StateError(
-      'Could not seed exercise catalog: ${seedResult.errorOrNull}',
-    );
-  }
+  final templates = TemplateRepository(database);
+
+  // Run seeders in the background without throwing errors that halt app startup
+  unawaited(_initializeSeeders(exercises, templates));
+
   final events = DomainEventDispatcher();
   final sessions = WorkoutSessionRepository(database);
-  final templates = TemplateRepository(database);
   final sessionUseCases = SessionUseCases(
     templates: templates,
     sessions: sessions,
     events: events,
   );
+
   final projector = AnalyticsProjector(
     db: database,
     prCalculator: const PRCalculator(),
     sessionRepo: sessions,
     exerciseRepo: exercises,
   )..start(events);
+
   final analyticsDao = AnalyticsDao(database);
   final projectionRebuilder = ProjectionRebuilder(
     db: database,
     sessionRepo: sessions,
     projector: projector,
   );
+
   final userUseCases = UserUseCases(UserRepository(database));
   final router = AppRouter(
     initialLocation: appRouteLaunch,
@@ -71,7 +75,9 @@ void main() async {
       userUseCases: userUseCases,
     ),
   ).router;
+
   final settingsCubit = SettingsCubit(notificationService: notificationService);
+
   runApp(
     GrowthGaugeApp(
       router: router,
@@ -81,6 +87,30 @@ void main() async {
       projector: projector,
     ),
   );
+}
+
+/// Safely runs database seeders in the background so application startup never blocks or crashes.
+Future<void> _initializeSeeders(
+  ExerciseRepository exercises,
+  TemplateRepository templates,
+) async {
+  try {
+    final catalogSeedResult = await CatalogSeeder(exercises).seedIfEmpty();
+    if (catalogSeedResult.isError) {
+      debugPrint(
+        'Warning: Could not seed exercise catalog: ${catalogSeedResult.errorOrNull}',
+      );
+    }
+
+    final templateSeedResult = await TemplateSeeder(templates).seedIfEmpty();
+    if (templateSeedResult.isError) {
+      debugPrint(
+        'Warning: Could not seed workout templates: ${templateSeedResult.errorOrNull}',
+      );
+    }
+  } catch (e, st) {
+    debugPrint('Error during background database seeding: $e\n$st');
+  }
 }
 
 class const GrowthGaugeApp({
