@@ -1,30 +1,43 @@
 # Application Route Inventory
 
-Reviewed during Phase 10 on 2026-10-18 and refined afterward. Shared GoRouter
-behavior and path/name constants live in
-[`lib/core/routing/app_router.dart`](../lib/core/routing/app_router.dart);
-application destinations and feature dependency composition live in
-[`lib/app/app_routes.dart`](../lib/app/app_routes.dart). Routes currently carry
-no path, query, or extra data; editor and workout data stays in the local
-feature navigation flow that creates those pages.
+**Status:** Updated to reflect the complete Phase 10 declarative routing migration on GoRouter. Shared router behavior, path constants, and transition builders live in [`lib/core/routing/app_router.dart`](../lib/core/routing/app_router.dart); application destinations and feature dependency composition live in [`lib/app/app_routes.dart`](../lib/app/app_routes.dart).
 
-| Destination | Path | Entry / behavior | Back-stack behavior |
-|---|---|---|---|
-| Fitness launch | `/launch` | Initial location; waits for saved authentication settings | Replaced with the selected auth or Home location |
-| Home | `/home` | Authentication success; workout summary completion | `go` clears prior app destination history |
-| Settings | `/settings` | Registered destination; currently embedded in Home's training/settings navigation | Remains in Home; no route push |
-| PIN authentication | `/pin_auth` | Launch auth decision or enabling PIN from settings | `go` to Home on success; settings flow goes directly to PIN |
-| Biometric authentication | `/biometric_auth` | Launch auth decision | `go` to Home on success |
-| Exercise catalog | `/exercise_catalog` | Training hub | `push`; back returns to Home |
-| Workout templates | `/workout_templates` | Training hub | `push`; back returns to Home |
-| Analytics | `/analytics` | Training hub | `push`; local analytics detail pages remain Navigator pushes |
-| Goals | `/goals` | Training hub | `push`; back returns to Home |
-| Measurements | `/measurements` | Training hub | `push`; back returns to Home |
-| Profile | `/profile` | Training hub | `push`; back returns to Home |
-| Backup and restore | `/backup_restore` | Settings | `push`; back returns to the current Home settings surface |
+All application screens are registered as declarative GoRouter routes and navigated via `context.push(routePath, extra: ...)` or `context.go(routePath)`. Only transient modal popups (such as `showDialog` or `showModalBottomSheet`) use `Navigator.pop`.
 
-Workout start/recovery and editor/detail screens remain local
-`MaterialPageRoute` or Flutter Navigator pushes because they carry feature state
-and are transient. Dialogs, sheets, and modal results also remain local. The
-route table applies a right-to-left fade transition to app destinations and
-displays an explicit unknown-route page for unmatched locations.
+---
+
+## Route Registry
+
+| Destination | Path Constant | Route Path | Navigation Method | Parameters (`state.extra`) | Back-stack Behavior |
+|---|---|---|---|---|---|
+| **Fitness Launch** | `appRouteLaunch` | `/launch` | Initial location | None | Replaced by `go` with auth or Home |
+| **Home / Training Hub** | `appRouteHome` | `/home` | `context.go` | None | Primary destination; root of navigation stack |
+| **Settings** | `appRouteSettings` | `/settings` | Embedded in Home | None | Tab surface within Home |
+| **PIN Authentication** | `appRoutePinAuth` | `/pin_auth` | `context.go` / `push` | None | Replaced by `go(appRouteHome)` on success |
+| **Biometric Auth** | `appRouteBiometricAuth` | `/biometric_auth` | `context.go` / `push` | None | Replaced by `go(appRouteHome)` on success |
+| **Exercise Catalog** | `appRouteExerciseCatalog` | `/exercise_catalog` | `context.push` | None | Pushed over Home; back returns to Home |
+| **Custom Exercise** | `appRouteCustomExercise` | `/exercise_catalog/custom` | `context.push` | None | Pushed over Catalog; back returns to Catalog |
+| **Exercise Detail** | `appRouteExerciseDetail` | `/exercise_catalog/detail` | `context.push` | `Exercise` | Pushed over Catalog; back returns to Catalog |
+| **Workout Templates** | `appRouteWorkoutTemplates` | `/workout_templates` | `context.push` | None | Pushed over Home; back returns to Home |
+| **Template Detail** | `appRouteTemplateDetail` | `/workout_templates/detail` | `context.push` | `WorkoutTemplate` | Pushed over Templates; back returns to Templates |
+| **Template Editor** | `appRouteTemplateEditor` | `/workout_templates/editor` | `context.push` | `TemplateEditorArgs` (optional) | Pushed over Templates/Detail; back returns to caller |
+| **Active Session** | `appRouteActiveSession` | `/session/active` | `context.push` | `WorkoutSession` | Pushed over Home/Detail; back prompts confirmation |
+| **Session Summary** | `appRouteSessionSummary` | `/session/summary` | `context.push` | `WorkoutSession` | Pushed over Active Session; save returns to Home |
+| **Analytics Dashboard** | `appRouteAnalytics` | `/analytics` | `context.push` | None | Pushed over Home; back returns to Home |
+| **PR Trophy Shelf** | `appRoutePrTrophies` | `/analytics/pr_trophies` | `context.push` | None | Pushed over Analytics; back returns to Analytics |
+| **Exercise Progression**| `appRouteExerciseProgression`| `/analytics/progression` | `context.push` | String? `exerciseId` (optional) | Pushed over Analytics; back returns to Analytics |
+| **User Profile** | `appRouteProfile` | `/profile` | `context.push` | None | Pushed over Home/Settings; back returns to caller |
+| **Training Goals** | `appRouteGoals` | `/goals` | `context.push` | None | Pushed over Home; back returns to Home |
+| **Physical Measurements**| `appRouteMeasurements` | `/measurements` | `context.push` | None | Pushed over Home; back returns to Home |
+| **Backup and Restore** | `appRouteBackupRestore` | `/backup_restore` | `context.push` | None | Pushed over Settings; back returns to Settings |
+
+---
+
+## Planned Routes (Phases 5, 15, 17)
+
+| Destination | Target Phase | Planned Path | Navigation Method | Parameters (`state.extra`) |
+|---|---|---|---|---|
+| **Onboarding Wizard** | Phase 5 (Step 5.5) | `/onboarding` | `context.go` | First-launch flag |
+| **Growth Reminders** | Phase 15 | `/settings/reminders` | `context.push` | None |
+| **Edit Reminder** | Phase 15 | `/settings/reminders/edit`| `context.push` | `ReminderItem?` |
+| **Appearance Settings**| Phase 17 (Step 17.5)| `/settings/appearance` | `context.push` | None |
