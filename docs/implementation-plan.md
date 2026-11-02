@@ -91,7 +91,6 @@ flowchart TD
     P15 --> P16["Phase 16: GitHub Actions Build Improvements"]
     P16 --> P17["Phase 17: Adaptive Modular Widget System & Design System"]
     P17 --> P18["Phase 18: Fitness Assessment Score & Biometric Intelligence"]
-    P18 --> P19["Phase 19: Local Network Peer Synchronization (LAN Sync)"]
 ```
 
 ### Phase Progress Tracker
@@ -99,24 +98,23 @@ flowchart TD
 | Phase | Description | Status | Completed Steps | Total Steps |
 |---|---|---|---|---|
 | **Phase 1** | Dependencies & Core Foundation | `[x] COMPLETED` | 6 | 6 |
-| **Phase 2** | Exercise Catalog & Templates | `[x] COMPLETED` | 7 | 7 |
+| **Phase 2** | Exercise Catalog & Templates | `[~] IN PROGRESS` | 7 | 8 |
 | **Phase 3** | Session Runtime & Copy-on-Write Engine | `[x] COMPLETED` | 8 | 8 |
 | **Phase 4** | Materialized Analytics & Drift Projections | `[x] COMPLETED` | 7 | 7 |
-| **Phase 5** | User Profile, Goals & Physical Measurements | `[x] COMPLETED` | 4 | 4 |
+| **Phase 5** | User Profile, Goals & Physical Measurements | `[~] IN PROGRESS` | 4 | 5 |
 | **Phase 6** | Portability Engine, Export/Import & Migrations | `[x] COMPLETED` | 5 | 5 |
-| **Phase 7** | Hardening, Polish & Legacy Cleanup | `[~] IN PROGRESS` | 3 | 4 |
+| **Phase 7** | Hardening, Polish & Legacy Cleanup | `[~] IN PROGRESS` | 3 | 5 |
 | **Phase 8** | Consistent Structure & Maintainability | `[x] COMPLETED` | 5 | 5 |
 | **Phase 9** | Test Coverage Expansion | `[x] COMPLETED` | 5 | 5 |
 | **Phase 10** | Application Routing Migration (go_router) | `[x] COMPLETED` | 6 | 6 |
 | **Phase 11** | Bloc and Framework State Management | `[x] COMPLETED` | 6 | 6 |
 | **Phase 12** | Responsive and Accessible Experience | `[~] IN PROGRESS` | 6 | 6 |
-| **Phase 13** | Comprehensive Exercise Catalog & Exercise Steps | `[ ] PLANNED` | 0 | 6 |
+| **Phase 13** | Comprehensive Exercise Catalog & Exercise Steps | `[ ] PLANNED` | 0 | 7 |
 | **Phase 14** | Secure Local Authentication | `[ ] PLANNED` | 0 | 6 |
 | **Phase 15** | Progress Sounds, Growth Reminders & TTS Coach | `[ ] PLANNED` | 0 | 6 |
 | **Phase 16** | GitHub Actions Build Improvements | `[ ] PLANNED` | 0 | 6 |
 | **Phase 17** | Adaptive Modular Widget System & Design System | `[ ] PLANNED` | 0 | 6 |
 | **Phase 18** | Fitness Assessment Score & Biometric Intelligence | `[ ] PLANNED` | 0 | 6 |
-| **Phase 19** | Local Network Peer Synchronization (LAN Sync) | `[ ] PLANNED` | 0 | 5 |
 
 ---
 
@@ -240,6 +238,7 @@ Phase 2 builds the reusable program definitions: the **Exercise Catalog** and **
 | **Step 2.5** | Catalog presentation | `[x] COMPLETED` | Search and taxonomy filters cover body region, movement pattern, muscle group, and equipment. Custom exercise creation captures classification and metric data; owners can add/remove exercise relationships. |
 | **Step 2.6** | Template presentation | `[x] COMPLETED` | Template list/detail/editor support immutable draft revisions, block types and rounds, ordering, exercise selection, and per-set rep, weight, duration, distance, calorie, and rest targets. |
 | **Step 2.7** | Phase 2 integration and acceptance checks | `[x] COMPLETED` | Catalog auto-seeds on app startup and catalog/templates are reachable from Training navigation. All 13 catalog/template tests pass; scoped Flutter analysis reports no issues. |
+| **Step 2.8** | Template archival and deletion management | `[ ] PLANNED` | Add UI affordance to archive (soft-delete via `isArchived`) and permanently delete workout templates from `TemplateListScreen`, `TemplateDetailScreen`, and `TemplateEditorScreen`. Expose `archiveTemplate` and `deleteTemplate` use cases, wire confirmation dialogs, and provide an archived templates filter/restore toggle. |
 
 ---
 
@@ -583,6 +582,7 @@ Phase 5 establishes user-centric features: training profiles, equipment inventor
 | **Step 5.2** | Profile, goals, measurements, and equipment UI | `[x] IMPLEMENTED` | Profile/preferences and equipment inventory, goal management/progress, and append-only measurement logging screens are present and routed from the Training hub. |
 | **Step 5.3** | Canonical measurement unit handling | `[x] IMPLEMENTED` | Measurement inputs accept pounds and inches and normalize to kg/cm before persistence; body-fat percentages and custom units retain their appropriate units. Inputs with incompatible units are rejected. |
 | **Step 5.4** | User feature regression tests and verification | `[x] COMPLETED` | Repository, use-case, Cubit, and widget coverage passes (29 tests). Strict repository analysis reports no issues; scoped formatting verification passes. |
+| **Step 5.5** | First-launch user onboarding flow (3-step wizard) | `[ ] PLANNED` | Implement dedicated `OnboardingScreen` (`Step 1: Body Metrics` with biological sex toggle, imperial/metric unit selector, age/height/weight, and activity level chips; `Step 2: Goals` selection grid; `Step 3: Constraints` with body areas to avoid, equipment checklist, and daily time cap slider). Persist captured data to `UserAccount`, `UserProfile`, and `TrainingProfile`, configure first-launch routing gate in `launch_route_resolver.dart`, and add corresponding widget/flow tests. |
 
 **Verification (2026-10-18):** Phase 5 models, repositories, application state, screens, equipment selector, and navigation were already present. This pass completed the missing account repository operations and canonical measurement input conversion, and added focused regression cases. `flutter analyze --fatal-infos --fatal-warnings` passes repository-wide, all 29 tests in `test/features/user/` pass, and scoped Dart format verification passes. The provided link `design/Implementation_Plan.md` does not exist in this checkout; this canonical plan is `docs/implementation-plan.md`.
 
@@ -771,6 +771,7 @@ Phase 7 hardens the entire system for production release, ensures 60/120 FPS UI 
 | **Step 7.2** | Accessibility, contrast and rest completion feedback | `[x] COMPLETED` | Active timer, pause/resume and completion controls expose semantics; rest auto-completion triggers medium haptic feedback. Light/dark high-contrast text pairs have WCAG AA contrast tests. |
 | **Step 7.3** | Prune legacy features and refactor launch flow | `[x] COMPLETED` | Removed counter/timer/chart/splash/onboarding trees and dead routes/tests/repositories; launch now routes through saved authentication settings into the fitness home. Removed direct-only `csv`, `flutter_heatmap_calendar`, and `lottie` dependencies. |
 | **Step 7.4** | End-to-end portability journey and verification | `[x] COMPLETED` | Added `test/integration/end_to_end_workout_journey_test.dart` and a 1,000-session analytics rebuild stress test. `scripts/check.ps1` passes analysis, format check, and all 127 tests. The device-frame profiling portion remains pending and prevents Phase 7 from being fully closed. |
+| **Step 7.5** | Dynamic analytics integration for Training Hub ("This Week" & Activity Trends) | `[ ] PLANNED` | Replace hardcoded values (`3,240 kcal`, `85%`, and empty `workoutHistory: const []`) in `WeekSummarySection` and `ActivityTrendsSection`. Wire `AnalyticsCubit` / `DailySummary` repository stream to `FitnessHubPage`, compute real active time, workouts count, and estimated calories burned, wire the "Details" link button to `context.push(appRouteAnalytics)`, and add regression tests. |
 
 **Remaining release check:** profile a rebuild of 1,000 completed sessions on a Flutter device and confirm animation frame pacing. The automated stress test runs this rebuild on the test host and reports elapsed time and 16 ms event-loop pulse gaps; its measured pulse gaps are diagnostic and are not a substitute for Flutter device `FrameTiming`. No Android/iOS device or hardware-rendered target was available in this environment. Drift query/projection transactions intentionally stay on the database isolate; only portable CPU processing and rebuild ordering are moved to worker isolates with the current architecture.
 
@@ -961,6 +962,7 @@ Expand the existing catalog seed data into a broad, balanced, searchable exercis
 | **Step 13.4** | Reconcile versioned seed data safely | `[ ] PLANNED` | Ensure repeat seeding and upgrades add/update system-owned records without overwriting custom or user-modified data. |
 | **Step 13.5** | Add catalog quality and seeding tests | `[ ] PLANNED` | Verify taxonomy coverage, uniqueness, serialization, filter/search behavior, relationship integrity, and idempotent upgrade behavior. |
 | **Step 13.6** | Review catalog usability and documentation | `[ ] PLANNED` | Confirm catalog browsing/filtering remains usable and document coverage, provenance, and known taxonomy limitations. |
+| **Step 13.7** | Exercise step-by-step guidance and custom step builder | `[ ] PLANNED` | Display structured sequential steps (`setupInstructions` and `executionInstructions`) as numbered steps with an interactive timeline/stepper in `ExerciseDetailScreen`. Update `CustomExerciseScreen` with a dynamic step builder (add/remove/reorder steps), and surface step-by-step guidance cues in the active workout session HUD modal. |
 
 ### 13.3 Acceptance Criteria
 
@@ -1071,38 +1073,73 @@ Review and improve CI and release automation using the repository's existing scr
 
 ---
 
-## 20. Phase 17: Adaptive Application Widget System
+## 20. Phase 17: Unified Design System, Modular Widget Library & Adaptive Theme Engine
 
-Create a reusable Growth Gauge widget library on top of Flutter's general-purpose widgets. It will provide consistent application components with platform-aware presentation where appropriate, so the same feature-level API can render with suitable Material or Cupertino behavior for the current operating system. Build on the existing Material 3 `FitnessTheme`, settings typography, responsive layout components, and shared common widgets; replace repeated feature-local patterns incrementally.
+Create a cohesive, accessible, and responsive design system for Growth Gauge. This phase replaces fragmented and hardcoded UI patterns (such as conflicting purple color schemes in `theme_config.dart`, ad-hoc text fields, and inconsistent card paddings) with a unified design system. The system combines Material 3 dynamic color generation with a curated fitness seed palette, centralized typography (Manrope, Open Dyslexic, System Default), WCAG 2.1 AA/AAA accessibility compliance, and a library of modular, responsive components in `lib/features/common/presentation/widgets/`.
 
-### 17.1 Design-System Rules
+### 17.1 Architectural & Design-System Rules
 
-- Keep reusable components in a discoverable presentation/design-system boundary (for example, `lib/core/widgets/` or `lib/features/common/presentation/widgets/` after an inventory selects the best existing location). Do not create parallel widget libraries.
-- Define a small set of semantic design tokens for color, spacing, shape, elevation, sizing, motion, and typography. Derive light/dark/high-contrast themes and accessible states from these tokens instead of repeating literals in screens.
-- Expose stable, composable application APIs for primary/secondary/destructive/icon buttons, selectable/action chips, filter controls, text/form fields, loading/empty/error states, and common layout containers. Support labels, icons, enabled/loading/selected states, callbacks, and extension points without business logic in the widgets.
-- Use platform-aware Material/Cupertino variants only where interaction or convention materially differs. Prefer Flutter's theme and platform-adaptive components when they satisfy the design; do not fork every widget or infer the OS from device models. Provide a consistent fallback for platforms without a dedicated style.
-- Centralize typography roles and font-family configuration. Reuse existing bundled fonts and current user font settings where appropriate; define sensible system fallbacks, support text scaling, and avoid fixed-height text that clips at larger sizes. Font family and text size should be user-configurable in Settings as required by the legacy feature.
-- Make controls keyboard-operable, screen-reader labeled, focus-visible, contrast-safe, and adequately sized for touch. Platform styling must not change the meaning or accessibility of a control.
-- Keep components presentation-only and easy to extend through composition and documented variants. Avoid a generic configuration framework or a new package unless a demonstrated requirement justifies it.
+1. **Color Engine & Curated Seed Palettes:**
+   - Deprecate hardcoded purple color constants in `theme_config.dart`. Generate dynamic light, dark, medium-contrast, and high-contrast `ColorScheme` instances using `ColorScheme.fromSeed` anchored by 8 curated fitness seeds:
+     - **Forest (Default):** Vibrant athletic green (`0xFF00FF66` dark / `0xFF008732` light)
+     - **Midnight:** Deep electric indigo (`0xFF5C6BC0`)
+     - **Amber:** High-visibility power yellow/amber (`0xFFFFB300`)
+     - **Slate:** Cool metallic minimalist grey (`0xFF78909C`)
+     - **Rust:** Fiery sprint orange (`0xFFFF5722`)
+     - **Moss:** Natural organic sage green (`0xFF4CAF50`)
+     - **Cyan:** Hyper-electric endurance cyan (`0xFF00E5FF`)
+     - **Custom:** User-selected hex color harmonized via HCT color space
+   - Surfaces must strictly use Material 3 tonal elevation containers (`surfaceContainerLowest`, `surfaceContainerLow`, `surfaceContainer`, `surfaceContainerHigh`, `surfaceContainerHighest`).
+
+2. **Typography Engine:**
+   - Centralize typography on three verified font families:
+     - **Manrope (Default):** Modern geometric sans-serif optimized for numbers, fitness metrics, and clean headers.
+     - **Open Dyslexic:** High-readability font designed to mitigate common reading errors and visual crowding.
+     - **System Default:** Native platform sans-serif (San Francisco on iOS/macOS, Roboto on Android, Segoe UI on Windows).
+   - Base all text styles on `Theme.of(context).textTheme` semantic roles. Support continuous font scaling via `MediaQuery.textScalerOf(context)` without clipping or fixed-height overflow.
+
+3. **Accessibility (A11y) & WCAG Compliance:**
+   - **Contrast Ratio:** Enforce minimum 4.5:1 for normal text and 3:1 for large text / graphical controls in standard modes; enforce 7:1 (AAA) in High Contrast mode.
+   - **Touch Targets:** All interactive controls must guarantee a minimum hit region of 48×48 dp (`kMinInteractiveDimension`).
+   - **Focus & Keyboard Navigation:** Desktop and tablet keyboards must show a high-visibility 2 dp primary accent outline with 2 dp offset on active elements.
+   - **Screen Reader Semantics:** Active timers, set counts, completion dialogs, and charts must provide descriptive semantic labels, hints, and live-region announcements (`SemanticsService.announce`).
+   - **Reduced Motion:** When `MediaQuery.disableAnimationsOf(context)` is enabled, animations (progress rings, transitions, charts) immediately snap to end values without spring or lerp effects.
+
+4. **Responsive & Adaptive Layout Hierarchy:**
+   - Window size classes:
+     - **Compact (< 600 dp):** Mobile phones. Bottom navigation bar, single-column scrollable lists, full-width modal sheets.
+     - **Medium (600–1024 dp):** Tablets and foldables. Left navigation rail, 2-column card grids, persistent side sheets.
+     - **Expanded (≥ 1024 dp):** Desktop and large tablets. Extended navigation rail, 3-column catalog grids, max-width bounded content containers (Dashboards: 1080 dp, Forms: 760 dp, Detail views: 900 dp).
+
+5. **Modular Widget System (`features/common/presentation/widgets/`):**
+   - Provide standard composable UI primitives:
+     - `AppButton`: Primary (filled accent), Secondary (tonal), Outlined, Ghost/Text, Destructive, and Transport (play/pause/skip).
+     - `AppTextField`: Standardized dark input with floating label, prefix/suffix icons, character counter, error text, and unit labels.
+     - `AppDropdown<T>`: Uniform dropdown with search filtering and bottom-sheet fallback on compact viewports.
+     - `AppCard`: Standard 16 dp rounded container with `surfaceContainer` fill and optional selected state border.
+     - `AppSegmentedControl<T>`: Pill toggle control with sliding active indicator.
+     - `AppStatCard`: Metric tile featuring icon container, value, title, and trend indicator.
+     - `AppProgressRing`: Vector circular progress ring for calories, daily goal completion, and time caps.
+     - `AppActivityBadge`: Circular icon pill indicating block types (Warm Up, Interval, Reps, Rest, Cool Down).
 
 ### 17.2 Execution Status
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 17.1** | Audit theme, fonts, and repeated widget patterns | `[ ] PLANNED` | Inventory `FitnessTheme`, settings font configuration, responsive/common widgets, repeated buttons/chips/filters, and platform-specific differences. |
-| **Step 17.2** | Define tokens, typography roles, and platform policy | `[ ] PLANNED` | Document semantic tokens, font fallback/scaling, component variants, adaptive selection rules, and accessibility requirements. |
-| **Step 17.3** | Establish widget library boundary and APIs | `[ ] PLANNED` | Select the existing shared presentation location and define focused, composable component APIs with minimal dependencies. |
-| **Step 17.4** | Implement core controls and theme integration | `[ ] PLANNED` | Add button variants, chips, filter controls, form components, and common states, integrated with Material/Cupertino themes as appropriate. |
-| **Step 17.5** | Migrate representative screens incrementally | `[ ] PLANNED` | Migrate high-use controls in home, catalog, template, session, analytics, and settings; remove duplicate local styling when verified. |
-| **Step 17.6** | Add cross-platform widget and accessibility tests | `[ ] PLANNED` | Test platform overrides, themes, visual states, text scaling, focus/semantics, keyboard/touch affordances, and responsive behavior. |
+| **Step 17.1** | Audit theme, colors, and reconcile `FitnessTheme` | `[ ] PLANNED` | Remove obsolete purple schemes in `theme_config.dart`. Implement 8 curated seed palettes (Forest, Midnight, Amber, Slate, Rust, Moss, Cyan, Custom) with dynamic light/dark/contrast modes in `FitnessTheme`. |
+| **Step 17.2** | Implement centralized typography engine | `[ ] PLANNED` | Wire `Manrope`, `Open Dyslexic`, and `System Default` into `AppFontTheme` using standard `TextTheme` roles, responsive line heights, and `TextScaler` support. |
+| **Step 17.3** | Build core form controls (`AppTextField`, `AppDropdown`, `AppButton`) | `[ ] PLANNED` | Implement modular inputs in `lib/features/common/presentation/widgets/` with 48 dp touch targets, floating labels, validation states, and visible focus. |
+| **Step 17.4** | Build data display components (`AppCard`, `AppProgressRing`, `AppStatCard`, `AppActivityBadge`) | `[ ] PLANNED` | Implement standardized cards, vector progress rings for calories/time caps, stat tiles, and block activity category badges. |
+| **Step 17.5** | Implement dedicated Appearance screen (`appRouteAppearance`) | `[ ] PLANNED` | Build the screen from `Settings-2.png`: Light/Dark/System toggle, 8-swatch seed grid, font family selector, text size slider, and live preview card updating in real time. |
+| **Step 17.6** | Screen migration and design system regression tests | `[ ] PLANNED` | Migrate Home, Catalog, Template, Session, and Settings to use the modular widgets. Add automated tests covering WCAG AA contrast, text scaling up to 200%, keyboard focus traversal, and responsive window resizing. |
 
 ### 17.3 Acceptance Criteria
 
-- A documented application widget library provides consistent, reusable button, chip, filter, form, and feedback components, built on Flutter widgets and existing theme conventions.
-- Component APIs remain stable across supported operating systems and choose Material/Cupertino presentation only where appropriate; unsupported platforms retain a usable accessible fallback.
-- Typography uses centralized roles and bundled/system fallback fonts, respects settings and text scaling, and does not clip in supported responsive layouts.
-- Representative screens use the shared components, repeated hard-coded styling is reduced, and component tests cover supported platform variants, visual states, semantics, focus, and large text.
-- The library remains presentation-only, extensible through clear variants/composition, and introduces no unnecessary dependency or competing design system.
+- All screens share a consistent visual language: near-black green surfaces (`#0E1410`), accent green (`#00FF66`), 16 dp rounded cards, and clean typography.
+- Users can switch between 8 seed palettes, 3 font families, and continuous text scale in Appearance settings with instantaneous preview.
+- All controls pass WCAG 2.1 AA contrast requirements and touch targets measure at least 48×48 dp.
+- Layouts adapt seamlessly across Compact (<600 dp), Medium (600–1024 dp), and Expanded (≥1024 dp) breakpoints without clipped text or RenderFlex overflows.
+- Hardcoded literals, duplicate text fields, and inconsistent card decorations are replaced by shared modular widgets.
 
 
 ---
@@ -1130,3 +1167,524 @@ This crosswalk maps `features.md` into the existing phase structure. It does not
 ### Cross-cutting acceptance gate
 
 Before declaring legacy parity complete, verify each row against code and tests, update the relevant phase tracker/status only after evidence exists, and record any deliberately deferred item. Do not change the current architecture or reintroduce `lib/features/counter/`, `lib/features/timer/`, legacy Shared Preferences repositories, or obsolete routes merely to achieve feature-name parity. Where a legacy feature’s detailed behavior is not specified, mark it **NA** rather than inventing requirements.
+
+
+---
+
+## 22. Legacy Design Image Retrofit Plan
+
+This section maps each legacy UI design image (from `docs/Legacy/design/`) to the current implementation, identifies what is already built, and documents the specific gaps that must be addressed. All work is integrated into the existing phases above; the phase references below are the authoritative home for each piece of work.
+
+> **Design language reference (from legacy images)**
+> - **Primary background**: near-black green-tinted surface (`#0D1F0D` / `#0E1A0E`)
+> - **Brand accent**: bright green (`#00E676`)
+> - **Card style**: rounded corners (~16 dp), `surfaceContainer` dark fill, no harsh borders
+> - **Default font family**: `Manrope` geometric sans-serif
+> - **CTA style**: filled rounded button in accent green with dark label
+> - **Icon containers**: circular filled icons per activity type (runner = Warm Up, timer = Interval, dumbbell = Reps, clock = Rest, snowflake = Cool Down)
+
+---
+
+### 22.1 Home / Training Hub
+
+**Source image:** `HomePage-1.png`  
+**Current file:** [`lib/features/home/fitness_hub_page.dart`](../lib/features/home/fitness_hub_page.dart)  
+**Target phase:** Phase 7 polish + Phase 12 responsive (already in progress)
+
+| Component | Status | Notes |
+|---|---|---|
+| Greeting header with user name and avatar circle | ✅ Implemented | Present in `home_page.dart` header |
+| Time-range selector (Today / Week / Month) | ✅ Implemented | Exists in `FitnessHubPage` |
+| Quick Start horizontal carousel | ✅ Implemented | `quick_start_section.dart` |
+| Explore Library CTA banner | ✅ Implemented | In `fitness_hub_page.dart` |
+| Weekly stats summary cards (active time, workouts count) | ✅ Implemented | Grid cards present |
+| **"This Week" calories burned donut ring progress indicator** | ❌ Missing | Large ring with calories in center and weekly goal label; maps to Phase 7 Step 7.4 polish |
+| **7-day M–T–W–T–F–S–S activity tile row with checkmarks** | ❌ Missing | Each day shows a small circle tile: filled accent green with checkmark = completed, muted = missed; Phase 12 / Phase 17 |
+| **Streak badge overlaid on activity tiles** | ❌ Missing | "12-Day Streak 🔥" pill badge; Phase 7 / Phase 15 |
+| **"Details" link in "This Week" header → Analytics Trends route** | ❌ Missing | Tappable text that navigates to the Trends screen; Phase 10 routing already complete, needs UI link wired |
+
+---
+
+### 22.2 Workout Builder (Template Editor)
+
+**Source images:** `New-Workout-1.png`, `Edit-Workout-1.png`  
+**Current files:** [`lib/features/template/presentation/template_editor_screen.dart`](../lib/features/template/presentation/template_editor_screen.dart), [`lib/features/template/presentation/template_detail_screen.dart`](../lib/features/template/presentation/template_detail_screen.dart)  
+**Target phase:** Phase 2 (completed) + Phase 13 exercise steps + Phase 15 sound/voice toggles
+
+| Component | Status | Notes |
+|---|---|---|
+| Editable workout name field at top | ✅ Implemented | `template_editor_screen.dart` |
+| Block structure list (Warm Up, Blocks, Cool Down) | ✅ Implemented | Drag-reorderable block list |
+| Per-block interval timer vs. reps distinction | ✅ Implemented | Measurement profile per block |
+| "+ Add Block" dashed button | ✅ Implemented | Present in editor |
+| **Live reactive "Total Duration" header** | ❌ Missing | Shows computed sum of all block durations in real time as blocks are added/edited; Phase 7 polish |
+| **Base template selector cards (Custom / HIIT / Strength)** | ❌ Missing | Visual card picker at top of new-template flow with icon + label + selected state ring; Phase 2 enhancement or Phase 17 widget system |
+| **Warm Up and Cool Down blocks shown as locked (non-removable)** | ❌ Missing | Swipe-to-delete disabled, lock icon shown; Phase 3 session rules |
+| **Sound Effects toggle + Voice Guide toggle per template** | ❌ Missing | Two switch tiles at bottom of editor; sound = play audio cues; voice = TTS coach; links to Phase 15 |
+
+---
+
+### 22.3 Active Session Player
+
+**Source images:** `Running-Workout-1.png`, `Running-Workout-2.png`  
+**Current file:** [`lib/features/session/presentation/active_session_screen.dart`](../lib/features/session/presentation/active_session_screen.dart)  
+**Target phase:** Phase 3 (completed) + Phase 7 polish
+
+| Component | Status | Notes |
+|---|---|---|
+| Countdown timer display | ✅ Implemented | `active_session_screen.dart` |
+| Rep counter | ✅ Implemented | Present for reps-based exercises |
+| Pause / Resume button | ✅ Implemented | Transport controls present |
+| Block Progress bar | ✅ Implemented | Progress indicator present |
+| "Next Up" card (next exercise name and type) | ✅ Implemented | Footer card present |
+| **Exercise icon circle (type-specific circular icon container)** | ❌ Missing | Large centered circle with themed icon: runner (Warm Up), timer (Interval), dumbbell (Reps), clock (Rest), snowflake (Cool Down); Phase 7 / Phase 17 |
+| **Exercise type badge chip (INTERVAL / REPS label pill)** | ❌ Missing | Pill chip below exercise name indicating measurement type; Phase 7 |
+| **Large countdown / rep counter with ±1 circular tap buttons** | ❌ Missing | "+1" / "−1" buttons in circular outlines flanking the large digit counter for reps; Phase 7 |
+| **Rounds N/8 footer card** | ❌ Missing | Persistent bottom card showing "Round 2 of 4" progress; Phase 7 |
+| **Previous block transport button** | ❌ Missing | Three-button transport row: ← skip-back / ⏸ pause / → skip-forward; Phase 3/7 |
+
+---
+
+### 22.4 Session Summary (Deep Dive)
+
+**Source image:** `Workout-Completed-1.png`  
+**Current file:** [`lib/features/session/presentation/session_summary_screen.dart`](../lib/features/session/presentation/session_summary_screen.dart)  
+**Target phase:** Phase 3 (completed) + Phase 7 polish
+
+| Component | Status | Notes |
+|---|---|---|
+| RPE slider (Easy → Max) | ✅ Implemented | `session_summary_screen.dart` |
+| "How did you feel?" emoji row (Tired / Neutral / Good / Energetic / Great) | ✅ Implemented | Mood selector present |
+| Notes text area | ✅ Implemented | Free-text notes field |
+| "Save Log" CTA button | ✅ Implemented | Primary action |
+| **Total Duration + Completed Date header card** | ❌ Missing | Top section showing "45 min" duration and "Completed Mon, 14 Oct" date badge; Phase 7 |
+| **Heart Rate input with zone annotation** | ❌ Missing | Average heart rate field with inline "Zone 3 • Moderate" annotation derived from HR zones; Phase 18 biometric intelligence |
+| **TIMELINE read-only block list at bottom** | ❌ Missing | Scrollable list of each executed block with block name, type icon, and duration; Phase 7 |
+
+---
+
+### 22.5 Analytics & Trends Screen
+
+**Source image:** `Summary-1.png`  
+**Current file:** [`lib/features/analytics/presentation/screens/analytics_dashboard_screen.dart`](../lib/features/analytics/presentation/screens/analytics_dashboard_screen.dart)  
+**Target phase:** Phase 4 (completed) + Phase 13 + Phase 18
+
+| Component | Status | Notes |
+|---|---|---|
+| Volume bar chart | ✅ Implemented | `fl_chart` bar chart present |
+| Exercise progression chart (PR trophies) | ✅ Implemented | PR trophy shelf implemented |
+| Workout frequency chart | ✅ Implemented | Frequency visualization present |
+| **Monthly consistency calendar heatmap** | ❌ Missing | Navigable month calendar where each day cell is colored by activity intensity or marked as completed; Phase 4 enhancement / Phase 13 |
+| **Average Heart Rate line chart with tooltip** | ❌ Missing | Line chart of avg HR per session with interactive tooltip showing exact value; Phase 18 (requires HR data from summary) |
+| **Total Duration trend bar chart with tooltip** | ❌ Missing | Stacked or grouped bar chart of workout duration per day/week; Phase 4 enhancement |
+| **1W / 1M / 3M / YTD segmented period toggle** | ❌ Missing | Four-segment control at top of Performance section to filter all charts; Phase 4 enhancement |
+| **% growth vs. previous period badge** | ❌ Missing | Green badge "↑ 12% vs last month" shown below each chart; Phase 4 enhancement |
+| **"12-Day Streak" badge in Consistency section** | ❌ Missing | Streak badge with flame icon displayed in the calendar header; Phase 15 / Phase 7 |
+
+---
+
+### 22.6 Profile Setup — 3-Step Onboarding Wizard
+
+**Source images:** `Profile-Setup-1.png`, `Constraints-1.png`  
+**Current file:** [`lib/features/user/presentation/`](../lib/features/user/presentation/)  
+**Target phase:** Phase 5 (completed) + Phase 18
+
+| Component | Status | Notes |
+|---|---|---|
+| Height / Weight / RHR biometric input fields | ✅ Implemented | `profile_screen.dart` |
+| Equipment inventory sheet | ✅ Implemented | `equipment_inventory_sheet.dart` |
+| **3-step wizard with step indicator (Step N of 3)** | ❌ Missing | Linear stepper UI with progress dots or numbered chips; must not use a new state management pattern — wire to existing `UserCubit` |
+| **Step 1: Biological Sex toggle (Male / Female segmented control)** | ❌ Missing | Segmented toggle widget; Phase 5 / Phase 17 widget system |
+| **Step 1: Imperial / Metric unit toggle** | ❌ Missing | Two-option segmented control switching height/weight field labels and expected range; Phase 5 (unit conversion in `core/units/` already exists) |
+| **Step 1: Activity Level horizontal chip row** | ❌ Missing | Selectable chips: Sedentary / Light / Moderate / Heavy / Athletic; Phase 5 enhancement |
+| **Step 1: Optional body composition fields** | ❌ Missing | Neck / Waist / Hip fields shown as collapsible "Optional" section for body-fat estimation; Phase 18 biometric intelligence |
+| **Step 2: Goal Selection grid** | ❌ Missing | Cards with icon + label for goals (Lose Weight / Build Muscle / Improve Endurance / General Fitness etc.); Phase 5 |
+| **Step 3: Constraints screen** | ❌ Missing | Body areas to avoid chips, equipment checklist, Daily Time Cap slider (15M–120M), Dietary Restrictions dropdown + allergen text field, "Finish Setup" CTA; Phase 5 enhancement — do not duplicate `equipment_inventory_sheet.dart`, extend it |
+
+---
+
+### 22.7 Settings Hub
+
+**Source image:** `Settings-1.png`  
+**Current file:** [`lib/features/settings/settings_page.dart`](../lib/features/settings/settings_page.dart)  
+**Target phase:** Phase 14 (auth) + Phase 15 (reminders) + Phase 17 (appearance) + Phase 7 polish
+
+| Component | Status | Notes |
+|---|---|---|
+| Theme toggle | ✅ Implemented | Dark/Light/System toggle in settings |
+| Auth section (biometric lock) | ✅ Partially | Tile present but biometric flow incomplete (Phase 14) |
+| Backup / Restore tiles | ✅ Implemented | Portability tiles present |
+| **User profile summary card at top** | ❌ Missing | Large card with avatar circle, display name, "Pro Member" badge (if applicable), and pencil edit icon that routes to `ProfileScreen`; Phase 7 |
+| **"UI Customization" tile → Appearance screen route** | ❌ Missing | Navigates to dedicated Appearance screen (Section 22.8); Phase 17 |
+| **"Growth Reminders" tile → Reminders list route** | ❌ Missing | Navigates to `GrowthRemindersScreen` (Section 22.9); Phase 15 |
+| **Help & FAQ external link tile** | ❌ Missing | Opens external URL or in-app web view; Phase 7 |
+| **About Us tile** | ❌ Missing | Shows app version, legal, credits; Phase 7 |
+| **Log Out destructive button** | ❌ Missing | Bottom of settings list, destructive red label, triggers account sign-out confirmation; Phase 7 |
+| **App version string at bottom** | ❌ Missing | Small muted text "v1.0.0 (42)" below Log Out; Phase 7 |
+
+---
+
+### 22.8 Appearance Screen
+
+**Source image:** `Settings-2.png`  
+**Current files:** [`lib/features/settings/config/theme_config.dart`](../lib/features/settings/config/theme_config.dart)  
+**Target phase:** Phase 17 (Adaptive Modular Widget System & Design System)
+
+> This entire screen needs to be built. It does not yet exist as a standalone route.
+
+| Component | Status | Notes |
+|---|---|---|
+| **Light / Dark / System segmented control** | ❌ Missing | Three-option toggle at top of appearance screen (currently buried in settings page as a dropdown/switch) |
+| **Color seed grid (7 tiles + Custom)** | ❌ Missing | Tappable color swatch tiles with labels: Forest ✓ (default), Midnight, Amber, Slate, Rust, Moss, Cyan, and a "Custom" tile with palette icon; selected tile shows a checkmark ring; drives `FitnessTheme` seed color |
+| **Font Style radio list** | ❌ Missing | Radio-list group: "Manrope — Default Geometric Sans" (default ✓), "Open Dyslexic — Accessibility Focused", "System Default — San Francisco / Roboto"; a "More Fonts" expandable row may follow |
+| **Text Size slider (A → A with % badge)** | ❌ Missing | Continuous slider between small-A and large-A icons; current scale shown as "100%" badge that updates as slider moves |
+| **LIVE PREVIEW card** | ❌ Missing | Card below controls showing sample heading + body text rendered in the currently selected font family, scale, and active theme in real time — no restart required |
+| **Route registration for Appearance screen** | ❌ Missing | Add `appRouteAppearance` in `app_routes.dart`; navigate from Settings tile |
+
+---
+
+### 22.9 Growth Reminders Screen
+
+**Source images:** `Growth-Reminders-1.png`, `Edit-Reminders-1.png`  
+**Current service:** [`lib/features/user/`](../lib/features/user/) notification service (basic scheduling exists)  
+**Target phase:** Phase 15 (Progress Sounds, Growth Reminders & TTS Coach)
+
+> The `NotificationService` exists but the full Reminders UI does not.
+
+| Component | Status | Notes |
+|---|---|---|
+| Basic local notification scheduling in `NotificationService` | ✅ Implemented | Foundation exists |
+| **`GrowthRemindersScreen` route** | ❌ Missing | New screen; register as `appRouteGrowthReminders` in `app_routes.dart` |
+| **"Enable All Reminders" master toggle + motivation copy** | ❌ Missing | Top section with single switch that enables/disables all scheduled reminders at once |
+| **Reminder list items** | ❌ Missing | Each row: icon (emoji), label, time string, recurrence label, edit-pencil icon button, active switch toggle |
+| **Quick Add inline form** | ❌ Missing | Collapsed/expanded section within the same screen: Label field, Time picker row, Repeat dropdown (Daily / Weekdays / Weekends / Custom), Motivational Message textarea (120-char counter), "Save Reminder" CTA |
+| **Template variable insert chips** | ❌ Missing | Chips below the message textarea: `[Streak]`, `[Current Goal]`, `[Name]`; tapping inserts the token at the cursor position |
+| **NOTIFICATION PREVIEW mock card** | ❌ Missing | Read-only card that substitutes live variable values (highlighted in accent green) into the composed message, simulating the lock-screen notification appearance |
+| **`EditReminderScreen` route** | ❌ Missing | Full edit form navigated from the edit-pencil icon; includes icon picker emoji row, Label + Time + Repeat fields, "Reminder Active" toggle, Motivational Message + variable chips + preview; register as `appRouteEditReminder` |
+
+---
+
+### 22.10 Data Management (Backup & Restore)
+
+**Source image:** `Data-Management-1.png`  
+**Current file:** [`lib/features/portability/presentation/screens/backup_restore_screen.dart`](../lib/features/portability/presentation/screens/backup_restore_screen.dart)  
+**Target phase:** Phase 6 (completed) + Phase 7 UI polish
+
+| Component | Status | Notes |
+|---|---|---|
+| JSON Backup export and restore logic | ✅ Implemented | `portability_cubit.dart`, `export_data_use_case.dart`, `import_data_use_case.dart` |
+| Conflict resolution dialog | ✅ Implemented | `conflict_resolution_dialog.dart` |
+| Checksum verification & migrations | ✅ Implemented | `checksum_validator.dart`, `migration_registry.dart` |
+| **Dedicated "JSON Backup" card** | ❌ Missing | Card with code icon `{}`, title "JSON Backup", subtitle "Full history & settings • Best for migration", and outline "Generate" button with download icon; Phase 7 UI polish |
+| **Dedicated "CSV Spreadsheet" export card** | ❌ Missing | Card with table/spreadsheet icon, title "CSV Spreadsheet", subtitle "Activity metrics only • For Excel or Sheets", and outline "Generate" button; Phase 6 / Phase 7 UI polish |
+| **Dashed-border "Select File to Restore" picker zone** | ❌ Missing | Prominent card with dashed border, centered green circular upload icon, "Tap to browse files", and amber warning chip "⚠ This may overwrite existing logs."; Phase 7 UI polish |
+| **Export/Restore "HISTORY" timeline list** | ❌ Missing | Vertical stepper/timeline showing history of exports and imports with timestamp (e.g. "Exported CSV • Today 10:00 AM", "Exported JSON • Oct 24") and status dots; Phase 6 / Phase 7 |
+
+---
+
+### 22.11 Retrofit Priority Summary
+
+The table below ranks unbuilt components by user-facing impact to guide sequencing within each phase.
+
+| Priority | Screen Area | Missing Component | Target Phase |
+|---|---|---|---|
+| 🔴 High | Home / Hub | Dynamic "This Week" analytics integration (real calories, active time, workouts, Details link) | Phase 7 (Step 7.5) |
+| 🔴 High | Home / Hub | Calories donut ring + 7-day activity tiles + streak badge | Phase 7 / Phase 17 |
+| 🔴 High | Onboarding | 3-step first-launch wizard (Body Metrics, Goals, Constraints) | Phase 5 (Step 5.5) |
+| 🔴 High | Templates | Delete / Archive workout template with confirmation dialog & filter | Phase 2 (Step 2.8) |
+| 🔴 High | Exercise Steps | Sequential setup & execution steps timeline + custom step builder | Phase 13 (Step 13.7) |
+| 🔴 High | Active Session | Exercise icon circle + type badge + ±1 rep buttons | Phase 7 |
+| 🔴 High | Session Summary | Total Duration header + TIMELINE block list | Phase 7 |
+| 🔴 High | Settings | User profile card + missing tiles (Reminders, Appearance, Log Out, version) | Phase 7 |
+| 🔴 High | Data Management | Dual export cards (JSON/CSV) + dashed restore zone + history timeline | Phase 7 |
+| 🟠 Medium | Appearance Screen | Entire screen (seed grid, font picker, text size slider, live preview) | Phase 17 |
+| 🟠 Medium | Growth Reminders | Full `GrowthRemindersScreen` + `EditReminderScreen` | Phase 15 |
+| 🟠 Medium | Analytics | Calendar heatmap + period toggle + growth badges | Phase 4 enhancement |
+| 🟠 Medium | Workout Builder | Live Total Duration header + base template selector + locked blocks + sound/voice toggles | Phase 7 / Phase 15 |
+| 🟡 Lower | Session Summary | HR input with zone annotation | Phase 18 |
+| 🟡 Lower | Analytics | Avg HR line chart + Total Duration bar chart | Phase 18 |
+| 🟡 Lower | Profile Setup | Optional body composition fields (Neck/Waist/Hip) | Phase 18 |
+
+---
+
+### 22.12 Design Consistency Checklist (Cross-cutting)
+
+Apply the following to every retrofit component — do not implement a component without satisfying these:
+
+- [ ] Background uses `Theme.of(context).colorScheme.surface` / `surfaceContainer`; do not hard-code hex values
+- [ ] Accent green is `Theme.of(context).colorScheme.primary` (driven by the seed color in Phase 17)
+- [ ] Rounded corners use `Theme.of(context).shape.large` (or explicit `BorderRadius.circular(16)` from the design token)
+- [ ] Typography uses `Theme.of(context).textTheme` roles — `headlineMedium`, `titleLarge`, `bodyMedium`, `labelSmall`; do not set raw `fontSize` values in feature code
+- [ ] All new routes use `context.push(routePath, extra: ...)` via GoRouter — never `Navigator.of(context).push(MaterialPageRoute(...))`
+- [ ] New screens follow the clean-architecture layer separation: domain → application (Cubit/Bloc) → infrastructure → presentation
+- [ ] Run `./scripts/check.ps1` (analysis + format + tests) before marking any component done
+
+---
+
+### 22.13 Comprehensive Current Implementation Audit (`docs/design/` 23-Image Analysis)
+
+This section maps all 23 live screenshots captured in `docs/design/` against the codebase, cataloging what is currently built, responsive presentation differences, visual bugs/artifacts, and exact implementation plan actions.
+
+#### 1. Full Screen-by-Screen Mapping Table
+
+| Screen & Artifacts | Visual State in `docs/design/` Screenshots | Code Implementation Status | Identified Gaps & Required Actions |
+|---|---|---|---|
+| **Home Dashboard**<br>`HomePage-Mobile.png`<br>`HomePage-Desktop.png` | • Responsive shell (Rail on desktop, Bottom bar on mobile)<br>• Calories card: `3,240 kcal`, `85%` donut ring<br>• Stats cards: `0h 0m` active time, `0` workouts<br>• Activity trends: `Week \| Month \| Quarter` toggle, empty day/week slots<br>• Quick Start carousel with workout cards | ⚠️ **Partially Implemented & Hardcoded**<br>• Shell navigation adapts properly.<br>• `CaloriesCard` contains hardcoded literals (`3,240`, `85%`).<br>• `workoutHistory` defaults to empty `const []`.<br>• "Details" link button has empty callback `onPressed: () {}`. | **Step 7.5:** Wire `FitnessHubPage` to `AnalyticsCubit` / `DailySummary` Drift stream. Compute live active time, workouts, and estimated kcal. Route "Details" to `appRouteAnalytics`. |
+| **Exercise Catalog**<br>`ExerciseCatalog-Mobile.png`<br>`ExerciseCatalog-Desktop.png` | • Responsive view (single column list on mobile, 3-column card grid on desktop)<br>• Search bar + 4 taxonomy filters (`Region`, `Pattern`, `Muscle`, `Equipment`)<br>• FAB `+ Custom exercise` | ✅ **Implemented**<br>• Full taxonomy filtering and search work.<br>• Custom exercise modal functions. | Ensure responsive constraints prevent horizontal overflow on extreme desktop widths. |
+| **Exercise Detail**<br>`ExerciseDetailPage-Mobile.png`<br>`ExerciseDetails-Desktop.png` | • Large title + short description<br>• Card with metadata: Movement Pattern, Body Region, Primary Muscles, Equipment Required, Tracking Metric | ❌ **Severely Incomplete**<br>• The page is almost empty below the metadata card.<br>• No setup instructions or execution steps.<br>• No exercise illustrations/diagrams.<br>• No relationship/progression links. | **Step 13.7:** Display sequential `setupInstructions` and `executionInstructions` as a numbered timeline/stepper. Surface linked progressions/regressions. |
+| **Exercise Progression**<br>`ExerciseProgression-Mobile.png` | • Exercise dropdown selector (`Dumbbell Hammer Curl`)<br>• Line chart: Estimated 1RM Progression (kg) with trend line<br>• "Completed Sets History" cards with RPE and 1RM calculation | ✅ **Implemented**<br>• Dropdown selection, 1RM trend chart, and set history cards render cleanly. | Enhance chart tooltips for individual data points on desktop hover. |
+| **Workout Templates**<br>`WorkoutTemplatePage-Mobile.png`<br>`WorkoutTemplatePage-Desktop.png` | • Scrollable list of templates with title, description, and chevron `>`<br>• FAB `+ New template`<br>• Description text contains raw citation artifacts (e.g. `[cite: 4]`, `[cite: 2, 4]`) | ⚠️ **Partially Implemented / Missing Archival**<br>• Templates query and display from Drift.<br>• **No delete or archive affordance** (no swipe, popup menu, or button).<br>• Seed descriptions contain uncleaned markdown citations. | **Step 2.8:** Add template archive/delete actions with confirmation dialogs and an archived routines filter tab. Clean citation artifacts from seed data. |
+| **Template Detail / Start**<br>`WorkoutStartPage-Mobile.png`<br>`WorkoutStartPage-Desktop.png` | • Template name + description (`[cite: 4]`)<br>• `Revision 1 / PUBLISHED` history badge<br>• Full-width green `▶ Start workout` button<br>• Block card summary (`Arm Blaster / 2 exercises • 3 round(s)`)<br>• FAB `✏ Edit template` | ⚠️ **Partially Implemented**<br>• Can launch session or enter template editor.<br>• No delete or archive option in app bar.<br>• Does not display exercises, sets, or targets inside the block card. | **Step 2.8:** Add delete/archive action to app bar. Expand block card to show exercise names, target reps, weights, and rest periods. |
+| **Active Workout Running**<br>`WorkoutRunningPage-Mobile.png`<br>`WorkoutRunningPage-Desktop.png` | • Header with timers: `00:10 ACTIVE`, `00:10 ELAPSED`, Pause button<br>• Active Set card with green icon, exercise name, target prescription (`10 reps • 30.0 kg`)<br>• Set navigation `<` `>` and action buttons (`Log set`, `Edit target`, `Skip`, `Delete`)<br>• Collapsible block accordion showing all planned sets<br>• Full-width `✓ Complete workout` button | ✅ **Core Functionality Implemented**<br>• State machine, copy-on-write execution, and set logging work reliably. | **Step 13.7:** Add info action/sheet displaying exercise form cues and execution steps during the active set. |
+| **Workout Complete Summary**<br>`WorkoutCompletePage-Mobile.png`<br>`WorkoutComplete-Desktop.png` | • Top cards: `TOTAL DURATION (⏱ 00:25)` & `COMPLETED ON (📅 Nov 2)`<br>• Perceived Effort (RPE) slider (`8/10 Hard`)<br>• Emoji feeling row (Tired, Neutral, Good, Energetic, Great)<br>• Notes text area + green `💾 Save Log` button<br>• TIMELINE list shows raw IDs (`exercise-barbell-curl-001`, `exercise-skull-crusher-001`) | ⚠️ **Implemented with Visual Defects**<br>• Summary logging, RPE, and notes persist.<br>• **Bug:** TIMELINE displays raw IDs instead of resolved exercise names.<br>• Missing heart rate input with zone annotation. | Resolve exercise IDs to names in summary timeline. Add average HR input (Phase 18). |
+| **Analytics & Progress**<br>`AnalyticsPage-Mobile.png`<br>`AnalyticsPage-Desktop.png` | • 10-week workout frequency heatmap (`43 total`)<br>• Weekly volume by muscle bar chart<br>• "Latest Completed Workouts" card list<br>• "Recent Personal Records" list showing raw IDs (`exercise-squat-001`)<br>• Desktop layout duplicates "Latest Completed Workouts" section twice | ⚠️ **Implemented with Defects**<br>• Projections and charts render real data.<br>• **Bug:** Desktop view renders "Latest Completed Workouts" twice.<br>• **Bug:** Recent PRs show raw IDs instead of exercise names. | Fix desktop layout duplication. Resolve exercise IDs to names in PR list. Add period filter toggle (`1W \| 1M \| 3M \| YTD`). |
+| **Personal Record Trophies**<br>`PRPage-Mobile.png`<br>`PRPage-Desktop.png` | • Header: `Achievements (34)`, Sort dropdown (`Newest First`)<br>• Filter chips: `All Trophies`, `Max Weight`, `Est. 1RM`, `Max Reps`<br>• Trophy list displays raw IDs (`exercise-bench-001`, `exercise-squat-001`) | ⚠️ **Implemented with Defect**<br>• Filtering and sorting function correctly.<br>• **Bug:** Cards display raw IDs (`exercise-bench-001`) instead of human-readable exercise names. | Resolve exercise IDs to names across the trophy shelf. |
+| **Profile & Preferences**<br>`ProfilePage-Mobile.png`<br>`ProfilePage-Desktop.png` | • User card: "Athlete / INTERMEDIATE • General Strength"<br>• Core measurements: Age, Height, Weight<br>• Detailed body metrics: Neck, Waist, Hip<br>• Unit preferences: KG/LB, KM/MI, CM/FT-IN<br>• Training profile & workout execution toggles | ⚠️ **Settings Sub-Screen Only**<br>• Full preference and measurement storage works.<br>• User display name is uneditable (defaults to "Athlete").<br>• **Missing:** Not an onboarding wizard for first launch. | **Step 5.5:** Create 3-step `OnboardingScreen` for first launch. Allow editing display name in profile. |
+| **Settings Hub**<br>`SettingsPage-Mobile.png`<br>`SettingsPage-Desktop.png` | • Appearance card: App theme, Font size, Font family dropdowns<br>• Notifications card: Notification time (`Set time`)<br>• Data & Security card: Backup and restore, Authentication type | ⚠️ **Basic Prototype State**<br>• Functional, but lacks structure of design specs (`Settings-1.png` / `Settings-2.png`).<br>• No profile card header with avatar and edit button.<br>• No dedicated Appearance screen (color seed grid, live preview).<br>• No Growth Reminders management list.<br>• Missing Help & FAQ, About Us, Log Out, and app version. | **Phases 7, 15, 17:** Upgrade settings to grouped hub with profile card, route to Appearance screen (`appRouteAppearance`), route to Reminders screen (`appRouteGrowthReminders`), and add footer actions. |
+
+---
+
+#### 2. Summary of 4 Core Unimplemented Features & Immediate Action Items
+
+1. **Onboarding Page for Capturing User Information (`Step 5.5`):**
+   - Implement `OnboardingScreen` featuring the 3-step wizard (`Body Metrics` → `Goals` → `Constraints`).
+   - Wire `launch_route_resolver.dart` to check profile existence and divert first-time users before landing on Home.
+
+2. **Dynamic "This Week" Section on Home Dashboard (`Step 7.5`):**
+   - Remove hardcoded `3,240 kcal` and `85%` in `week_summary_section.dart`.
+   - Stream actual weekly volume, active seconds, and workout counts from `AnalyticsCubit` / `DailySummary`.
+   - Calculate calorie expenditure dynamically and wire the "Details" header button to `context.push(appRouteAnalytics)`.
+
+3. **Template Deletion and Archiving (`Step 2.8`):**
+   - Expose archive and delete methods in `TemplateBloc` and `ITemplateRepository`.
+   - Add archive/delete action buttons and confirmation dialogs in `TemplateListScreen`, `TemplateDetailScreen`, and `TemplateEditorScreen`.
+   - Add an "Archived Routines" filter/toggle to `TemplateListScreen` and clean citation artifacts from seed templates.
+
+4. **Steps for Specific Exercises (`Step 13.7`):**
+   - Update `ExerciseDetailScreen` to render `setupInstructions` and `executionInstructions` as a sequential, numbered timeline/stepper.
+   - Build a custom step builder in `CustomExerciseScreen` allowing users to add, edit, and reorder steps.
+   - Provide an in-session step cues sheet during active workout tracking in `ActiveSessionScreen`.
+
+5. **Cross-Screen Visual Fixes (Found in Audit):**
+   - **Fix Raw Exercise IDs:** Map document IDs (`exercise-squat-001`) to exercise names in Session Summary Timeline, Analytics PRs, and PR Trophy Shelf.
+   - **Fix Desktop Analytics Duplication:** Remove the duplicated "Latest Completed Workouts" section in `AnalyticsDashboardScreen`.
+
+
+---
+
+## 23. Growth Gauge Unified Design System Specification (Theme, Accessibility & Responsiveness)
+
+This specification establishes the authoritative standard for visual styling, accessible interaction, responsive layouts, and reusable components across Growth Gauge. It consolidates legacy design requirements, resolves current code discrepancies (e.g. conflicting purple themes in `theme_config.dart`), and defines a modular component library in `lib/features/common/presentation/widgets/`.
+
+```mermaid
+flowchart TD
+    subgraph Tokens["Design Tokens"]
+        Color["Curated Seed Palettes (8)"]
+        Type["Typography Roles (Manrope / OpenDyslexic / System)"]
+        Space["Spacing & Radius Scales"]
+        Elevation["M3 Tonal Surfaces"]
+    end
+
+    subgraph Primitives["Modular UI Components"]
+        Btn["AppButton (Primary / Outlined / Transport)"]
+        Input["AppTextField & AppDropdown"]
+        Card["AppCard & AppStatCard"]
+        Ring["AppProgressRing & AppActivityBadge"]
+        Toggle["AppSegmentedControl"]
+    end
+
+    subgraph Pillars["Core Pillars"]
+        A11y["Accessibility (WCAG 2.1 AA/AAA, 48dp, Focus, Semantics)"]
+        Resp["Responsiveness (Compact <600, Medium 600-1024, Expanded >=1024)"]
+        Theme["Adaptive Theming (Light / Dark / High Contrast / 8 Seeds)"]
+    end
+
+    Tokens --> Primitives
+    Primitives --> Pillars
+    Pillars --> App["Features: Home, Session, Catalog, Templates, Analytics, Profile, Settings"]
+```
+
+---
+
+### 23.1 Design Token Architecture
+
+#### A. Curated Color Seed Palettes
+The application supports 8 curated seed colors driving Material 3 `ColorScheme.fromSeed` generation. Each palette automatically generates Dark, Light, Medium Contrast, and High Contrast variants:
+
+| Palette Name | Seed Hex | Primary Tone (Dark) | Primary Tone (Light) | Visual Identity & Intent |
+|---|---|---|---|---|
+| **Forest (Default)** | `#00FF66` | `#00FF66` (Electric Green) | `#008732` (Deep Forest) | High-energy athletic identity matching legacy designs |
+| **Midnight** | `#5C6BC0` | `#9FA8DA` (Indigo Tint) | `#3949AB` (Deep Navy) | Focused, minimal nighttime training palette |
+| **Amber** | `#FFB300` | `#FFCA28` (Warm Gold) | `#FF8F00` (High-Vis Amber) | High-visibility warning/power lifting theme |
+| **Slate** | `#78909C` | `#B0BEC5` (Cool Metallic) | `#455A64` (Dark Steel) | Monochromatic, distraction-free minimalist aesthetic |
+| **Rust** | `#FF5722` | `#FF8A65` (Vibrant Terracotta) | `#D84315` (Burnt Orange) | High-intensity interval / sprint training aesthetic |
+| **Moss** | `#4CAF50` | `#81C784` (Natural Sage) | `#2E7D32` (Deep Foliage) | Organic, outdoor running & mobility palette |
+| **Cyan** | `#00E5FF` | `#18FFFF` (Hyper Cyan) | `#0097A7` (Teal Marine) | Electric endurance / cardio aesthetic |
+| **Custom** | User Defined | HCT Harmonized | HCT Harmonized | User-chosen hex color harmonized via HCT color space |
+
+#### B. Material 3 Tonal Surfaces (Dark Theme Standard)
+To eliminate jarring solid-black surfaces and ensure proper depth hierarchy:
+- **Canvas / Background:** `#0E1410` (Dark green-tinted canvas)
+- **`surfaceContainerLowest`:** `#090D0A` (Underlying recesses, dark slot backgrounds)
+- **`surfaceContainerLow`:** `#131A14` (Recessed card slots, inactive tabs)
+- **`surfaceContainer`:** `#1A221C` (Standard cards, dialog bodies, bottom sheets)
+- **`surfaceContainerHigh`:** `#222B24` (Elevated cards, active set highlights, dropdown menus)
+- **`surfaceContainerHighest`:** `#2A342C` (Hover states, focused borders, subtle dividers)
+- **`onSurface`:** `#DFE3DD` (Primary text, 87% opacity white equivalent)
+- **`onSurfaceVariant`:** `#8E988F` (Secondary captions, metadata labels, units)
+
+#### C. Spacing & Corner Radius Scales
+- **Spacing:** `xxs: 4dp`, `xs: 8dp`, `sm: 12dp`, `md: 16dp`, `lg: 20dp`, `xl: 24dp`, `xxl: 32dp`, `hero: 48dp`.
+- **Border Radius:**
+  - `small: 8dp` (Chips, badges, mini tags)
+  - `medium: 12dp` (Text fields, dropdowns, buttons)
+  - `large: 16dp` (Standard cards, accordion panels, dialogs)
+  - `xlarge: 20dp` (Hero summary cards, calories banner)
+  - `pill: 999dp` (Segmented controls, floating pills, transport circles)
+
+#### D. Typography Roles & Font Families
+- **Supported Families:**
+  - `Manrope`: Modern geometric sans-serif (Default). Features crisp tabular numerals ideal for sets, reps, weights, and timers.
+  - `Open Dyslexic`: Accessibility-focused font with weighted bottoms to prevent letter flipping and crowding.
+  - `System Default`: Platform-native font (`San Francisco` on iOS/macOS, `Roboto` on Android, `Segoe UI` on Windows).
+- **Scale Mapping (Material 3):**
+  - `displayLarge`: 48 sp / Bold (Hero timers, active rep countdowns)
+  - `headlineMedium`: 28 sp / Bold (Screen headers, metric totals like `3,240 kcal`)
+  - `titleLarge`: 20 sp / Semi-bold (Card titles, block headers)
+  - `titleMedium`: 16 sp / Medium (Section headers, dialog titles)
+  - `bodyLarge`: 16 sp / Regular (Primary body text, descriptions)
+  - `bodyMedium`: 14 sp / Regular (Form labels, metadata rows)
+  - `labelLarge`: 14 sp / Bold (Button labels, tab titles)
+  - `labelSmall`: 11 sp / Medium (Metric units `kg`, `reps`, badge chips)
+
+---
+
+### 23.2 Modular Application Widget Library
+
+All modular components reside in `lib/features/common/presentation/widgets/`:
+
+#### 1. `AppButton`
+- **Variants:**
+  - `AppButton.primary`: Filled vibrant accent button (`#00FF66` background, dark `#003913` text).
+  - `AppButton.secondary`: Tonal container button (`surfaceContainerHigh` background, `primary` text).
+  - `AppButton.outlined`: 1.5 dp outline button with rounded corners for secondary actions (e.g. `Generate`, `Edit target`).
+  - `AppButton.ghost`: Text button with no background for quiet navigation links (e.g. `Details`, `See All`).
+  - `AppButton.destructive`: Red-tinted outlined or filled button for irreversible actions (`Delete`, `Log Out`).
+  - `AppButton.transport`: Circular 56 dp glowing icon button for workout player controls (Pause ⏸, Skip ⏮ ⏭).
+- **Accessibility:** Guarantees minimum `48×48 dp` hit target; includes visible focus indicator.
+
+#### 2. `AppTextField`
+- **Features:**
+  - Standardized dark fill (`surfaceContainerLow`) with 12 dp border radius.
+  - Floating label with clear focus transition.
+  - Optional prefix icon (e.g. `Icons.search`, `Icons.label`).
+  - Optional suffix unit annotation (e.g. `kg`, `cm`, `yrs`, `min`).
+  - Built-in character counter (e.g. `45/120` in reminder templates).
+  - High-visibility error border and assistive text.
+
+#### 3. `AppDropdown<T>`
+- **Features:**
+  - Clean container matching `AppTextField` styling.
+  - Adaptive presentation:
+    - **Compact (<600 dp):** Tapping opens a smooth modal bottom sheet with search filter.
+    - **Medium / Expanded (≥600 dp):** Opens an aligned popover menu with keyboard navigation.
+
+#### 4. `AppCard`
+- **Features:**
+  - Standard 16 dp rounded rectangle with `surfaceContainer` fill.
+  - Selected state: High-contrast 2 dp green border outline (`colorScheme.primary`) and subtle glow.
+  - Dashed variant: Border stroke for dropzones (e.g. "+ Add Block", "Select File to Restore").
+
+#### 5. `AppSegmentedControl<T>`
+- **Features:**
+  - Pill-shaped container (`surfaceContainerLowest`) with sliding animated active indicator pill.
+  - Equal-width segments supporting text labels, icons, or counts.
+  - Used uniformly for: `Week | Month | Quarter`, `1W | 1M | 3M | YTD`, `Male | Female`, `Metric | Imperial`.
+
+#### 6. `AppProgressRing`
+- **Features:**
+  - Custom-painted vector circular progress ring.
+  - Centered value readout (e.g. `85%`) with optional sub-label.
+  - Responsive sizing (`64 dp` in lists, `96 dp` on cards, `140 dp` in hero sections).
+  - Animated progress interpolation with reduced-motion fallback.
+
+#### 7. `AppStatCard`
+- **Features:**
+  - Compact stat tile with circular icon container, large metric value, title label, and trend delta (`↗ +12%`).
+  - Responsive layout: expands horizontally on mobile rows, stacks neatly in desktop multi-column grids.
+
+#### 8. `AppActivityBadge`
+- **Features:**
+  - Circular container with themed iconography:
+    - `Warm Up`: Amber / Runner icon
+    - `Interval`: Purple / Stopwatch icon
+    - `Reps`: Green / Dumbbell icon
+    - `Rest`: Grey-Blue / Zzz clock icon
+    - `Cool Down`: Cyan / Snowflake icon
+  - Includes text pill badge variant (`INTERVAL`, `REPS`).
+
+---
+
+### 23.3 Accessibility (A11y) & WCAG 2.1 AA/AAA Compliance
+
+1. **Color Contrast Enforcement:**
+   - Standard Mode: All text against surfaces must achieve at least `4.5:1` contrast ratio (`titleLarge`, `headlineMedium` must achieve `3:1`).
+   - High Contrast Mode: Text must achieve at least `7:1` (WCAG AAA); outlines and icons must achieve `4.5:1`.
+   - Contrast level is driven dynamically via `ColorScheme.contrastLevel` (`0.0` normal, `0.5` medium, `1.0` high).
+
+2. **Touch Targets & Hit Testing:**
+   - Every interactive element (buttons, chips, list items, slider thumbs, icon buttons) must have a touch target of at least `48×48 dp`.
+   - Where visual controls are compact (e.g. 24 dp icon), wrap with `EdgeInsets` or `IconButton` enforcing `visualDensity: VisualDensity.standard` and `constraints: BoxConstraints(minWidth: 48, minHeight: 48)`.
+
+3. **Visible Keyboard Focus:**
+   - Desktop and tablet devices must render a distinct focus indicator when navigating via `Tab` or arrow keys:
+     ```dart
+     Focus(
+       child: Container(
+         decoration: BoxDecoration(
+           border: isFocused ? Border.all(color: colorScheme.primary, width: 2.0) : null,
+         ),
+       ),
+     )
+     ```
+
+4. **Screen Reader Semantics:**
+   - Timers must not announce every millisecond tick. Announce meaningful workout milestones (e.g. "Rest complete", "Round 2 of 4 started") using `SemanticsService.announce(message, TextDirection.ltr)`.
+   - Charts must provide descriptive alternative semantics (e.g. `Semantics(label: 'Weekly workout frequency: 4 workouts completed this week')`).
+
+5. **Text Scaling & Dynamic Type:**
+   - The UI must scale cleanly up to `200%` system text size without clipping text or dropping buttons off-screen.
+   - Use `Flexible`, `Expanded`, and scrollable containers (`ListView`, `SingleChildScrollView`) for all cards containing text. Never use hardcoded container heights for widgets wrapping text.
+
+6. **Reduced Motion:**
+   - Check `MediaQuery.disableAnimationsOf(context)` across all animated widgets.
+   - When enabled, progress rings, screen transitions, and chart animations must disable duration/curves and jump immediately to final states.
+
+---
+
+### 23.4 Responsive & Adaptive Layout Architecture
+
+#### A. Window Breakpoints (`AppWindowSizeClass`)
+| Window Class | Viewport Width | Form Factor | Navigation Pattern | Content Layout |
+|---|---|---|---|---|
+| **Compact** | `< 600 dp` | Mobile phones, portrait foldables | Bottom Navigation Bar (2–5 tabs) | 1 column, stacked cards, full-width modal sheets |
+| **Medium** | `600 dp – 1024 dp` | Tablets, landscape foldables | Navigation Rail (compact icon rail) | 2-column card grids, persistent filter sheets |
+| **Expanded** | `≥ 1024 dp` | Desktop, laptop, widescreen tablets | Extended Navigation Rail with labels | 3-column catalog grids, max-width bounded dashboard |
+
+#### B. Content Width Bounding (`ResponsiveContent`)
+To prevent unbounded stretching on widescreen desktop monitors:
+- **Dashboards & Analytics (`FitnessHubPage`, `AnalyticsDashboardScreen`):** Constrained to `maxWidth: 1080 dp`.
+- **Forms, Wizards & Onboarding (`OnboardingScreen`, `CustomExerciseScreen`, `TemplateEditorScreen`):** Constrained to `maxWidth: 760 dp`.
+- **Detail Views (`ExerciseDetailScreen`, `TemplateDetailScreen`):** Constrained to `maxWidth: 900 dp`.
+
+---
+
+### 23.5 Design System Validation & Quality Gates
+
+Before any new screen or component is marked complete:
+- [ ] **Static Analysis:** Zero analyzer warnings or errors (`dart analyze lib --fatal-infos`).
+- [ ] **Contrast Check:** Screen verified in both Standard and High Contrast modes.
+- [ ] **Touch Target Test:** All interactive controls verify `minWidth >= 48 && minHeight >= 48`.
+- [ ] **Text Scaling Test:** Layout renders without overflow under `TextScaler.linear(2.0)`.
+- [ ] **Keyboard Navigation:** Tab traversal follows logical order and visible focus rings render.
+- [ ] **Responsive Test:** Golden or widget tests verify layout at `400×800` (phone), `800×1200` (tablet), and `1440×900` (desktop).
