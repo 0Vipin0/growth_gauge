@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AppCardVariant() {
-  standard,
-  selected,
-  dashed,
-}
+enum AppCardVariant() { standard, selected, dashed }
 
 class AppCard extends StatelessWidget {
   final Widget child;
@@ -59,9 +55,13 @@ class AppCard extends StatelessWidget {
         ],
       );
     } else {
+      // Added subtle border for standard cards
       decoration = BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
       );
     }
 
