@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class const AppStatCard({
-    super.key,
-    required final String title,
-    required final String value,
-    final String? trendDelta,
-    final bool isPositiveTrend = true,
-    required final IconData icon,
-    final Color? iconContainerColor,
-    final Color? iconColor,
-  }) extends StatelessWidget {
+  super.key,
+  required final String title,
+  required final String value,
+  final String? trendDelta,
+  final bool isPositiveTrend = true,
+  required final IconData icon,
+  final Color? iconContainerColor,
+  final Color? iconColor,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

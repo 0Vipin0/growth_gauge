@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../app_theme.dart';
-import '../config/config.dart';
+import '../../common/presentation/theme/theme.dart';
 
 part 'settings_model.freezed.dart';
-
 part 'settings_model.g.dart';
 
 enum ExportFormat { json, csv }
@@ -31,9 +29,11 @@ extension AuthenticationTypeExtension on AuthenticationType {
 @freezed
 abstract class SettingsModel with _$SettingsModel {
   const factory({
-    required AppThemeName themeName,
+    @Default(AppThemeName.forest) AppThemeName themeName,
+    @Default(ThemeMode.system) ThemeMode themeMode,
+    @Default(AppContrastVariant.standard) AppContrastVariant contrastVariant,
     @Default(AppFontSize.medium) AppFontSize fontSize,
-    @Default(AppFontFamily.roboto) AppFontFamily fontFamily,
+    @Default(AppFontFamilyChoice.manrope) AppFontFamilyChoice fontFamilyChoice,
     @Default(ExportFormat.json) ExportFormat exportFormat,
     @Default(AuthenticationType.none) AuthenticationType authenticationType,
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
@@ -43,10 +43,20 @@ abstract class SettingsModel with _$SettingsModel {
 }
 
 extension SettingsModelExtension on SettingsModel {
-  AppTheme get appTheme => AppTheme(
-    themeName: themeName,
-    fontTheme: AppFontTheme(fontFamily: fontFamily, fontSize: fontSize),
-  );
+  /// Resolves and builds the authoritative ThemeData using AppTheme.buildTheme.
+  ThemeData toThemeData(BuildContext context) {
+    final brightness = themeMode == ThemeMode.system
+        ? MediaQuery.platformBrightnessOf(context)
+        : (themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light);
+
+    return AppTheme.buildTheme(
+      themeName: themeName,
+      brightness: brightness,
+      contrastVariant: contrastVariant,
+      fontFamilyChoice: fontFamilyChoice,
+      fontSize: fontSize,
+    );
+  }
 }
 
 class TimeOfDayConverter implements JsonConverter<TimeOfDay?, String?> {

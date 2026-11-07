@@ -1,12 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-import '../config/config.dart';
-import '../model/settings_model.dart';
+import '../domain/settings_model.dart';
 
 class const SettingsState({
-  final SettingsModel settings = const SettingsModel(
-    themeName: AppThemeName.light,
-  ),
+  final SettingsModel settings = const SettingsModel(),
   final bool isReady = false,
   final String? error,
 }) extends Equatable {

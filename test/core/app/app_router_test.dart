@@ -16,8 +16,8 @@ import 'package:growth_gauge/features/notification/infrastructure/notification_s
 import 'package:growth_gauge/features/session/application/session_use_cases.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
 import 'package:growth_gauge/features/settings/application/settings_cubit.dart';
-import 'package:growth_gauge/features/settings/config/config.dart';
-import 'package:growth_gauge/features/settings/model/settings_model.dart';
+import 'package:growth_gauge/features/settings/config/shared_preferences_config.dart';
+import 'package:growth_gauge/features/settings/domain/settings_model.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 import 'package:growth_gauge/features/user/application/user_use_cases.dart';
 import 'package:growth_gauge/features/user/infrastructure/user_repository.dart';

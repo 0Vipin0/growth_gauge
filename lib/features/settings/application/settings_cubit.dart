@@ -6,17 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../common/presentation/theme/theme.dart';
 import '../../notification/infrastructure/notification_service.dart';
-import '../config/config.dart';
-import '../model/settings_model.dart';
+import '../config/shared_preferences_config.dart';
+import '../domain/domain.dart';
 import 'settings_state.dart';
 
 class SettingsCubit({
-  required final NotificationService notificationService,
-  final LocalAuthentication? localAuth,
-  final FlutterSecureStorage? secureStorage,
+  required final NotificationService _notificationService,
+  LocalAuthentication? localAuth,
+  FlutterSecureStorage? secureStorage,
 }) extends Cubit<SettingsState> {
-  final NotificationService _notificationService = notificationService;
   final LocalAuthentication _localAuth = localAuth ?? LocalAuthentication();
   final FlutterSecureStorage _secureStorage =
       secureStorage ?? const FlutterSecureStorage();
@@ -28,11 +28,21 @@ class SettingsCubit({
   void updateThemeName(AppThemeName themeName) =>
       _updateSettings(state.settings.copyWith(themeName: themeName));
 
+  void updateThemeMode(ThemeMode themeMode) =>
+      _updateSettings(state.settings.copyWith(themeMode: themeMode));
+
+  void updateContrastVariant(AppContrastVariant contrastVariant) =>
+      _updateSettings(
+        state.settings.copyWith(contrastVariant: contrastVariant),
+      );
+
   void updateFontSize(AppFontSize fontSize) =>
       _updateSettings(state.settings.copyWith(fontSize: fontSize));
 
-  void updateFontFamily(AppFontFamily fontFamily) =>
-      _updateSettings(state.settings.copyWith(fontFamily: fontFamily));
+  void updateFontFamilyChoice(AppFontFamilyChoice fontFamilyChoice) =>
+      _updateSettings(
+        state.settings.copyWith(fontFamilyChoice: fontFamilyChoice),
+      );
 
   Future<void> updateAuthenticationType(AuthenticationType type) async {
     try {
@@ -71,33 +81,52 @@ class SettingsCubit({
       final themeName = _enumValue(
         SharedPreferencesHelper.getThemeName(),
         AppThemeName.values,
-        AppThemeName.light,
+        AppThemeName.forest,
       );
+
+      final themeMode = _enumValue(
+        SharedPreferencesHelper.getThemeMode(),
+        ThemeMode.values,
+        ThemeMode.system,
+      );
+
+      final contrastVariant = _enumValue(
+        SharedPreferencesHelper.getContrastVariant.call(),
+        AppContrastVariant.values,
+        AppContrastVariant.standard,
+      );
+
       final fontSize = _enumValue(
         SharedPreferencesHelper.getFontSize(),
         AppFontSize.values,
         AppFontSize.medium,
       );
-      final fontFamily = _enumValue(
-        SharedPreferencesHelper.getFontFamily(),
-        AppFontFamily.values,
-        AppFontFamily.roboto,
+
+      final fontFamilyChoice = _enumValue(
+        SharedPreferencesHelper.getFontFamily.call(),
+        AppFontFamilyChoice.values,
+        AppFontFamilyChoice.manrope,
       );
+
       final authenticationType = _enumValue(
         SharedPreferencesHelper.getAuthenticationType(),
         AuthenticationType.values,
         AuthenticationType.none,
       );
+
       final notificationTime = const TimeOfDayConverter().fromJson(
         SharedPreferencesHelper.getNotificationTime(),
       );
+
       if (!isClosed) {
         emit(
           state.copyWith(
             settings: SettingsModel(
               themeName: themeName,
+              themeMode: themeMode,
+              contrastVariant: contrastVariant,
               fontSize: fontSize,
-              fontFamily: fontFamily,
+              fontFamilyChoice: fontFamilyChoice,
               authenticationType: authenticationType,
               notificationTime: notificationTime,
             ),
@@ -122,8 +151,14 @@ class SettingsCubit({
     try {
       final settings = state.settings;
       await SharedPreferencesHelper.setThemeName(settings.themeName.name);
+      await SharedPreferencesHelper.setThemeMode(settings.themeMode.name);
+      await SharedPreferencesHelper.setContrastVariant.call(
+        settings.contrastVariant.name,
+      );
       await SharedPreferencesHelper.setFontSize(settings.fontSize.name);
-      await SharedPreferencesHelper.setFontFamily(settings.fontFamily.name);
+      await SharedPreferencesHelper.setFontFamilyChoice.call(
+        settings.fontFamilyChoice.name,
+      );
       await SharedPreferencesHelper.setAuthenticationType(
         settings.authenticationType.name,
       );
@@ -150,6 +185,7 @@ class SettingsCubit({
   }
 
   T _enumValue<T extends Enum>(String? name, List<T> values, T fallback) {
+    if (name == null) return fallback;
     for (final value in values) {
       if (value.name == name) return value;
     }

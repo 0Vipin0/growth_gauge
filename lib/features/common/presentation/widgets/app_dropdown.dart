@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../utils/responsive_layout.dart';
 
-class const AppDropdownItem<T>({required final T value, required final String label, final IconData? icon});
+class const AppDropdownItem<T>({
+  required final T value,
+  required final String label,
+  final IconData? icon,
+});
 
 class const AppDropdown<T>({
-    super.key,
-    required final String label,
-    required final T? value,
-    required final List<AppDropdownItem<T>> items,
-    required final ValueChanged<T?> onChanged,
-    final String? hintText,
-    final IconData? prefixIcon,
-  }) extends StatelessWidget {
+  super.key,
+  required final String label,
+  required final T? value,
+  required final List<AppDropdownItem<T>> items,
+  required final ValueChanged<T?> onChanged,
+  final String? hintText,
+  final IconData? prefixIcon,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,9 +46,7 @@ class const AppDropdown<T>({
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: colorScheme.outlineVariant,
-              ),
+              borderSide: BorderSide(color: colorScheme.outlineVariant),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -122,11 +124,11 @@ class const AppDropdown<T>({
 }
 
 class const _DropdownSheetContent<T>({
-    required final String label,
-    required final List<AppDropdownItem<T>> items,
-    required final T? selectedValue,
-    required final ValueChanged<T> onSelected,
-  }) extends StatelessWidget {
+  required final String label,
+  required final List<AppDropdownItem<T>> items,
+  required final T? selectedValue,
+  required final ValueChanged<T> onSelected,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

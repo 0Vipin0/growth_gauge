@@ -18,6 +18,7 @@ import 'features/catalog/infrastructure/exercise_repository.dart';
 import 'features/notification/infrastructure/notification_service.dart';
 import 'features/session/application/session_use_cases.dart';
 import 'features/session/infrastructure/session_repository.dart';
+import 'features/settings/config/shared_preferences_config.dart';
 import 'features/settings/settings.dart';
 import 'features/template/infrastructure/template_repository.dart';
 import 'features/template/infrastructure/template_seeder.dart';
@@ -145,12 +146,18 @@ class _GrowthGaugeAppState() extends State<GrowthGaugeApp> {
     return BlocProvider<SettingsCubit>.value(
       value: widget.settingsCubit,
       child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) => MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          title: 'Growth Gage App',
-          theme: state.settings.appTheme.getThemeData(),
-          routerConfig: widget.router,
-        ),
+        builder: (context, state) {
+          final settings = state.settings;
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Growth Gauge App',
+            // Dynamically build theme and brightness configuration from settings model
+            theme: settings.toThemeData(context),
+            darkTheme: settings.toThemeData(context),
+            themeMode: settings.themeMode,
+            routerConfig: widget.router,
+          );
+        },
       ),
     );
   }

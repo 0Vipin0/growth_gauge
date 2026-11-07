@@ -12,7 +12,7 @@ import '../session/application/session_use_cases.dart';
 import '../session/domain/session_enums.dart';
 import '../session/infrastructure/session_repository.dart';
 import '../session/presentation/session_recovery_dialog.dart';
-import '../settings/settings_page.dart';
+import '../settings/presentation/settings_page.dart';
 import '../template/template.dart';
 import 'fitness_hub_page.dart';
 

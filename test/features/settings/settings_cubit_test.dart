@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_gauge/features/common/presentation/theme/app_colors.dart';
+import 'package:growth_gauge/features/common/presentation/theme/app_typography.dart';
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
 import 'package:growth_gauge/features/settings/application/settings_cubit.dart';
 import 'package:growth_gauge/features/settings/application/settings_state.dart';
-import 'package:growth_gauge/features/settings/config/config.dart';
-import 'package:growth_gauge/features/settings/model/settings_model.dart';
+import 'package:growth_gauge/features/settings/config/shared_preferences_config.dart';
+import 'package:growth_gauge/features/settings/domain/domain.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,16 +77,27 @@ void main() {
 
   test('loads settings and marks the initial state ready', () async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('themeName', 'lightHighContrast');
+    await prefs.setString('themeName', 'midnight');
+    await prefs.setString('themeMode', 'dark');
+    await prefs.setString('contrastVariant', 'highContrast');
     await prefs.setString('fontSize', 'large');
-    await prefs.setString('fontFamily', 'roboto');
+    await prefs.setString('fontFamilyChoice', 'openDyslexic');
     await prefs.setString('authenticationType', 'pin');
     await prefs.setString('notificationTime', '8:30');
     await cubit.loadSettingsFromStorage();
 
     expect(cubit.state.isReady, isTrue);
-    expect(cubit.state.settings.themeName, AppThemeName.lightHighContrast);
+    expect(cubit.state.settings.themeName, AppThemeName.midnight);
+    expect(cubit.state.settings.themeMode, ThemeMode.dark);
+    expect(
+      cubit.state.settings.contrastVariant,
+      AppContrastVariant.highContrast,
+    );
     expect(cubit.state.settings.fontSize, AppFontSize.large);
+    expect(
+      cubit.state.settings.fontFamilyChoice,
+      AppFontFamilyChoice.openDyslexic,
+    );
     expect(cubit.state.settings.authenticationType, AuthenticationType.pin);
     expect(
       cubit.state.settings.notificationTime,
@@ -99,20 +112,22 @@ void main() {
         isA<SettingsState>().having(
           (state) => state.settings.themeName,
           'themeName',
-          AppThemeName.darkHighContrast,
+          AppThemeName.rust,
         ),
       ),
     );
-    cubit.updateThemeName(AppThemeName.darkHighContrast);
+    cubit.updateThemeName(AppThemeName.rust);
+    cubit.updateThemeMode(ThemeMode.light);
     cubit.updateFontSize(AppFontSize.large);
-    cubit.updateFontFamily(AppFontFamily.roboto);
+    cubit.updateFontFamilyChoice(AppFontFamilyChoice.manrope);
     await cubit.saveSettingsToStorage();
     await emitted;
 
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString('themeName'), 'darkHighContrast');
+    expect(prefs.getString('themeName'), 'rust');
+    expect(prefs.getString('themeMode'), 'light');
     expect(prefs.getString('fontSize'), 'large');
-    expect(prefs.getString('fontFamily'), 'roboto');
+    expect(prefs.getString('fontFamilyChoice'), 'manrope');
     expect(prefs.containsKey('exportFormat'), isFalse);
   });
 

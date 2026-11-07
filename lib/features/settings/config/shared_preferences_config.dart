@@ -2,8 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesKeys() {
   static const String themeName = 'themeName';
+  static const String themeMode = 'themeMode';
+  static const String contrastVariant = 'contrastVariant';
   static const String fontSize = 'fontSize';
-  static const String fontFamily = 'fontFamily';
+  static const String fontFamily = 'fontFamily'; // Backward compatibility
+  static const String fontFamilyChoice = 'fontFamilyChoice';
   static const String authenticationType = 'authenticationType';
   static const String notificationTime = 'notificationTime';
 }
@@ -33,6 +36,22 @@ mixin SharedPreferencesHelper {
     return instance.setString(SharedPreferencesKeys.themeName, value);
   }
 
+  static String? getThemeMode() {
+    return instance.getString(SharedPreferencesKeys.themeMode);
+  }
+
+  static Future<bool> setThemeMode(String value) {
+    return instance.setString(SharedPreferencesKeys.themeMode, value);
+  }
+
+  static String? getContrastVariant() {
+    return instance.getString(SharedPreferencesKeys.contrastVariant);
+  }
+
+  static Future<bool> setContrastVariant(String value) {
+    return instance.setString(SharedPreferencesKeys.contrastVariant, value);
+  }
+
   static String? getFontSize() {
     return instance.getString(SharedPreferencesKeys.fontSize);
   }
@@ -42,11 +61,21 @@ mixin SharedPreferencesHelper {
   }
 
   static String? getFontFamily() {
-    return instance.getString(SharedPreferencesKeys.fontFamily);
+    return instance.getString(SharedPreferencesKeys.fontFamily) ??
+        instance.getString(SharedPreferencesKeys.fontFamilyChoice);
   }
 
   static Future<bool> setFontFamily(String value) {
     return instance.setString(SharedPreferencesKeys.fontFamily, value);
+  }
+
+  static String? getFontFamilyChoice() {
+    return instance.getString(SharedPreferencesKeys.fontFamilyChoice) ??
+        instance.getString(SharedPreferencesKeys.fontFamily);
+  }
+
+  static Future<bool> setFontFamilyChoice(String value) {
+    return instance.setString(SharedPreferencesKeys.fontFamilyChoice, value);
   }
 
   static String? getAuthenticationType() {

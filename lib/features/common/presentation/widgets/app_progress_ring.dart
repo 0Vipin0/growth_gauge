@@ -96,11 +96,11 @@ class AppProgressRing extends StatelessWidget {
 }
 
 class _ProgressRingPainter({
-    required final double progress,
-    required final Color progressColor,
-    required final Color trackColor,
-    required final double strokeWidth,
-  }) extends CustomPainter {
+  required final double progress,
+  required final Color progressColor,
+  required final Color trackColor,
+  required final double strokeWidth,
+}) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
