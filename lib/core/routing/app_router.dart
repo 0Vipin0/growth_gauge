@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 const appRouteLaunch = '/launch';
+const appRouteOnboarding = '/onboarding';
 const appRouteHome = '/home';
 const appRouteSettings = '/settings';
 const appRouteBiometricAuth = '/biometric_auth';
@@ -24,6 +25,7 @@ const appRouteTemplateDetail = '/template_detail';
 const appRouteTemplateEditor = '/template_editor';
 
 const appRouteNameLaunch = 'launch';
+const appRouteNameOnboarding = 'onboarding';
 const appRouteNameHome = 'home';
 const appRouteNameSettings = 'settings';
 const appRouteNameBiometricAuth = 'biometric-auth';

@@ -49,6 +49,11 @@ List<RouteBase> createAppRoutes({
       builder: (_, _) => const FitnessLaunchScreen(),
     ),
     appGoRoute(
+      path: appRouteOnboarding,
+      name: appRouteNameOnboarding,
+      builder: (_, _) => OnboardingScreen(useCases: userUseCases),
+    ),
+    appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
       builder: (_, _) => StreamBuilder<List<DailyWorkoutSummary>>(

@@ -3,4 +3,5 @@ export 'domain/domain.dart';
 export 'infrastructure/infrastructure.dart';
 export 'presentation/screens/goals_screen.dart';
 export 'presentation/screens/measurements_screen.dart';
+export 'presentation/screens/onboarding_screen.dart';
 export 'presentation/screens/profile_screen.dart';

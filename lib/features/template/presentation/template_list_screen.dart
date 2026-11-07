@@ -14,14 +14,14 @@ import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
 
 class const TemplateListScreen({
-  super.key,
-  required final ITemplateRepository repository,
-  required final IExerciseRepository exerciseRepository,
-  required final IWorkoutSessionRepository sessionRepository,
-  required final SessionUseCases sessionUseCases,
-  required final TemplateUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+    super.key,
+    required final ITemplateRepository repository,
+    required final IExerciseRepository exerciseRepository,
+    required final IWorkoutSessionRepository sessionRepository,
+    required final SessionUseCases sessionUseCases,
+    required final TemplateUseCases useCases,
+    required final String userId,
+  }) extends StatefulWidget {
   @override
   State<TemplateListScreen> createState() => _TemplateListScreenState();
 }

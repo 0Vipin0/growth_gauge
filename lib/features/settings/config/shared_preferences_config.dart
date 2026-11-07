@@ -9,6 +9,7 @@ class SharedPreferencesKeys() {
   static const String fontFamilyChoice = 'fontFamilyChoice';
   static const String authenticationType = 'authenticationType';
   static const String notificationTime = 'notificationTime';
+  static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
 }
 
 mixin SharedPreferencesHelper {
@@ -92,5 +93,18 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setNotificationTime(String value) {
     return instance.setString(SharedPreferencesKeys.notificationTime, value);
+  }
+
+  // ── Onboarding Helpers ────────────────────────────────────────────────────
+  static bool getHasCompletedOnboarding() {
+    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding) ??
+        false;
+  }
+
+  static Future<bool> setHasCompletedOnboarding(bool value) {
+    return instance.setBool(
+      SharedPreferencesKeys.hasCompletedOnboarding,
+      value,
+    );
   }
 }

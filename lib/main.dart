@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -63,8 +65,21 @@ void main() async {
   );
 
   final userUseCases = UserUseCases(UserRepository(database));
+
+  // ── Onboarding & Launch Route Resolution ──────────────────────────────────
+  // Check if onboarding has been completed. Set forceTestOnboarding to true if
+  // you want to test the onboarding screen on every startup.
+  final bool hasCompletedOnboarding =
+      SharedPreferencesHelper.getHasCompletedOnboarding();
+  const bool forceTestOnboarding =
+      true; // Switch to false for production first-launch behavior
+
+  final String initialRoute = (forceTestOnboarding || !hasCompletedOnboarding)
+      ? appRouteOnboarding
+      : appRouteLaunch;
+
   final router = AppRouter(
-    initialLocation: appRouteLaunch,
+    initialLocation: initialRoute,
     routes: createAppRoutes(
       database: database,
       exercises: exercises,
