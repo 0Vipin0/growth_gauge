@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/goal_cubit.dart';
 import '../../domain/training_goal.dart';
 import '../../domain/user_enums.dart';
@@ -50,10 +51,10 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                     const SizedBox(height: 8),
                     const Text('Tap the button below to set your first goal.'),
                     const SizedBox(height: 24),
-                    FilledButton.icon(
+                    AppButton.primary(
+                      label: 'Add Goal',
+                      icon: Icons.add,
                       onPressed: () => _showAddGoalDialog(context),
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add Goal'),
                     ),
                   ],
                 ),
@@ -183,25 +184,19 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      TextFormField(
+                      AppTextField(
+                        label: 'Goal Name *',
+                        hintText: 'e.g., Bench Press 100kg',
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Goal Name *',
-                          hintText: 'e.g., Bench Press 100kg',
-                        ),
-                        validator: (value) =>
-                            (value == null || value.trim().isEmpty)
-                            ? 'Please enter a goal name'
-                            : null,
                       ),
-                      const SizedBox(height: 12),
-                      DropdownButtonFormField<GoalType>(
-                        initialValue: selectedType,
-                        decoration: const InputDecoration(labelText: 'Type'),
+                      const SizedBox(height: 16),
+                      AppDropdown<GoalType>(
+                        label: 'Type',
+                        value: selectedType,
                         items: GoalType.values.map((t) {
-                          return DropdownMenuItem(
+                          return AppDropdownItem(
                             value: t,
-                            child: Text(t.name.toUpperCase()),
+                            label: t.name.toUpperCase(),
                           );
                         }).toList(),
                         onChanged: (val) {
@@ -223,56 +218,42 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                           }
                         },
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
-                            child: TextFormField(
+                            child: AppTextField(
+                              label: 'Start Value',
                               controller: startValueController,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                     decimal: true,
                                   ),
-                              decoration: const InputDecoration(
-                                labelText: 'Start Value',
-                              ),
-                              validator: (v) => double.tryParse(v ?? '') == null
-                                  ? 'Invalid number'
-                                  : null,
                             ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
-                            child: TextFormField(
+                            child: AppTextField(
+                              label: 'Target Value *',
                               controller: targetValueController,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                     decimal: true,
                                   ),
-                              decoration: const InputDecoration(
-                                labelText: 'Target Value *',
-                              ),
-                              validator: (v) => double.tryParse(v ?? '') == null
-                                  ? 'Invalid number'
-                                  : null,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
-                      TextFormField(
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        label: 'Unit',
+                        hintText: 'kg, reps, km, etc.',
                         controller: unitController,
-                        decoration: const InputDecoration(
-                          labelText: 'Unit',
-                          hintText: 'kg, reps, km, etc.',
-                        ),
                       ),
-                      const SizedBox(height: 12),
-                      TextFormField(
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        label: 'Description (optional)',
                         controller: descriptionController,
-                        decoration: const InputDecoration(
-                          labelText: 'Description (optional)',
-                        ),
                         maxLines: 2,
                       ),
                       const SizedBox(height: 12),
@@ -304,11 +285,12 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                 ),
               ),
               actions: [
-                TextButton(
+                AppButton.ghost(
+                  label: 'Cancel',
                   onPressed: () => Navigator.of(dialogCtx).pop(),
-                  child: const Text('Cancel'),
                 ),
-                FilledButton(
+                AppButton.primary(
+                  label: 'Create',
                   onPressed: () {
                     if (formKey.currentState?.validate() ?? false) {
                       final startVal =
@@ -329,7 +311,6 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                       Navigator.of(dialogCtx).pop();
                     }
                   },
-                  child: const Text('Create'),
                 ),
               ],
             );
@@ -353,24 +334,22 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
           children: [
             Text('Target: ${goal.targetValue} ${goal.unit}'),
             const SizedBox(height: 12),
-            TextField(
+            AppTextField(
+              label: 'New Current Value (${goal.unit})',
               controller: controller,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
-              decoration: InputDecoration(
-                labelText: 'New Current Value (${goal.unit})',
-              ),
-              autofocus: true,
             ),
           ],
         ),
         actions: [
-          TextButton(
+          AppButton.ghost(
+            label: 'Cancel',
             onPressed: () => Navigator.of(dialogCtx).pop(),
-            child: const Text('Cancel'),
           ),
-          FilledButton(
+          AppButton.primary(
+            label: 'Save',
             onPressed: () {
               final val = double.tryParse(controller.text);
               if (val != null) {
@@ -378,7 +357,6 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                 Navigator.of(dialogCtx).pop();
               }
             },
-            child: const Text('Save'),
           ),
         ],
       ),

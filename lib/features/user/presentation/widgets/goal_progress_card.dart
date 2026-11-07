@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/training_goal.dart';
 import '../../domain/user_enums.dart';
 
 /// Card displaying progress toward a training goal with status indicators.
 class const GoalProgressCard({
-  super.key,
-  required final TrainingGoal goal,
-  final VoidCallback? onUpdateProgress,
-  final VoidCallback? onComplete,
-  final VoidCallback? onAbandon,
-  final VoidCallback? onDelete,
-}) extends StatelessWidget {
+    super.key,
+    required final TrainingGoal goal,
+    final VoidCallback? onUpdateProgress,
+    final VoidCallback? onComplete,
+    final VoidCallback? onAbandon,
+    final VoidCallback? onDelete,
+  }) extends StatelessWidget {
   String _formatType(GoalType type) {
     switch (type) {
       case GoalType.strength:
@@ -35,28 +36,26 @@ class const GoalProgressCard({
     }
   }
 
-  Color _statusColor(GoalStatus status) {
+  Color _statusColor(GoalStatus status, ColorScheme colorScheme) {
     switch (status) {
       case GoalStatus.active:
-        return Colors.blue;
+        return colorScheme.primary;
       case GoalStatus.achieved:
         return Colors.green;
       case GoalStatus.abandoned:
-        return Colors.grey;
+        return colorScheme.outline;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final percent = goal.progressPercent;
 
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+      child: AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,7 +75,7 @@ class const GoalProgressCard({
                       Text(
                         _formatType(goal.type),
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.grey.shade600,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -87,7 +86,7 @@ class const GoalProgressCard({
                     goal.status.name.toUpperCase(),
                     style: const TextStyle(fontSize: 10, color: Colors.white),
                   ),
-                  backgroundColor: _statusColor(goal.status),
+                  backgroundColor: _statusColor(goal.status, colorScheme),
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                 ),
@@ -103,10 +102,8 @@ class const GoalProgressCard({
               child: LinearProgressIndicator(
                 value: percent,
                 minHeight: 8,
-                backgroundColor: theme.dividerColor.withValues(alpha: 0.2),
-                color: goal.isAchieved
-                    ? Colors.green
-                    : theme.colorScheme.primary,
+                backgroundColor: colorScheme.surfaceContainerHighest,
+                color: goal.isAchieved ? Colors.green : colorScheme.primary,
               ),
             ),
             const SizedBox(height: 8),
@@ -121,9 +118,7 @@ class const GoalProgressCard({
                   'Current: ${goal.currentValue.toStringAsFixed(1)} ${goal.unit} (${(percent * 100).toInt()}%)',
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: goal.isAchieved
-                        ? Colors.green
-                        : theme.colorScheme.primary,
+                    color: goal.isAchieved ? Colors.green : colorScheme.primary,
                   ),
                 ),
                 Text(
@@ -138,15 +133,16 @@ class const GoalProgressCard({
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   if (onUpdateProgress != null)
-                    TextButton.icon(
-                      icon: const Icon(Icons.edit, size: 16),
-                      label: const Text('Update'),
+                    AppButton.ghost(
+                      label: 'Update',
+                      icon: Icons.edit,
                       onPressed: onUpdateProgress,
                     ),
+                  const SizedBox(width: 8),
                   if (onComplete != null)
-                    TextButton.icon(
-                      icon: const Icon(Icons.check, size: 16),
-                      label: const Text('Complete'),
+                    AppButton.secondary(
+                      label: 'Complete',
+                      icon: Icons.check,
                       onPressed: onComplete,
                     ),
                   PopupMenuButton<String>(

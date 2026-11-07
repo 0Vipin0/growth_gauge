@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../catalog/domain/exercise_enums.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 
 /// Modal bottom sheet allowing users to toggle owned/accessible equipment.
 class const EquipmentInventorySheet({
-  super.key,
-  required final List<EquipmentType> initialSelection,
-  required final ValueChanged<List<EquipmentType>> onSaved,
-}) extends StatefulWidget {
+    super.key,
+    required final List<EquipmentType> initialSelection,
+    required final ValueChanged<List<EquipmentType>> onSaved,
+  }) extends StatefulWidget {
   @override
   State<EquipmentInventorySheet> createState() =>
       _EquipmentInventorySheetState();
@@ -51,60 +53,66 @@ class _EquipmentInventorySheetState() extends State<EquipmentInventorySheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Available Equipment',
-                style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              TextButton(
-                onPressed: () {
-                  widget.onSaved(_selected.toList());
-                  context.pop();
-                },
-                child: const Text('Save'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Select the equipment you have access to. Exercises requiring unselected equipment will be flagged.',
-            style: TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: ListView(
-              children: EquipmentType.values.map((type) {
-                final isBodyweight = type == EquipmentType.bodyweight;
-                final isChecked = isBodyweight || _selected.contains(type);
+    final theme = Theme.of(context);
 
-                return CheckboxListTile(
-                  title: Text(_formatName(type)),
-                  value: isChecked,
-                  onChanged: isBodyweight
-                      ? null // Bodyweight is always available
-                      : (val) {
-                          setState(() {
-                            if (val == true) {
-                              _selected.add(type);
-                            } else {
-                              _selected.remove(type);
-                            }
-                          });
-                        },
-                );
-              }).toList(),
+    return ResponsiveContent(
+      maxWidth: 600,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Available Equipment',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                AppButton.primary(
+                  label: 'Save',
+                  onPressed: () {
+                    widget.onSaved(_selected.toList());
+                    context.pop();
+                  },
+                ),
+              ],
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              'Select the equipment you have access to. Exercises requiring unselected equipment will be flagged.',
+              style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView(
+                children: EquipmentType.values.map((type) {
+                  final isBodyweight = type == EquipmentType.bodyweight;
+                  final isChecked = isBodyweight || _selected.contains(type);
+
+                  return CheckboxListTile(
+                    title: Text(_formatName(type)),
+                    value: isChecked,
+                    onChanged: isBodyweight
+                        ? null
+                        : (val) {
+                            setState(() {
+                              if (val == true) {
+                                _selected.add(type);
+                              } else {
+                                _selected.remove(type);
+                              }
+                            });
+                          },
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

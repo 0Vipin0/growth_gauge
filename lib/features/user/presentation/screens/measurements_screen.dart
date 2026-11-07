@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/measurement_cubit.dart';
 import '../../domain/user_enums.dart';
 
@@ -69,7 +70,7 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
 
           return Column(
             children: [
-              // ── Filter Chips ───────────────────────────────────────────────
+              // Filter Chips
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(
@@ -102,7 +103,7 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                 ),
               ),
 
-              // ── Latest Stat Card (if selected or available) ─────────────────
+              // Latest Stat Card
               if (latest != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -155,7 +156,7 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                   ),
                 ),
 
-              // ── Measurements List / Empty State ─────────────────────────────
+              // Measurements List / Empty State
               Expanded(
                 child: ResponsiveContent(
                   maxWidth: 1000,
@@ -181,11 +182,11 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                                 'Log your measurements to track body progress over time.',
                               ),
                               const SizedBox(height: 24),
-                              FilledButton.icon(
+                              AppButton.primary(
+                                label: 'Log Measurement',
+                                icon: Icons.add,
                                 onPressed: () =>
                                     _showLogDialog(context, state.selectedType),
-                                icon: const Icon(Icons.add),
-                                label: const Text('Log Measurement'),
                               ),
                             ],
                           ),
@@ -262,15 +263,13 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DropdownButtonFormField<MeasurementType>(
-                        initialValue: selectedType,
-                        decoration: const InputDecoration(
-                          labelText: 'Measurement Type',
-                        ),
+                      AppDropdown<MeasurementType>(
+                        label: 'Measurement Type',
+                        value: selectedType,
                         items: MeasurementType.values.map((t) {
-                          return DropdownMenuItem(
+                          return AppDropdownItem(
                             value: t,
-                            child: Text(_formatType(t)),
+                            label: _formatType(t),
                           );
                         }).toList(),
                         onChanged: (val) {
@@ -282,33 +281,25 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                           }
                         },
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
-                            child: TextFormField(
+                            child: AppTextField(
+                              label: 'Value *',
                               controller: valueController,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                     decimal: true,
                                   ),
-                              decoration: const InputDecoration(
-                                labelText: 'Value *',
-                              ),
-                              validator: (v) => double.tryParse(v ?? '') == null
-                                  ? 'Enter a valid number'
-                                  : null,
-                              autofocus: true,
                             ),
                           ),
                           const SizedBox(width: 12),
                           SizedBox(
-                            width: 80,
-                            child: TextFormField(
+                            width: 90,
+                            child: AppTextField(
+                              label: 'Unit',
                               controller: unitController,
-                              decoration: const InputDecoration(
-                                labelText: 'Unit',
-                              ),
                             ),
                           ),
                         ],
@@ -337,22 +328,21 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      TextFormField(
+                      AppTextField(
+                        label: 'Notes (optional)',
                         controller: notesController,
-                        decoration: const InputDecoration(
-                          labelText: 'Notes (optional)',
-                        ),
                       ),
                     ],
                   ),
                 ),
               ),
               actions: [
-                TextButton(
+                AppButton.ghost(
+                  label: 'Cancel',
                   onPressed: () => Navigator.of(dialogCtx).pop(),
-                  child: const Text('Cancel'),
                 ),
-                FilledButton(
+                AppButton.primary(
+                  label: 'Log',
                   onPressed: () {
                     if (formKey.currentState?.validate() ?? false) {
                       final val = double.parse(valueController.text);
@@ -370,7 +360,6 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                       Navigator.of(dialogCtx).pop();
                     }
                   },
-                  child: const Text('Log'),
                 ),
               ],
             );

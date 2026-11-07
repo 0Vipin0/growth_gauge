@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../catalog/domain/exercise_enums.dart';
+import '../../../common/presentation/utils/responsive_form_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/onboarding_cubit.dart';
 import '../../domain/user_enums.dart';
 
@@ -16,112 +18,114 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
         final training = state.trainingProfile;
         final equipment = state.equipmentInventory.ownedEquipment;
 
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Training Experience Level',
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+        return ResponsiveFormLayout(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Training Experience Level',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<TrainingExperience>(
-                initialValue: training.trainingExperience,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                items: TrainingExperience.values.map((exp) {
-                  return DropdownMenuItem(
-                    value: exp,
-                    child: Text(exp.name.toUpperCase()),
-                  );
-                }).toList(),
-                onChanged: (val) {
-                  if (val != null) {
-                    context.read<OnboardingCubit>().updateTrainingProfile(
-                      (tp) => tp.copyWith(trainingExperience: val),
+                const SizedBox(height: 8),
+                AppDropdown<TrainingExperience>(
+                  label: 'Experience Level',
+                  value: training.trainingExperience,
+                  items: TrainingExperience.values.map((exp) {
+                    return AppDropdownItem(
+                      value: exp,
+                      label: exp.name.toUpperCase(),
                     );
-                  }
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Preferred Session Duration',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${training.preferredSessionDurationMinutes} mins',
-                    style: TextStyle(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Slider(
-                value: training.preferredSessionDurationMinutes.toDouble(),
-                min: 20,
-                max: 120,
-                divisions: 10,
-                label: '${training.preferredSessionDurationMinutes} mins',
-                onChanged: (val) {
-                  context.read<OnboardingCubit>().updateTrainingProfile(
-                    (tp) => tp.copyWith(
-                      preferredSessionDurationMinutes: val.toInt(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Available Equipment Inventory',
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8.0,
-                runSpacing: 4.0,
-                children:
-                    [
-                      EquipmentType.barbell,
-                      EquipmentType.dumbbell,
-                      EquipmentType.kettlebell,
-                      EquipmentType.resistanceBand,
-                      EquipmentType.pullUpBar,
-                    ].map((item) {
-                      final isOwned = equipment.contains(item);
-                      return FilterChip(
-                        label: Text(item.name.toUpperCase()),
-                        selected: isOwned,
-                        onSelected: (selected) {
-                          final updatedList = List<EquipmentType>.from(
-                            equipment,
-                          );
-                          if (selected) {
-                            updatedList.add(item);
-                          } else {
-                            updatedList.remove(item);
-                          }
-                          context
-                              .read<OnboardingCubit>()
-                              .updateEquipmentInventory(
-                                (inv) => inv.copyWith(
-                                  ownedEquipment: updatedList,
-                                  updatedAt: DateTime.now(),
-                                ),
-                              );
-                        },
+                  }).toList(),
+                  onChanged: (val) {
+                    if (val != null) {
+                      context.read<OnboardingCubit>().updateTrainingProfile(
+                        (tp) => tp.copyWith(trainingExperience: val),
                       );
-                    }).toList(),
-              ),
-            ],
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Preferred Session Duration',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '${training.preferredSessionDurationMinutes} mins',
+                      style: TextStyle(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                Slider(
+                  value: training.preferredSessionDurationMinutes.toDouble(),
+                  min: 20,
+                  max: 120,
+                  divisions: 10,
+                  label: '${training.preferredSessionDurationMinutes} mins',
+                  onChanged: (val) {
+                    context.read<OnboardingCubit>().updateTrainingProfile(
+                      (tp) => tp.copyWith(
+                        preferredSessionDurationMinutes: val.toInt(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Available Equipment Inventory',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 4.0,
+                  children:
+                      [
+                        EquipmentType.barbell,
+                        EquipmentType.dumbbell,
+                        EquipmentType.kettlebell,
+                        EquipmentType.resistanceBand,
+                        EquipmentType.pullUpBar,
+                      ].map((item) {
+                        final isOwned = equipment.contains(item);
+                        return FilterChip(
+                          label: Text(item.name.toUpperCase()),
+                          selected: isOwned,
+                          onSelected: (selected) {
+                            final updatedList = List<EquipmentType>.from(
+                              equipment,
+                            );
+                            if (selected) {
+                              updatedList.add(item);
+                            } else {
+                              updatedList.remove(item);
+                            }
+                            context
+                                .read<OnboardingCubit>()
+                                .updateEquipmentInventory(
+                                  (inv) => inv.copyWith(
+                                    ownedEquipment: updatedList,
+                                    updatedAt: DateTime.now(),
+                                  ),
+                                );
+                          },
+                        );
+                      }).toList(),
+                ),
+              ],
+            ),
           ),
         );
       },

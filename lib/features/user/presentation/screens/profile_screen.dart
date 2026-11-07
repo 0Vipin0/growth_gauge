@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/units/unit_types.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/user_use_cases.dart';
 import '../../domain/equipment_inventory.dart';
 import '../../domain/training_profile.dart';
@@ -11,10 +12,10 @@ import '../../domain/workout_preferences.dart';
 import '../widgets/equipment_inventory_sheet.dart';
 
 class const ProfileScreen({
-  super.key,
-  required final UserUseCases useCases,
-  final String userId = 'local-user',
-}) extends StatefulWidget {
+    super.key,
+    required final UserUseCases useCases,
+    final String userId = 'local-user',
+  }) extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -26,7 +27,6 @@ class _ProfileScreenState() extends State<ProfileScreen> {
   WorkoutPreferences? _preferences;
   EquipmentInventory? _equipment;
 
-  // Controllers for Core & Detailed Body Metrics
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
@@ -69,9 +69,7 @@ class _ProfileScreenState() extends State<ProfileScreen> {
         _preferences = wRes.dataOrNull;
         _equipment = eRes.dataOrNull;
 
-        // Populate metrics if available
         if (_profile != null) {
-          // Initialize sample defaults if empty
           _ageController.text = '28';
           _heightController.text = '178';
           _weightController.text = '75.5';
@@ -104,6 +102,10 @@ class _ProfileScreenState() extends State<ProfileScreen> {
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (ctx) {
         final media = MediaQuery.of(ctx);
         final availableHeight = media.size.height - media.viewInsets.bottom;
@@ -143,8 +145,8 @@ class _ProfileScreenState() extends State<ProfileScreen> {
     final training = _trainingProfile!;
     final prefs = _preferences!;
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isDesktop = screenWidth >= 900;
+    final sizeClass = AppWindowSizeClass.of(context);
+    final isDesktop = sizeClass != AppWindowSizeClass.compact;
 
     return Scaffold(
       appBar: AppBar(
@@ -152,114 +154,100 @@ class _ProfileScreenState() extends State<ProfileScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1100),
-            child: ListView(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 32.0 : 20.0,
-                vertical: 24.0,
-              ),
-              children: [
-                // ── Header User Card ──────────────────────────────────────────
-                Card(
-                  elevation: 0,
-                  color: colorScheme.surfaceContainer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 32,
-                          backgroundColor: colorScheme.primaryContainer,
-                          child: Icon(
-                            Icons.person,
-                            size: 38,
-                            color: colorScheme.primary,
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                profile.displayName,
-                                style: theme.textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.onSurface,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${training.trainingExperience.name.toUpperCase()} • ${training.primaryTrainingStyle}',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Responsive Layout Grid for Large vs Mobile screens
-                if (isDesktop)
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Left Column: Body Metrics Inputs
-                      Expanded(
-                        flex: 5,
-                        child: Column(
-                          children: [_buildBodyMetricsSection(context)],
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      // Right Column: Preferences & Training
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          children: [
-                            _buildUnitPreferencesSection(context, profile),
-                            const SizedBox(height: 24),
-                            _buildTrainingProfileSection(context, training),
-                            const SizedBox(height: 24),
-                            _buildPreferencesSection(context, prefs),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      _buildBodyMetricsSection(context),
-                      const SizedBox(height: 24),
-                      _buildUnitPreferencesSection(context, profile),
-                      const SizedBox(height: 24),
-                      _buildTrainingProfileSection(context, training),
-                      const SizedBox(height: 24),
-                      _buildPreferencesSection(context, prefs),
-                    ],
-                  ),
-                const SizedBox(height: 32),
-              ],
+        child: ResponsiveContent(
+          maxWidth: 1100,
+          child: ListView(
+            padding: EdgeInsets.symmetric(
+              horizontal: isDesktop ? 32.0 : 20.0,
+              vertical: 24.0,
             ),
+            children: [
+              // Header User Card
+              AppCard(
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 32,
+                      backgroundColor: colorScheme.primaryContainer,
+                      child: Icon(
+                        Icons.person,
+                        size: 38,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            profile.displayName,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${training.trainingExperience.name.toUpperCase()} • ${training.primaryTrainingStyle}',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Responsive Layout Grid
+              if (isDesktop)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        children: [_buildBodyMetricsSection(context)],
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        children: [
+                          _buildUnitPreferencesSection(context, profile),
+                          const SizedBox(height: 24),
+                          _buildTrainingProfileSection(context, training),
+                          const SizedBox(height: 24),
+                          _buildPreferencesSection(context, prefs),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Column(
+                  children: [
+                    _buildBodyMetricsSection(context),
+                    const SizedBox(height: 24),
+                    _buildUnitPreferencesSection(context, profile),
+                    const SizedBox(height: 24),
+                    _buildTrainingProfileSection(context, training),
+                    const SizedBox(height: 24),
+                    _buildPreferencesSection(context, prefs),
+                  ],
+                ),
+              const SizedBox(height: 32),
+            ],
           ),
         ),
       ),
     );
   }
 
-  // ── 1. Body Metrics Section ────────────────────────────────────────────────
   Widget _buildBodyMetricsSection(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -269,241 +257,190 @@ class _ProfileScreenState() extends State<ProfileScreen> {
       children: [
         _buildSectionHeader(context, 'Core & Body Measurements'),
         const SizedBox(height: 8),
-        Card(
-          elevation: 0,
-          color: colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Core Measurements',
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
+        AppCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Core Measurements',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      label: 'AGE',
+                      controller: _ageController,
+                      keyboardType: TextInputType.number,
+                      suffixUnit: 'yrs',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildMetricField(
-                        context,
-                        label: 'AGE',
-                        controller: _ageController,
-                        unit: 'yrs',
-                      ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppTextField(
+                      label: 'HEIGHT',
+                      controller: _heightController,
+                      keyboardType: TextInputType.number,
+                      suffixUnit: 'cm',
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildMetricField(
-                        context,
-                        label: 'HEIGHT',
-                        controller: _heightController,
-                        unit: 'cm',
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _buildMetricField(
-                  context,
-                  label: 'WEIGHT',
-                  controller: _weightController,
-                  unit: 'kg',
-                ),
-                const Divider(height: 32),
-                Text(
-                  'Detailed Body Metrics',
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
                   ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              AppTextField(
+                label: 'WEIGHT',
+                controller: _weightController,
+                keyboardType: TextInputType.number,
+                suffixUnit: 'kg',
+              ),
+              const Divider(height: 32),
+              Text(
+                'Detailed Body Metrics',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  'Optional measurements for higher accuracy',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Optional measurements for higher accuracy',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      label: 'NECK',
+                      controller: _neckController,
+                      keyboardType: TextInputType.number,
+                      suffixUnit: 'cm',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildMetricField(
-                        context,
-                        label: 'NECK',
-                        controller: _neckController,
-                        unit: 'cm',
-                      ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppTextField(
+                      label: 'WAIST',
+                      controller: _waistController,
+                      keyboardType: TextInputType.number,
+                      suffixUnit: 'cm',
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildMetricField(
-                        context,
-                        label: 'WAIST',
-                        controller: _waistController,
-                        unit: 'cm',
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _buildMetricField(
-                  context,
-                  label: 'HIP',
-                  controller: _hipController,
-                  unit: 'cm',
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Body metrics updated successfully.'),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: colorScheme.primary,
-                      foregroundColor: colorScheme.onPrimary,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    icon: const Icon(Icons.check_circle_outline, size: 18),
-                    label: const Text('Save Body Metrics'),
                   ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              AppTextField(
+                label: 'HIP',
+                controller: _hipController,
+                keyboardType: TextInputType.number,
+                suffixUnit: 'cm',
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: AppButton.primary(
+                  label: 'Save Body Metrics',
+                  icon: Icons.check_circle_outline,
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Body metrics updated successfully.'),
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
 
-  // Helper Widget for Numeric Input Fields
-  Widget _buildMetricField(
-    BuildContext context, {
-    required String label,
-    required TextEditingController controller,
-    required String unit,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            color: colorScheme.onSurfaceVariant,
-          ),
-        ),
-        const SizedBox(height: 6),
-        TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: colorScheme.surfaceContainerHighest,
-            suffixText: unit,
-            suffixStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ── 2. Unit Preferences Section ───────────────────────────────────────────
   Widget _buildUnitPreferencesSection(
     BuildContext context,
     UserProfile profile,
   ) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader(context, 'Unit Preferences'),
         const SizedBox(height: 8),
-        Card(
-          elevation: 0,
-          color: colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+        AppCard(
           child: Column(
             children: [
               _buildUnitRow(
                 context,
                 title: 'Weight Unit',
-                control: SegmentedButton<WeightUnit>(
-                  segments: const [
-                    ButtonSegment(
-                      value: WeightUnit.kilograms,
-                      label: Text('KG'),
-                    ),
-                    ButtonSegment(value: WeightUnit.pounds, label: Text('LB')),
-                  ],
-                  selected: {profile.weightUnit},
-                  onSelectionChanged: (set) =>
-                      _saveProfile(profile.copyWith(weightUnit: set.first)),
+                control: SizedBox(
+                  width: 150,
+                  child: AppSegmentedControl<WeightUnit>(
+                    selectedValue: profile.weightUnit,
+                    items: const [
+                      AppSegmentedControlItem(
+                        value: WeightUnit.kilograms,
+                        label: 'KG',
+                      ),
+                      AppSegmentedControlItem(
+                        value: WeightUnit.pounds,
+                        label: 'LB',
+                      ),
+                    ],
+                    onValueChanged: (val) =>
+                        _saveProfile(profile.copyWith(weightUnit: val)),
+                  ),
                 ),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               _buildUnitRow(
                 context,
                 title: 'Distance Unit',
-                control: SegmentedButton<DistanceUnit>(
-                  segments: const [
-                    ButtonSegment(
-                      value: DistanceUnit.kilometers,
-                      label: Text('KM'),
-                    ),
-                    ButtonSegment(value: DistanceUnit.miles, label: Text('MI')),
-                  ],
-                  selected: {profile.distanceUnit},
-                  onSelectionChanged: (set) =>
-                      _saveProfile(profile.copyWith(distanceUnit: set.first)),
+                control: SizedBox(
+                  width: 150,
+                  child: AppSegmentedControl<DistanceUnit>(
+                    selectedValue: profile.distanceUnit,
+                    items: const [
+                      AppSegmentedControlItem(
+                        value: DistanceUnit.kilometers,
+                        label: 'KM',
+                      ),
+                      AppSegmentedControlItem(
+                        value: DistanceUnit.miles,
+                        label: 'MI',
+                      ),
+                    ],
+                    onValueChanged: (val) =>
+                        _saveProfile(profile.copyWith(distanceUnit: val)),
+                  ),
                 ),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               _buildUnitRow(
                 context,
                 title: 'Height Unit',
-                control: SegmentedButton<HeightUnit>(
-                  segments: const [
-                    ButtonSegment(
-                      value: HeightUnit.centimeters,
-                      label: Text('CM'),
-                    ),
-                    ButtonSegment(
-                      value: HeightUnit.feetAndInches,
-                      label: Text('FT/IN'),
-                    ),
-                  ],
-                  selected: {profile.heightUnit},
-                  onSelectionChanged: (set) =>
-                      _saveProfile(profile.copyWith(heightUnit: set.first)),
+                control: SizedBox(
+                  width: 160,
+                  child: AppSegmentedControl<HeightUnit>(
+                    selectedValue: profile.heightUnit,
+                    items: const [
+                      AppSegmentedControlItem(
+                        value: HeightUnit.centimeters,
+                        label: 'CM',
+                      ),
+                      AppSegmentedControlItem(
+                        value: HeightUnit.feetAndInches,
+                        label: 'FT/IN',
+                      ),
+                    ],
+                    onValueChanged: (val) =>
+                        _saveProfile(profile.copyWith(heightUnit: val)),
+                  ),
                 ),
               ),
             ],
@@ -518,60 +455,47 @@ class _ProfileScreenState() extends State<ProfileScreen> {
     required String title,
     required Widget control,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-          control,
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+        control,
+      ],
     );
   }
 
-  // ── 3. Training Profile Section ───────────────────────────────────────────
   Widget _buildTrainingProfileSection(
     BuildContext context,
     TrainingProfile training,
   ) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader(context, 'Training Profile'),
         const SizedBox(height: 8),
-        Card(
-          elevation: 0,
-          color: colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+        AppCard(
           child: Column(
             children: [
-              ListTile(
-                title: const Text('Experience Level'),
-                trailing: DropdownButton<TrainingExperience>(
-                  value: training.trainingExperience,
-                  underline: const SizedBox.shrink(),
-                  items: TrainingExperience.values.map((exp) {
-                    return DropdownMenuItem(
-                      value: exp,
-                      child: Text(exp.name.toUpperCase()),
+              AppDropdown<TrainingExperience>(
+                label: 'Experience Level',
+                value: training.trainingExperience,
+                items: TrainingExperience.values.map((exp) {
+                  return AppDropdownItem(
+                    value: exp,
+                    label: exp.name.toUpperCase(),
+                  );
+                }).toList(),
+                onChanged: (val) {
+                  if (val != null) {
+                    _saveTrainingProfile(
+                      training.copyWith(trainingExperience: val),
                     );
-                  }).toList(),
-                  onChanged: (val) {
-                    if (val != null) {
-                      _saveTrainingProfile(
-                        training.copyWith(trainingExperience: val),
-                      );
-                    }
-                  },
-                ),
+                  }
+                },
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const SizedBox(height: 16),
               ListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Equipment Inventory'),
                 subtitle: Text(
                   '${_equipment?.ownedEquipment.length ?? 0} equipment items available',
@@ -586,7 +510,6 @@ class _ProfileScreenState() extends State<ProfileScreen> {
     );
   }
 
-  // ── 4. Workout Preferences Section ────────────────────────────────────────
   Widget _buildPreferencesSection(
     BuildContext context,
     WorkoutPreferences prefs,
@@ -598,15 +521,11 @@ class _ProfileScreenState() extends State<ProfileScreen> {
       children: [
         _buildSectionHeader(context, 'Workout Execution Preferences'),
         const SizedBox(height: 8),
-        Card(
-          elevation: 0,
-          color: colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+        AppCard(
           child: Column(
             children: [
               SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Auto-start Rest Timer'),
                 subtitle: const Text(
                   'Starts rest timer immediately on set log',
@@ -615,8 +534,9 @@ class _ProfileScreenState() extends State<ProfileScreen> {
                 onChanged: (val) =>
                     _savePreferences(prefs.copyWith(autoStartRestTimer: val)),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               ListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Default Rest Duration'),
                 trailing: Text(
                   '${prefs.defaultRestSeconds}s',
@@ -631,15 +551,18 @@ class _ProfileScreenState() extends State<ProfileScreen> {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: const Text('Default Rest (Seconds)'),
-                      content: TextFormField(
-                        initialValue: seconds.toString(),
+                      content: AppTextField(
+                        label: 'Seconds',
+                        controller: TextEditingController(
+                          text: seconds.toString(),
+                        ),
                         keyboardType: TextInputType.number,
                         onChanged: (v) => seconds = int.tryParse(v) ?? seconds,
                       ),
                       actions: [
-                        TextButton(
+                        AppButton.primary(
+                          label: 'Save',
                           onPressed: () => Navigator.of(ctx).pop(seconds),
-                          child: const Text('Save'),
                         ),
                       ],
                     ),
@@ -649,29 +572,33 @@ class _ProfileScreenState() extends State<ProfileScreen> {
                   }
                 },
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Sound Feedback'),
                 value: prefs.soundEnabled,
                 onChanged: (val) =>
                     _savePreferences(prefs.copyWith(soundEnabled: val)),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Vibration Feedback'),
                 value: prefs.vibrationEnabled,
                 onChanged: (val) =>
                     _savePreferences(prefs.copyWith(vibrationEnabled: val)),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Show RPE (Rate of Perceived Exertion)'),
                 value: prefs.showRpe,
                 onChanged: (val) =>
                     _savePreferences(prefs.copyWith(showRpe: val)),
               ),
-              const Divider(height: 1, indent: 16, endIndent: 16),
+              const Divider(height: 24),
               SwitchListTile(
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Show RIR (Reps in Reserve)'),
                 value: prefs.showRir,
                 onChanged: (val) =>
