@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_router.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../../session/domain/session_enums.dart';
 import '../../../session/infrastructure/session_repository.dart';
 import '../../application/analytics_cubit.dart';
@@ -14,10 +15,10 @@ import '../widgets/workout_frequency_heatmap.dart';
 /// Central dashboard for analytics: weekly volume, workout frequency heatmap,
 /// latest completed workout sessions, and recent PR achievements.
 class const AnalyticsDashboardScreen({
-  super.key,
-  final IWorkoutSessionRepository? sessionRepository,
-  final String? userId,
-}) extends StatelessWidget {
+    super.key,
+    final IWorkoutSessionRepository? sessionRepository,
+    final String? userId,
+  }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -75,7 +76,7 @@ class const AnalyticsDashboardScreen({
             return Center(
               child: Text(
                 'Error loading analytics: ${state.errorMessage}',
-                style: const TextStyle(color: Colors.red),
+                style: TextStyle(color: colorScheme.error),
               ),
             );
           }
@@ -143,7 +144,6 @@ class const AnalyticsDashboardScreen({
                               );
                             }
 
-                            // Filter for completed sessions belonging to user (if userId provided) and sort by completion date descending
                             final sessions = result.dataOrNull ?? [];
                             final completedSessions =
                                 sessions
@@ -162,12 +162,7 @@ class const AnalyticsDashboardScreen({
                                   );
 
                             if (completedSessions.isEmpty) {
-                              return Card(
-                                elevation: 0,
-                                color: colorScheme.surfaceContainer,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
+                              return AppCard(
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: Center(
@@ -195,13 +190,7 @@ class const AnalyticsDashboardScreen({
                                           .inMinutes
                                     : null;
 
-                                return Card(
-                                  elevation: 0,
-                                  color: colorScheme.surfaceContainer,
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
+                                return AppCard(
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
                                     child: Row(
@@ -285,12 +274,14 @@ class const AnalyticsDashboardScreen({
                       ),
                       const SizedBox(height: 8),
                       if (state.personalRecords.isEmpty)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: Center(
                             child: Text(
                               'Complete workouts to unlock PR trophies!',
-                              style: TextStyle(color: Colors.grey),
+                              style: TextStyle(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
                         )

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../catalog/catalog.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../../session/domain/session_enums.dart';
 import '../../../session/infrastructure/session_repository.dart';
 import '../../application/analytics_cubit.dart';
@@ -11,11 +12,11 @@ import '../widgets/progression_line_chart.dart';
 /// Screen displaying 1RM estimated curve and set history for a selected exercise,
 /// with dynamic exercise selection derived from completed workout sessions.
 class const ExerciseProgressionScreen({
-  super.key,
-  required final IWorkoutSessionRepository sessionRepository,
-  required final IExerciseRepository exerciseRepository,
-  final String? initialExerciseId,
-}) extends StatefulWidget {
+    super.key,
+    required final IWorkoutSessionRepository sessionRepository,
+    required final IExerciseRepository exerciseRepository,
+    final String? initialExerciseId,
+  }) extends StatefulWidget {
   @override
   State<ExerciseProgressionScreen> createState() =>
       _ExerciseProgressionScreenState();
@@ -72,7 +73,6 @@ class _ExerciseProgressionScreenState()
       _isLoadingExercises = false;
 
       if (_availableExercises.isNotEmpty) {
-        // Select initial exercise ID or default to the first available exercise
         _currentExerciseId =
             widget.initialExerciseId != null &&
                 _availableExercises.any(
@@ -107,7 +107,7 @@ class _ExerciseProgressionScreenState()
                 constraints: const BoxConstraints(maxWidth: 1000),
                 child: Column(
                   children: [
-                    // Dynamic Exercise Dropdown Selection
+                    // Dynamic Exercise Dropdown Selection using AppDropdown
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth >= 900 ? 32 : 20,
@@ -120,26 +120,24 @@ class _ExerciseProgressionScreenState()
                                 child: CircularProgressIndicator(),
                               ),
                             )
-                          : DropdownButtonFormField<String>(
-                              initialValue: _currentExerciseId,
-                              decoration: InputDecoration(
-                                labelText: _availableExercises.isEmpty
-                                    ? 'No Completed Exercises Found'
-                                    : 'Select Exercise',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                filled: true,
-                                fillColor: colorScheme.surfaceContainer,
-                              ),
-                              items: _availableExercises.map((e) {
-                                return DropdownMenuItem<String>(
-                                  value: e['id'],
-                                  child: Text(e['name']!),
-                                );
-                              }).toList(),
+                          : AppDropdown<String>(
+                              label: _availableExercises.isEmpty
+                                  ? 'No Completed Exercises Found'
+                                  : 'Select Exercise',
+                              value: _currentExerciseId,
+                              hintText: 'Choose an exercise',
+                              prefixIcon: Icons.fitness_center,
+                              items: _availableExercises
+                                  .map(
+                                    (e) => AppDropdownItem<String>(
+                                      value: e['id']!,
+                                      label: e['name']!,
+                                      icon: Icons.fitness_center,
+                                    ),
+                                  )
+                                  .toList(),
                               onChanged: _availableExercises.isEmpty
-                                  ? null
+                                  ? (_) {}
                                   : (val) {
                                       if (val != null) {
                                         setState(
@@ -173,75 +171,82 @@ class _ExerciseProgressionScreenState()
                           ),
                           const SizedBox(height: 12),
                           if (state.exerciseProgression.isEmpty)
-                            Card(
-                              elevation: 0,
-                              color: colorScheme.surfaceContainer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(24.0),
+                            AppCard(
+                              child: Padding(
+                                padding: const EdgeInsets.all(24.0),
                                 child: Center(
                                   child: Text(
                                     'No completed sets logged yet for this exercise.',
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ),
                             )
                           else
                             ...state.exerciseProgression.reversed.map((set) {
-                              return Card(
-                                elevation: 0,
-                                color: colorScheme.surfaceContainer,
-                                margin: const EdgeInsets.only(bottom: 8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: AppCard(
+                                  padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
-                                    vertical: 8,
+                                    vertical: 12,
                                   ),
-                                  leading: CircleAvatar(
-                                    backgroundColor:
-                                        colorScheme.primaryContainer,
-                                    foregroundColor:
-                                        colorScheme.onPrimaryContainer,
-                                    radius: 16,
-                                    child: Text(
-                                      set.setType.isNotEmpty
-                                          ? set.setType
-                                                .substring(0, 1)
-                                                .toUpperCase()
-                                          : 'W',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor:
+                                            colorScheme.primaryContainer,
+                                        foregroundColor:
+                                            colorScheme.onPrimaryContainer,
+                                        radius: 16,
+                                        child: Text(
+                                          set.setType.isNotEmpty
+                                              ? set.setType
+                                                    .substring(0, 1)
+                                                    .toUpperCase()
+                                              : 'W',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    '${set.weightKg?.toStringAsFixed(1) ?? 'BW'} kg × ${set.reps ?? 0} reps',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    '${set.timestamp.year}-${set.timestamp.month.toString().padLeft(2, '0')}-${set.timestamp.day.toString().padLeft(2, '0')}'
-                                    '${set.rpe != null ? ' • RPE ${set.rpe}' : ''}',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    set.estimated1Rm != null
-                                        ? '1RM ~ ${set.estimated1Rm!.toStringAsFixed(1)} kg'
-                                        : '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.primary,
-                                    ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${set.weightKg?.toStringAsFixed(1) ?? 'BW'} kg × ${set.reps ?? 0} reps',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Text(
+                                              '${set.timestamp.year}-${set.timestamp.month.toString().padLeft(2, '0')}-${set.timestamp.day.toString().padLeft(2, '0')}'
+                                              '${set.rpe != null ? ' • RPE ${set.rpe}' : ''}',
+                                              style: TextStyle(
+                                                color: colorScheme
+                                                    .onSurfaceVariant,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (set.estimated1Rm != null)
+                                        Text(
+                                          '1RM ~ ${set.estimated1Rm!.toStringAsFixed(1)} kg',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: colorScheme.primary,
+                                          ),
+                                        ),
+                                    ],
                                   ),
                                 ),
                               );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/analytics_cubit.dart';
 import '../../domain/analytics_enums.dart';
 import '../../domain/personal_record.dart';
@@ -74,28 +75,34 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          DropdownButton<String>(
-                            value: _sortBy,
-                            underline: const SizedBox.shrink(),
-                            items: const [
-                              DropdownMenuItem(
-                                value: 'date_desc',
-                                child: Text('Newest First'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'value_desc',
-                                child: Text('Highest Value'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'exercise_asc',
-                                child: Text('Exercise A-Z'),
-                              ),
-                            ],
-                            onChanged: (val) {
-                              if (val != null) {
-                                setState(() => _sortBy = val);
-                              }
-                            },
+                          SizedBox(
+                            width: 190,
+                            child: AppDropdown<String>(
+                              value: _sortBy,
+                              items: const [
+                                AppDropdownItem(
+                                  value: 'date_desc',
+                                  label: 'Newest First',
+                                  icon: Icons.calendar_today,
+                                ),
+                                AppDropdownItem(
+                                  value: 'value_desc',
+                                  label: 'Highest Value',
+                                  icon: Icons.trending_up,
+                                ),
+                                AppDropdownItem(
+                                  value: 'exercise_asc',
+                                  label: 'Exercise A-Z',
+                                  icon: Icons.sort_by_alpha,
+                                ),
+                              ],
+                              onChanged: (val) {
+                                if (val != null) {
+                                  setState(() => _sortBy = val);
+                                }
+                              },
+                              label: 'Sort By',
+                            ),
                           ),
                         ],
                       ),
@@ -146,18 +153,15 @@ class _PrTrophyScreenState() extends State<PrTrophyScreen> {
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth >= 900 ? 32 : 20,
                               ),
-                              child: Card(
-                                elevation: 0,
-                                color: colorScheme.surfaceContainer,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(32.0),
+                              child: AppCard(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(32.0),
                                   child: Center(
                                     child: Text(
                                       'No records match the selected filter.',
-                                      style: TextStyle(color: Colors.grey),
+                                      style: TextStyle(
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
                                     ),
                                   ),
                                 ),
