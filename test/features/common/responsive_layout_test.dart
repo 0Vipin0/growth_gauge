@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:growth_gauge/features/common/presentation/widgets/responsive_layout.dart';
+import 'package:growth_gauge/features/common/presentation/utils/responsive_layout.dart';
 
 void main() {
   test('classifies compact, medium, and expanded available widths', () {

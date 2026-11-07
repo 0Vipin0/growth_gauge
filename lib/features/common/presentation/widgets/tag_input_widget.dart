@@ -1,3 +1,5 @@
+// ignore_for_file: use_primary_constructors
+
 import 'package:flutter/material.dart';
 
 class const TagInputWidget({
@@ -9,7 +11,7 @@ class const TagInputWidget({
   State<TagInputWidget> createState() => _TagInputWidgetState();
 }
 
-class _TagInputWidgetState() extends State<TagInputWidget> {
+class _TagInputWidgetState extends State<TagInputWidget> {
   late List<String> _tags;
   final TextEditingController _tagController = TextEditingController();
 

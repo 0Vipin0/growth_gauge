@@ -12,6 +12,7 @@ class const TimeControlWidget({
       children: [
         Text(label),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
               icon: const Icon(Icons.remove),

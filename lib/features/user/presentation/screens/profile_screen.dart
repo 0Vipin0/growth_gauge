@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/units/unit_types.dart';
-import '../../../common/presentation/widgets/responsive_layout.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../application/user_use_cases.dart';
 import '../../domain/equipment_inventory.dart';
 import '../../domain/training_profile.dart';

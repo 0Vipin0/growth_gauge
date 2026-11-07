@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
-import '../../common/presentation/widgets/responsive_layout.dart';
+import '../../common/presentation/utils/responsive_layout.dart';
 import '../domain/workout_session.dart';
 
 class const SessionSummaryScreen({

@@ -9,7 +9,7 @@ import '../../../core/error/failures.dart';
 import '../../../core/error/result.dart';
 import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
-import '../../common/presentation/widgets/responsive_layout.dart';
+import '../../common/presentation/utils/responsive_layout.dart';
 import '../application/session_use_cases.dart';
 import '../application/workout_session_bloc.dart';
 import '../domain/execution_set.dart';

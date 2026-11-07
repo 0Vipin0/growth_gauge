@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
-import '../../common/presentation/widgets/responsive_form_layout.dart';
+import '../../common/presentation/utils/responsive_form_layout.dart';
 import '../infrastructure/authentication_service.dart';
 
 class const BiometricAuthScreen() extends StatefulWidget {

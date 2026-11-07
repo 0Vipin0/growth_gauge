@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/presentation/widgets/responsive_layout.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../application/portability_cubit.dart';
 import '../widgets/conflict_resolution_dialog.dart';
 

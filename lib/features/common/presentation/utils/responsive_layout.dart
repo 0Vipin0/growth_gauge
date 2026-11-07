@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Window classes are based on available logical width, not device identity.
 enum AppWindowSizeClass(final double maxWidth) {
@@ -10,6 +10,10 @@ enum AppWindowSizeClass(final double maxWidth) {
     if (width <= compact.maxWidth) return compact;
     if (width <= medium.maxWidth) return medium;
     return expanded;
+  }
+
+  static AppWindowSizeClass of(BuildContext context) {
+    return fromWidth(MediaQuery.sizeOf(context).width);
   }
 }
 

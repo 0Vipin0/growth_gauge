@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/routing/app_router.dart';
-import '../common/presentation/widgets/responsive_layout.dart';
+import '../common/presentation/utils/responsive_layout.dart';
 import 'application/settings_cubit.dart';
 import 'application/settings_state.dart';
 import 'config/config.dart';

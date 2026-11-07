@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../common/presentation/widgets/responsive_form_layout.dart';
+import '../../common/presentation/utils/responsive_form_layout.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise_enums.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/presentation/widgets/responsive_layout.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../application/goal_cubit.dart';
 import '../../domain/training_goal.dart';
 import '../../domain/user_enums.dart';
