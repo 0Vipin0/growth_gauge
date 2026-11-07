@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
+import '../../common/presentation/widgets/widgets.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_enums.dart';
@@ -20,6 +21,7 @@ class const CatalogScreen({
 
 class _CatalogScreenState() extends State<CatalogScreen> {
   late Future<List<Exercise>> _exercises;
+  final TextEditingController _searchController = TextEditingController();
   String _query = '';
   BodyRegion? _bodyRegion;
   MovementPattern? _movementPattern;
@@ -30,6 +32,12 @@ class _CatalogScreenState() extends State<CatalogScreen> {
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _load() {
@@ -47,6 +55,7 @@ class _CatalogScreenState() extends State<CatalogScreen> {
   void _clearFilters() {
     setState(() {
       _query = '';
+      _searchController.clear();
       _bodyRegion = null;
       _movementPattern = null;
       _muscleGroup = null;
@@ -88,34 +97,15 @@ class _CatalogScreenState() extends State<CatalogScreen> {
             constraints: const BoxConstraints(maxWidth: 1100),
             child: Column(
               children: [
-                // Search Bar
+                // Search Bar using AppTextField
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: colorScheme.primary,
-                      ),
-                      suffixIcon: _query.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: () {
-                                setState(() {
-                                  _query = '';
-                                  _load();
-                                });
-                              },
-                            )
-                          : null,
-                      hintText: 'Search exercises...',
-                      filled: true,
-                      fillColor: colorScheme.surfaceContainer,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                  child: AppTextField(
+                    controller: _searchController,
+                    label: 'Search exercises...',
+                    hintText: 'Type to search...',
+                    prefixIcon: Icons.search,
+                    suffixUnit: _query.isNotEmpty ? 'CLEAR' : null,
                     onChanged: (value) => setState(() {
                       _query = value;
                       _load();
@@ -322,56 +312,47 @@ class _CatalogScreenState() extends State<CatalogScreen> {
         .map((e) => e.name)
         .join(' · ');
 
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainer,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => context.push(appRouteExerciseDetail, extra: exercise),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(Icons.fitness_center, color: colorScheme.primary),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      exercise.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      movement.isEmpty ? 'General' : movement,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
-            ],
+    return AppCard(
+      onTap: () => context.push(appRouteExerciseDetail, extra: exercise),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(Icons.fitness_center, color: colorScheme.primary),
           ),
-        ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  exercise.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  movement.isEmpty ? 'General' : movement,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
+        ],
       ),
     );
   }

@@ -5,7 +5,10 @@ import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/muscle_volume_stat.dart';
 
 /// Renders a weekly volume breakdown bar chart using fl_chart.
-class const VolumeBarChart({super.key, required final List<MuscleVolumeStat> stats}) extends StatelessWidget {
+class const VolumeBarChart({
+  super.key,
+  required final List<MuscleVolumeStat> stats,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

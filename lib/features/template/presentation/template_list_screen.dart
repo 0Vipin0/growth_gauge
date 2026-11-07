@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/widgets.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
-import '../../session/presentation/session_recovery_dialog.dart';
+import '../../session/presentation/screen/session_recovery_dialog.dart';
 import '../application/template_use_cases.dart';
 import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';
@@ -66,29 +67,33 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
   }
 
   Future<void> _create() async {
-    final name = TextEditingController();
+    final nameController = TextEditingController();
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('New workout template'),
-        content: TextField(
-          controller: name,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Name'),
+        content: SizedBox(
+          width: 400,
+          child: AppTextField(
+            controller: nameController,
+            label: 'Name',
+            hintText: 'Enter template name...',
+            prefixIcon: Icons.view_agenda_outlined,
+          ),
         ),
         actions: [
-          TextButton(
+          AppButton.ghost(
+            label: 'Cancel',
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
           ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, name.text),
-            child: const Text('Create'),
+          AppButton.primary(
+            label: 'Create',
+            onPressed: () => Navigator.pop(context, nameController.text),
           ),
         ],
       ),
     );
-    name.dispose();
+    nameController.dispose();
     if (result == null || !mounted) return;
     final created = await widget.useCases.create(
       name: result,
@@ -161,67 +166,53 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                   separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, i) {
                     final template = templates[i];
-                    return Card(
-                      elevation: 0,
-                      color: colorScheme.surfaceContainer,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(16),
-                        onTap: () => context.push(
-                          appRouteTemplateDetail,
-                          extra: template,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primaryContainer
-                                      .withValues(alpha: 0.3),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Icon(
-                                  Icons.view_agenda,
-                                  color: colorScheme.primary,
-                                ),
+                    return AppCard(
+                      onTap: () =>
+                          context.push(appRouteTemplateDetail, extra: template),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: colorScheme.primaryContainer.withValues(
+                                alpha: 0.3,
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      template.name,
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: colorScheme.onSurface,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      template.description.isEmpty
-                                          ? 'No description'
-                                          : template.description,
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                            color: colorScheme.onSurfaceVariant,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Icon(
-                                Icons.chevron_right,
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.view_agenda,
+                              color: colorScheme.primary,
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  template.name,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.onSurface,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  template.description.isEmpty
+                                      ? 'No description'
+                                      : template.description,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ],
                       ),
                     );
                   },

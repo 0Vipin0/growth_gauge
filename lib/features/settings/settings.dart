@@ -1,3 +1,3 @@
 export 'application/application.dart';
 export 'domain/settings_model.dart';
-export 'presentation/settings_page.dart';
+export 'presentation/settings_screen.dart';

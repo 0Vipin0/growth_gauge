@@ -12,11 +12,11 @@ import '../widgets/progression_line_chart.dart';
 /// Screen displaying 1RM estimated curve and set history for a selected exercise,
 /// with dynamic exercise selection derived from completed workout sessions.
 class const ExerciseProgressionScreen({
-    super.key,
-    required final IWorkoutSessionRepository sessionRepository,
-    required final IExerciseRepository exerciseRepository,
-    final String? initialExerciseId,
-  }) extends StatefulWidget {
+  super.key,
+  required final IWorkoutSessionRepository sessionRepository,
+  required final IExerciseRepository exerciseRepository,
+  final String? initialExerciseId,
+}) extends StatefulWidget {
   @override
   State<ExerciseProgressionScreen> createState() =>
       _ExerciseProgressionScreenState();

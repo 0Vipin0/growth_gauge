@@ -5,7 +5,10 @@ import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/exercise_set_metric.dart';
 
 /// Renders a 1RM estimated progression curve using fl_chart.
-class const ProgressionLineChart({super.key, required final List<ExerciseSetMetric> metrics}) extends StatelessWidget {
+class const ProgressionLineChart({
+  super.key,
+  required final List<ExerciseSetMetric> metrics,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

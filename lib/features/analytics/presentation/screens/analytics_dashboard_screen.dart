@@ -15,10 +15,10 @@ import '../widgets/workout_frequency_heatmap.dart';
 /// Central dashboard for analytics: weekly volume, workout frequency heatmap,
 /// latest completed workout sessions, and recent PR achievements.
 class const AnalyticsDashboardScreen({
-    super.key,
-    final IWorkoutSessionRepository? sessionRepository,
-    final String? userId,
-  }) extends StatelessWidget {
+  super.key,
+  final IWorkoutSessionRepository? sessionRepository,
+  final String? userId,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -190,9 +190,9 @@ class const AnalyticsDashboardScreen({
                                           .inMinutes
                                     : null;
 
-                                return AppCard(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: AppCard(
                                     child: Row(
                                       children: [
                                         Container(

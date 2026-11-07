@@ -10,7 +10,7 @@ import '../../common/presentation/widgets/widgets.dart';
 import '../application/application.dart';
 import '../domain/domain.dart';
 
-class const SettingsPage({super.key}) extends StatelessWidget {
+class const SettingsScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<SettingsCubit, SettingsState>(
@@ -26,6 +26,7 @@ class const SettingsPage({super.key}) extends StatelessWidget {
     final colorScheme = previewTheme.colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: const Text('Appearance & Settings'),
         centerTitle: true,
@@ -36,17 +37,21 @@ class const SettingsPage({super.key}) extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           children: [
             if (state.error != null) ...[
-              Card(
-                color: colorScheme.errorContainer,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.warning_amber_outlined,
-                    color: colorScheme.onErrorContainer,
-                  ),
-                  title: Text(
-                    state.error!,
-                    style: TextStyle(color: colorScheme.onErrorContainer),
-                  ),
+              AppCard(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.warning_amber_outlined,
+                      color: colorScheme.error,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        state.error!,
+                        style: TextStyle(color: colorScheme.error),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 16),
@@ -59,16 +64,9 @@ class const SettingsPage({super.key}) extends StatelessWidget {
               data: previewTheme,
               child: Builder(
                 builder: (previewContext) {
-                  return Container(
+                  return AppCard(
+                    variant: AppCardVariant.selected,
                     padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: previewTheme.cardTheme.color,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: colorScheme.primary.withValues(alpha: 0.4),
-                        width: 1.5,
-                      ),
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -144,14 +142,9 @@ class const SettingsPage({super.key}) extends StatelessWidget {
             // 2. APPEARANCE CONFIGURATION SECTION
             _buildSectionHeader(context, 'Appearance Customization'),
             const SizedBox(height: 8),
-            Card(
-              elevation: 0,
-              color: colorScheme.surfaceContainer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+            AppCard(
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -251,7 +244,6 @@ class const SettingsPage({super.key}) extends StatelessWidget {
                       },
                     ),
 
-                    // (Snippet replacing the Font Size & Font Family controls inside SettingsPage)
                     const SizedBox(height: 24),
                     const Divider(height: 1),
                     const SizedBox(height: 24),
@@ -334,35 +326,26 @@ class const SettingsPage({super.key}) extends StatelessWidget {
             // 3. NOTIFICATIONS SECTION
             _buildSectionHeader(context, 'Notifications'),
             const SizedBox(height: 8),
-            Card(
-              elevation: 0,
-              color: colorScheme.surfaceContainer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+            AppCard(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 8.0,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 16.0,
-                ),
-                child: ListTile(
-                  title: const Text('Notification time'),
-                  subtitle: const Text('Daily reminder schedule for workouts'),
-                  trailing: TextButton(
-                    child: Text(
+              child: ListTile(
+                title: const Text('Notification time'),
+                subtitle: const Text('Daily reminder schedule for workouts'),
+                trailing: AppButton.ghost(
+                  label:
                       settings.notificationTime?.format(context) ?? 'Set time',
-                    ),
-                    onPressed: () async {
-                      final time = await showTimePicker(
-                        context: context,
-                        initialTime:
-                            settings.notificationTime ?? TimeOfDay.now(),
-                      );
-                      if (time != null) {
-                        await settingsCubit.updateNotificationTime(time);
-                      }
-                    },
-                  ),
+                  onPressed: () async {
+                    final time = await showTimePicker(
+                      context: context,
+                      initialTime: settings.notificationTime ?? TimeOfDay.now(),
+                    );
+                    if (time != null) {
+                      await settingsCubit.updateNotificationTime(time);
+                    }
+                  },
                 ),
               ),
             ),
@@ -372,68 +355,93 @@ class const SettingsPage({super.key}) extends StatelessWidget {
             // 4. DATA & SECURITY SECTION
             _buildSectionHeader(context, 'Data & Security'),
             const SizedBox(height: 8),
-            Card(
-              elevation: 0,
-              color: colorScheme.surfaceContainer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text('Backup and restore'),
-                      subtitle: const Text(
-                        'Export or restore your Growth Gauge data',
-                      ),
-                      trailing: const Icon(Icons.backup_outlined),
-                      onTap: () => context.push(appRouteBackupRestore),
+            AppCard(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: const Text('Backup and restore'),
+                    subtitle: const Text(
+                      'Export or restore your Growth Gauge data',
                     ),
-                    const Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
-                      title: const Text('Authentication type'),
-                      subtitle: const Text(
-                        'Secure your app with biometrics or PIN',
-                      ),
-                      trailing: DropdownButton<AuthenticationType>(
-                        value: settings.authenticationType,
-                        underline: const SizedBox(),
-                        items: AuthenticationType.values
-                            .map(
-                              (value) => DropdownMenuItem(
-                                value: value,
-                                child: Text(value.getLabel()),
+                    trailing: const Icon(Icons.backup_outlined),
+                    onTap: () => context.push(appRouteBackupRestore),
+                  ),
+                  const Divider(height: 1, indent: 16, endIndent: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 4.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Authentication type',
+                                style: TextStyle(fontWeight: FontWeight.w500),
                               ),
-                            )
-                            .toList(),
-                        onChanged: (value) async {
-                          if (value == null) return;
-                          final previous = settings.authenticationType;
-                          if (value == AuthenticationType.biometric &&
-                              !await settingsCubit.isBiometricAvailable()) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Biometric authentication is unavailable.',
-                                  ),
+                              SizedBox(height: 2),
+                              Text(
+                                'Secure your app with biometrics or PIN',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 170,
+                          child: AppDropdown<AuthenticationType>(
+                            label: 'Auth Type',
+                            value: settings.authenticationType,
+                            prefixIcon: Icons.lock_outline,
+                            items: AuthenticationType.values
+                                .map(
+                                  (value) =>
+                                      AppDropdownItem<AuthenticationType>(
+                                        value: value,
+                                        label: value.getLabel(),
+                                        icon: Icons.security,
+                                      ),
+                                )
+                                .toList(),
+                            onChanged: (value) async {
+                              if (value == null) return;
+                              final previous = settings.authenticationType;
+                              if (value == AuthenticationType.biometric &&
+                                  !await settingsCubit.isBiometricAvailable()) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Biometric authentication is unavailable.',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return;
+                              }
+                              await settingsCubit.updateAuthenticationType(
+                                value,
                               );
-                            }
-                            return;
-                          }
-                          await settingsCubit.updateAuthenticationType(value);
-                          if (value == AuthenticationType.pin &&
-                              previous == AuthenticationType.none &&
-                              context.mounted) {
-                            context.go(appRoutePinAuth);
-                          }
-                        },
-                      ),
+                              if (value == AuthenticationType.pin &&
+                                  previous == AuthenticationType.none &&
+                                  context.mounted) {
+                                context.go(appRoutePinAuth);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -4,20 +4,34 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
 import '../../common/presentation/utils/responsive_form_layout.dart';
+import '../../common/presentation/widgets/widgets.dart';
 import '../infrastructure/authentication_service.dart';
 
-class const PinAuthScreen() extends StatefulWidget {
+class const PinAuthScreen({super.key}) extends StatefulWidget {
   @override
-  _PinAuthScreenState createState() => _PinAuthScreenState();
+  State<PinAuthScreen> createState() => _PinAuthScreenState();
 }
 
 class _PinAuthScreenState() extends State<PinAuthScreen> {
   final AuthenticationService _authService = AuthenticationService();
   final TextEditingController _pinController = TextEditingController();
   String? _errorMessage;
+  bool _isLoading = false;
 
   Future<void> _handlePinSubmission() async {
     final String enteredPin = _pinController.text;
+    if (enteredPin.isEmpty) {
+      setState(() {
+        _errorMessage = 'Please enter a PIN.';
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
     final String? storedPin = await _authService.getSavedPin();
 
     if (storedPin == null) {
@@ -33,6 +47,7 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
         _navigateToHome();
       } else {
         setState(() {
+          _isLoading = false;
           _errorMessage = 'Invalid PIN. Please try again.';
         });
       }
@@ -46,8 +61,18 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
   }
 
   @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('PIN Authentication'),
@@ -56,35 +81,49 @@ class _PinAuthScreenState() extends State<PinAuthScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Please enter your PIN to proceed:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.all(24.0),
+              child: AppCard(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Please enter your PIN to proceed:',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        controller: _pinController,
+                        label: 'Enter PIN',
+                        hintText: '••••',
+                        obscureText: true,
+                        keyboardType: TextInputType.number,
+                        prefixIcon: Icons.lock_outline,
+                        errorText: _errorMessage,
+                        maxLength: 6,
+                        onChanged: (_) {
+                          if (_errorMessage != null) {
+                            setState(() => _errorMessage = null);
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: AppButton.primary(
+                          label: 'Submit',
+                          onPressed: _isLoading ? null : _handlePinSubmission,
+                          isLoading: _isLoading,
+                          icon: Icons.arrow_forward,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _pinController,
-                    obscureText: true,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (_) => _handlePinSubmission(),
-                    decoration: InputDecoration(
-                      labelText: 'Enter PIN',
-                      errorText: _errorMessage,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: _handlePinSubmission,
-                      child: const Text('Submit'),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

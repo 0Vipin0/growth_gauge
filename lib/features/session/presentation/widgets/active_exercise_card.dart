@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/domain.dart';
 
 class const ActiveExerciseCard({
@@ -20,23 +21,9 @@ class const ActiveExerciseCard({
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
+    return AppCard(
+      variant: AppCardVariant.selected,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.4),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.primary.withValues(alpha: 0.1),
-            blurRadius: 15,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
       child: Column(
         children: [
           // Timers Row (Active & Elapsed)
@@ -172,9 +159,10 @@ class const ActiveExerciseCard({
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton.outlined(
+              AppButton.outlined(
+                label: 'Prev',
+                icon: Icons.arrow_back_ios_new,
                 onPressed: isBusy ? null : onPrevious,
-                icon: const Icon(Icons.arrow_back_ios_new, size: 18),
                 tooltip: 'Previous set',
               ),
               const Padding(
@@ -184,9 +172,10 @@ class const ActiveExerciseCard({
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
                 ),
               ),
-              IconButton.outlined(
+              AppButton.outlined(
+                label: 'Next',
+                icon: Icons.arrow_forward_ios,
                 onPressed: isBusy ? null : onNext,
-                icon: const Icon(Icons.arrow_forward_ios, size: 18),
                 tooltip: 'Next set',
               ),
             ],
@@ -200,28 +189,25 @@ class const ActiveExerciseCard({
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
-                FilledButton.icon(
+                AppButton.primary(
+                  label: 'Log set',
+                  icon: Icons.check,
                   onPressed: isBusy ? null : () => onRecord(currentSet!),
-                  icon: const Icon(Icons.check, size: 16),
-                  label: const Text('Log set'),
                 ),
-                OutlinedButton.icon(
+                AppButton.secondary(
+                  label: 'Edit target',
+                  icon: Icons.edit,
                   onPressed: isBusy ? null : () => onEditTarget(currentSet!),
-                  icon: const Icon(Icons.edit, size: 16),
-                  label: const Text('Edit target'),
                 ),
-                OutlinedButton.icon(
+                AppButton.outlined(
+                  label: 'Skip',
+                  icon: Icons.skip_next,
                   onPressed: isBusy ? null : () => onSkip(currentSet!),
-                  icon: const Icon(Icons.skip_next, size: 16),
-                  label: const Text('Skip'),
                 ),
-                OutlinedButton.icon(
+                AppButton.destructive(
+                  label: 'Delete',
+                  icon: Icons.delete_outline,
                   onPressed: isBusy ? null : () => onDelete(currentSet!),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: colorScheme.error,
-                  ),
-                  icon: const Icon(Icons.delete_outline, size: 16),
-                  label: const Text('Delete'),
                 ),
               ],
             ),

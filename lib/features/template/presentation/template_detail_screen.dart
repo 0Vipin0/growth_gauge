@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/widgets.dart';
 import '../../session/application/session_use_cases.dart';
 import '../application/template_use_cases.dart';
 import '../domain/template_enums.dart';
@@ -143,40 +144,32 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Card(
-                      elevation: 0,
-                      color: colorScheme.surfaceContainer,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Icon(Icons.history, color: colorScheme.primary),
-                            const SizedBox(width: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Revision ${revision.revisionNumber}',
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.onSurface,
-                                  ),
+                    AppCard(
+                      child: Row(
+                        children: [
+                          Icon(Icons.history, color: colorScheme.primary),
+                          const SizedBox(width: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Revision ${revision.revisionNumber}',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.onSurface,
                                 ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  revision.status.name.toUpperCase(),
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: colorScheme.primary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                revision.status.name.toUpperCase(),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     if (revision.blocks.isEmpty)
@@ -194,60 +187,61 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                     if (revision.status == TemplateRevisionStatus.published &&
                         revision.blocks.isNotEmpty) ...[
                       const SizedBox(height: 24),
-                      FilledButton.icon(
-                        onPressed: _starting ? null : () => _start(revision),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: colorScheme.primary,
-                          foregroundColor: colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: AppButton.primary(
+                          label: _starting ? 'Starting…' : 'Start workout',
+                          icon: Icons.play_arrow,
+                          onPressed: _starting ? null : () => _start(revision),
+                          isLoading: _starting,
                         ),
-                        icon: const Icon(Icons.play_arrow),
-                        label: Text(_starting ? 'Starting…' : 'Start workout'),
                       ),
                     ],
                     const SizedBox(height: 16),
                     ...revision.blocks.map(
                       (block) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
-                        child: Card(
-                          elevation: 0,
-                          color: colorScheme.surfaceContainer,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                        child: AppCard(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
                           ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 8,
-                            ),
-                            leading: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: colorScheme.primaryContainer.withValues(
-                                  alpha: 0.3,
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primaryContainer
+                                      .withValues(alpha: 0.3),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                child: Icon(
+                                  Icons.fitness_center,
+                                  color: colorScheme.primary,
+                                ),
                               ),
-                              child: Icon(
-                                Icons.fitness_center,
-                                color: colorScheme.primary,
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      block.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '${block.items.length} exercises · ${block.rounds} round(s)',
+                                      style: TextStyle(
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            title: Text(
-                              block.name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              '${block.items.length} exercises · ${block.rounds} round(s)',
-                              style: TextStyle(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
+                            ],
                           ),
                         ),
                       ),

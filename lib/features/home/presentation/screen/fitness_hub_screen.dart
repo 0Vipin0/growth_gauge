@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../analytics/domain/daily_workout_summary.dart';
-import '../template/domain/workout_template.dart';
-import '../template/infrastructure/template_repository.dart';
-import 'widgets/activity_trends_section.dart';
-import 'widgets/explore_banner.dart';
-import 'widgets/hub_header.dart';
-import 'widgets/quick_start_section.dart';
-import 'widgets/week_summary_section.dart';
+import '../../../analytics/domain/daily_workout_summary.dart';
+import '../../../template/domain/workout_template.dart';
+import '../../../template/infrastructure/template_repository.dart';
+import '../widgets/activity_trends_section.dart';
+import '../widgets/explore_banner.dart';
+import '../widgets/hub_header.dart';
+import '../widgets/quick_start_section.dart';
+import '../widgets/week_summary_section.dart';
 
 // ---------------------------------------------------------------------------
 // FitnessHubPage
@@ -17,7 +17,7 @@ import 'widgets/week_summary_section.dart';
 ///
 /// Displays a weekly summary, activity trends with time-range navigation,
 /// quick-start workout templates, and an explore library banner.
-class const FitnessHubPage({
+class const FitnessHubScreen({
   super.key,
   final VoidCallback? onProfileTap,
   final VoidCallback? onAnalyticsTap,
@@ -28,10 +28,10 @@ class const FitnessHubPage({
   final List<DailyWorkoutSummary> workoutHistory = const [],
 }) extends StatefulWidget {
   @override
-  State<FitnessHubPage> createState() => _FitnessHubPageState();
+  State<FitnessHubScreen> createState() => _FitnessHubScreenState();
 }
 
-class _FitnessHubPageState() extends State<FitnessHubPage> {
+class _FitnessHubScreenState() extends State<FitnessHubScreen> {
   late ActivityTimeRange _selectedTimeRange;
   int _timeOffset = 0;
   bool _initialized = false;

@@ -4,17 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../core/routing/app_router.dart';
-import '../analytics/analytics.dart';
-import '../catalog/infrastructure/exercise_repository.dart';
-import '../common/presentation/utils/responsive_layout.dart';
-import '../session/application/session_use_cases.dart';
-import '../session/domain/session_enums.dart';
-import '../session/infrastructure/session_repository.dart';
-import '../session/presentation/session_recovery_dialog.dart';
-import '../settings/presentation/settings_page.dart';
-import '../template/template.dart';
-import 'fitness_hub_page.dart';
+import '../../../../core/routing/routing.dart';
+import '../../../analytics/analytics.dart';
+import '../../../catalog/catalog.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../session/session.dart';
+import '../../../settings/settings.dart';
+import '../../../template/template.dart';
+import 'fitness_hub_screen.dart';
 
 // ---------------------------------------------------------------------------
 // HomePage
@@ -26,7 +23,7 @@ import 'fitness_hub_page.dart';
 ///
 /// On mount it checks for unfinished sessions and offers session recovery via
 /// [SessionRecoveryDialog].
-class const HomePage({
+class const HomeScreen({
   super.key,
   required final IWorkoutSessionRepository sessionRepository,
   required final SessionUseCases sessionUseCases,
@@ -36,10 +33,10 @@ class const HomePage({
   final String userId = 'local-user',
 }) extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState() extends State<HomePage> {
+class _HomeScreenState() extends State<HomeScreen> {
   int _selectedIndex = 0;
   bool? _railExtendedOverride;
   final PageController _pageController = PageController();
@@ -195,7 +192,7 @@ class _HomePageState() extends State<HomePage> {
                   child: _DestinationPageView(
                     controller: _pageController,
                     onPageChanged: (i) => setState(() => _selectedIndex = i),
-                    fitnessHubPage: FitnessHubPage(
+                    fitnessHubPage: FitnessHubScreen(
                       templateRepository: widget.templateRepository,
                       workoutHistory: widget.workoutHistory,
                       onStartTemplate: _startTemplate,
@@ -299,7 +296,7 @@ class const _DestinationPageView({
       key: const PageStorageKey<String>('home-destinations'),
       controller: controller,
       onPageChanged: onPageChanged,
-      children: [fitnessHubPage, const SettingsPage()],
+      children: [fitnessHubPage, const SettingsScreen()],
     );
   }
 }

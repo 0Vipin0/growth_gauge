@@ -11,7 +11,7 @@ import 'package:growth_gauge/features/analytics/infrastructure/analytics_dao.dar
 import 'package:growth_gauge/features/analytics/projection/analytics_projector.dart';
 import 'package:growth_gauge/features/analytics/projection/projection_rebuilder.dart';
 import 'package:growth_gauge/features/catalog/infrastructure/exercise_repository.dart';
-import 'package:growth_gauge/features/home/launch_route_resolver.dart';
+import 'package:growth_gauge/features/home/presentation/screen/launch_route_resolver.dart';
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
 import 'package:growth_gauge/features/session/application/session_use_cases.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';

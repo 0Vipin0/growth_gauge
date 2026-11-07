@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../analytics/domain/daily_workout_summary.dart';
+import '../../../analytics/domain/daily_workout_summary.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 
 enum ActivityTimeRange() {
   week,
@@ -69,14 +70,8 @@ class const ActivityTrendsCard({
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Container(
+    return AppCard(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
       child: Column(
         children: [
           Row(
@@ -92,14 +87,14 @@ class const ActivityTrendsCard({
                   Icon(
                     Icons.calendar_today,
                     size: 16,
-                    color: colorScheme.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     periodLabel,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],

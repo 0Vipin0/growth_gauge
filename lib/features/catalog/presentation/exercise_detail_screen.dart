@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../common/presentation/widgets/widgets.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_enums.dart';
@@ -40,66 +41,76 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
 
     var target = candidates.first;
     var type = RelationshipType.alternative;
-    final reason = TextEditingController();
+    final reasonController = TextEditingController();
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: const Text('Link related exercise'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<Exercise>(
-                initialValue: target,
-                decoration: const InputDecoration(labelText: 'Exercise'),
-                items: candidates
-                    .map(
-                      (exercise) => DropdownMenuItem(
-                        value: exercise,
-                        child: Text(exercise.name),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) =>
-                    setDialogState(() => target = value ?? target),
-              ),
-              DropdownButtonFormField<RelationshipType>(
-                initialValue: type,
-                decoration: const InputDecoration(labelText: 'Relationship'),
-                items: RelationshipType.values
-                    .map(
-                      (value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value.name),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) =>
-                    setDialogState(() => type = value ?? type),
-              ),
-              TextField(
-                controller: reason,
-                decoration: const InputDecoration(
-                  labelText: 'Reason (optional)',
+          content: SizedBox(
+            width: 400,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppDropdown<Exercise>(
+                  label: 'Exercise',
+                  value: target,
+                  prefixIcon: Icons.fitness_center,
+                  items: candidates
+                      .map(
+                        (exercise) => AppDropdownItem<Exercise>(
+                          value: exercise,
+                          label: exercise.name,
+                          icon: Icons.fitness_center,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) =>
+                      setDialogState(() => target = value ?? target),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                AppDropdown<RelationshipType>(
+                  label: 'Relationship',
+                  value: type,
+                  prefixIcon: Icons.link,
+                  items: RelationshipType.values
+                      .map(
+                        (value) => AppDropdownItem<RelationshipType>(
+                          value: value,
+                          label: value.name,
+                          icon: Icons.compare_arrows,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) =>
+                      setDialogState(() => type = value ?? type),
+                ),
+                const SizedBox(height: 16),
+                AppTextField(
+                  controller: reasonController,
+                  label: 'Reason (optional)',
+                  hintText: 'Enter reason for linking...',
+                  prefixIcon: Icons.note_alt_outlined,
+                ),
+              ],
+            ),
           ),
           actions: [
-            TextButton(
+            AppButton.ghost(
+              label: 'Cancel',
               onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancel'),
             ),
-            FilledButton(
+            AppButton.primary(
+              label: 'Link',
               onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Link'),
             ),
           ],
         ),
       ),
     );
-    final reasonText = reason.text;
-    reason.dispose();
+    final reasonText = reasonController.text;
+    reasonController.dispose();
     if (confirmed != true || !mounted) return;
 
     final saved = await widget.useCases.addRelationship(
@@ -174,58 +185,48 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                 ],
 
                 // Movement & Body Region Metadata Grid
-                Card(
-                  elevation: 0,
-                  color: colorScheme.surfaceContainer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        _buildMetaRow(
-                          context,
-                          title: 'Movement Pattern',
-                          value: _exercise.classification.movementPatterns
-                              .map((e) => e.name)
-                              .join(', '),
-                        ),
-                        const Divider(height: 24),
-                        _buildMetaRow(
-                          context,
-                          title: 'Body Region',
-                          value: _exercise.classification.bodyRegions
-                              .map((e) => e.name)
-                              .join(', '),
-                        ),
-                        const Divider(height: 24),
-                        _buildMetaRow(
-                          context,
-                          title: 'Primary Muscles',
-                          value: _exercise.classification.primaryMuscles
-                              .map((e) => e.name)
-                              .join(', '),
-                        ),
-                        const Divider(height: 24),
-                        _buildMetaRow(
-                          context,
-                          title: 'Equipment Required',
-                          value: _exercise.equipment.requiredEquipment
-                              .map((e) => e.name)
-                              .join(', '),
-                        ),
-                        const Divider(height: 24),
-                        _buildMetaRow(
-                          context,
-                          title: 'Tracking Metric',
-                          value: _exercise
-                              .measurementProfile
-                              .defaultMetricType
-                              .name,
-                        ),
-                      ],
-                    ),
+                AppCard(
+                  child: Column(
+                    children: [
+                      _buildMetaRow(
+                        context,
+                        title: 'Movement Pattern',
+                        value: _exercise.classification.movementPatterns
+                            .map((e) => e.name)
+                            .join(', '),
+                      ),
+                      const Divider(height: 24),
+                      _buildMetaRow(
+                        context,
+                        title: 'Body Region',
+                        value: _exercise.classification.bodyRegions
+                            .map((e) => e.name)
+                            .join(', '),
+                      ),
+                      const Divider(height: 24),
+                      _buildMetaRow(
+                        context,
+                        title: 'Primary Muscles',
+                        value: _exercise.classification.primaryMuscles
+                            .map((e) => e.name)
+                            .join(', '),
+                      ),
+                      const Divider(height: 24),
+                      _buildMetaRow(
+                        context,
+                        title: 'Equipment Required',
+                        value: _exercise.equipment.requiredEquipment
+                            .map((e) => e.name)
+                            .join(', '),
+                      ),
+                      const Divider(height: 24),
+                      _buildMetaRow(
+                        context,
+                        title: 'Tracking Metric',
+                        value:
+                            _exercise.measurementProfile.defaultMetricType.name,
+                      ),
+                    ],
                   ),
                 ),
 
@@ -239,12 +240,7 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Card(
-                    elevation: 0,
-                    color: colorScheme.surfaceContainer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                  AppCard(
                     child: Column(
                       children: _exercise.execution.techniqueCues
                           .map(
@@ -271,12 +267,7 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Card(
-                    elevation: 0,
-                    color: colorScheme.surfaceContainer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                  AppCard(
                     child: Column(
                       children: _exercise.relationships
                           .map(
@@ -321,16 +312,10 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                     _exercise.createdById == widget.userId)
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: OutlinedButton.icon(
+                    child: AppButton.outlined(
+                      label: 'Add Related Exercise',
+                      icon: Icons.add_link,
                       onPressed: _addRelationship,
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      icon: const Icon(Icons.add_link),
-                      label: const Text('Add Related Exercise'),
                     ),
                   ),
               ],

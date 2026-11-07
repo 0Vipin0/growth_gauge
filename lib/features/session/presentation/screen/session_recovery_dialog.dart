@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../domain/workout_session.dart';
+import '../../../common/presentation/widgets/widgets.dart';
+import '../../domain/workout_session.dart';
 
 Future<WorkoutSession?> showSessionRecoveryDialog(
   BuildContext context,
@@ -25,10 +26,7 @@ Future<WorkoutSession?> showSessionRecoveryDialog(
       ),
     ),
     actions: [
-      TextButton(
-        onPressed: () => Navigator.pop(context),
-        child: const Text('Later'),
-      ),
+      AppButton.ghost(label: 'Later', onPressed: () => Navigator.pop(context)),
     ],
   ),
 );

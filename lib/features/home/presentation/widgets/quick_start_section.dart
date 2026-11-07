@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../template/domain/workout_template.dart';
-import '../../template/infrastructure/template_repository.dart';
+import '../../../common/presentation/widgets/widgets.dart';
+import '../../../template/domain/workout_template.dart';
+import '../../../template/infrastructure/template_repository.dart';
 
 class const QuickStartSection({
   super.key,
@@ -28,14 +29,9 @@ class const QuickStartSection({
                 color: colorScheme.onSurface,
               ),
             ),
-            TextButton(
-              onPressed: onTemplateTap,
-              child: Text(
-                'See All',
-                style: textTheme.labelLarge?.copyWith(
-                  color: colorScheme.primary,
-                ),
-              ),
+            AppButton.ghost(
+              label: 'See All',
+              onPressed: onTemplateTap ?? () {},
             ),
           ],
         ),
@@ -96,12 +92,7 @@ class const _EmptyTemplatesCard({required final ColorScheme colorScheme})
     extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
+    return AppCard(
       child: Text(
         'No templates available.',
         style: Theme.of(context).textTheme.bodyMedium
@@ -125,12 +116,8 @@ class const QuickStartCard({
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return Container(
+    return AppCard(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -190,18 +177,10 @@ class const QuickStartCard({
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton.icon(
+            child: AppButton.primary(
+              label: 'Start Workout',
+              icon: Icons.play_arrow,
               onPressed: onStart,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.primary,
-                foregroundColor: colorScheme.onPrimary,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              icon: const Icon(Icons.play_arrow, size: 18),
-              label: const Text('Start Workout'),
             ),
           ),
         ],

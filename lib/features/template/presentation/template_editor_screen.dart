@@ -6,6 +6,7 @@ import '../../../core/ids/unique_id.dart';
 import '../../catalog/domain/exercise.dart';
 import '../../catalog/domain/exercise_enums.dart';
 import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../common/presentation/widgets/widgets.dart';
 import '../application/template_use_cases.dart';
 import '../domain/rest_policy.dart';
 import '../domain/target_set.dart';
@@ -38,60 +39,66 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
   }
 
   Future<void> _addBlock() async {
-    final name = TextEditingController(
+    final nameController = TextEditingController(
       text: 'Workout block ${_blocks.length + 1}',
     );
     var type = WorkoutBlockType.standard;
-    final rounds = TextEditingController(text: '1');
+    final roundsController = TextEditingController(text: '1');
     final value = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: const Text('Add block'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: name,
-                autofocus: true,
-                decoration: const InputDecoration(labelText: 'Block name'),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<WorkoutBlockType>(
-                initialValue: type,
-                decoration: const InputDecoration(labelText: 'Block type'),
-                items: WorkoutBlockType.values
-                    .map(
-                      (value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value.name),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) =>
-                    setDialogState(() => type = value ?? type),
-              ),
-              const SizedBox(height: 12),
-              _numberField(rounds, 'Rounds'),
-            ],
+          content: SizedBox(
+            width: 400,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppTextField(
+                  controller: nameController,
+                  label: 'Block name',
+                  hintText: 'Enter block name...',
+                  prefixIcon: Icons.view_agenda_outlined,
+                ),
+                const SizedBox(height: 16),
+                AppDropdown<WorkoutBlockType>(
+                  label: 'Block type',
+                  value: type,
+                  prefixIcon: Icons.category_outlined,
+                  items: WorkoutBlockType.values
+                      .map(
+                        (value) => AppDropdownItem<WorkoutBlockType>(
+                          value: value,
+                          label: value.name,
+                          icon: Icons.list,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) =>
+                      setDialogState(() => type = value ?? type),
+                ),
+                const SizedBox(height: 16),
+                _numberField(roundsController, 'Rounds', Icons.repeat),
+              ],
+            ),
           ),
           actions: [
-            TextButton(
+            AppButton.ghost(
+              label: 'Cancel',
               onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancel'),
             ),
-            FilledButton(
+            AppButton.primary(
+              label: 'Add',
               onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Add'),
             ),
           ],
         ),
       ),
     );
-    final cleanName = name.text.trim();
-    final roundCount = int.tryParse(rounds.text) ?? 1;
-    name.dispose();
-    rounds.dispose();
+    final cleanName = nameController.text.trim();
+    final roundCount = int.tryParse(roundsController.text) ?? 1;
+    nameController.dispose();
+    roundsController.dispose();
     if (value != true || cleanName.isEmpty || roundCount < 1 || !mounted) {
       return;
     }
@@ -128,71 +135,98 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
     final caloriesController = TextEditingController(text: '100');
     final weightController = TextEditingController();
     final restController = TextEditingController(text: '90');
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: const Text('Prescribe exercise'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButtonFormField<Exercise>(
-                  initialValue: selectedExercise,
-                  decoration: const InputDecoration(labelText: 'Exercise'),
-                  items: exercises
-                      .map(
-                        (exercise) => DropdownMenuItem(
-                          value: exercise,
-                          child: Text(exercise.name),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) => setDialogState(
-                    () => selectedExercise = value ?? selectedExercise,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _numberField(setCountController, 'Sets'),
-                if (selectedExercise.measurementProfile.supportsReps) ...[
-                  const SizedBox(height: 12),
-                  _numberField(repsController, 'Reps'),
-                ],
-                if (selectedExercise.measurementProfile.supportsDuration) ...[
-                  const SizedBox(height: 12),
-                  _numberField(durationController, 'Duration (seconds)'),
-                ],
-                if (selectedExercise.measurementProfile.supportsDistance) ...[
-                  const SizedBox(height: 12),
-                  _decimalField(distanceController, 'Distance (metres)'),
-                ],
-                if (selectedExercise.measurementProfile.supportsCalories) ...[
-                  const SizedBox(height: 12),
-                  _numberField(caloriesController, 'Calories'),
-                ],
-                if (selectedExercise.measurementProfile.supportsWeight) ...[
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: weightController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Target weight (kg, optional)',
+          content: SizedBox(
+            width: 450,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppDropdown<Exercise>(
+                    label: 'Exercise',
+                    value: selectedExercise,
+                    prefixIcon: Icons.fitness_center,
+                    items: exercises
+                        .map(
+                          (exercise) => AppDropdownItem<Exercise>(
+                            value: exercise,
+                            label: exercise.name,
+                            icon: Icons.fitness_center,
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) => setDialogState(
+                      () => selectedExercise = value ?? selectedExercise,
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  _numberField(
+                    setCountController,
+                    'Sets',
+                    Icons.format_list_numbered,
+                  ),
+                  if (selectedExercise.measurementProfile.supportsReps) ...[
+                    const SizedBox(height: 16),
+                    _numberField(repsController, 'Reps', Icons.repeat),
+                  ],
+                  if (selectedExercise.measurementProfile.supportsDuration) ...[
+                    const SizedBox(height: 16),
+                    _numberField(
+                      durationController,
+                      'Duration (seconds)',
+                      Icons.timer,
+                    ),
+                  ],
+                  if (selectedExercise.measurementProfile.supportsDistance) ...[
+                    const SizedBox(height: 16),
+                    _decimalField(
+                      distanceController,
+                      'Distance (metres)',
+                      Icons.map,
+                    ),
+                  ],
+                  if (selectedExercise.measurementProfile.supportsCalories) ...[
+                    const SizedBox(height: 16),
+                    _numberField(
+                      caloriesController,
+                      'Calories',
+                      Icons.local_fire_department,
+                    ),
+                  ],
+                  if (selectedExercise.measurementProfile.supportsWeight) ...[
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      controller: weightController,
+                      label: 'Target weight (kg, optional)',
+                      hintText: '0.0',
+                      prefixIcon: Icons.monitor_weight_outlined,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  _numberField(
+                    restController,
+                    'Rest (seconds)',
+                    Icons.hourglass_empty,
+                  ),
                 ],
-                const SizedBox(height: 12),
-                _numberField(restController, 'Rest (seconds)'),
-              ],
+              ),
             ),
           ),
           actions: [
-            TextButton(
+            AppButton.ghost(
+              label: 'Cancel',
               onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancel'),
             ),
-            FilledButton(
+            AppButton.primary(
+              label: 'Add exercise',
               onPressed: () {
                 final count = int.tryParse(setCountController.text);
                 final reps = int.tryParse(repsController.text);
@@ -223,7 +257,6 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                 }
                 Navigator.pop(dialogContext, true);
               },
-              child: const Text('Add exercise'),
             ),
           ],
         ),
@@ -286,19 +319,27 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
     );
   }
 
-  Widget _numberField(TextEditingController controller, String label) =>
-      TextField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(labelText: label),
-      );
+  Widget _numberField(
+    TextEditingController controller,
+    String label,
+    IconData icon,
+  ) => AppTextField(
+    controller: controller,
+    label: label,
+    prefixIcon: icon,
+    keyboardType: TextInputType.number,
+  );
 
-  Widget _decimalField(TextEditingController controller, String label) =>
-      TextField(
-        controller: controller,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        decoration: InputDecoration(labelText: label),
-      );
+  Widget _decimalField(
+    TextEditingController controller,
+    String label,
+    IconData icon,
+  ) => AppTextField(
+    controller: controller,
+    label: label,
+    prefixIcon: icon,
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+  );
 
   Future<void> _save({bool publish = false}) async {
     setState(() => _saving = true);
@@ -356,33 +397,21 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
         color: colorScheme.surface,
         child: SafeArea(
           child: Row(
-            mainAxisAlignment: .center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: OutlinedButton(
+                child: AppButton.outlined(
+                  label: 'Save draft',
                   onPressed: _saving ? null : () => _save(),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Save draft'),
+                  isLoading: _saving,
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: FilledButton(
+                child: AppButton.primary(
+                  label: _saving ? 'Saving…' : 'Publish revision',
                   onPressed: _saving ? null : () => _save(publish: true),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(_saving ? 'Saving…' : 'Publish revision'),
+                  isLoading: _saving,
                 ),
               ),
             ],
@@ -416,84 +445,78 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                       return Padding(
                         key: ValueKey(block.id),
                         padding: const EdgeInsets.only(bottom: 16),
-                        child: Card(
-                          elevation: 0,
-                          color: colorScheme.surfaceContainer,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  leading: Icon(
-                                    Icons.drag_handle,
+                        child: AppCard(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(
+                                  Icons.drag_handle,
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                                title: Text(
+                                  block.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${block.type.name} · ${block.rounds} round(s)',
+                                  style: TextStyle(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
-                                  title: Text(
-                                    block.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    '${block.type.name} · ${block.rounds} round(s)',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
-                                  trailing: IconButton(
-                                    tooltip: 'Remove block',
-                                    icon: Icon(
-                                      Icons.delete_outline,
-                                      color: colorScheme.error,
-                                    ),
-                                    onPressed: () =>
-                                        setState(() => _blocks.removeAt(index)),
-                                  ),
                                 ),
-                                const Divider(height: 8),
-                                ...block.items.asMap().entries.map((entry) {
-                                  final itemIndex = entry.key;
-                                  final item = entry.value;
-                                  return ListTile(
-                                    dense: true,
-                                    leading: Icon(
-                                      Icons.fitness_center,
-                                      color: colorScheme.primary,
+                                trailing: IconButton(
+                                  tooltip: 'Remove block',
+                                  icon: Icon(
+                                    Icons.delete_outline,
+                                    color: colorScheme.error,
+                                  ),
+                                  onPressed: () =>
+                                      setState(() => _blocks.removeAt(index)),
+                                ),
+                              ),
+                              const Divider(height: 8),
+                              ...block.items.asMap().entries.map((entry) {
+                                final itemIndex = entry.key;
+                                final item = entry.value;
+                                return ListTile(
+                                  dense: true,
+                                  leading: Icon(
+                                    Icons.fitness_center,
+                                    color: colorScheme.primary,
+                                  ),
+                                  title: FutureBuilder(
+                                    future: widget.exerciseRepository.findById(
+                                      item.exerciseId,
                                     ),
-                                    title: FutureBuilder(
-                                      future: widget.exerciseRepository
-                                          .findById(item.exerciseId),
-                                      builder: (context, snapshot) => Text(
-                                        snapshot.data?.dataOrNull?.name ??
-                                            item.exerciseId,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                    builder: (context, snapshot) => Text(
+                                      snapshot.data?.dataOrNull?.name ??
+                                          item.exerciseId,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    subtitle: Text(_prescriptionSummary(item)),
-                                    trailing: IconButton(
-                                      tooltip: 'Remove exercise',
-                                      icon: const Icon(Icons.close, size: 18),
-                                      onPressed: () =>
-                                          _removeExercise(index, itemIndex),
-                                    ),
-                                  );
-                                }),
-                                const SizedBox(height: 8),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton.icon(
-                                    onPressed: () => _addExercise(index),
-                                    icon: const Icon(Icons.add, size: 18),
-                                    label: const Text('Add exercise'),
                                   ),
+                                  subtitle: Text(_prescriptionSummary(item)),
+                                  trailing: IconButton(
+                                    tooltip: 'Remove exercise',
+                                    icon: const Icon(Icons.close, size: 18),
+                                    onPressed: () =>
+                                        _removeExercise(index, itemIndex),
+                                  ),
+                                );
+                              }),
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton.icon(
+                                  onPressed: () => _addExercise(index),
+                                  icon: const Icon(Icons.add, size: 18),
+                                  label: const Text('Add exercise'),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );

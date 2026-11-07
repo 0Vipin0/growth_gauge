@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import '../../features/analytics/analytics.dart';
 import '../../features/authentication/authentication.dart';
 import '../../features/catalog/catalog.dart';
-import '../../features/home/fitness_launch_screen.dart';
 import '../../features/home/home.dart';
 import '../../features/portability/migration/steps/migration_v1_to_v2.dart';
 import '../../features/portability/migration/steps/migration_v2_to_v3.dart';
@@ -56,7 +55,7 @@ List<RouteBase> createAppRoutes({
         stream: analyticsQueries.watchWorkoutHistory('local-user'),
         builder: (context, snapshot) {
           final workoutHistory = snapshot.data ?? [];
-          return HomePage(
+          return HomeScreen(
             sessionRepository: sessions,
             sessionUseCases: sessionUseCases,
             exerciseRepository: exercises,
@@ -69,7 +68,7 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteSettings,
       name: appRouteNameSettings,
-      builder: (_, _) => const SettingsPage(),
+      builder: (_, _) => const SettingsScreen(),
     ),
     appGoRoute(
       path: appRouteBiometricAuth,

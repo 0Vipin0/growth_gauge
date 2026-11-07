@@ -5,7 +5,11 @@ import '../../domain/analytics_enums.dart';
 import '../../domain/personal_record.dart';
 
 /// Card displaying an earned Personal Record badge with details.
-class const PrBadgeCard({super.key, required final PersonalRecord record, final String? exerciseName}) extends StatelessWidget {
+class const PrBadgeCard({
+  super.key,
+  required final PersonalRecord record,
+  final String? exerciseName,
+}) extends StatelessWidget {
   String _formatPrType(PrType type) {
     switch (type) {
       case PrType.maxWeight:

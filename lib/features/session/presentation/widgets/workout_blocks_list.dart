@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/domain.dart';
 
 class const WorkoutBlocksList({
@@ -21,17 +22,10 @@ class const WorkoutBlocksList({
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (final block in session.blocks) ...[
-          Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            child: Material(
-              color: colorScheme.surfaceContainer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-                ),
-              ),
-              clipBehavior: Clip.antiAlias,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: AppCard(
+              padding: EdgeInsets.zero,
               child: ExpansionTile(
                 tilePadding: const EdgeInsets.symmetric(
                   horizontal: 16,

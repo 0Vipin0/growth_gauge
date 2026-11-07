@@ -5,10 +5,10 @@ import '../../domain/daily_workout_summary.dart';
 
 /// GitHub-style calendar consistency grid for workout frequency.
 class const WorkoutFrequencyHeatmap({
-    super.key,
-    required final List<DailyWorkoutSummary> summaries,
-    final int daysToShow = 70,
-  }) extends StatelessWidget {
+  super.key,
+  required final List<DailyWorkoutSummary> summaries,
+  final int daysToShow = 70,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

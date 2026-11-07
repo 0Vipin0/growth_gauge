@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../../core/routing/app_router.dart';
-import '../../common/presentation/utils/responsive_layout.dart';
-import '../domain/workout_session.dart';
+import '../../../../core/routing/app_router.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
+import '../../domain/workout_session.dart';
 
 class const SessionSummaryScreen({
   super.key,
@@ -67,17 +68,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainer,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: colorScheme.outlineVariant.withValues(
-                          alpha: 0.3,
-                        ),
-                      ),
-                    ),
+                  child: AppCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -116,17 +107,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainer,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: colorScheme.outlineVariant.withValues(
-                          alpha: 0.3,
-                        ),
-                      ),
-                    ),
+                  child: AppCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -178,15 +159,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
             const SizedBox(height: 12),
 
             // Session Log Container Card
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-                ),
-              ),
+            AppCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -307,47 +280,23 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Notes
-                  const Text(
-                    'Notes',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
+                  // Notes using AppTextField
+                  AppTextField(
                     controller: _notesController,
+                    label: 'Notes',
+                    hintText: "Add notes about today's workout...",
+                    prefixIcon: Icons.note_alt_outlined,
                     maxLines: 3,
-                    decoration: InputDecoration(
-                      hintText: "Add notes about today's workout...",
-                      hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                      filled: true,
-                      fillColor: colorScheme.surface,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 20),
 
-                  // Save Log Button
+                  // Save Log Button using AppButton.primary
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton.icon(
+                    child: AppButton.primary(
+                      label: 'Save Log',
+                      icon: Icons.bookmark_added_outlined,
                       onPressed: () => context.go(appRouteHome),
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      icon: const Icon(Icons.bookmark_added_outlined),
-                      label: const Text(
-                        'Save Log',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
                   ),
                 ],
@@ -367,64 +316,58 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
             ),
             const SizedBox(height: 12),
 
-            // Timeline Blocks List
+            // Timeline Blocks List using AppCard
             for (final block in widget.session.blocks)
               for (final item in block.items)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: colorScheme.outlineVariant.withValues(alpha: 0.3),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: AppCard(
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: colorScheme.surfaceContainerHighest,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.fitness_center,
+                            color: colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.exerciseId,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                '${item.sets.length} sets completed',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          '${item.sets.length * 8} reps',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainerHighest,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.fitness_center,
-                          color: colorScheme.primary,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.exerciseId,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              '${item.sets.length} sets completed',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        '${item.sets.length * 8} reps',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
             const SizedBox(height: 40),

@@ -5,17 +5,18 @@ import 'package:flutter/services.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/error/result.dart';
-import '../../../core/routing/app_router.dart';
-import '../../catalog/infrastructure/exercise_repository.dart';
-import '../../common/presentation/utils/responsive_layout.dart';
-import '../application/session_use_cases.dart';
-import '../application/workout_session_bloc.dart';
-import '../domain/execution_set.dart';
-import '../domain/session_enums.dart';
-import '../domain/workout_session.dart';
-import 'widgets/widgets.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/error/result.dart';
+import '../../../../core/routing/app_router.dart';
+import '../../../catalog/infrastructure/exercise_repository.dart';
+import '../../../common/presentation/utils/responsive_layout.dart';
+import '../../../common/presentation/widgets/widgets.dart';
+import '../../application/session_use_cases.dart';
+import '../../application/workout_session_bloc.dart';
+import '../../domain/execution_set.dart';
+import '../../domain/session_enums.dart';
+import '../../domain/workout_session.dart';
+import '../widgets/widgets.dart';
 
 class const ActiveSessionScreen({
   super.key,
@@ -183,35 +184,46 @@ class _ActiveSessionScreenState()
     );
     final rpe = TextEditingController(text: set.rpe?.toString() ?? '');
     final rir = TextEditingController(text: set.rir?.toString() ?? '');
+
     final values =
         await showDialog<(double?, int?, int?, double?, int?, double?, int?)>(
           context: context,
           builder: (context) => AlertDialog(
             title: Text('Set ${set.setNumber}'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _measurementField(weight, 'Weight (kg)', decimal: true),
-                  _measurementField(reps, 'Repetitions'),
-                  _measurementField(duration, 'Duration (seconds)'),
-                  _measurementField(
-                    distance,
-                    'Distance (meters)',
-                    decimal: true,
-                  ),
-                  _measurementField(calories, 'Calories'),
-                  _measurementField(rpe, 'RPE (0–10)', decimal: true),
-                  _measurementField(rir, 'Reps in reserve'),
-                ],
+            content: SizedBox(
+              width: 400,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _measurementField(weight, 'Weight (kg)', decimal: true),
+                    const SizedBox(height: 12),
+                    _measurementField(reps, 'Repetitions'),
+                    const SizedBox(height: 12),
+                    _measurementField(duration, 'Duration (seconds)'),
+                    const SizedBox(height: 12),
+                    _measurementField(
+                      distance,
+                      'Distance (meters)',
+                      decimal: true,
+                    ),
+                    const SizedBox(height: 12),
+                    _measurementField(calories, 'Calories'),
+                    const SizedBox(height: 12),
+                    _measurementField(rpe, 'RPE (0–10)', decimal: true),
+                    const SizedBox(height: 12),
+                    _measurementField(rir, 'Reps in reserve'),
+                  ],
+                ),
               ),
             ),
             actions: [
-              TextButton(
+              AppButton.ghost(
+                label: 'Cancel',
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
               ),
-              FilledButton(
+              AppButton.primary(
+                label: 'Save set',
                 onPressed: () => Navigator.pop(context, (
                   double.tryParse(weight.text),
                   int.tryParse(reps.text),
@@ -221,7 +233,6 @@ class _ActiveSessionScreenState()
                   double.tryParse(rpe.text),
                   int.tryParse(rir.text),
                 )),
-                child: const Text('Save set'),
               ),
             ],
           ),
@@ -268,24 +279,28 @@ class _ActiveSessionScreenState()
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Edit targets for set ${set.setNumber}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _measurementField(weight, 'Target weight (kg)', decimal: true),
-            _measurementField(reps, 'Target repetitions'),
-          ],
+        content: SizedBox(
+          width: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _measurementField(weight, 'Target weight (kg)', decimal: true),
+              const SizedBox(height: 12),
+              _measurementField(reps, 'Target repetitions'),
+            ],
+          ),
         ),
         actions: [
-          TextButton(
+          AppButton.ghost(
+            label: 'Cancel',
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
           ),
-          FilledButton(
+          AppButton.primary(
+            label: 'Save targets',
             onPressed: () => Navigator.pop(context, (
               double.tryParse(weight.text),
               int.tryParse(reps.text),
             )),
-            child: const Text('Save targets'),
           ),
         ],
       ),
@@ -318,13 +333,13 @@ class _ActiveSessionScreenState()
           'The set will be removed from this session. Its audit history will be retained.',
         ),
         actions: [
-          TextButton(
+          AppButton.ghost(
+            label: 'Keep set',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Keep set'),
           ),
-          FilledButton(
+          AppButton.destructive(
+            label: 'Delete set',
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete set'),
           ),
         ],
       ),
@@ -343,13 +358,10 @@ class _ActiveSessionScreenState()
     TextEditingController controller,
     String label, {
     bool decimal = false,
-  }) => Padding(
-    padding: const EdgeInsets.only(bottom: 8),
-    child: TextField(
-      controller: controller,
-      keyboardType: TextInputType.numberWithOptions(decimal: decimal),
-      decoration: InputDecoration(labelText: label),
-    ),
+  }) => AppTextField(
+    controller: controller,
+    label: label,
+    keyboardType: TextInputType.numberWithOptions(decimal: decimal),
   );
 
   Future<void> _endSession({required bool abandon}) async {
@@ -366,13 +378,13 @@ class _ActiveSessionScreenState()
               : 'This cancels the workout and retains its saved data.',
         ),
         actions: [
-          TextButton(
+          AppButton.ghost(
+            label: 'Keep workout',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Keep workout'),
           ),
-          FilledButton(
+          AppButton.destructive(
+            label: action,
             onPressed: () => Navigator.pop(context, true),
-            child: Text(action),
           ),
         ],
       ),
@@ -419,13 +431,13 @@ class _ActiveSessionScreenState()
               ),
             ],
           ),
-          TextButton(
+          AppButton.ghost(
+            label: 'Keep training',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Keep training'),
           ),
-          FilledButton(
+          AppButton.primary(
+            label: 'Finish',
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Finish'),
           ),
         ],
       ),
@@ -577,22 +589,11 @@ class _ActiveSessionScreenState()
                   constraints: const BoxConstraints(maxWidth: 850),
                   child: SizedBox(
                     width: double.infinity,
-                    child: FilledButton.icon(
+                    child: AppButton.primary(
+                      label: 'Complete workout',
+                      icon: Icons.check,
                       onPressed: _busy || paused ? null : _complete,
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                      icon: const Icon(Icons.check),
-                      label: const Text(
-                        'Complete workout',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      isLoading: _busy,
                     ),
                   ),
                 ),

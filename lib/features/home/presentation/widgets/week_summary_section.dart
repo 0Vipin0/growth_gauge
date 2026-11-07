@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../analytics/domain/daily_workout_summary.dart';
+import '../../../analytics/domain/daily_workout_summary.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 
 class const WeekSummarySection({
   super.key,
@@ -41,15 +42,7 @@ class const WeekSummarySection({
                 color: colorScheme.onSurface,
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Details',
-                style: textTheme.labelLarge?.copyWith(
-                  color: colorScheme.primary,
-                ),
-              ),
-            ),
+            AppButton.ghost(label: 'Details', onPressed: () {}),
           ],
         ),
         const SizedBox(height: 12),
@@ -85,7 +78,7 @@ class const _WeekSummaryDesktopGrid({
             child: Column(
               children: [
                 Expanded(
-                  child: StatCard(
+                  child: AppStatCard(
                     icon: Icons.timer_outlined,
                     title: 'Active Time',
                     value: activeTime,
@@ -93,7 +86,7 @@ class const _WeekSummaryDesktopGrid({
                 ),
                 const SizedBox(height: 12),
                 Expanded(
-                  child: StatCard(
+                  child: AppStatCard(
                     icon: Icons.fitness_center,
                     title: 'Workouts',
                     value: workouts,
@@ -121,7 +114,7 @@ class const _WeekSummaryMobileStack({
         Row(
           children: [
             Expanded(
-              child: StatCard(
+              child: AppStatCard(
                 icon: Icons.timer_outlined,
                 title: 'Active Time',
                 value: activeTime,
@@ -129,7 +122,7 @@ class const _WeekSummaryMobileStack({
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: StatCard(
+              child: AppStatCard(
                 icon: Icons.fitness_center,
                 title: 'Workouts',
                 value: workouts,
@@ -149,12 +142,8 @@ class const CaloriesCard({super.key}) extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return Container(
+    return AppCard(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -210,61 +199,6 @@ class const CaloriesCard({super.key}) extends StatelessWidget {
               ),
               Text(
                 '85%',
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class const StatCard({
-  super.key,
-  required final IconData icon,
-  required final String title,
-  required final String value,
-}) extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: colorScheme.primary, size: 22),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
                 style: textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.onSurface,
