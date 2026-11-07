@@ -1,15 +1,12 @@
+// ignore_for_file: use_primary_constructors
+
 import 'package:flutter/material.dart';
 
-class TagInputWidget extends StatefulWidget {
-  final List<String> initialTags;
-  final ValueChanged<List<String>> onTagsChanged;
-
-  const TagInputWidget({
-    super.key,
-    required this.initialTags,
-    required this.onTagsChanged,
-  });
-
+class const TagInputWidget({
+  super.key,
+  required final List<String> initialTags,
+  required final ValueChanged<List<String>> onTagsChanged,
+}) extends StatefulWidget {
   @override
   State<TagInputWidget> createState() => _TagInputWidgetState();
 }
