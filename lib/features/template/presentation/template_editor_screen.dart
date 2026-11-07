@@ -373,6 +373,52 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
     }
   }
 
+  Future<void> _confirmAndDelete() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Permanently delete template?'),
+        content: const Text('This action cannot be undone.'),
+        actions: [
+          AppButton.ghost(
+            label: 'Cancel',
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          AppButton.primary(
+            label: 'Delete',
+            onPressed: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) {
+      final result = await widget.useCases.deleteTemplate(
+        widget.revision.templateId,
+      );
+      if (result.isError && mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+      } else if (mounted) {
+        context.pop(); // Pop editor
+        context.pop(); // Pop detail view back to list
+      }
+    }
+  }
+
+  Future<void> _toggleArchive() async {
+    final result = await widget.useCases.archiveTemplate(
+      widget.revision.templateId,
+      isArchived: true,
+    );
+    if (result.isError && mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+    } else if (mounted) {
+      context.pop();
+      context.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -384,6 +430,48 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
       appBar: AppBar(
         title: Text('Edit revision ${widget.revision.revisionNumber}'),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'archive') {
+                _toggleArchive();
+              } else if (value == 'delete') {
+                _confirmAndDelete();
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'archive',
+                child: Row(
+                  children: [
+                    Icon(Icons.archive, size: 18),
+                    SizedBox(width: 8),
+                    Text('Archive template'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_forever,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Delete permanently',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addBlock,

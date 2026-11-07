@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-enum AppCardVariant() { standard, selected, dashed }
+enum AppCardVariant() {
+  standard,
+  selected,
+  dashed,
+}
 
 class AppCard extends StatelessWidget {
   final Widget child;

@@ -111,7 +111,7 @@ Based on the 23-screenshot UI audit in [`docs/design/`](../docs/design/) and leg
 3. **Template Deletion and Archival (`Step 2.8`):**
    - Add archive (soft-delete via `isArchived`) and permanent delete use cases and Cubit methods.
    - Add swipe-to-archive, popup menu actions, and confirmation dialogs in `TemplateListScreen`, `TemplateDetailScreen`, and `TemplateEditorScreen`.
-   - Clean citation artifacts (e.g. `[cite: 4]`) from seed template descriptions.
+   - Clean citation artifacts (e.g. ``) from seed template descriptions.
 4. **Exercise Execution Steps & Form Guidance (`Step 13.7`):**
    - Display `setupInstructions` and `executionInstructions` as a numbered timeline/stepper in `ExerciseDetailScreen`.
    - Build custom step builder in `CustomExerciseScreen` allowing users to add, edit, and reorder steps.

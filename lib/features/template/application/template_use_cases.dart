@@ -142,4 +142,25 @@ class const TemplateUseCases(final ITemplateRepository _repository) {
       ),
     );
   }
+
+  Future<Result<void, Failure>> archiveTemplate(
+    String templateId, {
+    required bool isArchived,
+  }) async {
+    final templateResult = await _repository.getTemplate(templateId);
+    if (templateResult.isError) {
+      return Result.error(templateResult.errorOrNull!);
+    }
+    final template = templateResult.dataOrNull!;
+    final updated = template.copyWith(
+      isArchived: isArchived,
+      updatedAt: AppClock.nowUtc(),
+    );
+    return await _repository.saveTemplate(updated);
+  }
+
+  Future<Result<void, Failure>> deleteTemplate(String templateId) async {
+    // Assuming ITemplateRepository implements deleteTemplate or delete method
+    return await _repository.deleteTemplate(templateId);
+  }
 }

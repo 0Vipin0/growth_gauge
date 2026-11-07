@@ -95,6 +95,48 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
     }
   }
 
+  Future<void> _toggleArchive() async {
+    final result = await widget.useCases.archiveTemplate(
+      _template.id,
+      isArchived: !_template.isArchived,
+    );
+    if (result.isError && mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+    } else if (mounted) {
+      context.pop();
+    }
+  }
+
+  Future<void> _confirmAndDelete() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Permanently delete template?'),
+        content: Text('This action cannot be undone for "${_template.name}".'),
+        actions: [
+          AppButton.ghost(
+            label: 'Cancel',
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          AppButton.primary(
+            label: 'Delete',
+            onPressed: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) {
+      final result = await widget.useCases.deleteTemplate(_template.id);
+      if (result.isError && mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+      } else if (mounted) {
+        context.pop();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -103,7 +145,59 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(title: Text(_template.name), centerTitle: true),
+      appBar: AppBar(
+        title: Text(_template.name),
+        centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'archive') {
+                _toggleArchive();
+              } else if (value == 'delete') {
+                _confirmAndDelete();
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'archive',
+                child: Row(
+                  children: [
+                    Icon(
+                      _template.isArchived ? Icons.unarchive : Icons.archive,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _template.isArchived
+                          ? 'Restore template'
+                          : 'Archive template',
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_forever,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Delete permanently',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _edit,
         backgroundColor: colorScheme.primary,

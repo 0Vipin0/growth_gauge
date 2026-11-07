@@ -28,6 +28,7 @@ class const TemplateListScreen({
 
 class _TemplateListScreenState() extends State<TemplateListScreen> {
   late Stream<List<WorkoutTemplate>> _templates;
+  bool _showArchived = false;
 
   @override
   void initState() {
@@ -94,7 +95,7 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
       ),
     );
     nameController.dispose();
-    if (result == null || !mounted) return;
+    if (result == null || result.trim().isEmpty || !mounted) return;
     final created = await widget.useCases.create(
       name: result,
       createdById: widget.userId,
@@ -102,6 +103,44 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
     if (created.isError && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(created.errorOrNull!.message)));
+    }
+  }
+
+  Future<void> _toggleArchive(WorkoutTemplate template) async {
+    final result = await widget.useCases.archiveTemplate(
+      template.id,
+      isArchived: !template.isArchived,
+    );
+    if (result.isError && mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+    }
+  }
+
+  Future<void> _confirmAndDelete(WorkoutTemplate template) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Permanently delete template?'),
+        content: Text('This action cannot be undone for "${template.name}".'),
+        actions: [
+          AppButton.ghost(
+            label: 'Cancel',
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          AppButton.primary(
+            label: 'Delete',
+            onPressed: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) {
+      final result = await widget.useCases.deleteTemplate(template.id);
+      if (result.isError && mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+      }
     }
   }
 
@@ -113,14 +152,50 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(title: const Text('Workout templates'), centerTitle: true),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _create,
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-        icon: const Icon(Icons.add),
-        label: const Text('New template'),
+      appBar: AppBar(
+        title: Text(_showArchived ? 'Archived templates' : 'Workout templates'),
+        centerTitle: true,
+        actions: [
+          PopupMenuButton<bool>(
+            icon: const Icon(Icons.filter_list),
+            tooltip: 'Filter templates',
+            onSelected: (value) => setState(() => _showArchived = value),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: false,
+                child: Text(
+                  'Active templates',
+                  style: TextStyle(
+                    fontWeight: !_showArchived
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+              PopupMenuItem(
+                value: true,
+                child: Text(
+                  'Archived templates',
+                  style: TextStyle(
+                    fontWeight: _showArchived
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
+      floatingActionButton: _showArchived
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: _create,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              icon: const Icon(Icons.add),
+              label: const Text('New template'),
+            ),
       body: StreamBuilder<List<WorkoutTemplate>>(
         stream: _templates,
         builder: (context, snapshot) {
@@ -130,20 +205,27 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final templates = snapshot.data!.where((t) => !t.isArchived).toList();
+          final templates = snapshot.data!
+              .where((t) => t.isArchived == _showArchived)
+              .toList();
+
           if (templates.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.view_agenda_outlined,
+                    _showArchived
+                        ? Icons.archive_outlined
+                        : Icons.view_agenda_outlined,
                     size: 64,
                     color: colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Create a template to start planning workouts',
+                    _showArchived
+                        ? 'No archived templates'
+                        : 'Create a template to start planning workouts',
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -180,7 +262,7 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
-                              Icons.view_agenda,
+                              _showArchived ? Icons.archive : Icons.view_agenda,
                               color: colorScheme.primary,
                             ),
                           ),
@@ -208,9 +290,58 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                               ],
                             ),
                           ),
-                          Icon(
-                            Icons.chevron_right,
-                            color: colorScheme.onSurfaceVariant,
+                          PopupMenuButton<String>(
+                            icon: Icon(
+                              Icons.more_vert,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            onSelected: (value) {
+                              if (value == 'archive') {
+                                _toggleArchive(template);
+                              } else if (value == 'delete') {
+                                _confirmAndDelete(template);
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 'archive',
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      template.isArchived
+                                          ? Icons.unarchive
+                                          : Icons.archive,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      template.isArchived
+                                          ? 'Restore'
+                                          : 'Archive',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.delete_forever,
+                                      size: 18,
+                                      color: colorScheme.error,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Delete permanently',
+                                      style: TextStyle(
+                                        color: colorScheme.error,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

@@ -256,7 +256,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-upper-push-a',
       name: 'Upper Body Push A',
-      description: 'Horizontal and vertical pressing power[cite: 4].',
+      description: 'Horizontal and vertical pressing power.',
       currentRevisionId: 'rev-upper-push-a-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -345,7 +345,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-upper-push-b',
       name: 'Upper Body Push B',
-      description: 'Shoulder and incline focus push session[cite: 4].',
+      description: 'Shoulder and incline focus push session.',
       currentRevisionId: 'rev-upper-push-b-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -414,7 +414,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-upper-pull-a',
       name: 'Upper Body Pull A',
-      description: 'Back thickness and bicep volume[cite: 4].',
+      description: 'Back thickness and bicep volume.',
       currentRevisionId: 'rev-upper-pull-a-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -501,7 +501,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-upper-pull-b',
       name: 'Upper Body Pull B',
-      description: 'Vertical pull and rear delt specialization[cite: 4].',
+      description: 'Vertical pull and rear delt specialization.',
       currentRevisionId: 'rev-upper-pull-b-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -559,7 +559,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-lower-quad',
       name: 'Lower Body Quad Focus',
-      description: 'Squat and machine press heavy leg session[cite: 4].',
+      description: 'Squat and machine press heavy leg session.',
       currentRevisionId: 'rev-lower-quad-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -627,7 +627,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-lower-hinge',
       name: 'Lower Body Hinge Focus',
-      description: 'Hamstring and posterior chain builder[cite: 4].',
+      description: 'Hamstring and posterior chain builder.',
       currentRevisionId: 'rev-lower-hinge-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -690,7 +690,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-push-hypertrophy',
       name: 'Push Hypertrophy',
-      description: 'Volume-driven chest and shoulder session[cite: 4].',
+      description: 'Volume-driven chest and shoulder session.',
       currentRevisionId: 'rev-push-hyp-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -752,7 +752,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-pull-hypertrophy',
       name: 'Pull Hypertrophy',
-      description: 'High volume back isolation and rowing[cite: 4].',
+      description: 'High volume back isolation and rowing.',
       currentRevisionId: 'rev-pull-hyp-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -801,8 +801,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-leg-balanced',
       name: 'Balanced Leg Session',
-      description:
-          'Complete workout addressing quads, glutes, and calves[cite: 4].',
+      description: 'Complete workout addressing quads, glutes, and calves.',
       currentRevisionId: 'rev-leg-bal-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -859,8 +858,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-upper-power-pump',
       name: 'Upper Power & Pump',
-      description:
-          'Heavy compound initiation followed by high rep isolation[cite: 4].',
+      description: 'Heavy compound initiation followed by high rep isolation.',
       currentRevisionId: 'rev-upp-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -903,7 +901,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-lower-hypertrophy',
       name: 'Lower Hypertrophy Block',
-      description: 'Isolation and machine-focused lower body builder[cite: 4].',
+      description: 'Isolation and machine-focused lower body builder.',
       currentRevisionId: 'rev-low-hyp-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -946,7 +944,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-arms-shoulders',
       name: 'Arms & Shoulders Blaster',
-      description: 'Dedicated accessory session for arms and delts[cite: 4].',
+      description: 'Dedicated accessory session for arms and delts.',
       currentRevisionId: 'rev-arm-shd-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -1005,7 +1003,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-core-conditioning',
       name: 'Core & Conditioning Circuit',
-      description: 'Abs and functional carrying conditioning[cite: 4].',
+      description: 'Abs and functional carrying conditioning.',
       currentRevisionId: 'rev-core-cond-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -1193,8 +1191,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-express-full',
       name: 'Express Full Body',
-      description:
-          'Time-efficient session hitting all major patterns quickly[cite: 4].',
+      description: 'Time-efficient session hitting all major patterns quickly.',
       currentRevisionId: 'rev-exp-full-001',
       createdById: _systemUser,
       createdAt: _epoch,
@@ -1245,8 +1242,7 @@ class WorkoutTemplateSeedData._() {
     template: WorkoutTemplate(
       id: 'template-posterior-chain',
       name: 'Posterior Chain Dominator',
-      description:
-          'Intense hip-hinge and glute specialization workout[cite: 4].',
+      description: 'Intense hip-hinge and glute specialization workout.',
       currentRevisionId: 'rev-post-chain-001',
       createdById: _systemUser,
       createdAt: _epoch,

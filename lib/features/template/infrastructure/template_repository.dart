@@ -18,6 +18,7 @@ abstract interface class ITemplateRepository() {
   Future<Result<List<WorkoutTemplateRevision>, Failure>> getRevisions(
     String templateId,
   );
+  Future<Result<void, Failure>> deleteTemplate(String id);
 }
 
 class TemplateRepository(AppDatabase db) implements ITemplateRepository {
@@ -74,4 +75,8 @@ class TemplateRepository(AppDatabase db) implements ITemplateRepository {
             ..sort((a, b) => a.revisionNumber.compareTo(b.revisionNumber)),
     );
   }
+
+  @override
+  Future<Result<void, Failure>> deleteTemplate(String id) =>
+      _templates.delete(id);
 }
