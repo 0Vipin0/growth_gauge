@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_router.dart';
+import '../../../catalog/catalog.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/workout_session.dart';
@@ -10,6 +11,7 @@ import '../../domain/workout_session.dart';
 class const SessionSummaryScreen({
   super.key,
   required final WorkoutSession session,
+  final IExerciseRepository? exerciseRepository,
 }) extends StatefulWidget {
   @override
   State<SessionSummaryScreen> createState() => _SessionSummaryScreenState();
@@ -19,6 +21,51 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
   double _rpe = 8.0;
   int _selectedMoodIndex = 2; // Default to 'Good'
   final TextEditingController _notesController = TextEditingController();
+  final Map<String, String> _exerciseNames = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExerciseNames();
+  }
+
+  Future<void> _loadExerciseNames() async {
+    final repo = widget.exerciseRepository;
+    if (repo == null) return;
+    final ids = widget.session.blocks
+        .expand((b) => b.items.map((i) => i.exerciseId))
+        .toSet();
+    for (final id in ids) {
+      final result = await repo.findById(id);
+      result.when(
+        success: (exercise) {
+          if (mounted) {
+            setState(() => _exerciseNames[id] = exercise.name);
+          }
+        },
+        error: (_) {},
+      );
+    }
+  }
+
+  String _formatExerciseName(String exerciseId) {
+    if (_exerciseNames.containsKey(exerciseId)) {
+      return _exerciseNames[exerciseId]!;
+    }
+    final cleaned = exerciseId
+        .replaceFirst(RegExp('^exercise-'), '')
+        .replaceAll(RegExp(r'-\d+$'), '')
+        .replaceAll('-', ' ');
+    if (cleaned.isEmpty) return exerciseId;
+    return cleaned
+        .split(' ')
+        .map(
+          (word) => word.isNotEmpty
+              ? '${word[0].toUpperCase()}${word.substring(1)}'
+              : '',
+        )
+        .join(' ');
+  }
 
   @override
   void dispose() {
@@ -342,7 +389,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.exerciseId,
+                                _formatExerciseName(item.exerciseId),
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -360,7 +407,7 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                           ),
                         ),
                         Text(
-                          '${item.sets.length * 8} reps',
+                          '${item.sets.fold<int>(0, (sum, s) => sum + (s.actualReps ?? s.targetReps ?? 0))} reps',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

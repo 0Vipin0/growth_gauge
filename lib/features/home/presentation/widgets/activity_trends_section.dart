@@ -146,6 +146,15 @@ class const _WeekView({
         .add(Duration(days: timeOffset * 7))
         .subtract(Duration(days: now.weekday - 1));
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const dayNames = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -171,18 +180,22 @@ class const _WeekView({
               ),
             ),
             const SizedBox(height: 10),
-            Container(
-              width: 40,
-              height: 50,
-              decoration: BoxDecoration(
-                color: hasWorkout
-                    ? colorScheme.primary
-                    : colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(10),
+            Semantics(
+              label:
+                  '${dayNames[index]}: ${hasWorkout ? "Completed workout" : "Rest day"}',
+              child: Container(
+                width: 40,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: hasWorkout
+                      ? colorScheme.primary
+                      : colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: hasWorkout
+                    ? Icon(Icons.check, size: 20, color: colorScheme.onPrimary)
+                    : null,
               ),
-              child: hasWorkout
-                  ? Icon(Icons.check, size: 20, color: colorScheme.onPrimary)
-                  : null,
             ),
           ],
         );
@@ -226,18 +239,24 @@ class const _MonthView({
               ),
             ),
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: count > 0
-                    ? colorScheme.primaryContainer.withValues(alpha: 0.4)
-                    : colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                '$count workouts',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurface,
+            Semantics(
+              label: 'Week ${weekIndex + 1}: $count workouts',
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: count > 0
+                      ? colorScheme.primaryContainer.withValues(alpha: 0.4)
+                      : colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '$count workouts',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),
@@ -295,16 +314,22 @@ class const _QuarterView({
               ),
             ),
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                '$count sessions',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurface,
+            Semantics(
+              label: '$monthLabel: $count sessions',
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '$count sessions',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),

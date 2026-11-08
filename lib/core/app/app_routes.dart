@@ -171,7 +171,10 @@ List<RouteBase> createAppRoutes({
       name: appRouteNameSessionSummary,
       builder: (_, state) {
         final session = state.extra! as WorkoutSession;
-        return SessionSummaryScreen(session: session);
+        return SessionSummaryScreen(
+          session: session,
+          exerciseRepository: exercises,
+        );
       },
     ),
     appGoRoute(

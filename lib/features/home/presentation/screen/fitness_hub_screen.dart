@@ -102,6 +102,7 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
                 WeekSummarySection(
                   isDesktop: isDesktop,
                   summaries: widget.workoutHistory,
+                  onDetailsTap: widget.onAnalyticsTap,
                 ),
                 const SizedBox(height: 32),
                 ActivityTrendsSection(

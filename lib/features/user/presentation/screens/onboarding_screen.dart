@@ -14,10 +14,10 @@ import '../widgets/onboarding_step_goals.dart';
 import '../widgets/onboarding_step_metrics.dart';
 
 class const OnboardingScreen({
-    super.key,
-    required final UserUseCases useCases,
-    final String userId = 'local-user',
-  }) extends StatefulWidget {
+  super.key,
+  required final UserUseCases useCases,
+  final String userId = 'local-user',
+}) extends StatefulWidget {
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
