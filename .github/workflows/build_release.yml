@@ -6,50 +6,44 @@ on:
       - 'v*'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
+    name: Build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4
+        uses: subosito/flutter-action@db71fa631482e825f571819adc070e303f0b0e93 # v2.18.0
         with:
-          channel: stable
-          version: 3.38.4
+          flutter-version: '3.44.0'
+          channel: 'stable'
           cache: true
-          cache-sdk: true
 
-      - name: Get dependencies
-        run: flutter pub get
-
-      - name: Flutter Analyze
-        run: flutter analyze
-
-      - name: Install Linux dependencies
+      - name: Install Linux Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build libgtk-3-dev libglib2.0-dev libsecret-1-dev libjsoncpp-dev
 
       - name: Setup JDK
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@3def3e3da50490f2303036f4c4a6b6f7902d5395 # v5.1.0
         if: matrix.os == 'ubuntu-latest'
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
 
-      - name: Download keystore for Android
+      - name: Download Keystore for Android
         id: android_keystore
-        uses: timheuer/base64-to-file@v1.2
+        uses: timheuer/base64-to-file@ac84c7185012a9e3a6a978f657bc0d2427baf497 # v1.2.f
         if: matrix.os == 'ubuntu-latest'
         with:
           fileName: upload-keystore.jks
@@ -66,90 +60,58 @@ jobs:
 
       - name: Build Linux Release
         if: matrix.os == 'ubuntu-latest'
-        run: flutter build linux --release
+        run: ./scripts/build.sh linux --release
 
       - name: Build Windows Release
         if: matrix.os == 'windows-latest'
-        run: flutter build windows --release
+        run: ./scripts/build.ps1 windows
 
       - name: Build Android Release
         if: matrix.os == 'ubuntu-latest'
-        run: flutter build apk --release
+        run: ./scripts/build.sh apk --release
 
-      - name: Copy Android Release Artifacts
+      - name: Copy and Package Artifacts (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
           cp -rp build/app/outputs/apk/release/*.apk android_release.apk
-        shell: bash
-
-      - name: Zip Linux Release Artifacts
-        if: matrix.os == 'ubuntu-latest'
-        run: |
           cd build/linux/x64/release/bundle
           zip -r ../../../../../linux_release.zip .
         shell: bash
 
-      - name: Zip Windows Release Artifacts
+      - name: Copy and Package Artifacts (Windows)
         if: matrix.os == 'windows-latest'
         run: |
           Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath windows_release.zip
         shell: pwsh
 
-      - name: Upload Release Artifact
-        uses: actions/upload-artifact@v6
+      - name: Upload Release Artifacts
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf88f # v4.4.3
         with:
           name: ${{ matrix.os }}-release
           path: |
             linux_release.zip
             windows_release.zip
             android_release.apk
+          retention-days: 7
 
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v7
+      - name: Download All Artifacts
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           path: artifacts
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf1aa5b0ef2c3fbc # v2.2.1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          files: |
+            artifacts/ubuntu-latest-release/linux_release.zip
+            artifacts/windows-latest-release/windows_release.zip
+            artifacts/ubuntu-latest-release/android_release.apk
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
-
-      - name: Upload Linux Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ubuntu-latest-release/linux_release.zip
-          asset_name: growth_gauge_linux-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Windows Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/windows-latest-release/windows_release.zip
-          asset_name: growth_gauge_windows-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Android Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/ubuntu-latest-release/android_release.apk
-          asset_name: growth_gauge_android-${{ github.ref_name }}.apk
-          asset_content_type: application/zip

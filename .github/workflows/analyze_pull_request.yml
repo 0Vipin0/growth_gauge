@@ -6,6 +6,13 @@ on:
       - main
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: Analyze Pull Request
@@ -13,24 +20,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4
+        uses: subosito/flutter-action@db71fa631482e825f571819adc070e303f0b0e93 # v2.18.0
         with:
-          channel: stable
-          version: 3.29.1
+          flutter-version: '3.44.0'
+          channel: 'stable'
           cache: true
-          cache-sdk: true
 
-      - name: Get dependencies
-        run: flutter pub get
-
-      - name: Analyze Code for any Issues
-        run: flutter analyze --fatal-infos --fatal-warnings
-
-      - name: Format Code Verification
-        run: dart format --output=none --set-exit-if-changed .
-
-      - name: Run tests
-        run: flutter test
+      - name: Run Validation Checks
+        run: ./scripts/check.sh
