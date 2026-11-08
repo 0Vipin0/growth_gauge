@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
+import 'package:growth_gauge/features/user/application/application.dart';
+
 import '../../../../core/routing/routing.dart';
 import '../../../analytics/analytics.dart';
 import '../../../catalog/catalog.dart';
@@ -29,6 +31,7 @@ class const HomeScreen({
   required final SessionUseCases sessionUseCases,
   required final IExerciseRepository exerciseRepository,
   required final ITemplateRepository templateRepository,
+  required final UserUseCases userUseCases,
   final List<DailyWorkoutSummary> workoutHistory = const [],
   final String userId = 'local-user',
 }) extends StatefulWidget {
@@ -201,6 +204,7 @@ class _HomeScreenState() extends State<HomeScreen> {
                       onCatalogTap: () => context.push(appRouteExerciseCatalog),
                       onTemplateTap: () =>
                           context.push(appRouteWorkoutTemplates),
+                      useCases: widget.userUseCases,
                     ),
                   ),
                 ),

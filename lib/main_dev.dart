@@ -13,12 +13,8 @@ void main() async {
   await SharedPreferencesHelper.init();
 
   // Compile-time dev flags restricted solely to dev entry point
-  const bool devBypassAuth = bool.fromEnvironment(
-    'DEV_BYPASS_AUTH',
-  );
-  const bool devForceOnboarding = bool.fromEnvironment(
-    'DEV_FORCE_ONBOARDING',
-  );
+  const bool devBypassAuth = bool.fromEnvironment('DEV_BYPASS_AUTH');
+  const bool devForceOnboarding = bool.fromEnvironment('DEV_FORCE_ONBOARDING');
 
   debugPrint(
     '🔧 [DEV MODE] Bypass Auth: $devBypassAuth, Force Onboarding: $devForceOnboarding',
@@ -29,7 +25,9 @@ void main() async {
   }
 
   // Resolve onboarding based on dev flag override or real storage
-  final bool hasCompletedOnboarding = !devForceOnboarding && SharedPreferencesHelper.getHasCompletedOnboarding();
+  final bool hasCompletedOnboarding =
+      !devForceOnboarding &&
+      SharedPreferencesHelper.getHasCompletedOnboarding();
 
   await runGrowthGaugeApp(hasCompletedOnboarding: hasCompletedOnboarding);
 }

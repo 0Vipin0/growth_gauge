@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../analytics/domain/daily_workout_summary.dart';
 import '../../../template/domain/workout_template.dart';
 import '../../../template/infrastructure/template_repository.dart';
+import '../../../user/user.dart';
 import '../widgets/activity_trends_section.dart';
 import '../widgets/explore_banner.dart';
 import '../widgets/hub_header.dart';
@@ -18,15 +19,17 @@ import '../widgets/week_summary_section.dart';
 /// Displays a weekly summary, activity trends with time-range navigation,
 /// quick-start workout templates, and an explore library banner.
 class const FitnessHubScreen({
-  super.key,
-  final VoidCallback? onProfileTap,
-  final VoidCallback? onAnalyticsTap,
-  final VoidCallback? onCatalogTap,
-  final VoidCallback? onTemplateTap,
-  required final ITemplateRepository templateRepository,
-  required final ValueChanged<WorkoutTemplate> onStartTemplate,
-  final List<DailyWorkoutSummary> workoutHistory = const [],
-}) extends StatefulWidget {
+    super.key,
+    required final UserUseCases useCases,
+    final String userId = 'local-user',
+    final VoidCallback? onProfileTap,
+    final VoidCallback? onAnalyticsTap,
+    final VoidCallback? onCatalogTap,
+    final VoidCallback? onTemplateTap,
+    required final ITemplateRepository templateRepository,
+    required final ValueChanged<WorkoutTemplate> onStartTemplate,
+    final List<DailyWorkoutSummary> workoutHistory = const [],
+  }) extends StatefulWidget {
   @override
   State<FitnessHubScreen> createState() => _FitnessHubScreenState();
 }
@@ -35,6 +38,23 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
   late ActivityTimeRange _selectedTimeRange;
   int _timeOffset = 0;
   bool _initialized = false;
+
+  UserProfile? _profile;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final result = await widget.useCases.getOrCreateProfile(widget.userId);
+    if (mounted) {
+      setState(() {
+        _profile = result.dataOrNull;
+      });
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -84,6 +104,12 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth >= 900;
 
+    // Uses the profile display name if available, otherwise falls back to a professional title
+    final profileName = _profile?.displayName.trim();
+    final userName = (profileName != null && profileName.isNotEmpty)
+        ? profileName
+        : 'Athlete';
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
@@ -97,7 +123,10 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
                 vertical: 24.0,
               ),
               children: [
-                HubHeader(onProfileTap: widget.onProfileTap),
+                HubHeader(
+                  userName: userName, // Pass the professional/dynamic name
+                  onProfileTap: widget.onProfileTap,
+                ),
                 const SizedBox(height: 28),
                 WeekSummarySection(
                   isDesktop: isDesktop,

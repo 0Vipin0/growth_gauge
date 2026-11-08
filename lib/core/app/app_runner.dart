@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../../features/analytics/domain/pr_calculator.dart';
@@ -105,13 +106,13 @@ Future<void> _initializeSeeders(
 }
 
 class const GrowthGaugeRootApp({
-    super.key,
-    required final GoRouter router,
-    required final SettingsCubit settingsCubit,
-    required final AppDatabase database,
-    required final DomainEventDispatcher events,
-    required final AnalyticsProjector projector,
-  }) extends StatefulWidget {
+  super.key,
+  required final GoRouter router,
+  required final SettingsCubit settingsCubit,
+  required final AppDatabase database,
+  required final DomainEventDispatcher events,
+  required final AnalyticsProjector projector,
+}) extends StatefulWidget {
   @override
   State<GrowthGaugeRootApp> createState() => _GrowthGaugeRootAppState();
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class const HubHeader({super.key, final VoidCallback? onProfileTap})
-    extends StatelessWidget {
+class const HubHeader({super.key, final String userName = 'Alex Doe', final VoidCallback? onProfileTap}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,7 +31,7 @@ class const HubHeader({super.key, final VoidCallback? onProfileTap})
                   ),
                 ),
                 Text(
-                  'Alex Doe',
+                  userName,
                   style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurface,

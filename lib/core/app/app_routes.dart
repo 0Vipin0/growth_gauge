@@ -66,6 +66,7 @@ List<RouteBase> createAppRoutes({
             exerciseRepository: exercises,
             templateRepository: templates,
             workoutHistory: workoutHistory,
+            userUseCases: userUseCases,
           );
         },
       ),
