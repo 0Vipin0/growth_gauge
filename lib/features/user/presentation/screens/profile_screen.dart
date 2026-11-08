@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/routing/routing.dart';
 import '../../../../core/units/unit_types.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
@@ -12,10 +15,10 @@ import '../../domain/workout_preferences.dart';
 import '../widgets/equipment_inventory_sheet.dart';
 
 class const ProfileScreen({
-    super.key,
-    required final UserUseCases useCases,
-    final String userId = 'local-user',
-  }) extends StatefulWidget {
+  super.key,
+  required final UserUseCases useCases,
+  final String userId = 'local-user',
+}) extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -164,6 +167,7 @@ class _ProfileScreenState() extends State<ProfileScreen> {
             children: [
               // Header User Card
               AppCard(
+                onTap: () => context.go(appRouteGoals),
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -194,8 +198,30 @@ class _ProfileScreenState() extends State<ProfileScreen> {
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.flag,
+                                size: 14,
+                                color: colorScheme.primary,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Tap to manage training goals',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ],
                 ),

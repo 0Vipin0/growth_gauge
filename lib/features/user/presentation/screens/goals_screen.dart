@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
@@ -13,7 +14,19 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Training Goals')),
+      appBar: AppBar(
+        title: const Text('Training Goals'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/home'); // Fallback if stack is empty
+            }
+          },
+        ),
+      ),
       body: BlocConsumer<GoalCubit, GoalState>(
         listener: (context, state) {
           if (state.errorMessage != null) {

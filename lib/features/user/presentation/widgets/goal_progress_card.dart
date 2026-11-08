@@ -6,13 +6,13 @@ import '../../domain/user_enums.dart';
 
 /// Card displaying progress toward a training goal with status indicators.
 class const GoalProgressCard({
-    super.key,
-    required final TrainingGoal goal,
-    final VoidCallback? onUpdateProgress,
-    final VoidCallback? onComplete,
-    final VoidCallback? onAbandon,
-    final VoidCallback? onDelete,
-  }) extends StatelessWidget {
+  super.key,
+  required final TrainingGoal goal,
+  final VoidCallback? onUpdateProgress,
+  final VoidCallback? onComplete,
+  final VoidCallback? onAbandon,
+  final VoidCallback? onDelete,
+}) extends StatelessWidget {
   String _formatType(GoalType type) {
     switch (type) {
       case GoalType.strength:

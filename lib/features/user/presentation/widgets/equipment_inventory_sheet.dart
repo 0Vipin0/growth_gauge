@@ -8,10 +8,10 @@ import '../../../common/presentation/widgets/widgets.dart';
 
 /// Modal bottom sheet allowing users to toggle owned/accessible equipment.
 class const EquipmentInventorySheet({
-    super.key,
-    required final List<EquipmentType> initialSelection,
-    required final ValueChanged<List<EquipmentType>> onSaved,
-  }) extends StatefulWidget {
+  super.key,
+  required final List<EquipmentType> initialSelection,
+  required final ValueChanged<List<EquipmentType>> onSaved,
+}) extends StatefulWidget {
   @override
   State<EquipmentInventorySheet> createState() =>
       _EquipmentInventorySheetState();

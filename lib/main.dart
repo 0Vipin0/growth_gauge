@@ -1,5 +1,3 @@
-// ignore_for_file: dead_code
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -71,10 +69,8 @@ void main() async {
   // you want to test the onboarding screen on every startup.
   final bool hasCompletedOnboarding =
       SharedPreferencesHelper.getHasCompletedOnboarding();
-  const bool forceTestOnboarding =
-      true; // Switch to false for production first-launch behavior
 
-  final String initialRoute = (forceTestOnboarding || !hasCompletedOnboarding)
+  final String initialRoute = (!hasCompletedOnboarding)
       ? appRouteOnboarding
       : appRouteLaunch;
 

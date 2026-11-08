@@ -12,6 +12,7 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
@@ -23,6 +24,21 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Why we need this:',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Your experience level, session duration limits, and available equipment inventory ensure that generated workout routines match your capability and setting without requiring manual adjustments.',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Text(
                   'Training Experience Level',
                   style: theme.textTheme.titleSmall?.copyWith(
@@ -123,6 +139,18 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
                           },
                         );
                       }).toList(),
+                ),
+                const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Text(
+                    'Note: All of these training constraints and equipment details can be updated anytime later in your profile page as well.',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
