@@ -300,7 +300,7 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
               actions: [
                 AppButton.ghost(
                   label: 'Cancel',
-                  onPressed: () => Navigator.of(dialogCtx).pop(),
+                  onPressed: () => dialogCtx.pop(),
                 ),
                 AppButton.primary(
                   label: 'Create',
@@ -321,7 +321,7 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
                             : unitController.text.trim(),
                         targetDate: selectedTargetDate,
                       );
-                      Navigator.of(dialogCtx).pop();
+                      dialogCtx.pop();
                     }
                   },
                 ),
@@ -357,17 +357,14 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
           ],
         ),
         actions: [
-          AppButton.ghost(
-            label: 'Cancel',
-            onPressed: () => Navigator.of(dialogCtx).pop(),
-          ),
+          AppButton.ghost(label: 'Cancel', onPressed: () => dialogCtx.pop()),
           AppButton.primary(
             label: 'Save',
             onPressed: () {
               final val = double.tryParse(controller.text);
               if (val != null) {
                 context.read<GoalCubit>().updateProgress(goal.id, val);
-                Navigator.of(dialogCtx).pop();
+                dialogCtx.pop();
               }
             },
           ),

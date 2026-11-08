@@ -588,7 +588,7 @@ class _ProfileScreenState() extends State<ProfileScreen> {
                       actions: [
                         AppButton.primary(
                           label: 'Save',
-                          onPressed: () => Navigator.of(ctx).pop(seconds),
+                          onPressed: () => ctx.pop(seconds),
                         ),
                       ],
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
@@ -339,7 +340,7 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
               actions: [
                 AppButton.ghost(
                   label: 'Cancel',
-                  onPressed: () => Navigator.of(dialogCtx).pop(),
+                  onPressed: () => dialogCtx.pop(),
                 ),
                 AppButton.primary(
                   label: 'Log',
@@ -357,7 +358,7 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
                             ? null
                             : notesController.text.trim(),
                       );
-                      Navigator.of(dialogCtx).pop();
+                      dialogCtx.pop();
                     }
                   },
                 ),
