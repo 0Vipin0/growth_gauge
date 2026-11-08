@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
+import '../../features/settings/settings.dart';
+
 const appRouteLaunch = '/launch';
 const appRouteOnboarding = '/onboarding';
 const appRouteHome = '/home';
@@ -86,3 +88,9 @@ GoRoute appGoRoute({
         ),
   ),
 );
+
+String appRouteForAuthentication(AuthenticationType type) => switch (type) {
+  AuthenticationType.pin => appRoutePinAuth,
+  AuthenticationType.biometric => appRouteBiometricAuth,
+  AuthenticationType.none => appRouteHome,
+};

@@ -151,3 +151,23 @@ enum MetricType() {
   @JsonValue('PACE')
   pace,
 }
+
+/// Extension to format enum values into human-readable display strings.
+extension EnumFormatting on Enum {
+  String get displayName {
+    switch (name) {
+      case 'weightAndReps':
+        return 'Weight & Reps';
+      default:
+        final result = name.replaceAllMapped(
+          RegExp(r'([A-Z])'),
+          (match) => ' ${match.group(0)}',
+        );
+        return result.split(' ').map((word) {
+          if (word.isEmpty) return '';
+          if (word.toLowerCase() == 'and') return '&';
+          return word[0].toUpperCase() + word.substring(1);
+        }).join(' ');
+    }
+  }
+}

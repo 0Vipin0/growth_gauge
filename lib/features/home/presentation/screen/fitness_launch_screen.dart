@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/routing/routing.dart';
 import '../../../settings/application/settings_cubit.dart';
 import '../../../settings/application/settings_state.dart';
-import 'launch_route_resolver.dart';
 
 /// Resolves saved access settings before opening the fitness home flow.
 class const FitnessLaunchScreen({super.key}) extends StatefulWidget {

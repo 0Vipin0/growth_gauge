@@ -19,7 +19,7 @@ class const CatalogScreen({
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogScreenState() extends State<CatalogScreen> {
+class _CatalogScreenState extends State<CatalogScreen> {
   late Future<List<Exercise>> _exercises;
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
@@ -280,7 +280,10 @@ class _CatalogScreenState() extends State<CatalogScreen> {
         ),
         const PopupMenuDivider(),
         ...options.map(
-          (opt) => PopupMenuItem<T?>(value: opt, child: Text(opt.name)),
+          (opt) => PopupMenuItem<T?>(
+            value: opt,
+            child: Text(opt.displayName), // Updated to displayName
+          ),
         ),
       ],
       child: Chip(
@@ -291,7 +294,11 @@ class _CatalogScreenState() extends State<CatalogScreen> {
               ? colorScheme.onPrimaryContainer
               : colorScheme.onSurfaceVariant,
         ),
-        label: Text(isSelected ? '$title: ${value.name}' : 'Any $title'),
+        label: Text(
+          isSelected
+              ? '$title: ${value.displayName}' // Updated to displayName
+              : 'Any $title',
+        ),
         backgroundColor: isSelected
             ? colorScheme.primaryContainer
             : colorScheme.surfaceContainerHighest,
@@ -309,7 +316,7 @@ class _CatalogScreenState() extends State<CatalogScreen> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final movement = exercise.classification.movementPatterns
-        .map((e) => e.name)
+        .map((e) => e.displayName) // Updated to displayName
         .join(' · ');
 
     return AppCard(

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:growth_gauge/features/settings/config/shared_preferences_config.dart';
 
 import '../domain/equipment_inventory.dart';
 import '../domain/training_goal.dart';
@@ -125,7 +126,7 @@ class OnboardingCubit(
           targetDate: state.goal!.targetDate,
         );
       }
-
+      SharedPreferencesHelper.setHasCompletedOnboarding(true);
       emit(state.copyWith(isLoading: false, isCompleted: true));
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
