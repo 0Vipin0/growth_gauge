@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/analytics/domain/pr_calculator.dart';
@@ -10,6 +11,7 @@ import '../../features/analytics/projection/analytics_projector.dart';
 import '../../features/analytics/projection/projection_rebuilder.dart';
 import '../../features/catalog/infrastructure/catalog_seeder.dart';
 import '../../features/catalog/infrastructure/exercise_repository.dart';
+import '../../features/common/presentation/theme/theme.dart';
 import '../../features/notification/infrastructure/notification_service.dart';
 import '../../features/session/application/session_use_cases.dart';
 import '../../features/session/infrastructure/session_repository.dart';
@@ -134,10 +136,35 @@ class _GrowthGaugeRootAppState() extends State<GrowthGaugeRootApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Growth Gauge',
-      routerConfig: widget.router,
+    return BlocProvider.value(
+      value: widget.settingsCubit,
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Growth Gauge',
+            // Apply light theme configuration derived from SettingsState
+            theme: AppTheme.buildTheme(
+              themeName: state.settings.themeName,
+              brightness: Brightness.light,
+              contrastVariant: state.settings.contrastVariant,
+              fontFamilyChoice: state.settings.fontFamilyChoice,
+              fontSize: state.settings.fontSize,
+            ),
+            // Apply dark theme configuration derived from SettingsState
+            darkTheme: AppTheme.buildTheme(
+              themeName: state.settings.themeName,
+              contrastVariant: state.settings.contrastVariant,
+              fontFamilyChoice: state.settings.fontFamilyChoice,
+              fontSize: state.settings.fontSize,
+            ),
+            themeMode: state
+                .settings
+                .themeMode, // Controls whether dark or light theme is active
+            routerConfig: widget.router,
+          );
+        },
+      ),
     );
   }
 }

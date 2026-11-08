@@ -19,17 +19,17 @@ import '../widgets/week_summary_section.dart';
 /// Displays a weekly summary, activity trends with time-range navigation,
 /// quick-start workout templates, and an explore library banner.
 class const FitnessHubScreen({
-    super.key,
-    required final UserUseCases useCases,
-    final String userId = 'local-user',
-    final VoidCallback? onProfileTap,
-    final VoidCallback? onAnalyticsTap,
-    final VoidCallback? onCatalogTap,
-    final VoidCallback? onTemplateTap,
-    required final ITemplateRepository templateRepository,
-    required final ValueChanged<WorkoutTemplate> onStartTemplate,
-    final List<DailyWorkoutSummary> workoutHistory = const [],
-  }) extends StatefulWidget {
+  super.key,
+  required final UserUseCases useCases,
+  final String userId = 'local-user',
+  final VoidCallback? onProfileTap,
+  final VoidCallback? onAnalyticsTap,
+  final VoidCallback? onCatalogTap,
+  final VoidCallback? onTemplateTap,
+  required final ITemplateRepository templateRepository,
+  required final ValueChanged<WorkoutTemplate> onStartTemplate,
+  final List<DailyWorkoutSummary> workoutHistory = const [],
+}) extends StatefulWidget {
   @override
   State<FitnessHubScreen> createState() => _FitnessHubScreenState();
 }
