@@ -12,6 +12,7 @@ class const TemplateSeedBundle({
 });
 
 /// Canonical system workout template seed data containing 38 complete programs.
+/// Every program has an explicitly timed warm-up and a stretch / relaxed cool-down.
 ///
 /// Every session follows a full structure: warm-up, main work, then a
 /// cool-down stretch and a relaxed finish (breathing / spinal release).
@@ -90,16 +91,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-fba-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-fba-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-fba-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-fba-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-fba-1-1',
@@ -111,7 +125,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fba-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-fba-2-1',
@@ -123,7 +137,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fba-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-fba-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -131,7 +145,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fba-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-fba-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -139,7 +153,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fba-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-fba-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-fba-5-2', setNumber: 2, targetReps: 3),
@@ -464,16 +478,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-fbb-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-fbb-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-fbb-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-fbb-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-fbb-1-1',
@@ -485,7 +512,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fbb-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-fbb-2-1',
@@ -497,7 +524,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fbb-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-fbb-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -505,7 +532,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fbb-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-fbb-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -513,7 +540,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-fbb-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-fbb-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-fbb-5-2', setNumber: 2, targetReps: 3),
@@ -820,16 +847,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-upa-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-upa-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-upa-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-upa-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-upa-1-1',
@@ -841,7 +881,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upa-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-upa-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -849,7 +889,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upa-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-upa-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -857,7 +897,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upa-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-upa-4-1',
@@ -876,7 +916,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upa-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-upa-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -1156,16 +1196,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-upb-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-upb-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-upb-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-upb-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-upb-1-1',
@@ -1177,7 +1230,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upb-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-upb-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -1185,7 +1238,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upb-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-upb-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -1193,7 +1246,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upb-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-upb-4-1',
@@ -1212,7 +1265,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upb-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-upb-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -1466,16 +1519,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-upla-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-upla-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-upla-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-upla-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-upla-1-1',
@@ -1487,7 +1553,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upla-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-upla-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -1495,7 +1561,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upla-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-upla-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -1503,7 +1569,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upla-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-upla-4-1',
@@ -1522,7 +1588,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upla-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-upla-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -1803,16 +1869,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-uplb-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-uplb-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-uplb-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-uplb-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-uplb-1-1',
@@ -1824,7 +1903,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uplb-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-uplb-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -1832,7 +1911,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uplb-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-uplb-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -1840,7 +1919,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uplb-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-uplb-4-1',
@@ -1859,7 +1938,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uplb-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-uplb-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -2155,16 +2234,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-lq-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-lq-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-lq-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-lq-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-lq-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -2172,7 +2264,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lq-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-lq-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-lq-2-2', setNumber: 2, targetReps: 10),
@@ -2181,7 +2273,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lq-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-lq-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -2189,7 +2281,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lq-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-lq-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-lq-4-2', setNumber: 2, targetReps: 3),
@@ -2198,7 +2290,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lq-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-lq-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -2520,16 +2612,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-lh-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-lh-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-lh-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-lh-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-lh-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -2537,7 +2642,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lh-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-lh-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-lh-2-2', setNumber: 2, targetReps: 10),
@@ -2546,7 +2651,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lh-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-lh-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -2554,7 +2659,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lh-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-lh-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-lh-4-2', setNumber: 2, targetReps: 3),
@@ -2563,7 +2668,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lh-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-lh-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -2877,16 +2982,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ph-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-ph-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-ph-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-ph-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-ph-1-1',
@@ -2898,7 +3016,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ph-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-ph-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -2906,7 +3024,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ph-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-ph-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -2914,7 +3032,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ph-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-ph-4-1',
@@ -2933,7 +3051,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ph-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-ph-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -3244,16 +3362,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-pullh-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-pullh-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-pullh-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-pullh-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-pullh-1-1',
@@ -3265,7 +3396,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pullh-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-pullh-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -3273,7 +3404,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pullh-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-pullh-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -3281,7 +3412,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pullh-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-pullh-4-1',
@@ -3300,7 +3431,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pullh-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-pullh-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -3602,16 +3733,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-legbal-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-legbal-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-legbal-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-legbal-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-legbal-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -3619,7 +3763,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-legbal-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-legbal-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-legbal-2-2', setNumber: 2, targetReps: 10),
@@ -3628,7 +3772,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-legbal-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-legbal-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -3636,7 +3780,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-legbal-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-legbal-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-legbal-4-2', setNumber: 2, targetReps: 3),
@@ -3645,7 +3789,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-legbal-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-legbal-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -4009,16 +4153,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-upp-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-upp-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-upp-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-upp-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-upp-1-1',
@@ -4030,7 +4187,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upp-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-upp-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -4038,7 +4195,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upp-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-upp-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -4046,7 +4203,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upp-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-upp-4-1',
@@ -4065,7 +4222,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-upp-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-upp-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -4368,16 +4525,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-lhy-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-lhy-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-lhy-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-lhy-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-lhy-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -4385,7 +4555,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lhy-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-lhy-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-lhy-2-2', setNumber: 2, targetReps: 10),
@@ -4394,7 +4564,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lhy-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-lhy-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -4402,7 +4572,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lhy-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-lhy-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-lhy-4-2', setNumber: 2, targetReps: 3),
@@ -4411,7 +4581,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-lhy-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-lhy-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -4784,16 +4954,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-as-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-as-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-as-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-as-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-as-1-1',
@@ -4805,7 +4988,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-as-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-as-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -4813,7 +4996,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-as-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-as-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -4821,7 +5004,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-as-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-as-4-1',
@@ -4840,7 +5023,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-as-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-as-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -5116,16 +5299,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-cc-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-cc-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-cc-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-cc-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-cc-1-1',
@@ -5137,7 +5333,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-cc-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-cc-2-1',
@@ -5149,7 +5345,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-cc-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-cc-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -5157,7 +5353,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-cc-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-cc-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -5165,7 +5361,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-cc-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-cc-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-cc-5-2', setNumber: 2, targetReps: 3),
@@ -5402,16 +5598,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-uc-1',
           name: 'Upper Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-uc-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-uc-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 270,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-uc-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-uc-1-1',
@@ -5423,7 +5632,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uc-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-uc-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -5431,7 +5640,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uc-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-uc-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -5439,7 +5648,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uc-4',
               exerciseId: 'exercise-face-pull-001', // Cable Face Pull
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-uc-4-1',
@@ -5458,7 +5667,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-uc-5',
               exerciseId: 'exercise-pushup-001', // Push-Up
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-uc-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -5726,16 +5935,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ul-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-ul-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-ul-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-ul-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-ul-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -5743,7 +5965,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ul-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-ul-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-ul-2-2', setNumber: 2, targetReps: 10),
@@ -5752,7 +5974,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ul-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-ul-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -5760,7 +5982,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ul-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-ul-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-ul-4-2', setNumber: 2, targetReps: 3),
@@ -5769,7 +5991,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ul-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-ul-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -6069,16 +6291,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-tbp-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-tbp-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-tbp-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-tbp-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-tbp-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -6086,7 +6321,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-tbp-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-tbp-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-tbp-2-2', setNumber: 2, targetReps: 10),
@@ -6095,7 +6330,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-tbp-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-tbp-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -6103,7 +6338,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-tbp-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-tbp-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-tbp-4-2', setNumber: 2, targetReps: 3),
@@ -6112,7 +6347,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-tbp-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-tbp-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -6437,16 +6672,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ef-1',
           name: 'Quick Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-ef-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-ef-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 150,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-ef-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-ef-1-1',
@@ -6458,7 +6706,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ef-2',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-ef-2-1', setNumber: 1, targetReps: 10),
               ],
@@ -6466,7 +6714,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ef-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-ef-3-1', setNumber: 1, targetReps: 5),
               ],
@@ -6640,16 +6888,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-pc-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-pc-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-pc-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-pc-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-pc-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -6657,7 +6918,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pc-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-pc-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-pc-2-2', setNumber: 2, targetReps: 10),
@@ -6666,7 +6927,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pc-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-pc-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -6674,7 +6935,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pc-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-pc-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-pc-4-2', setNumber: 2, targetReps: 3),
@@ -6683,7 +6944,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-pc-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-pc-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -7066,16 +7327,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-hs-1',
           name: 'HIIT Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-hs-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-hs-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 235,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-hs-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-hs-1-1',
@@ -7087,7 +7361,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-hs-2',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-hs-2-1', setNumber: 1, targetReps: 12),
               ],
@@ -7095,7 +7369,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-hs-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-hs-3-1', setNumber: 1, targetReps: 5),
               ],
@@ -7103,7 +7377,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-hs-4',
               exerciseId: 'exercise-mountain-climber-001', // Mountain Climber
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-hs-4-1',
@@ -7351,16 +7625,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ht-1',
           name: 'HIIT Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-ht-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-ht-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 235,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-ht-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-ht-1-1',
@@ -7372,7 +7659,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ht-2',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-ht-2-1', setNumber: 1, targetReps: 12),
               ],
@@ -7380,7 +7667,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ht-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-ht-3-1', setNumber: 1, targetReps: 5),
               ],
@@ -7388,7 +7675,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ht-4',
               exerciseId: 'exercise-mountain-climber-001', // Mountain Climber
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-ht-4-1',
@@ -7660,16 +7947,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-he-1',
           name: 'HIIT Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-he-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-he-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 235,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-he-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-he-1-1',
@@ -7681,7 +7981,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-he-2',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-he-2-1', setNumber: 1, targetReps: 12),
               ],
@@ -7689,7 +7989,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-he-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-he-3-1', setNumber: 1, targetReps: 5),
               ],
@@ -7697,7 +7997,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-he-4',
               exerciseId: 'exercise-mountain-climber-001', // Mountain Climber
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(
                   id: 'ts-he-4-1',
@@ -7979,7 +8279,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-hr-1',
@@ -8248,16 +8548,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-scb-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-scb-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-scb-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-scb-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-scb-1-1',
@@ -8269,7 +8582,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-scb-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-scb-2-1',
@@ -8281,7 +8594,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-scb-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-scb-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -8289,7 +8602,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-scb-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-scb-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -8297,7 +8610,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-scb-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-scb-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-scb-5-2', setNumber: 2, targetReps: 3),
@@ -8579,16 +8892,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-sci-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-sci-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-sci-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-sci-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-sci-1-1',
@@ -8600,7 +8926,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sci-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-sci-2-1',
@@ -8612,7 +8938,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sci-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-sci-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -8620,7 +8946,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sci-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-sci-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -8628,7 +8954,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sci-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-sci-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-sci-5-2', setNumber: 2, targetReps: 3),
@@ -8988,16 +9314,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-sce-1',
           name: 'Lower Body Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-sce-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-sce-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-sce-1',
               exerciseId: 'exercise-glute-bridge-001', // Glute Bridge
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-sce-1-1', setNumber: 1, targetReps: 12),
               ],
@@ -9005,7 +9344,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sce-2',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-sce-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-sce-2-2', setNumber: 2, targetReps: 10),
@@ -9014,7 +9353,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sce-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-sce-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -9022,7 +9361,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sce-4',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-sce-4-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-sce-4-2', setNumber: 2, targetReps: 3),
@@ -9031,7 +9370,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-sce-5',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-sce-5-1', setNumber: 1, targetReps: 8),
               ],
@@ -9404,7 +9743,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-rw-1',
@@ -9665,7 +10004,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-z2-1',
@@ -9944,7 +10283,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-tr-1',
@@ -10230,7 +10569,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ct-1',
@@ -10501,16 +10840,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ri-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-ri-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-ri-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-ri-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-ri-1-1',
@@ -10522,7 +10874,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ri-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-ri-2-1',
@@ -10534,7 +10886,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ri-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-ri-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -10542,7 +10894,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ri-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-ri-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -10550,7 +10902,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-ri-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-ri-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-ri-5-2', setNumber: 2, targetReps: 3),
@@ -10776,16 +11128,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-me-1',
           name: 'Dynamic Warm-Up',
           items: [
             TemplateItem(
+              id: 'item-warmup-walk-me-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-me-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 225,
+                ),
+              ],
+            ),
+
+            TemplateItem(
               id: 'item-me-1',
               exerciseId: 'exercise-jumping-jack-001', // Jumping Jack
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-me-1-1',
@@ -10797,7 +11162,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-me-2',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(
                   id: 'ts-me-2-1',
@@ -10809,7 +11174,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-me-3',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-me-3-1', setNumber: 1, targetReps: 10),
               ],
@@ -10817,7 +11182,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-me-4',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-me-4-1', setNumber: 1, targetReps: 5),
               ],
@@ -10825,7 +11190,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-me-5',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(id: 'ts-me-5-1', setNumber: 1, targetReps: 3),
                 TargetSet(id: 'ts-me-5-2', setNumber: 2, targetReps: 3),
@@ -11078,7 +11443,7 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ab-1',
@@ -11389,16 +11754,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-mf-1',
-          name: 'Mobility Flow',
+          name: 'Warm-Up Mobility Flow',
           items: [
+            TemplateItem(
+              id: 'item-warmup-walk-mf-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-mf-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 255,
+                ),
+              ],
+            ),
+
             TemplateItem(
               id: 'item-mf-1',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(id: 'ts-mf-1-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-mf-1-2', setNumber: 2, targetReps: 10),
@@ -11407,7 +11785,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-mf-2',
               exerciseId: 'exercise-worlds-greatest-stretch-001', // World's Greatest Stretch
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-mf-2-1', setNumber: 1, targetReps: 5),
                 TargetSet(id: 'ts-mf-2-2', setNumber: 2, targetReps: 5),
@@ -11416,7 +11794,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-mf-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-mf-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -11424,7 +11802,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-mf-4',
               exerciseId: 'exercise-leg-swings-001', // Leg Swings
-              order: 4,
+              order: 5,
               targetSets: [
                 TargetSet(id: 'ts-mf-4-1', setNumber: 1, targetReps: 12),
                 TargetSet(id: 'ts-mf-4-2', setNumber: 2, targetReps: 12),
@@ -11433,7 +11811,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-mf-5',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 5,
+              order: 6,
               targetSets: [
                 TargetSet(
                   id: 'ts-mf-5-1',
@@ -11445,7 +11823,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-mf-6',
               exerciseId: 'exercise-bodyweight-squat-001', // Bodyweight Squat
-              order: 6,
+              order: 7,
               targetSets: [
                 TargetSet(id: 'ts-mf-6-1', setNumber: 1, targetReps: 10),
               ],
@@ -11454,7 +11832,7 @@ class WorkoutTemplateSeedData._() {
         ),
         const WorkoutBlock(
           id: 'block-mf-2',
-          name: 'Deep Stretch',
+          name: 'Cool-Down Stretch',
           items: [
             TemplateItem(
               id: 'item-mf-7',
@@ -11666,11 +12044,11 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-lsr-1',
-          name: 'Lower Body Prep',
+          name: 'Lower Body Warm-Up & Prep',
           items: [
             TemplateItem(
               id: 'item-lsr-1',
@@ -11705,7 +12083,7 @@ class WorkoutTemplateSeedData._() {
         ),
         const WorkoutBlock(
           id: 'block-lsr-2',
-          name: 'Deep Stretch',
+          name: 'Cool-Down Stretch',
           items: [
             TemplateItem(
               id: 'item-lsr-4',
@@ -11865,16 +12243,29 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-usr-1',
-          name: 'Upper Body Prep',
+          name: 'Upper Body Warm-Up & Prep',
           items: [
+            TemplateItem(
+              id: 'item-warmup-walk-usr-1',
+              exerciseId: 'exercise-recovery-walk-001', // Easy Recovery Walk
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-warmup-walk-usr-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 240,
+                ),
+              ],
+            ),
+
             TemplateItem(
               id: 'item-usr-1',
               exerciseId: 'exercise-arm-circles-001', // Arm Circles
-              order: 1,
+              order: 2,
               targetSets: [
                 TargetSet(
                   id: 'ts-usr-1-1',
@@ -11886,7 +12277,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-usr-2',
               exerciseId: 'exercise-cat-cow-001', // Cat-Cow
-              order: 2,
+              order: 3,
               targetSets: [
                 TargetSet(id: 'ts-usr-2-1', setNumber: 1, targetReps: 10),
                 TargetSet(id: 'ts-usr-2-2', setNumber: 2, targetReps: 10),
@@ -11895,7 +12286,7 @@ class WorkoutTemplateSeedData._() {
             TemplateItem(
               id: 'item-usr-3',
               exerciseId: 'exercise-inchworm-001', // Inchworm
-              order: 3,
+              order: 4,
               targetSets: [
                 TargetSet(id: 'ts-usr-3-1', setNumber: 1, targetReps: 6),
               ],
@@ -11904,7 +12295,7 @@ class WorkoutTemplateSeedData._() {
         ),
         const WorkoutBlock(
           id: 'block-usr-2',
-          name: 'Deep Stretch',
+          name: 'Cool-Down Stretch',
           items: [
             TemplateItem(
               id: 'item-usr-4',
@@ -12038,11 +12429,11 @@ class WorkoutTemplateSeedData._() {
       status: TemplateRevisionStatus.published,
       createdById: _systemUser,
       createdAt: _epoch,
-      changeSummary: 'Initial system release',
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
       blocks: [
         const WorkoutBlock(
           id: 'block-ar-1',
-          name: 'Easy Movement',
+          name: 'Easy Movement Warm-Up',
           items: [
             TemplateItem(
               id: 'item-ar-1',
@@ -12077,7 +12468,7 @@ class WorkoutTemplateSeedData._() {
         ),
         const WorkoutBlock(
           id: 'block-ar-2',
-          name: 'Gentle Stretch',
+          name: 'Cool-Down Stretch',
           items: [
             TemplateItem(
               id: 'item-ar-4',

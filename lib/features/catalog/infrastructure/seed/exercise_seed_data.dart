@@ -6,7 +6,7 @@ import '../../domain/exercise_execution.dart';
 
 /// Canonical system exercise seed data.
 ///
-/// These 60 exercises are seeded on first launch if the catalog is empty.
+/// These 89 exercises are seeded on first launch if the catalog is empty.
 /// Every exercise ships with a complete execution profile (setup, execution,
 /// technique cues and breathing) covering the staples used by beginner,
 /// intermediate and advanced lifters.
@@ -74,6 +74,35 @@ class ExerciseSeedData._() {
     _backExtension,
     _machineChestPress,
     _deadBug,
+    _armCircles,
+    _birdDog,
+    _bodyweightSquat,
+    _burpee,
+    _calfStretch,
+    _catCow,
+    _childsPose,
+    _crossBodyShoulderStretch,
+    _dumbbellSwing,
+    _dumbbellThruster,
+    _diaphragmaticBreathing,
+    _doorwayChestStretch,
+    _figureFourStretch,
+    _hamstringStretch,
+    _hipFlexorStretch,
+    _inchworm,
+    _jumpRope,
+    _jumpSquat,
+    _jumpingJack,
+    _legSwings,
+    _lyingSpinalTwist,
+    _mountainClimber,
+    _overheadTricepStretch,
+    _quadStretch,
+    _recoveryWalk,
+    _rowingMachine,
+    _stationaryBike,
+    _treadmillRun,
+    _worldsGreatestStretch,
   ];
 
   // 1-7 (Original Reference Exercises)
@@ -2245,6 +2274,839 @@ class ExerciseSeedData._() {
       ],
       breathingInstructions:
           'Exhale as you extend the arm and leg; inhale as you return.',
+    ),
+  );
+
+  // 61-89 (Template support: warm-ups, conditioning, mobility and recovery)
+  static final _armCircles = _movement(
+    id: 'exercise-arm-circles-001',
+    name: 'Arm Circles',
+    aliases: const ['shoulder circles'],
+    description: 'Dynamic shoulder mobility drill using controlled arm circles to prepare the shoulder girdle.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.shoulders, MuscleGroup.frontDelts],
+    setup: const [
+      'Stand tall with feet shoulder-width apart, knees soft and ribs stacked over the pelvis.',
+      'Extend both arms out to the sides at shoulder height with elbows relaxed.',
+    ],
+    execution: const [
+      'Make small forward circles from the shoulders, gradually increasing the circle size while keeping the torso still.',
+      'Continue for the prescribed time, then reverse direction for an equal duration.',
+      'Lower the arms slowly and relax the shoulders before moving on.',
+    ],
+    cues: const [
+      'Keep the neck relaxed and shoulders away from the ears',
+      'Use smooth, pain-free circles rather than forcing range',
+      'Keep the trunk still and avoid arching the lower back',
+    ],
+    breathing: 'Breathe steadily throughout; avoid holding your breath as the circles become larger.',
+  );
+
+  static final _birdDog = _movement(
+    id: 'exercise-bird-dog-001',
+    name: 'Bird Dog',
+    aliases: const ['quadruped opposite arm leg raise'],
+    description: 'Quadruped core-stability drill extending opposite arm and leg while resisting trunk rotation.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.core],
+    secondary: const [
+      MuscleGroup.glutes,
+      MuscleGroup.shoulders,
+      MuscleGroup.lowerBack,
+    ],
+    setup: const [
+      'Start on hands and knees with hands under shoulders and knees under hips.',
+      'Brace the abdomen gently and keep the spine in a neutral position with eyes on the floor.',
+    ],
+    execution: const [
+      'Reach one arm forward while extending the opposite leg straight behind you.',
+      'Pause when the arm, torso and leg form one long line without allowing the hips to rotate.',
+      'Return under control and repeat on the opposite side, alternating for the prescribed reps.',
+    ],
+    cues: const [
+      'Keep the pelvis square to the floor',
+      'Reach long rather than lifting the leg excessively high',
+      'Move slowly and keep the trunk steady',
+    ],
+    breathing: 'Exhale as you extend the arm and leg; inhale as you return to the starting position.',
+  );
+
+  static final _bodyweightSquat = _movement(
+    id: 'exercise-bodyweight-squat-001',
+    name: 'Bodyweight Squat',
+    aliases: const ['air squat'],
+    description: 'Foundational squat pattern performed without external load to build lower-body control and prepare for loaded squats.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.squat],
+    primary: const [MuscleGroup.quads, MuscleGroup.glutes],
+    secondary: const [MuscleGroup.hamstrings, MuscleGroup.core],
+    setup: const [
+      'Stand with feet around shoulder-width apart and toes turned out slightly.',
+      'Brace the abdomen, keep the chest comfortably lifted and distribute weight across the whole foot.',
+    ],
+    execution: const [
+      'Bend the hips and knees together, sitting down between the feet while keeping heels grounded.',
+      'Descend to a comfortable depth while the knees track in line with the toes.',
+      'Press through the whole foot to stand tall and fully reset before the next repetition.',
+    ],
+    cues: const [
+      'Keep the heels planted and knees tracking over the toes',
+      'Maintain a neutral spine and controlled torso position',
+      'Use a smooth tempo without bouncing at the bottom',
+    ],
+    breathing: 'Inhale as you lower; exhale as you stand, keeping the trunk braced throughout.',
+  );
+
+  static final _burpee = _movement(
+    id: 'exercise-burpee-001',
+    name: 'Burpee',
+    aliases: const ['bodyweight burpee'],
+    description: 'Full-body conditioning movement combining a squat, plank transition and controlled return to standing.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.squat, MovementPattern.horizontalPush],
+    primary: const [MuscleGroup.quads, MuscleGroup.glutes, MuscleGroup.core],
+    secondary: const [
+      MuscleGroup.chest,
+      MuscleGroup.triceps,
+      MuscleGroup.shoulders,
+    ],
+    setup: const [
+      'Stand with feet about hip-width apart, arms relaxed and core lightly braced.',
+      'Choose a step-back version or a jump-back version that you can perform with stable form.',
+    ],
+    execution: const [
+      'Squat down and place both hands on the floor just in front of the feet.',
+      'Step or jump both feet back to a strong high-plank position with shoulders over wrists.',
+      'Step or jump the feet back toward the hands, stand tall and add a small vertical jump only if appropriate.',
+    ],
+    cues: const [
+      'Keep the abdomen braced as the feet travel back',
+      'Land softly and keep knees tracking in line with the feet',
+      'Use the step-back variation to maintain control or reduce impact',
+    ],
+    breathing: 'Breathe out as you return to standing; take a controlled breath during the plank transition.',
+  );
+
+  static final _calfStretch = _movement(
+    id: 'exercise-calf-stretch-001',
+    name: 'Standing Calf Stretch',
+    aliases: const ['wall calf stretch'],
+    description: 'Static calf stretch with the rear heel grounded and the ankle gently moved into dorsiflexion.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.calves],
+    setup: const [
+      'Stand facing a wall and place both hands on it for balance.',
+      'Step one foot back, keep both toes pointing forward and bend the front knee slightly.',
+    ],
+    execution: const [
+      'Keep the rear heel on the floor and the rear knee straight as you shift the hips gently forward.',
+      'Stop at a mild stretch through the rear calf and hold for the prescribed time.',
+      'Ease out slowly and repeat on the other side.',
+    ],
+    cues: const [
+      'Keep the rear heel grounded',
+      'Point the rear toes straight ahead rather than turning the foot out',
+      'Use gentle tension; do not bounce or force the ankle',
+    ],
+    breathing: 'Breathe slowly and evenly throughout the hold, relaxing into the stretch on each exhale.',
+  );
+
+  static final _catCow = _movement(
+    id: 'exercise-cat-cow-001',
+    name: 'Cat-Cow',
+    aliases: const ['cat cow stretch', 'cat camel'],
+    description: 'Controlled spinal mobility drill alternating gentle spinal flexion and extension from quadruped.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.core, MuscleGroup.lowerBack],
+    secondary: const [MuscleGroup.shoulders],
+    setup: const [
+      'Start on hands and knees with wrists below shoulders and knees below hips.',
+      'Keep the head in line with the spine and distribute pressure evenly through the hands.',
+    ],
+    execution: const [
+      'Exhale and gently round the spine toward the ceiling, drawing the abdomen inward.',
+      'Inhale and reverse the movement, allowing the chest to open and the tailbone to tilt up without forcing the lower back.',
+      'Continue alternating smoothly for the prescribed repetitions.',
+    ],
+    cues: const [
+      'Move one segment of the spine at a time',
+      'Keep the movement gentle and within a comfortable range',
+      'Avoid pushing into end-range neck extension',
+    ],
+    breathing: 'Exhale during the rounded cat position and inhale as you move into cow; let breathing set the pace.',
+  );
+
+  static final _childsPose = _movement(
+    id: 'exercise-childs-pose-001',
+    name: "Child's Pose",
+    aliases: const ['balasana'],
+    description: 'Gentle kneeling recovery posture that relaxes the back, hips and shoulders.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.lowerBack, MuscleGroup.shoulders],
+    secondary: const [MuscleGroup.glutes],
+    setup: const [
+      'Kneel on a mat with knees comfortably apart and big toes close together.',
+      'Sit the hips toward the heels and place the hands on the floor in front of you.',
+    ],
+    execution: const [
+      'Walk the hands forward and lower the torso toward the thighs, resting the forehead on the mat or a support.',
+      'Allow the shoulders and back to relax while keeping the hips as close to the heels as comfortable.',
+      'Hold for the prescribed time, then walk the hands back and rise slowly.',
+    ],
+    cues: const [
+      'Keep the position comfortable for the knees and hips',
+      'Relax the shoulders away from the ears',
+      'Use a cushion under the hips or forehead when needed',
+    ],
+    breathing: 'Breathe slowly into the back and sides of the rib cage; lengthen each exhale without straining.',
+  );
+
+  static final _crossBodyShoulderStretch = _movement(
+    id: 'exercise-cross-body-shoulder-stretch-001',
+    name: 'Cross-Body Shoulder Stretch',
+    aliases: const ['posterior shoulder stretch'],
+    description: 'Static stretch for the rear shoulder performed by drawing one arm gently across the chest.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.rearDelts, MuscleGroup.shoulders],
+    setup: const [
+      'Stand or sit tall with shoulders relaxed and the chest facing forward.',
+      'Bring one arm across the chest at approximately shoulder height.',
+    ],
+    execution: const [
+      'Use the opposite hand to draw the upper arm gently closer to the chest.',
+      'Keep the stretching shoulder down and hold the mild stretch for the prescribed time.',
+      'Release slowly and repeat on the opposite side.',
+    ],
+    cues: const [
+      'Keep the torso facing forward without twisting',
+      'Apply pressure to the upper arm rather than the elbow joint',
+      'Do not shrug the stretching shoulder',
+    ],
+    breathing: 'Maintain relaxed, even breathing and soften the stretch slightly as you exhale.',
+  );
+
+  static final _dumbbellSwing = _movement(
+    id: 'exercise-db-swing-001',
+    name: 'Dumbbell Swing',
+    aliases: const ['single dumbbell swing'],
+    description: 'Hip-driven ballistic hinge using one dumbbell, performed with a controlled swing arc.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.hinge],
+    primary: const [MuscleGroup.glutes, MuscleGroup.hamstrings],
+    secondary: const [
+      MuscleGroup.core,
+      MuscleGroup.lowerBack,
+      MuscleGroup.shoulders,
+    ],
+    equipment: const [EquipmentType.dumbbell],
+    setup: const [
+      'Stand with feet slightly wider than hip-width and hold one dumbbell securely with both hands.',
+      'Brace the abdomen, soften the knees and hinge at the hips with the dumbbell hanging in front of the thighs.',
+    ],
+    execution: const [
+      'Hike the dumbbell back between the thighs by hinging at the hips, keeping the spine neutral.',
+      'Drive the hips forward forcefully to swing the dumbbell to around chest height; let the arms guide rather than lift it.',
+      'Allow the dumbbell to fall, hinge again and immediately flow into the next repetition.',
+    ],
+    cues: const [
+      'Generate power from the hips, not the shoulders',
+      'Keep the dumbbell close to the body on the backswing',
+      'Finish tall with glutes contracted, not with the lower back arched',
+    ],
+    breathing: 'Exhale sharply as the hips drive forward; inhale during the backswing while maintaining the brace.',
+  );
+
+  static final _dumbbellThruster = _movement(
+    id: 'exercise-db-thruster-001',
+    name: 'Dumbbell Thruster',
+    aliases: const ['dumbbell squat to press'],
+    description: 'Full-body compound combining a front-loaded squat with a continuous overhead dumbbell press.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.squat, MovementPattern.verticalPush],
+    primary: const [
+      MuscleGroup.quads,
+      MuscleGroup.glutes,
+      MuscleGroup.frontDelts,
+    ],
+    secondary: const [MuscleGroup.triceps, MuscleGroup.core],
+    equipment: const [EquipmentType.dumbbell],
+    setup: const [
+      'Hold a dumbbell in each hand at shoulder height with palms facing inward or slightly forward.',
+      'Stand with feet around shoulder-width apart, elbows slightly forward and core braced.',
+    ],
+    execution: const [
+      'Squat under control until the thighs are at least near parallel while keeping the dumbbells at the shoulders.',
+      'Drive through the whole foot and use the upward momentum of the squat to press both dumbbells overhead.',
+      'Lower the dumbbells back to the shoulders with control and flow into the next squat.',
+    ],
+    cues: const [
+      'Keep the chest lifted and knees tracking over the toes',
+      'Finish with the weights stacked over the shoulders and mid-foot',
+      'Use a load that allows a stable overhead lockout',
+    ],
+    breathing: 'Inhale and brace on the descent; exhale through the drive and press; inhale as the weights return to the shoulders.',
+  );
+
+  static final _diaphragmaticBreathing = _movement(
+    id: 'exercise-diaphragmatic-breathing-001',
+    name: 'Supine Diaphragmatic Breathing',
+    aliases: const ['belly breathing', 'diaphragmatic breathing'],
+    description: 'Supine breathing drill encouraging relaxed diaphragmatic expansion and a calm recovery response.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.core],
+    setup: const [
+      'Lie on your back with knees bent, feet flat and head supported comfortably.',
+      'Rest one hand on the abdomen and one on the upper chest to notice the breathing pattern.',
+    ],
+    execution: const [
+      'Inhale slowly through the nose, allowing the abdomen and lower ribs to expand while the upper chest stays relatively quiet.',
+      'Exhale gently through pursed lips, letting the abdomen fall without forcefully tightening it.',
+      'Continue for the prescribed duration with an unhurried, comfortable rhythm.',
+    ],
+    cues: const [
+      'Keep the jaw, neck and shoulders relaxed',
+      'Breathe comfortably without forcing a very deep breath',
+      'Allow the exhale to be slightly longer than the inhale if comfortable',
+    ],
+    breathing: 'Use a slow nasal inhale and soft, prolonged exhale; stop or return to normal breathing if light-headed.',
+  );
+
+  static final _doorwayChestStretch = _movement(
+    id: 'exercise-doorway-chest-stretch-001',
+    name: 'Doorway Chest Stretch',
+    aliases: const ['door frame pectoral stretch'],
+    description: 'Static chest and anterior shoulder stretch using a doorway to support the arms.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.chest],
+    secondary: const [MuscleGroup.frontDelts],
+    setup: const [
+      'Stand in a doorway and place one forearm against the frame with the elbow around shoulder height.',
+      'Step the same-side foot slightly forward and keep the ribs stacked over the pelvis.',
+    ],
+    execution: const [
+      'Rotate the torso gently away from the supported arm until a mild stretch is felt across the chest.',
+      'Hold without bouncing for the prescribed duration.',
+      'Step back to release and repeat with the other arm.',
+    ],
+    cues: const [
+      'Keep the shoulder down and avoid excessive arching',
+      'Use a comfortable elbow and shoulder angle',
+      'Do not push into sharp or pinching sensations',
+    ],
+    breathing:
+        'Breathe slowly and evenly; allow the chest to relax on each exhale.',
+  );
+
+  static final _figureFourStretch = _movement(
+    id: 'exercise-figure-four-stretch-001',
+    name: 'Figure-Four Glute Stretch',
+    aliases: const ['supine figure four stretch', 'piriformis stretch'],
+    description:
+        'Supine hip external-rotation stretch targeting the gluteal region.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.glutes],
+    secondary: const [MuscleGroup.hamstrings],
+    setup: const [
+      'Lie on your back with both knees bent and feet flat on the floor.',
+      'Cross one ankle over the opposite thigh just above the knee, creating a figure-four shape.',
+    ],
+    execution: const [
+      'Thread both hands behind the uncrossed thigh and draw it gently toward the chest.',
+      'Keep the head and shoulders relaxed while holding the stretch for the prescribed time.',
+      'Release slowly and change sides.',
+    ],
+    cues: const [
+      'Keep the crossed foot gently flexed',
+      'Do not pull directly on the knee joint',
+      'Keep the pelvis level and the lower back comfortable',
+    ],
+    breathing: 'Breathe slowly into the hips and glutes, relaxing slightly deeper only as comfort allows.',
+  );
+
+  static final _hamstringStretch = _movement(
+    id: 'exercise-hamstring-stretch-001',
+    name: 'Standing Hamstring Stretch',
+    aliases: const ['standing hamstring hinge stretch'],
+    description: 'Standing hamstring stretch using a shallow hip hinge with one leg positioned forward.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.hinge],
+    primary: const [MuscleGroup.hamstrings],
+    secondary: const [MuscleGroup.glutes],
+    setup: const [
+      'Stand tall and place one heel a short step in front with the toes lifted.',
+      'Keep a soft bend in the supporting knee and place hands on the hips or a stable support.',
+    ],
+    execution: const [
+      'Hinge forward from the hips with a long spine until a gentle stretch is felt along the back of the front thigh.',
+      'Hold for the prescribed duration without rounding the back.',
+      'Rise slowly and switch legs.',
+    ],
+    cues: const [
+      'Move from the hips rather than rounding the spine',
+      'Keep the front knee softly unlocked',
+      'Maintain a mild, comfortable stretch rather than pulling hard',
+    ],
+    breathing: 'Maintain slow, relaxed breathing throughout the hold.',
+  );
+
+  static final _hipFlexorStretch = _movement(
+    id: 'exercise-hip-flexor-stretch-001',
+    name: 'Half-Kneeling Hip Flexor Stretch',
+    aliases: const ['half kneeling lunge stretch'],
+    description: 'Half-kneeling hip extension stretch targeting the front of the rear hip.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.quads],
+    secondary: const [MuscleGroup.glutes],
+    setup: const [
+      'Kneel on one knee with the opposite foot planted in front and both knees around 90 degrees.',
+      'Tuck the pelvis slightly and brace the abdomen while keeping the torso tall.',
+    ],
+    execution: const [
+      'Squeeze the glute on the kneeling side and shift the pelvis forward a few centimetres.',
+      'Stop when a mild stretch is felt across the front of the rear hip and hold for the prescribed time.',
+      'Return to neutral and switch sides.',
+    ],
+    cues: const [
+      'Keep the ribs down and avoid arching the lower back',
+      'Use the rear-side glute to create the stretch',
+      'Keep the front foot planted and knee stable',
+    ],
+    breathing:
+        'Breathe slowly and evenly, maintaining a gentle abdominal brace.',
+  );
+
+  static final _inchworm = _movement(
+    id: 'exercise-inchworm-001',
+    name: 'Inchworm',
+    aliases: const ['walkout'],
+    description: 'Dynamic full-body mobility drill walking the hands from a standing fold into a high plank and back.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.hinge, MovementPattern.horizontalPush],
+    primary: const [MuscleGroup.core, MuscleGroup.shoulders],
+    secondary: const [MuscleGroup.hamstrings, MuscleGroup.chest],
+    setup: const [
+      'Stand with feet hip-width apart, knees soft and arms relaxed.',
+      'Brace the abdomen lightly and hinge forward to place the hands on the floor in front of the feet.',
+    ],
+    execution: const [
+      'Walk the hands forward in small steps until the body reaches a stable high plank.',
+      'Pause briefly with shoulders over wrists and hips level.',
+      'Walk the hands back toward the feet and return to standing with control.',
+    ],
+    cues: const [
+      'Keep the abdomen braced and avoid letting the lower back sag',
+      'Use small hand steps and keep the knees softly bent as needed',
+      'Keep the hips level in the plank position',
+    ],
+    breathing: 'Exhale as you walk the hands out; inhale as you walk them back and stand.',
+  );
+
+  static final _jumpRope = _movement(
+    id: 'exercise-jump-rope-001',
+    name: 'Jump Rope',
+    aliases: const ['skipping'],
+    description: 'Rhythmic low-amplitude skipping drill using a rope to develop aerobic capacity, timing and lower-leg spring.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.calves],
+    secondary: const [
+      MuscleGroup.quads,
+      MuscleGroup.shoulders,
+      MuscleGroup.core,
+    ],
+    setup: const [
+      'Hold one handle in each hand with the rope behind the heels and elbows close to the sides.',
+      'Stand tall with feet together or hip-width apart and look forward.',
+    ],
+    execution: const [
+      'Turn the rope using small wrist circles and hop just high enough for it to pass beneath the feet.',
+      'Land softly on the balls of the feet with knees relaxed and repeat at a steady rhythm.',
+      'Stop safely by allowing the rope to pass to the side or stepping out of the rhythm.',
+    ],
+    cues: const [
+      'Keep jumps low and quiet',
+      'Use the wrists rather than large shoulder circles to turn the rope',
+      'Stay tall and avoid stiff-legged landings',
+    ],
+    breathing: 'Maintain a steady breathing rhythm; exhale naturally across several jumps rather than holding your breath.',
+  );
+
+  static final _jumpSquat = _movement(
+    id: 'exercise-jump-squat-001',
+    name: 'Jump Squat',
+    aliases: const ['bodyweight squat jump'],
+    description: 'Plyometric squat variation that uses a controlled countermovement and soft landing to develop lower-body power.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.squat],
+    primary: const [MuscleGroup.quads, MuscleGroup.glutes],
+    secondary: const [MuscleGroup.calves, MuscleGroup.core],
+    setup: const [
+      'Stand with feet around shoulder-width apart and arms relaxed or slightly behind the body.',
+      'Brace the abdomen and establish a balanced stance with weight across the whole foot.',
+    ],
+    execution: const [
+      'Bend the hips and knees into a shallow-to-moderate squat while swinging the arms back.',
+      'Drive through the feet and jump vertically, extending the hips, knees and ankles.',
+      'Land softly on both feet with knees tracking over toes, absorb the landing and reset before the next rep.',
+    ],
+    cues: const [
+      'Prioritise a quiet, controlled landing',
+      'Keep knees aligned with the toes',
+      'Use a lower-impact squat without a jump when landing control fades',
+    ],
+    breathing: 'Inhale during the countermovement; exhale as you jump and land with a braced trunk.',
+  );
+
+  static final _jumpingJack = _movement(
+    id: 'exercise-jumping-jack-001',
+    name: 'Jumping Jack',
+    aliases: const ['star jump'],
+    description: 'Bodyweight cardiovascular warm-up moving the feet apart as the arms sweep overhead, then returning to the start.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.shoulders, MuscleGroup.quads],
+    secondary: const [MuscleGroup.calves, MuscleGroup.core],
+    setup: const [
+      'Stand tall with feet together, arms by the sides and knees relaxed.',
+      'Brace lightly and look forward with enough space around you to move.',
+    ],
+    execution: const [
+      'Jump or step both feet out wider than shoulder-width while sweeping the arms out and overhead.',
+      'Jump or step the feet back together as the arms return to the sides.',
+      'Continue at a controlled, repeatable rhythm for the prescribed duration.',
+    ],
+    cues: const [
+      'Land softly with knees tracking over the toes',
+      'Keep the shoulders relaxed as the arms travel overhead',
+      'Use the step-out variation to reduce impact',
+    ],
+    breathing: 'Breathe rhythmically and continuously; exhale naturally as the feet move out.',
+  );
+
+  static final _legSwings = _movement(
+    id: 'exercise-leg-swings-001',
+    name: 'Leg Swings',
+    aliases: const ['dynamic leg swings'],
+    description: 'Dynamic hip mobility drill swinging one leg forward and backward while supported by a stable surface.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.glutes, MuscleGroup.hamstrings],
+    secondary: const [MuscleGroup.quads, MuscleGroup.core],
+    setup: const [
+      'Stand beside a wall or rack and hold it lightly for balance.',
+      'Stand tall on the supporting leg with the swinging leg relaxed and pelvis facing forward.',
+    ],
+    execution: const [
+      'Swing the free leg forward and backward through a comfortable range without twisting the torso.',
+      'Gradually increase the range as the hip becomes warm while keeping the movement smooth.',
+      'Complete the prescribed repetitions and repeat on the other side.',
+    ],
+    cues: const [
+      'Keep the trunk upright and pelvis square',
+      'Let the hip create the movement rather than kicking from the knee',
+      'Start with a small range and build gradually',
+    ],
+    breathing:
+        'Breathe naturally and steadily while keeping the swing relaxed.',
+  );
+
+  static final _lyingSpinalTwist = _movement(
+    id: 'exercise-lying-spinal-twist-001',
+    name: 'Lying Spinal Twist',
+    aliases: const ['supine spinal twist'],
+    description: 'Supine rotational mobility stretch allowing bent knees to lower gently to one side.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.core, MuscleGroup.lowerBack],
+    secondary: const [MuscleGroup.glutes],
+    setup: const [
+      'Lie on your back with arms extended out to the sides in a T shape.',
+      'Bend both knees and place the feet flat, keeping shoulders relaxed against the floor.',
+    ],
+    execution: const [
+      'Allow both knees to lower together toward one side while keeping the opposite shoulder comfortably grounded.',
+      'Pause in a gentle stretch for the prescribed duration without forcing the knees to the floor.',
+      'Bring the knees back to centre and repeat on the other side.',
+    ],
+    cues: const [
+      'Move slowly and keep the shoulders relaxed',
+      'Use a smaller range if the lower back feels strained',
+      'Keep both knees moving together',
+    ],
+    breathing:
+        'Exhale gently as the knees lower; inhale as they return to centre.',
+  );
+
+  static final _mountainClimber = _movement(
+    id: 'exercise-mountain-climber-001',
+    name: 'Mountain Climber',
+    aliases: const ['alternating mountain climber'],
+    description: 'Dynamic plank-based conditioning drill alternating knee drives toward the chest.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.horizontalPush],
+    primary: const [MuscleGroup.core],
+    secondary: const [MuscleGroup.quads, MuscleGroup.shoulders],
+    setup: const [
+      'Start in a high plank with hands under shoulders, feet hip-width apart and body in a straight line.',
+      'Brace the abdomen and press the floor away to keep the upper back stable.',
+    ],
+    execution: const [
+      'Drive one knee toward the chest while keeping the hips as level as possible.',
+      'Return that foot to the plank and immediately drive the opposite knee forward.',
+      'Alternate smoothly for the prescribed time or repetitions, adjusting speed to maintain control.',
+    ],
+    cues: const [
+      'Keep shoulders stacked over wrists',
+      'Avoid bouncing the hips high or allowing the lower back to sag',
+      'Use a slower step-in variation when needed',
+    ],
+    breathing: 'Breathe continuously and rhythmically; avoid holding the breath as the pace increases.',
+  );
+
+  static final _overheadTricepStretch = _movement(
+    id: 'exercise-overhead-tricep-stretch-001',
+    name: 'Overhead Triceps Stretch',
+    aliases: const ['overhead triceps stretch'],
+    description: 'Static triceps stretch with one elbow bent overhead and the hand moving gently down the upper back.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.triceps],
+    secondary: const [MuscleGroup.shoulders],
+    setup: const [
+      'Stand or sit tall and raise one arm overhead.',
+      'Bend the elbow so the hand moves toward the upper back between the shoulder blades.',
+    ],
+    execution: const [
+      'Use the opposite hand to guide the raised elbow gently backward, without pulling on the wrist.',
+      'Hold the mild stretch for the prescribed duration while keeping the ribs down.',
+      'Release slowly and repeat on the other side.',
+    ],
+    cues: const [
+      'Keep the lower ribs from flaring upward',
+      'Avoid pressing the elbow into pain',
+      'Keep the neck relaxed',
+    ],
+    breathing:
+        'Breathe slowly and evenly, softening the shoulders as you exhale.',
+  );
+
+  static final _quadStretch = _movement(
+    id: 'exercise-quad-stretch-001',
+    name: 'Standing Quad Stretch',
+    aliases: const ['standing quadriceps stretch'],
+    description: 'Standing static quadriceps stretch drawing one heel toward the glutes while balancing with support as needed.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.quads],
+    secondary: const [MuscleGroup.glutes],
+    setup: const [
+      'Stand tall beside a wall or stable support and hold it lightly for balance.',
+      'Bend one knee and bring the heel toward the glutes, holding the ankle or foot.',
+    ],
+    execution: const [
+      'Bring the knees close together and gently draw the heel toward the glutes until the front thigh stretches.',
+      'Keep the pelvis neutral and hold for the prescribed duration.',
+      'Release slowly and repeat with the other leg.',
+    ],
+    cues: const [
+      'Keep the knees pointing toward the floor',
+      'Avoid arching the lower back or pushing the hip forward aggressively',
+      'Use a hand support to maintain balance',
+    ],
+    breathing: 'Maintain calm, steady breathing throughout the hold.',
+  );
+
+  static final _recoveryWalk = _movement(
+    id: 'exercise-recovery-walk-001',
+    name: 'Easy Recovery Walk',
+    aliases: const ['easy walk', 'cool-down walk'],
+    description: 'Low-intensity walking interval used to raise body temperature gradually or bring heart rate down after training.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.quads, MuscleGroup.glutes, MuscleGroup.calves],
+    secondary: const [MuscleGroup.hamstrings, MuscleGroup.core],
+    setup: const [
+      'Choose a flat, unobstructed walking route or treadmill and stand tall with a relaxed arm swing.',
+      'Begin at a comfortable pace that allows full-sentence conversation.',
+    ],
+    execution: const [
+      'Walk continuously for the prescribed time using short, natural strides.',
+      'Keep the shoulders relaxed, eyes forward and steps quiet.',
+      'Gradually reduce the pace when using the walk as a cool-down.',
+    ],
+    cues: const [
+      'Keep effort easy and conversational',
+      'Avoid suddenly stopping after hard intervals',
+      'Use a flat route and comfortable stride length',
+    ],
+    breathing: 'Breathe naturally; the pace should allow controlled conversation without gasping.',
+  );
+
+  static final _rowingMachine = _movement(
+    id: 'exercise-rowing-machine-001',
+    name: 'Rowing Machine',
+    aliases: const ['indoor rower', 'erg rowing'],
+    description: 'Full-body aerobic exercise on an indoor rowing ergometer using a coordinated leg drive, body swing and arm pull.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.horizontalPull, MovementPattern.hinge],
+    primary: const [MuscleGroup.quads, MuscleGroup.lats],
+    secondary: const [
+      MuscleGroup.glutes,
+      MuscleGroup.hamstrings,
+      MuscleGroup.core,
+      MuscleGroup.biceps,
+    ],
+    equipment: const [EquipmentType.machine],
+    setup: const [
+      'Set the foot straps across the widest part of the feet and adjust the damper to a manageable setting.',
+      'Sit tall with shins near vertical, knees bent, arms straight and hands holding the handle.',
+    ],
+    execution: const [
+      'Drive through the legs first, then swing the torso slightly back and draw the handle toward the lower ribs.',
+      'Reverse the sequence by extending the arms, hinging the torso forward and bending the knees to slide toward the flywheel.',
+      'Repeat in a smooth rhythm, keeping the handle path level.',
+    ],
+    cues: const [
+      'Use the sequence legs, body, arms on the drive and arms, body, legs on recovery',
+      'Keep the shoulders relaxed and wrists flat',
+      'Avoid rounding the lower back at the catch',
+    ],
+    breathing: 'Exhale through the leg drive and pull; inhale during the controlled recovery.',
+  );
+
+  static final _stationaryBike = _movement(
+    id: 'exercise-stationary-bike-001',
+    name: 'Stationary Bike',
+    aliases: const ['indoor cycling', 'exercise bike'],
+    description: 'Low-impact aerobic cycling interval performed on a stationary exercise bike.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.quads],
+    secondary: const [
+      MuscleGroup.glutes,
+      MuscleGroup.hamstrings,
+      MuscleGroup.calves,
+    ],
+    equipment: const [EquipmentType.machine],
+    setup: const [
+      'Adjust the saddle so the knee remains slightly bent when the pedal is at its lowest point.',
+      'Set the handlebars and resistance to a comfortable starting level, then place feet securely on the pedals.',
+    ],
+    execution: const [
+      'Pedal smoothly with an even circular motion, keeping the hips stable on the saddle.',
+      'Maintain the prescribed cadence or effort and adjust resistance without rocking the torso.',
+      'Reduce resistance gradually at the end of the interval.',
+    ],
+    cues: const [
+      'Keep knees tracking in line with the feet',
+      'Relax the shoulders and grip lightly',
+      'Avoid bouncing in the saddle at higher cadence',
+    ],
+    breathing: 'Breathe rhythmically and steadily; increase effort only while breathing remains controlled.',
+  );
+
+  static final _treadmillRun = _movement(
+    id: 'exercise-treadmill-run-001',
+    name: 'Treadmill Run',
+    aliases: const ['treadmill jogging', 'indoor run'],
+    description: 'Running interval on a treadmill with speed and incline set to match the prescribed effort.',
+    regions: const [BodyRegion.lowerBody],
+    patterns: const [MovementPattern.squat],
+    primary: const [MuscleGroup.quads, MuscleGroup.glutes, MuscleGroup.calves],
+    secondary: const [MuscleGroup.hamstrings, MuscleGroup.core],
+    equipment: const [EquipmentType.machine],
+    setup: const [
+      'Stand on the side rails, attach the safety clip and select a flat or modest incline.',
+      'Start the belt at a walking speed and step onto it only once it is moving slowly and steadily.',
+    ],
+    execution: const [
+      'Gradually increase the belt speed to the prescribed running pace.',
+      'Run with a relaxed upright posture, short natural strides and feet landing beneath the body.',
+      'Reduce speed gradually before stepping onto the side rails to stop.',
+    ],
+    cues: const [
+      'Keep eyes forward and shoulders relaxed',
+      'Avoid reaching far ahead with the lead foot',
+      'Use the safety clip and do not jump onto or off a moving belt',
+    ],
+    breathing: 'Use controlled rhythmic breathing appropriate to the interval intensity; ease the pace if breathing becomes uncontrolled.',
+  );
+
+  static final _worldsGreatestStretch = _movement(
+    id: 'exercise-worlds-greatest-stretch-001',
+    name: "World's Greatest Stretch",
+    aliases: const ['worlds greatest stretch', 'lunge with thoracic rotation'],
+    description: 'Dynamic multi-joint mobility sequence combining a lunge, hip flexor stretch and thoracic rotation.',
+    regions: const [BodyRegion.fullBody],
+    patterns: const [MovementPattern.squat, MovementPattern.isolation],
+    primary: const [MuscleGroup.glutes, MuscleGroup.quads, MuscleGroup.core],
+    secondary: const [
+      MuscleGroup.hamstrings,
+      MuscleGroup.shoulders,
+      MuscleGroup.lowerBack,
+    ],
+    setup: const [
+      'Begin in a high plank with hands under shoulders and feet hip-width apart.',
+      'Step one foot forward outside the same-side hand, keeping the rear leg long and the front foot flat.',
+    ],
+    execution: const [
+      'Lower the rear hip gently toward the floor while keeping the front knee aligned over the foot.',
+      'Place the same-side hand inside the front foot, then rotate that arm toward the ceiling while following the hand with the eyes.',
+      'Return the hand to the floor, shift the hips back briefly to stretch the front leg, then step back and repeat on the other side.',
+    ],
+    cues: const [
+      'Keep the front foot flat and knee tracking over the toes',
+      'Rotate through the upper back rather than forcing the lower back',
+      'Move smoothly and use a shorter lunge if hip mobility is limited',
+    ],
+    breathing: 'Exhale as you rotate and inhale as you return to the lunge; keep breathing smoothly through the sequence.',
+  );
+
+  /// Shared constructor keeps the catalog entries consistent while each movement
+  /// still carries its own complete, exercise-specific execution profile.
+  static Exercise _movement({
+    required String id,
+    required String name,
+    List<String> aliases = const [],
+    required String description,
+    required List<BodyRegion> regions,
+    required List<MovementPattern> patterns,
+    required List<MuscleGroup> primary,
+    List<MuscleGroup> secondary = const [],
+    List<EquipmentType> equipment = const [EquipmentType.bodyweight],
+    required List<String> setup,
+    required List<String> execution,
+    required List<String> cues,
+    required String breathing,
+  }) => Exercise(
+    id: id,
+    name: name,
+    aliases: aliases,
+    description: description,
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: ExerciseClassification(
+      bodyRegions: regions,
+      movementPatterns: patterns,
+      primaryMuscles: primary,
+      secondaryMuscles: secondary,
+    ),
+    equipment: ExerciseEquipmentProfile(requiredEquipment: equipment),
+    execution: ExerciseExecutionProfile(
+      setupInstructions: setup,
+      executionInstructions: execution,
+      techniqueCues: cues,
+      breathingInstructions: breathing,
     ),
   );
 }
