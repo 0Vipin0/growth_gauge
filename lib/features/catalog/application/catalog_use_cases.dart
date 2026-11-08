@@ -6,6 +6,7 @@ import '../domain/exercise.dart';
 import '../domain/exercise_classification.dart';
 import '../domain/exercise_enums.dart';
 import '../domain/exercise_equipment.dart';
+import '../domain/exercise_execution.dart';
 import '../domain/exercise_relationship.dart';
 import '../domain/measurement_profile.dart';
 import '../infrastructure/exercise_repository.dart';
@@ -67,6 +68,10 @@ class const CatalogUseCases(final IExerciseRepository _repository) {
     MuscleGroup? primaryMuscle,
     EquipmentType? equipment,
     MetricType metricType = MetricType.weightAndReps,
+    List<String> setupInstructions = const [],
+    List<String> executionInstructions = const [],
+    List<String> techniqueCues = const [],
+    String? breathingInstructions,
   }) async {
     final cleanName = name.trim();
     if (cleanName.isEmpty) {
@@ -92,6 +97,12 @@ class const CatalogUseCases(final IExerciseRepository _repository) {
       ),
       equipment: ExerciseEquipmentProfile(
         requiredEquipment: equipment == null ? const [] : [equipment],
+      ),
+      execution: ExerciseExecutionProfile(
+        setupInstructions: setupInstructions,
+        executionInstructions: executionInstructions,
+        techniqueCues: techniqueCues,
+        breathingInstructions: breathingInstructions,
       ),
       measurementProfile: ExerciseMeasurementProfile(
         defaultMetricType: metricType,

@@ -16,6 +16,7 @@ class const ActiveExerciseCard({
   required final ValueChanged<ExecutionSet> onSkip,
   required final VoidCallback onNext,
   required final VoidCallback onPrevious,
+  final VoidCallback? onShowGuidance,
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -111,11 +112,33 @@ class const ActiveExerciseCard({
           ),
           const SizedBox(height: 12),
 
-          // Exercise Title
-          Text(
-            exerciseName,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
+          // Exercise Title with Optional Guidance Button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  exerciseName,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              if (onShowGuidance != null) ...[
+                const SizedBox(width: 8),
+                IconButton(
+                  tooltip: 'View Form & Steps Guidance',
+                  icon: Icon(
+                    Icons.info_outline,
+                    color: colorScheme.primary,
+                    size: 22,
+                  ),
+                  onPressed: onShowGuidance,
+                ),
+              ],
+            ],
           ),
           const SizedBox(height: 8),
 

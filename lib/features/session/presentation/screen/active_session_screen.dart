@@ -135,6 +135,122 @@ class _ActiveSessionScreenState()
     });
   }
 
+  Future<void> _showExerciseGuidance(
+    String exerciseId,
+    String exerciseName,
+  ) async {
+    final result = await widget.exerciseRepository.findById(exerciseId);
+    if (!mounted) return;
+    final exercise = result.dataOrNull;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        minChildSize: 0.4,
+        maxChildSize: 0.9,
+        expand: false,
+        builder: (context, scrollController) => Padding(
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            controller: scrollController,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                exercise?.name ?? exerciseName,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              if (exercise != null) ...[
+                if (exercise.execution.setupInstructions.isNotEmpty) ...[
+                  const Text(
+                    'Setup Steps',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  ...exercise.execution.setupInstructions.map(
+                    (step) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('• '),
+                          Expanded(child: Text(step)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (exercise.execution.executionInstructions.isNotEmpty) ...[
+                  const Text(
+                    'Execution Steps',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  ...exercise.execution.executionInstructions.map(
+                    (step) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('• '),
+                          Expanded(child: Text(step)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (exercise.execution.techniqueCues.isNotEmpty) ...[
+                  const Text(
+                    'Technique Cues',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  ...exercise.execution.techniqueCues.map(
+                    (cue) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.check_circle_outline,
+                            size: 16,
+                            color: Colors.green,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(cue)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ] else ...[
+                const Text('No guidance details available for this exercise.'),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _ticker?.cancel();
@@ -468,12 +584,17 @@ class _ActiveSessionScreenState()
     final paused = _session.status == SessionStatus.paused;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final allSetsWithInfo = <({ExecutionSet set, String exerciseName})>[];
+    final allSetsWithInfo =
+        <({ExecutionSet set, String exerciseName, String exerciseId})>[];
     for (final block in _session.blocks) {
       for (final item in block.items) {
         final exName = _exerciseNames[item.exerciseId] ?? item.exerciseId;
         for (final set in item.sets) {
-          allSetsWithInfo.add((set: set, exerciseName: exName));
+          allSetsWithInfo.add((
+            set: set,
+            exerciseName: exName,
+            exerciseId: item.exerciseId,
+          ));
         }
       }
     }
@@ -555,6 +676,12 @@ class _ActiveSessionScreenState()
                   setState(() => _activeSetIndex--);
                 }
               },
+              onShowGuidance: currentInfo != null
+                  ? () => _showExerciseGuidance(
+                      currentInfo.exerciseId,
+                      currentInfo.exerciseName,
+                    )
+                  : null,
             ),
             const SizedBox(height: 24),
             const Divider(),

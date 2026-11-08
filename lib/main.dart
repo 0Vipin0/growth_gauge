@@ -107,14 +107,14 @@ Future<void> _initializeSeeders(
   TemplateRepository templates,
 ) async {
   try {
-    final catalogSeedResult = await CatalogSeeder(exercises).seedIfEmpty();
+    final catalogSeedResult = await CatalogSeeder(exercises).seedOrUpdate();
     if (catalogSeedResult.isError) {
       debugPrint(
         'Warning: Could not seed exercise catalog: ${catalogSeedResult.errorOrNull}',
       );
     }
 
-    final templateSeedResult = await TemplateSeeder(templates).seedIfEmpty();
+    final templateSeedResult = await TemplateSeeder(templates).seedOrUpdate();
     if (templateSeedResult.isError) {
       debugPrint(
         'Warning: Could not seed workout templates: ${templateSeedResult.errorOrNull}',

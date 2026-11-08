@@ -20,6 +20,12 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _setupStepController = TextEditingController();
+  final _executionStepController = TextEditingController();
+
+  final List<String> _setupSteps = [];
+  final List<String> _executionSteps = [];
+
   BodyRegion _bodyRegion = BodyRegion.fullBody;
   MovementPattern _movementPattern = MovementPattern.isolation;
   MuscleGroup _primaryMuscle = MuscleGroup.glutes;
@@ -31,7 +37,27 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _setupStepController.dispose();
+    _executionStepController.dispose();
     super.dispose();
+  }
+
+  void _addSetupStep() {
+    final text = _setupStepController.text.trim();
+    if (text.isEmpty) return;
+    setState(() {
+      _setupSteps.add(text);
+      _setupStepController.clear();
+    });
+  }
+
+  void _addExecutionStep() {
+    final text = _executionStepController.text.trim();
+    if (text.isEmpty) return;
+    setState(() {
+      _executionSteps.add(text);
+      _executionStepController.clear();
+    });
   }
 
   @override
@@ -56,8 +82,6 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
                 label: 'Exercise Name',
                 hintText: 'Enter exercise name...',
                 prefixIcon: Icons.fitness_center,
-                // Note: validator can be integrated via form fields wrapping or custom handling if needed,
-                // but standard text field here is fully managed.
               ),
               const SizedBox(height: 16),
               AppTextField(
@@ -159,7 +183,36 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
                   ],
                 ),
               ),
+
+              // Setup Steps Builder Section
               const SizedBox(height: 28),
+              _buildStepSection(
+                title: 'Setup Steps',
+                subtitle: 'Preparation steps (e.g. rack height, stance, grip)',
+                controller: _setupStepController,
+                steps: _setupSteps,
+                onAdd: _addSetupStep,
+                badgeColor: colorScheme.primaryContainer,
+                onBadgeColor: colorScheme.onPrimaryContainer,
+                onDelete: (index) =>
+                    setState(() => _setupSteps.removeAt(index)),
+              ),
+
+              // Execution Steps Builder Section
+              const SizedBox(height: 28),
+              _buildStepSection(
+                title: 'Execution Steps',
+                subtitle: 'Movement execution (e.g. descent, drive, lockout)',
+                controller: _executionStepController,
+                steps: _executionSteps,
+                onAdd: _addExecutionStep,
+                badgeColor: colorScheme.primary,
+                onBadgeColor: colorScheme.onPrimary,
+                onDelete: (index) =>
+                    setState(() => _executionSteps.removeAt(index)),
+              ),
+
+              const SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,
                 child: AppButton.primary(
@@ -173,6 +226,117 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildStepSection({
+    required String title,
+    required String subtitle,
+    required TextEditingController controller,
+    required List<String> steps,
+    required VoidCallback onAdd,
+    required Color badgeColor,
+    required Color onBadgeColor,
+    required ValueChanged<int> onDelete,
+  }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          subtitle,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: AppTextField(
+                controller: controller,
+                label: 'Step Description',
+                hintText: 'Enter step detail...',
+                prefixIcon: Icons.format_list_numbered,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: IconButton.filledTonal(
+                tooltip: 'Add Step',
+                icon: const Icon(Icons.add),
+                onPressed: onAdd,
+              ),
+            ),
+          ],
+        ),
+        if (steps.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          AppCard(
+            child: Column(
+              children: List.generate(steps.length, (index) {
+                final stepNum = index + 1;
+                final isLast = index == steps.length - 1;
+                return Padding(
+                  padding: EdgeInsets.only(bottom: isLast ? 0 : 12.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 26,
+                        height: 26,
+                        decoration: BoxDecoration(
+                          color: badgeColor,
+                          shape: BoxShape.circle,
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '$stepNum',
+                          style: TextStyle(
+                            color: onBadgeColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text(
+                            steps[index],
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: 'Remove step',
+                        icon: const Icon(Icons.delete_outline, size: 20),
+                        color: colorScheme.error,
+                        onPressed: () => onDelete(index),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -193,6 +357,8 @@ class _CustomExerciseScreenState() extends State<CustomExerciseScreen> {
       primaryMuscle: _primaryMuscle,
       equipment: _equipment,
       metricType: _metricType,
+      setupInstructions: _setupSteps,
+      executionInstructions: _executionSteps,
     );
     if (!mounted) return;
     setState(() => _saving = false);

@@ -230,6 +230,68 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                   ),
                 ),
 
+                if (_exercise.execution.setupInstructions.isNotEmpty)
+                  _buildStepList(
+                    context,
+                    title: 'Setup Steps',
+                    steps: _exercise.execution.setupInstructions,
+                    badgeColor: colorScheme.primaryContainer,
+                    onBadgeColor: colorScheme.onPrimaryContainer,
+                  ),
+
+                if (_exercise.execution.executionInstructions.isNotEmpty)
+                  _buildStepList(
+                    context,
+                    title: 'Execution Steps',
+                    steps: _exercise.execution.executionInstructions,
+                    badgeColor: colorScheme.primary,
+                    onBadgeColor: colorScheme.onPrimary,
+                  ),
+
+                if (_exercise.execution.breathingInstructions != null &&
+                    _exercise.execution.breathingInstructions!
+                        .trim()
+                        .isNotEmpty) ...[
+                  const SizedBox(height: 28),
+                  Text(
+                    'Breathing Guidance',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  AppCard(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: colorScheme.primaryContainer,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.air,
+                            color: colorScheme.onPrimaryContainer,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Text(
+                            _exercise.execution.breathingInstructions!,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurface,
+                              height: 1.4,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+
                 if (_exercise.execution.techniqueCues.isNotEmpty) ...[
                   const SizedBox(height: 28),
                   Text(
@@ -344,6 +406,74 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
             value.isEmpty ? 'Not specified' : value,
             textAlign: TextAlign.end,
             style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStepList(
+    BuildContext context, {
+    required String title,
+    required List<String> steps,
+    required Color badgeColor,
+    required Color onBadgeColor,
+  }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 28),
+        Text(
+          title,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: 12),
+        AppCard(
+          child: Column(
+            children: List.generate(steps.length, (index) {
+              final stepNumber = index + 1;
+              final isLast = index == steps.length - 1;
+              return Padding(
+                padding: EdgeInsets.only(bottom: isLast ? 0 : 16.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: badgeColor,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '$stepNumber',
+                        style: TextStyle(
+                          color: onBadgeColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Text(
+                        steps[index],
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
         ),
       ],

@@ -5,13 +5,13 @@ import '../../../analytics/domain/daily_workout_summary.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 
 class const WeekSummarySection({
-    super.key,
-    required final bool isDesktop,
-    required final List<DailyWorkoutSummary> summaries,
-    final VoidCallback? onDetailsTap,
-    final int targetCalories = 3500,
-    final double userWeightKg = 75.0,
-  }) extends StatelessWidget {
+  super.key,
+  required final bool isDesktop,
+  required final List<DailyWorkoutSummary> summaries,
+  final VoidCallback? onDetailsTap,
+  final int targetCalories = 3500,
+  final double userWeightKg = 75.0,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -78,11 +78,11 @@ class const WeekSummarySection({
 }
 
 class const _WeekSummaryDesktopGrid({
-    required final String activeTime,
-    required final String workouts,
-    required final int burnedCalories,
-    required final int targetCalories,
-  }) extends StatelessWidget {
+  required final String activeTime,
+  required final String workouts,
+  required final int burnedCalories,
+  required final int targetCalories,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -126,11 +126,11 @@ class const _WeekSummaryDesktopGrid({
 }
 
 class const _WeekSummaryMobileStack({
-    required final String activeTime,
-    required final String workouts,
-    required final int burnedCalories,
-    required final int targetCalories,
-  }) extends StatelessWidget {
+  required final String activeTime,
+  required final String workouts,
+  required final int burnedCalories,
+  required final int targetCalories,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -165,10 +165,10 @@ class const _WeekSummaryMobileStack({
 }
 
 class const CaloriesCard({
-    super.key,
-    final int burnedCalories = 0,
-    final int targetCalories = 3500,
-  }) extends StatelessWidget {
+  super.key,
+  final int burnedCalories = 0,
+  final int targetCalories = 3500,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

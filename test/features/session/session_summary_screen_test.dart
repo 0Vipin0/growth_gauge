@@ -148,11 +148,7 @@ void main() {
       'uses formatted slug fallback when exerciseRepository is null',
       (tester) async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: SessionSummaryScreen(
-              session: testSession,
-            ),
-          ),
+          MaterialApp(home: SessionSummaryScreen(session: testSession)),
         );
 
         await tester.pumpAndSettle();
