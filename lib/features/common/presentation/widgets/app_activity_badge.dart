@@ -27,30 +27,30 @@ extension ActivityTypeExtension on ActivityType {
   IconData get icon {
     switch (this) {
       case ActivityType.warmUp:
-        return Icons.directions_run; // Runner icon[cite: 1]
+        return Icons.directions_run; // Runner icon
       case ActivityType.interval:
-        return Icons.timer; // Stopwatch icon[cite: 1]
+        return Icons.timer; // Stopwatch icon
       case ActivityType.reps:
-        return Icons.fitness_center; // Dumbbell icon[cite: 1]
+        return Icons.fitness_center; // Dumbbell icon
       case ActivityType.rest:
-        return Icons.bedtime; // Zzz clock icon[cite: 1]
+        return Icons.bedtime; // Zzz clock icon
       case ActivityType.coolDown:
-        return Icons.ac_unit; // Snowflake icon[cite: 1]
+        return Icons.ac_unit; // Snowflake icon
     }
   }
 
   Color get themeColor {
     switch (this) {
       case ActivityType.warmUp:
-        return const Color(0xFFFFB300); // Amber[cite: 1]
+        return const Color(0xFFFFB300); // Amber
       case ActivityType.interval:
-        return const Color(0xFF9FA8DA); // Purple / Indigo tint[cite: 1]
+        return const Color(0xFF9FA8DA); // Purple / Indigo tint
       case ActivityType.reps:
-        return const Color(0xFF00FF66); // Forest Green[cite: 1]
+        return const Color(0xFF00FF66); // Forest Green
       case ActivityType.rest:
-        return const Color(0xFF78909C); // Grey-Blue[cite: 1]
+        return const Color(0xFF78909C); // Grey-Blue
       case ActivityType.coolDown:
-        return const Color(0xFF00E5FF); // Cyan[cite: 1]
+        return const Color(0xFF00E5FF); // Cyan
     }
   }
 }

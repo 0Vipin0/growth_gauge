@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../chart/presentation/screens/chart.dart';
+import '../../../chart/chart.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/daily_workout_summary.dart';
 
@@ -8,10 +8,10 @@ import '../../domain/daily_workout_summary.dart';
 class const WorkoutFrequencyHeatmap({
   super.key,
 
-  /// List of daily workout summaries[cite: 2].
+  /// List of daily workout summaries.
   required final List<DailyWorkoutSummary> summaries,
 
-  /// Number of days to display[cite: 2].
+  /// Number of days to display.
   final int daysToShow = 70,
 }) extends StatelessWidget {
   @override

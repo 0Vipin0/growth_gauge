@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/heatmap_utils.dart';
 import 'heatmap_container.dart';
-import 'heatmap_utils.dart';
 
 class HeatMapColumn({
   super.key,

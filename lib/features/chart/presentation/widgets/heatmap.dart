@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../utils/heatmap_utils.dart';
 import 'heatmap_color_tip.dart';
 import 'heatmap_page.dart';
-import 'heatmap_utils.dart';
 
 class const HeatMap({
   super.key,

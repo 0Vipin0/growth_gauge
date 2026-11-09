@@ -33,7 +33,7 @@ class const AppTextField({
         hintText: hintText,
         helperText: helperText,
         errorText: errorText,
-        // Standardized dark fill (surfaceContainerLow) with 12dp border radius[cite: 1]
+        // Standardized dark fill (surfaceContainerLow) with 12dp border radius
         filled: true,
         fillColor: colorScheme.surfaceContainerLow,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 20) : null,

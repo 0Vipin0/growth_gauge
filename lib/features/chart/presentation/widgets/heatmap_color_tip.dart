@@ -2,12 +2,12 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import 'heatmap_utils.dart';
+import '../utils/heatmap_utils.dart';
 
 class const HeatMapColorTip({
   super.key,
 
-  /// ColorMode changes the color mode of blocks.[cite: 1]
+  /// ColorMode changes the color mode of blocks.
   /// ColorMode changes the color mode of blocks.
   ///
   /// [ColorMode.opacity] requires just one colorsets value and changes color
@@ -35,33 +35,33 @@ class const HeatMapColorTip({
   /// The double value of tip container's size.
   this.size,
 }) extends StatelessWidget {
-  /// The colorsets which give the color value for its thresholds key value.[cite: 1]
+  /// The colorsets which give the color value for its thresholds key value.
   final Map<int, Color>? colorsets;
 
-  /// The widget which shows left side of [HeatMapColorTip].[cite: 1]
+  /// The widget which shows left side of [HeatMapColorTip].
   final Widget? leftWidget;
 
-  /// The widget which shows right side of [HeatMapColorTip].[cite: 1]
+  /// The widget which shows right side of [HeatMapColorTip].
   final Widget? rightWidget;
 
-  /// The integer value of color tip containers count.[cite: 1]
+  /// The integer value of color tip containers count.
   final int? containerCount;
 
-  /// The double value of tip container's size.[cite: 1]
+  /// The double value of tip container's size.
   final double? size;
 
-  /// Default length of [containerCount].[cite: 1]
+  /// Default length of [containerCount].
   static const int _defaultLength = 7;
 
   /// It returns the List of tip container.
   ///
-  /// If [ColorMode.color], call [_heatmapListColor][cite: 1]
-  /// If [ColorMode.opacity], call [_heatmapListOpacity][cite: 1]
+  /// If [ColorMode.color], call [_heatmapListColor]
+  /// If [ColorMode.opacity], call [_heatmapListOpacity]
   List<Widget> _heatmapList() => colorMode == ColorMode.color
       ? _heatmapListColor()
       : _heatmapListOpacity();
 
-  /// Evenly show every colors from lowest to highest.[cite: 1]
+  /// Evenly show every colors from lowest to highest.
   List<Widget> _heatmapListColor() {
     final List<Widget> children = [];
     final SplayTreeMap<int, Color> sortedColorset =
@@ -84,7 +84,7 @@ class const HeatMapColorTip({
     return children;
   }
 
-  /// Evenly show every colors from transparent to non-transparent.[cite: 1]
+  /// Evenly show every colors from transparent to non-transparent.
   List<Widget> _heatmapListOpacity() {
     final List<Widget> children = [];
 
@@ -101,7 +101,7 @@ class const HeatMapColorTip({
     return children;
   }
 
-  /// Container which is colored by [color].[cite: 1]
+  /// Container which is colored by [color].
   Widget _tipContainer(Color color) {
     return ColoredBox(
       color: HeatMapColor.defaultColor,
@@ -109,7 +109,7 @@ class const HeatMapColorTip({
     );
   }
 
-  /// Default text widget.[cite: 1]
+  /// Default text widget.
   Widget _defaultText(String text) {
     return Text(
       text,

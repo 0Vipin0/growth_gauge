@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../../chart/presentation/screens/chart.dart';
+import '../../../chart/chart.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/muscle_volume_stat.dart';
 
@@ -31,7 +31,7 @@ class const VolumeBarChart({
       );
     }
 
-    // Aggregate volume by muscle group[cite: 4]
+    // Aggregate volume by muscle group
     final muscleTotals = <String, double>{};
     for (final s in stats) {
       muscleTotals[s.muscleGroup] =
@@ -42,7 +42,7 @@ class const VolumeBarChart({
       ..sort((a, b) => b.value.compareTo(a.value));
     final displayEntries = entries.take(6).toList();
 
-    // Build bar groups for fl_chart[cite: 4, 5]
+    // Build bar groups for fl_chart
     final barGroups = <BarChartGroupData>[];
     for (int i = 0; i < displayEntries.length; i++) {
       final entry = displayEntries[i];

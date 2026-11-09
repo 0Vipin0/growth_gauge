@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'heatmap_utils.dart';
+import '../utils/heatmap_utils.dart';
 
 class const HeatMapWeekText({
   super.key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/heatmap_utils.dart';
 import 'heatmap_calendar_row.dart';
-import 'heatmap_utils.dart';
 
 class HeatMapCalendarPage({
   super.key,

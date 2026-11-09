@@ -11,9 +11,9 @@ Following a comprehensive review of [`docs/phases/phase-13-comprehensive-catalog
 
 | Step | Capability | Status in Codebase | Concrete Findings & Deficiencies |
 |---|---|---|---|
-| **13.1** | Audit current seed library & taxonomy | `[~] PARTIAL` | 51 exercises exist in `ExerciseSeedData.all`, but **all 51 entries contain raw `[cite: 23]` citation artifacts**. All 51 entries have completely empty `executionInstructions` and `setupInstructions`. |
+| **13.1** | Audit current seed library & taxonomy | `[~] PARTIAL` | 51 exercises exist in `ExerciseSeedData.all`, but **all 51 entries contain raw `` citation artifacts**. All 51 entries have completely empty `executionInstructions` and `setupInstructions`. |
 | **13.2** | Coverage matrix & metadata standards | `[ ] PENDING` | Enums exist (`BodyRegion`, `MovementPattern`, `MuscleGroup`, `EquipmentType`, `MetricType`), but no documented coverage matrix exists. Certain movement patterns (e.g. `olympic`, `carry`, `rotation`) are underrepresented or missing. |
-| **13.3** | Curate & validate exercise entries | `[ ] PENDING` | Need to clean all `[cite: 23]` tags and enrich foundational movement families with structured `setupInstructions`, `executionInstructions`, `techniqueCues`, and `breathingInstructions`. |
+| **13.3** | Curate & validate exercise entries | `[ ] PENDING` | Need to clean all `` tags and enrich foundational movement families with structured `setupInstructions`, `executionInstructions`, `techniqueCues`, and `breathingInstructions`. |
 | **13.4** | Reconcile versioned seed data safely | `[ ] PENDING` | `CatalogSeeder.seedIfEmpty()` only inserts when catalog count is 0. If new system exercises are added in updates, existing databases never receive them. Needs `seedOrUpdate()` reconciliation preserving `ExerciseSourceType.userCreated`. |
 | **13.5** | Catalog quality & seeding tests | `[~] PARTIAL` | `catalog_feature_test.dart` has an obsolete assertion (`expect(firstSeed.dataOrNull, 7)`) from an older 7-exercise catalog. No tests verify citation cleanliness, instruction validity, or seed reconciliation. |
 | **13.6** | Catalog usability & documentation | `[ ] PENDING` | Need documented taxonomy matrix, search verification, and recording known constraints in phase documentation. |
@@ -55,7 +55,7 @@ flowchart TD
 ### Task 1: Clean Seed Data & Curate Step Guidance (Steps 13.1, 13.2, 13.3)
 - **File:** `lib/features/catalog/infrastructure/seed/exercise_seed_data.dart`
 - **Actions:**
-  1. Strip all `[cite: 23]` artifacts across all descriptions in `ExerciseSeedData`.
+  1. Strip all `` artifacts across all descriptions in `ExerciseSeedData`.
   2. For foundational compound and isolation exercises (Squat, Deadlift, Bench Press, Overhead Press, Barbell Row, Pull Up, Romanian Deadlift, Incline Bench, Lat Pulldown, Leg Press, Dips, Barbell Hip Thrust, Plank, etc.), enrich `execution: ExerciseExecutionProfile(...)` with:
      - `setupInstructions`: Numbered preparation steps (e.g. rack height, foot placement, grip width).
      - `executionInstructions`: Numbered movement execution steps (eccentric descent, concentric drive, lockout).
@@ -137,7 +137,7 @@ flowchart TD
 ---
 
 ## 4. Acceptance Criteria
-- [ ] No `[cite: 23]` or citation tokens remain in any seed exercise.
+- [ ] No `` or citation tokens remain in any seed exercise.
 - [ ] Core compound and isolation exercises contain verified setup and execution steps.
 - [ ] `CatalogSeeder.seedOrUpdate()` safely adds new system exercises without overwriting user-created exercises.
 - [ ] `ExerciseDetailScreen` renders setup and execution steps in numbered visual sequences.

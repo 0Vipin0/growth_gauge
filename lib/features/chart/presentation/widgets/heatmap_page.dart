@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../utils/heatmap_utils.dart';
 import 'heatmap_column.dart';
 import 'heatmap_month_text.dart';
-import 'heatmap_utils.dart';
 import 'heatmap_week_text.dart';
 
 class HeatMapPage({

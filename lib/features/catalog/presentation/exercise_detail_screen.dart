@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../chart/chart.dart';
 import '../../common/presentation/widgets/widgets.dart';
 import '../application/catalog_use_cases.dart';
 import '../domain/exercise.dart';
@@ -7,12 +8,12 @@ import '../domain/exercise_enums.dart';
 import '../infrastructure/exercise_repository.dart';
 
 class const ExerciseDetailScreen({
-  super.key,
-  required final Exercise exercise,
-  required final IExerciseRepository repository,
-  required final CatalogUseCases useCases,
-  required final String userId,
-}) extends StatefulWidget {
+    super.key,
+    required final Exercise exercise,
+    required final IExerciseRepository repository,
+    required final CatalogUseCases useCases,
+    required final String userId,
+  }) extends StatefulWidget {
   @override
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
 }
@@ -24,6 +25,71 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
   void initState() {
     super.initState();
     _exercise = widget.exercise;
+  }
+
+  /// Maps exercise body regions and primary muscles to BodyChartWidget expected part keys
+  Set<String> _getSelectedBodyParts() {
+    final parts = <String>{};
+    for (final region in _exercise.classification.bodyRegions) {
+      final name = region.displayName.toLowerCase();
+      if (_isValidBodyPart(name)) {
+        parts.add(name);
+      }
+    }
+    for (final muscle in _exercise.classification.primaryMuscles) {
+      final name = muscle.displayName.toLowerCase();
+      if (_isValidBodyPart(name)) {
+        parts.add(name);
+      } else {
+        if (name.contains('bicep') ||
+            name.contains('tricep') ||
+            name.contains('forearm') ||
+            name.contains('arm')) {
+          parts.add('arm');
+        } else if (name.contains('quad') ||
+            name.contains('hamstring') ||
+            name.contains('calf') ||
+            name.contains('leg')) {
+          parts.add('leg');
+        } else if (name.contains('chest') || name.contains('pectoral')) {
+          parts.add('chest');
+        } else if (name.contains('back') ||
+            name.contains('lat') ||
+            name.contains('trap') ||
+            name.contains('rhomboid')) {
+          parts.add('back');
+        } else if (name.contains('shoulder') || name.contains('delt')) {
+          parts.add('shoulder');
+        } else if (name.contains('ab') ||
+            name.contains('core') ||
+            name.contains('oblique')) {
+          parts.add('abs');
+        } else if (name.contains('glute') || name.contains('butt')) {
+          parts.add('butt');
+        } else if (name.contains('neck')) {
+          parts.add('neck');
+        }
+      }
+    }
+    if (parts.isEmpty) {
+      parts.add('full body');
+    }
+    return parts;
+  }
+
+  bool _isValidBodyPart(String name) {
+    const valid = {
+      'neck',
+      'shoulder',
+      'chest',
+      'arm',
+      'abs',
+      'leg',
+      'butt',
+      'back',
+      'full body',
+    };
+    return valid.contains(name);
   }
 
   Future<void> _addRelationship() async {
@@ -183,6 +249,36 @@ class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
                   ),
                   const SizedBox(height: 24),
                 ],
+
+                // Body Chart Widget highlighting targeted body parts
+                Center(
+                  child: AppCard(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Targeted Body Parts',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          BodyChartWidget(
+                            selectedParts: _getSelectedBodyParts(),
+                            selectedColor: colorScheme.primary,
+                            unselectedColor:
+                                colorScheme.surfaceContainerHighest,
+                            width: 260,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
 
                 // Movement & Body Region Metadata Grid
                 AppCard(

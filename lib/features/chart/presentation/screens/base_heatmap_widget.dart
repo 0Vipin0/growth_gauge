@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/heatmap_utils.dart';
 import '../widgets/heatmap_calendar.dart';
-import '../widgets/heatmap_utils.dart';
 
 class const BaseHeatmapWidget({
   super.key,
