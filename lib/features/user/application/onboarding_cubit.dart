@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:growth_gauge/features/settings/config/shared_preferences_config.dart';
 
 import '../domain/equipment_inventory.dart';

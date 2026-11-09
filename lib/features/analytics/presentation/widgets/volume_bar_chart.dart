@@ -1,12 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../chart/presentation/screens/chart.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../domain/muscle_volume_stat.dart';
 
-/// Renders a weekly volume breakdown bar chart using fl_chart.
+/// Renders a weekly volume breakdown bar chart using BaseChartWidget.
 class const VolumeBarChart({
   super.key,
+
+  /// List of muscle volume statistics.
   required final List<MuscleVolumeStat> stats,
 }) extends StatelessWidget {
   @override
@@ -28,7 +31,7 @@ class const VolumeBarChart({
       );
     }
 
-    // Aggregate volume by muscle group
+    // Aggregate volume by muscle group[cite: 4]
     final muscleTotals = <String, double>{};
     for (final s in stats) {
       muscleTotals[s.muscleGroup] =
@@ -39,12 +42,7 @@ class const VolumeBarChart({
       ..sort((a, b) => b.value.compareTo(a.value));
     final displayEntries = entries.take(6).toList();
 
-    final maxVolume = displayEntries.fold<double>(
-      0.0,
-      (max, e) => e.value > max ? e.value : max,
-    );
-    final maxY = maxVolume > 0 ? maxVolume * 1.2 : 100.0;
-
+    // Build bar groups for fl_chart[cite: 4, 5]
     final barGroups = <BarChartGroupData>[];
     for (int i = 0; i < displayEntries.length; i++) {
       final entry = displayEntries[i];
@@ -65,6 +63,15 @@ class const VolumeBarChart({
       );
     }
 
+    // Calculate a dynamic y-axis interval based on max volume
+    final maxVolume = displayEntries.fold<double>(
+      0.0,
+      (max, e) => e.value > max ? e.value : max,
+    );
+    final yAxisInterval = maxVolume > 0
+        ? (maxVolume / 5).ceil().toDouble()
+        : 20.0;
+
     final accessibleSummary = displayEntries
         .map((entry) => '${entry.key}: ${entry.value.round()} kilograms')
         .join(', ');
@@ -73,61 +80,29 @@ class const VolumeBarChart({
       container: true,
       label: 'Weekly volume by muscle group. $accessibleSummary.',
       child: ExcludeSemantics(
-        child: AspectRatio(
-          aspectRatio: 1.6,
-          child: AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Weekly Volume by Muscle (kg)',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: AppCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Weekly Volume by Muscle (kg)',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: BarChart(
-                    BarChartData(
-                      maxY: maxY,
-                      barGroups: barGroups,
-                      titlesData: FlTitlesData(
-                        leftTitles: const AxisTitles(),
-                        rightTitles: const AxisTitles(),
-                        topTitles: const AxisTitles(),
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            getTitlesWidget: (value, meta) {
-                              final idx = value.toInt();
-                              if (idx < 0 || idx >= displayEntries.length) {
-                                return const SizedBox.shrink();
-                              }
-                              final name = displayEntries[idx].key;
-                              final shortName = name.length > 5
-                                  ? name.substring(0, 5)
-                                  : name;
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Text(
-                                  shortName,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      gridData: const FlGridData(show: false),
-                      borderData: FlBorderData(show: false),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16),
+              BaseChartWidget(
+                barGroups: barGroups,
+                dayLabel: (index) {
+                  if (index < 0 || index >= displayEntries.length) {
+                    return '';
+                  }
+                  final name = displayEntries[index].key;
+                  return name.length > 5 ? name.substring(0, 5) : name;
+                },
+                yAxisInterval: yAxisInterval,
+              ),
+            ],
           ),
         ),
       ),

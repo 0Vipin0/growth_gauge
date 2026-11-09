@@ -24,6 +24,7 @@ class const AnalyticsDashboardScreen({
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final screenWidth = MediaQuery.of(context).size.width;
+    final isLargeScreen = screenWidth >= 900;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -81,219 +82,250 @@ class const AnalyticsDashboardScreen({
             );
           }
 
+          // Build Latest Completed Workouts Widget
+          Widget buildLatestWorkoutsWidget() {
+            if (sessionRepository == null) return const SizedBox.shrink();
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Latest Completed Workouts',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                FutureBuilder(
+                  future: sessionRepository!.listAll(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ),
+                      );
+                    }
+
+                    final result = snapshot.data!;
+                    if (result.isError) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Could not load completed sessions.',
+                          style: TextStyle(color: colorScheme.error),
+                        ),
+                      );
+                    }
+
+                    final sessions = result.dataOrNull ?? [];
+                    final completedSessions =
+                        sessions
+                            .where(
+                              (s) =>
+                                  s.status == SessionStatus.completed &&
+                                  (userId == null || s.userId == userId),
+                            )
+                            .toList()
+                          ..sort(
+                            (a, b) => (b.completedAt ?? b.createdAt).compareTo(
+                              a.completedAt ?? a.createdAt,
+                            ),
+                          );
+
+                    if (completedSessions.isEmpty) {
+                      return AppCard(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Center(
+                            child: Text(
+                              'No completed workout sessions logged yet.',
+                              style: TextStyle(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Column(
+                      children: completedSessions.take(3).map((session) {
+                        final completedDate =
+                            session.completedAt ?? session.createdAt;
+                        final durationMinutes = session.startedAt != null
+                            ? completedDate
+                                  .difference(session.startedAt!)
+                                  .inMinutes
+                            : null;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: AppCard(
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.primaryContainer
+                                        .withValues(alpha: 0.3),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    Icons.check_circle_outline,
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        session.templateName,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: colorScheme.onSurface,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Completed on ${completedDate.toLocal().toString().split('.').first}'
+                                        '${durationMinutes != null ? ' • $durationMinutes mins' : ''}',
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color:
+                                                  colorScheme.onSurfaceVariant,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
+              ],
+            );
+          }
+
+          // Build Personal Records Widget
+          Widget buildPersonalRecordsWidget() {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recent Personal Records',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.push(
+                          appRoutePrTrophies,
+                          extra: context.read<AnalyticsCubit>(),
+                        );
+                      },
+                      child: const Text('View All'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (state.personalRecords.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24.0),
+                    child: Center(
+                      child: Text(
+                        'Complete workouts to unlock PR trophies!',
+                        style: TextStyle(color: colorScheme.onSurfaceVariant),
+                      ),
+                    ),
+                  )
+                else
+                  ...state.personalRecords
+                      .take(5)
+                      .map(
+                        (pr) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: PrBadgeCard(record: pr),
+                        ),
+                      ),
+              ],
+            );
+          }
+
           return RefreshIndicator(
             onRefresh: () => context.read<AnalyticsCubit>().triggerRebuild(),
             child: SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1000),
+                  constraints: BoxConstraints(
+                    maxWidth: isLargeScreen ? 1400 : 1000,
+                  ),
                   child: ListView(
                     padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth >= 900 ? 32 : 20,
+                      horizontal: isLargeScreen ? 32 : 20,
                       vertical: 24,
                     ),
                     children: [
-                      WorkoutFrequencyHeatmap(summaries: state.history),
-                      const SizedBox(height: 16),
-                      VolumeBarChart(stats: state.weeklyVolume),
-                      const SizedBox(height: 24),
-
-                      // Latest Completed Workout Sessions Section
-                      if (sessionRepository != null) ...[
+                      if (!isLargeScreen) ...[
+                        // Small Screen / Mobile Layout (Single Column)
+                        WorkoutFrequencyHeatmap(summaries: state.history),
+                        const SizedBox(height: 16),
+                        VolumeBarChart(stats: state.weeklyVolume),
+                        const SizedBox(height: 24),
+                        if (sessionRepository != null) ...[
+                          buildLatestWorkoutsWidget(),
+                          const SizedBox(height: 24),
+                        ],
+                        buildPersonalRecordsWidget(),
+                      ] else ...[
+                        // Large Screen / Desktop Layout (Two-Column Grid Sections)
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Latest Completed Workouts',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: WorkoutFrequencyHeatmap(
+                                summaries: state.history,
                               ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: VolumeBarChart(stats: state.weeklyVolume),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        FutureBuilder(
-                          future: sessionRepository!.listAll(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16.0),
-                                child: Center(
-                                  child: SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-
-                            final result = snapshot.data!;
-                            if (result.isError) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                ),
-                                child: Text(
-                                  'Could not load completed sessions.',
-                                  style: TextStyle(color: colorScheme.error),
-                                ),
-                              );
-                            }
-
-                            final sessions = result.dataOrNull ?? [];
-                            final completedSessions =
-                                sessions
-                                    .where(
-                                      (s) =>
-                                          s.status == SessionStatus.completed &&
-                                          (userId == null ||
-                                              s.userId == userId),
-                                    )
-                                    .toList()
-                                  ..sort(
-                                    (a, b) => (b.completedAt ?? b.createdAt)
-                                        .compareTo(
-                                          a.completedAt ?? a.createdAt,
-                                        ),
-                                  );
-
-                            if (completedSessions.isEmpty) {
-                              return AppCard(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Center(
-                                    child: Text(
-                                      'No completed workout sessions logged yet.',
-                                      style: TextStyle(
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-
-                            return Column(
-                              children: completedSessions.take(3).map((
-                                session,
-                              ) {
-                                final completedDate =
-                                    session.completedAt ?? session.createdAt;
-                                final durationMinutes =
-                                    session.startedAt != null
-                                    ? completedDate
-                                          .difference(session.startedAt!)
-                                          .inMinutes
-                                    : null;
-
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: AppCard(
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                            color: colorScheme.primaryContainer
-                                                .withValues(alpha: 0.3),
-                                            borderRadius: BorderRadius.circular(
-                                              12,
-                                            ),
-                                          ),
-                                          child: Icon(
-                                            Icons.check_circle_outline,
-                                            color: colorScheme.primary,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                session.templateName,
-                                                style: theme
-                                                    .textTheme
-                                                    .titleMedium
-                                                    ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          colorScheme.onSurface,
-                                                    ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                'Completed on ${completedDate.toLocal().toString().split('.').first}'
-                                                '${durationMinutes != null ? ' • $durationMinutes mins' : ''}',
-                                                style: theme.textTheme.bodySmall
-                                                    ?.copyWith(
-                                                      color: colorScheme
-                                                          .onSurfaceVariant,
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            );
-                          },
-                        ),
                         const SizedBox(height: 24),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: sessionRepository != null
+                                  ? buildLatestWorkoutsWidget()
+                                  : const SizedBox.shrink(),
+                            ),
+                            if (sessionRepository != null)
+                              const SizedBox(width: 24),
+                            Expanded(child: buildPersonalRecordsWidget()),
+                          ],
+                        ),
                       ],
-
-                      // Personal Records Section
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Recent Personal Records',
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              context.push(
-                                appRoutePrTrophies,
-                                extra: context.read<AnalyticsCubit>(),
-                              );
-                            },
-                            child: const Text('View All'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      if (state.personalRecords.isEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 24.0),
-                          child: Center(
-                            child: Text(
-                              'Complete workouts to unlock PR trophies!',
-                              style: TextStyle(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
-                        )
-                      else
-                        ...state.personalRecords
-                            .take(5)
-                            .map(
-                              (pr) => Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: PrBadgeCard(record: pr),
-                              ),
-                            ),
                     ],
                   ),
                 ),

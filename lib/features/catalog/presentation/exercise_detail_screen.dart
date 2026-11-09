@@ -17,7 +17,7 @@ class const ExerciseDetailScreen({
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
 }
 
-class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
+class _ExerciseDetailScreenState() extends State<ExerciseDetailScreen> {
   late Exercise _exercise;
 
   @override
@@ -192,7 +192,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         context,
                         title: 'Movement Pattern',
                         value: _exercise.classification.movementPatterns
-                            .map((e) => e.displayName) 
+                            .map((e) => e.displayName)
                             .join(', '),
                       ),
                       const Divider(height: 24),
@@ -200,7 +200,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         context,
                         title: 'Body Region',
                         value: _exercise.classification.bodyRegions
-                            .map((e) => e.displayName) 
+                            .map((e) => e.displayName)
                             .join(', '),
                       ),
                       const Divider(height: 24),
@@ -208,7 +208,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         context,
                         title: 'Primary Muscles',
                         value: _exercise.classification.primaryMuscles
-                            .map((e) => e.displayName) 
+                            .map((e) => e.displayName)
                             .join(', '),
                       ),
                       const Divider(height: 24),
@@ -216,7 +216,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         context,
                         title: 'Equipment Required',
                         value: _exercise.equipment.requiredEquipment
-                            .map((e) => e.displayName) 
+                            .map((e) => e.displayName)
                             .join(', '),
                       ),
                       const Divider(height: 24),
@@ -226,7 +226,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         value: _exercise
                             .measurementProfile
                             .defaultMetricType
-                            .displayName, 
+                            .displayName,
                       ),
                     ],
                   ),
@@ -347,7 +347,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                                 ),
                               ),
                               subtitle: Text(
-                                relationship.type.displayName + 
+                                relationship.type.displayName +
                                     (relationship.reason == null
                                         ? ''
                                         : ' · ${relationship.reason}'),

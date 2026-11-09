@@ -160,14 +160,17 @@ extension EnumFormatting on Enum {
         return 'Weight & Reps';
       default:
         final result = name.replaceAllMapped(
-          RegExp(r'([A-Z])'),
+          RegExp('([A-Z])'),
           (match) => ' ${match.group(0)}',
         );
-        return result.split(' ').map((word) {
-          if (word.isEmpty) return '';
-          if (word.toLowerCase() == 'and') return '&';
-          return word[0].toUpperCase() + word.substring(1);
-        }).join(' ');
+        return result
+            .split(' ')
+            .map((word) {
+              if (word.isEmpty) return '';
+              if (word.toLowerCase() == 'and') return '&';
+              return word[0].toUpperCase() + word.substring(1);
+            })
+            .join(' ');
     }
   }
 }

@@ -19,7 +19,7 @@ class const CatalogScreen({
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogScreenState extends State<CatalogScreen> {
+class _CatalogScreenState() extends State<CatalogScreen> {
   late Future<List<Exercise>> _exercises;
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
