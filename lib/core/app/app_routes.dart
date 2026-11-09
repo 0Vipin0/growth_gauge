@@ -14,6 +14,7 @@ import '../../features/portability/migration/steps/migration_v2_to_v3.dart';
 import '../../features/portability/portability.dart';
 import '../../features/session/session.dart';
 import '../../features/settings/settings.dart';
+import '../../features/splash/splash.dart';
 import '../../features/template/template.dart';
 import '../../features/user/user.dart';
 import '../database/app_database.dart';
@@ -47,6 +48,11 @@ List<RouteBase> createAppRoutes({
       path: appRouteLaunch,
       name: appRouteNameLaunch,
       builder: (_, _) => const FitnessLaunchScreen(),
+    ),
+    appGoRoute(
+      path: appRouteSplash,
+      name: appRouteNameSplash,
+      builder: (_, _) => const SplashScreen(),
     ),
     appGoRoute(
       path: appRouteOnboarding,

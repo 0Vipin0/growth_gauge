@@ -8,12 +8,12 @@ import '../domain/exercise_enums.dart';
 import '../infrastructure/exercise_repository.dart';
 
 class const ExerciseDetailScreen({
-    super.key,
-    required final Exercise exercise,
-    required final IExerciseRepository repository,
-    required final CatalogUseCases useCases,
-    required final String userId,
-  }) extends StatefulWidget {
+  super.key,
+  required final Exercise exercise,
+  required final IExerciseRepository repository,
+  required final CatalogUseCases useCases,
+  required final String userId,
+}) extends StatefulWidget {
   @override
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
 }

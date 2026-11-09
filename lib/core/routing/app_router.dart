@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/settings/settings.dart';
 
+const appRouteSplash = '/splash';
 const appRouteLaunch = '/launch';
 const appRouteOnboarding = '/onboarding';
 const appRouteHome = '/home';
@@ -26,6 +27,7 @@ const appRouteExerciseDetail = '/exercise_detail';
 const appRouteTemplateDetail = '/template_detail';
 const appRouteTemplateEditor = '/template_editor';
 
+const appRouteNameSplash = 'splash';
 const appRouteNameLaunch = 'launch';
 const appRouteNameOnboarding = 'onboarding';
 const appRouteNameHome = 'home';

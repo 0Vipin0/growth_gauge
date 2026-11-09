@@ -64,9 +64,8 @@ Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
 
   final userUseCases = UserUseCases(UserRepository(database));
 
-  final String initialRoute = (!hasCompletedOnboarding)
-      ? appRouteOnboarding
-      : appRouteLaunch;
+  // Use the splash page as the initial route
+  const String initialRoute = appRouteSplash;
 
   final router = AppRouter(
     initialLocation: initialRoute,
