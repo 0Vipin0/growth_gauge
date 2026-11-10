@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/heatmap_utils.dart';
 import 'heatmap_container.dart';
 
-class HeatMapCalendarRow({
+class const HeatMapCalendarRow({
   super.key,
 
   /// The integer value of beginning date of the week.

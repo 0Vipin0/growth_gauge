@@ -28,16 +28,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ActivityTrendsCard(
-              selectedTimeRange: ActivityTimeRange.week,
-              timeOffset: 0,
-              periodLabel: 'This Week',
-              workoutHistory: summaries,
-              onPrevious: () {},
-              onNext: () {},
-            ),
-          ),
+          home: Scaffold(body: ActivityTrendsCard(workoutHistory: summaries)),
         ),
       );
 
@@ -65,16 +56,7 @@ void main() {
       // Test Month View
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ActivityTrendsCard(
-              selectedTimeRange: ActivityTimeRange.month,
-              timeOffset: 0,
-              periodLabel: 'Nov 2026',
-              workoutHistory: summaries,
-              onPrevious: () {},
-              onNext: () {},
-            ),
-          ),
+          home: Scaffold(body: ActivityTrendsCard(workoutHistory: summaries)),
         ),
       );
       expect(find.text('W1'), findsOneWidget);
@@ -82,16 +64,7 @@ void main() {
       // Test Quarter View
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: ActivityTrendsCard(
-              selectedTimeRange: ActivityTimeRange.quarter,
-              timeOffset: 0,
-              periodLabel: 'Q4 2026',
-              workoutHistory: summaries,
-              onPrevious: () {},
-              onNext: () {},
-            ),
-          ),
+          home: Scaffold(body: ActivityTrendsCard(workoutHistory: summaries)),
         ),
       );
       expect(find.text('Oct'), findsOneWidget);
@@ -102,21 +75,12 @@ void main() {
     testWidgets('triggers onPrevious and onNext on navigation buttons', (
       tester,
     ) async {
-      var prevTapped = false;
-      var nextTapped = false;
+      const prevTapped = false;
+      const nextTapped = false;
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: ActivityTrendsCard(
-              selectedTimeRange: ActivityTimeRange.week,
-              timeOffset: 0,
-              periodLabel: 'This Week',
-              workoutHistory: const [],
-              onPrevious: () => prevTapped = true,
-              onNext: () => nextTapped = true,
-            ),
-          ),
+        const MaterialApp(
+          home: Scaffold(body: ActivityTrendsCard(workoutHistory: [])),
         ),
       );
 

@@ -10,35 +10,23 @@ import '../widgets/hub_header.dart';
 import '../widgets/quick_start_section.dart';
 import '../widgets/week_summary_section.dart';
 
-// ---------------------------------------------------------------------------
-// FitnessHubPage
-// ---------------------------------------------------------------------------
-
-/// The main fitness dashboard page.
-///
-/// Displays a weekly summary, activity trends with time-range navigation,
-/// quick-start workout templates, and an explore library banner.
 class const FitnessHubScreen({
-  super.key,
-  required final UserUseCases useCases,
-  final String userId = 'local-user',
-  final VoidCallback? onProfileTap,
-  final VoidCallback? onAnalyticsTap,
-  final VoidCallback? onCatalogTap,
-  final VoidCallback? onTemplateTap,
-  required final ITemplateRepository templateRepository,
-  required final ValueChanged<WorkoutTemplate> onStartTemplate,
-  final List<DailyWorkoutSummary> workoutHistory = const [],
-}) extends StatefulWidget {
+    super.key,
+    required final UserUseCases useCases,
+    final String userId = 'local-user',
+    final VoidCallback? onProfileTap,
+    final VoidCallback? onAnalyticsTap,
+    final VoidCallback? onCatalogTap,
+    final VoidCallback? onTemplateTap,
+    required final ITemplateRepository templateRepository,
+    required final ValueChanged<WorkoutTemplate> onStartTemplate,
+    final List<DailyWorkoutSummary> workoutHistory = const [],
+  }) extends StatefulWidget {
   @override
   State<FitnessHubScreen> createState() => _FitnessHubScreenState();
 }
 
 class _FitnessHubScreenState() extends State<FitnessHubScreen> {
-  late ActivityTimeRange _selectedTimeRange;
-  int _timeOffset = 0;
-  bool _initialized = false;
-
   UserProfile? _profile;
 
   @override
@@ -57,54 +45,10 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initialized) {
-      final screenWidth = MediaQuery.of(context).size.width;
-      _selectedTimeRange = screenWidth >= 900
-          ? ActivityTimeRange.month
-          : ActivityTimeRange.week;
-      _initialized = true;
-    }
-  }
-
-  String _getPeriodLabel() {
-    final now = DateTime.now();
-    switch (_selectedTimeRange) {
-      case ActivityTimeRange.week:
-        if (_timeOffset == 0) return 'This Week';
-        if (_timeOffset == -1) return 'Last Week';
-        return '${_timeOffset.abs()} weeks ago';
-      case ActivityTimeRange.month:
-        final targetMonth = DateTime(now.year, now.month + _timeOffset);
-        const months = [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ];
-        return '${months[targetMonth.month - 1]} ${targetMonth.year}';
-      case ActivityTimeRange.quarter:
-        final currentQuarter = ((now.month - 1) ~/ 3) + 1;
-        final targetQuarter = currentQuarter + _timeOffset;
-        return 'Q$targetQuarter ${now.year}';
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth >= 900;
 
-    // Uses the profile display name if available, otherwise falls back to a professional title
     final profileName = _profile?.displayName.trim();
     final userName = (profileName != null && profileName.isNotEmpty)
         ? profileName
@@ -120,44 +64,33 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
             child: ListView(
               padding: EdgeInsets.symmetric(
                 horizontal: isDesktop ? 32.0 : 20.0,
-                vertical: 24.0,
+                vertical: isDesktop ? 32.0 : 24.0,
               ),
               children: [
                 HubHeader(
-                  userName: userName, // Pass the professional/dynamic name
+                  userName: userName,
                   onProfileTap: widget.onProfileTap,
+                  isDesktop: isDesktop,
                 ),
-                const SizedBox(height: 28),
+                SizedBox(height: isDesktop ? 36 : 28),
                 WeekSummarySection(
                   isDesktop: isDesktop,
                   summaries: widget.workoutHistory,
                   onDetailsTap: widget.onAnalyticsTap,
                 ),
-                const SizedBox(height: 32),
-                ActivityTrendsSection(
-                  selectedTimeRange: _selectedTimeRange,
-                  onAnalyticsTap: widget.onAnalyticsTap,
-                  onRangeChanged: (range) => setState(() {
-                    _selectedTimeRange = range;
-                    _timeOffset = 0;
-                  }),
-                ),
-                const SizedBox(height: 12),
+                SizedBox(height: isDesktop ? 36 : 32),
                 ActivityTrendsCard(
-                  selectedTimeRange: _selectedTimeRange,
-                  timeOffset: _timeOffset,
-                  periodLabel: _getPeriodLabel(),
                   workoutHistory: widget.workoutHistory,
-                  onPrevious: () => setState(() => _timeOffset--),
-                  onNext: () => setState(() => _timeOffset++),
+                  onAnalyticsTap: widget.onAnalyticsTap,
+                  isDesktop: isDesktop,
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: isDesktop ? 36 : 32),
                 QuickStartSection(
                   templateRepository: widget.templateRepository,
                   onTemplateTap: widget.onTemplateTap,
                   onStartTemplate: widget.onStartTemplate,
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: isDesktop ? 36 : 32),
                 ExploreBanner(
                   onCatalogTap: widget.onCatalogTap,
                   onTemplateTap: widget.onTemplateTap,

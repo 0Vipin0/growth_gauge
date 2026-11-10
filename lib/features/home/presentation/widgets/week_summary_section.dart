@@ -36,7 +36,12 @@ class const WeekSummarySection({
     final hours = totalActiveSeconds ~/ 3600;
     final minutes = (totalActiveSeconds % 3600) ~/ 60;
     final activeTimeString = '${hours}h ${minutes}m';
-    final workoutsCount = weekSummaries.length.toString();
+    final workoutsCount = weekSummaries.length;
+
+    final avgDurationMinutes = workoutsCount > 0
+        ? (totalActiveSeconds ~/ 60) ~/ workoutsCount
+        : 0;
+
     final burnedCalories = weekSummaries.calculateTotalCalories(
       userWeightKg: userWeightKg,
     );
@@ -49,26 +54,28 @@ class const WeekSummarySection({
           children: [
             Text(
               'This Week',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurface,
-              ),
+              style: (isDesktop ? textTheme.titleLarge : textTheme.titleMedium)
+                  ?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
             ),
-            AppButton.ghost(label: 'Details', onPressed: onDetailsTap),
           ],
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: isDesktop ? 16 : 12),
         if (isDesktop)
           _WeekSummaryDesktopGrid(
             activeTime: activeTimeString,
-            workouts: workoutsCount,
+            workouts: workoutsCount.toString(),
+            avgDuration: '${avgDurationMinutes}m',
             burnedCalories: burnedCalories,
             targetCalories: targetCalories,
+            completedWorkouts: workoutsCount,
           )
         else
           _WeekSummaryMobileStack(
             activeTime: activeTimeString,
-            workouts: workoutsCount,
+            workouts: workoutsCount.toString(),
             burnedCalories: burnedCalories,
             targetCalories: targetCalories,
           ),
@@ -80,8 +87,10 @@ class const WeekSummarySection({
 class const _WeekSummaryDesktopGrid({
   required final String activeTime,
   required final String workouts,
+  required final String avgDuration,
   required final int burnedCalories,
   required final int targetCalories,
+  required final int completedWorkouts,
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -89,17 +98,18 @@ class const _WeekSummaryDesktopGrid({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Column 1: Calories Card
           Expanded(
-            flex: 3,
             child: CaloriesCard(
               burnedCalories: burnedCalories,
               targetCalories: targetCalories,
+              isDesktop: true,
             ),
           ),
           const SizedBox(width: 16),
+          // Column 2: Side-by-side row for Active Time & Workouts (reduces height & removes vertical gap)
           Expanded(
-            flex: 2,
-            child: Column(
+            child: Row(
               children: [
                 Expanded(
                   child: AppStatCard(
@@ -108,7 +118,7 @@ class const _WeekSummaryDesktopGrid({
                     value: activeTime,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: AppStatCard(
                     icon: Icons.fitness_center,
@@ -117,6 +127,14 @@ class const _WeekSummaryDesktopGrid({
                   ),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Column 3: Weekly Insights Card
+          Expanded(
+            child: _WeeklyInsightsCard(
+              avgDuration: avgDuration,
+              completedWorkouts: completedWorkouts,
             ),
           ),
         ],
@@ -164,10 +182,100 @@ class const _WeekSummaryMobileStack({
   }
 }
 
+class const _WeeklyInsightsCard({
+  required final String avgDuration,
+  required final int completedWorkouts,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
+    const weeklyGoalWorkouts = 4;
+    final progressToGoal = (completedWorkouts / weeklyGoalWorkouts).clamp(
+      0.0,
+      1.0,
+    );
+
+    return AppCard(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.insights, color: colorScheme.primary, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                'Weekly Insights',
+                style: textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Avg. Session',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              Text(
+                avgDuration,
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Goal Pace',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              Text(
+                '$completedWorkouts/$weeklyGoalWorkouts sessions',
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: progressToGoal,
+              minHeight: 6,
+              backgroundColor: colorScheme.surfaceContainerHighest,
+              color: colorScheme.primary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class const CaloriesCard({
   super.key,
   final int burnedCalories = 0,
   final int targetCalories = 3500,
+  final bool isDesktop = false,
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -185,7 +293,7 @@ class const CaloriesCard({
     );
 
     return AppCard(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(isDesktop ? 28 : 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -198,24 +306,28 @@ class const CaloriesCard({
                   Icon(
                     Icons.local_fire_department,
                     color: colorScheme.primary,
-                    size: 20,
+                    size: isDesktop ? 22 : 20,
                   ),
                   const SizedBox(width: 6),
                   Text(
                     'Calories Burned',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style:
+                        (isDesktop ? textTheme.bodyLarge : textTheme.bodyMedium)
+                            ?.copyWith(color: colorScheme.onSurfaceVariant),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: isDesktop ? 16 : 12),
               Text(
                 caloriesString,
-                style: textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                ),
+                style:
+                    (isDesktop
+                            ? textTheme.headlineLarge
+                            : textTheme.headlineMedium)
+                        ?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
               ),
               Text(
                 'kcal',
@@ -229,11 +341,11 @@ class const CaloriesCard({
             alignment: Alignment.center,
             children: [
               SizedBox(
-                width: 80,
-                height: 80,
+                width: isDesktop ? 100 : 80,
+                height: isDesktop ? 100 : 80,
                 child: CircularProgressIndicator(
                   value: progress,
-                  strokeWidth: 8,
+                  strokeWidth: isDesktop ? 10 : 8,
                   backgroundColor: colorScheme.surfaceContainerHighest,
                   color: colorScheme.primary,
                   strokeCap: StrokeCap.round,
@@ -241,10 +353,12 @@ class const CaloriesCard({
               ),
               Text(
                 percentageString,
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                ),
+                style:
+                    (isDesktop ? textTheme.titleLarge : textTheme.titleMedium)
+                        ?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
               ),
             ],
           ),
