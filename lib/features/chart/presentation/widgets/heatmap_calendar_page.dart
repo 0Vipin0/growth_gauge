@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/heatmap_utils.dart';
 import 'heatmap_calendar_row.dart';
 
-class const HeatMapCalendarPage({
+class HeatMapCalendarPage({
   super.key,
 
   /// The DateTime value which contains the current calendar's date value.

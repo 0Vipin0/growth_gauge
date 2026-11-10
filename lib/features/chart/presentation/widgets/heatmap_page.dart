@@ -7,7 +7,7 @@ import 'heatmap_column.dart';
 import 'heatmap_month_text.dart';
 import 'heatmap_week_text.dart';
 
-class const HeatMapPage({
+class HeatMapPage({
   super.key,
 
   /// ColorMode changes the color mode of blocks.

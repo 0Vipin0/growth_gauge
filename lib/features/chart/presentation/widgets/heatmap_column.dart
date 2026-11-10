@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/heatmap_utils.dart';
 import 'heatmap_container.dart';
 
-class const HeatMapColumn({
+class HeatMapColumn({
   super.key,
 
   /// The date value of first day of given week.
