@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
-import '../../catalog/infrastructure/exercise_repository.dart';
+import '../../catalog/catalog.dart';
 import '../../common/presentation/widgets/widgets.dart';
 import '../../session/application/session_use_cases.dart';
 import '../application/template_use_cases.dart';
@@ -292,48 +292,83 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                       ),
                     ],
                     const SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ...revision.blocks.map(
                       (block) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: AppCard(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 8,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primaryContainer
-                                      .withValues(alpha: 0.3),
-                                  borderRadius: BorderRadius.circular(10),
+                          padding: EdgeInsets.zero, // Let ExpansionTile handle its own internal padding
+                          child: ExpansionTile(
+                            leading: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer.withValues(
+                                  alpha: 0.3,
                                 ),
-                                child: Icon(
-                                  Icons.fitness_center,
-                                  color: colorScheme.primary,
-                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      block.name,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              child: Icon(
+                                Icons.fitness_center,
+                                color: colorScheme.primary,
+                              ),
+                            ),
+                            title: Text(
+                              block.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              '${block.items.length} exercises · ${block.rounds} round(s)',
+                              style: TextStyle(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                            children: [
+                              const Divider(height: 1),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: block.items.length,
+                                itemBuilder: (context, index) {
+                                  final item = block.items[index];
+                                  return FutureBuilder(
+                                    future: widget.exerciseRepository.findById(
+                                      item.exerciseId,
                                     ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      '${block.items.length} exercises · ${block.rounds} round(s)',
-                                      style: TextStyle(
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                    builder: (context, snapshot) {
+                                      final exercise =
+                                          snapshot.data?.dataOrNull;
+                                      return ListTile(
+                                        title: Text(
+                                          exercise?.name ?? item.exerciseId,
+                                        ),
+                                        subtitle: exercise != null
+                                            ? Text(
+                                                exercise
+                                                    .classification
+                                                    .bodyRegions
+                                                    .map((e) => e.displayName)
+                                                    .join(', '),
+                                              )
+                                            : null,
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.chevron_right),
+                                          tooltip: 'View exercise details',
+                                          onPressed: exercise == null
+                                              ? null
+                                              : () async {
+                                                  // Navigate to the exercise detail screen using GoRouter
+                                                  await context.push(
+                                                    appRouteExerciseDetail,
+                                                    extra: exercise,
+                                                  );
+                                                },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           ),

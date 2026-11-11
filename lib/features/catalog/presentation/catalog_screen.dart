@@ -98,6 +98,7 @@ class _CatalogScreenState() extends State<CatalogScreen> {
             child: Column(
               children: [
                 // Search Bar using AppTextField
+                // Search Bar using AppTextField
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
                   child: AppTextField(
@@ -106,6 +107,11 @@ class _CatalogScreenState() extends State<CatalogScreen> {
                     hintText: 'Type to search...',
                     prefixIcon: Icons.search,
                     suffixUnit: _query.isNotEmpty ? 'CLEAR' : null,
+                    onSuffixTap: () => setState(() {
+                      _query = '';
+                      _searchController.clear();
+                      _load();
+                    }),
                     onChanged: (value) => setState(() {
                       _query = value;
                       _load();

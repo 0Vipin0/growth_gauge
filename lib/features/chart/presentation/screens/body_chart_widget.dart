@@ -164,7 +164,6 @@ fill="${fillSvg("arm")}"/>
 <path d="M83 293V288.5L87.5 290.5H92L95.5 288.5L94.5 291.5L92 294.5H90L83 293Z" fill="${defaultColor()}"/>
 <path d="M58 116H53L54.3696 105.5L58 116Z" fill="${defaultColor()}"/>
 <path d="M94.5 116L98 104.5L99.5 118.5L94.5 116Z" fill="${defaultColor()}"/>
-    //🤞
 <path d="M65 153.5L60.5 156.5V165.5L58.5 171.5V183.5L60.5 197.5L66.5 211L69 206L68 184.5L65 176V153.5Z" fill="${fillSvg("leg")}"/>
 <path d="M73 149.5L68 151.5L69 179H71L72 172.5L73 168V149.5Z" fill="${fillSvg("leg")}"/>
 <path d="M79 167V149.5L83.5 151.5L84.5 176L82 178L79 167Z" fill="${fillSvg("leg")}"/>
@@ -179,18 +178,15 @@ fill="${fillSvg("arm")}"/>
 <path d="M93.5 239.5V203.5L99 216V226V239.5L95.5 246.5L91.5 245L93.5 239.5Z" fill="${fillSvg("leg")}"/>
 <path d="M62 246L59.5 248V254.5L62.5 265.5L63.5 288H66.5L69 252.5L62 246Z" fill="${fillSvg("leg")}"/>
 <path d="M90 247.5L83.5 252.5L86.246 288H88.5V270L93.5 248L90 247.5Z" fill="${fillSvg("leg")}"/>
-    //:)
 <path d="M91.5 118L88 122.5L95 125.5L100.5 133.5L101.5 131L99 121L91.5 118Z" 
 fill="${fillSvg("butt")}"/>
 <path d="M64 122.5L60 118L53 121.5L50.5 133.5L52.5 132.5L57.5 125.5L64 122.5Z" fill="${fillSvg("butt")}"/>
 <path d="M68 129L67 125.5L56 131L50.5 139V151.5L54.5 158L74.5 144.5L73.5 133.5L68 129Z" fill="${fillSvg("butt")}"/>
 <path d="M77.5 144.5L79 132.5L86 126.5L95 129L101.5 140V152.5L99 156.5L97 158L95 154L88 151.5L77.5 144.5Z" fill="${fillSvg("butt")}"/>
-    //🤞
 <path d="M50.5 51.5L41.5 50.5L33.5 63.5H35.5L37 67.5L50.5 51.5Z" 
 fill="${fillSvg("shoulder")}"/>
 <path d="M101 53.5L115.5 67.5L117 60L112 51.5L104.5 50.5L101 53.5Z" 
 fill="${fillSvg("shoulder")}"/>
-    //🤞
 <path d="M107 87L109 67.5L119 77V95L115.5 96.5L112 98V95L107 87Z" 
 fill="${fillSvg("arm")}"/>
 <path d="M120 104L116.5 99L115.5 104L111.5 103.5L116.5 118L125.5 127L120 115.5V104Z" fill="${fillSvg("arm")}"/>
@@ -201,7 +197,6 @@ fill="${fillSvg("arm")}"/>
 <path d="M37 103.5V99L32 101.5L31 115.5L26.5 127H29L37 115.5L40 103.5H37Z" 
 fill="${fillSvg("arm")}"/>
 <path d="M20 125.5L26.5 101.5H31L29 115.5L24 128.5L19 136.5L15 132.5L20 125.5Z" fill="${fillSvg("arm")}"/>
-    //🤞
 <path d="M75.5 22.5H73L72 30.5L56 45H63L73 47L74 33L75.5 30.5V22.5Z" fill="${fillSvg("neck")}"/>
 <path d="M78.5 22.5H77V33L78.5 33.5L80 47.5L85.5 45L94 43.5L80.5 33.5L80 30.5L78.5 22.5Z" fill="${fillSvg("neck")}"/>
 <path d="M57 47H49L56 52L62 67L73 75.5L72 52L57 47Z" fill="${fillSvg("back")}"/>
@@ -218,8 +213,7 @@ fill="${fillSvg("back")}"/>
   //F+B chart!
   String bothSvg() {
     return '''
-//🫡
-     <svg width="319" height="295" viewBox="0 0 319 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="319" height="295" viewBox="0 0 319 295" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M69 0L63 4V14H60.5V19.5C61.3333 20 63 21.2 63 22V30L69 34H79L84.5 30V22L87.5 19.5V14H84.5V4L79 0H69Z" fill="#CCCCCC"/>
 <path d="M84.5 39.5V34L78 39.5V47H95.5L84.5 39.5Z" fill="${fillSvg("neck")}"/>
 <path d="M65 40.5V35L67 34L71 39.5L71.5 47H54L65 40.5Z" fill="${fillSvg("neck")}"/>
@@ -283,7 +277,6 @@ fill="${fillSvg("arm")}"/>
 <path d="M89.5 211.5L94 201.5V211.5H89.5Z" fill="${defaultColor()}"/>
 <path d="M71.5 291V276L63 277.5L58 288.5L65 291H67.5L68.5 287.5V291H71.5Z" fill="${defaultColor()}"/>
 <path d="M77 291V274.5L83 276L91 285.5L89.5 290H84.5V292L77 291Z" fill="${defaultColor()}"/>
-//🤞
 <path d="M229 20L230.5 28L234 24.5V20H245V24.5V28L250 26.5V18L252.5 14L250 13V4L243 0H234L227.5 7V11L225.5 14L229 20Z" fill="${defaultColor()}"/>
 <path d="M177.5 141L176.5 137.5L167 141.5L163.5 145.5L164.5 146.5L167.5 144.5L170.5 145.5L164.5 157.5H167.5L170.5 150.5L172 151.5L168.5 160H172L174.5 151.5H177.5L174.5 160H176.5L180 152.5V159H181.5L182.5 152.5V141H177.5Z" fill="${defaultColor()}"/>
 <path d="M299.5 141H294.5V150.5L296 159.5H298.5L297.5 151.5L299.5 153L301 160H303.5L301 153H303L305.5 160L309.5 159.5L305 151.5H307L310.5 157.5H312.5L306 144.5L308 143.5L312.5 146.5L314 145V143.5L305 137.5H301L299.5 141Z" fill="${defaultColor()}"/>
@@ -331,7 +324,7 @@ fill="${fillSvg("arm")}"/>
     ''';
   }
 
-  //Control your body view type👍
+  //Control your body view type
   String buildSvg(BodyViewType view) {
     switch (view) {
       case BodyViewType.front:

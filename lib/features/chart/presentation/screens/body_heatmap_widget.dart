@@ -131,8 +131,7 @@ class const BodyHeatmap({
   }
 
   String data() {
-    return ''' 
-//🫡
+    return '''
 <svg width="319" height="295" viewBox="0 0 319 295" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M69 0L63 4V14H60.5V19.5C61.3333 20 63 21.2 63 22V30L69 34H79L84.5 30V22L87.5 19.5V14H84.5V4L79 0H69Z" fill="${defaultColor()}"/>
 <path d="M84.5 39.5V34L78 39.5V47H95.5L84.5 39.5Z" fill="${fillSvg("neck")}" fill-opacity="${fillOpacity("neck")}"/>
@@ -197,7 +196,6 @@ fill="${fillSvg("arm")}" fill-opacity="${fillOpacity("arm")}"/>
 <path d="M89.5 211.5L94 201.5V211.5H89.5Z" fill="${defaultColor()}"/>
 <path d="M71.5 291V276L63 277.5L58 288.5L65 291H67.5L68.5 287.5V291H71.5Z" fill="${defaultColor()}"/>
 <path d="M77 291V274.5L83 276L91 285.5L89.5 290H84.5V292L77 291Z" fill="${defaultColor()}"/>
-//🤞
 <path d="M229 20L230.5 28L234 24.5V20H245V24.5V28L250 26.5V18L252.5 14L250 13V4L243 0H234L227.5 7V11L225.5 14L229 20Z" fill="${defaultColor()}"/>
 <path d="M177.5 141L176.5 137.5L167 141.5L163.5 145.5L164.5 146.5L167.5 144.5L170.5 145.5L164.5 157.5H167.5L170.5 150.5L172 151.5L168.5 160H172L174.5 151.5H177.5L174.5 160H176.5L180 152.5V159H181.5L182.5 152.5V141H177.5Z" fill="${defaultColor()}"/>
 <path d="M299.5 141H294.5V150.5L296 159.5H298.5L297.5 151.5L299.5 153L301 160H303.5L301 153H303L305.5 160L309.5 159.5L305 151.5H307L310.5 157.5H312.5L306 144.5L308 143.5L312.5 146.5L314 145V143.5L305 137.5H301L299.5 141Z" fill="${defaultColor()}"/>

@@ -72,8 +72,8 @@ class HeatMapPage({
 
   /// The integer value of the maximum value for the [datasets].
   ///
-  /// Get highest key value of filtered datasets using [DatasetsUtil.getMaxValue].
-  final int? maxValue = DatasetsUtil.getMaxValue(datasets);
+  /// Get highest key value of filtered datasets using [getMaxValue].
+  final int? maxValue = getMaxValue(datasets);
 
   /// Get [HeatMapColumn] from [startDate] to [endDate].
   List<Widget> _heatmapColumnList() {
@@ -88,7 +88,7 @@ class HeatMapPage({
       datePos += 7
     ) {
       // Get first day of week by adding cursor's value to startDate.
-      final DateTime firstDay = DateUtil.changeDay(startDate, datePos);
+      final DateTime firstDay = changeDay(startDate, datePos);
 
       columns.add(
         HeatMapColumn(
@@ -99,7 +99,7 @@ class HeatMapPage({
           // endDate to HeatMapColumn's endDate.
           startDate: firstDay,
           endDate: datePos <= _dateDifferent - 7
-              ? DateUtil.changeDay(startDate, datePos + 6)
+              ? changeDay(startDate, datePos + 6)
               : endDate,
           colorMode: colorMode,
           numDays: min(endDate.difference(firstDay).inDays + 1, 7),

@@ -7,6 +7,7 @@ class const AppTextField({
   final String? hintText,
   final IconData? prefixIcon,
   final String? suffixUnit,
+  final VoidCallback? onSuffixTap,
   final String? helperText,
   final String? errorText,
   final bool obscureText = false,
@@ -19,6 +20,35 @@ class const AppTextField({
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    Widget? suffixWidget;
+    if (suffixUnit != null) {
+      final textWidget = Text(
+        suffixUnit ?? '',
+        style: TextStyle(
+          color: colorScheme.primary,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+
+      suffixWidget = onSuffixTap != null
+          ? InkWell(
+              onTap: onSuffixTap,
+              borderRadius: BorderRadius.circular(4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
+                child: Center(
+                  widthFactor: 1.0,
+                  heightFactor: 1.0,
+                  child: textWidget,
+                ),
+              ),
+            )
+          : textWidget;
+    }
 
     return TextField(
       controller: controller,
@@ -37,11 +67,7 @@ class const AppTextField({
         filled: true,
         fillColor: colorScheme.surfaceContainerLow,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 20) : null,
-        suffixText: suffixUnit,
-        suffixStyle: TextStyle(
-          color: colorScheme.primary,
-          fontWeight: FontWeight.bold,
-        ),
+        suffixIcon: suffixWidget,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

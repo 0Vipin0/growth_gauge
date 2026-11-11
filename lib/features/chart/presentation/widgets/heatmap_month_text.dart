@@ -43,7 +43,7 @@ class const HeatMapMonthText({
           firstDayInfos!.length == 1 ||
                   (label == 0 &&
                       firstDayInfos![label] != firstDayInfos![label + 1])
-              ? _renderText(DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]])
+              ? _renderText(shortMonthLabel[firstDayInfos![label]])
               : Container(
                   width: ((size ?? 20) + (margin?.right ?? 2)) * 2,
                   margin: EdgeInsets.only(
@@ -51,7 +51,7 @@ class const HeatMapMonthText({
                     right: margin?.right ?? 2,
                   ),
                   child: _renderText(
-                    DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]],
+                    shortMonthLabel[firstDayInfos![label]],
                   ),
                 ),
         );

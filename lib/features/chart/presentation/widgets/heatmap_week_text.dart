@@ -22,7 +22,7 @@ class const HeatMapWeekText({
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        for (final String label in DateUtil.WEEK_LABEL)
+        for (final String label in weekLabel)
           Container(
             height: size ?? 20,
             margin: margin ?? const EdgeInsets.all(2.0),

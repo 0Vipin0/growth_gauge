@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class const HubHeader({
-    super.key,
-    final String userName = 'Alex Doe',
-    final VoidCallback? onProfileTap,
-    final bool isDesktop = false,
-  }) extends StatelessWidget {
+  super.key,
+  final String userName = 'Alex Doe',
+  final VoidCallback? onProfileTap,
+  final bool isDesktop = false,
+}) extends StatelessWidget {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) return 'Good Morning';
@@ -64,7 +64,9 @@ class const HubHeader({
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: colorScheme.primaryContainer.withValues(alpha: 0.6),
+                          color: colorScheme.primaryContainer.withValues(
+                            alpha: 0.6,
+                          ),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -107,7 +109,9 @@ class const HubHeader({
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+                  color: colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.4,
+                  ),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: colorScheme.outlineVariant.withValues(alpha: 0.3),

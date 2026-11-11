@@ -67,7 +67,7 @@ class HeatMapColumn({
   final List<Widget> dayContainers = List.generate(
     numDays,
     (i) => HeatMapContainer(
-      date: DateUtil.changeDay(startDate, i),
+      date: changeDay(startDate, i),
       backgroundColor: defaultColor,
       size: size,
       fontSize: fontSize,
@@ -107,8 +107,8 @@ class HeatMapColumn({
                 // Else if colorMode is ColorMode.Color.
                 //
                 // Get color value from colorsets which is filtered with DateTime value
-                // Using DatasetsUtil.getColor()
-                : DatasetsUtil.getColor(
+                // Using getColor()
+                : getColor(
                     colorsets,
                     datasets?[DateTime(
                       startDate.year,

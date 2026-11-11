@@ -102,15 +102,15 @@ class _HeatMapCalendar() extends State<HeatMapCalendar> {
     setState(() {
       // Set _currentDate value to first day of initialized date or
       // today's month if widget.initDate is null.
-      _currentDate = DateUtil.startDayOfMonth(
+      _currentDate = startDayOfMonth(
         widget.initDate ?? DateTime.now(),
       );
     });
   }
 
-  void changeMonth(int direction) {
+  void updateMonth(int direction) {
     setState(() {
-      _currentDate = DateUtil.changeMonth(
+      _currentDate = changeMonth(
         _currentDate ?? DateTime.now(),
         direction,
       );
@@ -126,19 +126,19 @@ class _HeatMapCalendar() extends State<HeatMapCalendar> {
         // Previous month button.
         IconButton(
           icon: const Icon(Icons.arrow_back_ios, size: 14),
-          onPressed: () => changeMonth(-1),
+          onPressed: () => updateMonth(-1),
         ),
 
         // Text which shows the current year and month
         Text(
-          '${DateUtil.MONTH_LABEL[_currentDate?.month ?? 0]} ${_currentDate?.year}',
+          '${monthLabel[_currentDate?.month ?? 0]} ${_currentDate?.year}',
           style: TextStyle(fontSize: widget.monthFontSize ?? 12),
         ),
 
         // Next month button.
         IconButton(
           icon: const Icon(Icons.arrow_forward_ios, size: 14),
-          onPressed: () => changeMonth(1),
+          onPressed: () => updateMonth(1),
         ),
       ],
     );
@@ -148,8 +148,8 @@ class _HeatMapCalendar() extends State<HeatMapCalendar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        for (final String label in DateUtil.WEEK_LABEL.skip(1))
-          WidgetUtil.flexibleContainer(
+        for (final String label in weekLabel.skip(1))
+          flexibleContainer(
             widget.flexible ?? false,
             false,
             Container(

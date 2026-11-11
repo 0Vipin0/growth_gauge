@@ -116,7 +116,7 @@ class _HeatMap() extends State<HeatMap> {
             endDate: widget.endDate ?? DateTime.now(),
             startDate:
                 widget.startDate ??
-                DateUtil.oneYearBefore(widget.endDate ?? DateTime.now()),
+                oneYearBefore(widget.endDate ?? DateTime.now()),
             colorMode: widget.colorMode,
             size: widget.size,
             fontSize: widget.fontSize,

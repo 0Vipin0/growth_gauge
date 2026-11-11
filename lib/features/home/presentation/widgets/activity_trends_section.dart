@@ -4,12 +4,12 @@ import '../../../analytics/domain/daily_workout_summary.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 
 class const ActivityTrendsCard({
-    super.key,
-    required final List<DailyWorkoutSummary> workoutHistory,
-    final VoidCallback? onAnalyticsTap,
-    final bool showCount = false,
-    final bool isDesktop = false,
-  }) extends StatelessWidget {
+  super.key,
+  required final List<DailyWorkoutSummary> workoutHistory,
+  final VoidCallback? onAnalyticsTap,
+  final bool showCount = false,
+  final bool isDesktop = false,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -88,10 +88,10 @@ class const ActivityTrendsCard({
 }
 
 class const _WeekView({
-    required final List<DailyWorkoutSummary> summaries,
-    required final bool showCount,
-    final bool isDesktop = false,
-  }) extends StatelessWidget {
+  required final List<DailyWorkoutSummary> summaries,
+  required final bool showCount,
+  final bool isDesktop = false,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -72,10 +72,10 @@ class HeatMapCalendarRow({
     // Do same works if current week has last day of the month and
     // the last day is not a saturday.
     (i) =>
-        (startDate == DateUtil.startDayOfMonth(startDate) &&
+        (startDate == startDayOfMonth(startDate) &&
                 endDate.day - startDate.day != 7 &&
                 i < (startDate.weekday % 7)) ||
-            (endDate == DateUtil.endDayOfMonth(endDate) &&
+            (endDate == endDayOfMonth(endDate) &&
                 endDate.day - startDate.day != 7 &&
                 i > (endDate.weekday % 7))
         ? Container(
@@ -132,8 +132,8 @@ class HeatMapCalendarRow({
                       // Else if colorMode is ColorMode.Color.
                       //
                       // Get color value from colorsets which is filtered with DateTime value
-                      // Using DatasetsUtil.getColor()
-                      : DatasetsUtil.getColor(
+                      // Using getColor()
+                      : getColor(
                           colorsets,
                           datasets?[DateTime(
                             startDate.year,
@@ -152,7 +152,7 @@ class HeatMapCalendarRow({
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         for (final Widget container in dayContainers)
-          WidgetUtil.flexibleContainer(flexible ?? false, true, container),
+          flexibleContainer(flexible ?? false, true, container),
       ],
     );
   }

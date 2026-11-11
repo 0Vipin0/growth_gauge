@@ -53,18 +53,14 @@ class HeatMapCalendarPage({
   /// The list value of the map value that contains
   /// separated start and end of every weeks on month.
   ///
-  /// Separate [datasets] using [DateUtil.separatedMonth].
-  final List<Map<DateTime, DateTime>> separatedDate = DateUtil.separatedMonth(
-    baseDate,
-  );
+  /// Separate [datasets] using [separatedMonth].
+  final List<Map<DateTime, DateTime>> separatedDate = separatedMonth(baseDate);
 
   /// The integer value of the maximum value for the [datasets].
   ///
-  /// Filtering [datasets] with [baseDate] using [DatasetsUtil.filterMonth].
-  /// And get highest key value of filtered datasets using [DatasetsUtil.getMaxValue].
-  final int? maxValue = DatasetsUtil.getMaxValue(
-    DatasetsUtil.filterMonth(datasets, baseDate),
-  );
+  /// Filtering [datasets] with [baseDate] using [filterMonth].
+  /// And get highest key value of filtered datasets using [getMaxValue].
+  final int? maxValue = getMaxValue(filterMonth(datasets, baseDate));
 
   @override
   Widget build(BuildContext context) {
