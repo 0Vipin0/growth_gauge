@@ -103,6 +103,24 @@ class ExerciseSeedData._() {
     _stationaryBike,
     _treadmillRun,
     _worldsGreatestStretch,
+    _seatedMachineChestPress,
+    _chestSupportedTBarRow,
+    _seatedMachineOverheadPress,
+    _singleArmLatPulldown,
+    _singleArmCableTricepExtension,
+    _inclineDumbbellBicepCurl,
+    _legPress45,
+    _singleLegExtension,
+    _pecDeckMachineFly,
+    _overheadCableRopeExtension,
+    _neutralGripLatPulldown,
+    _reversePecDeck,
+    _dbPreacherCurlSingle,
+    _cableAbdominalCrunch,
+    _bandPullAparts,
+    _latOverheadStretch,
+    _cableLateralRaise,
+    _chestDoorwayStretch,
   ];
 
   // 1-7 (Original Reference Exercises)
@@ -3070,6 +3088,578 @@ class ExerciseSeedData._() {
       'Move smoothly and use a shorter lunge if hip mobility is limited',
     ],
     breathing: 'Exhale as you rotate and inhale as you return to the lunge; keep breathing smoothly through the sequence.',
+  );
+
+  static final _seatedMachineChestPress = Exercise(
+    id: 'exercise-seated-machine-chest-press-001',
+    name: 'Seated Machine Chest Press',
+    aliases: ['machine chest press'],
+    description: 'Converging path machine chest press focusing on pectoral development with stable back support.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.horizontalPush],
+      primaryMuscles: [MuscleGroup.chest],
+      secondaryMuscles: [MuscleGroup.triceps, MuscleGroup.frontDelts],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Adjust the seat height so the handles align mid-chest.',
+        'Plant feet firmly on the floor and press your upper back and head firmly against the pad.',
+      ],
+      executionInstructions: [
+        'Push the handles forward smoothly, maintaining a converging arc.',
+        'Squeeze the chest at full extension without locking elbows harshly.',
+        'Return slowly until a stretch is felt in the chest.',
+      ],
+      techniqueCues: [
+        'Balance left and right drive evenly',
+        'Keep shoulders back against the pad',
+      ],
+      breathingInstructions:
+          'Exhale as you press forward; inhale as you return.',
+    ),
+  );
+
+  static final _chestSupportedTBarRow = Exercise(
+    id: 'exercise-chest-supported-t-bar-row-001',
+    name: 'Chest-Supported T-Bar / Cable Row',
+    aliases: ['chest-supported t-bar row'],
+    description: 'Upper back rowing movement utilizing chest support to eliminate lower back strain.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.horizontalPull],
+      primaryMuscles: [MuscleGroup.lats, MuscleGroup.traps],
+      secondaryMuscles: [MuscleGroup.biceps, MuscleGroup.rearDelts],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Adjust the chest pad height so your chest is fully supported and your arms hang comfortably toward the handles.',
+        'Plant feet securely on the footplates.',
+      ],
+      executionInstructions: [
+        'Grip the handles, brace your core, and pull toward your navel by driving elbows back.',
+        'Squeeze your shoulder blades together at peak contraction.',
+        'Lower the weight smoothly under control to a full stretch.',
+      ],
+      techniqueCues: [
+        'Zero lower back strain by keeping chest glued to pad',
+        'Pull directly to navel',
+      ],
+      breathingInstructions: 'Exhale as you pull; inhale as you return.',
+    ),
+  );
+
+  static final _seatedMachineOverheadPress = Exercise(
+    id: 'exercise-seated-machine-ohp-001',
+    name: 'Seated Machine Overhead Press',
+    aliases: ['machine shoulder press'],
+    description: 'Joint-friendly vertical pressing movement using a machine with a smooth neutral grip.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.verticalPush],
+      primaryMuscles: [MuscleGroup.frontDelts, MuscleGroup.sideDelts],
+      secondaryMuscles: [MuscleGroup.triceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Adjust seat height so handles start around shoulder level.',
+        'Sit back firmly with spine neutral against the back pad.',
+      ],
+      executionInstructions: [
+        'Press handles overhead smoothly using a neutral grip.',
+        'Extend arms fully overhead without shrugging shoulders upward.',
+        'Lower under control back to starting position.',
+      ],
+      techniqueCues: [
+        'Smooth neutral grip movement',
+        'Keep core engaged and ribs down',
+      ],
+      breathingInstructions: 'Exhale as you press up; inhale as you lower.',
+    ),
+  );
+
+  static final _singleArmLatPulldown = Exercise(
+    id: 'exercise-single-arm-lat-pulldown-001',
+    name: 'Single-Arm Lat Pulldown',
+    aliases: ['unilateral lat pulldown'],
+    description: 'Unilateral vertical pulling exercise targeting lat width and correcting asymmetries.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.verticalPull],
+      primaryMuscles: [MuscleGroup.lats],
+      secondaryMuscles: [MuscleGroup.biceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.cable],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Attach a single handle to a high cable pulley.',
+        'Sit or kneel facing the anchor, bracing your core.',
+      ],
+      executionInstructions: [
+        'Pull the handle down toward your hip/ribcage, focusing on lat engagement.',
+        'Squeeze at the bottom and match weak-side output first.',
+        'Return slowly to the top with a full overhead stretch.',
+      ],
+      techniqueCues: [
+        'Match weak side reps first',
+        'Keep torso stable without excessive leaning',
+      ],
+      breathingInstructions: 'Exhale as you pull down; inhale as you return.',
+    ),
+  );
+
+  static final _singleArmCableTricepExtension = Exercise(
+    id: 'exercise-single-arm-cable-tricep-extension-001',
+    name: 'Single-Arm Cable Tricep Extension',
+    aliases: ['single-arm tricep pushdown'],
+    description: 'Unilateral cable extension isolating the triceps to correct imbalances.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.triceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.cable],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Attach a D-handle to a high pulley.',
+        'Grip the handle with one hand, pinning your elbow tightly to your side.',
+      ],
+      executionInstructions: [
+        'Extend the elbow fully downward until your arm is straight.',
+        'Squeeze the tricep hard at the bottom position.',
+        'Return under control to the starting position.',
+      ],
+      techniqueCues: [
+        'Corrects triceps imbalances',
+        'Keep elbow locked rigidly in place',
+      ],
+      breathingInstructions: 'Exhale as you press down; inhale as you return.',
+    ),
+  );
+
+  static final _inclineDumbbellBicepCurl = Exercise(
+    id: 'exercise-incline-db-bicep-curl-001',
+    name: 'Incline Dumbbell Bicep Curl',
+    aliases: ['incline bicep curl'],
+    description: 'Bicep curl performed on an inclined bench placing the biceps in a stretched position.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.biceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.dumbbell, EquipmentType.bench],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Set bench to a 45-degree incline and sit back with a dumbbell in each hand, arms hanging straight down.',
+      ],
+      executionInstructions: [
+        'Curl the dumbbells up while keeping upper arms stationary.',
+        'Squeeze biceps at the top and lower slowly to achieve a full stretch at the bottom.',
+      ],
+      techniqueCues: [
+        'Strict form with full stretch at the bottom',
+        'Do not swing elbows forward',
+      ],
+      breathingInstructions: 'Exhale as you curl up; inhale as you lower.',
+    ),
+  );
+
+  static final _legPress45 = Exercise(
+    id: 'exercise-45-degree-leg-press-001',
+    name: '45-Degree Leg Press',
+    aliases: ['45 leg press'],
+    description: 'Heavy compound quad and glute press on a 45-degree sled.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.lowerBody],
+      movementPatterns: [MovementPattern.squat],
+      primaryMuscles: [MuscleGroup.quads, MuscleGroup.glutes],
+      secondaryMuscles: [MuscleGroup.hamstrings],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Sit on the 45-degree leg press machine with your back and lower back glued flat against the pad.',
+        'Place feet shoulder-width apart on the sled platform.',
+      ],
+      executionInstructions: [
+        'Release safety handles and lower the sled under control until knees reach 90 degrees.',
+        'Drive through your mid-foot to push the sled back up without locking knees completely.',
+      ],
+      techniqueCues: [
+        'Keep lower back glued to pad; do not round tailbone',
+        'Keep knees tracking in line with toes',
+      ],
+      breathingInstructions:
+          'Inhale on descent; exhale as you drive the sled up.',
+    ),
+  );
+
+  static final _singleLegExtension = Exercise(
+    id: 'exercise-single-leg-extension-001',
+    name: 'Single-Leg Extension',
+    aliases: ['unilateral leg extension'],
+    description: 'Unilateral machine leg extension focusing on individual quad development.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.lowerBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.quads],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Sit on the leg extension machine, aligning one knee with the pivot point.',
+        'Secure the pad against your lower shin.',
+      ],
+      executionInstructions: [
+        'Extend the leg fully until straight, squeezing the quad at the top.',
+        'Lower slowly back to the start and match weak leg output.',
+      ],
+      techniqueCues: [
+        'Unilateral quad focus; match weak leg output',
+        'Keep hips firmly pressed into the seat',
+      ],
+      breathingInstructions: 'Exhale as you extend; inhale as you lower.',
+    ),
+  );
+
+  static final _pecDeckMachineFly = Exercise(
+    id: 'exercise-pec-deck-fly-001',
+    name: 'Pec Deck Machine Fly',
+    aliases: ['pec deck fly'],
+    description:
+        'Machine chest fly providing continuous tension across the pectorals.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.chest],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Adjust seat height so handles align with mid-chest level.',
+        'Press your back firmly against the pad and place forearms or hands against the pads.',
+      ],
+      executionInstructions: [
+        'Bring handles together in a smooth arc, squeezing your chest inward.',
+        'Return slowly with control to experience a deep stretch.',
+      ],
+      techniqueCues: [
+        'Continuous tension; squeeze chest inward',
+        'Keep elbows at a consistent, comfortable height',
+      ],
+      breathingInstructions:
+          'Exhale as you squeeze together; inhale as you open.',
+    ),
+  );
+
+  static final _overheadCableRopeExtension = Exercise(
+    id: 'exercise-overhead-cable-rope-extension-001',
+    name: 'Overhead Cable Rope Extension',
+    aliases: ['overhead rope extension'],
+    description:
+        'Cable extension overhead emphasizing the long head of the triceps.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.triceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.cable],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Attach a rope to a low or mid pulley, face away, and hold the rope overhead with elbows tucked.',
+      ],
+      executionInstructions: [
+        'Extend your forearms forward and upward, separating the rope ends at full extension.',
+        'Return slowly behind your head.',
+      ],
+      techniqueCues: [
+        'Targets long head of triceps; keep elbows tucked',
+        'Avoid letting elbows flare outward',
+      ],
+      breathingInstructions: 'Exhale as you extend; inhale as you return.',
+    ),
+  );
+
+  static final _neutralGripLatPulldown = Exercise(
+    id: 'exercise-neutral-grip-lat-pulldown-001',
+    name: 'Neutral-Grip Lat Pulldown',
+    aliases: ['parallel grip pulldown'],
+    description: 'Lat pulldown variation utilizing parallel handles to protect shoulders.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.verticalPull],
+      primaryMuscles: [MuscleGroup.lats],
+      secondaryMuscles: [MuscleGroup.biceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.cable],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Attach parallel/neutral grip handles to the high pulley.',
+        'Sit securely under the thigh pads with an upright posture.',
+      ],
+      executionInstructions: [
+        'Pull down smoothly, keeping handles facing each other and driving elbows down.',
+        'Return under control to full extension.',
+      ],
+      techniqueCues: [
+        'Handles facing each other; protects shoulders',
+        'Keep chest lifted toward the bar',
+      ],
+      breathingInstructions: 'Exhale as you pull down; inhale as you return.',
+    ),
+  );
+
+  static final _reversePecDeck = Exercise(
+    id: 'exercise-reverse-pec-deck-001',
+    name: 'Reverse Pec Deck (Rear Delt)',
+    aliases: ['reverse pec deck fly'],
+    description: 'Machine rear delt fly isolating the posterior deltoids.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.rearDelts],
+      secondaryMuscles: [MuscleGroup.traps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.machine],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Sit facing the pec deck machine with chest against the pad and hands gripping handles at shoulder height.',
+      ],
+      executionInstructions: [
+        'Push handles backward in an arc, squeezing rear delts.',
+        'Return slowly with control.',
+      ],
+      techniqueCues: [
+        'Replaces disliked bent-over flys',
+        'Keep movement strict without body momentum',
+      ],
+      breathingInstructions: 'Exhale as you push back; inhale as you return.',
+    ),
+  );
+
+  static final _dbPreacherCurlSingle = Exercise(
+    id: 'exercise-db-preacher-curl-single-001',
+    name: 'DB Preacher Curl (Single Arm)',
+    aliases: ['single arm dumbbell preacher curl'],
+    description:
+        'Unilateral bicep isolation curl performed on a preacher bench.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.upperBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.biceps],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.dumbbell, EquipmentType.bench],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Sit at a preacher bench with one arm resting flat against the pad holding a dumbbell.',
+      ],
+      executionInstructions: [
+        'Curl the dumbbell up toward your shoulder, contracting the bicep fully.',
+        'Lower under control to a full stretch.',
+      ],
+      techniqueCues: [
+        'Rest arm on pad; isolates biceps unilaterally',
+        'Avoid lifting your shoulder off the pad',
+      ],
+      breathingInstructions: 'Exhale as you curl up; inhale as you lower.',
+    ),
+  );
+
+  static final _cableAbdominalCrunch = Exercise(
+    id: 'exercise-cable-ab-crunch-001',
+    name: 'Cable Abdominal Crunch',
+    aliases: ['kneeling cable crunch'],
+    description:
+        'Weighted core crunch movement performed kneeling at a cable station.',
+    createdAt: _epoch,
+    updatedAt: _epoch,
+    classification: const ExerciseClassification(
+      bodyRegions: [BodyRegion.fullBody],
+      movementPatterns: [MovementPattern.isolation],
+      primaryMuscles: [MuscleGroup.core],
+    ),
+    equipment: const ExerciseEquipmentProfile(
+      requiredEquipment: [EquipmentType.cable],
+    ),
+    execution: const ExerciseExecutionProfile(
+      setupInstructions: [
+        'Attach a rope to a high pulley and kneel facing the stack, holding the rope near your ears.',
+      ],
+      executionInstructions: [
+        'Flex your spine downward, curling your ribs toward your hips against the resistance.',
+        'Return slowly under control.',
+      ],
+      techniqueCues: [
+        'Kneeling cable crunch; flex spine under control',
+        'Keep hips stable; movement should come from the spine',
+      ],
+      breathingInstructions: 'Exhale as you crunch down; inhale as you return.',
+    ),
+  );
+
+  // Missing / Added Exercises: Band Pull-Aparts, Lat Overhead Stretch, Cable Lateral Raise, Doorway Chest Stretch
+  static final _bandPullAparts = _movement(
+    id: 'exercise-band-pull-aparts-001',
+    name: 'Band Pull-Aparts',
+    aliases: const ['resistance band pull-apart'],
+    description: 'An upper body activation and posture exercise targeting the rear deltoids and upper back using a resistance band.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.shoulders, MuscleGroup.rearDelts],
+    secondary: const [MuscleGroup.traps],
+    equipment: const [EquipmentType.resistanceBand],
+    setup: const [
+      'Hold a resistance band with both hands in front of you, arms extended at shoulder height.',
+      'Take a shoulder-width grip with palms facing down or up, keeping a slight, soft bend in the elbows.',
+    ],
+    execution: const [
+      'Pull the band apart horizontally by moving your hands outward and squeezing your shoulder blades together.',
+      'Continue until the band touches your chest and arms are extended wide.',
+      'Return slowly to the starting position under control.',
+    ],
+    cues: const [
+      'Keep shoulders depressed away from your ears',
+      'Lead with the elbows and squeeze the upper back',
+      'Avoid shrugging or arching the lower back',
+    ],
+    breathing:
+        'Exhale as you pull the band apart; inhale as you return to the start.',
+  );
+
+  static final _latOverheadStretch = _movement(
+    id: 'exercise-lat-overhead-stretch-001',
+    name: 'Lat Overhead Stretch',
+    aliases: const ['overhead lat stretch'],
+    description: 'A static stretch focusing on the latissimus dorsi and lateral upper body to improve overhead mobility and flexibility.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.lats],
+    secondary: const [MuscleGroup.shoulders],
+    equipment: const [EquipmentType.bodyweight],
+    setup: const [
+      'Stand tall or kneel, raising one arm straight overhead next to your ear.',
+      'Lean your torso gently to the opposite side while keeping your hips stable.',
+    ],
+    execution: const [
+      'Reach upward and slightly across to lengthen the side of your body until a deep stretch is felt along the lats.',
+      'Hold the static position for the prescribed duration without rotating your torso.',
+      'Return to center slowly and repeat on the opposite side.',
+    ],
+    cues: const [
+      'Keep your core braced and hips facing forward',
+      'Do not twist or lean forward during the side bend',
+      'Breathe into the stretch to relax tension',
+    ],
+    breathing: 'Breathe slowly and evenly, deepening the stretch slightly with each relaxed exhale.',
+  );
+
+  static final _cableLateralRaise = _movement(
+    id: 'exercise-cable-lateral-raise-001',
+    name: 'Cable Lateral Raise',
+    aliases: const ['single-arm cable lateral raise'],
+    description: 'An isolation exercise utilizing a cable machine to apply constant tension on the lateral deltoids for shoulder hypertrophy.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.sideDelts],
+    secondary: const [MuscleGroup.traps],
+    equipment: const [EquipmentType.cable],
+    setup: const [
+      'Set a D-handle to a low pulley and stand sideways to the cable stack.',
+      'Grab the handle with the outside hand, keeping your arm down across your body or behind your back, with a slight bend in the elbow.',
+    ],
+    execution: const [
+      'Raise the handle out and up to the side, leading with the elbow, until it reaches shoulder height.',
+      'Pause briefly at the top with the side delt fully contracted.',
+      'Lower the weight slowly under control back to the starting position.',
+    ],
+    cues: const [
+      'Keep the torso steady, avoiding swinging or leaning away',
+      'Keep the wrist lower than the elbow at the peak of the raise',
+      'Use a strict, controlled tempo',
+    ],
+    breathing: 'Exhale as you raise the handle; inhale as you lower it.',
+  );
+
+  static final _chestDoorwayStretch = _movement(
+    id: 'exercise-chest-doorway-stretch-001',
+    name: 'Doorway Chest Stretch',
+    aliases: const ['door frame pectoral stretch'],
+    description: 'A classic static stretch targeting the pectorals and anterior shoulders to open up the chest and improve posture.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.chest],
+    secondary: const [MuscleGroup.frontDelts],
+    equipment: const [EquipmentType.bodyweight],
+    setup: const [
+      'Stand in an open doorway and place your forearms against the frame with elbows slightly below shoulder height.',
+      'Step one foot slightly forward into the doorway while keeping your core braced.',
+    ],
+    execution: const [
+      'Gently lean your body forward through the doorway until you feel a comfortable stretch across your chest and front shoulders.',
+      'Hold the position statically for the prescribed duration without shrugging your shoulders.',
+      'Step back out of the stretch slowly.',
+    ],
+    cues: const [
+      'Keep your neck relaxed and ribs tucked down',
+      'Do not force or push into painful ranges of motion',
+      'Adjust elbow height on the frame to target different pectoral fibers',
+    ],
+    breathing: 'Breathe slowly and deeply, letting the chest relax more with every exhale.',
   );
 
   /// Shared constructor keeps the catalog entries consistent while each movement

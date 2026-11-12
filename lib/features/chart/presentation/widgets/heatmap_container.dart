@@ -49,7 +49,7 @@ class const HeatMapContainer({
           ),
         ),
         onTap: () {
-          onClick != null ? onClick!(date) : null;
+          onClick!(date);
         },
       ),
     );

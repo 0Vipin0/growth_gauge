@@ -115,7 +115,7 @@ class _HeatMapCalendar() extends State<HeatMapCalendar> {
         direction,
       );
     });
-    if (widget.onMonthChange != null) widget.onMonthChange!(_currentDate!);
+    widget.onMonthChange!(_currentDate!);
   }
 
   /// Header widget which shows left, right buttons and year/month text.

@@ -68,6 +68,11 @@ class WorkoutTemplateSeedData._() {
     _lowerStretchRelease,
     _upperStretchRelease,
     _activeRecovery,
+    _upperBodyA,
+    _lowerBodyA,
+    _upperBodyB,
+    _upperBodyC,
+    _lowerBodyB,
   ];
 
   // ===================== STRENGTH (1-20) =====================
@@ -12562,6 +12567,1415 @@ class WorkoutTemplateSeedData._() {
                   id: 'ts-ar-9-1',
                   setNumber: 1,
                   targetDurationSeconds: 300,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== CUSTOM USER TEMPLATES (1-5) =====================
+
+  // 1. Upper Body A
+  static final _upperBodyA = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-upper-body-a-001',
+      name: 'Upper Body A',
+      description: 'Intermediate | ~65 min. Focuses on horizontal pushing, vertical pulling, and shoulder/arm accessories with warm-up, stretching and relaxed ending.',
+      currentRevisionId: 'rev-upper-body-a-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['upper-body', 'push', 'pull', 'intermediate', 'stretching'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-upper-body-a-001',
+      templateId: 'template-upper-body-a-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-uba-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-uba-w1',
+              exerciseId: 'exercise-band-pull-aparts-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 6.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-w1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 6.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-w2',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-w2-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-w2-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-uba-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-uba-1',
+              exerciseId: 'exercise-seated-machine-chest-press-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-1-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-uba-1-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-uba-1-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-2',
+              exerciseId: 'exercise-chest-supported-t-bar-row-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-2-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-uba-2-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-uba-2-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-3',
+              exerciseId: 'exercise-seated-machine-ohp-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-4',
+              exerciseId: 'exercise-single-arm-lat-pulldown-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-5',
+              exerciseId: 'exercise-single-arm-cable-tricep-extension-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-6',
+              exerciseId: 'exercise-incline-db-bicep-curl-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-6-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-6-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-uba-6-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-uba-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-uba-7',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-uba-7-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-8',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-8-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-uba-8-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-uba-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-uba-9',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-uba-10',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-uba-10-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Lower Body A
+  static final _lowerBodyA = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-lower-body-a-001',
+      name: 'Lower Body A',
+      description: 'Heavy quad focus featuring leg press, lunges, and calf/core finishers with warm-up and stretching.',
+      currentRevisionId: 'rev-lower-body-a-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['lower-body', 'quads', 'core', 'intermediate', 'stretching'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-lower-body-a-001',
+      templateId: 'template-lower-body-a-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-lba-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-lba-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-w1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 6.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-w1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 6.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-w2',
+              exerciseId: 'exercise-leg-swings-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-w2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-w2-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lba-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-lba-1',
+              exerciseId: 'exercise-leg-press-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-2',
+              exerciseId: 'exercise-leg-extension-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-3',
+              exerciseId: 'exercise-walking-lunge-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-4',
+              exerciseId: 'exercise-seated-calf-raise-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lba-4-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-5',
+              exerciseId: 'exercise-hanging-leg-raise-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lba-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lba-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-lba-6',
+              exerciseId: 'exercise-quad-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-lba-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-7',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-lba-7-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lba-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-lba-8',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-8-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lba-9',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lba-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Upper Body B
+  static final _upperBodyB = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-upper-body-b-001',
+      name: 'Upper Body B',
+      description: 'Emphasizes upper chest, fly variations, lateral delts, and tricep long-head work with warm-up and stretching.',
+      currentRevisionId: 'rev-upper-body-b-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: [
+        'upper-body',
+        'chest',
+        'triceps',
+        'shoulders',
+        'intermediate',
+        'stretching',
+      ],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-upper-body-b-001',
+      templateId: 'template-upper-body-b-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-ubb-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-ubb-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-w1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-w1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-w2',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-w2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 6.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-w2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 6.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubb-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-ubb-1',
+              exerciseId: 'exercise-incline-db-press-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-1-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-1-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-1-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-2',
+              exerciseId: 'exercise-pec-deck-fly-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-3',
+              exerciseId: 'exercise-cable-lateral-raise-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-3-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-3-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-3-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-3-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-4',
+              exerciseId: 'exercise-tricep-pushdown-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-5',
+              exerciseId: 'exercise-overhead-tricep-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubb-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-ubb-6',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-7',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-ubb-7-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubb-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-ubb-8',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-8-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubb-9',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubb-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Upper Body C
+  static final _upperBodyC = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-upper-body-c-001',
+      name: 'Upper Body C',
+      description: 'Back-dominant pulling routine with rear delt focus and preacher bicep isolation with warm-up and stretching.',
+      currentRevisionId: 'rev-upper-body-c-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['upper-body', 'back', 'biceps', 'intermediate', 'stretching'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-upper-body-c-001',
+      templateId: 'template-upper-body-c-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-ubc-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-ubc-w1',
+              exerciseId: 'exercise-band-pull-aparts-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 6.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-w1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 6.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-w2',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-w2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-w2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubc-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-ubc-1',
+              exerciseId: 'exercise-lat-pulldown-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-2',
+              exerciseId: 'exercise-single-arm-db-row-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-3',
+              exerciseId: 'exercise-rear-delt-fly-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-3-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-3-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-3-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-4',
+              exerciseId: 'exercise-face-pull-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-5',
+              exerciseId: 'exercise-barbell-curl-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubc-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-ubc-6',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-7',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-ubc-7-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ubc-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-ubc-8',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-8-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ubc-9',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ubc-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Lower Body B
+  static final _lowerBodyB = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-lower-body-b-001',
+      name: 'Lower Body B',
+      description: 'Posterior chain focused leg day with hamstring isolation, high/wide leg press, and core work with warm-up and stretching.',
+      currentRevisionId: 'rev-lower-body-b-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: [
+        'lower-body',
+        'hamstrings',
+        'glutes',
+        'abs',
+        'intermediate',
+        'stretching',
+      ],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-lower-body-b-001',
+      templateId: 'template-lower-body-b-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release: timed warm-up, structured work blocks and complete cool-down',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-lbb-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-lbb-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-w1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 6.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-w1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 6.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-w2',
+              exerciseId: 'exercise-leg-swings-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-w2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-w2-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lbb-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-lbb-1',
+              exerciseId: 'exercise-seated-leg-curl-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-2',
+              exerciseId: 'exercise-leg-press-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-3',
+              exerciseId: 'exercise-standing-calf-raise-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-4',
+              exerciseId: 'exercise-cable-ab-crunch-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-5',
+              exerciseId: 'exercise-plank-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-5-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-5-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 60,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-5-3',
+                  setNumber: 3,
+                  targetDurationSeconds: 60,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lbb-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-lbb-6',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-7',
+              exerciseId: 'exercise-hip-flexor-stretch-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-lbb-7-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-lbb-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-lbb-8',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-8-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-lbb-9',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-lbb-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
                 ),
               ],
             ),
