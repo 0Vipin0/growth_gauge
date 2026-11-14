@@ -1,5 +1,4 @@
-export 'base_chart_widget.dart';
-export 'base_heatmap_widget.dart';
-export 'provider/abstract_chart_provider.dart';
-export 'provider/counter_chart_provider.dart';
-export 'provider/timer_chart_provider.dart';
+export 'presentation/screens/base_chart_widget.dart';
+export 'presentation/screens/base_heatmap_widget.dart';
+export 'presentation/screens/body_chart_widget.dart';
+export 'presentation/screens/body_heatmap_widget.dart';

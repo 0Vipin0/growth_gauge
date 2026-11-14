@@ -1,15 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesKeys {
-  static const String countersStorageKey = 'counters';
-  static const String timersStorageKey = 'timers';
-  static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
+class SharedPreferencesKeys() {
   static const String themeName = 'themeName';
+  static const String themeMode = 'themeMode';
+  static const String contrastVariant = 'contrastVariant';
   static const String fontSize = 'fontSize';
-  static const String fontFamily = 'fontFamily';
-  static const String exportFormat = 'exportFormat';
+  static const String fontFamily = 'fontFamily'; // Backward compatibility
+  static const String fontFamilyChoice = 'fontFamilyChoice';
   static const String authenticationType = 'authenticationType';
   static const String notificationTime = 'notificationTime';
+  static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
 }
 
 mixin SharedPreferencesHelper {
@@ -29,43 +29,28 @@ mixin SharedPreferencesHelper {
     return _prefs!;
   }
 
-  static String? getCounters() {
-    return instance.getString(SharedPreferencesKeys.countersStorageKey);
-  }
-
-  static Future<bool> setCounters(String value) {
-    return instance.setString(SharedPreferencesKeys.countersStorageKey, value);
-  }
-
-  static String? getTimers() {
-    return instance.getString(SharedPreferencesKeys.timersStorageKey);
-  }
-
-  static Future<bool> setTimers(String value) {
-    return instance.setString(SharedPreferencesKeys.timersStorageKey, value);
-  }
-
-  static Future<bool> removeTimers() {
-    return instance.remove(SharedPreferencesKeys.timersStorageKey);
-  }
-
-  static Future<bool?>? getHasCompletedOnboarding() async {
-    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding);
-  }
-
-  static Future<bool> setHasCompletedOnboarding(bool value) {
-    return instance.setBool(
-      SharedPreferencesKeys.hasCompletedOnboarding,
-      value,
-    );
-  }
-
   static String? getThemeName() {
     return instance.getString(SharedPreferencesKeys.themeName);
   }
 
   static Future<bool> setThemeName(String value) {
     return instance.setString(SharedPreferencesKeys.themeName, value);
+  }
+
+  static String? getThemeMode() {
+    return instance.getString(SharedPreferencesKeys.themeMode);
+  }
+
+  static Future<bool> setThemeMode(String value) {
+    return instance.setString(SharedPreferencesKeys.themeMode, value);
+  }
+
+  static String? getContrastVariant() {
+    return instance.getString(SharedPreferencesKeys.contrastVariant);
+  }
+
+  static Future<bool> setContrastVariant(String value) {
+    return instance.setString(SharedPreferencesKeys.contrastVariant, value);
   }
 
   static String? getFontSize() {
@@ -77,19 +62,21 @@ mixin SharedPreferencesHelper {
   }
 
   static String? getFontFamily() {
-    return instance.getString(SharedPreferencesKeys.fontFamily);
+    return instance.getString(SharedPreferencesKeys.fontFamily) ??
+        instance.getString(SharedPreferencesKeys.fontFamilyChoice);
   }
 
   static Future<bool> setFontFamily(String value) {
     return instance.setString(SharedPreferencesKeys.fontFamily, value);
   }
 
-  static String? getExportFormat() {
-    return instance.getString(SharedPreferencesKeys.exportFormat);
+  static String? getFontFamilyChoice() {
+    return instance.getString(SharedPreferencesKeys.fontFamilyChoice) ??
+        instance.getString(SharedPreferencesKeys.fontFamily);
   }
 
-  static Future<bool> setExportFormat(String value) {
-    return instance.setString(SharedPreferencesKeys.exportFormat, value);
+  static Future<bool> setFontFamilyChoice(String value) {
+    return instance.setString(SharedPreferencesKeys.fontFamilyChoice, value);
   }
 
   static String? getAuthenticationType() {
@@ -106,5 +93,18 @@ mixin SharedPreferencesHelper {
 
   static Future<bool> setNotificationTime(String value) {
     return instance.setString(SharedPreferencesKeys.notificationTime, value);
+  }
+
+  // ── Onboarding Helpers ────────────────────────────────────────────────────
+  static bool getHasCompletedOnboarding() {
+    return instance.getBool(SharedPreferencesKeys.hasCompletedOnboarding) ??
+        false;
+  }
+
+  static Future<bool> setHasCompletedOnboarding(bool value) {
+    return instance.setBool(
+      SharedPreferencesKeys.hasCompletedOnboarding,
+      value,
+    );
   }
 }
