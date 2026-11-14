@@ -66,7 +66,6 @@ function Get-Quoted {
 }
 
 function Get-Dupes {
-    # Returns objects { Value, Count } for values that occur more than once (case-sensitive).
     param([string[]]$Values)
     $counter = New-OrdinalCounter
     foreach ($v in $Values) { if ($null -ne $v -and $v -ne '') { Add-Count $counter $v } }
@@ -174,7 +173,8 @@ if (-not $exerciseFound -or -not $templateFound) {
 # ---------------------------------------------------------------------------
 function Read-ExerciseFile {
     param([string]$Path)
-    $lines = [System.IO.File]::ReadAllLines((Resolve-Path -LiteralPath $Path).ProviderPath)
+    $rawLines = [System.IO.File]::ReadAllLines((Resolve-Path -LiteralPath $Path).ProviderPath)
+    $lines = @(foreach ($l in $rawLines) { $l.TrimEnd("`r") })
     $exercises = New-Object System.Collections.Generic.List[object]
     $declared = New-Object System.Collections.Generic.List[string]
     $registered = New-Object System.Collections.Generic.List[string]
@@ -264,7 +264,8 @@ function Read-ExerciseFile {
 # ---------------------------------------------------------------------------
 function Read-TemplateFile {
     param([string]$Path)
-    $lines = [System.IO.File]::ReadAllLines((Resolve-Path -LiteralPath $Path).ProviderPath)
+    $rawLines = [System.IO.File]::ReadAllLines((Resolve-Path -LiteralPath $Path).ProviderPath)
+    $lines = @(foreach ($l in $rawLines) { $l.TrimEnd("`r") })
     $templates = New-Object System.Collections.Generic.List[object]
     $refs = New-Object System.Collections.Generic.List[object]
     $nested = New-Object System.Collections.Generic.List[object]
@@ -383,7 +384,7 @@ $blocks = 0; $items = 0; $sets = 0
 foreach ($t in $templates) { $blocks += $t.Blocks; $items += $t.Items; $sets += $t.Sets }
 
 # Duplicates and integrity
-$issues = New-Object System.Collections.Generic.List[object]   # Issue, Value, Detail
+$issues = New-Object System.Collections.Generic.List[object]
 function Add-DupIssues {
     param([string]$Label, [string[]]$Values)
     $d = Get-Dupes $Values
@@ -404,7 +405,7 @@ $dupVars = Add-DupIssues 'Static variable' @(@($exData.Declared) + @($tpData.Dec
 $revMismatch = @($templates | Where-Object { ($_.CurRev -cne $_.RevId) -or ($_.Id -cne $_.RevTplId) }).Count
 
 function Get-SetDiff {
-    param([string[]]$A, [string[]]$B)   # items in A that are not in B
+    param([string[]]$A, [string[]]$B)
     $bs = New-OrdinalSet
     foreach ($x in $B) { [void]$bs.Add($x) }
     return @($A | Where-Object { -not $bs.Contains($_) })
