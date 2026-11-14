@@ -43,6 +43,11 @@ _SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
           : const TimeOfDayConverter().fromJson(
               json['notificationTime'] as String?,
             ),
+      notificationSettings: json['notificationSettings'] == null
+          ? const NotificationSettings()
+          : NotificationSettings.fromJson(
+              json['notificationSettings'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$SettingsModelToJson(
@@ -59,6 +64,7 @@ Map<String, dynamic> _$SettingsModelToJson(
   'notificationTime': const TimeOfDayConverter().toJson(
     instance.notificationTime,
   ),
+  'notificationSettings': instance.notificationSettings,
 };
 
 const _$AppThemeNameEnumMap = {

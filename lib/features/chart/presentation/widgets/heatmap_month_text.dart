@@ -50,9 +50,7 @@ class const HeatMapMonthText({
                     left: margin?.left ?? 2,
                     right: margin?.right ?? 2,
                   ),
-                  child: _renderText(
-                    shortMonthLabel[firstDayInfos![label]],
-                  ),
+                  child: _renderText(shortMonthLabel[firstDayInfos![label]]),
                 ),
         );
       } else if (write) {

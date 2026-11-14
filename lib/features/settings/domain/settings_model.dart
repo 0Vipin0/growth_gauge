@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../common/presentation/theme/theme.dart';
+import '../../notification/domain/notification_settings.dart';
 
 part 'settings_model.freezed.dart';
 part 'settings_model.g.dart';
@@ -37,6 +38,7 @@ abstract class SettingsModel with _$SettingsModel {
     @Default(ExportFormat.json) ExportFormat exportFormat,
     @Default(AuthenticationType.none) AuthenticationType authenticationType,
     @Default(null) @TimeOfDayConverter() TimeOfDay? notificationTime,
+    @Default(NotificationSettings()) NotificationSettings notificationSettings,
   }) = _SettingsModel;
 
   factory fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);

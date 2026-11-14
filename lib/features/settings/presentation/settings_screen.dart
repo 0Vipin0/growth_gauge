@@ -324,29 +324,17 @@ class const SettingsScreen({super.key}) extends StatelessWidget {
             const SizedBox(height: 24),
 
             // 3. NOTIFICATIONS SECTION
-            _buildSectionHeader(context, 'Notifications'),
+            _buildSectionHeader(context, 'Notifications & Sounds'),
             const SizedBox(height: 8),
             AppCard(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 8.0,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: ListTile(
-                title: const Text('Notification time'),
-                subtitle: const Text('Daily reminder schedule for workouts'),
-                trailing: AppButton.ghost(
-                  label:
-                      settings.notificationTime?.format(context) ?? 'Set time',
-                  onPressed: () async {
-                    final time = await showTimePicker(
-                      context: context,
-                      initialTime: settings.notificationTime ?? TimeOfDay.now(),
-                    );
-                    if (time != null) {
-                      await settingsCubit.updateNotificationTime(time);
-                    }
-                  },
+                title: const Text('Notification & Sound Options'),
+                subtitle: const Text(
+                  'Manage reminders, quiet hours, and audio cues',
                 ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () => context.push(appRouteNotificationSettings),
               ),
             ),
 

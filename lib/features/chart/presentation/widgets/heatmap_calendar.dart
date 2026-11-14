@@ -102,18 +102,13 @@ class _HeatMapCalendar() extends State<HeatMapCalendar> {
     setState(() {
       // Set _currentDate value to first day of initialized date or
       // today's month if widget.initDate is null.
-      _currentDate = startDayOfMonth(
-        widget.initDate ?? DateTime.now(),
-      );
+      _currentDate = startDayOfMonth(widget.initDate ?? DateTime.now());
     });
   }
 
   void updateMonth(int direction) {
     setState(() {
-      _currentDate = changeMonth(
-        _currentDate ?? DateTime.now(),
-        direction,
-      );
+      _currentDate = changeMonth(_currentDate ?? DateTime.now(), direction);
     });
     widget.onMonthChange!(_currentDate!);
   }

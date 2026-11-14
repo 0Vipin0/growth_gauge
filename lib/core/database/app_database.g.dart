@@ -3659,6 +3659,857 @@ class RestIntervalMetricsCompanion
   }
 }
 
+class $NotificationPreferencesTableTable extends NotificationPreferencesTable
+    with
+        TableInfo<
+          $NotificationPreferencesTableTable,
+          NotificationPreferencesData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotificationPreferencesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _notificationsEnabledMeta =
+      const VerificationMeta('notificationsEnabled');
+  @override
+  late final GeneratedColumn<bool> notificationsEnabled = GeneratedColumn<bool>(
+    'notifications_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("notifications_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _soundEnabledMeta = const VerificationMeta(
+    'soundEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> soundEnabled = GeneratedColumn<bool>(
+    'sound_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("sound_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _vibrationEnabledMeta = const VerificationMeta(
+    'vibrationEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> vibrationEnabled = GeneratedColumn<bool>(
+    'vibration_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("vibration_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _dailyReminderEnabledMeta =
+      const VerificationMeta('dailyReminderEnabled');
+  @override
+  late final GeneratedColumn<bool> dailyReminderEnabled = GeneratedColumn<bool>(
+    'daily_reminder_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("daily_reminder_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _reminderHourMeta = const VerificationMeta(
+    'reminderHour',
+  );
+  @override
+  late final GeneratedColumn<int> reminderHour = GeneratedColumn<int>(
+    'reminder_hour',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(9),
+  );
+  static const VerificationMeta _reminderMinuteMeta = const VerificationMeta(
+    'reminderMinute',
+  );
+  @override
+  late final GeneratedColumn<int> reminderMinute = GeneratedColumn<int>(
+    'reminder_minute',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _quietHoursEnabledMeta = const VerificationMeta(
+    'quietHoursEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> quietHoursEnabled = GeneratedColumn<bool>(
+    'quiet_hours_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("quiet_hours_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _quietHoursStartHourMeta =
+      const VerificationMeta('quietHoursStartHour');
+  @override
+  late final GeneratedColumn<int> quietHoursStartHour = GeneratedColumn<int>(
+    'quiet_hours_start_hour',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _quietHoursStartMinuteMeta =
+      const VerificationMeta('quietHoursStartMinute');
+  @override
+  late final GeneratedColumn<int> quietHoursStartMinute = GeneratedColumn<int>(
+    'quiet_hours_start_minute',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _quietHoursEndHourMeta = const VerificationMeta(
+    'quietHoursEndHour',
+  );
+  @override
+  late final GeneratedColumn<int> quietHoursEndHour = GeneratedColumn<int>(
+    'quiet_hours_end_hour',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _quietHoursEndMinuteMeta =
+      const VerificationMeta('quietHoursEndMinute');
+  @override
+  late final GeneratedColumn<int> quietHoursEndMinute = GeneratedColumn<int>(
+    'quiet_hours_end_minute',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _motivationalMessagingStyleMeta =
+      const VerificationMeta('motivationalMessagingStyle');
+  @override
+  late final GeneratedColumn<String> motivationalMessagingStyle =
+      GeneratedColumn<String>(
+        'motivational_messaging_style',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('balanced'),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    notificationsEnabled,
+    soundEnabled,
+    vibrationEnabled,
+    dailyReminderEnabled,
+    reminderHour,
+    reminderMinute,
+    quietHoursEnabled,
+    quietHoursStartHour,
+    quietHoursStartMinute,
+    quietHoursEndHour,
+    quietHoursEndMinute,
+    motivationalMessagingStyle,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'notification_preferences_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NotificationPreferencesData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('notifications_enabled')) {
+      context.handle(
+        _notificationsEnabledMeta,
+        notificationsEnabled.isAcceptableOrUnknown(
+          data['notifications_enabled']!,
+          _notificationsEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sound_enabled')) {
+      context.handle(
+        _soundEnabledMeta,
+        soundEnabled.isAcceptableOrUnknown(
+          data['sound_enabled']!,
+          _soundEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('vibration_enabled')) {
+      context.handle(
+        _vibrationEnabledMeta,
+        vibrationEnabled.isAcceptableOrUnknown(
+          data['vibration_enabled']!,
+          _vibrationEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('daily_reminder_enabled')) {
+      context.handle(
+        _dailyReminderEnabledMeta,
+        dailyReminderEnabled.isAcceptableOrUnknown(
+          data['daily_reminder_enabled']!,
+          _dailyReminderEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reminder_hour')) {
+      context.handle(
+        _reminderHourMeta,
+        reminderHour.isAcceptableOrUnknown(
+          data['reminder_hour']!,
+          _reminderHourMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reminder_minute')) {
+      context.handle(
+        _reminderMinuteMeta,
+        reminderMinute.isAcceptableOrUnknown(
+          data['reminder_minute']!,
+          _reminderMinuteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quiet_hours_enabled')) {
+      context.handle(
+        _quietHoursEnabledMeta,
+        quietHoursEnabled.isAcceptableOrUnknown(
+          data['quiet_hours_enabled']!,
+          _quietHoursEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quiet_hours_start_hour')) {
+      context.handle(
+        _quietHoursStartHourMeta,
+        quietHoursStartHour.isAcceptableOrUnknown(
+          data['quiet_hours_start_hour']!,
+          _quietHoursStartHourMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quiet_hours_start_minute')) {
+      context.handle(
+        _quietHoursStartMinuteMeta,
+        quietHoursStartMinute.isAcceptableOrUnknown(
+          data['quiet_hours_start_minute']!,
+          _quietHoursStartMinuteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quiet_hours_end_hour')) {
+      context.handle(
+        _quietHoursEndHourMeta,
+        quietHoursEndHour.isAcceptableOrUnknown(
+          data['quiet_hours_end_hour']!,
+          _quietHoursEndHourMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quiet_hours_end_minute')) {
+      context.handle(
+        _quietHoursEndMinuteMeta,
+        quietHoursEndMinute.isAcceptableOrUnknown(
+          data['quiet_hours_end_minute']!,
+          _quietHoursEndMinuteMeta,
+        ),
+      );
+    }
+    if (data.containsKey('motivational_messaging_style')) {
+      context.handle(
+        _motivationalMessagingStyleMeta,
+        motivationalMessagingStyle.isAcceptableOrUnknown(
+          data['motivational_messaging_style']!,
+          _motivationalMessagingStyleMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NotificationPreferencesData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NotificationPreferencesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      notificationsEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}notifications_enabled'],
+      )!,
+      soundEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}sound_enabled'],
+      )!,
+      vibrationEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}vibration_enabled'],
+      )!,
+      dailyReminderEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}daily_reminder_enabled'],
+      )!,
+      reminderHour: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reminder_hour'],
+      )!,
+      reminderMinute: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reminder_minute'],
+      )!,
+      quietHoursEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}quiet_hours_enabled'],
+      )!,
+      quietHoursStartHour: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quiet_hours_start_hour'],
+      ),
+      quietHoursStartMinute: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quiet_hours_start_minute'],
+      ),
+      quietHoursEndHour: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quiet_hours_end_hour'],
+      ),
+      quietHoursEndMinute: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}quiet_hours_end_minute'],
+      ),
+      motivationalMessagingStyle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}motivational_messaging_style'],
+      )!,
+    );
+  }
+
+  @override
+  $NotificationPreferencesTableTable createAlias(String alias) {
+    return $NotificationPreferencesTableTable(attachedDatabase, alias);
+  }
+}
+
+class NotificationPreferencesData extends DataClass
+    implements Insertable<NotificationPreferencesData> {
+  final int id;
+  final bool notificationsEnabled;
+  final bool soundEnabled;
+  final bool vibrationEnabled;
+  final bool dailyReminderEnabled;
+  final int reminderHour;
+  final int reminderMinute;
+  final bool quietHoursEnabled;
+  final int? quietHoursStartHour;
+  final int? quietHoursStartMinute;
+  final int? quietHoursEndHour;
+  final int? quietHoursEndMinute;
+  final String motivationalMessagingStyle;
+  const NotificationPreferencesData({
+    required this.id,
+    required this.notificationsEnabled,
+    required this.soundEnabled,
+    required this.vibrationEnabled,
+    required this.dailyReminderEnabled,
+    required this.reminderHour,
+    required this.reminderMinute,
+    required this.quietHoursEnabled,
+    this.quietHoursStartHour,
+    this.quietHoursStartMinute,
+    this.quietHoursEndHour,
+    this.quietHoursEndMinute,
+    required this.motivationalMessagingStyle,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['notifications_enabled'] = Variable<bool>(notificationsEnabled);
+    map['sound_enabled'] = Variable<bool>(soundEnabled);
+    map['vibration_enabled'] = Variable<bool>(vibrationEnabled);
+    map['daily_reminder_enabled'] = Variable<bool>(dailyReminderEnabled);
+    map['reminder_hour'] = Variable<int>(reminderHour);
+    map['reminder_minute'] = Variable<int>(reminderMinute);
+    map['quiet_hours_enabled'] = Variable<bool>(quietHoursEnabled);
+    if (!nullToAbsent || quietHoursStartHour != null) {
+      map['quiet_hours_start_hour'] = Variable<int>(quietHoursStartHour);
+    }
+    if (!nullToAbsent || quietHoursStartMinute != null) {
+      map['quiet_hours_start_minute'] = Variable<int>(quietHoursStartMinute);
+    }
+    if (!nullToAbsent || quietHoursEndHour != null) {
+      map['quiet_hours_end_hour'] = Variable<int>(quietHoursEndHour);
+    }
+    if (!nullToAbsent || quietHoursEndMinute != null) {
+      map['quiet_hours_end_minute'] = Variable<int>(quietHoursEndMinute);
+    }
+    map['motivational_messaging_style'] = Variable<String>(
+      motivationalMessagingStyle,
+    );
+    return map;
+  }
+
+  NotificationPreferencesTableCompanion toCompanion(bool nullToAbsent) {
+    return NotificationPreferencesTableCompanion(
+      id: Value(id),
+      notificationsEnabled: Value(notificationsEnabled),
+      soundEnabled: Value(soundEnabled),
+      vibrationEnabled: Value(vibrationEnabled),
+      dailyReminderEnabled: Value(dailyReminderEnabled),
+      reminderHour: Value(reminderHour),
+      reminderMinute: Value(reminderMinute),
+      quietHoursEnabled: Value(quietHoursEnabled),
+      quietHoursStartHour: quietHoursStartHour == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quietHoursStartHour),
+      quietHoursStartMinute: quietHoursStartMinute == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quietHoursStartMinute),
+      quietHoursEndHour: quietHoursEndHour == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quietHoursEndHour),
+      quietHoursEndMinute: quietHoursEndMinute == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quietHoursEndMinute),
+      motivationalMessagingStyle: Value(motivationalMessagingStyle),
+    );
+  }
+
+  factory NotificationPreferencesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NotificationPreferencesData(
+      id: serializer.fromJson<int>(json['id']),
+      notificationsEnabled: serializer.fromJson<bool>(
+        json['notificationsEnabled'],
+      ),
+      soundEnabled: serializer.fromJson<bool>(json['soundEnabled']),
+      vibrationEnabled: serializer.fromJson<bool>(json['vibrationEnabled']),
+      dailyReminderEnabled: serializer.fromJson<bool>(
+        json['dailyReminderEnabled'],
+      ),
+      reminderHour: serializer.fromJson<int>(json['reminderHour']),
+      reminderMinute: serializer.fromJson<int>(json['reminderMinute']),
+      quietHoursEnabled: serializer.fromJson<bool>(json['quietHoursEnabled']),
+      quietHoursStartHour: serializer.fromJson<int?>(
+        json['quietHoursStartHour'],
+      ),
+      quietHoursStartMinute: serializer.fromJson<int?>(
+        json['quietHoursStartMinute'],
+      ),
+      quietHoursEndHour: serializer.fromJson<int?>(json['quietHoursEndHour']),
+      quietHoursEndMinute: serializer.fromJson<int?>(
+        json['quietHoursEndMinute'],
+      ),
+      motivationalMessagingStyle: serializer.fromJson<String>(
+        json['motivationalMessagingStyle'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'notificationsEnabled': serializer.toJson<bool>(notificationsEnabled),
+      'soundEnabled': serializer.toJson<bool>(soundEnabled),
+      'vibrationEnabled': serializer.toJson<bool>(vibrationEnabled),
+      'dailyReminderEnabled': serializer.toJson<bool>(dailyReminderEnabled),
+      'reminderHour': serializer.toJson<int>(reminderHour),
+      'reminderMinute': serializer.toJson<int>(reminderMinute),
+      'quietHoursEnabled': serializer.toJson<bool>(quietHoursEnabled),
+      'quietHoursStartHour': serializer.toJson<int?>(quietHoursStartHour),
+      'quietHoursStartMinute': serializer.toJson<int?>(quietHoursStartMinute),
+      'quietHoursEndHour': serializer.toJson<int?>(quietHoursEndHour),
+      'quietHoursEndMinute': serializer.toJson<int?>(quietHoursEndMinute),
+      'motivationalMessagingStyle': serializer.toJson<String>(
+        motivationalMessagingStyle,
+      ),
+    };
+  }
+
+  NotificationPreferencesData copyWith({
+    int? id,
+    bool? notificationsEnabled,
+    bool? soundEnabled,
+    bool? vibrationEnabled,
+    bool? dailyReminderEnabled,
+    int? reminderHour,
+    int? reminderMinute,
+    bool? quietHoursEnabled,
+    Value<int?> quietHoursStartHour = const Value.absent(),
+    Value<int?> quietHoursStartMinute = const Value.absent(),
+    Value<int?> quietHoursEndHour = const Value.absent(),
+    Value<int?> quietHoursEndMinute = const Value.absent(),
+    String? motivationalMessagingStyle,
+  }) => NotificationPreferencesData(
+    id: id ?? this.id,
+    notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+    soundEnabled: soundEnabled ?? this.soundEnabled,
+    vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
+    dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
+    reminderHour: reminderHour ?? this.reminderHour,
+    reminderMinute: reminderMinute ?? this.reminderMinute,
+    quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
+    quietHoursStartHour: quietHoursStartHour.present
+        ? quietHoursStartHour.value
+        : this.quietHoursStartHour,
+    quietHoursStartMinute: quietHoursStartMinute.present
+        ? quietHoursStartMinute.value
+        : this.quietHoursStartMinute,
+    quietHoursEndHour: quietHoursEndHour.present
+        ? quietHoursEndHour.value
+        : this.quietHoursEndHour,
+    quietHoursEndMinute: quietHoursEndMinute.present
+        ? quietHoursEndMinute.value
+        : this.quietHoursEndMinute,
+    motivationalMessagingStyle:
+        motivationalMessagingStyle ?? this.motivationalMessagingStyle,
+  );
+  NotificationPreferencesData copyWithCompanion(
+    NotificationPreferencesTableCompanion data,
+  ) {
+    return NotificationPreferencesData(
+      id: data.id.present ? data.id.value : this.id,
+      notificationsEnabled: data.notificationsEnabled.present
+          ? data.notificationsEnabled.value
+          : this.notificationsEnabled,
+      soundEnabled: data.soundEnabled.present
+          ? data.soundEnabled.value
+          : this.soundEnabled,
+      vibrationEnabled: data.vibrationEnabled.present
+          ? data.vibrationEnabled.value
+          : this.vibrationEnabled,
+      dailyReminderEnabled: data.dailyReminderEnabled.present
+          ? data.dailyReminderEnabled.value
+          : this.dailyReminderEnabled,
+      reminderHour: data.reminderHour.present
+          ? data.reminderHour.value
+          : this.reminderHour,
+      reminderMinute: data.reminderMinute.present
+          ? data.reminderMinute.value
+          : this.reminderMinute,
+      quietHoursEnabled: data.quietHoursEnabled.present
+          ? data.quietHoursEnabled.value
+          : this.quietHoursEnabled,
+      quietHoursStartHour: data.quietHoursStartHour.present
+          ? data.quietHoursStartHour.value
+          : this.quietHoursStartHour,
+      quietHoursStartMinute: data.quietHoursStartMinute.present
+          ? data.quietHoursStartMinute.value
+          : this.quietHoursStartMinute,
+      quietHoursEndHour: data.quietHoursEndHour.present
+          ? data.quietHoursEndHour.value
+          : this.quietHoursEndHour,
+      quietHoursEndMinute: data.quietHoursEndMinute.present
+          ? data.quietHoursEndMinute.value
+          : this.quietHoursEndMinute,
+      motivationalMessagingStyle: data.motivationalMessagingStyle.present
+          ? data.motivationalMessagingStyle.value
+          : this.motivationalMessagingStyle,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationPreferencesData(')
+          ..write('id: $id, ')
+          ..write('notificationsEnabled: $notificationsEnabled, ')
+          ..write('soundEnabled: $soundEnabled, ')
+          ..write('vibrationEnabled: $vibrationEnabled, ')
+          ..write('dailyReminderEnabled: $dailyReminderEnabled, ')
+          ..write('reminderHour: $reminderHour, ')
+          ..write('reminderMinute: $reminderMinute, ')
+          ..write('quietHoursEnabled: $quietHoursEnabled, ')
+          ..write('quietHoursStartHour: $quietHoursStartHour, ')
+          ..write('quietHoursStartMinute: $quietHoursStartMinute, ')
+          ..write('quietHoursEndHour: $quietHoursEndHour, ')
+          ..write('quietHoursEndMinute: $quietHoursEndMinute, ')
+          ..write('motivationalMessagingStyle: $motivationalMessagingStyle')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    notificationsEnabled,
+    soundEnabled,
+    vibrationEnabled,
+    dailyReminderEnabled,
+    reminderHour,
+    reminderMinute,
+    quietHoursEnabled,
+    quietHoursStartHour,
+    quietHoursStartMinute,
+    quietHoursEndHour,
+    quietHoursEndMinute,
+    motivationalMessagingStyle,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NotificationPreferencesData &&
+          other.id == this.id &&
+          other.notificationsEnabled == this.notificationsEnabled &&
+          other.soundEnabled == this.soundEnabled &&
+          other.vibrationEnabled == this.vibrationEnabled &&
+          other.dailyReminderEnabled == this.dailyReminderEnabled &&
+          other.reminderHour == this.reminderHour &&
+          other.reminderMinute == this.reminderMinute &&
+          other.quietHoursEnabled == this.quietHoursEnabled &&
+          other.quietHoursStartHour == this.quietHoursStartHour &&
+          other.quietHoursStartMinute == this.quietHoursStartMinute &&
+          other.quietHoursEndHour == this.quietHoursEndHour &&
+          other.quietHoursEndMinute == this.quietHoursEndMinute &&
+          other.motivationalMessagingStyle == this.motivationalMessagingStyle);
+}
+
+class NotificationPreferencesTableCompanion
+    extends UpdateCompanion<NotificationPreferencesData> {
+  final Value<int> id;
+  final Value<bool> notificationsEnabled;
+  final Value<bool> soundEnabled;
+  final Value<bool> vibrationEnabled;
+  final Value<bool> dailyReminderEnabled;
+  final Value<int> reminderHour;
+  final Value<int> reminderMinute;
+  final Value<bool> quietHoursEnabled;
+  final Value<int?> quietHoursStartHour;
+  final Value<int?> quietHoursStartMinute;
+  final Value<int?> quietHoursEndHour;
+  final Value<int?> quietHoursEndMinute;
+  final Value<String> motivationalMessagingStyle;
+  const NotificationPreferencesTableCompanion({
+    this.id = const Value.absent(),
+    this.notificationsEnabled = const Value.absent(),
+    this.soundEnabled = const Value.absent(),
+    this.vibrationEnabled = const Value.absent(),
+    this.dailyReminderEnabled = const Value.absent(),
+    this.reminderHour = const Value.absent(),
+    this.reminderMinute = const Value.absent(),
+    this.quietHoursEnabled = const Value.absent(),
+    this.quietHoursStartHour = const Value.absent(),
+    this.quietHoursStartMinute = const Value.absent(),
+    this.quietHoursEndHour = const Value.absent(),
+    this.quietHoursEndMinute = const Value.absent(),
+    this.motivationalMessagingStyle = const Value.absent(),
+  });
+  NotificationPreferencesTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.notificationsEnabled = const Value.absent(),
+    this.soundEnabled = const Value.absent(),
+    this.vibrationEnabled = const Value.absent(),
+    this.dailyReminderEnabled = const Value.absent(),
+    this.reminderHour = const Value.absent(),
+    this.reminderMinute = const Value.absent(),
+    this.quietHoursEnabled = const Value.absent(),
+    this.quietHoursStartHour = const Value.absent(),
+    this.quietHoursStartMinute = const Value.absent(),
+    this.quietHoursEndHour = const Value.absent(),
+    this.quietHoursEndMinute = const Value.absent(),
+    this.motivationalMessagingStyle = const Value.absent(),
+  });
+  static Insertable<NotificationPreferencesData> custom({
+    Expression<int>? id,
+    Expression<bool>? notificationsEnabled,
+    Expression<bool>? soundEnabled,
+    Expression<bool>? vibrationEnabled,
+    Expression<bool>? dailyReminderEnabled,
+    Expression<int>? reminderHour,
+    Expression<int>? reminderMinute,
+    Expression<bool>? quietHoursEnabled,
+    Expression<int>? quietHoursStartHour,
+    Expression<int>? quietHoursStartMinute,
+    Expression<int>? quietHoursEndHour,
+    Expression<int>? quietHoursEndMinute,
+    Expression<String>? motivationalMessagingStyle,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (notificationsEnabled != null)
+        'notifications_enabled': notificationsEnabled,
+      if (soundEnabled != null) 'sound_enabled': soundEnabled,
+      if (vibrationEnabled != null) 'vibration_enabled': vibrationEnabled,
+      if (dailyReminderEnabled != null)
+        'daily_reminder_enabled': dailyReminderEnabled,
+      if (reminderHour != null) 'reminder_hour': reminderHour,
+      if (reminderMinute != null) 'reminder_minute': reminderMinute,
+      if (quietHoursEnabled != null) 'quiet_hours_enabled': quietHoursEnabled,
+      if (quietHoursStartHour != null)
+        'quiet_hours_start_hour': quietHoursStartHour,
+      if (quietHoursStartMinute != null)
+        'quiet_hours_start_minute': quietHoursStartMinute,
+      if (quietHoursEndHour != null) 'quiet_hours_end_hour': quietHoursEndHour,
+      if (quietHoursEndMinute != null)
+        'quiet_hours_end_minute': quietHoursEndMinute,
+      if (motivationalMessagingStyle != null)
+        'motivational_messaging_style': motivationalMessagingStyle,
+    });
+  }
+
+  NotificationPreferencesTableCompanion copyWith({
+    Value<int>? id,
+    Value<bool>? notificationsEnabled,
+    Value<bool>? soundEnabled,
+    Value<bool>? vibrationEnabled,
+    Value<bool>? dailyReminderEnabled,
+    Value<int>? reminderHour,
+    Value<int>? reminderMinute,
+    Value<bool>? quietHoursEnabled,
+    Value<int?>? quietHoursStartHour,
+    Value<int?>? quietHoursStartMinute,
+    Value<int?>? quietHoursEndHour,
+    Value<int?>? quietHoursEndMinute,
+    Value<String>? motivationalMessagingStyle,
+  }) {
+    return NotificationPreferencesTableCompanion(
+      id: id ?? this.id,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      soundEnabled: soundEnabled ?? this.soundEnabled,
+      vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
+      dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
+      reminderHour: reminderHour ?? this.reminderHour,
+      reminderMinute: reminderMinute ?? this.reminderMinute,
+      quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
+      quietHoursStartHour: quietHoursStartHour ?? this.quietHoursStartHour,
+      quietHoursStartMinute:
+          quietHoursStartMinute ?? this.quietHoursStartMinute,
+      quietHoursEndHour: quietHoursEndHour ?? this.quietHoursEndHour,
+      quietHoursEndMinute: quietHoursEndMinute ?? this.quietHoursEndMinute,
+      motivationalMessagingStyle:
+          motivationalMessagingStyle ?? this.motivationalMessagingStyle,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (notificationsEnabled.present) {
+      map['notifications_enabled'] = Variable<bool>(notificationsEnabled.value);
+    }
+    if (soundEnabled.present) {
+      map['sound_enabled'] = Variable<bool>(soundEnabled.value);
+    }
+    if (vibrationEnabled.present) {
+      map['vibration_enabled'] = Variable<bool>(vibrationEnabled.value);
+    }
+    if (dailyReminderEnabled.present) {
+      map['daily_reminder_enabled'] = Variable<bool>(
+        dailyReminderEnabled.value,
+      );
+    }
+    if (reminderHour.present) {
+      map['reminder_hour'] = Variable<int>(reminderHour.value);
+    }
+    if (reminderMinute.present) {
+      map['reminder_minute'] = Variable<int>(reminderMinute.value);
+    }
+    if (quietHoursEnabled.present) {
+      map['quiet_hours_enabled'] = Variable<bool>(quietHoursEnabled.value);
+    }
+    if (quietHoursStartHour.present) {
+      map['quiet_hours_start_hour'] = Variable<int>(quietHoursStartHour.value);
+    }
+    if (quietHoursStartMinute.present) {
+      map['quiet_hours_start_minute'] = Variable<int>(
+        quietHoursStartMinute.value,
+      );
+    }
+    if (quietHoursEndHour.present) {
+      map['quiet_hours_end_hour'] = Variable<int>(quietHoursEndHour.value);
+    }
+    if (quietHoursEndMinute.present) {
+      map['quiet_hours_end_minute'] = Variable<int>(quietHoursEndMinute.value);
+    }
+    if (motivationalMessagingStyle.present) {
+      map['motivational_messaging_style'] = Variable<String>(
+        motivationalMessagingStyle.value,
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationPreferencesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('notificationsEnabled: $notificationsEnabled, ')
+          ..write('soundEnabled: $soundEnabled, ')
+          ..write('vibrationEnabled: $vibrationEnabled, ')
+          ..write('dailyReminderEnabled: $dailyReminderEnabled, ')
+          ..write('reminderHour: $reminderHour, ')
+          ..write('reminderMinute: $reminderMinute, ')
+          ..write('quietHoursEnabled: $quietHoursEnabled, ')
+          ..write('quietHoursStartHour: $quietHoursStartHour, ')
+          ..write('quietHoursStartMinute: $quietHoursStartMinute, ')
+          ..write('quietHoursEndHour: $quietHoursEndHour, ')
+          ..write('quietHoursEndMinute: $quietHoursEndMinute, ')
+          ..write('motivationalMessagingStyle: $motivationalMessagingStyle')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3674,6 +4525,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MuscleVolumeBreakdownsTable(this);
   late final $RestIntervalMetricsTable restIntervalMetrics =
       $RestIntervalMetricsTable(this);
+  late final $NotificationPreferencesTableTable notificationPreferencesTable =
+      $NotificationPreferencesTableTable(this);
   late final Index muscleVolumeUserWeekStart = Index(
     'muscle_volume_user_week_start',
     'CREATE INDEX muscle_volume_user_week_start ON muscle_volume_breakdowns (user_id, week_start_date)',
@@ -3689,6 +4542,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     personalRecords,
     muscleVolumeBreakdowns,
     restIntervalMetrics,
+    notificationPreferencesTable,
     muscleVolumeUserWeekStart,
   ];
 }
@@ -5562,6 +6416,407 @@ typedef $$RestIntervalMetricsTableProcessedTableManager =
       RestIntervalMetricRow,
       PrefetchHooks Function()
     >;
+typedef $$NotificationPreferencesTableTableCreateCompanionBuilder =
+    NotificationPreferencesTableCompanion Function({
+      Value<int> id,
+      Value<bool> notificationsEnabled,
+      Value<bool> soundEnabled,
+      Value<bool> vibrationEnabled,
+      Value<bool> dailyReminderEnabled,
+      Value<int> reminderHour,
+      Value<int> reminderMinute,
+      Value<bool> quietHoursEnabled,
+      Value<int?> quietHoursStartHour,
+      Value<int?> quietHoursStartMinute,
+      Value<int?> quietHoursEndHour,
+      Value<int?> quietHoursEndMinute,
+      Value<String> motivationalMessagingStyle,
+    });
+typedef $$NotificationPreferencesTableTableUpdateCompanionBuilder =
+    NotificationPreferencesTableCompanion Function({
+      Value<int> id,
+      Value<bool> notificationsEnabled,
+      Value<bool> soundEnabled,
+      Value<bool> vibrationEnabled,
+      Value<bool> dailyReminderEnabled,
+      Value<int> reminderHour,
+      Value<int> reminderMinute,
+      Value<bool> quietHoursEnabled,
+      Value<int?> quietHoursStartHour,
+      Value<int?> quietHoursStartMinute,
+      Value<int?> quietHoursEndHour,
+      Value<int?> quietHoursEndMinute,
+      Value<String> motivationalMessagingStyle,
+    });
+
+class $$NotificationPreferencesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $NotificationPreferencesTableTable> {
+  $$NotificationPreferencesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get soundEnabled => $composableBuilder(
+    column: $table.soundEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get vibrationEnabled => $composableBuilder(
+    column: $table.vibrationEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get dailyReminderEnabled => $composableBuilder(
+    column: $table.dailyReminderEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reminderHour => $composableBuilder(
+    column: $table.reminderHour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reminderMinute => $composableBuilder(
+    column: $table.reminderMinute,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get quietHoursEnabled => $composableBuilder(
+    column: $table.quietHoursEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quietHoursStartHour => $composableBuilder(
+    column: $table.quietHoursStartHour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quietHoursStartMinute => $composableBuilder(
+    column: $table.quietHoursStartMinute,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quietHoursEndHour => $composableBuilder(
+    column: $table.quietHoursEndHour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get quietHoursEndMinute => $composableBuilder(
+    column: $table.quietHoursEndMinute,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get motivationalMessagingStyle => $composableBuilder(
+    column: $table.motivationalMessagingStyle,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NotificationPreferencesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $NotificationPreferencesTableTable> {
+  $$NotificationPreferencesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get soundEnabled => $composableBuilder(
+    column: $table.soundEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get vibrationEnabled => $composableBuilder(
+    column: $table.vibrationEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get dailyReminderEnabled => $composableBuilder(
+    column: $table.dailyReminderEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reminderHour => $composableBuilder(
+    column: $table.reminderHour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reminderMinute => $composableBuilder(
+    column: $table.reminderMinute,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get quietHoursEnabled => $composableBuilder(
+    column: $table.quietHoursEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quietHoursStartHour => $composableBuilder(
+    column: $table.quietHoursStartHour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quietHoursStartMinute => $composableBuilder(
+    column: $table.quietHoursStartMinute,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quietHoursEndHour => $composableBuilder(
+    column: $table.quietHoursEndHour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get quietHoursEndMinute => $composableBuilder(
+    column: $table.quietHoursEndMinute,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get motivationalMessagingStyle => $composableBuilder(
+    column: $table.motivationalMessagingStyle,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NotificationPreferencesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NotificationPreferencesTableTable> {
+  $$NotificationPreferencesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<bool> get notificationsEnabled => $composableBuilder(
+    column: $table.notificationsEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get soundEnabled => $composableBuilder(
+    column: $table.soundEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get vibrationEnabled => $composableBuilder(
+    column: $table.vibrationEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get dailyReminderEnabled => $composableBuilder(
+    column: $table.dailyReminderEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get reminderHour => $composableBuilder(
+    column: $table.reminderHour,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get reminderMinute => $composableBuilder(
+    column: $table.reminderMinute,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get quietHoursEnabled => $composableBuilder(
+    column: $table.quietHoursEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get quietHoursStartHour => $composableBuilder(
+    column: $table.quietHoursStartHour,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get quietHoursStartMinute => $composableBuilder(
+    column: $table.quietHoursStartMinute,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get quietHoursEndHour => $composableBuilder(
+    column: $table.quietHoursEndHour,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get quietHoursEndMinute => $composableBuilder(
+    column: $table.quietHoursEndMinute,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get motivationalMessagingStyle => $composableBuilder(
+    column: $table.motivationalMessagingStyle,
+    builder: (column) => column,
+  );
+}
+
+class $$NotificationPreferencesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NotificationPreferencesTableTable,
+          NotificationPreferencesData,
+          $$NotificationPreferencesTableTableFilterComposer,
+          $$NotificationPreferencesTableTableOrderingComposer,
+          $$NotificationPreferencesTableTableAnnotationComposer,
+          $$NotificationPreferencesTableTableCreateCompanionBuilder,
+          $$NotificationPreferencesTableTableUpdateCompanionBuilder,
+          (
+            NotificationPreferencesData,
+            BaseReferences<
+              _$AppDatabase,
+              $NotificationPreferencesTableTable,
+              NotificationPreferencesData
+            >,
+          ),
+          NotificationPreferencesData,
+          PrefetchHooks Function()
+        > {
+  $$NotificationPreferencesTableTableTableManager(
+    _$AppDatabase db,
+    $NotificationPreferencesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NotificationPreferencesTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$NotificationPreferencesTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$NotificationPreferencesTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<bool> notificationsEnabled = const Value.absent(),
+                Value<bool> soundEnabled = const Value.absent(),
+                Value<bool> vibrationEnabled = const Value.absent(),
+                Value<bool> dailyReminderEnabled = const Value.absent(),
+                Value<int> reminderHour = const Value.absent(),
+                Value<int> reminderMinute = const Value.absent(),
+                Value<bool> quietHoursEnabled = const Value.absent(),
+                Value<int?> quietHoursStartHour = const Value.absent(),
+                Value<int?> quietHoursStartMinute = const Value.absent(),
+                Value<int?> quietHoursEndHour = const Value.absent(),
+                Value<int?> quietHoursEndMinute = const Value.absent(),
+                Value<String> motivationalMessagingStyle = const Value.absent(),
+              }) => NotificationPreferencesTableCompanion(
+                id: id,
+                notificationsEnabled: notificationsEnabled,
+                soundEnabled: soundEnabled,
+                vibrationEnabled: vibrationEnabled,
+                dailyReminderEnabled: dailyReminderEnabled,
+                reminderHour: reminderHour,
+                reminderMinute: reminderMinute,
+                quietHoursEnabled: quietHoursEnabled,
+                quietHoursStartHour: quietHoursStartHour,
+                quietHoursStartMinute: quietHoursStartMinute,
+                quietHoursEndHour: quietHoursEndHour,
+                quietHoursEndMinute: quietHoursEndMinute,
+                motivationalMessagingStyle: motivationalMessagingStyle,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<bool> notificationsEnabled = const Value.absent(),
+                Value<bool> soundEnabled = const Value.absent(),
+                Value<bool> vibrationEnabled = const Value.absent(),
+                Value<bool> dailyReminderEnabled = const Value.absent(),
+                Value<int> reminderHour = const Value.absent(),
+                Value<int> reminderMinute = const Value.absent(),
+                Value<bool> quietHoursEnabled = const Value.absent(),
+                Value<int?> quietHoursStartHour = const Value.absent(),
+                Value<int?> quietHoursStartMinute = const Value.absent(),
+                Value<int?> quietHoursEndHour = const Value.absent(),
+                Value<int?> quietHoursEndMinute = const Value.absent(),
+                Value<String> motivationalMessagingStyle = const Value.absent(),
+              }) => NotificationPreferencesTableCompanion.insert(
+                id: id,
+                notificationsEnabled: notificationsEnabled,
+                soundEnabled: soundEnabled,
+                vibrationEnabled: vibrationEnabled,
+                dailyReminderEnabled: dailyReminderEnabled,
+                reminderHour: reminderHour,
+                reminderMinute: reminderMinute,
+                quietHoursEnabled: quietHoursEnabled,
+                quietHoursStartHour: quietHoursStartHour,
+                quietHoursStartMinute: quietHoursStartMinute,
+                quietHoursEndHour: quietHoursEndHour,
+                quietHoursEndMinute: quietHoursEndMinute,
+                motivationalMessagingStyle: motivationalMessagingStyle,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $NotificationPreferencesTableTable,
+                    NotificationPreferencesData
+                  >(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $NotificationPreferencesTableTable,
+                    NotificationPreferencesData
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NotificationPreferencesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NotificationPreferencesTableTable,
+      NotificationPreferencesData,
+      $$NotificationPreferencesTableTableFilterComposer,
+      $$NotificationPreferencesTableTableOrderingComposer,
+      $$NotificationPreferencesTableTableAnnotationComposer,
+      $$NotificationPreferencesTableTableCreateCompanionBuilder,
+      $$NotificationPreferencesTableTableUpdateCompanionBuilder,
+      (
+        NotificationPreferencesData,
+        BaseReferences<
+          _$AppDatabase,
+          $NotificationPreferencesTableTable,
+          NotificationPreferencesData
+        >,
+      ),
+      NotificationPreferencesData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -5581,4 +6836,10 @@ class $AppDatabaseManager {
       );
   $$RestIntervalMetricsTableTableManager get restIntervalMetrics =>
       $$RestIntervalMetricsTableTableManager(_db, _db.restIntervalMetrics);
+  $$NotificationPreferencesTableTableTableManager
+  get notificationPreferencesTable =>
+      $$NotificationPreferencesTableTableTableManager(
+        _db,
+        _db.notificationPreferencesTable,
+      );
 }

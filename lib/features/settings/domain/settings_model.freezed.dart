@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SettingsModel {
 
- AppThemeName get themeName; ThemeMode get themeMode; AppContrastVariant get contrastVariant; AppFontSize get fontSize; AppFontFamilyChoice get fontFamilyChoice; ExportFormat get exportFormat; AuthenticationType get authenticationType;@TimeOfDayConverter() TimeOfDay? get notificationTime;
+ AppThemeName get themeName; ThemeMode get themeMode; AppContrastVariant get contrastVariant; AppFontSize get fontSize; AppFontFamilyChoice get fontFamilyChoice; ExportFormat get exportFormat; AuthenticationType get authenticationType;@TimeOfDayConverter() TimeOfDay? get notificationTime; NotificationSettings get notificationSettings;
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $SettingsModelCopyWith<SettingsModel> get copyWith => _$SettingsModelCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as SettingsModel;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeName, _this.themeName) || other.themeName == _this.themeName)&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.contrastVariant, _this.contrastVariant) || other.contrastVariant == _this.contrastVariant)&&(identical(other.fontSize, _this.fontSize) || other.fontSize == _this.fontSize)&&(identical(other.fontFamilyChoice, _this.fontFamilyChoice) || other.fontFamilyChoice == _this.fontFamilyChoice)&&(identical(other.exportFormat, _this.exportFormat) || other.exportFormat == _this.exportFormat)&&(identical(other.authenticationType, _this.authenticationType) || other.authenticationType == _this.authenticationType)&&(identical(other.notificationTime, _this.notificationTime) || other.notificationTime == _this.notificationTime));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsModel&&(identical(other.themeName, _this.themeName) || other.themeName == _this.themeName)&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.contrastVariant, _this.contrastVariant) || other.contrastVariant == _this.contrastVariant)&&(identical(other.fontSize, _this.fontSize) || other.fontSize == _this.fontSize)&&(identical(other.fontFamilyChoice, _this.fontFamilyChoice) || other.fontFamilyChoice == _this.fontFamilyChoice)&&(identical(other.exportFormat, _this.exportFormat) || other.exportFormat == _this.exportFormat)&&(identical(other.authenticationType, _this.authenticationType) || other.authenticationType == _this.authenticationType)&&(identical(other.notificationTime, _this.notificationTime) || other.notificationTime == _this.notificationTime)&&(identical(other.notificationSettings, _this.notificationSettings) || other.notificationSettings == _this.notificationSettings));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as SettingsModel;
-  return Object.hash(runtimeType,_this.themeName,_this.themeMode,_this.contrastVariant,_this.fontSize,_this.fontFamilyChoice,_this.exportFormat,_this.authenticationType,_this.notificationTime);
+  return Object.hash(runtimeType,_this.themeName,_this.themeMode,_this.contrastVariant,_this.fontSize,_this.fontFamilyChoice,_this.exportFormat,_this.authenticationType,_this.notificationTime,_this.notificationSettings);
 }
 
 @override
 String toString() {
   final _this = this as SettingsModel;
-  return 'SettingsModel(themeName: ${_this.themeName}, themeMode: ${_this.themeMode}, contrastVariant: ${_this.contrastVariant}, fontSize: ${_this.fontSize}, fontFamilyChoice: ${_this.fontFamilyChoice}, exportFormat: ${_this.exportFormat}, authenticationType: ${_this.authenticationType}, notificationTime: ${_this.notificationTime})';
+  return 'SettingsModel(themeName: ${_this.themeName}, themeMode: ${_this.themeMode}, contrastVariant: ${_this.contrastVariant}, fontSize: ${_this.fontSize}, fontFamilyChoice: ${_this.fontFamilyChoice}, exportFormat: ${_this.exportFormat}, authenticationType: ${_this.authenticationType}, notificationTime: ${_this.notificationTime}, notificationSettings: ${_this.notificationSettings})';
 }
 
 
@@ -54,11 +54,11 @@ abstract mixin class $SettingsModelCopyWith<$Res>  {
   factory $SettingsModelCopyWith(SettingsModel value, $Res Function(SettingsModel) _then) = _$SettingsModelCopyWithImpl;
 @useResult
 $Res call({
- AppThemeName themeName, ThemeMode themeMode, AppContrastVariant contrastVariant, AppFontSize fontSize, AppFontFamilyChoice fontFamilyChoice, ExportFormat exportFormat, AuthenticationType authenticationType,@TimeOfDayConverter() TimeOfDay? notificationTime
+ AppThemeName themeName, ThemeMode themeMode, AppContrastVariant contrastVariant, AppFontSize fontSize, AppFontFamilyChoice fontFamilyChoice, ExportFormat exportFormat, AuthenticationType authenticationType,@TimeOfDayConverter() TimeOfDay? notificationTime, NotificationSettings notificationSettings
 });
 
 
-
+$NotificationSettingsCopyWith<$Res> get notificationSettings;
 
 }
 /// @nodoc
@@ -71,7 +71,7 @@ class _$SettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeName = null,Object? themeMode = null,Object? contrastVariant = null,Object? fontSize = null,Object? fontFamilyChoice = null,Object? exportFormat = null,Object? authenticationType = null,Object? notificationTime = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeName = null,Object? themeMode = null,Object? contrastVariant = null,Object? fontSize = null,Object? fontFamilyChoice = null,Object? exportFormat = null,Object? authenticationType = null,Object? notificationTime = freezed,Object? notificationSettings = null,}) {
   return _then(SettingsModel(
 themeName: null == themeName ? _self.themeName : themeName // ignore: cast_nullable_to_non_nullable
 as AppThemeName,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
@@ -81,10 +81,20 @@ as AppFontSize,fontFamilyChoice: null == fontFamilyChoice ? _self.fontFamilyChoi
 as AppFontFamilyChoice,exportFormat: null == exportFormat ? _self.exportFormat : exportFormat // ignore: cast_nullable_to_non_nullable
 as ExportFormat,authenticationType: null == authenticationType ? _self.authenticationType : authenticationType // ignore: cast_nullable_to_non_nullable
 as AuthenticationType,notificationTime: freezed == notificationTime ? _self.notificationTime : notificationTime // ignore: cast_nullable_to_non_nullable
-as TimeOfDay?,
+as TimeOfDay?,notificationSettings: null == notificationSettings ? _self.notificationSettings : notificationSettings // ignore: cast_nullable_to_non_nullable
+as NotificationSettings,
   ));
 }
-
+/// Create a copy of SettingsModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$NotificationSettingsCopyWith<$Res> get notificationSettings {
+  
+  return $NotificationSettingsCopyWith<$Res>(_self.notificationSettings, (value) {
+    return _then(_self.copyWith(notificationSettings: value));
+  });
+}
 }
 
 
@@ -166,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime,  NotificationSettings notificationSettings)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsModel() when $default != null:
-return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime);case _:
+return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime,_that.notificationSettings);case _:
   return orElse();
 
 }
@@ -187,10 +197,10 @@ return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.font
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime,  NotificationSettings notificationSettings)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsModel():
-return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime);case _:
+return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime,_that.notificationSettings);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +217,10 @@ return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.font
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppThemeName themeName,  ThemeMode themeMode,  AppContrastVariant contrastVariant,  AppFontSize fontSize,  AppFontFamilyChoice fontFamilyChoice,  ExportFormat exportFormat,  AuthenticationType authenticationType, @TimeOfDayConverter()  TimeOfDay? notificationTime,  NotificationSettings notificationSettings)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsModel() when $default != null:
-return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime);case _:
+return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.fontSize,_that.fontFamilyChoice,_that.exportFormat,_that.authenticationType,_that.notificationTime,_that.notificationSettings);case _:
   return null;
 
 }
@@ -222,7 +232,7 @@ return $default(_that.themeName,_that.themeMode,_that.contrastVariant,_that.font
 @JsonSerializable()
 
 class _SettingsModel implements SettingsModel {
-  const _SettingsModel({this.themeName = AppThemeName.forest, this.themeMode = ThemeMode.system, this.contrastVariant = AppContrastVariant.standard, this.fontSize = AppFontSize.medium, this.fontFamilyChoice = AppFontFamilyChoice.manrope, this.exportFormat = ExportFormat.json, this.authenticationType = AuthenticationType.none, @TimeOfDayConverter() this.notificationTime = null});
+  const _SettingsModel({this.themeName = AppThemeName.forest, this.themeMode = ThemeMode.system, this.contrastVariant = AppContrastVariant.standard, this.fontSize = AppFontSize.medium, this.fontFamilyChoice = AppFontFamilyChoice.manrope, this.exportFormat = ExportFormat.json, this.authenticationType = AuthenticationType.none, @TimeOfDayConverter() this.notificationTime = null, this.notificationSettings = const NotificationSettings()});
   factory _SettingsModel.fromJson(Map<String, dynamic> json) => _$SettingsModelFromJson(json);
 
 @override@JsonKey() final  AppThemeName themeName;
@@ -233,6 +243,7 @@ class _SettingsModel implements SettingsModel {
 @override@JsonKey() final  ExportFormat exportFormat;
 @override@JsonKey() final  AuthenticationType authenticationType;
 @override@JsonKey()@TimeOfDayConverter() final  TimeOfDay? notificationTime;
+@override@JsonKey() final  NotificationSettings notificationSettings;
 
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
@@ -247,18 +258,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeName, themeName) || other.themeName == themeName)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.contrastVariant, contrastVariant) || other.contrastVariant == contrastVariant)&&(identical(other.fontSize, fontSize) || other.fontSize == fontSize)&&(identical(other.fontFamilyChoice, fontFamilyChoice) || other.fontFamilyChoice == fontFamilyChoice)&&(identical(other.exportFormat, exportFormat) || other.exportFormat == exportFormat)&&(identical(other.authenticationType, authenticationType) || other.authenticationType == authenticationType)&&(identical(other.notificationTime, notificationTime) || other.notificationTime == notificationTime));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsModel&&(identical(other.themeName, themeName) || other.themeName == themeName)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.contrastVariant, contrastVariant) || other.contrastVariant == contrastVariant)&&(identical(other.fontSize, fontSize) || other.fontSize == fontSize)&&(identical(other.fontFamilyChoice, fontFamilyChoice) || other.fontFamilyChoice == fontFamilyChoice)&&(identical(other.exportFormat, exportFormat) || other.exportFormat == exportFormat)&&(identical(other.authenticationType, authenticationType) || other.authenticationType == authenticationType)&&(identical(other.notificationTime, notificationTime) || other.notificationTime == notificationTime)&&(identical(other.notificationSettings, notificationSettings) || other.notificationSettings == notificationSettings));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,themeName,themeMode,contrastVariant,fontSize,fontFamilyChoice,exportFormat,authenticationType,notificationTime);
+    return Object.hash(runtimeType,themeName,themeMode,contrastVariant,fontSize,fontFamilyChoice,exportFormat,authenticationType,notificationTime,notificationSettings);
 }
 
 @override
 String toString() {
-    return 'SettingsModel(themeName: $themeName, themeMode: $themeMode, contrastVariant: $contrastVariant, fontSize: $fontSize, fontFamilyChoice: $fontFamilyChoice, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime)';
+    return 'SettingsModel(themeName: $themeName, themeMode: $themeMode, contrastVariant: $contrastVariant, fontSize: $fontSize, fontFamilyChoice: $fontFamilyChoice, exportFormat: $exportFormat, authenticationType: $authenticationType, notificationTime: $notificationTime, notificationSettings: $notificationSettings)';
 }
 
 
@@ -269,11 +280,11 @@ abstract mixin class _$SettingsModelCopyWith<$Res> implements $SettingsModelCopy
   factory _$SettingsModelCopyWith(_SettingsModel value, $Res Function(_SettingsModel) _then) = __$SettingsModelCopyWithImpl;
 @override @useResult
 $Res call({
- AppThemeName themeName, ThemeMode themeMode, AppContrastVariant contrastVariant, AppFontSize fontSize, AppFontFamilyChoice fontFamilyChoice, ExportFormat exportFormat, AuthenticationType authenticationType,@TimeOfDayConverter() TimeOfDay? notificationTime
+ AppThemeName themeName, ThemeMode themeMode, AppContrastVariant contrastVariant, AppFontSize fontSize, AppFontFamilyChoice fontFamilyChoice, ExportFormat exportFormat, AuthenticationType authenticationType,@TimeOfDayConverter() TimeOfDay? notificationTime, NotificationSettings notificationSettings
 });
 
 
-
+@override $NotificationSettingsCopyWith<$Res> get notificationSettings;
 
 }
 /// @nodoc
@@ -286,7 +297,7 @@ class __$SettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of SettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeName = null,Object? themeMode = null,Object? contrastVariant = null,Object? fontSize = null,Object? fontFamilyChoice = null,Object? exportFormat = null,Object? authenticationType = null,Object? notificationTime = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeName = null,Object? themeMode = null,Object? contrastVariant = null,Object? fontSize = null,Object? fontFamilyChoice = null,Object? exportFormat = null,Object? authenticationType = null,Object? notificationTime = freezed,Object? notificationSettings = null,}) {
   return _then(_SettingsModel(
 themeName: null == themeName ? _self.themeName : themeName // ignore: cast_nullable_to_non_nullable
 as AppThemeName,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
@@ -296,11 +307,21 @@ as AppFontSize,fontFamilyChoice: null == fontFamilyChoice ? _self.fontFamilyChoi
 as AppFontFamilyChoice,exportFormat: null == exportFormat ? _self.exportFormat : exportFormat // ignore: cast_nullable_to_non_nullable
 as ExportFormat,authenticationType: null == authenticationType ? _self.authenticationType : authenticationType // ignore: cast_nullable_to_non_nullable
 as AuthenticationType,notificationTime: freezed == notificationTime ? _self.notificationTime : notificationTime // ignore: cast_nullable_to_non_nullable
-as TimeOfDay?,
+as TimeOfDay?,notificationSettings: null == notificationSettings ? _self.notificationSettings : notificationSettings // ignore: cast_nullable_to_non_nullable
+as NotificationSettings,
   ));
 }
 
-
+/// Create a copy of SettingsModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$NotificationSettingsCopyWith<$Res> get notificationSettings {
+  
+  return $NotificationSettingsCopyWith<$Res>(_self.notificationSettings, (value) {
+    return _then(_self.copyWith(notificationSettings: value));
+  });
+}
 }
 
 // dart format on

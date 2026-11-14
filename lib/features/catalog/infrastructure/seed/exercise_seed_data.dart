@@ -3605,7 +3605,6 @@ class ExerciseSeedData._() {
     patterns: const [MovementPattern.isolation],
     primary: const [MuscleGroup.lats],
     secondary: const [MuscleGroup.shoulders],
-    equipment: const [EquipmentType.bodyweight],
     setup: const [
       'Stand tall or kneel, raising one arm straight overhead next to your ear.',
       'Lean your torso gently to the opposite side while keeping your hips stable.',
@@ -3659,7 +3658,6 @@ class ExerciseSeedData._() {
     patterns: const [MovementPattern.isolation],
     primary: const [MuscleGroup.chest],
     secondary: const [MuscleGroup.frontDelts],
-    equipment: const [EquipmentType.bodyweight],
     setup: const [
       'Stand in an open doorway and place your forearms against the frame with elbows slightly below shoulder height.',
       'Step one foot slightly forward into the doorway while keeping your core braced.',
@@ -3729,7 +3727,8 @@ class ExerciseSeedData._() {
       'Keep the chest tall and avoid jerking the neck forward',
       'Stop the pull if the shoulders feel pinched',
     ],
-    breathing: 'Exhale as you pull the bar down; inhale as it returns overhead.',
+    breathing:
+        'Exhale as you pull the bar down; inhale as it returns overhead.',
   );
 
   static final _benchDips = _movement(
@@ -3762,7 +3761,10 @@ class ExerciseSeedData._() {
   static final _concentrationCurl = _movement(
     id: 'exercise-concentration-curl-001',
     name: 'Concentration Curl',
-    aliases: const ['seated concentration curl', 'single-arm concentration curl'],
+    aliases: const [
+      'seated concentration curl',
+      'single-arm concentration curl',
+    ],
     description: 'Seated single-arm dumbbell curl with the elbow braced against the inner thigh to isolate the biceps.',
     regions: const [BodyRegion.upperBody],
     patterns: const [MovementPattern.isolation],
@@ -3870,7 +3872,10 @@ class ExerciseSeedData._() {
   static final _spiderCurl = _movement(
     id: 'exercise-spider-curl-001',
     name: 'Spider Curl',
-    aliases: const ['prone incline dumbbell curl', 'chest-supported spider curl'],
+    aliases: const [
+      'prone incline dumbbell curl',
+      'chest-supported spider curl',
+    ],
     description: 'Dumbbell curl performed lying face down on an incline bench so the arms hang straight down, keeping constant tension on the biceps.',
     regions: const [BodyRegion.upperBody],
     patterns: const [MovementPattern.isolation],
@@ -3902,7 +3907,11 @@ class ExerciseSeedData._() {
     regions: const [BodyRegion.upperBody],
     patterns: const [MovementPattern.verticalPull],
     primary: const [MuscleGroup.sideDelts, MuscleGroup.traps],
-    secondary: const [MuscleGroup.biceps, MuscleGroup.frontDelts, MuscleGroup.forearms],
+    secondary: const [
+      MuscleGroup.biceps,
+      MuscleGroup.frontDelts,
+      MuscleGroup.forearms,
+    ],
     equipment: const [EquipmentType.barbell],
     setup: const [
       'Stand tall holding a barbell with an overhand grip about shoulder-width apart, bar resting against the thighs.',
@@ -4005,7 +4014,11 @@ class ExerciseSeedData._() {
   static final _overheadDbTricepExtension = _movement(
     id: 'exercise-overhead-tricep-extension-001',
     name: 'Overhead Dumbbell Tricep Extension',
-    aliases: const ['overhead tricep extension', 'overhead dumbbell extension', 'single-arm overhead extension'],
+    aliases: const [
+      'overhead tricep extension',
+      'overhead dumbbell extension',
+      'single-arm overhead extension',
+    ],
     description: 'Triceps isolation using one or two dumbbells held overhead, stretching the long head of the triceps; can be done seated or standing.',
     regions: const [BodyRegion.upperBody],
     patterns: const [MovementPattern.isolation],

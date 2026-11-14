@@ -6,6 +6,7 @@ import 'tables/daily_workout_summaries_table.dart';
 import 'tables/documents_table.dart';
 import 'tables/exercise_set_metrics_table.dart';
 import 'tables/muscle_volume_breakdowns_table.dart';
+import 'tables/notification_preferences_table.dart';
 import 'tables/personal_records_table.dart';
 import 'tables/rest_interval_metrics_table.dart';
 
@@ -21,6 +22,7 @@ part 'app_database.g.dart';
     PersonalRecords,
     MuscleVolumeBreakdowns,
     RestIntervalMetrics,
+    NotificationPreferencesTable,
   ],
 )
 class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
@@ -32,7 +34,7 @@ class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4; // Bumped schema version to 4
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -50,6 +52,10 @@ class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
           'CREATE INDEX IF NOT EXISTS muscle_volume_user_week_start '
           'ON muscle_volume_breakdowns (user_id, week_start_date)',
         );
+      }
+      if (from < 4) {
+        // Create the notification preferences table during upgrade from v3 to v4
+        await m.createTable(notificationPreferencesTable);
       }
     },
   );

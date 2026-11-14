@@ -26,6 +26,7 @@ const appRouteCustomExercise = '/custom_exercise';
 const appRouteExerciseDetail = '/exercise_detail';
 const appRouteTemplateDetail = '/template_detail';
 const appRouteTemplateEditor = '/template_editor';
+const appRouteNotificationSettings = '/notification_settings';
 
 const appRouteNameSplash = 'splash';
 const appRouteNameLaunch = 'launch';
@@ -49,6 +50,7 @@ const appRouteNameCustomExercise = 'custom-exercise';
 const appRouteNameExerciseDetail = 'exercise-detail';
 const appRouteNameTemplateDetail = 'template-detail';
 const appRouteNameTemplateEditor = 'template-editor';
+const appRouteNameNotificationSettings = 'notification-settings';
 
 /// Owns GoRouter lifecycle, the app-wide transition, and unmatched paths.
 class AppRouter({

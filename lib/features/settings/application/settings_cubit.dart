@@ -7,13 +7,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../common/presentation/theme/theme.dart';
-import '../../notification/infrastructure/notification_service.dart';
+import '../../notification/application/notification_cubit.dart';
 import '../config/shared_preferences_config.dart';
 import '../domain/domain.dart';
 import 'settings_state.dart';
 
 class SettingsCubit({
-  required final NotificationService _notificationService,
+  required final NotificationCubit notificationCubit,
   LocalAuthentication? localAuth,
   FlutterSecureStorage? secureStorage,
 }) extends Cubit<SettingsState> {
@@ -57,25 +57,6 @@ class SettingsCubit({
     }
   }
 
-  Future<void> updateNotificationTime(TimeOfDay time) async {
-    _updateSettings(
-      state.settings.copyWith(notificationTime: time),
-      persist: false,
-    );
-    try {
-      await _notificationService.scheduleDailyNotification(
-        id: 1,
-        title: 'Keep the Growth going forever!',
-        body: 'Log the items that you have progressed today and keep up the good work!!',
-        time: time,
-        sound: 'assets/sounds/simple_notification.mp3',
-      );
-    } catch (error) {
-      _emitError('Could not schedule the daily notification: $error');
-    }
-    await saveSettingsToStorage();
-  }
-
   Future<void> loadSettingsFromStorage() async {
     try {
       final themeName = _enumValue(
@@ -114,10 +95,6 @@ class SettingsCubit({
         AuthenticationType.none,
       );
 
-      final notificationTime = const TimeOfDayConverter().fromJson(
-        SharedPreferencesHelper.getNotificationTime(),
-      );
-
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -128,7 +105,6 @@ class SettingsCubit({
               fontSize: fontSize,
               fontFamilyChoice: fontFamilyChoice,
               authenticationType: authenticationType,
-              notificationTime: notificationTime,
             ),
             isReady: true,
             clearError: true,
@@ -162,8 +138,6 @@ class SettingsCubit({
       await SharedPreferencesHelper.setAuthenticationType(
         settings.authenticationType.name,
       );
-      final time = const TimeOfDayConverter().toJson(settings.notificationTime);
-      if (time != null) await SharedPreferencesHelper.setNotificationTime(time);
     } catch (error) {
       _emitError('Could not save settings: $error');
     }

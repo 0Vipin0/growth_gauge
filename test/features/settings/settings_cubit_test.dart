@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_gauge/features/common/presentation/theme/app_colors.dart';
 import 'package:growth_gauge/features/common/presentation/theme/app_typography.dart';
+import 'package:growth_gauge/features/notification/application/notification_cubit.dart';
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
 import 'package:growth_gauge/features/settings/application/settings_cubit.dart';
 import 'package:growth_gauge/features/settings/application/settings_state.dart';
@@ -66,7 +67,9 @@ void main() {
     notificationService = MockNotificationService();
     secureStorage = MockSecureStorage();
     cubit = SettingsCubit(
-      notificationService: notificationService,
+      notificationCubit: NotificationCubit(
+        notificationService: notificationService,
+      ),
       secureStorage: secureStorage,
     );
   });
@@ -144,27 +147,13 @@ void main() {
     },
   );
 
-  test(
-    'notification time is saved and scheduled through its service',
-    () async {
-      await cubit.updateNotificationTime(const TimeOfDay(hour: 7, minute: 45));
-
-      expect(
-        cubit.state.settings.notificationTime,
-        const TimeOfDay(hour: 7, minute: 45),
-      );
-      expect(
-        notificationService.scheduledTime,
-        const TimeOfDay(hour: 7, minute: 45),
-      );
-    },
-  );
-
   test('biometric availability failures are handled as unavailable', () async {
     final localAuth = MockLocalAuthentication();
     localAuth.biometricError = PlatformException(code: 'unavailable');
     final cubitWithAuth = SettingsCubit(
-      notificationService: notificationService,
+      notificationCubit: NotificationCubit(
+        notificationService: notificationService,
+      ),
       localAuth: localAuth,
     );
     addTearDown(cubitWithAuth.close);

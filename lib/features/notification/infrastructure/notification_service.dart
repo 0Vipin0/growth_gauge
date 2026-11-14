@@ -25,6 +25,9 @@ abstract class NotificationServiceBase() {
     required TimeOfDay time,
     String? sound,
   });
+  Future<void> cancelNotification(
+    int id,
+  ); // Added cancelNotification definition
 }
 
 class NotificationService() extends NotificationServiceBase {
@@ -34,11 +37,9 @@ class NotificationService() extends NotificationServiceBase {
 
   @override
   Future<void> initializeTimeZone() async {
-    // final TimezoneInfo currentTimeZone =
-    // await FlutterTimezone.getLocalTimezone();
-
     tz.initializeTimeZones();
-    // tz.setLocalLocation(tz.getLocation(currentTimeZone as String));
+    final currentTimeZone = tz.local;
+    tz.setLocalLocation(currentTimeZone);
   }
 
   @override
@@ -47,29 +48,31 @@ class NotificationService() extends NotificationServiceBase {
   }
 
   Future<void> _initializeNotifications() async {
-    // const AndroidInitializationSettings initializationSettingsAndroid =
-    //     AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // final InitializationSettings initializationSettings =
-    //     InitializationSettings(
-    //   android: initializationSettingsAndroid,
-    //   windows: const WindowsInitializationSettings(
-    //     iconPath: 'assets/images/icon.png',
-    //     appName: 'Growth Gauge',
-    //     guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
-    //     appUserModelId: 'Com.GrowthGauge',
-    //   ),
-    //   linux: LinuxInitializationSettings(
-    //     defaultActionName: 'Open',
-    //     defaultIcon: AssetsLinuxIcon('assets/images/icon.png'),
-    //   ),
-    //   macOS: const DarwinInitializationSettings(),
-    //   iOS: const DarwinInitializationSettings(),
-    // );
+    const WindowsInitializationSettings initializationSettingsWindows =
+        WindowsInitializationSettings(
+          iconPath: 'assets/images/icon.png',
+          appName: 'Growth Gauge',
+          guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
+          appUserModelId: 'Com.GrowthGauge',
+        );
 
-    // await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    // await isAndroidPermissionGranted();
-    // await _requestPermissions();
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+          android: initializationSettingsAndroid,
+          windows: initializationSettingsWindows,
+        );
+
+    await _flutterLocalNotificationsPlugin.initialize(
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        // Handle notification click interactions here if required
+      },
+      settings: initializationSettings,
+    );
+
+    await isAndroidPermissionGranted();
   }
 
   @override
@@ -80,52 +83,34 @@ class NotificationService() extends NotificationServiceBase {
     required tz.TZDateTime scheduledTime,
     String? sound,
   }) async {
-    // final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    //   'growth_gauge_id',
-    //   'growth_gauge_channel',
-    //   channelDescription: 'Growth Gauge Channel for scheduled notifications',
-    //   importance: Importance.max,
-    //   priority: Priority.high,
-    //   sound: sound != null
-    //       ? const RawResourceAndroidNotificationSound('simple_notification')
-    //       : null,
-    // );
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'growth_gauge_id',
+      'growth_gauge_channel',
+      channelDescription: 'Growth Gauge Channel for scheduled notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+      sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
+    );
 
-    // final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
-    //   audio: WindowsNotificationAudio.asset(
-    //     sound!,
-    //     fallback: WindowsNotificationSound.reminder,
-    //   ),
-    // );
+    final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
+      audio: sound != null
+          ? WindowsNotificationAudio.asset(sound)
+          : WindowsNotificationAudio.preset(sound: .defaultSound),
+    );
 
-    // final linuxPlatformChannelSpecifics = LinuxNotificationDetails(
-    //   sound: AssetsLinuxSound(sound),
-    // );
+    final platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      windows: windowsPlatformChannelSpecifics,
+    );
 
-    // final macOSPlatformChannelSpecifics = DarwinNotificationDetails(
-    //   sound: sound,
-    // );
-
-    // final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-    //   sound: sound,
-    // );
-
-    // final platformChannelSpecifics = NotificationDetails(
-    //   android: androidPlatformChannelSpecifics,
-    //   windows: windowsPlatformChannelSpecifics,
-    //   linux: linuxPlatformChannelSpecifics,
-    //   macOS: macOSPlatformChannelSpecifics,
-    //   iOS: iOSPlatformChannelSpecifics,
-    // );
-
-    // await _flutterLocalNotificationsPlugin.zonedSchedule(
-    //   id,
-    //   title,
-    //   body,
-    //   scheduledTime,
-    //   platformChannelSpecifics,
-    //   androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    // );
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduledTime,
+      notificationDetails: platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
   }
 
   @override
@@ -137,7 +122,7 @@ class NotificationService() extends NotificationServiceBase {
     String? sound,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
-    final scheduledTime = tz.TZDateTime(
+    var scheduledTime = tz.TZDateTime(
       now.location,
       now.year,
       now.month,
@@ -146,15 +131,22 @@ class NotificationService() extends NotificationServiceBase {
       time.minute,
     );
 
+    if (scheduledTime.isBefore(now)) {
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
+    }
+
     await scheduleNotification(
       id: id,
       title: title,
       body: body,
-      scheduledTime: scheduledTime.isBefore(now)
-          ? scheduledTime.add(const Duration(days: 1))
-          : scheduledTime,
+      scheduledTime: scheduledTime,
       sound: sound,
     );
+  }
+
+  @override
+  Future<void> cancelNotification(int id) async {
+    await _flutterLocalNotificationsPlugin.cancel(id: id);
   }
 
   @override
@@ -178,18 +170,7 @@ class NotificationService() extends NotificationServiceBase {
   }
 
   Future<void> _requestPermissions() async {
-    if (Platform.isIOS || Platform.isMacOS) {
-      await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin
-          >()
-          ?.requestPermissions(alert: true, badge: true, sound: true);
-      await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            MacOSFlutterLocalNotificationsPlugin
-          >()
-          ?.requestPermissions(alert: true, badge: true, sound: true);
-    } else if (Platform.isAndroid) {
+    if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
           _flutterLocalNotificationsPlugin
               .resolvePlatformSpecificImplementation<

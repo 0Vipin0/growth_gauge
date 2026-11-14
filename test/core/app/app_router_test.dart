@@ -11,6 +11,7 @@ import 'package:growth_gauge/features/analytics/infrastructure/analytics_dao.dar
 import 'package:growth_gauge/features/analytics/projection/analytics_projector.dart';
 import 'package:growth_gauge/features/analytics/projection/projection_rebuilder.dart';
 import 'package:growth_gauge/features/catalog/infrastructure/exercise_repository.dart';
+import 'package:growth_gauge/features/notification/application/notification_cubit.dart';
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart';
 import 'package:growth_gauge/features/session/application/session_use_cases.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
@@ -69,7 +70,9 @@ void main() {
     );
     router = routerController.router;
     settingsCubit = SettingsCubit(
-      notificationService: MockNotificationService(),
+      notificationCubit: NotificationCubit(
+        notificationService: MockNotificationService(),
+      ),
     );
   });
 

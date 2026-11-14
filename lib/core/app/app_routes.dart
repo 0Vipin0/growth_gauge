@@ -9,6 +9,7 @@ import '../../features/analytics/analytics.dart';
 import '../../features/authentication/authentication.dart';
 import '../../features/catalog/catalog.dart';
 import '../../features/home/home.dart';
+import '../../features/notification/notification.dart';
 import '../../features/portability/migration/steps/migration_v1_to_v2.dart';
 import '../../features/portability/migration/steps/migration_v2_to_v3.dart';
 import '../../features/portability/portability.dart';
@@ -81,6 +82,15 @@ List<RouteBase> createAppRoutes({
       path: appRouteSettings,
       name: appRouteNameSettings,
       builder: (_, _) => const SettingsScreen(),
+    ),
+    appGoRoute(
+      path: appRouteNotificationSettings,
+      name: appRouteNameNotificationSettings,
+      builder: (context, state) => BlocProvider(
+        create: (_) =>
+            NotificationCubit(notificationService: NotificationService()),
+        child: const NotificationSettingsScreen(),
+      ),
     ),
     appGoRoute(
       path: appRouteBiometricAuth,
