@@ -6,7 +6,7 @@ import '../../domain/exercise_execution.dart';
 
 /// Canonical system exercise seed data.
 ///
-/// These 89 exercises are seeded on first launch if the catalog is empty.
+/// These 122 exercises are seeded on first launch if the catalog is empty.
 /// Every exercise ships with a complete execution profile (setup, execution,
 /// technique cues and breathing) covering the staples used by beginner,
 /// intermediate and advanced lifters.
@@ -121,6 +121,21 @@ class ExerciseSeedData._() {
     _latOverheadStretch,
     _cableLateralRaise,
     _chestDoorwayStretch,
+    _behindNeckPress,
+    _behindNeckRow,
+    _benchDips,
+    _concentrationCurl,
+    _dumbbellKickback,
+    _dumbbellPullover,
+    _frontRaise,
+    _spiderCurl,
+    _uprightRow,
+    _risingCablePress,
+    _ezCloseGripCurl,
+    _inclineDbFly,
+    _overheadDbTricepExtension,
+    _reverseGripPushdown,
+    _ropeTricepPushdown,
   ];
 
   // 1-7 (Original Reference Exercises)
@@ -3660,6 +3675,411 @@ class ExerciseSeedData._() {
       'Adjust elbow height on the frame to target different pectoral fibers',
     ],
     breathing: 'Breathe slowly and deeply, letting the chest relax more with every exhale.',
+  );
+
+  // Exercises referenced by workout templates that were missing from the catalog.
+  static final _behindNeckPress = _movement(
+    id: 'exercise-behind-neck-press-001',
+    name: 'Behind Neck Press',
+    aliases: const ['behind the neck press', 'behind neck barbell press'],
+    description: 'Barbell overhead press lowered behind the head to load the side and rear delts; best reserved for lifters with good shoulder and thoracic mobility.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.verticalPush],
+    primary: const [MuscleGroup.frontDelts, MuscleGroup.sideDelts],
+    secondary: const [MuscleGroup.triceps, MuscleGroup.traps],
+    equipment: const [EquipmentType.barbell],
+    setup: const [
+      'Set the barbell on a rack at about upper-chest height and take a grip noticeably wider than shoulder-width.',
+      'Unrack, step back and stand tall with the bar resting across the upper traps, glutes squeezed and core braced.',
+    ],
+    execution: const [
+      'Press the bar straight up from behind the head until the arms are fully extended over the shoulders.',
+      'Pause briefly at lockout without shrugging or arching the lower back.',
+      'Lower under control until the bar reaches the base of the neck, never lower than that.',
+    ],
+    cues: const [
+      'Use a light load and warm up the shoulders thoroughly',
+      'Keep the head slightly forward and the forearms vertical',
+      'Stop the descent at ear level if the shoulders feel restricted',
+    ],
+    breathing: 'Inhale and brace at the bottom; exhale as the bar passes the head and locks out overhead.',
+  );
+
+  static final _behindNeckRow = _movement(
+    id: 'exercise-behind-neck-row-001',
+    name: 'Behind Neck Row',
+    aliases: const ['behind neck pulldown', 'behind the neck lat pulldown'],
+    description: 'Cable pulling movement where the bar is drawn down behind the head to the base of the neck, emphasizing the lats and upper back; requires good shoulder mobility.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.verticalPull],
+    primary: const [MuscleGroup.lats, MuscleGroup.traps],
+    secondary: const [MuscleGroup.biceps, MuscleGroup.rearDelts],
+    equipment: const [EquipmentType.cable],
+    setup: const [
+      'Adjust the thigh pad so the legs are locked in and take a wide overhand grip on the bar.',
+      'Sit tall, lean the torso very slightly forward and keep the head forward of the bar path.',
+    ],
+    execution: const [
+      'Pull the bar down behind the head by driving the elbows down and back until it reaches the base of the neck.',
+      'Squeeze the shoulder blades together briefly at the bottom.',
+      'Return the bar slowly until the arms are fully extended and the lats are stretched.',
+    ],
+    cues: const [
+      'Use a light to moderate weight and a strict tempo',
+      'Keep the chest tall and avoid jerking the neck forward',
+      'Stop the pull if the shoulders feel pinched',
+    ],
+    breathing: 'Exhale as you pull the bar down; inhale as it returns overhead.',
+  );
+
+  static final _benchDips = _movement(
+    id: 'exercise-bench-dips-001',
+    name: 'Bench Dips',
+    aliases: const ['triceps bench dip', 'bench triceps dip'],
+    description: 'Bodyweight triceps exercise performed with the hands on a bench behind the body and the feet on the floor.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.verticalPush],
+    primary: const [MuscleGroup.triceps],
+    secondary: const [MuscleGroup.chest, MuscleGroup.frontDelts],
+    equipment: const [EquipmentType.bench, EquipmentType.bodyweight],
+    setup: const [
+      'Sit on the edge of a bench, place the hands beside the hips with fingers pointing forward and slide the hips off the bench.',
+      'Extend the legs out in front with the heels on the floor (bend the knees to make it easier).',
+    ],
+    execution: const [
+      'Lower the body by bending the elbows straight back until the upper arms are about parallel to the floor.',
+      'Keep the hips close to the bench and the chest lifted.',
+      'Press through the palms to straighten the arms and return to the start.',
+    ],
+    cues: const [
+      'Keep the elbows pointing straight back, not flared out',
+      'Keep the shoulders down away from the ears',
+      'Do not sink so low that the shoulders feel strained',
+    ],
+    breathing: 'Inhale as you lower; exhale as you press up.',
+  );
+
+  static final _concentrationCurl = _movement(
+    id: 'exercise-concentration-curl-001',
+    name: 'Concentration Curl',
+    aliases: const ['seated concentration curl', 'single-arm concentration curl'],
+    description: 'Seated single-arm dumbbell curl with the elbow braced against the inner thigh to isolate the biceps.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.biceps],
+    secondary: const [MuscleGroup.forearms],
+    equipment: const [EquipmentType.dumbbell, EquipmentType.bench],
+    setup: const [
+      'Sit on the end of a bench with feet wide and take a dumbbell in one hand.',
+      'Rest the back of the upper arm against the inside of the same-side thigh with the arm fully extended.',
+    ],
+    execution: const [
+      'Curl the dumbbell up toward the shoulder by bending only at the elbow.',
+      'Squeeze the biceps hard at the top for a brief pause.',
+      'Lower slowly to full extension, then complete all reps before switching arms.',
+    ],
+    cues: const [
+      'Keep the upper arm pinned against the thigh',
+      'Do not swing the torso to lift the weight',
+      'Control the lowering phase for 2-3 seconds',
+    ],
+    breathing: 'Exhale as you curl up; inhale as you lower.',
+  );
+
+  static final _dumbbellKickback = _movement(
+    id: 'exercise-dumbbell-kickback-001',
+    name: 'Dumbbell Kickback',
+    aliases: const ['triceps kickback', 'db kickback'],
+    description: 'Single-arm triceps isolation performed bent over with the upper arm held parallel to the torso.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.triceps],
+    secondary: const [MuscleGroup.rearDelts],
+    equipment: const [EquipmentType.dumbbell, EquipmentType.bench],
+    setup: const [
+      'Place one hand and the same-side knee on a bench with a flat back and hold a dumbbell in the free hand.',
+      'Raise the upper arm until it is parallel to the torso with the elbow bent at about 90 degrees.',
+    ],
+    execution: const [
+      'Extend the elbow to swing the dumbbell back until the arm is fully straight.',
+      'Squeeze the triceps for a brief pause at full extension.',
+      'Return slowly to 90 degrees without letting the upper arm drop.',
+    ],
+    cues: const [
+      'Keep the upper arm still and tight against the torso',
+      'Keep the back flat and the neck neutral',
+      'Use a light weight and avoid swinging',
+    ],
+    breathing: 'Exhale as you extend the arm; inhale as you return.',
+  );
+
+  static final _dumbbellPullover = _movement(
+    id: 'exercise-dumbbell-pullover-001',
+    name: 'Dumbbell Pullover',
+    aliases: const ['db pullover', 'pullover'],
+    description: 'Arc-shaped dumbbell movement lying across a bench that stretches and loads the chest and lats.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.chest, MuscleGroup.lats],
+    secondary: const [MuscleGroup.triceps],
+    equipment: const [EquipmentType.dumbbell, EquipmentType.bench],
+    setup: const [
+      'Lie with only the upper back supported across a bench, feet flat and hips slightly lowered.',
+      'Hold one dumbbell with both hands above the chest, with a slight bend in the elbows.',
+    ],
+    execution: const [
+      'Lower the dumbbell in an arc back over and behind the head until you feel a deep stretch in the chest and lats.',
+      'Keep the elbows slightly bent and the ribs down.',
+      'Pull the dumbbell back over the chest along the same arc using the chest and lats.',
+    ],
+    cues: const [
+      'Keep the hips low and the core braced',
+      'Do not let the lower back arch excessively at the bottom',
+      'Move through a comfortable range and control the stretch',
+    ],
+    breathing: 'Inhale as the dumbbell lowers behind the head; exhale as you pull it back over the chest.',
+  );
+
+  static final _frontRaise = _movement(
+    id: 'exercise-front-raise-001',
+    name: 'Front Raise',
+    aliases: const ['dumbbell front raise'],
+    description: 'Dumbbell isolation exercise raising the weights in front of the body to target the front delts.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.frontDelts],
+    secondary: const [MuscleGroup.sideDelts, MuscleGroup.chest],
+    equipment: const [EquipmentType.dumbbell],
+    setup: const [
+      'Stand tall holding a dumbbell in each hand in front of the thighs with palms facing the body.',
+      'Brace the core, soften the knees and keep a slight bend in the elbows.',
+    ],
+    execution: const [
+      'Raise the dumbbells straight in front of you until the arms reach about shoulder height.',
+      'Pause briefly at the top without shrugging.',
+      'Lower slowly under control to the start.',
+    ],
+    cues: const [
+      'Do not swing or lean back to lift the weight',
+      'Keep the shoulders down away from the ears',
+      'Raise only to shoulder height',
+    ],
+    breathing: 'Exhale as you raise the weights; inhale as you lower.',
+  );
+
+  static final _spiderCurl = _movement(
+    id: 'exercise-spider-curl-001',
+    name: 'Spider Curl',
+    aliases: const ['prone incline dumbbell curl', 'chest-supported spider curl'],
+    description: 'Dumbbell curl performed lying face down on an incline bench so the arms hang straight down, keeping constant tension on the biceps.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.biceps],
+    secondary: const [MuscleGroup.forearms],
+    equipment: const [EquipmentType.dumbbell, EquipmentType.bench],
+    setup: const [
+      'Set an incline bench to about 45 degrees and lie face down with the chest supported on the pad.',
+      'Let the arms hang straight down holding a dumbbell in each hand with palms facing forward.',
+    ],
+    execution: const [
+      'Curl the dumbbells up toward the shoulders without moving the upper arms.',
+      'Squeeze the biceps hard at the top for a brief pause.',
+      'Lower slowly to full extension.',
+    ],
+    cues: const [
+      'Keep the chest pressed into the pad',
+      'Keep the upper arms vertical and still',
+      'Do not swing the dumbbells',
+    ],
+    breathing: 'Exhale as you curl up; inhale as you lower.',
+  );
+
+  static final _uprightRow = _movement(
+    id: 'exercise-upright-row-001',
+    name: 'Upright Row',
+    aliases: const ['barbell upright row'],
+    description: 'Barbell pulling movement lifting the bar along the body to the chest to train the side delts and upper traps.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.verticalPull],
+    primary: const [MuscleGroup.sideDelts, MuscleGroup.traps],
+    secondary: const [MuscleGroup.biceps, MuscleGroup.frontDelts, MuscleGroup.forearms],
+    equipment: const [EquipmentType.barbell],
+    setup: const [
+      'Stand tall holding a barbell with an overhand grip about shoulder-width apart, bar resting against the thighs.',
+      'Brace the core and keep the knees soft.',
+    ],
+    execution: const [
+      'Pull the bar straight up along the body, leading with the elbows, until it reaches about lower-chest height.',
+      'Keep the elbows higher than the wrists and pause briefly at the top.',
+      'Lower the bar slowly to the thighs.',
+    ],
+    cues: const [
+      'Keep the bar close to the body',
+      'Do not pull higher than the point where the shoulders stay comfortable',
+      'Use a slightly wider grip to reduce shoulder strain',
+    ],
+    breathing: 'Exhale as you pull the bar up; inhale as you lower.',
+  );
+
+  static final _risingCablePress = _movement(
+    id: 'exercise-rising-cable-press-001',
+    name: 'Rising Cable Press',
+    aliases: const ['low-to-high cable press', 'rising cable chest press'],
+    description: 'Cable chest press with the pulleys set low so the handles rise in an upward arc, emphasizing the upper chest.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.horizontalPush],
+    primary: const [MuscleGroup.chest],
+    secondary: const [MuscleGroup.frontDelts, MuscleGroup.triceps],
+    equipment: const [EquipmentType.cable],
+    setup: const [
+      'Set both pulleys to the lowest position and take a handle in each hand.',
+      'Step forward into a split stance with a slight forward lean, hands at chest height and elbows bent.',
+    ],
+    execution: const [
+      'Press the handles upward and forward in a rising arc until the hands meet at about eye level.',
+      'Squeeze the chest at the top for a brief pause.',
+      'Return slowly along the same path until you feel a stretch across the chest.',
+    ],
+    cues: const [
+      'Keep the torso stable and do not lean back',
+      'Lead the movement with the chest, not the shoulders',
+      'Control the return and keep tension on the cables',
+    ],
+    breathing: 'Exhale as you press up; inhale as you return.',
+  );
+
+  static final _ezCloseGripCurl = _movement(
+    id: 'exercise-ez-close-grip-curl-001',
+    name: 'EZ-Bar Close-Grip Curl',
+    aliases: const ['close grip ez curl', 'ez bar close grip biceps curl'],
+    description: 'Biceps curl with an EZ-bar using a narrow grip on the inner bends to emphasize the outer biceps.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.biceps],
+    secondary: const [MuscleGroup.forearms],
+    equipment: const [EquipmentType.barbell],
+    setup: const [
+      'Stand tall holding an EZ-bar with a narrow underhand grip on the inner bends and the bar resting against the thighs.',
+      'Pin the elbows to the sides and brace the core.',
+    ],
+    execution: const [
+      'Curl the bar up by bending the elbows until the biceps are fully contracted.',
+      'Pause briefly at the top without letting the elbows drift forward.',
+      'Lower slowly to full elbow extension.',
+    ],
+    cues: const [
+      'Keep the elbows fixed at the sides',
+      'Do not swing the hips or lean back',
+      'Keep the wrists neutral and relaxed',
+    ],
+    breathing: 'Exhale as you curl up; inhale as you lower.',
+  );
+
+  static final _inclineDbFly = _movement(
+    id: 'exercise-incline-db-fly-001',
+    name: 'Incline Dumbbell Fly',
+    aliases: const ['incline fly', 'incline dumbbell chest fly'],
+    description: 'Dumbbell fly performed on an incline bench that stretches and isolates the upper chest.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.chest],
+    secondary: const [MuscleGroup.frontDelts],
+    equipment: const [EquipmentType.dumbbell, EquipmentType.bench],
+    setup: const [
+      'Set a bench to a low incline of about 30 degrees and lie back with a dumbbell in each hand above the chest, palms facing each other.',
+      'Pinch the shoulder blades together and set a soft, fixed bend in the elbows.',
+    ],
+    execution: const [
+      'Open the arms in a wide arc until you feel a comfortable stretch across the chest.',
+      'Keep the elbow angle fixed throughout the movement.',
+      'Squeeze the chest to bring the dumbbells back together above the upper chest.',
+    ],
+    cues: const [
+      'Keep the elbow bend constant, do not turn it into a press',
+      'Stop lowering at about shoulder level',
+      'Use lighter weights and control the stretch',
+    ],
+    breathing: 'Inhale as the arms open; exhale as you squeeze the dumbbells together.',
+  );
+
+  static final _overheadDbTricepExtension = _movement(
+    id: 'exercise-overhead-tricep-extension-001',
+    name: 'Overhead Dumbbell Tricep Extension',
+    aliases: const ['overhead tricep extension', 'overhead dumbbell extension', 'single-arm overhead extension'],
+    description: 'Triceps isolation using one or two dumbbells held overhead, stretching the long head of the triceps; can be done seated or standing.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.triceps],
+    secondary: const [MuscleGroup.shoulders, MuscleGroup.core],
+    equipment: const [EquipmentType.dumbbell],
+    setup: const [
+      'Stand or sit tall holding one dumbbell overhead with both hands, or a single dumbbell in one hand.',
+      'Keep the upper arms close to the head with the elbows pointing forward and the core braced.',
+    ],
+    execution: const [
+      'Lower the dumbbell behind the head by bending only at the elbows until you feel a deep triceps stretch.',
+      'Keep the upper arms still and the ribs down.',
+      'Extend the elbows to press the dumbbell back overhead to full lockout.',
+    ],
+    cues: const [
+      'Keep the elbows narrow and pointing forward',
+      'Do not arch the lower back',
+      'Use a controlled tempo, especially on the way down',
+    ],
+    breathing: 'Inhale as you lower the dumbbell; exhale as you extend.',
+  );
+
+  static final _reverseGripPushdown = _movement(
+    id: 'exercise-reverse-pushdown-001',
+    name: 'Reverse-Grip Tricep Pushdown',
+    aliases: const ['reverse pushdown', 'underhand cable pushdown'],
+    description: 'Cable pushdown performed with an underhand grip to shift emphasis toward the medial head of the triceps.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.triceps],
+    secondary: const [MuscleGroup.forearms],
+    equipment: const [EquipmentType.cable],
+    setup: const [
+      'Attach a straight or EZ bar to a high pulley and take an underhand shoulder-width grip.',
+      'Stand close to the stack with the elbows pinned to the sides and the forearms at about 90 degrees.',
+    ],
+    execution: const [
+      'Press the bar down by extending the elbows until the arms are fully straight.',
+      'Squeeze the triceps at the bottom for a brief pause.',
+      'Let the bar rise under control until the forearms are just past 90 degrees.',
+    ],
+    cues: const [
+      'Keep the elbows locked at the sides',
+      'Keep the wrists straight and do not let them bend back',
+      'Use a lighter weight than a standard pushdown',
+    ],
+    breathing: 'Exhale as you push down; inhale as the bar rises.',
+  );
+
+  static final _ropeTricepPushdown = _movement(
+    id: 'exercise-rope-pushdown-001',
+    name: 'Rope Tricep Pushdown',
+    aliases: const ['rope pushdown', 'cable rope pushdown'],
+    description: 'Cable triceps pushdown using a rope attachment that lets the hands split apart at the bottom for a stronger contraction.',
+    regions: const [BodyRegion.upperBody],
+    patterns: const [MovementPattern.isolation],
+    primary: const [MuscleGroup.triceps],
+    equipment: const [EquipmentType.cable],
+    setup: const [
+      'Attach a rope to a high pulley and take a neutral grip with a hand on each end.',
+      'Stand close to the stack with the elbows pinned to the sides and the forearms at about 90 degrees.',
+    ],
+    execution: const [
+      'Press the rope down by extending the elbows, splitting the ends apart at the bottom.',
+      'Squeeze the triceps hard at full extension.',
+      'Return slowly until the forearms are just past 90 degrees.',
+    ],
+    cues: const [
+      'Keep the elbows locked at the sides',
+      'Spread the rope apart at the bottom of each rep',
+      'Do not lean over the stack to push with bodyweight',
+    ],
+    breathing: 'Exhale as you push down; inhale as the rope rises.',
   );
 
   /// Shared constructor keeps the catalog entries consistent while each movement

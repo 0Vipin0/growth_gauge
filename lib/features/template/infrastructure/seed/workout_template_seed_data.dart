@@ -11,7 +11,7 @@ class const TemplateSeedBundle({
   required final WorkoutTemplateRevision initialRevision,
 });
 
-/// Canonical system workout template seed data containing 38 complete programs.
+/// Canonical system workout template seed data containing 83 complete programs.
 /// Every program has an explicitly timed warm-up and a stretch / relaxed cool-down.
 ///
 /// Every session follows a full structure: warm-up, main work, then a
@@ -73,6 +73,46 @@ class WorkoutTemplateSeedData._() {
     _upperBodyB,
     _upperBodyC,
     _lowerBodyB,
+    _routine1Shoulders,
+    _routine1Back,
+    _routine1Chest,
+    _routine1Biceps,
+    _routineShoulders,
+    _routineTriceps,
+    _routineChest,
+    _routineBiceps,
+    _routineBack,
+    _routineThighs,
+    _routineMondayBack,
+    _routineTuesdayBiceps,
+    _routineWednesdayChest,
+    _routineThursdayTriceps,
+    _routineFridayShoulders,
+    _routineSaturdayLegs,
+    _routine4MondayBackCore,
+    _routine4TuesdayBicepsCore,
+    _routineWednesdayShoulders,
+    _routine4ThursdayTricepsCore,
+    _routineFridayLower,
+    _routineSaturdayChest,
+    _routine5MondayBack,
+    _routine5TuesdayBiceps,
+    _routineWednesdayShoulder,
+    _routineThursdayTricep,
+    _routine5FridayLowerBody,
+    _routine5SaturdayChest,
+    _routine6MondayBack,
+    _routine6TuesdayBiceps,
+    _routine6WednesdayShoulders,
+    _routine6ThursdayTriceps,
+    _routineFridayChest,
+    _routineSaturdayLower,
+    _routineMondayChest,
+    _routineTuesdayTriceps,
+    _routineWednesdayBack,
+    _routineThursdayBiceps,
+    _routine7FridayLowerBody,
+    _routineSaturdayRecovery,
   ];
 
   // ===================== STRENGTH (1-20) =====================
@@ -13974,6 +14014,10852 @@ class WorkoutTemplateSeedData._() {
               targetSets: [
                 TargetSet(
                   id: 'ts-lbb-9-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== CUSTOM ROUTINE 1 TEMPLATES (Mon-Thu) =====================
+
+  // 1. Monday: Shoulders
+  static final _routine1Shoulders = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine1-shoulders-001',
+      name: 'Routine 1: Monday Shoulders',
+      description: 'Monday Routine | Focuses on heavy shoulder pressing, isolation raises, and trap development with a complete warm-up and cool-down.',
+      currentRevisionId: 'rev-routine1-shoulders-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'routine-1', 'hypertrophy', 'stretching'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine1-shoulders-001',
+      templateId: 'template-routine1-shoulders-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release for Routine 1 Shoulders workout',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r1s-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r1s-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-w1-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1s-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r1s-1',
+              exerciseId: 'exercise-seated-db-press-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-1-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1s-2',
+              exerciseId: 'exercise-ohp-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-2-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-2-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1s-3',
+              exerciseId: 'exercise-front-raise-001', // Front raise mapping
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-3-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1s-4',
+              exerciseId: 'exercise-lateral-raise-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1s-5',
+              exerciseId: 'exercise-barbell-shrug-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-5-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1s-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r1s-6',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-r1s-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1s-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r1s-7',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1s-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Back
+  static final _routine1Back = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine1-back-001',
+      name: 'Routine 1: Tuesday Back',
+      description: 'Tuesday Routine | Complete back session featuring pull-ups to max, lat pulldowns, heavy one-arm rows, sitting cable rows, and hyper extensions.',
+      currentRevisionId: 'rev-routine1-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine-1', 'pull', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine1-back-001',
+      templateId: 'template-routine1-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release for Routine 1 Back workout',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r1b-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r1b-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1b-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r1b-1',
+              exerciseId: 'exercise-pullup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ), // 0 reps can indicate max effort tracking in app logic
+                TargetSet(
+                  id: 'ts-r1b-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-1-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-1-6',
+                  setNumber: 6,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1b-2',
+              exerciseId: 'exercise-lat-pulldown-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-2-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1b-3',
+              exerciseId: 'exercise-single-arm-db-row-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-3-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-3-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-3-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1b-4',
+              exerciseId:
+                  'exercise-seated-cable-row-001', // Sitting draw / cable row
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1b-5',
+              exerciseId: 'exercise-back-extension-001', // Hyper Extension
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1b-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r1b-6',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-r1b-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1b-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r1b-7',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1b-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Chest
+  static final _routine1Chest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine1-chest-001',
+      name: 'Routine 1: Wednesday Chest',
+      description: 'Wednesday Routine | Comprehensive chest workout featuring push-ups, flat bench, flat DB press, incline DB press, and pec deck/flys.',
+      currentRevisionId: 'rev-routine1-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine-1', 'push', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine1-chest-001',
+      templateId: 'template-routine1-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release for Routine 1 Chest workout',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r1c-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r1c-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1c-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r1c-1',
+              exerciseId: 'exercise-pushup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 7.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 7.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 7.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-1-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-1-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-1-6',
+                  setNumber: 6,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1c-2',
+              exerciseId: 'exercise-bench-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-2-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-2-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1c-3',
+              exerciseId: 'exercise-db-bench-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1c-4',
+              exerciseId: 'exercise-incline-db-press-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1c-5',
+              exerciseId: 'exercise-pec-deck-fly-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1c-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r1c-6',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-6-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+                TargetSet(
+                  id: 'ts-r1c-6-2',
+                  setNumber: 2,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1c-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r1c-7',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1c-7-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Biceps
+  static final _routine1Biceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine1-biceps-001',
+      name: 'Routine 1: Thursday Biceps',
+      description: 'Thursday Routine | High-volume bicep isolation routine featuring barbell curls, preacher curls, and dumbbell curls.',
+      currentRevisionId: 'rev-routine1-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'routine-1', 'arms', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine1-biceps-001',
+      templateId: 'template-routine1-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial system release for Routine 1 Biceps workout',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r1bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r1bi-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r1bi-1',
+              exerciseId: 'exercise-barbell-curl-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-1-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-1-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1bi-2',
+              exerciseId: 'exercise-preacher-curl-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-2-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-2-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r1bi-3',
+              exerciseId: 'exercise-db-curl-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r1bi-3-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r1bi-4',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-4-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r1bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r1bi-5',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r1bi-5-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups & Cool-downs) =====================
+
+  // 1. Monday: Shoulders
+  static final _routineShoulders = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-shoulders-001',
+      name: 'Routine 2: Monday Shoulders',
+      description: 'Monday Routine | High-volume shoulder session covering front raises, lateral raises, upright rows, rear delts, military/behind-the-neck presses, and heavy shrugs, complete with warm-ups and cool-downs.',
+      currentRevisionId: 'rev-routine-shoulders-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'routine', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-shoulders-001',
+      templateId: 'template-routine-shoulders-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Shoulders routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-sh-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-sh-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sh-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-sh-1',
+              exerciseId: 'exercise-front-raise-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-1-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-1-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-1-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-2',
+              exerciseId: 'exercise-lateral-raise-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-2-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-2-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-2-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-3',
+              exerciseId: 'exercise-upright-row-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-3-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-3-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-3-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-4',
+              exerciseId: 'exercise-rear-delt-fly-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-4-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-4-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-4-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-4-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-5',
+              exerciseId: 'exercise-ohp-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-5-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-5-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-5-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-5-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-6',
+              exerciseId: 'exercise-behind-neck-press-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-6-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-6-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-6-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-6-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sh-7',
+              exerciseId: 'exercise-barbell-shrug-001',
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-7-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-7-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sh-7-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-7-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sh-7-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sh-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-sh-c1',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sh-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-sh-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sh-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Triceps
+  static final _routineTriceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-triceps-001',
+      name: 'Routine 2: Tuesday Triceps',
+      description: 'Tuesday Routine | Dedicated arm session featuring rope pushdowns, skull crushers, bench dips, reverse pushdowns, pulley pushdowns, and kickbacks with warm-up and cool-down.',
+      currentRevisionId: 'rev-routine-triceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-triceps-001',
+      templateId: 'template-routine-triceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Triceps routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r2-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r2-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r2-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r2-tr-1',
+              exerciseId: 'exercise-rope-pushdown-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-1-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r2-tr-2',
+              exerciseId: 'exercise-skull-crusher-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-2-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r2-tr-3',
+              exerciseId: 'exercise-bench-dips-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r2-tr-4',
+              exerciseId: 'exercise-reverse-pushdown-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-4-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r2-tr-5',
+              exerciseId: 'exercise-tricep-pushdown-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-5-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r2-tr-6',
+              exerciseId: 'exercise-dumbbell-kickback-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-6-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-6-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r2-tr-6-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r2-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r2-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r2-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r2-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r2-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Chest
+  static final _routineChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-chest-001',
+      name: 'Routine 2: Wednesday Chest',
+      description: 'Wednesday Routine | Comprehensive chest volume including push-ups, incline/flat bench presses, dumbbell flys, decline presses, rising cable presses, and pullovers with warm-up and cool-down.',
+      currentRevisionId: 'rev-routine-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-chest-001',
+      templateId: 'template-routine-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Chest routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-ch-1',
+              exerciseId: 'exercise-pushup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-1-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-1-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-2',
+              exerciseId: 'exercise-incline-bench-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-2-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-3',
+              exerciseId: 'exercise-bench-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-3-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-4',
+              exerciseId: 'exercise-db-fly-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-5',
+              exerciseId: 'exercise-incline-db-fly-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-6',
+              exerciseId: 'exercise-decline-bench-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-6-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-6-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-6-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-7',
+              exerciseId: 'exercise-rising-cable-press-001',
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-7-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-7-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-7-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-7-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-ch-8',
+              exerciseId: 'exercise-dumbbell-pullover-001',
+              order: 8,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-8-1',
+                  setNumber: 1,
+                  targetReps: 4,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-8-2',
+                  setNumber: 2,
+                  targetReps: 4,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-ch-8-3',
+                  setNumber: 3,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-ch-8-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Biceps
+  static final _routineBiceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-biceps-001',
+      name: 'Routine 2: Thursday Biceps',
+      description: 'Thursday Routine | High-intensity bicep builder incorporating dumbbell curls, barbell curls, close-grip EZ curls, wide-grip preacher curls, concentration curls, and hammer curls with warm-up and cool-down.',
+      currentRevisionId: 'rev-routine-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-biceps-001',
+      templateId: 'template-routine-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Biceps routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-bi-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-bi-1',
+              exerciseId: 'exercise-db-curl-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-6',
+                  setNumber: 6,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-7',
+                  setNumber: 7,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-8',
+                  setNumber: 8,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-1-9',
+                  setNumber: 9,
+                  targetReps: 20,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bi-2',
+              exerciseId: 'exercise-barbell-curl-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-6',
+                  setNumber: 6,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-7',
+                  setNumber: 7,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-8',
+                  setNumber: 8,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-2-9',
+                  setNumber: 9,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bi-3',
+              exerciseId: 'exercise-ez-close-grip-curl-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bi-4',
+              exerciseId: 'exercise-preacher-curl-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bi-5',
+              exerciseId: 'exercise-concentration-curl-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-5-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-5-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-5-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-5-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bi-6',
+              exerciseId: 'exercise-hammer-curl-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-6-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-6-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bi-6-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-6-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bi-6-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Back
+  static final _routineBack = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-back-001',
+      name: 'Routine 2: Friday Back',
+      description: 'Friday Routine | Comprehensive back workout featuring pull-ups, front pulleys, behind-neck presses/rows, seated/single-arm/bent-over rows, heavy deadlifts, and hyperextensions with warm-up and cool-down.',
+      currentRevisionId: 'rev-routine-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-back-001',
+      templateId: 'template-routine-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Back routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-bk-1',
+              exerciseId: 'exercise-pullup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-1-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-2',
+              exerciseId: 'exercise-lat-pulldown-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-2-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-2-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-2-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-3',
+              exerciseId: 'exercise-behind-neck-row-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-4',
+              exerciseId: 'exercise-seated-cable-row-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-4-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-5',
+              exerciseId: 'exercise-single-arm-db-row-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-6',
+              exerciseId: 'exercise-row-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-6-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-6-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-6-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-6-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-7',
+              exerciseId: 'exercise-deadlift-001',
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-7-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-7-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-7-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-7-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-bk-8',
+              exerciseId: 'exercise-back-extension-001',
+              order: 8,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-8-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-8-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-bk-8-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-bk-8-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-bk-f1',
+              exerciseId: 'exercise-childs-pose-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 60,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Thighs / Lower
+  static final _routineThighs = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-thighs-001',
+      name: 'Routine 2: Saturday Thighs & Lower Body',
+      description: 'Saturday Routine | Lower body session covering free bodyweight squats, weighted barbell squats, leg extensions, leg curls, heavy leg press, lunges, and high-rep calves with warm-up and cool-down.',
+      currentRevisionId: 'rev-routine-thighs-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-thighs-001',
+      templateId: 'template-routine-thighs-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Thighs & Lower routine with warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-th-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-th-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-th-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-th-1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 7.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-1-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 7.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-1-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-1-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-1-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-2',
+              exerciseId: 'exercise-squat-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-2-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-2-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-2-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-2-4',
+                  setNumber: 4,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-3',
+              exerciseId: 'exercise-leg-extension-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-4',
+              exerciseId: 'exercise-lying-leg-curl-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-4-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-4-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-4-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-4-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-5',
+              exerciseId: 'exercise-leg-press-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-5-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-6',
+              exerciseId: 'exercise-walking-lunge-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-6-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-6-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-6-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-6-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-th-7',
+              exerciseId: 'exercise-standing-calf-raise-001',
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-7-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-7-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-th-7-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-7-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-th-7-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-th-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-th-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-th-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-th-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-th-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups & Cool-downs) =====================
+
+  // 1. Monday: Back
+  static final _routineMondayBack = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-monday-back-001',
+      name: 'Routine 3: Monday Back',
+      description: 'Monday Routine | Back and posterior chain session featuring pull-ups, hyper extensions, pulley draws, one-arm rows, and bent rows.',
+      currentRevisionId: 'rev-routine-monday-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-monday-back-001',
+      templateId: 'template-routine-monday-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Back routine with integrated warm-ups and cool-downs',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-mon-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-mon-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-mon-bk-1',
+              exerciseId: 'exercise-pullup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-1-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-bk-2',
+              exerciseId: 'exercise-back-extension-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-bk-3',
+              exerciseId: 'exercise-seated-cable-row-001', // Pulley Draw
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-3-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-3-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-bk-4',
+              exerciseId: 'exercise-single-arm-db-row-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-4-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-bk-5',
+              exerciseId: 'exercise-row-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-mon-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-mon-bk-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Biceps & Abdomen
+  static final _routineTuesdayBiceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-tuesday-biceps-001',
+      name: 'Routine 3: Tuesday Biceps & Abdomen',
+      description: 'Tuesday Routine | Arm and abdomen session featuring dumbbell curls, 21s abdomen/bicep work, barbell curls, and hammer curls.',
+      currentRevisionId: 'rev-routine-tuesday-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'abdomen', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-tuesday-biceps-001',
+      templateId: 'template-routine-tuesday-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Biceps & Abdomen routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-tue-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-tue-bi-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-tue-bi-1',
+              exerciseId: 'exercise-db-curl-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-1-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-bi-2',
+              exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen (21s / core focus)
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 21,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-bi-3',
+              exerciseId: 'exercise-barbell-curl-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-3-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-bi-4',
+              exerciseId: 'exercise-hammer-curl-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-bi-4-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-tue-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-tue-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Chest
+  static final _routineWednesdayChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-wednesday-chest-001',
+      name: 'Routine 3: Wednesday Chest',
+      description: 'Wednesday Routine | Pectoral session featuring weighted push-ups, height push-ups, and butterfly flys.',
+      currentRevisionId: 'rev-routine-wednesday-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-wednesday-chest-001',
+      templateId: 'template-routine-wednesday-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Chest routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-wed-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-wed-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-wed-ch-1',
+              exerciseId: 'exercise-pushup-001', // Weighted pushup variant
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-ch-2',
+              exerciseId: 'exercise-pushup-001', // Height pushup
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-ch-3',
+              exerciseId: 'exercise-pec-deck-fly-001', // Butterfly
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-ch-3-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-wed-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-wed-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Triceps & Core
+  static final _routineThursdayTriceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-thursday-triceps-001',
+      name: 'Routine 3: Thursday Triceps & Core',
+      description: 'Thursday Routine | Tricep isolation and integrated core/hyper-extension work featuring rope pushdowns, reverse pushdowns, hyper extensions, and kickbacks.',
+      currentRevisionId: 'rev-routine-thursday-triceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-thursday-triceps-001',
+      templateId: 'template-routine-thursday-triceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Triceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-thu-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-thu-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-thu-tr-1',
+              exerciseId: 'exercise-rope-pushdown-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-1-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-tr-2',
+              exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen inclusion
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-tr-3',
+              exerciseId: 'exercise-reverse-pushdown-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-tr-4',
+              exerciseId:
+                  'exercise-back-extension-001', // Hyper Extension inclusion
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-tr-5',
+              exerciseId: 'exercise-dumbbell-kickback-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-5-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-tr-5-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-thu-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-thu-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Shoulders & Core
+  static final _routineFridayShoulders = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-friday-shoulders-001',
+      name: 'Routine 3: Friday Shoulders & Core',
+      description: 'Friday Routine | Shoulder isolation and pressing session featuring behind-the-neck presses, abdomen work, side lateral raises, and upright rows.',
+      currentRevisionId: 'rev-routine-friday-shoulders-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'routine', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-friday-shoulders-001',
+      templateId: 'template-routine-friday-shoulders-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Shoulders routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-fri-sh-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-fri-sh-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-sh-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-fri-sh-1',
+              exerciseId: 'exercise-behind-neck-press-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-sh-2',
+              exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen inclusion
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-sh-3',
+              exerciseId: 'exercise-lateral-raise-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-sh-4',
+              exerciseId: 'exercise-upright-row-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-sh-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-sh-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-fri-sh-c1',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-sh-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-fri-sh-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-sh-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Legs & Lower Body
+  static final _routineSaturdayLegs = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-saturday-legs-001',
+      name: 'Routine 3: Saturday Legs & Lower Body',
+      description: 'Saturday Routine | Lower body workout including thigh press, hyper extensions, leg extensions, lunges, and calf raises.',
+      currentRevisionId: 'rev-routine-saturday-legs-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-saturday-legs-001',
+      templateId: 'template-routine-saturday-legs-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Legs routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-sat-lg-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lg-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lg-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lg-1',
+              exerciseId: 'exercise-leg-press-001', // Thigh Press
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-1-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lg-2',
+              exerciseId:
+                  'exercise-back-extension-001', // Hyper Extension inclusion
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lg-3',
+              exerciseId: 'exercise-leg-extension-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lg-4',
+              exerciseId: 'exercise-walking-lunge-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lg-5',
+              exerciseId: 'exercise-standing-calf-raise-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lg-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lg-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lg-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lg-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lg-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lg-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups, Core, & Cool-downs) =====================
+
+  // 1. Monday: Back & Core
+  static final _routine4MondayBackCore = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine4-monday-back-core-001',
+      name: 'Routine 4: Monday Back & Core',
+      description: 'Monday Routine | Pull session featuring pull-ups, abdomen work (skipping + side bends), seated rowing, reverse close grip, one-arm rowing, behind neck rows, and hyper extensions.',
+      currentRevisionId: 'rev-routine4-monday-back-core-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'core', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine4-monday-back-core-001',
+      templateId: 'template-routine4-monday-back-core-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Back & Core routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r4-mon-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r4-mon-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-mon-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r4-mon-bk-1',
+              exerciseId: 'exercise-pullup-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-1-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-2',
+              exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen (Skipping + Sidebend)
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-2-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-3',
+              exerciseId: 'exercise-seated-cable-row-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-4',
+              exerciseId: 'exercise-neutral-grip-lat-pulldown-001', // Reverse Close Grip
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-4-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-5',
+              exerciseId: 'exercise-single-arm-db-row-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-5-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-6',
+              exerciseId: 'exercise-behind-neck-row-001',
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-6-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-6-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-6-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-6-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-6-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-mon-bk-7',
+              exerciseId: 'exercise-back-extension-001',
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-7-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-7-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-7-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-mon-bk-7-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-mon-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r4-mon-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-mon-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r4-mon-bk-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-mon-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Biceps & Core
+  static final _routine4TuesdayBicepsCore = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine4-tuesday-biceps-core-001',
+      name: 'Routine 4: Tuesday Biceps & Core',
+      description: 'Tuesday Routine | Arm and core session featuring inclined sitting dumbbell curls, abdominal crunches, hammer curls, low pulley barbell curls, wide-grip preacher curls, concentration curls, and heavy dumbbell curls.',
+      currentRevisionId: 'rev-routine4-tuesday-biceps-core-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'core', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine4-tuesday-biceps-core-001',
+      templateId: 'template-routine4-tuesday-biceps-core-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Biceps & Core routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r4-tue-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r4-tue-bi-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-tue-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r4-tue-bi-1',
+              exerciseId: 'exercise-incline-db-bicep-curl-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-1-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-2',
+              exerciseId: 'exercise-cable-ab-crunch-001', // Abdomen Crunches
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-3',
+              exerciseId: 'exercise-hammer-curl-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-3-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-3-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-4',
+              exerciseId: 'exercise-barbell-curl-001', // Low Pulley Barbell
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-5',
+              exerciseId: 'exercise-preacher-curl-001', // Wide Grip Preacher
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-5-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-5-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-6',
+              exerciseId:
+                  'exercise-db-preacher-curl-single-001', // Concentration Curl
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-6-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-6-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-6-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-6-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-6-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-tue-bi-7',
+              exerciseId: 'exercise-db-curl-001', // Heavy Dumbbell Curl
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-7-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-7-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-tue-bi-7-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-tue-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r4-tue-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-tue-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r4-tue-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-tue-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Shoulders & Core
+  static final _routineWednesdayShoulders = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-wednesday-shoulders-001',
+      name: 'Routine 4: Wednesday Shoulders & Core',
+      description: 'Wednesday Routine | Shoulder volume featuring heavy front raises, abdominal crunches, upright rows, side lateral raises, heavy military barbell press, dumbbell shoulder presses, and bent-over rear delt work.',
+      currentRevisionId: 'rev-routine-wednesday-shoulders-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'core', 'routine', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-wednesday-shoulders-001',
+      templateId: 'template-routine-wednesday-shoulders-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Shoulders & Core routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-wed-sh-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-wed-sh-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-sh-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-wed-sh-1',
+              exerciseId: 'exercise-front-raise-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-1-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-2',
+              exerciseId: 'exercise-cable-ab-crunch-001', // Abdomen Crunches
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-2-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-3',
+              exerciseId: 'exercise-upright-row-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-3-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-3-5',
+                  setNumber: 5,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-4',
+              exerciseId: 'exercise-lateral-raise-001',
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-4-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-4-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-5',
+              exerciseId: 'exercise-ohp-001', // Military Press Barbell
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-6',
+              exerciseId:
+                  'exercise-seated-db-press-001', // Dumbbell Shoulder Press
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-6-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-6-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-6-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-6-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-6-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-sh-7',
+              exerciseId: 'exercise-rear-delt-fly-001', // Bent Over Rear Delt
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-7-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-7-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-7-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-sh-7-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-sh-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-wed-sh-c1',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-sh-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-wed-sh-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-sh-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Triceps & Core
+  static final _routine4ThursdayTricepsCore = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine4-thursday-triceps-core-001',
+      name: 'Routine 4: Thursday Triceps & Core',
+      description: 'Thursday Routine | Tricep isolation and integrated core/hyper-extension work featuring close grip pushups, leg raises/twisters, skull crushers, hyper extensions, overhead extensions, close grip bench, pulley pushdowns, and bench triceps.',
+      currentRevisionId: 'rev-routine4-thursday-triceps-core-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'core', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine4-thursday-triceps-core-001',
+      templateId: 'template-routine4-thursday-triceps-core-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Triceps & Core routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r4-thu-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r4-thu-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-thu-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r4-thu-tr-1',
+              exerciseId:
+                  'exercise-pushup-001', // Close Grip Push (Diamond Push)
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-2',
+              exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen (Leg Raise + Twister)
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-3',
+              exerciseId: 'exercise-skull-crusher-001',
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-3-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-4',
+              exerciseId:
+                  'exercise-back-extension-001', // Hyper Extension (3xMax)
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-4-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-5',
+              exerciseId: 'exercise-overhead-tricep-extension-001', // Overhead Extension (Both Hand)
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-5-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-6',
+              exerciseId: 'exercise-close-grip-bench-001', // Close Grip Bench
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-6-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-6-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-6-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-6-4',
+                  setNumber: 4,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-7',
+              exerciseId: 'exercise-tricep-pushdown-001', // Pulley Pushdown
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-7-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-7-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-7-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r4-thu-tr-8',
+              exerciseId: 'exercise-dips-001', // Bench Triceps
+              order: 8,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-8-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-8-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-8-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-8-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r4-thu-tr-8-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-thu-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r4-thu-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r4-thu-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r4-thu-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r4-thu-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Lower Body (Interchangeable with Saturday)
+  static final _routineFridayLower = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-friday-lower-001',
+      name: 'Routine 4: Friday Lower Body',
+      description: 'Friday Routine | Lower body session featuring free squats, leg extensions, weighted squats, thigh presses, walking lunges, and calf raises.',
+      currentRevisionId: 'rev-routine-friday-lower-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-friday-lower-001',
+      templateId: 'template-routine-friday-lower-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Lower Body routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-fri-lw-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-fri-lw-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-lw-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-fri-lw-1',
+              exerciseId: 'exercise-bodyweight-squat-001', // Free Squat
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-1-1',
+                  setNumber: 1,
+                  targetReps: 50,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-1-2',
+                  setNumber: 2,
+                  targetReps: 50,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-1-3',
+                  setNumber: 3,
+                  targetReps: 50,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-lw-2',
+              exerciseId: 'exercise-leg-extension-001',
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-2-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-lw-3',
+              exerciseId: 'exercise-squat-001', // Weight Squat
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-3-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-lw-4',
+              exerciseId: 'exercise-leg-press-001', // Thigh Press
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-lw-5',
+              exerciseId: 'exercise-walking-lunge-001',
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-5-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-5-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-5-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-5-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-5-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-lw-6',
+              exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise + Dumbbell Calf Raise
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-6-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-6-2',
+                  setNumber: 2,
+                  targetReps: 20,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-6-3',
+                  setNumber: 3,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-6-4',
+                  setNumber: 4,
+                  targetReps: 20,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-6-5',
+                  setNumber: 5,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-lw-6-6',
+                  setNumber: 6,
+                  targetReps: 20,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-lw-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-fri-lw-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-lw-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-fri-lw-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-lw-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Chest (Interchangeable with Friday)
+  static final _routineSaturdayChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-saturday-chest-001',
+      name: 'Routine 4: Saturday Chest',
+      description: 'Saturday Routine | Massive chest volume featuring flat bench, flat DB press, incline barbell, incline flys, decline barbell/flys, pushups, butterfly/bench flys, rising cable presses, and pullovers.',
+      currentRevisionId: 'rev-routine-saturday-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-saturday-chest-001',
+      templateId: 'template-routine-saturday-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Chest routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-sat-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-sat-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-sat-ch-1',
+              exerciseId: 'exercise-bench-001', // Flat Bench
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-1-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-1-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-2',
+              exerciseId: 'exercise-db-bench-001', // Flat Bench Dumbbell Press
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-3',
+              exerciseId: 'exercise-incline-bench-001', // Incline Barbell Press
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-3-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-3-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-4',
+              exerciseId: 'exercise-incline-db-fly-001', // Incline Fly
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-4-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-5',
+              exerciseId: 'exercise-decline-bench-001', // Decline Barbell
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-5-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-5-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-5-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-6',
+              exerciseId: 'exercise-db-fly-001', // Decline Fly
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-6-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-6-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-6-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-7',
+              exerciseId: 'exercise-pushup-001', // Pushup
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-7-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-7-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-7-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-8',
+              exerciseId: 'exercise-pec-deck-fly-001', // Butterfly / Bench Fly
+              order: 8,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-8-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-8-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-8-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-8-4',
+                  setNumber: 4,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-8-5',
+                  setNumber: 5,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-9',
+              exerciseId: 'exercise-rising-cable-press-001', // Rising
+              order: 9,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-9-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-9-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-9-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-ch-10',
+              exerciseId: 'exercise-dumbbell-pullover-001', // Pullover
+              order: 10,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-10-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-10-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-ch-10-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-sat-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-sat-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups & Cool-downs) =====================
+
+  // 1. Monday: Back
+  static final _routine5MondayBack = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine5-monday-back-001',
+      name: 'Routine 5: Monday Back',
+      description: 'Monday Routine | Pull session featuring pull-ups, behind neck rows, front pulleys, one-arm rowing, seated rowing, bent rowing, and hyper extensions.',
+      currentRevisionId: 'rev-routine5-monday-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine5-monday-back-001',
+      templateId: 'template-routine5-monday-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Back routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-mon-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-mon-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-mon-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-mon-bk-1',
+              exerciseId: 'exercise-pullup-001', // Pullups
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-1-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-2',
+              exerciseId: 'exercise-behind-neck-row-001', // Behind Neck
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-2-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-2-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-2-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-2-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-3',
+              exerciseId: 'exercise-lat-pulldown-001', // Front Pulley
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-3-4',
+                  setNumber: 4,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-3-5',
+                  setNumber: 5,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-4',
+              exerciseId: 'exercise-single-arm-db-row-001', // One Arm Rowing
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-5',
+              exerciseId: 'exercise-seated-cable-row-001', // Sitted Rowing
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-6',
+              exerciseId: 'exercise-row-001', // Bent Rowing
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-6-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-mon-bk-7',
+              exerciseId: 'exercise-back-extension-001', // Hyper Extension
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-7-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-mon-bk-7-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-mon-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-mon-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-mon-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-mon-bk-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-mon-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Biceps
+  static final _routine5TuesdayBiceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine5-tuesday-biceps-001',
+      name: 'Routine 5: Tuesday Biceps',
+      description: 'Tuesday Routine | Arm session featuring dumbbell warm-ups, EZ close-grip curls, wide-grip barbell curls, one-arm preacher curls, low pulley curls, concentration curls, and reverse barbell curls.',
+      currentRevisionId: 'rev-routine5-tuesday-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine5-tuesday-biceps-001',
+      templateId: 'template-routine5-tuesday-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Biceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-tue-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-tue-bi-w1',
+              exerciseId: 'exercise-db-curl-001', // Warmup - Dumbbell
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-tue-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-tue-bi-1',
+              exerciseId: 'exercise-ez-close-grip-curl-001', // EZ Close Grip
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-1-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-1-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-tue-bi-2',
+              exerciseId: 'exercise-barbell-curl-001', // Wide Grip Barbell
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-2-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-2-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-2-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-2-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-tue-bi-3',
+              exerciseId: 'exercise-db-preacher-curl-single-001', // One Arm Preacher Dumbbell
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-3-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-tue-bi-4',
+              exerciseId: 'exercise-barbell-curl-001', // Low Pulley
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-4-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-tue-bi-5',
+              exerciseId: 'exercise-db-preacher-curl-single-001', // Concenteration Dumbbell
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-5-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-tue-bi-6',
+              exerciseId: 'exercise-barbell-curl-001', // Reverse Barbell
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-tue-bi-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-tue-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-tue-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-tue-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-tue-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-tue-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Shoulder
+  static final _routineWednesdayShoulder = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-wednesday-shoulder-001',
+      name: 'Routine 5: Wednesday Shoulders',
+      description: 'Wednesday Routine | Shoulder session featuring dumbbell presses, behind-the-neck barbell presses, side reverse flies, upright rows, and shrugs.',
+      currentRevisionId: 'rev-routine-wednesday-shoulder-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'routine', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-wednesday-shoulder-001',
+      templateId: 'template-routine-wednesday-shoulder-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Shoulder routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-wed-sh-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-wed-sh-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-wed-sh-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-wed-sh-1',
+              exerciseId: 'exercise-seated-db-press-001', // Shoulder Dumb Press
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-1-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-1-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-wed-sh-2',
+              exerciseId:
+                  'exercise-behind-neck-press-001', // Behind Neck Barbell
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-2-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-2-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-2-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-2-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-wed-sh-3',
+              exerciseId: 'exercise-rear-delt-fly-001', // Side Reverse
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-3-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-wed-sh-4',
+              exerciseId: 'exercise-upright-row-001', // Upright
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-wed-sh-5',
+              exerciseId: 'exercise-barbell-shrug-001', // Shrugs
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-wed-sh-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-wed-sh-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-wed-sh-c1',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-wed-sh-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-wed-sh-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-wed-sh-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Tricep
+  static final _routineThursdayTricep = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-thursday-tricep-001',
+      name: 'Routine 5: Thursday Triceps',
+      description: 'Thursday Routine | Tricep isolation session featuring bent over head extensions, single-arm overhead extensions, pushdown rods, reverse pushdowns, bench dips, and diamond pushups.',
+      currentRevisionId: 'rev-routine-thursday-tricep-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-thursday-tricep-001',
+      templateId: 'template-routine-thursday-tricep-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Tricep routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-thu-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-thu-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-thu-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-thu-tr-1',
+              exerciseId: 'exercise-overhead-tricep-extension-001', // Bent Over Head Extension
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-1-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-1-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-thu-tr-2',
+              exerciseId: 'exercise-overhead-tricep-extension-001', // Single Arm Over Head
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-2-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-2-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-2-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-2-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-thu-tr-3',
+              exerciseId: 'exercise-tricep-pushdown-001', // Pushdown Rod
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-3-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-thu-tr-4',
+              exerciseId: 'exercise-reverse-pushdown-001', // Reverse Psuhdown
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-4-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-thu-tr-5',
+              exerciseId: 'exercise-dips-001', // Bench Dips
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-5-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-thu-tr-6',
+              exerciseId: 'exercise-pushup-001', // Diamond Pushups
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-thu-tr-6-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-thu-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-thu-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-thu-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-thu-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-thu-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Lower (Interchangeable with Saturday)
+  static final _routine5FridayLowerBody = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine5-friday-lower-body-001',
+      name: 'Routine 5: Friday Lower Body',
+      description: 'Friday Routine | Lower body session featuring free squats, leg extensions, weighted squats, leg curls, thigh presses, and calf raises.',
+      currentRevisionId: 'rev-routine5-friday-lower-body-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine5-friday-lower-body-001',
+      templateId: 'template-routine5-friday-lower-body-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Lower Body routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-fri-lw-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-fri-lw-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-fri-lw-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-fri-lw-1',
+              exerciseId: 'exercise-bodyweight-squat-001', // Free Squat
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-1-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-1-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-1-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-1-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-fri-lw-2',
+              exerciseId: 'exercise-leg-extension-001', // Leg Extension
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-2-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-2-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-2-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-fri-lw-3',
+              exerciseId: 'exercise-squat-001', // Weighted Squat
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-fri-lw-4',
+              exerciseId: 'exercise-lying-leg-curl-001', // Leg Curl
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-fri-lw-5',
+              exerciseId: 'exercise-leg-press-001', // Thigh Press
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-5-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-fri-lw-6',
+              exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-fri-lw-6-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-fri-lw-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-fri-lw-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-fri-lw-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-fri-lw-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-fri-lw-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Chest (Interchangeable with Friday)
+  static final _routine5SaturdayChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine5-saturday-chest-001',
+      name: 'Routine 5: Saturday Chest',
+      description: 'Saturday Routine | Chest session featuring flat dumbbell presses + pushups, incline dumbbell presses + height pushups, dumbbell flies, decline bench, and pullovers.',
+      currentRevisionId: 'rev-routine5-saturday-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine5-saturday-chest-001',
+      templateId: 'template-routine5-saturday-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Chest routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r5-sat-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r5-sat-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-sat-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r5-sat-ch-1',
+              exerciseId:
+                  'exercise-db-bench-001', // Flat Dumbbell Press + Pushup
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-1-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-1-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-sat-ch-2',
+              exerciseId: 'exercise-incline-db-press-001', // Incline Dumbbell Press + Height Pushup
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-2-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-sat-ch-3',
+              exerciseId: 'exercise-db-fly-001', // Dumbbell Flies
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-3-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-sat-ch-4',
+              exerciseId: 'exercise-decline-bench-001', // Decline Bench
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r5-sat-ch-5',
+              exerciseId: 'exercise-dumbbell-pullover-001', // Pull Over
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r5-sat-ch-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-sat-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r5-sat-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r5-sat-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r5-sat-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r5-sat-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups & Cool-downs) =====================
+
+  // 1. Monday: Back
+  static final _routine6MondayBack = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine6-monday-back-001',
+      name: 'Routine 6: Monday Back',
+      description: 'Monday Routine | Comprehensive back session featuring pull-ups, one-arm rowing, seated rowing, T-bar rows, front lat pulldowns, heavy deadlifts, and hyper extensions.',
+      currentRevisionId: 'rev-routine6-monday-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine6-monday-back-001',
+      templateId: 'template-routine6-monday-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Back routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r6-mon-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r6-mon-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-mon-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r6-mon-bk-1',
+              exerciseId: 'exercise-pullup-001', // Pullups
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-2',
+              exerciseId: 'exercise-single-arm-db-row-001', // One Arm Rowing
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-3',
+              exerciseId: 'exercise-seated-cable-row-001', // Seated Rowing
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-4',
+              exerciseId: 'exercise-t-bar-row-001', // T-Bar
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-5',
+              exerciseId: 'exercise-lat-pulldown-001', // Front Lat Pulley
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-6',
+              exerciseId: 'exercise-deadlift-001', // Deadlift
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-6-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-6-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-6-3',
+                  setNumber: 3,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-mon-bk-7',
+              exerciseId: 'exercise-back-extension-001', // Hyper Extension
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-mon-bk-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-mon-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r6-mon-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-mon-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r6-mon-bk-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-mon-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Biceps
+  static final _routine6TuesdayBiceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine6-tuesday-biceps-001',
+      name: 'Routine 6: Tuesday Biceps',
+      description: 'Tuesday Routine | Dedicated arm builder covering wide-grip EZ curls, close-grip EZ curls, concentration curls, low pulley curls, bent curls, reverse grip curls, and dumbbell curls.',
+      currentRevisionId: 'rev-routine6-tuesday-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine6-tuesday-biceps-001',
+      templateId: 'template-routine6-tuesday-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Biceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r6-tue-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r6-tue-bi-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-tue-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r6-tue-bi-1',
+              exerciseId: 'exercise-barbell-curl-001', // Wide Grip EZ Curl
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-2',
+              exerciseId:
+                  'exercise-ez-close-grip-curl-001', // Close Grip EZ Curl
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-3',
+              exerciseId:
+                  'exercise-db-preacher-curl-single-001', // Concentration Curl
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-4',
+              exerciseId: 'exercise-barbell-curl-001', // Low Pulley
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-5',
+              exerciseId: 'exercise-barbell-curl-001', // Bent Curl
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-6',
+              exerciseId: 'exercise-barbell-curl-001', // Reverse Grip Curl
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-6-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-6-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-6-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-tue-bi-7',
+              exerciseId: 'exercise-db-curl-001', // Dumbbell Curl
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-tue-bi-7-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-tue-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r6-tue-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-tue-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r6-tue-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-tue-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Shoulder
+  static final _routine6WednesdayShoulders = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine6-wednesday-shoulders-001',
+      name: 'Routine 6: Wednesday Shoulders',
+      description: 'Wednesday Routine | Comprehensive shoulder workout covering front raises, upright rows, dumbbell presses, side lateral raises, bent-over flies, military presses, and shoulder pushups.',
+      currentRevisionId: 'rev-routine6-wednesday-shoulders-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['shoulders', 'routine', 'hypertrophy'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine6-wednesday-shoulders-001',
+      templateId: 'template-routine6-wednesday-shoulders-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Shoulder routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r6-wed-sh-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r6-wed-sh-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-w1-1',
+                  setNumber: 1,
+                  targetReps: 20,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-wed-sh-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r6-wed-sh-1',
+              exerciseId: 'exercise-front-raise-001', // Front Raise
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-2',
+              exerciseId: 'exercise-upright-row-001', // Upright
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-2-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-2-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-2-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-3',
+              exerciseId: 'exercise-seated-db-press-001', // Dumbbell Press
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-4',
+              exerciseId: 'exercise-lateral-raise-001', // Side Lateral Raise
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-4-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-4-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-4-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-5',
+              exerciseId: 'exercise-rear-delt-fly-001', // Bent over Fly
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-5-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-5-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-5-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-6',
+              exerciseId: 'exercise-ohp-001', // Military Press
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-6-1',
+                  setNumber: 1,
+                  targetReps: 8,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-6-2',
+                  setNumber: 2,
+                  targetReps: 8,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-6-3',
+                  setNumber: 3,
+                  targetReps: 8,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-wed-sh-7',
+              exerciseId: 'exercise-pushup-001', // Shoulder Pushups
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-7-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-wed-sh-7-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-wed-sh-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r6-wed-sh-c1',
+              exerciseId: 'exercise-cross-body-shoulder-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-wed-sh-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r6-wed-sh-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-wed-sh-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Triceps
+  static final _routine6ThursdayTriceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine6-thursday-triceps-001',
+      name: 'Routine 6: Thursday Triceps',
+      description: 'Thursday Routine | Focused tricep session featuring diamond pushups, skull crushers, close grip bench presses, overhead dumbbells, pulley pushdowns, and bench dips.',
+      currentRevisionId: 'rev-routine6-thursday-triceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine6-thursday-triceps-001',
+      templateId: 'template-routine6-thursday-triceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Triceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r6-thu-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r6-thu-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-thu-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r6-thu-tr-1',
+              exerciseId: 'exercise-pushup-001', // Diamond Pushups
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-thu-tr-2',
+              exerciseId: 'exercise-skull-crusher-001', // Skull Crusher
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-thu-tr-3',
+              exerciseId: 'exercise-close-grip-bench-001', // Close Grip Bench
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-thu-tr-4',
+              exerciseId:
+                  'exercise-overhead-tricep-extension-001', // Overhead Dumbbell
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-thu-tr-5',
+              exerciseId: 'exercise-tricep-pushdown-001', // Pulley Pushdown
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r6-thu-tr-6',
+              exerciseId: 'exercise-dips-001', // Bench Dips
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-6-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r6-thu-tr-6-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-thu-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r6-thu-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r6-thu-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r6-thu-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r6-thu-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Chest (Interchangeable with Saturday)
+  static final _routineFridayChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-friday-chest-001',
+      name: 'Routine 6: Friday Chest',
+      description: 'Friday Routine | Heavy chest volume including pushups, flat bench presses, incline bench presses, decline bench presses, flat/incline/decline dumbbell flies, and parallel dips.',
+      currentRevisionId: 'rev-routine-friday-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-friday-chest-001',
+      templateId: 'template-routine-friday-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Chest routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-fri-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-fri-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-fri-ch-1',
+              exerciseId: 'exercise-pushup-001', // Pushups
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-ch-2',
+              exerciseId: 'exercise-bench-001', // Flat Bench Press
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-ch-3',
+              exerciseId: 'exercise-incline-bench-001', // Incline Bench Press
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-ch-4',
+              exerciseId: 'exercise-decline-bench-001', // Decline Bench Press
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-4-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-4-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-ch-5',
+              exerciseId:
+                  'exercise-db-fly-001', // Dumbell Flat + Incline + Decline Fly
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-fri-ch-6',
+              exerciseId: 'exercise-dips-001', // Parallel Dips (If Alive!!)
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-6-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-fri-ch-6-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-fri-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-fri-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-fri-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-fri-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Lower (Interchangeable with Friday)
+  static final _routineSaturdayLower = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-saturday-lower-001',
+      name: 'Routine 6: Saturday Lower Body',
+      description: 'Saturday Routine | Lower body session featuring free squats, machine squats, thigh presses, leg extensions, leg curls, walking lunges, and calf raises.',
+      currentRevisionId: 'rev-routine-saturday-lower-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-saturday-lower-001',
+      templateId: 'template-routine-saturday-lower-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Lower Body routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-sat-lw-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lw-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lw-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lw-1',
+              exerciseId: 'exercise-bodyweight-squat-001', // Free Squat
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-1-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-1-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-1-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-2',
+              exerciseId: 'exercise-squat-001', // Machine Squat
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-2-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-2-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-3',
+              exerciseId: 'exercise-leg-press-001', // Thigh Press
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-3-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-3-2',
+                  setNumber: 2,
+                  targetReps: 10,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-4',
+              exerciseId: 'exercise-leg-extension-001', // Leg Extension
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-4-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-4-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-4-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-5',
+              exerciseId: 'exercise-lying-leg-curl-001', // Leg Curl
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-5-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-5-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-5-3',
+                  setNumber: 3,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-6',
+              exerciseId: 'exercise-walking-lunge-001', // Lunges
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-6-1',
+                  setNumber: 1,
+                  targetReps: 12,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-6-2',
+                  setNumber: 2,
+                  targetReps: 12,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-sat-lw-7',
+              exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-7-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-7-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-lw-7-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lw-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lw-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-lw-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-sat-lw-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-lw-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // ===================== 6-DAY ROUTINE TEMPLATES (Mon-Sat with Warm-ups & Cool-downs) =====================
+
+  // 1. Monday: Chest
+  static final _routineMondayChest = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-monday-chest-001',
+      name: 'Routine 7: Monday Chest',
+      description: 'Monday Routine | High-volume chest session covering weighted/non-weighted pushups, barbell & dumbbell bench presses, incline presses & flies, decline barbell, flat bench flies, rising cable presses, and pullovers.',
+      currentRevisionId: 'rev-routine-monday-chest-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['chest', 'routine', 'push'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-monday-chest-001',
+      templateId: 'template-routine-monday-chest-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Monday Chest routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-mon-ch-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-mon-ch-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-ch-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-mon-ch-1',
+              exerciseId:
+                  'exercise-pushup-001', // Pushup (Weighted + Non Weighted)
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-1-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-1-6',
+                  setNumber: 6,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-2',
+              exerciseId: 'exercise-bench-001', // Barbell Bench Press
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-2-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-3',
+              exerciseId: 'exercise-db-bench-001', // Dumbbell Bench Press
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-4',
+              exerciseId: 'exercise-incline-bench-001', // Incline Barbell Press
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-4-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-4-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-4-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-5',
+              exerciseId: 'exercise-incline-db-fly-001', // Incline Fly
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-5-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-5-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-5-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-5-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-6',
+              exerciseId: 'exercise-decline-bench-001', // Decline Barbell
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-6-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-6-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-6-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-6-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-7',
+              exerciseId: 'exercise-db-fly-001', // Flat Bench Fly
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-7-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-7-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-7-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-7-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-8',
+              exerciseId: 'exercise-rising-cable-press-001', // Rising
+              order: 8,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-8-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-8-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-8-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-mon-ch-9',
+              exerciseId: 'exercise-dumbbell-pullover-001', // PullOver
+              order: 9,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-9-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-9-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-9-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-9-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-mon-ch-9-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-ch-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-mon-ch-c1',
+              exerciseId: 'exercise-chest-doorway-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-mon-ch-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-mon-ch-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-mon-ch-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 2. Tuesday: Triceps
+  static final _routineTuesdayTriceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-tuesday-triceps-001',
+      name: 'Routine 7: Tuesday Triceps',
+      description: 'Tuesday Routine | Tricep isolation session featuring rising cable extensions, rope pushdowns, rope up triceps, skull crushers, pulley pushdowns, and kickbacks.',
+      currentRevisionId: 'rev-routine-tuesday-triceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['triceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-tuesday-triceps-001',
+      templateId: 'template-routine-tuesday-triceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Tuesday Triceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-tue-tr-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-tue-tr-w1',
+              exerciseId: 'exercise-arm-circles-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-tr-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-tue-tr-1',
+              exerciseId: 'exercise-rising-cable-press-001', // Rising
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-tr-2',
+              exerciseId: 'exercise-rope-pushdown-001', // Ropes Pushdown
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-2-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-tr-3',
+              exerciseId: 'exercise-rope-pushdown-001', // Rope up Triceps
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-3-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-3-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-tr-4',
+              exerciseId: 'exercise-skull-crusher-001', // Skull Crusher
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-4-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-4-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-4-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-tr-5',
+              exerciseId: 'exercise-tricep-pushdown-001', // Pulley Pushdown
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-5-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-5-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-5-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-5-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-tue-tr-6',
+              exerciseId: 'exercise-dumbbell-kickback-001', // Kickback
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-6-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-tue-tr-6-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-tr-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-tue-tr-c1',
+              exerciseId: 'exercise-overhead-tricep-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-tue-tr-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-tue-tr-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-tue-tr-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 3. Wednesday: Back
+  static final _routineWednesdayBack = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-wednesday-back-001',
+      name: 'Routine 7: Wednesday Back',
+      description: 'Wednesday Routine | Back session featuring pull-ups, front pulleys, single-arm rowing, bent rowing, reverse pulleys, seated rowing, and hyper extensions.',
+      currentRevisionId: 'rev-routine-wednesday-back-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['back', 'routine', 'pull'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-wednesday-back-001',
+      templateId: 'template-routine-wednesday-back-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Wednesday Back routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-wed-bk-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-wed-bk-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-w1-1',
+                  setNumber: 1,
+                  targetReps: 10,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-bk-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-wed-bk-1',
+              exerciseId: 'exercise-pullup-001', // Pullup
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-2',
+              exerciseId: 'exercise-lat-pulldown-001', // Front Pully
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-2-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-3',
+              exerciseId: 'exercise-single-arm-db-row-001', // Single Arm Rowing
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-3-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-3-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-4',
+              exerciseId: 'exercise-row-001', // Bent Rowing
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-4-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-4-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-4-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-5',
+              exerciseId:
+                  'exercise-neutral-grip-lat-pulldown-001', // Reverse Pulley
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-5-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-5-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-5-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-5-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-6',
+              exerciseId: 'exercise-seated-cable-row-001', // Seating Rowing
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-6-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-6-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-6-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-6-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-wed-bk-7',
+              exerciseId: 'exercise-back-extension-001', // Hyper Extension
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-7-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-wed-bk-7-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-bk-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-wed-bk-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-wed-bk-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-wed-bk-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-wed-bk-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 4. Thursday: Biceps
+  static final _routineThursdayBiceps = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-thursday-biceps-001',
+      name: 'Routine 7: Thursday Biceps',
+      description: 'Thursday Routine | Dedicated bicep session featuring a dumbbell warmup, wide-grip and close-grip EZ barbell curls, low pulley curls, reverse grip EZ and barbell curls, hammer curls, and spider curls.',
+      currentRevisionId: 'rev-routine-thursday-biceps-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['biceps', 'routine', 'arms'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-thursday-biceps-001',
+      templateId: 'template-routine-thursday-biceps-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Thursday Biceps routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-thu-bi-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-thu-bi-w1',
+              exerciseId: 'exercise-db-curl-001', // Warmup Dumbbell Curl
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-w1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 5.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-w1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 5.5,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-bi-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-thu-bi-1',
+              exerciseId:
+                  'exercise-barbell-curl-001', // Wide Grip EZ Barbell Curl
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-2',
+              exerciseId: 'exercise-ez-close-grip-curl-001', // Close Grip EZ Barbell Curl
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-3',
+              exerciseId: 'exercise-barbell-curl-001', // Low Pulley Curl
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-3-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-3-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-4',
+              exerciseId:
+                  'exercise-barbell-curl-001', // Reverse Grip EZ Barbell Curl
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-4-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-5',
+              exerciseId:
+                  'exercise-barbell-curl-001', // Reverse Grip Barbell Curl
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.5,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-6',
+              exerciseId: 'exercise-hammer-curl-001', // Hammer Curl
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-thu-bi-7',
+              exerciseId: 'exercise-spider-curl-001', // Spider Curl
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-7-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-thu-bi-7-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-bi-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-thu-bi-c1',
+              exerciseId: 'exercise-lat-overhead-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-thu-bi-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-thu-bi-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-thu-bi-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 5. Friday: Lower Body
+  static final _routine7FridayLowerBody = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine7-friday-lower-body-001',
+      name: 'Routine 7: Friday Lower Body',
+      description: 'Friday Routine | Lower body session covering squats, weighted squats, leg extensions, thigh presses, leg curls, lunges, and calf raises.',
+      currentRevisionId: 'rev-routine7-friday-lower-body-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['legs', 'routine', 'lower-body'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine7-friday-lower-body-001',
+      templateId: 'template-routine7-friday-lower-body-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Friday Lower Body routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-r7-fri-lw-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-r7-fri-lw-w1',
+              exerciseId: 'exercise-bodyweight-squat-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r7-fri-lw-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-r7-fri-lw-1',
+              exerciseId: 'exercise-bodyweight-squat-001', // Squats
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-1-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-1-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-1-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-1-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-1-5',
+                  setNumber: 5,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-2',
+              exerciseId: 'exercise-squat-001', // Weighted Squats
+              order: 2,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-2-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-2-2',
+                  setNumber: 2,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-2-3',
+                  setNumber: 3,
+                  targetReps: 0,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-2-4',
+                  setNumber: 4,
+                  targetReps: 0,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-3',
+              exerciseId: 'exercise-leg-extension-001', // Leg Extension
+              order: 3,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-3-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-3-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-3-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-3-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-3-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-4',
+              exerciseId: 'exercise-leg-press-001', // Thigh Press
+              order: 4,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-4-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-4-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-4-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-4-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-4-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-5',
+              exerciseId: 'exercise-lying-leg-curl-001', // Leg Curl
+              order: 5,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-5-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-5-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-5-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-5-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-5-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-6',
+              exerciseId: 'exercise-walking-lunge-001', // Lunges
+              order: 6,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-6-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-6-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-6-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-6-4',
+                  setNumber: 4,
+                  targetReps: 4,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-6-5',
+                  setNumber: 5,
+                  targetReps: 5,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+            TemplateItem(
+              id: 'item-r7-fri-lw-7',
+              exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise
+              order: 7,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-7-1',
+                  setNumber: 1,
+                  targetReps: 0,
+                  targetRpe: 9.0,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-7-2',
+                  setNumber: 2,
+                  targetReps: 2,
+                  targetRpe: 9.5,
+                ),
+                TargetSet(
+                  id: 'ts-r7-fri-lw-7-3',
+                  setNumber: 3,
+                  targetReps: 3,
+                  targetRpe: 10.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r7-fri-lw-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-r7-fri-lw-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-r7-fri-lw-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-r7-fri-lw-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-r7-fri-lw-f1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 180,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  // 6. Saturday: Rest / Active Recovery or Additional Session
+  static final _routineSaturdayRecovery = TemplateSeedBundle(
+    template: WorkoutTemplate(
+      id: 'template-routine-saturday-recovery-001',
+      name: 'Routine 7: Saturday Recovery & Core',
+      description: 'Saturday Routine | Active recovery and core stability session to round out your 6-day split.',
+      currentRevisionId: 'rev-routine-saturday-recovery-001',
+      createdById: _systemUser,
+      createdAt: _epoch,
+      updatedAt: _epoch,
+      tags: ['recovery', 'core', 'routine'],
+    ),
+    initialRevision: WorkoutTemplateRevision(
+      id: 'rev-routine-saturday-recovery-001',
+      templateId: 'template-routine-saturday-recovery-001',
+      revisionNumber: 1,
+      status: TemplateRevisionStatus.published,
+      createdById: _systemUser,
+      createdAt: _epoch,
+      changeSummary: 'Initial release for Saturday Recovery routine',
+      blocks: [
+        const WorkoutBlock(
+          id: 'block-sat-rec-1',
+          name: 'Warm-Up / Activation',
+          items: [
+            TemplateItem(
+              id: 'item-sat-rec-w1',
+              exerciseId: 'exercise-cat-cow-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-rec-w1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 5.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-rec-2',
+          name: 'Working Sets',
+          items: [
+            TemplateItem(
+              id: 'item-sat-rec-1',
+              exerciseId: 'exercise-hanging-leg-raise-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-rec-1-1',
+                  setNumber: 1,
+                  targetReps: 15,
+                  targetRpe: 8.0,
+                ),
+                TargetSet(
+                  id: 'ts-sat-rec-1-2',
+                  setNumber: 2,
+                  targetReps: 15,
+                  targetRpe: 8.5,
+                ),
+                TargetSet(
+                  id: 'ts-sat-rec-1-3',
+                  setNumber: 3,
+                  targetReps: 15,
+                  targetRpe: 9.0,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-rec-3',
+          name: 'Cool-Down Stretch',
+          items: [
+            TemplateItem(
+              id: 'item-sat-rec-c1',
+              exerciseId: 'exercise-hamstring-stretch-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-rec-c1-1',
+                  setNumber: 1,
+                  targetDurationSeconds: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const WorkoutBlock(
+          id: 'block-sat-rec-4',
+          name: 'Relaxed Finish',
+          items: [
+            TemplateItem(
+              id: 'item-sat-rec-f1',
+              exerciseId: 'exercise-diaphragmatic-breathing-001',
+              order: 1,
+              targetSets: [
+                TargetSet(
+                  id: 'ts-sat-rec-f1-1',
                   setNumber: 1,
                   targetDurationSeconds: 180,
                 ),
