@@ -53,6 +53,7 @@ dev_dependencies:
   json_serializable: ^6.14.1
   lint: ^2.8.0
   mockito: ^5.4.6
+  msix: ^3.18.0
   pubspec_dependency_sorter: ^1.0.5
 flutter:
   uses-material-design: true
@@ -85,3 +86,9 @@ flutter:
     - assets/sounds/whistle/
 import_sorter:
   comments: false
+msix_config:
+  display_name: 'Growth Gauge'
+  publisher_display_name: 'Growth Gauge'
+  identity_name: 'Com.GrowthGauge'
+  msix_version: '1.0.0.0'
+  logo_path: 'assets/images/png/icon.png'

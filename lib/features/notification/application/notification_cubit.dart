@@ -35,7 +35,9 @@ class NotificationCubit({
           title: 'Keep the Growth going forever!',
           body: 'Log the items that you have progressed today and keep up the good work!!',
           time: settings.notificationTime!,
-          sound: settings.soundEnabled ? 'simple_notification' : null,
+          sound: settings.soundEnabled
+              ? Assets.sounds.notification.regular
+              : null,
         );
       } else {
         await _notificationService.cancelNotification(1);
@@ -124,6 +126,45 @@ class NotificationCubit({
     } catch (error) {
       emit(
         state.copyWith(error: 'Could not save notification settings: $error'),
+      );
+    }
+  }
+
+  Future<void> testDelayedNotification(Duration duration) async {
+     try {
+      // Explicitly request/verify platform permissions first
+      await _notificationService.requestPlatformPermissions();
+
+      final now = tz.TZDateTime.now(tz.local).add(duration);
+      await _notificationService.scheduleNotification(
+        id: 998,
+        title: 'Growth Gauge Test Alert',
+        body: 'Local notifications are fully operational!',
+        scheduledTime: now,
+        sound: Assets.sounds.notification.regular,
+      );
+    } catch (error) {
+      emit(state.copyWith(error: 'Could not send test notification: $error'));
+    }
+  }
+
+  Future<void> cancelPendingTestNotification() async {
+    try {
+      await _notificationService.cancelNotification(998); // ID used for test notifications[cite: 3]
+      emit(
+        state.copyWith(
+          clearError: true,
+          message: 'Cancelled pending test notification (Title: Growth Gauge Test Alert)',
+        ),
+      );
+      //Immediately clear the message so it doesn't re-trigger on subsequent screen rebuilds
+      emit(state.copyWith(clearMessage: true));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          error: 'Could not cancel pending notification: $error',
+          clearMessage: true,
+        ),
       );
     }
   }

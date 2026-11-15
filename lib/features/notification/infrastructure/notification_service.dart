@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -25,6 +26,11 @@ abstract class NotificationServiceBase() {
     required TimeOfDay time,
     String? sound,
   });
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
+  });
   Future<void> cancelNotification(int id);
 }
 
@@ -36,8 +42,8 @@ class NotificationService() extends NotificationServiceBase {
   @override
   Future<void> initializeTimeZone() async {
     tz.initializeTimeZones();
-    final currentTimeZone = tz.local;
-    tz.setLocalLocation(currentTimeZone);
+    final info = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(info.identifier));
   }
 
   @override
@@ -144,8 +150,41 @@ class NotificationService() extends NotificationServiceBase {
   }
 
   @override
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
+  }) async {
+    final details = NotificationDetails(
+      android: const AndroidNotificationDetails(
+        'growth_gauge_id',
+        'growth_gauge_channel',
+        channelDescription: 'Growth Gauge Channel for notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+      windows: WindowsNotificationDetails(
+        audio: WindowsNotificationAudio.preset(
+          sound: WindowsNotificationSound.reminder,
+        ),
+      ),
+    );
+
+    await _flutterLocalNotificationsPlugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: details,
+    );
+  }
+
+  @override
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id: id);
+  }
+
+  Future<void> cancelAllPendingNotifications() async {
+    await _flutterLocalNotificationsPlugin.cancelAll();
   }
 
   @override
