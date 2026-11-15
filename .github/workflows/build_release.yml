@@ -112,13 +112,23 @@ jobs:
         with:
           path: artifacts
 
+      - name: Set release tag
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "RELEASE_TAG=${{ github.event.inputs.version }}" >> "$GITHUB_ENV"
+          else
+            echo "RELEASE_TAG=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+          fi
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v3.0.4
         with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: Release ${{ env.RELEASE_TAG }}
           files: |
             artifacts/ubuntu-latest-release/linux_release.zip
             artifacts/windows-latest-release/windows_release.zip
             artifacts/ubuntu-latest-release/android_release.apk
-          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
