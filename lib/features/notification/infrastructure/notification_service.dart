@@ -8,10 +8,10 @@ import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../../core/database/app_database.dart';
+import '../../../core/database/database.dart';
 import '../domain/domain.dart';
 
-abstract class NotificationServiceBase() {
+abstract class NotificationServiceBase {
   Future<void> initializeTimeZone();
   Future<void> initializeNotificationSettings();
   Future<void> requestPlatformPermissions();
@@ -37,6 +37,8 @@ abstract class NotificationServiceBase() {
     required String body,
   });
   Future<void> cancelNotification(int id);
+  Future<List<NotificationLog>> getNotificationLogs({String? statusFilter});
+  Future<void> updateLogStatus(int notificationId, String newStatus);
 }
 
 class NotificationService extends NotificationServiceBase {
@@ -79,12 +81,68 @@ class NotificationService extends NotificationServiceBase {
 
     await _flutterLocalNotificationsPlugin.initialize(
       settings: initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // Handle notification click interactions here if required
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        if (response.id != null) {
+          try {
+            await updateLogStatus(response.id!, 'delivered');
+          } catch (e) {
+            debugPrint('Failed to update log status on response: $e');
+          }
+        }
       },
     );
 
     await isAndroidPermissionGranted();
+  }
+
+  @override
+  Future<List<NotificationLog>> getNotificationLogs({
+    String? statusFilter,
+  }) async {
+    try {
+      final query = _database.select(_database.notificationLogsTable);
+      if (statusFilter != null && statusFilter != 'all') {
+        query.where((tbl) => tbl.status.equals(statusFilter));
+      }
+      final results = await query.get();
+
+      return results.map((row) {
+        return NotificationLog(
+          id: row.id,
+          notificationId: row.notificationId,
+          title: row.title,
+          body: row.body,
+          type: row.type,
+          status: row.status,
+          scheduledTime: row.scheduledTime,
+          triggeredAt: row.triggeredAt,
+          createdAt: row.createdAt,
+          payload: row.payload,
+        );
+      }).toList();
+    } catch (e) {
+      debugPrint('Failed to fetch notification logs: $e');
+      return [];
+    }
+  }
+
+  @override
+  Future<void> updateLogStatus(int logId, String newStatus) async {
+    try {
+      await (_database.update(_database.notificationLogsTable)..where(
+            (tbl) => tbl.id.equals(logId),
+          )) // Target the unique database primary key row id
+          .write(
+            NotificationLogsTableCompanion(
+              status: Value(newStatus),
+              triggeredAt: newStatus == 'delivered'
+                  ? Value(DateTime.now())
+                  : const Value.absent(),
+            ),
+          );
+    } catch (e) {
+      debugPrint('Failed to update log status: $e');
+    }
   }
 
   @override
@@ -126,7 +184,6 @@ class NotificationService extends NotificationServiceBase {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
 
-    // Persist scheduled notification details into DB logs table
     try {
       await _database
           .into(_database.notificationLogsTable)
@@ -206,7 +263,6 @@ class NotificationService extends NotificationServiceBase {
       notificationDetails: details,
     );
 
-    // Persist immediate/delivered notification log into DB
     try {
       await _database
           .into(_database.notificationLogsTable)
@@ -230,13 +286,8 @@ class NotificationService extends NotificationServiceBase {
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id: id);
 
-    // Update DB status to cancelled for this notification ID
     try {
-      await (_database.update(
-        _database.notificationLogsTable,
-      )..where((tbl) => tbl.notificationId.equals(id))).write(
-        const NotificationLogsTableCompanion(status: Value('cancelled')),
-      );
+      await updateLogStatus(id, 'cancelled');
     } catch (e) {
       debugPrint('Failed to update notification cancellation log: $e');
     }
@@ -245,7 +296,6 @@ class NotificationService extends NotificationServiceBase {
   Future<void> cancelAllPendingNotifications() async {
     await _flutterLocalNotificationsPlugin.cancelAll();
 
-    // Mark all currently scheduled items as cancelled in DB
     try {
       await (_database.update(
         _database.notificationLogsTable,
@@ -288,40 +338,6 @@ class NotificationService extends NotificationServiceBase {
       final bool? grantedNotificationPermission = await androidImplementation
           ?.requestNotificationsPermission();
       notificationsEnabled = grantedNotificationPermission ?? false;
-    }
-  }
-
-  // Add these methods to your NotificationService class:
-
-  Future<List<NotificationLog>> getNotificationLogs({
-    String? statusFilter,
-  }) async {
-    try {
-      final query = _database.select(_database.notificationLogsTable);
-      if (statusFilter != null && statusFilter != 'all') {
-        query.where((tbl) => tbl.status.equals(statusFilter));
-      }
-      final results = await query.get();
-
-      // Map drift database rows to your Freezed model
-      return results.map((row) {
-        return NotificationLog(
-          id: row.id,
-          notificationId: row.notificationId,
-          title: row.title,
-          body: row.body,
-          type: row.type,
-          status: row.status,
-          scheduledTime:
-              row.scheduledTime, // Pass DateTime? directly from Drift row
-          triggeredAt: row.triggeredAt,
-          createdAt: row.createdAt,
-          payload: row.payload,
-        );
-      }).toList();
-    } catch (e) {
-      debugPrint('Failed to fetch notification logs: $e');
-      return [];
     }
   }
 }

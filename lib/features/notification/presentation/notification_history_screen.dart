@@ -76,7 +76,7 @@ class NotificationHistoryScreen extends StatelessWidget {
                                   notificationCubit.filterLogsByStatus(value);
                                 }
                               },
-                              label: '',
+                              label: 'Status',
                             ),
                           ),
                         ],
@@ -155,8 +155,9 @@ class NotificationHistoryScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
+                                            // Removed ID from the UI string display
                                             Text(
-                                              'Type: ${log.type} | ID: ${log.notificationId}',
+                                              'Type: ${log.type}',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall
@@ -177,6 +178,69 @@ class NotificationHistoryScreen extends StatelessWidget {
                                                         .onSurfaceVariant,
                                                   ),
                                             ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 12),
+                                        // Manual Status Update Actions
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              'Update Status:',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall
+                                                  ?.copyWith(
+                                                    color: colorScheme
+                                                        .onSurfaceVariant,
+                                                  ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            if (log.status != 'delivered')
+                                              TextButton.icon(
+                                                onPressed: () {
+                                                  notificationCubit
+                                                      .updateLogStatus(
+                                                        log.id, // Must be log.id (unique row key)
+                                                        'delivered',
+                                                      );
+                                                },
+                                                icon: const Icon(
+                                                  Icons.check,
+                                                  size: 16,
+                                                  color: Colors.green,
+                                                ),
+                                                label: const Text(
+                                                  'Deliver',
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            if (log.status != 'cancelled')
+                                              TextButton.icon(
+                                                onPressed: () {
+                                                  notificationCubit
+                                                      .updateLogStatus(
+                                                        log.id, // Must be log.id (unique row key)
+                                                        'cancelled',
+                                                      );
+                                                },
+                                                icon: const Icon(
+                                                  Icons.close,
+                                                  size: 16,
+                                                  color: Colors.orange,
+                                                ),
+                                                label: const Text(
+                                                  'Cancel',
+                                                  style: TextStyle(
+                                                    color: Colors.orange,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
                                           ],
                                         ),
                                       ],

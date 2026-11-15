@@ -2,22 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../settings/config/shared_preferences_config.dart';
 import '../domain/domain.dart';
-import '../infrastructure/infrastructure.dart';
+import '../infrastructure/notification_service.dart';
+import '../infrastructure/workout_audio_service.dart';
 import 'notification_state.dart';
 
-class NotificationCubit({
-  required final NotificationService _notificationService,
-  WorkoutAudioService? audioService,
-}) extends Cubit<NotificationState> {
-  final WorkoutAudioService _audioService =
-      audioService ?? WorkoutAudioService();
+class NotificationCubit extends Cubit<NotificationState> {
+  final NotificationService _notificationService;
+  final WorkoutAudioService _audioService;
 
-  this : super(const NotificationState()) {
+  NotificationCubit({
+    required NotificationService notificationService,
+    WorkoutAudioService? audioService,
+  }) : _notificationService = notificationService,
+       _audioService = audioService ?? WorkoutAudioService(),
+       super(const NotificationState()) {
     unawaited(loadNotificationSettings());
     unawaited(loadNotificationLogs());
   }
@@ -46,6 +50,21 @@ class NotificationCubit({
       emit(state.copyWith(logs: logs));
     } catch (error) {
       emit(state.copyWith(error: 'Could not filter notification logs: $error'));
+    }
+  }
+
+  /// Manually updates a notification log's status (e.g. marked as delivered or cancelled)
+  Future<void> updateLogStatus(int logId, String newStatus) async {
+    try {
+      await _notificationService.updateLogStatus(logId, newStatus);
+      // Explicitly reload and emit new list to guarantee UI updates immediately
+      await loadNotificationLogs();
+    } catch (error) {
+      emit(
+        state.copyWith(
+          error: 'Could not update notification log status: $error',
+        ),
+      );
     }
   }
 
@@ -104,14 +123,10 @@ class NotificationCubit({
     try {
       await _notificationService.requestPlatformPermissions();
 
-      final now = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 1));
-      await _notificationService.scheduleNotification(
+      await _notificationService.showNotification(
         id: 998,
         title: 'Growth Gauge Test Alert',
         body: 'Local notifications are fully operational!',
-        scheduledTime: now,
-        sound: Assets.sounds.notification.regular,
-        type: 'test_instant',
       );
       await loadNotificationLogs();
     } catch (error) {
