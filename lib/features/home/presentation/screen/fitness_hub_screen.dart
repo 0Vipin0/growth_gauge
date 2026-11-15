@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/routing.dart';
 import '../../../analytics/domain/daily_workout_summary.dart';
+import '../../../notification/notification.dart'; // Import notification feature
 import '../../../template/domain/workout_template.dart';
 import '../../../template/infrastructure/template_repository.dart';
 import '../../../user/user.dart';
@@ -35,6 +37,8 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
   void initState() {
     super.initState();
     _loadUserProfile();
+    // Trigger log loading so the scheduled count badge updates immediately upon opening home
+    context.read<NotificationCubit>().loadNotificationLogs();
   }
 
   Future<void> _loadUserProfile() async {
@@ -63,45 +67,57 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1080),
-            child: ListView(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 32.0 : 20.0,
-                vertical: isDesktop ? 32.0 : 24.0,
-              ),
-              children: [
-                HubHeader(
-                  userName: userName,
-                  onProfileTap: widget.onProfileTap,
-                  isDesktop: isDesktop,
-                  onNotificationTap: () {
-                    context.pushNamed(appRouteNameNotificationHistory);
-                  },
-                ),
-                SizedBox(height: isDesktop ? 36 : 28),
-                WeekSummarySection(
-                  isDesktop: isDesktop,
-                  summaries: widget.workoutHistory,
-                  onDetailsTap: widget.onAnalyticsTap,
-                ),
-                SizedBox(height: isDesktop ? 36 : 32),
-                ActivityTrendsCard(
-                  workoutHistory: widget.workoutHistory,
-                  onAnalyticsTap: widget.onAnalyticsTap,
-                  isDesktop: isDesktop,
-                ),
-                SizedBox(height: isDesktop ? 36 : 32),
-                QuickStartSection(
-                  templateRepository: widget.templateRepository,
-                  onTemplateTap: widget.onTemplateTap,
-                  onStartTemplate: widget.onStartTemplate,
-                ),
-                SizedBox(height: isDesktop ? 36 : 32),
-                ExploreBanner(
-                  onCatalogTap: widget.onCatalogTap,
-                  onTemplateTap: widget.onTemplateTap,
-                ),
-                const SizedBox(height: 24),
-              ],
+            // Wrap list view or header with BlocBuilder to listen to NotificationCubit state
+            child: BlocBuilder<NotificationCubit, NotificationState>(
+              builder: (context, notificationState) {
+                // Count how many logs currently have the 'scheduled' status
+                final scheduledCount = notificationState.logs
+                    .where((log) => log.status == .scheduled)
+                    .length;
+
+                return ListView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isDesktop ? 32.0 : 20.0,
+                    vertical: isDesktop ? 32.0 : 24.0,
+                  ),
+                  children: [
+                    HubHeader(
+                      userName: userName,
+                      onProfileTap: widget.onProfileTap,
+                      isDesktop: isDesktop,
+                      scheduledCount:
+                          scheduledCount, // Passed dynamic count here
+                      onNotificationTap: () {
+                        context.pushNamed(appRouteNameNotificationHistory);
+                      },
+                    ),
+                    SizedBox(height: isDesktop ? 36 : 28),
+                    WeekSummarySection(
+                      isDesktop: isDesktop,
+                      summaries: widget.workoutHistory,
+                      onDetailsTap: widget.onAnalyticsTap,
+                    ),
+                    SizedBox(height: isDesktop ? 36 : 32),
+                    ActivityTrendsCard(
+                      workoutHistory: widget.workoutHistory,
+                      onAnalyticsTap: widget.onAnalyticsTap,
+                      isDesktop: isDesktop,
+                    ),
+                    SizedBox(height: isDesktop ? 36 : 32),
+                    QuickStartSection(
+                      templateRepository: widget.templateRepository,
+                      onTemplateTap: widget.onTemplateTap,
+                      onStartTemplate: widget.onStartTemplate,
+                    ),
+                    SizedBox(height: isDesktop ? 36 : 32),
+                    ExploreBanner(
+                      onCatalogTap: widget.onCatalogTap,
+                      onTemplateTap: widget.onTemplateTap,
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                );
+              },
             ),
           ),
         ),

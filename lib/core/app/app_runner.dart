@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:growth_gauge/features/notification/infrastructure/notification_repository.dart';
 import 'package:media_kit/media_kit.dart';
 
 import '../../features/analytics/domain/pr_calculator.dart';
@@ -35,10 +35,15 @@ Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
   final database = AppDatabase();
   final exercises = ExerciseRepository(database);
   final templates = TemplateRepository(database);
+  final notifications = NotificationRepository(database);
 
-  final notificationService = NotificationService(database: database);
+  final notificationService = NotificationService();
   await notificationService.initializeTimeZone();
-  await notificationService.initializeNotificationSettings();
+  await notificationService.initializeNotificationSettings(
+    onStatusUpdate: (int id, NotificationStatus status) async {
+      await notifications.updateLogStatus(id, status);
+    },
+  );
 
   unawaited(_initializeSeeders(exercises, templates));
 
@@ -75,6 +80,7 @@ Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
       database: database,
       exercises: exercises,
       templates: templates,
+      notifications: notifications,
       sessions: sessions,
       sessionUseCases: sessionUseCases,
       analyticsDao: analyticsDao,
@@ -86,6 +92,7 @@ Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
   final settingsCubit = SettingsCubit(
     notificationCubit: NotificationCubit(
       notificationService: notificationService,
+      notificationRepository: notifications,
     ),
   );
 

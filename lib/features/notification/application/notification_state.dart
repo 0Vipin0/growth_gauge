@@ -8,7 +8,7 @@ class const NotificationState({
   final String? error,
   final String? message,
   final List<NotificationLog> logs = const [],
-  final String? statusFilter,
+  final NotificationStatus? statusFilter,
 }) extends Equatable {
   NotificationState copyWith({
     NotificationSettings? settings,
@@ -17,9 +17,8 @@ class const NotificationState({
     bool clearError = false,
     String? message,
     bool clearMessage = false,
-    Object? logs =
-        const _Sentinel(), // Using sentinel to safely allow null or new lists
-    String? statusFilter,
+    Object? logs = const _Sentinel(),
+    NotificationStatus? statusFilter, // Updated to enum type
     bool clearFilter = false,
   }) {
     return NotificationState(
@@ -27,9 +26,7 @@ class const NotificationState({
       isReady: isReady ?? this.isReady,
       error: clearError ? null : error ?? this.error,
       message: clearMessage ? null : message ?? this.message,
-      logs: logs is _Sentinel
-          ? this.logs
-          : (logs! as List<NotificationLog>),
+      logs: logs is _Sentinel ? this.logs : (logs! as List<NotificationLog>),
       statusFilter: clearFilter ? null : statusFilter ?? this.statusFilter,
     );
   }
@@ -45,5 +42,4 @@ class const NotificationState({
   ];
 }
 
-// Internal sentinel class to handle optional list copying cleanly
 class const _Sentinel();

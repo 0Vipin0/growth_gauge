@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'notification_enums.dart';
+
 part 'notification_log.freezed.dart';
 part 'notification_log.g.dart';
 
@@ -10,8 +12,8 @@ abstract class NotificationLog with _$NotificationLog {
     required int notificationId,
     required String title,
     required String body,
-    @Default('general') String type,
-    @Default('scheduled') String status,
+    @Default(NotificationCategory.general) NotificationCategory type,
+    @Default(NotificationStatus.scheduled) NotificationStatus status,
     DateTime? scheduledTime,
     DateTime? triggeredAt,
     required DateTime createdAt,

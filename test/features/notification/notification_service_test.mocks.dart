@@ -7,10 +7,14 @@
 import 'dart:async' as _i3;
 
 import 'package:flutter/material.dart' as _i5;
-import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart'
-    as _i2;
+
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:timezone/timezone.dart' as _i4;
+
+import 'package:growth_gauge/features/notification/domain/domain.dart' as _i6;
+
+import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -126,4 +130,22 @@ class MockNotificationServiceBase extends _i1.Mock
     returnValue: _i3.Future<void>.value(),
     returnValueForMissingStub: _i3.Future<void>.value(),
   ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<List<_i6.NotificationLog>> getNotificationLogs({
+    String? statusFilter,
+  }) => (super.noSuchMethod(
+    Invocation.method(#getNotificationLogs, [], {#statusFilter: statusFilter}),
+    returnValue: _i3.Future<List<_i6.NotificationLog>>.value(
+      <_i6.NotificationLog>[],
+    ),
+  ) as _i3.Future<List<_i6.NotificationLog>>);
+
+  @override
+  _i3.Future<void> updateLogStatus(int? notificationId, String? newStatus) =>
+      (super.noSuchMethod(
+        Invocation.method(#updateLogStatus, [notificationId, newStatus]),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }

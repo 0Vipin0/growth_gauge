@@ -87,8 +87,8 @@ flutter:
 import_sorter:
   comments: false
 msix_config:
-  display_name: 'Growth Gauge'
-  publisher_display_name: 'Growth Gauge'
-  identity_name: 'Com.GrowthGauge'
-  msix_version: '1.0.0.0'
-  logo_path: 'assets/images/png/icon.png'
+  display_name: Growth Gauge
+  publisher_display_name: Growth Gauge
+  identity_name: Com.GrowthGauge
+  msix_version: 1.0.0.0
+  logo_path: assets/images/png/icon.png

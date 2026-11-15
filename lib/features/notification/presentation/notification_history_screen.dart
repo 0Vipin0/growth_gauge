@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/presentation/utils/responsive_layout.dart';
 import '../../common/presentation/widgets/widgets.dart';
 import '../application/application.dart';
+import '../domain/domain.dart';
 
-class NotificationHistoryScreen extends StatelessWidget {
-  const NotificationHistoryScreen({super.key});
-
+class const NotificationHistoryScreen({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NotificationCubit, NotificationState>(
       builder: (context, state) {
         final colorScheme = Theme.of(context).colorScheme;
-        final notificationCubit = context.read<NotificationCubit>();
 
         return Scaffold(
           backgroundColor: colorScheme.surface,
@@ -23,7 +22,8 @@ class NotificationHistoryScreen extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.refresh),
-                onPressed: () => notificationCubit.loadNotificationLogs(),
+                onPressed: () =>
+                    context.read<NotificationCubit>().loadNotificationLogs(),
                 tooltip: 'Refresh Logs',
               ),
             ],
@@ -51,30 +51,24 @@ class NotificationHistoryScreen extends StatelessWidget {
                           const SizedBox(width: 12),
                           SizedBox(
                             width: 180,
-                            child: AppDropdown<String>(
-                              value: state.statusFilter ?? 'all',
-                              items: const [
-                                AppDropdownItem(
-                                  value: 'all',
+                            child: AppDropdown<NotificationStatus?>(
+                              value: state.statusFilter,
+                              items: [
+                                const AppDropdownItem(
+                                  value: null,
                                   label: 'All Statuses',
                                 ),
-                                AppDropdownItem(
-                                  value: 'scheduled',
-                                  label: 'Scheduled',
-                                ),
-                                AppDropdownItem(
-                                  value: 'delivered',
-                                  label: 'Delivered',
-                                ),
-                                AppDropdownItem(
-                                  value: 'cancelled',
-                                  label: 'Cancelled',
+                                ...NotificationStatus.values.map(
+                                  (status) => AppDropdownItem(
+                                    value: status,
+                                    label: status.displayName,
+                                  ),
                                 ),
                               ],
                               onChanged: (value) {
-                                if (value != null) {
-                                  notificationCubit.filterLogsByStatus(value);
-                                }
+                                context
+                                    .read<NotificationCubit>()
+                                    .filterLogsByStatus(value);
                               },
                               label: 'Status',
                             ),
@@ -155,9 +149,8 @@ class NotificationHistoryScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            // Removed ID from the UI string display
                                             Text(
-                                              'Type: ${log.type}',
+                                              'Type: ${log.type.displayName}',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall
@@ -197,13 +190,16 @@ class NotificationHistoryScreen extends StatelessWidget {
                                                   ),
                                             ),
                                             const SizedBox(width: 8),
-                                            if (log.status != 'delivered')
+                                            if (log.status !=
+                                                NotificationStatus.delivered)
                                               TextButton.icon(
                                                 onPressed: () {
-                                                  notificationCubit
+                                                  context
+                                                      .read<NotificationCubit>()
                                                       .updateLogStatus(
-                                                        log.id, // Must be log.id (unique row key)
-                                                        'delivered',
+                                                        log.id,
+                                                        NotificationStatus
+                                                            .delivered,
                                                       );
                                                 },
                                                 icon: const Icon(
@@ -219,13 +215,16 @@ class NotificationHistoryScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                            if (log.status != 'cancelled')
+                                            if (log.status !=
+                                                NotificationStatus.cancelled)
                                               TextButton.icon(
                                                 onPressed: () {
-                                                  notificationCubit
+                                                  context
+                                                      .read<NotificationCubit>()
                                                       .updateLogStatus(
-                                                        log.id, // Must be log.id (unique row key)
-                                                        'cancelled',
+                                                        log.id,
+                                                        NotificationStatus
+                                                            .cancelled,
                                                       );
                                                 },
                                                 icon: const Icon(
@@ -260,31 +259,18 @@ class NotificationHistoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(BuildContext context, String status) {
-    Color color;
-    switch (status) {
-      case 'scheduled':
-        color = Colors.blue;
-        break;
-      case 'delivered':
-        color = Colors.green;
-        break;
-      case 'cancelled':
-        color = Colors.orange;
-        break;
-      default:
-        color = Colors.grey;
-    }
+  Widget _buildStatusBadge(BuildContext context, NotificationStatus status) {
+    final color = status.color;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.4)),
+        border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
       child: Text(
-        status.toUpperCase(),
+        status.displayName.toUpperCase(),
         style: TextStyle(
           color: color,
           fontSize: 11,

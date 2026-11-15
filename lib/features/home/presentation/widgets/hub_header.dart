@@ -5,9 +5,10 @@ class const HubHeader({
   final String userName = 'Alex Doe',
   final VoidCallback? onProfileTap,
   final VoidCallback? onNotificationTap,
+  final int scheduledCount = 0,
   final bool isDesktop = false,
 }) extends StatelessWidget {
-  // Added parameter for navigation callback
+  // Added parameter for the count of scheduled notifications
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) return 'Good Morning';
@@ -159,7 +160,8 @@ class const HubHeader({
                 padding: EdgeInsets.all(isDesktop ? 12 : 10),
               ),
               icon: Badge(
-                label: const Text('1'),
+                isLabelVisible: scheduledCount > 0, // Hides badge if count is 0
+                label: Text('$scheduledCount'),
                 child: Icon(
                   Icons.notifications_outlined,
                   color: colorScheme.onSurface,

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NotificationLog {
 
- int get id; int get notificationId; String get title; String get body; String get type; String get status; DateTime? get scheduledTime; DateTime? get triggeredAt; DateTime get createdAt; String? get payload;
+ int get id; int get notificationId; String get title; String get body; NotificationCategory get type; NotificationStatus get status; DateTime? get scheduledTime; DateTime? get triggeredAt; DateTime get createdAt; String? get payload;
 /// Create a copy of NotificationLog
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,7 +54,7 @@ abstract mixin class $NotificationLogCopyWith<$Res>  {
   factory $NotificationLogCopyWith(NotificationLog value, $Res Function(NotificationLog) _then) = _$NotificationLogCopyWithImpl;
 @useResult
 $Res call({
- int id, int notificationId, String title, String body, String type, String status, DateTime? scheduledTime, DateTime? triggeredAt, DateTime createdAt, String? payload
+ int id, int notificationId, String title, String body, NotificationCategory type, NotificationStatus status, DateTime? scheduledTime, DateTime? triggeredAt, DateTime createdAt, String? payload
 });
 
 
@@ -78,8 +78,8 @@ as int,notificationId: null == notificationId ? _self.notificationId : notificat
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
+as NotificationCategory,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as NotificationStatus,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,triggeredAt: freezed == triggeredAt ? _self.triggeredAt : triggeredAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,payload: freezed == payload ? _self.payload : payload // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int notificationId,  String title,  String body,  String type,  String status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int notificationId,  String title,  String body,  NotificationCategory type,  NotificationStatus status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationLog() when $default != null:
 return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,_that.status,_that.scheduledTime,_that.triggeredAt,_that.createdAt,_that.payload);case _:
@@ -189,7 +189,7 @@ return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int notificationId,  String title,  String body,  String type,  String status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int notificationId,  String title,  String body,  NotificationCategory type,  NotificationStatus status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationLog():
 return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,_that.status,_that.scheduledTime,_that.triggeredAt,_that.createdAt,_that.payload);case _:
@@ -209,7 +209,7 @@ return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int notificationId,  String title,  String body,  String type,  String status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int notificationId,  String title,  String body,  NotificationCategory type,  NotificationStatus status,  DateTime? scheduledTime,  DateTime? triggeredAt,  DateTime createdAt,  String? payload)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationLog() when $default != null:
 return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,_that.status,_that.scheduledTime,_that.triggeredAt,_that.createdAt,_that.payload);case _:
@@ -224,15 +224,15 @@ return $default(_that.id,_that.notificationId,_that.title,_that.body,_that.type,
 @JsonSerializable()
 
 class _NotificationLog implements NotificationLog {
-  const _NotificationLog({required this.id, required this.notificationId, required this.title, required this.body, this.type = 'general', this.status = 'scheduled', this.scheduledTime, this.triggeredAt, required this.createdAt, this.payload});
+  const _NotificationLog({required this.id, required this.notificationId, required this.title, required this.body, this.type = NotificationCategory.general, this.status = NotificationStatus.scheduled, this.scheduledTime, this.triggeredAt, required this.createdAt, this.payload});
   factory _NotificationLog.fromJson(Map<String, dynamic> json) => _$NotificationLogFromJson(json);
 
 @override final  int id;
 @override final  int notificationId;
 @override final  String title;
 @override final  String body;
-@override@JsonKey() final  String type;
-@override@JsonKey() final  String status;
+@override@JsonKey() final  NotificationCategory type;
+@override@JsonKey() final  NotificationStatus status;
 @override final  DateTime? scheduledTime;
 @override final  DateTime? triggeredAt;
 @override final  DateTime createdAt;
@@ -273,7 +273,7 @@ abstract mixin class _$NotificationLogCopyWith<$Res> implements $NotificationLog
   factory _$NotificationLogCopyWith(_NotificationLog value, $Res Function(_NotificationLog) _then) = __$NotificationLogCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int notificationId, String title, String body, String type, String status, DateTime? scheduledTime, DateTime? triggeredAt, DateTime createdAt, String? payload
+ int id, int notificationId, String title, String body, NotificationCategory type, NotificationStatus status, DateTime? scheduledTime, DateTime? triggeredAt, DateTime createdAt, String? payload
 });
 
 
@@ -297,8 +297,8 @@ as int,notificationId: null == notificationId ? _self.notificationId : notificat
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
+as NotificationCategory,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as NotificationStatus,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
 as DateTime?,triggeredAt: freezed == triggeredAt ? _self.triggeredAt : triggeredAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,payload: freezed == payload ? _self.payload : payload // ignore: cast_nullable_to_non_nullable

@@ -2,62 +2,57 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../settings/config/shared_preferences_config.dart';
 import '../domain/domain.dart';
+import '../infrastructure/notification_repository.dart';
 import '../infrastructure/notification_service.dart';
 import '../infrastructure/workout_audio_service.dart';
 import 'notification_state.dart';
 
-class NotificationCubit extends Cubit<NotificationState> {
-  final NotificationService _notificationService;
-  final WorkoutAudioService _audioService;
+class NotificationCubit({
+  required final NotificationService _notificationService,
+  required final INotificationRepository _notificationRepository,
+  WorkoutAudioService? audioService,
+}) extends Cubit<NotificationState> {
+  final WorkoutAudioService _audioService =
+      audioService ?? WorkoutAudioService();
 
-  NotificationCubit({
-    required NotificationService notificationService,
-    WorkoutAudioService? audioService,
-  }) : _notificationService = notificationService,
-       _audioService = audioService ?? WorkoutAudioService(),
-       super(const NotificationState()) {
+  this : super(const NotificationState()) {
     unawaited(loadNotificationSettings());
     unawaited(loadNotificationLogs());
   }
 
   Future<void> loadNotificationLogs() async {
     try {
-      final List<NotificationLog> logs = await _notificationService
-          .getNotificationLogs(statusFilter: state.statusFilter);
+      final result = await _notificationRepository.getNotificationLogs(
+        statusFilter: state.statusFilter,
+      );
+      final logs = result.dataOrNull ?? [];
       emit(state.copyWith(logs: logs, clearError: true));
     } catch (error) {
       emit(state.copyWith(error: 'Could not load notification logs: $error'));
     }
   }
 
-  Future<void> filterLogsByStatus(String? status) async {
-    emit(
-      state.copyWith(
-        statusFilter: status,
-        clearFilter: status == null || status == 'all',
-      ),
-    );
+  Future<void> filterLogsByStatus(NotificationStatus? status) async {
+    emit(state.copyWith(statusFilter: status, clearFilter: status == null));
     try {
-      final logs = await _notificationService.getNotificationLogs(
+      final result = await _notificationRepository.getNotificationLogs(
         statusFilter: status,
       );
+      final logs = result.dataOrNull ?? [];
       emit(state.copyWith(logs: logs));
     } catch (error) {
       emit(state.copyWith(error: 'Could not filter notification logs: $error'));
     }
   }
 
-  /// Manually updates a notification log's status (e.g. marked as delivered or cancelled)
-  Future<void> updateLogStatus(int logId, String newStatus) async {
+  Future<void> updateLogStatus(int logId, NotificationStatus newStatus) async {
     try {
-      await _notificationService.updateLogStatus(logId, newStatus);
-      // Explicitly reload and emit new list to guarantee UI updates immediately
+      await _notificationRepository.updateLogStatus(logId, newStatus);
       await loadNotificationLogs();
     } catch (error) {
       emit(
@@ -185,7 +180,7 @@ class NotificationCubit extends Cubit<NotificationState> {
         body: 'Local notifications are fully operational!',
         scheduledTime: now,
         sound: Assets.sounds.notification.regular,
-        type: 'test_delayed',
+        type: NotificationCategory.testDelayed,
       );
       await loadNotificationLogs();
     } catch (error) {

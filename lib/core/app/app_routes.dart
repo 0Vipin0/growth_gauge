@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:growth_gauge/features/notification/infrastructure/notification_repository.dart';
+
 import '../../features/analytics/analytics.dart';
 import '../../features/authentication/authentication.dart';
 import '../../features/catalog/catalog.dart';
@@ -30,6 +32,7 @@ List<RouteBase> createAppRoutes({
   required AnalyticsDao analyticsDao,
   required ProjectionRebuilder projectionRebuilder,
   required UserUseCases userUseCases,
+  required NotificationRepository notifications,
 }) {
   final catalogUseCases = CatalogUseCases(exercises);
   final templateUseCases = TemplateUseCases(templates);
@@ -63,19 +66,25 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteHome,
       name: appRouteNameHome,
-      builder: (_, _) => StreamBuilder<List<DailyWorkoutSummary>>(
-        stream: analyticsQueries.watchWorkoutHistory('local-user'),
-        builder: (context, snapshot) {
-          final workoutHistory = snapshot.data ?? [];
-          return HomeScreen(
-            sessionRepository: sessions,
-            sessionUseCases: sessionUseCases,
-            exerciseRepository: exercises,
-            templateRepository: templates,
-            workoutHistory: workoutHistory,
-            userUseCases: userUseCases,
-          );
-        },
+      builder: (_, _) => BlocProvider(
+        create: (_) => NotificationCubit(
+          notificationService: NotificationService(),
+          notificationRepository: notifications,
+        ),
+        child: StreamBuilder<List<DailyWorkoutSummary>>(
+          stream: analyticsQueries.watchWorkoutHistory('local-user'),
+          builder: (context, snapshot) {
+            final workoutHistory = snapshot.data ?? [];
+            return HomeScreen(
+              sessionRepository: sessions,
+              sessionUseCases: sessionUseCases,
+              exerciseRepository: exercises,
+              templateRepository: templates,
+              workoutHistory: workoutHistory,
+              userUseCases: userUseCases,
+            );
+          },
+        ),
       ),
     ),
     appGoRoute(
@@ -88,7 +97,8 @@ List<RouteBase> createAppRoutes({
       name: appRouteNameNotificationSettings,
       builder: (context, state) => BlocProvider(
         create: (_) => NotificationCubit(
-          notificationService: NotificationService(database: database),
+          notificationService: NotificationService(),
+          notificationRepository: notifications,
         ),
         child: const NotificationSettingsScreen(),
       ),
@@ -98,7 +108,8 @@ List<RouteBase> createAppRoutes({
       name: appRouteNameNotificationHistory,
       builder: (context, state) => BlocProvider(
         create: (_) => NotificationCubit(
-          notificationService: NotificationService(database: database),
+          notificationService: NotificationService(),
+          notificationRepository: notifications,
         ),
         child: const NotificationHistoryScreen(),
       ),

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -8,12 +7,14 @@ import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../../core/database/database.dart';
 import '../domain/domain.dart';
 
-abstract class NotificationServiceBase {
+abstract class NotificationServiceBase() {
   Future<void> initializeTimeZone();
-  Future<void> initializeNotificationSettings();
+  Future<void> initializeNotificationSettings({
+    required Future<void> Function(int id, NotificationStatus status)
+    onStatusUpdate,
+  });
   Future<void> requestPlatformPermissions();
   Future<void> isAndroidPermissionGranted();
   Future<void> scheduleNotification({
@@ -22,7 +23,7 @@ abstract class NotificationServiceBase {
     required String body,
     required tz.TZDateTime scheduledTime,
     String? sound,
-    String type,
+    NotificationCategory type,
   });
   Future<void> scheduleDailyNotification({
     required int id,
@@ -37,17 +38,13 @@ abstract class NotificationServiceBase {
     required String body,
   });
   Future<void> cancelNotification(int id);
-  Future<List<NotificationLog>> getNotificationLogs({String? statusFilter});
-  Future<void> updateLogStatus(int notificationId, String newStatus);
+  Future<void> cancelAllNotifications();
 }
 
-class NotificationService extends NotificationServiceBase {
+class NotificationService() extends NotificationServiceBase {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final AppDatabase _database;
   bool notificationsEnabled = false;
-
-  NotificationService({required AppDatabase database}) : _database = database;
 
   @override
   Future<void> initializeTimeZone() async {
@@ -57,11 +54,16 @@ class NotificationService extends NotificationServiceBase {
   }
 
   @override
-  Future<void> initializeNotificationSettings() async {
-    await _initializeNotifications();
+  Future<void> initializeNotificationSettings({
+    required Future<void> Function(int id, NotificationStatus status)
+    onStatusUpdate,
+  }) async {
+    await _initializeNotifications(onStatusUpdate);
   }
 
-  Future<void> _initializeNotifications() async {
+  Future<void> _initializeNotifications(
+    Future<void> Function(int id, NotificationStatus status) onStatusUpdate,
+  ) async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -84,7 +86,7 @@ class NotificationService extends NotificationServiceBase {
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
         if (response.id != null) {
           try {
-            await updateLogStatus(response.id!, 'delivered');
+            await onStatusUpdate(response.id!, NotificationStatus.delivered);
           } catch (e) {
             debugPrint('Failed to update log status on response: $e');
           }
@@ -96,63 +98,13 @@ class NotificationService extends NotificationServiceBase {
   }
 
   @override
-  Future<List<NotificationLog>> getNotificationLogs({
-    String? statusFilter,
-  }) async {
-    try {
-      final query = _database.select(_database.notificationLogsTable);
-      if (statusFilter != null && statusFilter != 'all') {
-        query.where((tbl) => tbl.status.equals(statusFilter));
-      }
-      final results = await query.get();
-
-      return results.map((row) {
-        return NotificationLog(
-          id: row.id,
-          notificationId: row.notificationId,
-          title: row.title,
-          body: row.body,
-          type: row.type,
-          status: row.status,
-          scheduledTime: row.scheduledTime,
-          triggeredAt: row.triggeredAt,
-          createdAt: row.createdAt,
-          payload: row.payload,
-        );
-      }).toList();
-    } catch (e) {
-      debugPrint('Failed to fetch notification logs: $e');
-      return [];
-    }
-  }
-
-  @override
-  Future<void> updateLogStatus(int logId, String newStatus) async {
-    try {
-      await (_database.update(_database.notificationLogsTable)..where(
-            (tbl) => tbl.id.equals(logId),
-          )) // Target the unique database primary key row id
-          .write(
-            NotificationLogsTableCompanion(
-              status: Value(newStatus),
-              triggeredAt: newStatus == 'delivered'
-                  ? Value(DateTime.now())
-                  : const Value.absent(),
-            ),
-          );
-    } catch (e) {
-      debugPrint('Failed to update log status: $e');
-    }
-  }
-
-  @override
   Future<void> scheduleNotification({
     required int id,
     required String title,
     required String body,
     required tz.TZDateTime scheduledTime,
     String? sound,
-    String type = 'scheduled_reminder',
+    NotificationCategory type = NotificationCategory.scheduledReminder,
   }) async {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'growth_gauge_id',
@@ -183,24 +135,6 @@ class NotificationService extends NotificationServiceBase {
       notificationDetails: platformChannelSpecifics,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
-
-    try {
-      await _database
-          .into(_database.notificationLogsTable)
-          .insert(
-            NotificationLogsTableCompanion.insert(
-              notificationId: id,
-              title: title,
-              body: body,
-              type: Value(type),
-              status: const Value('scheduled'),
-              scheduledTime: Value(scheduledTime),
-            ),
-            mode: InsertMode.insertOrReplace,
-          );
-    } catch (e) {
-      debugPrint('Failed to log scheduled notification: $e');
-    }
   }
 
   @override
@@ -231,7 +165,7 @@ class NotificationService extends NotificationServiceBase {
       body: body,
       scheduledTime: scheduledTime,
       sound: sound,
-      type: 'daily_reminder',
+      type: NotificationCategory.dailyReminder,
     );
   }
 
@@ -262,49 +196,16 @@ class NotificationService extends NotificationServiceBase {
       body: body,
       notificationDetails: details,
     );
-
-    try {
-      await _database
-          .into(_database.notificationLogsTable)
-          .insert(
-            NotificationLogsTableCompanion.insert(
-              notificationId: id,
-              title: title,
-              body: body,
-              type: const Value('instant_alert'),
-              status: const Value('delivered'),
-              triggeredAt: Value(DateTime.now()),
-            ),
-            mode: InsertMode.insertOrReplace,
-          );
-    } catch (e) {
-      debugPrint('Failed to log instant notification: $e');
-    }
   }
 
   @override
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id: id);
-
-    try {
-      await updateLogStatus(id, 'cancelled');
-    } catch (e) {
-      debugPrint('Failed to update notification cancellation log: $e');
-    }
   }
 
-  Future<void> cancelAllPendingNotifications() async {
+  @override
+  Future<void> cancelAllNotifications() async {
     await _flutterLocalNotificationsPlugin.cancelAll();
-
-    try {
-      await (_database.update(
-        _database.notificationLogsTable,
-      )..where((tbl) => tbl.status.equals('scheduled'))).write(
-        const NotificationLogsTableCompanion(status: Value('cancelled')),
-      );
-    } catch (e) {
-      debugPrint('Failed to update bulk cancellation logs: $e');
-    }
   }
 
   @override

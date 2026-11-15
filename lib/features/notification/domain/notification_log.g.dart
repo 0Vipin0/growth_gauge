@@ -12,8 +12,12 @@ _NotificationLog _$NotificationLogFromJson(Map<String, dynamic> json) =>
       notificationId: (json['notificationId'] as num).toInt(),
       title: json['title'] as String,
       body: json['body'] as String,
-      type: json['type'] as String? ?? 'general',
-      status: json['status'] as String? ?? 'scheduled',
+      type:
+          $enumDecodeNullable(_$NotificationCategoryEnumMap, json['type']) ??
+          NotificationCategory.general,
+      status:
+          $enumDecodeNullable(_$NotificationStatusEnumMap, json['status']) ??
+          NotificationStatus.scheduled,
       scheduledTime: json['scheduledTime'] == null
           ? null
           : DateTime.parse(json['scheduledTime'] as String),
@@ -30,10 +34,24 @@ Map<String, dynamic> _$NotificationLogToJson(_NotificationLog instance) =>
       'notificationId': instance.notificationId,
       'title': instance.title,
       'body': instance.body,
-      'type': instance.type,
-      'status': instance.status,
+      'type': _$NotificationCategoryEnumMap[instance.type]!,
+      'status': _$NotificationStatusEnumMap[instance.status]!,
       'scheduledTime': instance.scheduledTime?.toIso8601String(),
       'triggeredAt': instance.triggeredAt?.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
       'payload': instance.payload,
     };
+
+const _$NotificationCategoryEnumMap = {
+  NotificationCategory.general: 'general',
+  NotificationCategory.testInstant: 'testInstant',
+  NotificationCategory.testDelayed: 'testDelayed',
+  NotificationCategory.dailyReminder: 'dailyReminder',
+  NotificationCategory.scheduledReminder: 'scheduledReminder',
+};
+
+const _$NotificationStatusEnumMap = {
+  NotificationStatus.scheduled: 'scheduled',
+  NotificationStatus.delivered: 'delivered',
+  NotificationStatus.cancelled: 'cancelled',
+};
