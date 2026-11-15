@@ -3,6 +3,8 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:go_router/go_router.dart';
 
+import 'package:growth_gauge/gen/assets.gen.dart';
+
 import '../../../core/routing/routing.dart';
 import '../../settings/config/shared_preferences_config.dart';
 
@@ -98,7 +100,7 @@ class _SplashScreenState()
             ScaleTransition(
               scale: _logoAnimation,
               child: Image.asset(
-                'assets/images/icon.png',
+                Assets.images.png.icon.path,
                 width: MediaQuery.of(context).size.width * 0.2,
                 height: MediaQuery.of(context).size.width * 0.2,
               ),

@@ -129,7 +129,9 @@ class const NotificationSettingsScreen({super.key}) extends StatelessWidget {
                               child: AppButton.secondary(
                                 label: 'Test Sound Cue',
                                 onPressed: () {
-                                  notificationCubit.testAudioCue();
+                                  context
+                                      .read<NotificationCubit>()
+                                      .testAudioCue();
                                 },
                               ),
                             ),
@@ -138,7 +140,9 @@ class const NotificationSettingsScreen({super.key}) extends StatelessWidget {
                               child: AppButton.primary(
                                 label: 'Test Notification',
                                 onPressed: () {
-                                  notificationCubit.testLocalNotification();
+                                  context
+                                      .read<NotificationCubit>()
+                                      .testLocalNotification();
                                 },
                               ),
                             ),

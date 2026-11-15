@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -25,9 +25,7 @@ abstract class NotificationServiceBase() {
     required TimeOfDay time,
     String? sound,
   });
-  Future<void> cancelNotification(
-    int id,
-  ); // Added cancelNotification definition
+  Future<void> cancelNotification(int id);
 }
 
 class NotificationService() extends NotificationServiceBase {
@@ -51,25 +49,25 @@ class NotificationService() extends NotificationServiceBase {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const WindowsInitializationSettings initializationSettingsWindows =
+    final WindowsInitializationSettings initializationSettingsWindows =
         WindowsInitializationSettings(
-          iconPath: 'assets/images/icon.png',
+          iconPath: Assets.images.png.icon.path,
           appName: 'Growth Gauge',
           guid: '9b17769e-c5cd-424a-b859-1e8b873909c1',
           appUserModelId: 'Com.GrowthGauge',
         );
 
-    const InitializationSettings initializationSettings =
+    final InitializationSettings initializationSettings =
         InitializationSettings(
           android: initializationSettingsAndroid,
           windows: initializationSettingsWindows,
         );
 
     await _flutterLocalNotificationsPlugin.initialize(
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         // Handle notification click interactions here if required
       },
-      settings: initializationSettings,
     );
 
     await isAndroidPermissionGranted();
@@ -93,9 +91,10 @@ class NotificationService() extends NotificationServiceBase {
     );
 
     final windowsPlatformChannelSpecifics = WindowsNotificationDetails(
-      audio: sound != null
-          ? WindowsNotificationAudio.asset(sound)
-          : WindowsNotificationAudio.preset(sound: .defaultSound),
+      audio: WindowsNotificationAudio.asset(
+        sound!,
+        fallback: WindowsNotificationSound.reminder,
+      ),
     );
 
     final platformChannelSpecifics = NotificationDetails(

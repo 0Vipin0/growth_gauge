@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:growth_gauge/gen/assets.gen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/routing/app_router.dart';
@@ -28,18 +28,18 @@ class _OnboardingScreenState() extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _onboardingSteps = [
     {
-      'animation': 'assets/animations/welcome.json',
+      'animation': Assets.animations.welcome,
       'title': 'Body Metrics & Profile',
       'description': 'Configure your core measurements and unit preferences.',
     },
     {
-      'animation': 'assets/animations/counters.json',
+      'animation': Assets.animations.counters,
       'title': 'Training Goals',
       'description':
           'Select your primary targets to track success effectively.',
     },
     {
-      'animation': 'assets/animations/timers.json',
+      'animation': Assets.animations.counters,
       'title': 'Constraints & Equipment',
       'description': 'Set your available equipment and session limits.',
     },
