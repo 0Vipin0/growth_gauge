@@ -3,13 +3,13 @@ name: Build and Release Growth Gauge
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag for the release (e.g., v1.0.0)'
+        description: "Version tag for the release (e.g., v1.0.0)"
         required: true
-        default: 'v1.0.0'
+        default: "v1.0.0"
         type: string
 
 permissions:
@@ -25,13 +25,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@v7.0.1
 
       - name: Setup Flutter SDK
-        uses: subosito/flutter-action@db71fa631482e825f571819adc070e303f0b0e93 # v2.18.0
+        uses: subosito/flutter-action@v2.23.0
         with:
-          flutter-version: '3.44.0'
-          channel: 'stable'
+          flutter-version: "3.44.0"
+          channel: "stable"
           cache: true
 
       - name: Install Linux Dependencies
@@ -41,16 +41,16 @@ jobs:
           sudo apt-get install -y ninja-build libgtk-3-dev libglib2.0-dev libsecret-1-dev libjsoncpp-dev
 
       - name: Setup JDK
-        uses: actions/setup-java@3def3e3da50490f2303036f4c4a6b6f7902d5395 # v5.1.0
+        uses: actions/setup-java@v6.3.0
         if: matrix.os == 'ubuntu-latest'
         with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'gradle'
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
 
       - name: Download Keystore for Android
         id: android_keystore
-        uses: timheuer/base64-to-file@ac84c7185012a9e3a6a978f657bc0d2427baf497 # v1.2.f
+        uses: timheuer/base64-to-file@v2
         if: matrix.os == 'ubuntu-latest'
         with:
           fileName: upload-keystore.jks
@@ -92,7 +92,7 @@ jobs:
         shell: pwsh
 
       - name: Upload Release Artifacts
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf88f # v4.4.3
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ${{ matrix.os }}-release
           path: |
@@ -108,12 +108,12 @@ jobs:
       contents: write
     steps:
       - name: Download All Artifacts
-        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        uses: actions/download-artifact@v8.0.2
         with:
           path: artifacts
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf1aa5b0ef2c3fbc # v2.2.1
+        uses: softprops/action-gh-release@v3.0.4
         with:
           files: |
             artifacts/ubuntu-latest-release/linux_release.zip
