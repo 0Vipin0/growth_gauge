@@ -72,6 +72,7 @@ class MockNotificationServiceBase extends _i1.Mock
     required String? body,
     required _i4.TZDateTime? scheduledTime,
     String? sound,
+    String? type,
   }) => (super.noSuchMethod(
     Invocation.method(#scheduleNotification, [], {
       #id: id,
@@ -79,6 +80,7 @@ class MockNotificationServiceBase extends _i1.Mock
       #body: body,
       #scheduledTime: scheduledTime,
       #sound: sound,
+      #type: type,
     }),
     returnValue: _i3.Future<void>.value(),
     returnValueForMissingStub: _i3.Future<void>.value(),

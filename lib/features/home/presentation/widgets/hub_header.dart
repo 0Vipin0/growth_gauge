@@ -4,8 +4,10 @@ class const HubHeader({
   super.key,
   final String userName = 'Alex Doe',
   final VoidCallback? onProfileTap,
+  final VoidCallback? onNotificationTap,
   final bool isDesktop = false,
 }) extends StatelessWidget {
+  // Added parameter for navigation callback
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) return 'Good Morning';
@@ -151,7 +153,7 @@ class const HubHeader({
               const SizedBox(width: 12),
             ],
             IconButton(
-              onPressed: () {},
+              onPressed: onNotificationTap,
               style: IconButton.styleFrom(
                 backgroundColor: colorScheme.surfaceContainerHighest,
                 padding: EdgeInsets.all(isDesktop ? 12 : 10),

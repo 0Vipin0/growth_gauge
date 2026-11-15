@@ -30,15 +30,15 @@ import 'app_routes.dart';
 Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
-
-  final notificationService = NotificationService();
-  await notificationService.initializeTimeZone();
-  await notificationService.initializeNotificationSettings();
   await SharedPreferencesHelper.init();
 
   final database = AppDatabase();
   final exercises = ExerciseRepository(database);
   final templates = TemplateRepository(database);
+
+  final notificationService = NotificationService(database: database);
+  await notificationService.initializeTimeZone();
+  await notificationService.initializeNotificationSettings();
 
   unawaited(_initializeSeeders(exercises, templates));
 

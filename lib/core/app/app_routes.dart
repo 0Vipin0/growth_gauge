@@ -87,9 +87,20 @@ List<RouteBase> createAppRoutes({
       path: appRouteNotificationSettings,
       name: appRouteNameNotificationSettings,
       builder: (context, state) => BlocProvider(
-        create: (_) =>
-            NotificationCubit(notificationService: NotificationService()),
+        create: (_) => NotificationCubit(
+          notificationService: NotificationService(database: database),
+        ),
         child: const NotificationSettingsScreen(),
+      ),
+    ),
+    appGoRoute(
+      path: appRouteNotificationHistory,
+      name: appRouteNameNotificationHistory,
+      builder: (context, state) => BlocProvider(
+        create: (_) => NotificationCubit(
+          notificationService: NotificationService(database: database),
+        ),
+        child: const NotificationHistoryScreen(),
       ),
     ),
     appGoRoute(

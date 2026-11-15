@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/routing/routing.dart';
 import '../../../analytics/domain/daily_workout_summary.dart';
 import '../../../template/domain/workout_template.dart';
 import '../../../template/infrastructure/template_repository.dart';
@@ -71,6 +73,9 @@ class _FitnessHubScreenState() extends State<FitnessHubScreen> {
                   userName: userName,
                   onProfileTap: widget.onProfileTap,
                   isDesktop: isDesktop,
+                  onNotificationTap: () {
+                    context.pushNamed(appRouteNameNotificationHistory);
+                  },
                 ),
                 SizedBox(height: isDesktop ? 36 : 28),
                 WeekSummarySection(
