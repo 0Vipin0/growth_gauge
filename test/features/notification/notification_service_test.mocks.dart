@@ -7,12 +7,10 @@
 import 'dart:async' as _i3;
 
 import 'package:flutter/material.dart' as _i5;
-
-import 'package:mockito/mockito.dart' as _i1;
-import 'package:timezone/timezone.dart' as _i4;
-
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart'
     as _i2;
+import 'package:mockito/mockito.dart' as _i1;
+import 'package:timezone/timezone.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -100,6 +98,21 @@ class MockNotificationServiceBase extends _i1.Mock
       #body: body,
       #time: time,
       #sound: sound,
+    }),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> showNotification({
+    required int? id,
+    required String? title,
+    required String? body,
+  }) => (super.noSuchMethod(
+    Invocation.method(#showNotification, [], {
+      #id: id,
+      #title: title,
+      #body: body,
     }),
     returnValue: _i3.Future<void>.value(),
     returnValueForMissingStub: _i3.Future<void>.value(),

@@ -6,14 +6,13 @@ import 'tables/daily_workout_summaries_table.dart';
 import 'tables/documents_table.dart';
 import 'tables/exercise_set_metrics_table.dart';
 import 'tables/muscle_volume_breakdowns_table.dart';
+import 'tables/notification_logs_table.dart';
 import 'tables/notification_preferences_table.dart';
 import 'tables/personal_records_table.dart';
 import 'tables/rest_interval_metrics_table.dart';
 
 part 'app_database.g.dart';
 
-/// The primary application database managing authoritative document storage
-/// and materialized relational analytics read models.
 @DriftDatabase(
   tables: [
     Documents,
@@ -23,6 +22,7 @@ part 'app_database.g.dart';
     MuscleVolumeBreakdowns,
     RestIntervalMetrics,
     NotificationPreferencesTable,
+    NotificationLogsTable,
   ],
 )
 class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
@@ -34,7 +34,7 @@ class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 4; // Bumped schema version to 4
+  int get schemaVersion => 5; // Bumped schema version to 5
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -56,6 +56,10 @@ class AppDatabase([QueryExecutor? e]) extends _$AppDatabase {
       if (from < 4) {
         // Create the notification preferences table during upgrade from v3 to v4
         await m.createTable(notificationPreferencesTable);
+      }
+      if (from < 5) {
+        // Create notification logs table during upgrade from v4 to v5
+        await m.createTable(notificationLogsTable);
       }
     },
   );
