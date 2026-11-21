@@ -22,6 +22,32 @@ enum TrainingExperience() {
   advanced,
 }
 
+/// Self-reported biological sex, optional because it is sensitive data.
+enum BiologicalSex() {
+  @JsonValue('FEMALE')
+  female,
+  @JsonValue('MALE')
+  male,
+  @JsonValue('INTERSEX')
+  intersex,
+  @JsonValue('PREFER_NOT_TO_SAY')
+  preferNotToSay,
+}
+
+/// Self-reported habitual activity level used for fitness estimates.
+enum ActivityLevel() {
+  @JsonValue('SEDENTARY')
+  sedentary,
+  @JsonValue('LIGHTLY_ACTIVE')
+  lightlyActive,
+  @JsonValue('MODERATELY_ACTIVE')
+  moderatelyActive,
+  @JsonValue('VERY_ACTIVE')
+  veryActive,
+  @JsonValue('EXTRA_ACTIVE')
+  extraActive,
+}
+
 /// Category of personal training goal.
 enum GoalType() {
   @JsonValue('STRENGTH')
@@ -62,8 +88,12 @@ enum MeasurementType() {
   bodyFatPercent,
   @JsonValue('WAIST')
   waist,
+  @JsonValue('NECK')
+  neck,
   @JsonValue('CHEST')
   chest,
+  @JsonValue('HIP')
+  hip,
   @JsonValue('ARM')
   arm,
   @JsonValue('THIGH')

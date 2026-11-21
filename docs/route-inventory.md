@@ -11,7 +11,7 @@ All application screens are registered as declarative GoRouter routes and naviga
 | Destination | Path Constant | Route Path | Navigation Method | Parameters (`state.extra`) | Back-stack Behavior |
 |---|---|---|---|---|---|
 | **Fitness Launch** | `appRouteLaunch` | `/launch` | Initial location | None | Initial destination |
-| **Splash** | `appRouteSplash` | `/splash` | Registered | None | Runtime transition needs verification |
+| **Splash** | `appRouteSplash` | `/splash` | Registered; delegates via `resolveLaunchRoute` | Effective onboarding-completion flag | First-run targets `/onboarding`; completed users continue to `/launch`. Resolver outcomes are unit-tested; timed splash handoff still needs device/runtime review. |
 | **Home / Training Hub** | `appRouteHome` | `/home` | `context.go` | None | Primary destination; root of navigation stack |
 | **Settings** | `appRouteSettings` | `/settings` | Route registered | None | Separate route destination |
 | **PIN Authentication** | `appRoutePinAuth` | `/pin_auth` | `context.go` / `push` | None | Replaced by `go(appRouteHome)` on success |
@@ -31,7 +31,7 @@ All application screens are registered as declarative GoRouter routes and naviga
 | **Training Goals** | `appRouteGoals` | `/goals` | `context.push` | None | Pushed over Home; back returns to Home |
 | **Physical Measurements**| `appRouteMeasurements` | `/measurements` | `context.push` | None | Pushed over Home; back returns to Home |
 | **Backup and Restore** | `appRouteBackupRestore` | `/backup_restore` | `context.push` | None | Pushed over Settings; back returns to Settings |
-| **Onboarding Wizard** | `appRouteOnboarding` | `/onboarding` | Registered; launch handoff requires runtime verification | None | First-launch destination |
+| **Onboarding Wizard** | `appRouteOnboarding` | `/onboarding` | Registered; selected by first-run route resolver | None | First-launch destination; persistence flow is covered by onboarding tests |
 | **Notification Settings** | `appRouteNotificationSettings` | `/notification_settings` | `context.push` | None | Pushed from Settings |
 | **Notification History** | `appRouteNotificationHistory` | `/notification_history` | Registered | None | Back returns to caller |
 

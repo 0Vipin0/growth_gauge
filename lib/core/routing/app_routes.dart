@@ -33,6 +33,7 @@ List<RouteBase> createAppRoutes({
   required ProjectionRebuilder projectionRebuilder,
   required UserUseCases userUseCases,
   required NotificationRepository notifications,
+  bool? hasCompletedOnboarding,
 }) {
   final catalogUseCases = CatalogUseCases(exercises);
   final templateUseCases = TemplateUseCases(templates);
@@ -56,7 +57,8 @@ List<RouteBase> createAppRoutes({
     appGoRoute(
       path: appRouteSplash,
       name: appRouteNameSplash,
-      builder: (_, _) => const SplashScreen(),
+      builder: (_, _) =>
+          SplashScreen(hasCompletedOnboarding: hasCompletedOnboarding),
     ),
     appGoRoute(
       path: appRouteOnboarding,

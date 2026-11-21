@@ -63,6 +63,30 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
                     }
                   },
                 ),
+                const SizedBox(height: 16),
+                AppDropdown<ActivityLevel>(
+                  label: 'Typical Daily Activity',
+                  value: training.activityLevel,
+                  items: ActivityLevel.values.map((level) {
+                    return AppDropdownItem(
+                      value: level,
+                      label: switch (level) {
+                        ActivityLevel.sedentary => 'Mostly seated',
+                        ActivityLevel.lightlyActive => 'Lightly active',
+                        ActivityLevel.moderatelyActive => 'Moderately active',
+                        ActivityLevel.veryActive => 'Very active',
+                        ActivityLevel.extraActive => 'Extra active',
+                      },
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      context.read<OnboardingCubit>().updateTrainingProfile(
+                        (profile) => profile.copyWith(activityLevel: value),
+                      );
+                    }
+                  },
+                ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,6 +120,19 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
                     );
                   },
                 ),
+                const SizedBox(height: 12),
+                AppTextField(
+                  label: 'Injuries or movements to avoid (optional)',
+                  hintText: 'Describe any limitations for exercise suggestions',
+                  maxLines: 3,
+                  onChanged: (value) =>
+                      context.read<OnboardingCubit>().updateTrainingProfile(
+                        (profile) => profile.copyWith(
+                          injuriesAndLimitations: value.trim(),
+                        ),
+                      ),
+                ),
+                const SizedBox(height: 20),
                 const SizedBox(height: 20),
                 Text(
                   'Available Equipment Inventory',
@@ -107,38 +144,40 @@ class const OnboardingStepConstraints({super.key}) extends StatelessWidget {
                 Wrap(
                   spacing: 8.0,
                   runSpacing: 4.0,
-                  children:
-                      [
-                        EquipmentType.barbell,
-                        EquipmentType.dumbbell,
-                        EquipmentType.kettlebell,
-                        EquipmentType.resistanceBand,
-                        EquipmentType.pullUpBar,
-                      ].map((item) {
-                        final isOwned = equipment.contains(item);
-                        return FilterChip(
-                          label: Text(item.name.toUpperCase()),
-                          selected: isOwned,
-                          onSelected: (selected) {
-                            final updatedList = List<EquipmentType>.from(
-                              equipment,
+                  children: EquipmentType.values.map((item) {
+                    final isOwned = equipment.contains(item);
+                    return FilterChip(
+                      label: Text(switch (item) {
+                        EquipmentType.barbell => 'Barbell & plates',
+                        EquipmentType.dumbbell => 'Dumbbells',
+                        EquipmentType.kettlebell => 'Kettlebells',
+                        EquipmentType.cable => 'Cable machine',
+                        EquipmentType.machine => 'Weight machines',
+                        EquipmentType.bodyweight => 'Bodyweight',
+                        EquipmentType.smithMachine => 'Smith machine',
+                        EquipmentType.resistanceBand => 'Resistance bands',
+                        EquipmentType.pullUpBar => 'Pull-up bar',
+                        EquipmentType.bench => 'Bench',
+                      }),
+                      selected: isOwned,
+                      onSelected: (selected) {
+                        final updatedList = List<EquipmentType>.from(equipment);
+                        if (selected) {
+                          updatedList.add(item);
+                        } else {
+                          updatedList.remove(item);
+                        }
+                        context
+                            .read<OnboardingCubit>()
+                            .updateEquipmentInventory(
+                              (inv) => inv.copyWith(
+                                ownedEquipment: updatedList,
+                                updatedAt: DateTime.now(),
+                              ),
                             );
-                            if (selected) {
-                              updatedList.add(item);
-                            } else {
-                              updatedList.remove(item);
-                            }
-                            context
-                                .read<OnboardingCubit>()
-                                .updateEquipmentInventory(
-                                  (inv) => inv.copyWith(
-                                    ownedEquipment: updatedList,
-                                    updatedAt: DateTime.now(),
-                                  ),
-                                );
-                          },
-                        );
-                      }).toList(),
+                      },
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 24),
                 Padding(

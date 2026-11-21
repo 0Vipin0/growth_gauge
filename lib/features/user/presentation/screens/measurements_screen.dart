@@ -17,8 +17,12 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
         return 'Body Fat %';
       case MeasurementType.waist:
         return 'Waist';
+      case MeasurementType.neck:
+        return 'Neck';
       case MeasurementType.chest:
         return 'Chest';
+      case MeasurementType.hip:
+        return 'Hip';
       case MeasurementType.arm:
         return 'Arm';
       case MeasurementType.thigh:
@@ -35,7 +39,9 @@ class const MeasurementsScreen({super.key}) extends StatelessWidget {
       case MeasurementType.bodyFatPercent:
         return '%';
       case MeasurementType.waist:
+      case MeasurementType.neck:
       case MeasurementType.chest:
+      case MeasurementType.hip:
       case MeasurementType.arm:
       case MeasurementType.thigh:
         return 'cm';

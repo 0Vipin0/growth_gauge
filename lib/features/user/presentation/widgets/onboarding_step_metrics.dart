@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/units/unit_converter.dart';
 import '../../../../core/units/unit_types.dart';
 import '../../../common/presentation/utils/responsive_form_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/onboarding_cubit.dart';
+import '../../domain/user_enums.dart';
 
 class const OnboardingStepMetrics({super.key}) extends StatefulWidget {
   @override
@@ -13,18 +15,11 @@ class const OnboardingStepMetrics({super.key}) extends StatefulWidget {
 }
 
 class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
-  final TextEditingController _nameController = TextEditingController(
-    text: 'Athlete',
-  );
-  final TextEditingController _ageController = TextEditingController(
-    text: '28',
-  );
-  final TextEditingController _heightController = TextEditingController(
-    text: '178',
-  );
-  final TextEditingController _weightController = TextEditingController(
-    text: '75.5',
-  );
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heartRateController = TextEditingController();
   final TextEditingController _neckController = TextEditingController();
   final TextEditingController _waistController = TextEditingController();
   final TextEditingController _hipController = TextEditingController();
@@ -32,9 +27,23 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _syncProfile(context);
-    });
+    final state = context.read<OnboardingCubit>().state;
+    _nameController.text = state.profile.displayName;
+    _ageController.text = state.profile.ageYears?.toString() ?? '';
+    _heightController.text = state.trainingProfile.baselineHeightCm == null
+        ? ''
+        : _heightForUnit(
+            state.trainingProfile.baselineHeightCm!,
+            state.profile.heightUnit,
+          ).toStringAsFixed(1);
+    _weightController.text = state.trainingProfile.baselineWeightKg == null
+        ? ''
+        : UnitConverter.weightFromCanonical(
+            state.trainingProfile.baselineWeightKg!,
+            state.profile.weightUnit,
+          ).toStringAsFixed(1);
+    _heartRateController.text =
+        state.trainingProfile.restingHeartRateBpm?.toString() ?? '';
   }
 
   @override
@@ -43,6 +52,7 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
     _ageController.dispose();
     _heightController.dispose();
     _weightController.dispose();
+    _heartRateController.dispose();
     _neckController.dispose();
     _waistController.dispose();
     _hipController.dispose();
@@ -52,6 +62,34 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
   void _syncProfile(BuildContext context) {
     context.read<OnboardingCubit>().updateProfile(
       (p) => p.copyWith(displayName: _nameController.text.trim()),
+    );
+  }
+
+  double _heightForUnit(double heightCm, HeightUnit unit) =>
+      unit == HeightUnit.centimeters
+      ? heightCm
+      : UnitConverter.cmToInches(heightCm);
+
+  void _syncHeight(BuildContext context, String value, HeightUnit unit) {
+    final parsed = double.tryParse(value);
+    final heightCm = parsed == null
+        ? null
+        : unit == HeightUnit.centimeters
+        ? parsed
+        : UnitConverter.inchesToCm(parsed);
+    context.read<OnboardingCubit>().updateTrainingProfile(
+      (profile) => profile.copyWith(baselineHeightCm: heightCm),
+    );
+  }
+
+  void _syncOptionalMeasurement(
+    BuildContext context,
+    MeasurementType type,
+    String value,
+  ) {
+    context.read<OnboardingCubit>().updateOptionalMeasurement(
+      type,
+      double.tryParse(value),
     );
   }
 
@@ -123,6 +161,12 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                               controller: _ageController,
                               keyboardType: TextInputType.number,
                               suffixUnit: 'yrs',
+                              onChanged: (value) =>
+                                  context.read<OnboardingCubit>().updateProfile(
+                                    (p) => p.copyWith(
+                                      ageYears: int.tryParse(value),
+                                    ),
+                                  ),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -135,6 +179,11 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                                   profile.heightUnit == HeightUnit.centimeters
                                   ? 'cm'
                                   : 'in',
+                              onChanged: (value) => _syncHeight(
+                                context,
+                                value,
+                                profile.heightUnit,
+                              ),
                             ),
                           ),
                         ],
@@ -147,6 +196,72 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                         suffixUnit: profile.weightUnit == WeightUnit.kilograms
                             ? 'kg'
                             : 'lb',
+                        onChanged: (value) {
+                          final parsed = double.tryParse(value);
+                          context.read<OnboardingCubit>().updateTrainingProfile(
+                            (training) => training.copyWith(
+                              baselineWeightKg: parsed == null
+                                  ? null
+                                  : UnitConverter.weightToCanonical(
+                                      parsed,
+                                      profile.weightUnit,
+                                    ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Optional Health Context',
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 12),
+                      AppDropdown<BiologicalSex?>(
+                        label: 'Biological Sex (optional)',
+                        value: profile.biologicalSex,
+                        items: [
+                          const AppDropdownItem(
+                            value: null,
+                            label: 'Prefer not to select',
+                          ),
+                          ...BiologicalSex.values.map(
+                            (sex) => AppDropdownItem(
+                              value: sex,
+                              label: switch (sex) {
+                                BiologicalSex.female => 'Female',
+                                BiologicalSex.male => 'Male',
+                                BiologicalSex.intersex => 'Intersex',
+                                BiologicalSex.preferNotToSay =>
+                                  'Prefer not to say',
+                              },
+                            ),
+                          ),
+                        ],
+                        onChanged: (value) =>
+                            context.read<OnboardingCubit>().updateProfile(
+                              (p) => p.copyWith(biologicalSex: value),
+                            ),
+                      ),
+                      const SizedBox(height: 12),
+                      AppTextField(
+                        label: 'RESTING HEART RATE (OPTIONAL)',
+                        controller: _heartRateController,
+                        keyboardType: TextInputType.number,
+                        suffixUnit: 'bpm',
+                        onChanged: (value) => context
+                            .read<OnboardingCubit>()
+                            .updateTrainingProfile(
+                              (training) => training.copyWith(
+                                restingHeartRateBpm: int.tryParse(value),
+                              ),
+                            ),
                       ),
                     ],
                   ),
@@ -178,6 +293,11 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                               controller: _neckController,
                               keyboardType: TextInputType.number,
                               suffixUnit: 'cm',
+                              onChanged: (value) => _syncOptionalMeasurement(
+                                context,
+                                MeasurementType.neck,
+                                value,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -187,6 +307,11 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                               controller: _waistController,
                               keyboardType: TextInputType.number,
                               suffixUnit: 'cm',
+                              onChanged: (value) => _syncOptionalMeasurement(
+                                context,
+                                MeasurementType.waist,
+                                value,
+                              ),
                             ),
                           ),
                         ],
@@ -197,6 +322,11 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                         controller: _hipController,
                         keyboardType: TextInputType.number,
                         suffixUnit: 'cm',
+                        onChanged: (value) => _syncOptionalMeasurement(
+                          context,
+                          MeasurementType.hip,
+                          value,
+                        ),
                       ),
                     ],
                   ),
@@ -227,6 +357,18 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                                 ),
                               ],
                               onValueChanged: (val) {
+                                final weightKg = context
+                                    .read<OnboardingCubit>()
+                                    .state
+                                    .trainingProfile
+                                    .baselineWeightKg;
+                                if (weightKg != null) {
+                                  _weightController.text =
+                                      UnitConverter.weightFromCanonical(
+                                        weightKg,
+                                        val,
+                                      ).toStringAsFixed(1);
+                                }
                                 context.read<OnboardingCubit>().updateProfile(
                                   (p) => p.copyWith(weightUnit: val),
                                 );
@@ -285,10 +427,21 @@ class _OnboardingStepMetricsState() extends State<OnboardingStepMetrics> {
                                 ),
                                 AppSegmentedControlItem(
                                   value: HeightUnit.feetAndInches,
-                                  label: 'FT/IN',
+                                  label: 'IN',
                                 ),
                               ],
                               onValueChanged: (val) {
+                                final heightCm = context
+                                    .read<OnboardingCubit>()
+                                    .state
+                                    .trainingProfile
+                                    .baselineHeightCm;
+                                if (heightCm != null) {
+                                  _heightController.text = _heightForUnit(
+                                    heightCm,
+                                    val,
+                                  ).toStringAsFixed(1);
+                                }
                                 context.read<OnboardingCubit>().updateProfile(
                                   (p) => p.copyWith(heightUnit: val),
                                 );

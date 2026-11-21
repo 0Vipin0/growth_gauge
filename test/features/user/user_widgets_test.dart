@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:growth_gauge/features/catalog/domain/exercise_enums.dart';
 import 'package:growth_gauge/features/user/application/goal_cubit.dart';
@@ -65,16 +66,34 @@ void main() {
       (tester) async {
         List<EquipmentType>? saved;
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: EquipmentInventorySheet(
-                initialSelection: const [EquipmentType.barbell],
-                onSaved: (selection) => saved = selection,
+        final router = GoRouter(
+          initialLocation: '/',
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, _) => Scaffold(
+                body: Center(
+                  child: TextButton(
+                    onPressed: () => context.push('/equipment'),
+                    child: const Text('Open equipment'),
+                  ),
+                ),
               ),
             ),
-          ),
+            GoRoute(
+              path: '/equipment',
+              builder: (_, _) => Scaffold(
+                body: EquipmentInventorySheet(
+                  initialSelection: const [EquipmentType.barbell],
+                  onSaved: (selection) => saved = selection,
+                ),
+              ),
+            ),
+          ],
         );
+        await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+        await tester.tap(find.text('Open equipment'));
+        await tester.pumpAndSettle();
 
         expect(find.text('Available Equipment'), findsOneWidget);
         expect(find.text('Barbell & Plates'), findsOneWidget);
@@ -91,6 +110,7 @@ void main() {
         expect(saved, isNotNull);
         expect(saved, contains(EquipmentType.barbell));
         expect(saved, contains(EquipmentType.dumbbell));
+        router.dispose();
       },
     );
 

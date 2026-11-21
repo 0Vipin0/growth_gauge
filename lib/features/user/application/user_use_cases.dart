@@ -8,6 +8,7 @@ import '../../catalog/domain/exercise_enums.dart';
 import '../domain/equipment_inventory.dart';
 import '../domain/training_goal.dart';
 import '../domain/training_profile.dart';
+import '../domain/user_account.dart';
 import '../domain/user_enums.dart';
 import '../domain/user_measurement.dart';
 import '../domain/user_profile.dart';
@@ -16,6 +17,9 @@ import '../infrastructure/user_repository.dart';
 
 /// Application orchestration for user profile, goals, measurements, and equipment.
 class UserUseCases(final IUserRepository _repo) {
+  Future<Result<void, Failure>> updateAccount(UserAccount account) =>
+      _repo.saveAccount(account.copyWith(updatedAt: AppClock.nowUtc()));
+
   // ---------------------------------------------------------------------------
   // Profile
   // ---------------------------------------------------------------------------
@@ -88,6 +92,7 @@ class UserUseCases(final IUserRepository _repo) {
   // ---------------------------------------------------------------------------
 
   Future<Result<TrainingGoal, Failure>> createGoal({
+    String? id,
     required String userId,
     required GoalType type,
     required String name,
@@ -111,7 +116,7 @@ class UserUseCases(final IUserRepository _repo) {
 
     final now = AppClock.nowUtc();
     final goal = TrainingGoal(
-      id: UniqueId.generate().value,
+      id: id ?? UniqueId.generate().value,
       userId: userId,
       type: type,
       name: name.trim(),
@@ -187,6 +192,7 @@ class UserUseCases(final IUserRepository _repo) {
   // ---------------------------------------------------------------------------
 
   Future<Result<UserMeasurement, Failure>> logMeasurement({
+    String? id,
     required String userId,
     required MeasurementType type,
     required double value,
@@ -209,7 +215,7 @@ class UserUseCases(final IUserRepository _repo) {
     }
 
     final measurement = UserMeasurement(
-      id: UniqueId.generate().value,
+      id: id ?? UniqueId.generate().value,
       userId: userId,
       type: type,
       value: canonical.value,
@@ -244,7 +250,9 @@ class UserUseCases(final IUserRepository _repo) {
           );
         }
       case MeasurementType.waist:
+      case MeasurementType.neck:
       case MeasurementType.chest:
+      case MeasurementType.hip:
       case MeasurementType.arm:
       case MeasurementType.thigh:
         if (normalized == 'cm' || normalized == 'centimeters') {

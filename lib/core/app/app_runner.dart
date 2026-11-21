@@ -86,6 +86,7 @@ Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
       analyticsDao: analyticsDao,
       projectionRebuilder: projectionRebuilder,
       userUseCases: userUseCases,
+      hasCompletedOnboarding: hasCompletedOnboarding,
     ),
   ).router;
 

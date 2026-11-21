@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrainingProfile {
 
- String get userId; TrainingExperience get trainingExperience; String get primaryTrainingStyle; int get preferredSessionDurationMinutes; List<int> get preferredTrainingDays; String get notes; DateTime get updatedAt;
+ String get userId; TrainingExperience get trainingExperience; String get primaryTrainingStyle; int get preferredSessionDurationMinutes; List<int> get preferredTrainingDays; ActivityLevel get activityLevel; double? get baselineHeightCm; double? get baselineWeightKg; int? get restingHeartRateBpm; String get injuriesAndLimitations; String get notes; DateTime get updatedAt;
 /// Create a copy of TrainingProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $TrainingProfileCopyWith<TrainingProfile> get copyWith => _$TrainingProfileCopyW
 @override
 bool operator ==(Object other) {
   final _this = this as TrainingProfile;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingProfile&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.trainingExperience, _this.trainingExperience) || other.trainingExperience == _this.trainingExperience)&&(identical(other.primaryTrainingStyle, _this.primaryTrainingStyle) || other.primaryTrainingStyle == _this.primaryTrainingStyle)&&(identical(other.preferredSessionDurationMinutes, _this.preferredSessionDurationMinutes) || other.preferredSessionDurationMinutes == _this.preferredSessionDurationMinutes)&&const DeepCollectionEquality().equals(other.preferredTrainingDays, _this.preferredTrainingDays)&&(identical(other.notes, _this.notes) || other.notes == _this.notes)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingProfile&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.trainingExperience, _this.trainingExperience) || other.trainingExperience == _this.trainingExperience)&&(identical(other.primaryTrainingStyle, _this.primaryTrainingStyle) || other.primaryTrainingStyle == _this.primaryTrainingStyle)&&(identical(other.preferredSessionDurationMinutes, _this.preferredSessionDurationMinutes) || other.preferredSessionDurationMinutes == _this.preferredSessionDurationMinutes)&&const DeepCollectionEquality().equals(other.preferredTrainingDays, _this.preferredTrainingDays)&&(identical(other.activityLevel, _this.activityLevel) || other.activityLevel == _this.activityLevel)&&(identical(other.baselineHeightCm, _this.baselineHeightCm) || other.baselineHeightCm == _this.baselineHeightCm)&&(identical(other.baselineWeightKg, _this.baselineWeightKg) || other.baselineWeightKg == _this.baselineWeightKg)&&(identical(other.restingHeartRateBpm, _this.restingHeartRateBpm) || other.restingHeartRateBpm == _this.restingHeartRateBpm)&&(identical(other.injuriesAndLimitations, _this.injuriesAndLimitations) || other.injuriesAndLimitations == _this.injuriesAndLimitations)&&(identical(other.notes, _this.notes) || other.notes == _this.notes)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as TrainingProfile;
-  return Object.hash(runtimeType,_this.userId,_this.trainingExperience,_this.primaryTrainingStyle,_this.preferredSessionDurationMinutes,const DeepCollectionEquality().hash(_this.preferredTrainingDays),_this.notes,_this.updatedAt);
+  return Object.hash(runtimeType,_this.userId,_this.trainingExperience,_this.primaryTrainingStyle,_this.preferredSessionDurationMinutes,const DeepCollectionEquality().hash(_this.preferredTrainingDays),_this.activityLevel,_this.baselineHeightCm,_this.baselineWeightKg,_this.restingHeartRateBpm,_this.injuriesAndLimitations,_this.notes,_this.updatedAt);
 }
 
 @override
 String toString() {
   final _this = this as TrainingProfile;
-  return 'TrainingProfile(userId: ${_this.userId}, trainingExperience: ${_this.trainingExperience}, primaryTrainingStyle: ${_this.primaryTrainingStyle}, preferredSessionDurationMinutes: ${_this.preferredSessionDurationMinutes}, preferredTrainingDays: ${_this.preferredTrainingDays}, notes: ${_this.notes}, updatedAt: ${_this.updatedAt})';
+  return 'TrainingProfile(userId: ${_this.userId}, trainingExperience: ${_this.trainingExperience}, primaryTrainingStyle: ${_this.primaryTrainingStyle}, preferredSessionDurationMinutes: ${_this.preferredSessionDurationMinutes}, preferredTrainingDays: ${_this.preferredTrainingDays}, activityLevel: ${_this.activityLevel}, baselineHeightCm: ${_this.baselineHeightCm}, baselineWeightKg: ${_this.baselineWeightKg}, restingHeartRateBpm: ${_this.restingHeartRateBpm}, injuriesAndLimitations: ${_this.injuriesAndLimitations}, notes: ${_this.notes}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $TrainingProfileCopyWith<$Res>  {
   factory $TrainingProfileCopyWith(TrainingProfile value, $Res Function(TrainingProfile) _then) = _$TrainingProfileCopyWithImpl;
 @useResult
 $Res call({
- String userId, TrainingExperience trainingExperience, String primaryTrainingStyle, int preferredSessionDurationMinutes, List<int> preferredTrainingDays, String notes, DateTime updatedAt
+ String userId, TrainingExperience trainingExperience, String primaryTrainingStyle, int preferredSessionDurationMinutes, List<int> preferredTrainingDays, ActivityLevel activityLevel, double? baselineHeightCm, double? baselineWeightKg, int? restingHeartRateBpm, String injuriesAndLimitations, String notes, DateTime updatedAt
 });
 
 
@@ -71,14 +71,19 @@ class _$TrainingProfileCopyWithImpl<$Res>
 
 /// Create a copy of TrainingProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? trainingExperience = null,Object? primaryTrainingStyle = null,Object? preferredSessionDurationMinutes = null,Object? preferredTrainingDays = null,Object? notes = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? trainingExperience = null,Object? primaryTrainingStyle = null,Object? preferredSessionDurationMinutes = null,Object? preferredTrainingDays = null,Object? activityLevel = null,Object? baselineHeightCm = freezed,Object? baselineWeightKg = freezed,Object? restingHeartRateBpm = freezed,Object? injuriesAndLimitations = null,Object? notes = null,Object? updatedAt = null,}) {
   return _then(TrainingProfile(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,trainingExperience: null == trainingExperience ? _self.trainingExperience : trainingExperience // ignore: cast_nullable_to_non_nullable
 as TrainingExperience,primaryTrainingStyle: null == primaryTrainingStyle ? _self.primaryTrainingStyle : primaryTrainingStyle // ignore: cast_nullable_to_non_nullable
 as String,preferredSessionDurationMinutes: null == preferredSessionDurationMinutes ? _self.preferredSessionDurationMinutes : preferredSessionDurationMinutes // ignore: cast_nullable_to_non_nullable
 as int,preferredTrainingDays: null == preferredTrainingDays ? _self.preferredTrainingDays : preferredTrainingDays // ignore: cast_nullable_to_non_nullable
-as List<int>,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as List<int>,activityLevel: null == activityLevel ? _self.activityLevel : activityLevel // ignore: cast_nullable_to_non_nullable
+as ActivityLevel,baselineHeightCm: freezed == baselineHeightCm ? _self.baselineHeightCm : baselineHeightCm // ignore: cast_nullable_to_non_nullable
+as double?,baselineWeightKg: freezed == baselineWeightKg ? _self.baselineWeightKg : baselineWeightKg // ignore: cast_nullable_to_non_nullable
+as double?,restingHeartRateBpm: freezed == restingHeartRateBpm ? _self.restingHeartRateBpm : restingHeartRateBpm // ignore: cast_nullable_to_non_nullable
+as int?,injuriesAndLimitations: null == injuriesAndLimitations ? _self.injuriesAndLimitations : injuriesAndLimitations // ignore: cast_nullable_to_non_nullable
+as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -165,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  String notes,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  ActivityLevel activityLevel,  double? baselineHeightCm,  double? baselineWeightKg,  int? restingHeartRateBpm,  String injuriesAndLimitations,  String notes,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TrainingProfile() when $default != null:
-return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.notes,_that.updatedAt);case _:
+return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.activityLevel,_that.baselineHeightCm,_that.baselineWeightKg,_that.restingHeartRateBpm,_that.injuriesAndLimitations,_that.notes,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -186,10 +191,10 @@ return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  String notes,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  ActivityLevel activityLevel,  double? baselineHeightCm,  double? baselineWeightKg,  int? restingHeartRateBpm,  String injuriesAndLimitations,  String notes,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _TrainingProfile():
-return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.notes,_that.updatedAt);case _:
+return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.activityLevel,_that.baselineHeightCm,_that.baselineWeightKg,_that.restingHeartRateBpm,_that.injuriesAndLimitations,_that.notes,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -206,10 +211,10 @@ return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  String notes,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId,  TrainingExperience trainingExperience,  String primaryTrainingStyle,  int preferredSessionDurationMinutes,  List<int> preferredTrainingDays,  ActivityLevel activityLevel,  double? baselineHeightCm,  double? baselineWeightKg,  int? restingHeartRateBpm,  String injuriesAndLimitations,  String notes,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _TrainingProfile() when $default != null:
-return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.notes,_that.updatedAt);case _:
+return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle,_that.preferredSessionDurationMinutes,_that.preferredTrainingDays,_that.activityLevel,_that.baselineHeightCm,_that.baselineWeightKg,_that.restingHeartRateBpm,_that.injuriesAndLimitations,_that.notes,_that.updatedAt);case _:
   return null;
 
 }
@@ -221,7 +226,7 @@ return $default(_that.userId,_that.trainingExperience,_that.primaryTrainingStyle
 @JsonSerializable()
 
 class _TrainingProfile implements TrainingProfile {
-  const _TrainingProfile({required this.userId, this.trainingExperience = TrainingExperience.intermediate, this.primaryTrainingStyle = 'General Strength', this.preferredSessionDurationMinutes = 60,  List<int> preferredTrainingDays = const [1, 3, 5], this.notes = '', required this.updatedAt}): _preferredTrainingDays = preferredTrainingDays;
+  const _TrainingProfile({required this.userId, this.trainingExperience = TrainingExperience.intermediate, this.primaryTrainingStyle = 'General Strength', this.preferredSessionDurationMinutes = 60,  List<int> preferredTrainingDays = const [1, 3, 5], this.activityLevel = ActivityLevel.moderatelyActive, this.baselineHeightCm, this.baselineWeightKg, this.restingHeartRateBpm, this.injuriesAndLimitations = '', this.notes = '', required this.updatedAt}): _preferredTrainingDays = preferredTrainingDays;
   factory _TrainingProfile.fromJson(Map<String, dynamic> json) => _$TrainingProfileFromJson(json);
 
 @override final  String userId;
@@ -235,6 +240,11 @@ class _TrainingProfile implements TrainingProfile {
   return EqualUnmodifiableListView(_preferredTrainingDays);
 }
 
+@override@JsonKey() final  ActivityLevel activityLevel;
+@override final  double? baselineHeightCm;
+@override final  double? baselineWeightKg;
+@override final  int? restingHeartRateBpm;
+@override@JsonKey() final  String injuriesAndLimitations;
 @override@JsonKey() final  String notes;
 @override final  DateTime updatedAt;
 
@@ -251,18 +261,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingProfile&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.trainingExperience, trainingExperience) || other.trainingExperience == trainingExperience)&&(identical(other.primaryTrainingStyle, primaryTrainingStyle) || other.primaryTrainingStyle == primaryTrainingStyle)&&(identical(other.preferredSessionDurationMinutes, preferredSessionDurationMinutes) || other.preferredSessionDurationMinutes == preferredSessionDurationMinutes)&&const DeepCollectionEquality().equals(other.preferredTrainingDays, _preferredTrainingDays)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingProfile&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.trainingExperience, trainingExperience) || other.trainingExperience == trainingExperience)&&(identical(other.primaryTrainingStyle, primaryTrainingStyle) || other.primaryTrainingStyle == primaryTrainingStyle)&&(identical(other.preferredSessionDurationMinutes, preferredSessionDurationMinutes) || other.preferredSessionDurationMinutes == preferredSessionDurationMinutes)&&const DeepCollectionEquality().equals(other.preferredTrainingDays, _preferredTrainingDays)&&(identical(other.activityLevel, activityLevel) || other.activityLevel == activityLevel)&&(identical(other.baselineHeightCm, baselineHeightCm) || other.baselineHeightCm == baselineHeightCm)&&(identical(other.baselineWeightKg, baselineWeightKg) || other.baselineWeightKg == baselineWeightKg)&&(identical(other.restingHeartRateBpm, restingHeartRateBpm) || other.restingHeartRateBpm == restingHeartRateBpm)&&(identical(other.injuriesAndLimitations, injuriesAndLimitations) || other.injuriesAndLimitations == injuriesAndLimitations)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,userId,trainingExperience,primaryTrainingStyle,preferredSessionDurationMinutes,const DeepCollectionEquality().hash(_preferredTrainingDays),notes,updatedAt);
+    return Object.hash(runtimeType,userId,trainingExperience,primaryTrainingStyle,preferredSessionDurationMinutes,const DeepCollectionEquality().hash(_preferredTrainingDays),activityLevel,baselineHeightCm,baselineWeightKg,restingHeartRateBpm,injuriesAndLimitations,notes,updatedAt);
 }
 
 @override
 String toString() {
-    return 'TrainingProfile(userId: $userId, trainingExperience: $trainingExperience, primaryTrainingStyle: $primaryTrainingStyle, preferredSessionDurationMinutes: $preferredSessionDurationMinutes, preferredTrainingDays: $preferredTrainingDays, notes: $notes, updatedAt: $updatedAt)';
+    return 'TrainingProfile(userId: $userId, trainingExperience: $trainingExperience, primaryTrainingStyle: $primaryTrainingStyle, preferredSessionDurationMinutes: $preferredSessionDurationMinutes, preferredTrainingDays: $preferredTrainingDays, activityLevel: $activityLevel, baselineHeightCm: $baselineHeightCm, baselineWeightKg: $baselineWeightKg, restingHeartRateBpm: $restingHeartRateBpm, injuriesAndLimitations: $injuriesAndLimitations, notes: $notes, updatedAt: $updatedAt)';
 }
 
 
@@ -273,7 +283,7 @@ abstract mixin class _$TrainingProfileCopyWith<$Res> implements $TrainingProfile
   factory _$TrainingProfileCopyWith(_TrainingProfile value, $Res Function(_TrainingProfile) _then) = __$TrainingProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String userId, TrainingExperience trainingExperience, String primaryTrainingStyle, int preferredSessionDurationMinutes, List<int> preferredTrainingDays, String notes, DateTime updatedAt
+ String userId, TrainingExperience trainingExperience, String primaryTrainingStyle, int preferredSessionDurationMinutes, List<int> preferredTrainingDays, ActivityLevel activityLevel, double? baselineHeightCm, double? baselineWeightKg, int? restingHeartRateBpm, String injuriesAndLimitations, String notes, DateTime updatedAt
 });
 
 
@@ -290,14 +300,19 @@ class __$TrainingProfileCopyWithImpl<$Res>
 
 /// Create a copy of TrainingProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? trainingExperience = null,Object? primaryTrainingStyle = null,Object? preferredSessionDurationMinutes = null,Object? preferredTrainingDays = null,Object? notes = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? trainingExperience = null,Object? primaryTrainingStyle = null,Object? preferredSessionDurationMinutes = null,Object? preferredTrainingDays = null,Object? activityLevel = null,Object? baselineHeightCm = freezed,Object? baselineWeightKg = freezed,Object? restingHeartRateBpm = freezed,Object? injuriesAndLimitations = null,Object? notes = null,Object? updatedAt = null,}) {
   return _then(_TrainingProfile(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,trainingExperience: null == trainingExperience ? _self.trainingExperience : trainingExperience // ignore: cast_nullable_to_non_nullable
 as TrainingExperience,primaryTrainingStyle: null == primaryTrainingStyle ? _self.primaryTrainingStyle : primaryTrainingStyle // ignore: cast_nullable_to_non_nullable
 as String,preferredSessionDurationMinutes: null == preferredSessionDurationMinutes ? _self.preferredSessionDurationMinutes : preferredSessionDurationMinutes // ignore: cast_nullable_to_non_nullable
 as int,preferredTrainingDays: null == preferredTrainingDays ? _self._preferredTrainingDays : preferredTrainingDays // ignore: cast_nullable_to_non_nullable
-as List<int>,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as List<int>,activityLevel: null == activityLevel ? _self.activityLevel : activityLevel // ignore: cast_nullable_to_non_nullable
+as ActivityLevel,baselineHeightCm: freezed == baselineHeightCm ? _self.baselineHeightCm : baselineHeightCm // ignore: cast_nullable_to_non_nullable
+as double?,baselineWeightKg: freezed == baselineWeightKg ? _self.baselineWeightKg : baselineWeightKg // ignore: cast_nullable_to_non_nullable
+as double?,restingHeartRateBpm: freezed == restingHeartRateBpm ? _self.restingHeartRateBpm : restingHeartRateBpm // ignore: cast_nullable_to_non_nullable
+as int?,injuriesAndLimitations: null == injuriesAndLimitations ? _self.injuriesAndLimitations : injuriesAndLimitations // ignore: cast_nullable_to_non_nullable
+as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

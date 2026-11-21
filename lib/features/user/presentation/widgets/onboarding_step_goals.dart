@@ -15,15 +15,9 @@ class const OnboardingStepGoals({super.key}) extends StatefulWidget {
 
 class _OnboardingStepGoalsState() extends State<OnboardingStepGoals> {
   GoalType _selectedType = GoalType.strength;
-  final TextEditingController _nameController = TextEditingController(
-    text: 'Bench Press 100kg',
-  );
-  final TextEditingController _descriptionController = TextEditingController(
-    text: 'Build upper body pushing strength and chest mass.',
-  );
-  final TextEditingController _targetController = TextEditingController(
-    text: '100',
-  );
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _targetController = TextEditingController();
 
   @override
   void dispose() {
@@ -35,13 +29,18 @@ class _OnboardingStepGoalsState() extends State<OnboardingStepGoals> {
 
   void _syncGoal(BuildContext context) {
     final cubit = context.read<OnboardingCubit>();
-    final targetVal = double.tryParse(_targetController.text) ?? 100.0;
+    final goalName = _nameController.text.trim();
+    final targetVal = double.tryParse(_targetController.text);
+    if (goalName.isEmpty || targetVal == null || targetVal <= 0) {
+      cubit.updateGoal(null);
+      return;
+    }
 
     final goal = TrainingGoal(
-      id: 'onboarding-goal-${DateTime.now().millisecondsSinceEpoch}',
+      id: 'onboarding-goal',
       userId: cubit.userId,
       type: _selectedType,
-      name: _nameController.text.trim(),
+      name: goalName,
       description: _descriptionController.text.trim(),
       startValue: 0.0,
       targetValue: targetVal,
@@ -92,18 +91,35 @@ class _OnboardingStepGoalsState() extends State<OnboardingStepGoals> {
               onChanged: (_) => _syncGoal(context),
             ),
             const SizedBox(height: 16),
-            AppDropdown<GoalType>(
-              label: 'Goal Type',
-              value: _selectedType,
-              items: GoalType.values.map((t) {
-                return AppDropdownItem(value: t, label: t.name.toUpperCase());
-              }).toList(),
-              onChanged: (val) {
-                if (val != null) {
-                  setState(() => _selectedType = val);
-                  _syncGoal(context);
-                }
-              },
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children:
+                  [
+                    GoalType.strength,
+                    GoalType.workoutFrequency,
+                    GoalType.bodyWeight,
+                    GoalType.endurance,
+                    GoalType.duration,
+                    GoalType.distance,
+                  ].map((type) {
+                    return ChoiceChip(
+                      label: Text(switch (type) {
+                        GoalType.strength => 'Strength',
+                        GoalType.workoutFrequency => 'Workout frequency',
+                        GoalType.bodyWeight => 'Body weight',
+                        GoalType.endurance => 'Endurance',
+                        GoalType.duration => 'Workout duration',
+                        GoalType.distance => 'Distance',
+                        _ => type.name,
+                      }),
+                      selected: _selectedType == type,
+                      onSelected: (_) {
+                        setState(() => _selectedType = type);
+                        _syncGoal(context);
+                      },
+                    );
+                  }).toList(),
             ),
             const SizedBox(height: 16),
             AppTextField(

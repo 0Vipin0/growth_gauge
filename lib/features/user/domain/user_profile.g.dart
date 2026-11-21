@@ -14,6 +14,11 @@ _UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => _UserProfile(
   dateOfBirth: json['dateOfBirth'] == null
       ? null
       : DateTime.parse(json['dateOfBirth'] as String),
+  ageYears: (json['ageYears'] as num?)?.toInt(),
+  biologicalSex: $enumDecodeNullable(
+    _$BiologicalSexEnumMap,
+    json['biologicalSex'],
+  ),
   profileImageId: json['profileImageId'] as String?,
   timezone: json['timezone'] as String? ?? 'UTC',
   locale: json['locale'] as String? ?? 'en',
@@ -40,6 +45,8 @@ Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
+      'ageYears': instance.ageYears,
+      'biologicalSex': _$BiologicalSexEnumMap[instance.biologicalSex],
       'profileImageId': instance.profileImageId,
       'timezone': instance.timezone,
       'locale': instance.locale,
@@ -50,6 +57,13 @@ Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
+
+const _$BiologicalSexEnumMap = {
+  BiologicalSex.female: 'FEMALE',
+  BiologicalSex.male: 'MALE',
+  BiologicalSex.intersex: 'INTERSEX',
+  BiologicalSex.preferNotToSay: 'PREFER_NOT_TO_SAY',
+};
 
 const _$WeightUnitEnumMap = {
   WeightUnit.kilograms: 'kilograms',

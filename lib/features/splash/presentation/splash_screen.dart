@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:growth_gauge/gen/assets.gen.dart';
 
-import '../../../core/routing/routing.dart';
+import '../../../core/routing/launch_route_resolver.dart';
 import '../../settings/config/shared_preferences_config.dart';
 
-class const SplashScreen({super.key}) extends StatefulWidget {
+class const SplashScreen({super.key, final bool? hasCompletedOnboarding})
+    extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -68,15 +69,14 @@ class _SplashScreenState()
 
   Future<void> _checkOnboardingStatus() async {
     final bool hasCompletedOnboarding =
+        widget.hasCompletedOnboarding ??
         SharedPreferencesHelper.getHasCompletedOnboarding();
 
     if (!mounted) return;
 
-    if (hasCompletedOnboarding) {
-      _navigateTo(appRouteLaunch);
-    } else {
-      _navigateTo(appRouteOnboarding);
-    }
+    _navigateTo(
+      resolveLaunchRoute(hasCompletedOnboarding: hasCompletedOnboarding),
+    );
   }
 
   void _navigateTo(String route) {

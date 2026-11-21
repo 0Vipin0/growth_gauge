@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/units/unit_types.dart';
+import 'user_enums.dart';
 
 part 'user_profile.freezed.dart';
 part 'user_profile.g.dart';
@@ -14,6 +15,8 @@ abstract class UserProfile with _$UserProfile {
     @Default('') String firstName,
     @Default('') String lastName,
     DateTime? dateOfBirth,
+    int? ageYears,
+    BiologicalSex? biologicalSex,
     String? profileImageId,
     @Default('UTC') String timezone,
     @Default('en') String locale,

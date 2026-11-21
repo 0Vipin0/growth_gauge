@@ -15,6 +15,11 @@ abstract class TrainingProfile with _$TrainingProfile {
     @Default('General Strength') String primaryTrainingStyle,
     @Default(60) int preferredSessionDurationMinutes,
     @Default([1, 3, 5]) List<int> preferredTrainingDays,
+    @Default(ActivityLevel.moderatelyActive) ActivityLevel activityLevel,
+    double? baselineHeightCm,
+    double? baselineWeightKg,
+    int? restingHeartRateBpm,
+    @Default('') String injuriesAndLimitations,
     @Default('') String notes,
     required DateTime updatedAt,
   }) = _TrainingProfile;
