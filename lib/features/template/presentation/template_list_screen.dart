@@ -484,10 +484,14 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                                                         size: 18,
                                                       ),
                                                       const SizedBox(width: 8),
-                                                      Text(
-                                                        template.isArchived
-                                                            ? 'Restore'
-                                                            : 'Archive',
+                                                      Flexible(
+                                                        child: Text(
+                                                          template.isArchived
+                                                              ? 'Restore'
+                                                              : 'Archive',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -503,11 +507,15 @@ class _TemplateListScreenState() extends State<TemplateListScreen> {
                                                             colorScheme.error,
                                                       ),
                                                       const SizedBox(width: 8),
-                                                      Text(
-                                                        'Delete permanently',
-                                                        style: TextStyle(
-                                                          color:
-                                                              colorScheme.error,
+                                                      Flexible(
+                                                        child: Text(
+                                                          'Delete permanently',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                            color: colorScheme
+                                                                .error,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],

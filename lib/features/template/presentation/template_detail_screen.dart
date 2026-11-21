@@ -7,6 +7,7 @@ import '../../catalog/catalog.dart';
 import '../../common/presentation/widgets/widgets.dart';
 import '../../session/application/session_use_cases.dart';
 import '../application/template_use_cases.dart';
+import '../domain/target_set.dart';
 import '../domain/template_enums.dart';
 import '../domain/workout_template.dart';
 import '../domain/workout_template_revision.dart';
@@ -108,6 +109,24 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
     }
   }
 
+  String _targetSetSummary(TargetSet set) {
+    final details = <String>[];
+    if (set.targetReps != null) details.add('${set.targetReps} reps');
+    if (set.targetWeight != null) details.add('${set.targetWeight} kg');
+    if (set.targetDurationSeconds != null) {
+      details.add('${set.targetDurationSeconds}s');
+    }
+    if (set.targetDistanceMeters != null) {
+      details.add('${set.targetDistanceMeters} m');
+    }
+    if (set.targetCalories != null) details.add('${set.targetCalories} kcal');
+    if (set.targetRpe != null) details.add('RPE ${set.targetRpe}');
+    if (set.restPolicy != null) {
+      details.add('${set.restPolicy!.targetSeconds}s rest');
+    }
+    return details.isEmpty ? 'Open target' : details.join(' · ');
+  }
+
   Future<void> _confirmAndDelete() async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -167,10 +186,13 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                       size: 18,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      _template.isArchived
-                          ? 'Restore template'
-                          : 'Archive template',
+                    Flexible(
+                      child: Text(
+                        _template.isArchived
+                            ? 'Restore template'
+                            : 'Archive template',
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -185,10 +207,13 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                       color: Theme.of(context).colorScheme.error,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      'Delete permanently',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                    Flexible(
+                      child: Text(
+                        'Delete permanently',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                   ],
@@ -343,15 +368,32 @@ class _TemplateDetailScreenState() extends State<TemplateDetailScreen> {
                                         title: Text(
                                           exercise?.name ?? item.exerciseId,
                                         ),
-                                        subtitle: exercise != null
-                                            ? Text(
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (exercise != null)
+                                              Text(
                                                 exercise
                                                     .classification
                                                     .bodyRegions
                                                     .map((e) => e.displayName)
                                                     .join(', '),
-                                              )
-                                            : null,
+                                              ),
+                                            ...item.targetSets.map(
+                                              (set) => Text(
+                                                'Set ${set.setNumber} · ${_targetSetSummary(set)}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall
+                                                    ?.copyWith(
+                                                      color: colorScheme
+                                                          .onSurfaceVariant,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                         trailing: IconButton(
                                           icon: const Icon(Icons.chevron_right),
                                           tooltip: 'View exercise details',

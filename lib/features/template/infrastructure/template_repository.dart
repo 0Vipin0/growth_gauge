@@ -22,6 +22,7 @@ abstract interface class ITemplateRepository() {
 }
 
 class TemplateRepository(AppDatabase db) implements ITemplateRepository {
+  final AppDatabase _database = db;
   final IDocumentStore<WorkoutTemplate> _templates =
       DriftDocumentStore<WorkoutTemplate>(
         database: db,
@@ -77,6 +78,34 @@ class TemplateRepository(AppDatabase db) implements ITemplateRepository {
   }
 
   @override
-  Future<Result<void, Failure>> deleteTemplate(String id) =>
-      _templates.delete(id);
+  Future<Result<void, Failure>> deleteTemplate(String id) async {
+    final revisions = await getRevisions(id);
+    if (revisions.isError) return Result.error(revisions.errorOrNull!);
+
+    try {
+      await _database.transaction(() async {
+        for (final revision in revisions.dataOrNull!) {
+          final deletedRevision = await _revisions.delete(revision.id);
+          if (deletedRevision.isError) {
+            throw deletedRevision.errorOrNull!;
+          }
+        }
+
+        final deletedTemplate = await _templates.delete(id);
+        if (deletedTemplate.isError) {
+          throw deletedTemplate.errorOrNull!;
+        }
+      });
+      return const Result.success(null);
+    } on Failure catch (failure) {
+      return Result.error(failure);
+    } catch (error) {
+      return Result.error(
+        DatabaseFailure(
+          'Failed to delete template $id and its revisions',
+          error,
+        ),
+      );
+    }
+  }
 }

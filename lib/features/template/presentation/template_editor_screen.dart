@@ -446,7 +446,12 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                   children: [
                     Icon(Icons.archive, size: 18),
                     SizedBox(width: 8),
-                    Text('Archive template'),
+                    Flexible(
+                      child: Text(
+                        'Archive template',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -460,10 +465,13 @@ class _TemplateEditorScreenState() extends State<TemplateEditorScreen> {
                       color: Theme.of(context).colorScheme.error,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      'Delete permanently',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                    Flexible(
+                      child: Text(
+                        'Delete permanently',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                   ],

@@ -14343,39 +14343,13 @@ class WorkoutTemplateSeedData._() {
                 TargetSet(
                   id: 'ts-r1b-1-1',
                   setNumber: 1,
-                  targetReps: 0,
                   targetRpe: 9.5,
-                ), // 0 reps can indicate max effort tracking in app logic
-                TargetSet(
-                  id: 'ts-r1b-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r1b-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r1b-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r1b-1-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r1b-1-6',
-                  setNumber: 6,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                ), // RPE-guided sets leave the repetition target unspecified.
+                TargetSet(id: 'ts-r1b-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-r1b-1-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-r1b-1-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-r1b-1-5', setNumber: 5, targetRpe: 9.5),
+                TargetSet(id: 'ts-r1b-1-6', setNumber: 6, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -16912,30 +16886,10 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pullup-001',
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-bk-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-mon-bk-1-1', setNumber: 1, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-1-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-1-4', setNumber: 4, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-mon-bk-1-5',
                   setNumber: 5,
@@ -16962,36 +16916,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-seated-cable-row-001', // Pulley Draw
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-bk-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-3-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-3-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-bk-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-bk-3-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-bk-3-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-3-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-3-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -16999,30 +16928,10 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-single-arm-db-row-001',
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-bk-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-4-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-4-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-bk-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-bk-4-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-4-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-4-4', setNumber: 4, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -17030,24 +16939,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-row-001',
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-bk-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-5-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-bk-5-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-bk-5-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-bk-5-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-bk-5-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
           ],
@@ -17185,30 +17079,10 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-curl-001',
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-bi-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-bi-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-bi-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-bi-3-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-tue-bi-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-bi-3-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-bi-3-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-bi-3-4', setNumber: 4, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -17333,30 +17207,10 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pushup-001', // Weighted pushup variant
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-ch-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-wed-ch-1-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-ch-1-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-ch-1-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-ch-1-4', setNumber: 4, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -17364,30 +17218,10 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pushup-001', // Height pushup
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-ch-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-ch-2-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-wed-ch-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-ch-2-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-ch-2-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-ch-2-4', setNumber: 4, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -18112,34 +17946,13 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pullup-001',
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r4-mon-bk-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r4-mon-bk-1-1', setNumber: 1, targetRpe: 9.5),
+                TargetSet(id: 'ts-r4-mon-bk-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-r4-mon-bk-1-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-r4-mon-bk-1-4', setNumber: 4, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r4-mon-bk-1-5',
                   setNumber: 5,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -18149,36 +17962,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-hanging-leg-raise-001', // Abdomen (Skipping + Sidebend)
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r4-mon-bk-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 8.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 8.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-2-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-2-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r4-mon-bk-2-1', setNumber: 1, targetRpe: 8.5),
+                TargetSet(id: 'ts-r4-mon-bk-2-2', setNumber: 2, targetRpe: 8.5),
+                TargetSet(id: 'ts-r4-mon-bk-2-3', setNumber: 3, targetRpe: 9.0),
+                TargetSet(id: 'ts-r4-mon-bk-2-4', setNumber: 4, targetRpe: 9.0),
+                TargetSet(id: 'ts-r4-mon-bk-2-5', setNumber: 5, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -18322,34 +18110,13 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-back-extension-001',
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r4-mon-bk-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-7-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-7-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r4-mon-bk-7-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r4-mon-bk-7-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-r4-mon-bk-7-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-r4-mon-bk-7-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-r4-mon-bk-7-4', setNumber: 4, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r4-mon-bk-7-5',
                   setNumber: 5,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -19130,22 +18897,11 @@ class WorkoutTemplateSeedData._() {
                   'exercise-back-extension-001', // Hyper Extension (3xMax)
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r4-thu-tr-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r4-thu-tr-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r4-thu-tr-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-r4-thu-tr-4-2', setNumber: 2, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r4-thu-tr-4-3',
                   setNumber: 3,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -19915,24 +19671,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rising-cable-press-001', // Rising
               order: 9,
               targetSets: [
-                TargetSet(
-                  id: 'ts-sat-ch-9-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-sat-ch-9-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-sat-ch-9-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-sat-ch-9-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-sat-ch-9-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-sat-ch-9-3', setNumber: 3, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -19940,24 +19681,14 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-dumbbell-pullover-001', // Pullover
               order: 10,
               targetSets: [
-                TargetSet(
-                  id: 'ts-sat-ch-10-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-sat-ch-10-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-sat-ch-10-2',
                   setNumber: 2,
                   targetReps: 2,
                   targetRpe: 9.0,
                 ),
-                TargetSet(
-                  id: 'ts-sat-ch-10-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-sat-ch-10-3', setNumber: 3, targetRpe: 9.5),
               ],
             ),
           ],
@@ -20053,34 +19784,17 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pullup-001', // Pullups
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-mon-bk-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r5-mon-bk-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r5-mon-bk-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r5-mon-bk-1-1', setNumber: 1, targetRpe: 9.5),
+                TargetSet(id: 'ts-r5-mon-bk-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-r5-mon-bk-1-3', setNumber: 3, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r5-mon-bk-1-4',
                   setNumber: 4,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
                 TargetSet(
                   id: 'ts-r5-mon-bk-1-5',
                   setNumber: 5,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -20195,24 +19909,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-seated-cable-row-001', // Sitted Rowing
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-mon-bk-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r5-mon-bk-5-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r5-mon-bk-5-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r5-mon-bk-5-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-r5-mon-bk-5-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-r5-mon-bk-5-3', setNumber: 3, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r5-mon-bk-5-4',
                   setNumber: 4,
@@ -20226,12 +19925,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-row-001', // Bent Rowing
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-mon-bk-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-mon-bk-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-mon-bk-6-2',
                   setNumber: 2,
@@ -20257,12 +19951,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-back-extension-001', // Hyper Extension
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-mon-bk-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-mon-bk-7-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-mon-bk-7-2',
                   setNumber: 2,
@@ -20352,7 +20041,6 @@ class WorkoutTemplateSeedData._() {
                 TargetSet(
                   id: 'ts-r5-tue-bi-w1-1',
                   setNumber: 1,
-                  targetReps: 0,
                   targetRpe: 5.0,
                 ),
               ],
@@ -20368,12 +20056,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-ez-close-grip-curl-001', // EZ Close Grip
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-1-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-1-2',
                   setNumber: 2,
@@ -20405,12 +20088,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-curl-001', // Wide Grip Barbell
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-2-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-2-2',
                   setNumber: 2,
@@ -20442,12 +20120,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-preacher-curl-single-001', // One Arm Preacher Dumbbell
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-3-2',
                   setNumber: 2,
@@ -20479,12 +20152,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-curl-001', // Low Pulley
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-4-2',
                   setNumber: 2,
@@ -20516,12 +20184,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-preacher-curl-single-001', // Concenteration Dumbbell
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-5-2',
                   setNumber: 2,
@@ -20553,12 +20216,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-curl-001', // Reverse Barbell
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-tue-bi-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-tue-bi-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-tue-bi-6-2',
                   setNumber: 2,
@@ -20664,12 +20322,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-seated-db-press-001', // Shoulder Dumb Press
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-wed-sh-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-wed-sh-1-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-wed-sh-1-2',
                   setNumber: 2,
@@ -20690,12 +20343,7 @@ class WorkoutTemplateSeedData._() {
                   'exercise-behind-neck-press-001', // Behind Neck Barbell
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-wed-sh-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-wed-sh-2-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-wed-sh-2-2',
                   setNumber: 2,
@@ -20727,12 +20375,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rear-delt-fly-001', // Side Reverse
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-wed-sh-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-wed-sh-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-wed-sh-3-2',
                   setNumber: 2,
@@ -20764,12 +20407,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-upright-row-001', // Upright
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-wed-sh-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-wed-sh-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-wed-sh-4-2',
                   setNumber: 2,
@@ -20795,12 +20433,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-shrug-001', // Shrugs
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-wed-sh-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-wed-sh-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-wed-sh-5-2',
                   setNumber: 2,
@@ -20912,12 +20545,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-overhead-tricep-extension-001', // Bent Over Head Extension
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-1-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-1-2',
                   setNumber: 2,
@@ -20949,12 +20577,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-overhead-tricep-extension-001', // Single Arm Over Head
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-2-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-2-2',
                   setNumber: 2,
@@ -20986,12 +20609,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-tricep-pushdown-001', // Pushdown Rod
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-3-2',
                   setNumber: 2,
@@ -21023,12 +20641,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-reverse-pushdown-001', // Reverse Psuhdown
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-4-2',
                   setNumber: 2,
@@ -21060,12 +20673,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-dips-001', // Bench Dips
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-5-2',
                   setNumber: 2,
@@ -21097,12 +20705,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pushup-001', // Diamond Pushups
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-thu-tr-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-thu-tr-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-thu-tr-6-2',
                   setNumber: 2,
@@ -21214,12 +20817,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-bodyweight-squat-001', // Free Squat
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-1-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-1-2',
                   setNumber: 2,
@@ -21251,12 +20849,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-leg-extension-001', // Leg Extension
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-2-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-2-2',
                   setNumber: 2,
@@ -21282,12 +20875,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-squat-001', // Weighted Squat
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-3-2',
                   setNumber: 2,
@@ -21313,12 +20901,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-lying-leg-curl-001', // Leg Curl
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-4-2',
                   setNumber: 2,
@@ -21344,12 +20927,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-leg-press-001', // Thigh Press
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-5-2',
                   setNumber: 2,
@@ -21381,12 +20959,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-fri-lw-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-fri-lw-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-fri-lw-6-2',
                   setNumber: 2,
@@ -21499,12 +21072,7 @@ class WorkoutTemplateSeedData._() {
                   'exercise-db-bench-001', // Flat Dumbbell Press + Pushup
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-sat-ch-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-sat-ch-1-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-sat-ch-1-2',
                   setNumber: 2,
@@ -21530,12 +21098,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-incline-db-press-001', // Incline Dumbbell Press + Height Pushup
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-sat-ch-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-sat-ch-2-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-sat-ch-2-2',
                   setNumber: 2,
@@ -21561,12 +21124,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-fly-001', // Dumbbell Flies
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-sat-ch-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-sat-ch-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-sat-ch-3-2',
                   setNumber: 2,
@@ -21598,12 +21156,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-decline-bench-001', // Decline Bench
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-sat-ch-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-sat-ch-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-sat-ch-4-2',
                   setNumber: 2,
@@ -21629,12 +21182,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-dumbbell-pullover-001', // Pull Over
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r5-sat-ch-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r5-sat-ch-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r5-sat-ch-5-2',
                   setNumber: 2,
@@ -23217,42 +22765,12 @@ class WorkoutTemplateSeedData._() {
                   'exercise-pushup-001', // Pushup (Weighted + Non Weighted)
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 8.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-1-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-1-6',
-                  setNumber: 6,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-1-1', setNumber: 1, targetRpe: 8.5),
+                TargetSet(id: 'ts-mon-ch-1-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-1-3', setNumber: 3, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-1-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-1-5', setNumber: 5, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-1-6', setNumber: 6, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23260,36 +22778,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-bench-001', // Barbell Bench Press
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-2-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-2-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-2-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-2-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-2-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-2-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23297,24 +22790,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-bench-001', // Dumbbell Bench Press
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-3-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-3-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23322,36 +22800,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-incline-bench-001', // Incline Barbell Press
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-4-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-4-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-4-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-4-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-4-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-4-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-4-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23359,36 +22812,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-incline-db-fly-001', // Incline Fly
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-5-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-5-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-5-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-5-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-5-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-5-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-5-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-5-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-5-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23396,36 +22824,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-decline-bench-001', // Decline Barbell
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-6-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-6-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-6-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-6-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-6-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-6-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-6-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-6-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-6-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23433,36 +22836,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-fly-001', // Flat Bench Fly
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-7-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-7-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-7-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-7-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-7-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-7-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-7-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-7-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-7-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23470,24 +22848,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rising-cable-press-001', // Rising
               order: 8,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-8-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-8-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-8-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-8-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-8-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-8-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23495,36 +22858,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-dumbbell-pullover-001', // PullOver
               order: 9,
               targetSets: [
-                TargetSet(
-                  id: 'ts-mon-ch-9-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-9-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-9-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-9-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-mon-ch-9-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-mon-ch-9-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-9-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-mon-ch-9-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-9-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-mon-ch-9-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
           ],
@@ -23618,24 +22956,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rising-cable-press-001', // Rising
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-1-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-1-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23643,36 +22966,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rope-pushdown-001', // Ropes Pushdown
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-2-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-2-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-2-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-2-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-2-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-2-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23680,36 +22978,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-rope-pushdown-001', // Rope up Triceps
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-3-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-3-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-3-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-3-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-3-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-3-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23717,36 +22990,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-skull-crusher-001', // Skull Crusher
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-4-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-4-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-4-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-4-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-4-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-4-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-4-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23754,36 +23002,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-tricep-pushdown-001', // Pulley Pushdown
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-5-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-5-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-5-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-5-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-5-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-5-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-5-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-5-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-5-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23791,24 +23014,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-dumbbell-kickback-001', // Kickback
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-tue-tr-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-6-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-tue-tr-6-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-tue-tr-6-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-tue-tr-6-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-tue-tr-6-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
           ],
@@ -23902,24 +23110,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-pullup-001', // Pullup
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-1-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-1-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23927,36 +23120,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-lat-pulldown-001', // Front Pully
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-2-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-2-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-2-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-2-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-2-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-2-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -23964,36 +23132,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-single-arm-db-row-001', // Single Arm Rowing
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-3-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-3-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-3-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-3-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-3-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-3-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24001,36 +23144,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-row-001', // Bent Rowing
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-4-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-4-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-4-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-4-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-4-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-4-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-4-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24039,36 +23157,11 @@ class WorkoutTemplateSeedData._() {
                   'exercise-neutral-grip-lat-pulldown-001', // Reverse Pulley
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-5-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-5-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-5-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-5-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-5-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-5-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-5-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-5-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-5-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24076,36 +23169,11 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-seated-cable-row-001', // Seating Rowing
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-6-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-6-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-6-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-6-5',
-                  setNumber: 5,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-6-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-6-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-6-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-6-4', setNumber: 4, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-6-5', setNumber: 5, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24113,24 +23181,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-back-extension-001', // Hyper Extension
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-wed-bk-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-7-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-wed-bk-7-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-wed-bk-7-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-wed-bk-7-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-wed-bk-7-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
           ],
@@ -24205,18 +23258,8 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-db-curl-001', // Warmup Dumbbell Curl
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-w1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 5.0,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-w1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 5.5,
-                ),
+                TargetSet(id: 'ts-thu-bi-w1-1', setNumber: 1, targetRpe: 5.0),
+                TargetSet(id: 'ts-thu-bi-w1-2', setNumber: 2, targetRpe: 5.5),
               ],
             ),
           ],
@@ -24231,24 +23274,9 @@ class WorkoutTemplateSeedData._() {
                   'exercise-barbell-curl-001', // Wide Grip EZ Barbell Curl
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-1-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-thu-bi-1-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-thu-bi-1-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24256,24 +23284,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-ez-close-grip-curl-001', // Close Grip EZ Barbell Curl
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-thu-bi-2-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-thu-bi-2-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24281,24 +23294,9 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-barbell-curl-001', // Low Pulley Curl
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-3-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-3-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 10.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-3-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-thu-bi-3-2', setNumber: 2, targetRpe: 9.5),
+                TargetSet(id: 'ts-thu-bi-3-3', setNumber: 3, targetRpe: 10.0),
               ],
             ),
             TemplateItem(
@@ -24307,18 +23305,8 @@ class WorkoutTemplateSeedData._() {
                   'exercise-barbell-curl-001', // Reverse Grip EZ Barbell Curl
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-thu-bi-4-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-thu-bi-4-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-thu-bi-4-2', setNumber: 2, targetRpe: 9.5),
               ],
             ),
             TemplateItem(
@@ -24327,12 +23315,7 @@ class WorkoutTemplateSeedData._() {
                   'exercise-barbell-curl-001', // Reverse Grip Barbell Curl
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-thu-bi-5-2',
                   setNumber: 2,
@@ -24346,12 +23329,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-hammer-curl-001', // Hammer Curl
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-thu-bi-6-2',
                   setNumber: 2,
@@ -24371,12 +23349,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-spider-curl-001', // Spider Curl
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-thu-bi-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-thu-bi-7-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-thu-bi-7-2',
                   setNumber: 2,
@@ -24482,34 +23455,13 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-bodyweight-squat-001', // Squats
               order: 1,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-1-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r7-fri-lw-1-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r7-fri-lw-1-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
-                TargetSet(
-                  id: 'ts-r7-fri-lw-1-4',
-                  setNumber: 4,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-1-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-r7-fri-lw-1-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-r7-fri-lw-1-3', setNumber: 3, targetRpe: 9.5),
+                TargetSet(id: 'ts-r7-fri-lw-1-4', setNumber: 4, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r7-fri-lw-1-5',
                   setNumber: 5,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -24519,28 +23471,12 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-squat-001', // Weighted Squats
               order: 2,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-2-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r7-fri-lw-2-2',
-                  setNumber: 2,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
-                TargetSet(
-                  id: 'ts-r7-fri-lw-2-3',
-                  setNumber: 3,
-                  targetReps: 0,
-                  targetRpe: 9.5,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-2-1', setNumber: 1, targetRpe: 9.0),
+                TargetSet(id: 'ts-r7-fri-lw-2-2', setNumber: 2, targetRpe: 9.0),
+                TargetSet(id: 'ts-r7-fri-lw-2-3', setNumber: 3, targetRpe: 9.5),
                 TargetSet(
                   id: 'ts-r7-fri-lw-2-4',
                   setNumber: 4,
-                  targetReps: 0,
                   targetRpe: 10.0,
                 ),
               ],
@@ -24550,12 +23486,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-leg-extension-001', // Leg Extension
               order: 3,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-3-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-3-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r7-fri-lw-3-2',
                   setNumber: 2,
@@ -24587,12 +23518,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-leg-press-001', // Thigh Press
               order: 4,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-4-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-4-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r7-fri-lw-4-2',
                   setNumber: 2,
@@ -24624,12 +23550,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-lying-leg-curl-001', // Leg Curl
               order: 5,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-5-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-5-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r7-fri-lw-5-2',
                   setNumber: 2,
@@ -24661,12 +23582,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-walking-lunge-001', // Lunges
               order: 6,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-6-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-6-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r7-fri-lw-6-2',
                   setNumber: 2,
@@ -24698,12 +23614,7 @@ class WorkoutTemplateSeedData._() {
               exerciseId: 'exercise-standing-calf-raise-001', // Calf Raise
               order: 7,
               targetSets: [
-                TargetSet(
-                  id: 'ts-r7-fri-lw-7-1',
-                  setNumber: 1,
-                  targetReps: 0,
-                  targetRpe: 9.0,
-                ),
+                TargetSet(id: 'ts-r7-fri-lw-7-1', setNumber: 1, targetRpe: 9.0),
                 TargetSet(
                   id: 'ts-r7-fri-lw-7-2',
                   setNumber: 2,

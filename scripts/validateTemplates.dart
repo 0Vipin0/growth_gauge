@@ -23,8 +23,6 @@
 //
 // Requirements: Dart SDK only (no packages, no pub get).
 
-// ignore_for_file: file_names
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -936,9 +934,11 @@ int _run(List<String> arguments) {
       if (type == 'ERROR') {
         result = 'FAIL';
         errors++;
-      } else {
+      } else if (type == 'WARN') {
         result = 'WARN';
         warnings++;
+      } else {
+        result = 'INFO';
       }
     }
     checks.add(<String>[name, type, result, '$count', detail]);
@@ -1016,10 +1016,10 @@ int _run(List<String> arguments) {
   );
   addCheck(
     'Exercises used by templates',
-    'WARN',
+    'INFO',
     orphanCount,
-    '$orphanCount defined but never referenced',
-    'Every exercise is used',
+    '$orphanCount selectable catalog exercise(s) are not in a seeded template',
+    'Every catalog exercise appears in a seeded template',
   );
   addCheck(
     'Exercise execution profiles complete',

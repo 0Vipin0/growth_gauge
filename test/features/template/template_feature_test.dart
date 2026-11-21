@@ -6,6 +6,7 @@ import 'package:growth_gauge/features/template/application/template_use_cases.da
 import 'package:growth_gauge/features/template/domain/target_set.dart';
 import 'package:growth_gauge/features/template/domain/template_enums.dart';
 import 'package:growth_gauge/features/template/domain/workout_block.dart';
+import 'package:growth_gauge/features/template/infrastructure/seed/workout_template_seed_data.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
 void main() {
@@ -50,6 +51,19 @@ void main() {
       final restored = TargetSet.fromJson(target.toJson());
 
       expect(restored.targetCalories, 120);
+    });
+
+    test('seeded RPE-guided sets leave the rep target unspecified', () {
+      final seededSets = WorkoutTemplateSeedData.all
+          .expand((bundle) => bundle.initialRevision.blocks)
+          .expand((block) => block.items)
+          .expand((item) => item.targetSets);
+      final openEndedRpeSets = seededSets.where(
+        (set) => set.targetRpe != null && set.targetReps == null,
+      );
+
+      expect(openEndedRpeSets, isNotEmpty);
+      expect(seededSets.any((set) => set.targetReps == 0), isFalse);
     });
 
     test('updates and publishes a draft revision', () async {
@@ -129,5 +143,54 @@ void main() {
         TemplateRevisionStatus.published,
       );
     });
+
+    test('templates can be archived and restored', () async {
+      final template = (await useCases.create(
+        name: 'Recovery day',
+        createdById: 'user-1',
+      )).dataOrNull!;
+
+      final archived = await useCases.archiveTemplate(
+        template.id,
+        isArchived: true,
+      );
+      final archivedTemplate = await repository.getTemplate(template.id);
+      final restored = await useCases.archiveTemplate(
+        template.id,
+        isArchived: false,
+      );
+      final restoredTemplate = await repository.getTemplate(template.id);
+
+      expect(archived.isSuccess, isTrue);
+      expect(archivedTemplate.dataOrNull!.isArchived, isTrue);
+      expect(restored.isSuccess, isTrue);
+      expect(restoredTemplate.dataOrNull!.isArchived, isFalse);
+    });
+
+    test(
+      'permanent deletion removes the template and all revision history',
+      () async {
+        final template = (await useCases.create(
+          name: 'Deload day',
+          createdById: 'user-1',
+        )).dataOrNull!;
+        final original = (await repository.getRevision(
+          template.currentRevisionId!,
+        )).dataOrNull!;
+        await useCases.publish(original.id);
+        final nextDraft = await useCases.createDraftFromCurrent(template.id);
+        expect(nextDraft.isSuccess, isTrue);
+
+        final deleted = await useCases.deleteTemplate(template.id);
+
+        expect(deleted.isSuccess, isTrue);
+        expect((await repository.getTemplate(template.id)).isError, isTrue);
+        expect(
+          (await repository.getRevisions(template.id)).dataOrNull,
+          isEmpty,
+        );
+        expect((await repository.getRevision(original.id)).isError, isTrue);
+      },
+    );
   });
 }

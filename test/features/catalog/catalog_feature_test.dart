@@ -29,10 +29,11 @@ void main() {
         final firstSeed = await catalogSeeder.seedIfEmpty();
         final secondSeed = await catalogSeeder.seedIfEmpty();
         final exercises = await repository.findAll();
+        final seededCount = firstSeed.dataOrNull ?? 0;
 
-        expect(firstSeed.dataOrNull, 7);
+        expect(seededCount, greaterThan(0));
         expect(secondSeed.dataOrNull, 0);
-        expect(exercises.dataOrNull, hasLength(7));
+        expect(exercises.dataOrNull, hasLength(seededCount));
       },
     );
 

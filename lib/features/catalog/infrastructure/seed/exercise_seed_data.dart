@@ -3651,7 +3651,7 @@ class ExerciseSeedData._() {
 
   static final _chestDoorwayStretch = _movement(
     id: 'exercise-chest-doorway-stretch-001',
-    name: 'Doorway Chest Stretch',
+    name: 'Doorway Pectoral Stretch',
     aliases: const ['door frame pectoral stretch'],
     description: 'A classic static stretch targeting the pectorals and anterior shoulders to open up the chest and improve posture.',
     regions: const [BodyRegion.upperBody],
