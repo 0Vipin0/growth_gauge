@@ -1,4 +1,4 @@
-﻿## 5. Phase 2: Comprehensive Details (Exercise Catalog & Workout Templates)
+## 5. Phase 2: Comprehensive Details (Exercise Catalog & Workout Templates)
 
 Phase 2 builds the reusable program definitions: the **Exercise Catalog** and **Workout Templates with Immutable Revisions**.
 
@@ -32,3 +32,18 @@ Phase 2 builds the reusable program definitions: the **Exercise Catalog** and **
 | **Step 2.8** | Template archival and deletion management | `[ ] PLANNED` | Add UI affordance to archive (soft-delete via `isArchived`) and permanently delete workout templates from `TemplateListScreen`, `TemplateDetailScreen`, and `TemplateEditorScreen`. Expose `archiveTemplate` and `deleteTemplate` use cases, wire confirmation dialogs, and provide an archived templates filter/restore toggle. |
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Strict template validation — 2026-11-21
+
+Strict template validation completed and exited 1: structural/reference checks passed (108 references resolve, 122 exercise IDs and 83 templates registered, identifiers/revisions unique, all exercise profiles complete), but three warning categories failed strict mode: duplicate exercise name Doorway Chest Stretch (2 occurrences), 14 unused exercise definitions, and 225 sets with targetReps: 0. Review whether orphan catalog entries and zero-rep cardio/interval targets are intentional, resolve/document their semantics, and rerun strict validation. This is in addition to the still-open archival/deletion step.
+
+
+## Serial test result — 2026-11-21
+
+The seed idempotence test expects 7 exercises, but the current catalog registers 122. Classify that fixed count as a Deprecated assertion; retain the idempotence behavior check using a current/derived count. Strict validator warnings remain an independent Phase 2/13 gate.

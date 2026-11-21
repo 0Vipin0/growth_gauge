@@ -1,4 +1,4 @@
-﻿## 18. Phase 15: Progress Sounds and Notifications
+## 18. Phase 15: Progress Sounds and Notifications
 
 Finish the existing notification service and add opt-in, low-noise sound and local notification experiences that help users understand workout progress and stay motivated. Use session and analytics state as the source of truth. Keep essential status visible in the app, allow quiet operation, and avoid making permissions, sound, or notification delivery necessary for workout completion.
 
@@ -30,3 +30,16 @@ Finish the existing notification service and add opt-in, low-noise sound and loc
 - Service logic and settings have deterministic tests, with device checks for sound, permissions, scheduling, and lifecycle behavior on supported platforms.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+## Supplied review output — 2026-11-21
+
+The serial run confirms notification service tests fail to compile because generated mock signatures no longer match NotificationServiceBase; settings/router Cubit test setup also has missing repository arguments. Regenerate/update mocks and test wiring, then rerun. See [audit report](../audit-report.md#serial-test-failure-triage).
+
+
+## Serial test result — 2026-11-21
+
+Notification service test file cannot compile because generated mock method signatures no longer match the service API. Settings Cubit test setup also omits required notification repository arguments. Refresh generated test doubles and fixtures, then rerun affected tests.

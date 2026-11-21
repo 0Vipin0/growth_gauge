@@ -243,3 +243,13 @@ Phase 7 hardens the entire system for production release, ensures 60/120 FPS UI 
    - Verifies exact sum of set reps is displayed.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Serial test result — 2026-11-21
+
+Home widget tests confirm missing month/quarter trends, missing period-navigation controls and missing Week Summary Details CTA; desktop summary layout overflows. These are valid UI gaps. The compact-width “This Week” label assertion is Deprecated because the label is desktop-only; keep checkmark/date behavior covered.

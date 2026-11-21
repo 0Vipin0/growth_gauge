@@ -1,4 +1,4 @@
-﻿## 14. Phase 11: Bloc and Framework State Management
+## 14. Phase 11: Bloc and Framework State Management
 
 Consolidate application state management on the existing `flutter_bloc`/`bloc` packages and Flutter framework primitives. Remove third-party state-management packages such as `provider` once their state and dependency-composition uses have been migrated. This does not mean every local widget state needs a Cubit: use Flutter primitives such as `StatefulWidget`, `ValueNotifier`, and `InheritedWidget` for tightly scoped UI state or lightweight framework composition, and Bloc/Cubit for feature or application state with meaningful transitions.
 
@@ -29,3 +29,16 @@ Consolidate application state management on the existing `flutter_bloc`/`bloc` p
 - Settings, authentication, notification, and feature behavior remain covered by tests, and the repository checks pass.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+## Supplied review output — 2026-11-21
+
+The supplied analyzer output reports two NotificationCubit constructions in test/features/settings/settings_cubit_test.dart without the required notificationRepository. The test suite did not run because the review script aborted at its navigation scan. Align test fixtures with the current Cubit constructor and rerun analyzer/tests. See [audit report](../audit-report.md) for the full 22-issue analyzer result and validation status.
+
+
+## Serial test result — 2026-11-21
+
+Settings Cubit tests fail to compile because two `NotificationCubit` constructions omit required `notificationRepository`. Separately, AnalyticsCubit close/init race is a valid lifecycle defect recorded under Phase 4.

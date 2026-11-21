@@ -1,4 +1,4 @@
-﻿## 16. Phase 13: Comprehensive Exercise Catalog
+## 16. Phase 13: Comprehensive Exercise Catalog
 
 Expand the existing catalog seed data into a broad, balanced, searchable exercise library that exercises the taxonomy and measurement model already implemented. The deliverable is a high-quality maintained catalog with verified classifications, equipment, instructions, and metrics, rather than an uncurated maximum-count list. Preserve custom user-created exercises and the current idempotent catalog seeding behavior.
 
@@ -31,3 +31,18 @@ Expand the existing catalog seed data into a broad, balanced, searchable exercis
 - Search/filter and catalog detail behavior remain usable with the larger dataset; automated tests cover seed integrity, filters, and upgrade safety.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Strict template validation — 2026-11-21
+
+Strict seed validation reports 122 registered exercises and complete execution profiles, with no missing template references. Strict mode exits 1 due to one duplicated display name (Doorway Chest Stretch), 14 exercises unused by templates, and 225 zero-rep target sets. These are content warnings requiring catalog/template triage, not proof that each item is invalid; document intended catalog-only exercises and timed/interval targets or correct them, then rerun validation.
+
+
+## Serial test result — 2026-11-21
+
+Catalog idempotence test expects 7 exercises but current registry contains 122; classify only the fixed historical count as a Deprecated assertion and preserve idempotence coverage. Strict validation warnings remain open.

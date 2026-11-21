@@ -1,4 +1,4 @@
-﻿## 4. Phase 1: Comprehensive Details (Dependencies & Core Foundation)
+## 4. Phase 1: Comprehensive Details (Dependencies & Core Foundation)
 
 Phase 1 establishes the bedrock for the entire architecture: type-safe core primitives, domain event bus, and the authoritative Drift document store.
 
@@ -86,3 +86,13 @@ All 27 test cases passed with zero failures in `test/core/`:
   - `Failures equality and toString behavior` (PASSED)
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Serial test result — 2026-11-21
+
+The migration test fails because its fixture expects schema version 3 while the application schema is version 5. Classify the v3 expectation as a Deprecated assertion, not a current migration defect; update the fixture and verify the v5 upgrade path.

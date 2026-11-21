@@ -21,7 +21,7 @@ import '../../features/splash/splash.dart';
 import '../../features/template/template.dart';
 import '../../features/user/user.dart';
 import '../database/app_database.dart';
-import '../routing/app_router.dart';
+import 'app_router.dart';
 
 List<RouteBase> createAppRoutes({
   required AppDatabase database,

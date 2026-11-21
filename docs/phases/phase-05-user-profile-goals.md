@@ -1,4 +1,4 @@
-﻿## 8. Phase 5: Comprehensive Details (User Profile, Goals & Physical Measurements)
+## 8. Phase 5: Comprehensive Details (User Profile, Goals & Physical Measurements)
 
 Phase 5 establishes user-centric features: training profiles, equipment inventory filtering, goal tracking, and body composition measurements.
 
@@ -46,3 +46,8 @@ Phase 5 establishes user-centric features: training profiles, equipment inventor
 **Verification (2026-10-18):** Phase 5 models, repositories, application state, screens, equipment selector, and navigation were already present. This pass completed the missing account repository operations and canonical measurement input conversion, and added focused regression cases. `flutter analyze --fatal-infos --fatal-warnings` passes repository-wide, all 29 tests in `test/features/user/` pass, and scoped Dart format verification passes. The provided link `design/Implementation_Plan.md` does not exist in this checkout; this canonical plan is `docs/implementation-plan.md`.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.

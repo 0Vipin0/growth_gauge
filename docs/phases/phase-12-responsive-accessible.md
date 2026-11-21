@@ -1,4 +1,4 @@
-﻿## 15. Phase 12: Responsive and Accessible Experience
+## 15. Phase 12: Responsive and Accessible Experience
 
 Adapt the existing screens for mobile phones, tablets, and laptop/desktop windows while making accessibility behavior consistent across those form factors. Use available width, height, and input capabilities to choose layouts; do not assume that a device category always has a fixed size or orientation. Preserve the current visual language and feature flows while improving constraints, navigation, keyboard use, and semantics.
 
@@ -33,3 +33,13 @@ The Phase 12 implementation passes `scripts/check.ps1` (analysis, format verific
 - Automated widget checks cover responsive states and documented manual checks cover platform/device behavior that cannot be reliably automated; `scripts/check.ps1` passes.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Serial test result — 2026-11-21
+
+Widget tests report missing activity-period controls/views, missing Week Summary Details CTA, and desktop RenderFlex overflows (178, 70 and 93 px). These valid failures require responsive behavior fixes and widget retesting. Compact “This Week” label assertion is Deprecated for current desktop-only label behavior.

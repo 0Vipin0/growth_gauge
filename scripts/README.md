@@ -6,11 +6,22 @@ Run the `.ps1` files in PowerShell or the `.sh` files in Bash. They locate the p
 |---|---|
 | `./scripts/setup.ps1` | Fetch Flutter dependencies. |
 | `./scripts/check.ps1` | Run analysis and format checks, then run tests serially so timing benchmarks are not affected by concurrent test files. |
+| `./scripts/review.ps1` | Run a read-only phase evidence inventory and bounded diagnostics; does not run dependency resolution or mutating wrappers. |
 | `./scripts/generate.ps1` | Regenerate Freezed, JSON serialization, and Drift code. |
 | `./scripts/run.ps1` | Run the app; forward optional Flutter arguments such as `-d windows`. |
 | `./scripts/build.ps1 windows` | Build for a target platform (`apk`, `appbundle`, `web`, `windows`, `linux`, or `macos`). |
 
 Matching Bash scripts are available as `setup.sh`, `check.sh`, `generate.sh`, `run.sh`, and `build.sh`.
+
+For an observe-only review snapshot, run `./scripts/review.ps1` in PowerShell or
+`bash scripts/review.sh` on Linux/macOS. Both print the 18 roadmap statuses,
+source/test file counts and inventories, then run bounded analyzer, formatter,
+navigation scan, serial tests, and strict template validation. The default
+per-check timeout is 120 seconds (override with `-TimeoutSeconds` or the first
+Bash argument). Redirect the output to a text file when sharing it. These
+scripts intentionally skip `flutter pub get` because it can change dependency
+artifacts, and avoid the regular check wrappers because they rewrite citation
+tags before checking.
 
 Examples:
 

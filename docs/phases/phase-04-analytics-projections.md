@@ -1,4 +1,4 @@
-﻿## 7. Phase 4: Comprehensive Details (Materialized Analytics & Drift Projections)
+## 7. Phase 4: Comprehensive Details (Materialized Analytics & Drift Projections)
 
 Phase 4 implements the high-performance analytics query engine, projection pipeline, and visual dashboards.
 
@@ -252,3 +252,13 @@ class AnalyticsProjector {
 | **Step 4.7** | Analytics automated test suite | `[x] COMPLETED` | 26 tests pass across PR calculator unit tests, projector idempotency/rebuild parity tests, DAO reactive stream tests, widget UI tests, and 52-week volume query benchmark (<15ms). |
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+
+
+## Serial test result — 2026-11-21
+
+Six analytics DAO tests fail with `Bad state: Cannot emit new states after calling close` in `AnalyticsCubit._initStreams`. Pending initialization can create/emit through subscriptions after Cubit close. This is a valid lifecycle defect; fix cancellation/close coordination and test pending initialization.

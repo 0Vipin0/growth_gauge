@@ -1,4 +1,4 @@
-﻿## 13. Phase 10: Application Routing Migration
+## 13. Phase 10: Application Routing Migration
 
 Adopt `go_router` as the application routing package and separate shared router behavior from app-specific route registration. `lib/core/routing/` owns GoRouter lifecycle, route constants, transitions and unmatched-path handling without importing feature modules; `lib/app/` owns destination registration and feature dependency composition. Preserve current authentication launch behavior, screen transitions where supported, and route-local feature dependencies while replacing scattered route strings and ad hoc route construction with a centrally defined, testable route table. This phase changes the routing dependency and therefore updates `docs/architecture.md` when implemented.
 
@@ -30,3 +30,16 @@ Adopt `go_router` as the application routing package and separate shared router 
 - No duplicate routing system remains; analysis, formatting, targeted tests, and `scripts/check.ps1` pass, and `docs/architecture.md` describes the implemented router accurately.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+## Supplied review output — 2026-11-21
+
+The supplied analyzer output identifies compile blockers in the relocated router test: createAppRoutes is missing its required notifications argument, and NotificationCubit is missing notificationRepository. Route registry source exists, but the test gate fails. Update test setup and verify registered destinations, typed extras, redirect behavior and back stack before completion. See [audit report](../audit-report.md) for the full 22-issue analyzer result and validation status.
+
+
+## Serial test result — 2026-11-21
+
+`app_router_test.dart` fails to compile due to missing `notifications` route factory and `notificationRepository` constructor arguments. The equipment widget test also lacks GoRouter when `context.pop()` runs; make its harness representative before drawing runtime navigation conclusions.

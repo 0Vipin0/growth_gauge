@@ -1,4 +1,4 @@
-﻿## 9. Phase 6: Comprehensive Details (Portability Engine, Export/Import & Migrations)
+## 9. Phase 6: Comprehensive Details (Portability Engine, Export/Import & Migrations)
 
 Phase 6 implements the external portability contract: versioned JSON export envelope, SHA-256 integrity verification, sequential schema migrations, and atomic import conflict resolution.
 
@@ -129,3 +129,8 @@ CSV export is an additional analysis-oriented output; the existing JSON archive 
 **Legacy parity addition:** Add CSV export as a separate analysis-oriented output, not a replacement for JSON backup/restore. 
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.

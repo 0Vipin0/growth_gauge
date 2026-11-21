@@ -25,7 +25,7 @@ import '../../features/user/infrastructure/user_repository.dart';
 import '../database/app_database.dart';
 import '../events/domain_event_dispatcher.dart';
 import '../routing/app_router.dart';
-import 'app_routes.dart';
+import '../routing/app_routes.dart';
 
 Future<void> runGrowthGaugeApp({required bool hasCompletedOnboarding}) async {
   WidgetsFlutterBinding.ensureInitialized();

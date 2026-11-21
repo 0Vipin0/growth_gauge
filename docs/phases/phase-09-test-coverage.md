@@ -1,4 +1,4 @@
-﻿## 12. Phase 9: Test Coverage Expansion
+## 12. Phase 9: Test Coverage Expansion
 
 This phase adds behavior-focused regression tests where they provide the most risk reduction. Existing coverage includes core primitives, feature acceptance tests, widgets, analytics performance, and one end-to-end workout/portability journey. The next step is to map untested critical behavior and failure paths rather than pursue a raw line-coverage target.
 
@@ -27,3 +27,11 @@ This phase adds behavior-focused regression tests where they provide the most ri
 - The full existing suite remains green, new tests are deterministic, and `scripts/check.ps1` passes; test-only performance/coverage reports do not become brittle timing gates.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+## Supplied review output — 2026-11-21
+
+The supplied serial test run completed with 124 passed and 21 failed (exit 1). Four test files fail to compile/load, six analytics DAO cases expose a Cubit close/init lifecycle defect, and home/session widget tests expose valid UI failures. Two stale assertions and one compact-only label assertion are classified Deprecated in the [audit report](../audit-report.md#serial-test-failure-triage).

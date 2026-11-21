@@ -1,4 +1,4 @@
-﻿## 11. Phase 8: Consistent Structure & Maintainability
+## 11. Phase 8: Consistent Structure & Maintainability
 
 This phase reduces structural drift across the existing feature-first codebase. It is an incremental consistency pass, not a wholesale rewrite: retain the domain/application/infrastructure/presentation boundaries already used by the core fitness features and migrate transitional settings, authentication, and notification code only where a concrete inconsistency or maintenance cost is found.
 
@@ -28,3 +28,8 @@ This phase reduces structural drift across the existing feature-first codebase. 
 - Any intentionally retained legacy/transitional pattern is documented with its migration trigger; unrelated files are not reformatted or moved.
 
 ---
+
+
+## Audit status note — 2026-11-21
+
+This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
