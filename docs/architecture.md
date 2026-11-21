@@ -91,7 +91,7 @@ Authentication credentials stay in secure storage, notification scheduling stays
 
 - Template revisions are immutable after publication. Editing produces a new draft revision.
 - Starting a session creates an independent copy of the selected template revision; live changes never mutate the template.
-- Session lifecycle, rest intervals, interruptions, recovery and append-only audit history are explicit domain concepts.
+- Session lifecycle, post-set rest intervals, reusable persisted work/rest/cooldown sequences, interruptions, recovery and append-only audit history are explicit domain concepts. Keep the interval sequence distinct from the post-set rest timer; checkpoint active phases so cold-start recovery excludes downtime.
 - Persist session changes so interrupted workouts can be recovered after restart.
 - Analytics are projections, not the editing source of truth.
 - Portability uses a versioned JSON envelope with SHA-256 validation, sequential migrations, typed document validation, explicit conflict policy, atomic document writes and analytics rebuild after session imports.
@@ -112,7 +112,7 @@ Organize tests under `test/core/`, `test/features/<feature>/`, and `test/integra
 
 ## Status and source distinctions
 
-The implementation plan marks Phase 1 complete after the v1-to-v5 migration and targeted core gates passed; Phases 2–18 remain in progress. The current repository-wide analyzer and serial test gates do not pass, as tracked in [`audit-report.md`](audit-report.md). The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
+The implementation plan marks Phases 1–3 complete after their scoped implementation and validation gates passed; Phases 4–18 remain in progress. The current repository-wide analyzer and serial test gates do not pass, as tracked in [`audit-report.md`](audit-report.md). The implemented architecture document [`application-architecture.md`](application-architecture.md) and persona documents contain broader design/reference material; use the implementation plan and this target reference for direction, and verify details against code where behavior matters.
 
 The `lib/app/` boundary owns application routing and route composition. `main.dart` owns platform initialization, service construction, and lifecycle cleanup; settings state is supplied through `SettingsCubit`, while application dependencies are passed explicitly. Authentication hardening and notification preference expansion remain assigned to their later phases.
 

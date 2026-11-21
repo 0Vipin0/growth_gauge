@@ -6,15 +6,12 @@
 
 import 'dart:async' as _i3;
 
-import 'package:flutter/material.dart' as _i5;
-
-import 'package:mockito/mockito.dart' as _i1;
-import 'package:timezone/timezone.dart' as _i4;
-
-import 'package:growth_gauge/features/notification/domain/domain.dart' as _i6;
-
+import 'package:flutter/material.dart' as _i6;
+import 'package:growth_gauge/features/notification/domain/domain.dart' as _i4;
 import 'package:growth_gauge/features/notification/infrastructure/notification_service.dart'
     as _i2;
+import 'package:mockito/mockito.dart' as _i1;
+import 'package:timezone/timezone.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -49,8 +46,13 @@ class MockNotificationServiceBase extends _i1.Mock
   ) as _i3.Future<void>);
 
   @override
-  _i3.Future<void> initializeNotificationSettings() => (super.noSuchMethod(
-    Invocation.method(#initializeNotificationSettings, []),
+  _i3.Future<void> initializeNotificationSettings({
+    required _i3.Future<void> Function(int, _i4.NotificationStatus)?
+    onStatusUpdate,
+  }) => (super.noSuchMethod(
+    Invocation.method(#initializeNotificationSettings, [], {
+      #onStatusUpdate: onStatusUpdate,
+    }),
     returnValue: _i3.Future<void>.value(),
     returnValueForMissingStub: _i3.Future<void>.value(),
   ) as _i3.Future<void>);
@@ -74,9 +76,9 @@ class MockNotificationServiceBase extends _i1.Mock
     required int? id,
     required String? title,
     required String? body,
-    required _i4.TZDateTime? scheduledTime,
+    required _i5.TZDateTime? scheduledTime,
     String? sound,
-    String? type,
+    _i4.NotificationCategory? type,
   }) => (super.noSuchMethod(
     Invocation.method(#scheduleNotification, [], {
       #id: id,
@@ -95,7 +97,7 @@ class MockNotificationServiceBase extends _i1.Mock
     required int? id,
     required String? title,
     required String? body,
-    required _i5.TimeOfDay? time,
+    required _i6.TimeOfDay? time,
     String? sound,
   }) => (super.noSuchMethod(
     Invocation.method(#scheduleDailyNotification, [], {
@@ -132,20 +134,9 @@ class MockNotificationServiceBase extends _i1.Mock
   ) as _i3.Future<void>);
 
   @override
-  _i3.Future<List<_i6.NotificationLog>> getNotificationLogs({
-    String? statusFilter,
-  }) => (super.noSuchMethod(
-    Invocation.method(#getNotificationLogs, [], {#statusFilter: statusFilter}),
-    returnValue: _i3.Future<List<_i6.NotificationLog>>.value(
-      <_i6.NotificationLog>[],
-    ),
-  ) as _i3.Future<List<_i6.NotificationLog>>);
-
-  @override
-  _i3.Future<void> updateLogStatus(int? notificationId, String? newStatus) =>
-      (super.noSuchMethod(
-        Invocation.method(#updateLogStatus, [notificationId, newStatus]),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> cancelAllNotifications() => (super.noSuchMethod(
+    Invocation.method(#cancelAllNotifications, []),
+    returnValue: _i3.Future<void>.value(),
+    returnValueForMissingStub: _i3.Future<void>.value(),
+  ) as _i3.Future<void>);
 }

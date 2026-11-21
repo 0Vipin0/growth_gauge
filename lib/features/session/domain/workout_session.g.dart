@@ -6,50 +6,56 @@ part of 'workout_session.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_WorkoutSession _$WorkoutSessionFromJson(Map<String, dynamic> json) =>
-    _WorkoutSession(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
-      templateId: json['templateId'] as String,
-      templateRevisionId: json['templateRevisionId'] as String,
-      templateName: json['templateName'] as String,
-      status:
-          $enumDecodeNullable(_$SessionStatusEnumMap, json['status']) ??
-          SessionStatus.draft,
-      startedAt: json['startedAt'] == null
-          ? null
-          : DateTime.parse(json['startedAt'] as String),
-      pausedAt: json['pausedAt'] == null
-          ? null
-          : DateTime.parse(json['pausedAt'] as String),
-      completedAt: json['completedAt'] == null
-          ? null
-          : DateTime.parse(json['completedAt'] as String),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      blocks:
-          (json['blocks'] as List<dynamic>?)
-              ?.map((e) => SessionBlock.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      interruptions:
-          (json['interruptions'] as List<dynamic>?)
-              ?.map(
-                (e) => SessionInterruption.fromJson(e as Map<String, dynamic>),
-              )
-              .toList() ??
-          const [],
-      restIntervals:
-          (json['restIntervals'] as List<dynamic>?)
-              ?.map((e) => RestInterval.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      audits:
-          (json['audits'] as List<dynamic>?)
-              ?.map((e) => AuditEntry.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      sessionNotes: json['sessionNotes'] as String?,
-    );
+_WorkoutSession _$WorkoutSessionFromJson(
+  Map<String, dynamic> json,
+) => _WorkoutSession(
+  id: json['id'] as String,
+  userId: json['userId'] as String,
+  templateId: json['templateId'] as String,
+  templateRevisionId: json['templateRevisionId'] as String,
+  templateName: json['templateName'] as String,
+  status:
+      $enumDecodeNullable(_$SessionStatusEnumMap, json['status']) ??
+      SessionStatus.draft,
+  startedAt: json['startedAt'] == null
+      ? null
+      : DateTime.parse(json['startedAt'] as String),
+  pausedAt: json['pausedAt'] == null
+      ? null
+      : DateTime.parse(json['pausedAt'] as String),
+  completedAt: json['completedAt'] == null
+      ? null
+      : DateTime.parse(json['completedAt'] as String),
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  blocks:
+      (json['blocks'] as List<dynamic>?)
+          ?.map((e) => SessionBlock.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  interruptions:
+      (json['interruptions'] as List<dynamic>?)
+          ?.map((e) => SessionInterruption.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  restIntervals:
+      (json['restIntervals'] as List<dynamic>?)
+          ?.map((e) => RestInterval.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  sessionIntervals:
+      (json['sessionIntervals'] as List<dynamic>?)
+          ?.map((e) => SessionInterval.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  audits:
+      (json['audits'] as List<dynamic>?)
+          ?.map((e) => AuditEntry.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  sessionNotes: json['sessionNotes'] as String?,
+  sessionRpe: (json['sessionRpe'] as num?)?.toDouble(),
+  sessionMood: $enumDecodeNullable(_$SessionMoodEnumMap, json['sessionMood']),
+);
 
 Map<String, dynamic> _$WorkoutSessionToJson(_WorkoutSession instance) =>
     <String, dynamic>{
@@ -66,8 +72,11 @@ Map<String, dynamic> _$WorkoutSessionToJson(_WorkoutSession instance) =>
       'blocks': instance.blocks,
       'interruptions': instance.interruptions,
       'restIntervals': instance.restIntervals,
+      'sessionIntervals': instance.sessionIntervals,
       'audits': instance.audits,
       'sessionNotes': instance.sessionNotes,
+      'sessionRpe': instance.sessionRpe,
+      'sessionMood': _$SessionMoodEnumMap[instance.sessionMood],
     };
 
 const _$SessionStatusEnumMap = {
@@ -79,4 +88,12 @@ const _$SessionStatusEnumMap = {
   SessionStatus.completed: 'completed',
   SessionStatus.cancelled: 'cancelled',
   SessionStatus.abandoned: 'abandoned',
+};
+
+const _$SessionMoodEnumMap = {
+  SessionMood.tired: 'tired',
+  SessionMood.neutral: 'neutral',
+  SessionMood.good: 'good',
+  SessionMood.energetic: 'energetic',
+  SessionMood.great: 'great',
 };

@@ -1,4 +1,38 @@
 import '../../../core/events/domain_event.dart';
+import 'session_interval.dart';
+
+class SessionIntervalSequenceStarted({
+  required super.aggregateId,
+  required final String intervalId,
+}) extends DomainEvent {
+  @override
+  String get eventType => 'SessionIntervalSequenceStarted';
+  @override
+  List<Object?> get props => [...super.props, intervalId];
+}
+
+class SessionIntervalAdvanced({
+  required super.aggregateId,
+  required final String intervalId,
+  required final SessionIntervalPhase phase,
+  required final SessionIntervalStatus status,
+}) extends DomainEvent {
+  @override
+  String get eventType => 'SessionIntervalAdvanced';
+  @override
+  List<Object?> get props => [...super.props, intervalId, phase, status];
+}
+
+class SessionIntervalExtended({
+  required super.aggregateId,
+  required final String intervalId,
+  required final int durationSeconds,
+}) extends DomainEvent {
+  @override
+  String get eventType => 'SessionIntervalExtended';
+  @override
+  List<Object?> get props => [...super.props, intervalId, durationSeconds];
+}
 
 class WorkoutSessionStarted({required super.aggregateId}) extends DomainEvent {
   @override

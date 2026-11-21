@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_type_name_in_constructor, use_primary_constructors
 
+import 'dart:convert';
+
 import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +13,7 @@ import 'package:growth_gauge/features/session/application/session_use_cases.dart
 import 'package:growth_gauge/features/session/domain/execution_set.dart';
 import 'package:growth_gauge/features/session/domain/session_enums.dart';
 import 'package:growth_gauge/features/session/domain/session_events.dart';
+import 'package:growth_gauge/features/session/domain/session_interval.dart';
 import 'package:growth_gauge/features/session/domain/workout_session.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
 import 'package:growth_gauge/features/template/application/template_use_cases.dart';
@@ -523,6 +526,173 @@ void main() {
       expect(repeated.errorOrNull, isA<ConflictFailure>());
       expect(persisted.status, SessionStatus.completed);
     });
+
+    test(
+      'completed session log persists RPE, mood, notes, and audit',
+      () async {
+        final session = await createSession();
+        final premature = await sessionUseCases.saveSessionLog(
+          id: session.id,
+          perceivedEffort: 8,
+          mood: SessionMood.good,
+          notes: '  Strong session  ',
+        );
+        expect(premature.errorOrNull, isA<ConflictFailure>());
+
+        await sessionUseCases.complete(session.id);
+        final saved = await sessionUseCases.saveSessionLog(
+          id: session.id,
+          perceivedEffort: 8,
+          mood: SessionMood.good,
+          notes: '  Strong session  ',
+        );
+        final persisted = (await sessionRepository.getById(session.id))
+            .dataOrNull!;
+        final roundTripped = WorkoutSession.fromJson(
+          jsonDecode(jsonEncode(persisted.toJson())) as Map<String, dynamic>,
+        );
+
+        expect(saved.isSuccess, isTrue);
+        expect(persisted.sessionRpe, 8);
+        expect(persisted.sessionMood, SessionMood.good);
+        expect(persisted.sessionNotes, 'Strong session');
+        expect(persisted.audits.last.field, 'sessionLog');
+        expect(roundTripped.sessionMood, SessionMood.good);
+        expect(roundTripped.sessionRpe, 8);
+        expect(roundTripped.sessionNotes, 'Strong session');
+
+        final invalidRpe = await sessionUseCases.saveSessionLog(
+          id: session.id,
+          perceivedEffort: 11,
+          mood: SessionMood.good,
+          notes: '',
+        );
+        expect(invalidRpe.errorOrNull, isA<ValidationFailure>());
+      },
+    );
+
+    test(
+      'interval sequence persists phase transitions and pause time',
+      () async {
+        var now = DateTime.utc(2026, 9, 26, 16);
+        await withClock(Clock(() => now), () async {
+          final session = await createSession();
+          final started = await sessionUseCases.startIntervalSequence(
+            sessionId: session.id,
+            workSeconds: 5,
+            restSeconds: 2,
+            rounds: 2,
+            cooldownSeconds: 3,
+          );
+          expect(started.isSuccess, isTrue);
+          expect(
+            started.dataOrNull!.sessionIntervals.map((entry) => entry.phase),
+            [
+              SessionIntervalPhase.work,
+              SessionIntervalPhase.rest,
+              SessionIntervalPhase.work,
+              SessionIntervalPhase.cooldown,
+            ],
+          );
+
+          now = now.add(const Duration(seconds: 3));
+          final checkpoint = await sessionUseCases.checkpointActiveInterval(
+            session.id,
+          );
+          final paused = await sessionUseCases.pause(session.id);
+          expect(
+            paused.dataOrNull!.sessionIntervals.first.status,
+            SessionIntervalStatus.paused,
+          );
+          expect(paused.dataOrNull!.sessionIntervals.first.elapsedSeconds, 3);
+          expect(checkpoint.isSuccess, isTrue);
+
+          now = now.add(const Duration(seconds: 20));
+          final resumed = await sessionUseCases.resume(session.id);
+          expect(
+            resumed.dataOrNull!.sessionIntervals.first.status,
+            SessionIntervalStatus.active,
+          );
+          expect(resumed.dataOrNull!.sessionIntervals.first.elapsedAt(now), 3);
+
+          final extended = await sessionUseCases.extendActiveInterval(
+            session.id,
+            extensionSeconds: 2,
+          );
+          expect(
+            extended.dataOrNull!.sessionIntervals.first.durationSeconds,
+            7,
+          );
+
+          final skipped = await sessionUseCases.advanceInterval(
+            session.id,
+            skipped: true,
+          );
+          expect(
+            skipped.dataOrNull!.sessionIntervals.first.status,
+            SessionIntervalStatus.skipped,
+          );
+          expect(
+            skipped.dataOrNull!.sessionIntervals[1].status,
+            SessionIntervalStatus.active,
+          );
+
+          await sessionUseCases.advanceInterval(session.id);
+          now = now.add(const Duration(seconds: 5));
+          final workDone = await sessionUseCases.advanceInterval(session.id);
+          expect(
+            workDone.dataOrNull!.sessionIntervals[2].status,
+            SessionIntervalStatus.completed,
+          );
+          now = now.add(const Duration(seconds: 3));
+          final completed = await sessionUseCases.advanceInterval(session.id);
+          expect(
+            completed.dataOrNull!.sessionIntervals.last.status,
+            SessionIntervalStatus.completed,
+          );
+          final persisted = (await sessionRepository.getById(session.id))
+              .dataOrNull!;
+          expect(persisted.sessionIntervals, hasLength(4));
+          expect(
+            persisted.audits.where(
+              (entry) => entry.entityType == 'SessionInterval',
+            ),
+            isNotEmpty,
+          );
+        });
+      },
+    );
+
+    test(
+      'cold recovery pauses interval at its latest durable checkpoint',
+      () async {
+        var now = DateTime.utc(2026, 9, 26, 17);
+        await withClock(Clock(() => now), () async {
+          final session = await createSession();
+          await sessionUseCases.startIntervalSequence(
+            sessionId: session.id,
+            workSeconds: 20,
+            restSeconds: 5,
+            rounds: 2,
+            cooldownSeconds: 0,
+          );
+          now = now.add(const Duration(seconds: 3));
+          await sessionUseCases.checkpointActiveInterval(session.id);
+          now = now.add(const Duration(minutes: 2));
+
+          final recovered = await sessionUseCases.recoverIncomplete(session.id);
+          final activeInterval = recovered.dataOrNull!.sessionIntervals.first;
+          expect(recovered.dataOrNull!.status, SessionStatus.paused);
+          expect(activeInterval.status, SessionIntervalStatus.paused);
+          expect(activeInterval.elapsedSeconds, 3);
+          expect(activeInterval.remainingAt(now), 17);
+
+          now = now.add(const Duration(minutes: 1));
+          final resumed = await sessionUseCases.resume(session.id);
+          expect(resumed.dataOrNull!.sessionIntervals.first.elapsedAt(now), 3);
+        });
+      },
+    );
   });
 }
 

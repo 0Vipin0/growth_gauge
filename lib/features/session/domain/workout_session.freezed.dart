@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WorkoutSession {
 
- String get id; String get userId; String get templateId; String get templateRevisionId; String get templateName; SessionStatus get status; DateTime? get startedAt; DateTime? get pausedAt; DateTime? get completedAt; DateTime get createdAt; List<SessionBlock> get blocks; List<SessionInterruption> get interruptions; List<RestInterval> get restIntervals; List<AuditEntry> get audits; String? get sessionNotes;
+ String get id; String get userId; String get templateId; String get templateRevisionId; String get templateName; SessionStatus get status; DateTime? get startedAt; DateTime? get pausedAt; DateTime? get completedAt; DateTime get createdAt; List<SessionBlock> get blocks; List<SessionInterruption> get interruptions; List<RestInterval> get restIntervals; List<SessionInterval> get sessionIntervals; List<AuditEntry> get audits; String? get sessionNotes; double? get sessionRpe; SessionMood? get sessionMood;
 /// Create a copy of WorkoutSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $WorkoutSessionCopyWith<WorkoutSession> get copyWith => _$WorkoutSessionCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as WorkoutSession;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.templateId, _this.templateId) || other.templateId == _this.templateId)&&(identical(other.templateRevisionId, _this.templateRevisionId) || other.templateRevisionId == _this.templateRevisionId)&&(identical(other.templateName, _this.templateName) || other.templateName == _this.templateName)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.pausedAt, _this.pausedAt) || other.pausedAt == _this.pausedAt)&&(identical(other.completedAt, _this.completedAt) || other.completedAt == _this.completedAt)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.blocks, _this.blocks)&&const DeepCollectionEquality().equals(other.interruptions, _this.interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _this.restIntervals)&&const DeepCollectionEquality().equals(other.audits, _this.audits)&&(identical(other.sessionNotes, _this.sessionNotes) || other.sessionNotes == _this.sessionNotes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WorkoutSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.templateId, _this.templateId) || other.templateId == _this.templateId)&&(identical(other.templateRevisionId, _this.templateRevisionId) || other.templateRevisionId == _this.templateRevisionId)&&(identical(other.templateName, _this.templateName) || other.templateName == _this.templateName)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.pausedAt, _this.pausedAt) || other.pausedAt == _this.pausedAt)&&(identical(other.completedAt, _this.completedAt) || other.completedAt == _this.completedAt)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.blocks, _this.blocks)&&const DeepCollectionEquality().equals(other.interruptions, _this.interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _this.restIntervals)&&const DeepCollectionEquality().equals(other.sessionIntervals, _this.sessionIntervals)&&const DeepCollectionEquality().equals(other.audits, _this.audits)&&(identical(other.sessionNotes, _this.sessionNotes) || other.sessionNotes == _this.sessionNotes)&&(identical(other.sessionRpe, _this.sessionRpe) || other.sessionRpe == _this.sessionRpe)&&(identical(other.sessionMood, _this.sessionMood) || other.sessionMood == _this.sessionMood));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as WorkoutSession;
-  return Object.hash(runtimeType,_this.id,_this.userId,_this.templateId,_this.templateRevisionId,_this.templateName,_this.status,_this.startedAt,_this.pausedAt,_this.completedAt,_this.createdAt,const DeepCollectionEquality().hash(_this.blocks),const DeepCollectionEquality().hash(_this.interruptions),const DeepCollectionEquality().hash(_this.restIntervals),const DeepCollectionEquality().hash(_this.audits),_this.sessionNotes);
+  return Object.hash(runtimeType,_this.id,_this.userId,_this.templateId,_this.templateRevisionId,_this.templateName,_this.status,_this.startedAt,_this.pausedAt,_this.completedAt,_this.createdAt,const DeepCollectionEquality().hash(_this.blocks),const DeepCollectionEquality().hash(_this.interruptions),const DeepCollectionEquality().hash(_this.restIntervals),const DeepCollectionEquality().hash(_this.sessionIntervals),const DeepCollectionEquality().hash(_this.audits),_this.sessionNotes,_this.sessionRpe,_this.sessionMood);
 }
 
 @override
 String toString() {
   final _this = this as WorkoutSession;
-  return 'WorkoutSession(id: ${_this.id}, userId: ${_this.userId}, templateId: ${_this.templateId}, templateRevisionId: ${_this.templateRevisionId}, templateName: ${_this.templateName}, status: ${_this.status}, startedAt: ${_this.startedAt}, pausedAt: ${_this.pausedAt}, completedAt: ${_this.completedAt}, createdAt: ${_this.createdAt}, blocks: ${_this.blocks}, interruptions: ${_this.interruptions}, restIntervals: ${_this.restIntervals}, audits: ${_this.audits}, sessionNotes: ${_this.sessionNotes})';
+  return 'WorkoutSession(id: ${_this.id}, userId: ${_this.userId}, templateId: ${_this.templateId}, templateRevisionId: ${_this.templateRevisionId}, templateName: ${_this.templateName}, status: ${_this.status}, startedAt: ${_this.startedAt}, pausedAt: ${_this.pausedAt}, completedAt: ${_this.completedAt}, createdAt: ${_this.createdAt}, blocks: ${_this.blocks}, interruptions: ${_this.interruptions}, restIntervals: ${_this.restIntervals}, sessionIntervals: ${_this.sessionIntervals}, audits: ${_this.audits}, sessionNotes: ${_this.sessionNotes}, sessionRpe: ${_this.sessionRpe}, sessionMood: ${_this.sessionMood})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $WorkoutSessionCopyWith<$Res>  {
   factory $WorkoutSessionCopyWith(WorkoutSession value, $Res Function(WorkoutSession) _then) = _$WorkoutSessionCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String templateId, String templateRevisionId, String templateName, SessionStatus status, DateTime? startedAt, DateTime? pausedAt, DateTime? completedAt, DateTime createdAt, List<SessionBlock> blocks, List<SessionInterruption> interruptions, List<RestInterval> restIntervals, List<AuditEntry> audits, String? sessionNotes
+ String id, String userId, String templateId, String templateRevisionId, String templateName, SessionStatus status, DateTime? startedAt, DateTime? pausedAt, DateTime? completedAt, DateTime createdAt, List<SessionBlock> blocks, List<SessionInterruption> interruptions, List<RestInterval> restIntervals, List<SessionInterval> sessionIntervals, List<AuditEntry> audits, String? sessionNotes, double? sessionRpe, SessionMood? sessionMood
 });
 
 
@@ -71,7 +71,7 @@ class _$WorkoutSessionCopyWithImpl<$Res>
 
 /// Create a copy of WorkoutSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? templateId = null,Object? templateRevisionId = null,Object? templateName = null,Object? status = null,Object? startedAt = freezed,Object? pausedAt = freezed,Object? completedAt = freezed,Object? createdAt = null,Object? blocks = null,Object? interruptions = null,Object? restIntervals = null,Object? audits = null,Object? sessionNotes = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? templateId = null,Object? templateRevisionId = null,Object? templateName = null,Object? status = null,Object? startedAt = freezed,Object? pausedAt = freezed,Object? completedAt = freezed,Object? createdAt = null,Object? blocks = null,Object? interruptions = null,Object? restIntervals = null,Object? sessionIntervals = null,Object? audits = null,Object? sessionNotes = freezed,Object? sessionRpe = freezed,Object? sessionMood = freezed,}) {
   return _then(WorkoutSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -86,9 +86,12 @@ as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignor
 as DateTime,blocks: null == blocks ? _self.blocks : blocks // ignore: cast_nullable_to_non_nullable
 as List<SessionBlock>,interruptions: null == interruptions ? _self.interruptions : interruptions // ignore: cast_nullable_to_non_nullable
 as List<SessionInterruption>,restIntervals: null == restIntervals ? _self.restIntervals : restIntervals // ignore: cast_nullable_to_non_nullable
-as List<RestInterval>,audits: null == audits ? _self.audits : audits // ignore: cast_nullable_to_non_nullable
+as List<RestInterval>,sessionIntervals: null == sessionIntervals ? _self.sessionIntervals : sessionIntervals // ignore: cast_nullable_to_non_nullable
+as List<SessionInterval>,audits: null == audits ? _self.audits : audits // ignore: cast_nullable_to_non_nullable
 as List<AuditEntry>,sessionNotes: freezed == sessionNotes ? _self.sessionNotes : sessionNotes // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,sessionRpe: freezed == sessionRpe ? _self.sessionRpe : sessionRpe // ignore: cast_nullable_to_non_nullable
+as double?,sessionMood: freezed == sessionMood ? _self.sessionMood : sessionMood // ignore: cast_nullable_to_non_nullable
+as SessionMood?,
   ));
 }
 
@@ -173,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<AuditEntry> audits,  String? sessionNotes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<SessionInterval> sessionIntervals,  List<AuditEntry> audits,  String? sessionNotes,  double? sessionRpe,  SessionMood? sessionMood)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkoutSession() when $default != null:
-return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.audits,_that.sessionNotes);case _:
+return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.sessionIntervals,_that.audits,_that.sessionNotes,_that.sessionRpe,_that.sessionMood);case _:
   return orElse();
 
 }
@@ -194,10 +197,10 @@ return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<AuditEntry> audits,  String? sessionNotes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<SessionInterval> sessionIntervals,  List<AuditEntry> audits,  String? sessionNotes,  double? sessionRpe,  SessionMood? sessionMood)  $default,) {final _that = this;
 switch (_that) {
 case _WorkoutSession():
-return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.audits,_that.sessionNotes);case _:
+return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.sessionIntervals,_that.audits,_that.sessionNotes,_that.sessionRpe,_that.sessionMood);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +217,10 @@ return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<AuditEntry> audits,  String? sessionNotes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String templateId,  String templateRevisionId,  String templateName,  SessionStatus status,  DateTime? startedAt,  DateTime? pausedAt,  DateTime? completedAt,  DateTime createdAt,  List<SessionBlock> blocks,  List<SessionInterruption> interruptions,  List<RestInterval> restIntervals,  List<SessionInterval> sessionIntervals,  List<AuditEntry> audits,  String? sessionNotes,  double? sessionRpe,  SessionMood? sessionMood)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkoutSession() when $default != null:
-return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.audits,_that.sessionNotes);case _:
+return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,_that.templateName,_that.status,_that.startedAt,_that.pausedAt,_that.completedAt,_that.createdAt,_that.blocks,_that.interruptions,_that.restIntervals,_that.sessionIntervals,_that.audits,_that.sessionNotes,_that.sessionRpe,_that.sessionMood);case _:
   return null;
 
 }
@@ -229,7 +232,7 @@ return $default(_that.id,_that.userId,_that.templateId,_that.templateRevisionId,
 @JsonSerializable()
 
 class _WorkoutSession implements WorkoutSession {
-  const _WorkoutSession({required this.id, required this.userId, required this.templateId, required this.templateRevisionId, required this.templateName, this.status = SessionStatus.draft, this.startedAt, this.pausedAt, this.completedAt, required this.createdAt,  List<SessionBlock> blocks = const [],  List<SessionInterruption> interruptions = const [],  List<RestInterval> restIntervals = const [],  List<AuditEntry> audits = const [], this.sessionNotes}): _blocks = blocks,_interruptions = interruptions,_restIntervals = restIntervals,_audits = audits;
+  const _WorkoutSession({required this.id, required this.userId, required this.templateId, required this.templateRevisionId, required this.templateName, this.status = SessionStatus.draft, this.startedAt, this.pausedAt, this.completedAt, required this.createdAt,  List<SessionBlock> blocks = const [],  List<SessionInterruption> interruptions = const [],  List<RestInterval> restIntervals = const [],  List<SessionInterval> sessionIntervals = const [],  List<AuditEntry> audits = const [], this.sessionNotes, this.sessionRpe, this.sessionMood}): _blocks = blocks,_interruptions = interruptions,_restIntervals = restIntervals,_sessionIntervals = sessionIntervals,_audits = audits;
   factory _WorkoutSession.fromJson(Map<String, dynamic> json) => _$WorkoutSessionFromJson(json);
 
 @override final  String id;
@@ -263,6 +266,13 @@ class _WorkoutSession implements WorkoutSession {
   return EqualUnmodifiableListView(_restIntervals);
 }
 
+ final  List<SessionInterval> _sessionIntervals;
+@override@JsonKey() List<SessionInterval> get sessionIntervals {
+  if (_sessionIntervals is EqualUnmodifiableListView) return _sessionIntervals;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sessionIntervals);
+}
+
  final  List<AuditEntry> _audits;
 @override@JsonKey() List<AuditEntry> get audits {
   if (_audits is EqualUnmodifiableListView) return _audits;
@@ -271,6 +281,8 @@ class _WorkoutSession implements WorkoutSession {
 }
 
 @override final  String? sessionNotes;
+@override final  double? sessionRpe;
+@override final  SessionMood? sessionMood;
 
 /// Create a copy of WorkoutSession
 /// with the given fields replaced by the non-null parameter values.
@@ -285,18 +297,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.templateRevisionId, templateRevisionId) || other.templateRevisionId == templateRevisionId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.pausedAt, pausedAt) || other.pausedAt == pausedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.blocks, _blocks)&&const DeepCollectionEquality().equals(other.interruptions, _interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _restIntervals)&&const DeepCollectionEquality().equals(other.audits, _audits)&&(identical(other.sessionNotes, sessionNotes) || other.sessionNotes == sessionNotes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WorkoutSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.templateId, templateId) || other.templateId == templateId)&&(identical(other.templateRevisionId, templateRevisionId) || other.templateRevisionId == templateRevisionId)&&(identical(other.templateName, templateName) || other.templateName == templateName)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.pausedAt, pausedAt) || other.pausedAt == pausedAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.blocks, _blocks)&&const DeepCollectionEquality().equals(other.interruptions, _interruptions)&&const DeepCollectionEquality().equals(other.restIntervals, _restIntervals)&&const DeepCollectionEquality().equals(other.sessionIntervals, _sessionIntervals)&&const DeepCollectionEquality().equals(other.audits, _audits)&&(identical(other.sessionNotes, sessionNotes) || other.sessionNotes == sessionNotes)&&(identical(other.sessionRpe, sessionRpe) || other.sessionRpe == sessionRpe)&&(identical(other.sessionMood, sessionMood) || other.sessionMood == sessionMood));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,userId,templateId,templateRevisionId,templateName,status,startedAt,pausedAt,completedAt,createdAt,const DeepCollectionEquality().hash(_blocks),const DeepCollectionEquality().hash(_interruptions),const DeepCollectionEquality().hash(_restIntervals),const DeepCollectionEquality().hash(_audits),sessionNotes);
+    return Object.hash(runtimeType,id,userId,templateId,templateRevisionId,templateName,status,startedAt,pausedAt,completedAt,createdAt,const DeepCollectionEquality().hash(_blocks),const DeepCollectionEquality().hash(_interruptions),const DeepCollectionEquality().hash(_restIntervals),const DeepCollectionEquality().hash(_sessionIntervals),const DeepCollectionEquality().hash(_audits),sessionNotes,sessionRpe,sessionMood);
 }
 
 @override
 String toString() {
-    return 'WorkoutSession(id: $id, userId: $userId, templateId: $templateId, templateRevisionId: $templateRevisionId, templateName: $templateName, status: $status, startedAt: $startedAt, pausedAt: $pausedAt, completedAt: $completedAt, createdAt: $createdAt, blocks: $blocks, interruptions: $interruptions, restIntervals: $restIntervals, audits: $audits, sessionNotes: $sessionNotes)';
+    return 'WorkoutSession(id: $id, userId: $userId, templateId: $templateId, templateRevisionId: $templateRevisionId, templateName: $templateName, status: $status, startedAt: $startedAt, pausedAt: $pausedAt, completedAt: $completedAt, createdAt: $createdAt, blocks: $blocks, interruptions: $interruptions, restIntervals: $restIntervals, sessionIntervals: $sessionIntervals, audits: $audits, sessionNotes: $sessionNotes, sessionRpe: $sessionRpe, sessionMood: $sessionMood)';
 }
 
 
@@ -307,7 +319,7 @@ abstract mixin class _$WorkoutSessionCopyWith<$Res> implements $WorkoutSessionCo
   factory _$WorkoutSessionCopyWith(_WorkoutSession value, $Res Function(_WorkoutSession) _then) = __$WorkoutSessionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String templateId, String templateRevisionId, String templateName, SessionStatus status, DateTime? startedAt, DateTime? pausedAt, DateTime? completedAt, DateTime createdAt, List<SessionBlock> blocks, List<SessionInterruption> interruptions, List<RestInterval> restIntervals, List<AuditEntry> audits, String? sessionNotes
+ String id, String userId, String templateId, String templateRevisionId, String templateName, SessionStatus status, DateTime? startedAt, DateTime? pausedAt, DateTime? completedAt, DateTime createdAt, List<SessionBlock> blocks, List<SessionInterruption> interruptions, List<RestInterval> restIntervals, List<SessionInterval> sessionIntervals, List<AuditEntry> audits, String? sessionNotes, double? sessionRpe, SessionMood? sessionMood
 });
 
 
@@ -324,7 +336,7 @@ class __$WorkoutSessionCopyWithImpl<$Res>
 
 /// Create a copy of WorkoutSession
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? templateId = null,Object? templateRevisionId = null,Object? templateName = null,Object? status = null,Object? startedAt = freezed,Object? pausedAt = freezed,Object? completedAt = freezed,Object? createdAt = null,Object? blocks = null,Object? interruptions = null,Object? restIntervals = null,Object? audits = null,Object? sessionNotes = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? templateId = null,Object? templateRevisionId = null,Object? templateName = null,Object? status = null,Object? startedAt = freezed,Object? pausedAt = freezed,Object? completedAt = freezed,Object? createdAt = null,Object? blocks = null,Object? interruptions = null,Object? restIntervals = null,Object? sessionIntervals = null,Object? audits = null,Object? sessionNotes = freezed,Object? sessionRpe = freezed,Object? sessionMood = freezed,}) {
   return _then(_WorkoutSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -339,9 +351,12 @@ as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignor
 as DateTime,blocks: null == blocks ? _self._blocks : blocks // ignore: cast_nullable_to_non_nullable
 as List<SessionBlock>,interruptions: null == interruptions ? _self._interruptions : interruptions // ignore: cast_nullable_to_non_nullable
 as List<SessionInterruption>,restIntervals: null == restIntervals ? _self._restIntervals : restIntervals // ignore: cast_nullable_to_non_nullable
-as List<RestInterval>,audits: null == audits ? _self._audits : audits // ignore: cast_nullable_to_non_nullable
+as List<RestInterval>,sessionIntervals: null == sessionIntervals ? _self._sessionIntervals : sessionIntervals // ignore: cast_nullable_to_non_nullable
+as List<SessionInterval>,audits: null == audits ? _self._audits : audits // ignore: cast_nullable_to_non_nullable
 as List<AuditEntry>,sessionNotes: freezed == sessionNotes ? _self.sessionNotes : sessionNotes // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,sessionRpe: freezed == sessionRpe ? _self.sessionRpe : sessionRpe // ignore: cast_nullable_to_non_nullable
+as double?,sessionMood: freezed == sessionMood ? _self.sessionMood : sessionMood // ignore: cast_nullable_to_non_nullable
+as SessionMood?,
   ));
 }
 

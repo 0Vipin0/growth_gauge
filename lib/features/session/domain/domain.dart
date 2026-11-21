@@ -5,5 +5,6 @@ export 'session_block.dart';
 export 'session_enums.dart';
 export 'session_events.dart';
 export 'session_interruption.dart';
+export 'session_interval.dart';
 export 'session_item.dart';
 export 'workout_session.dart';

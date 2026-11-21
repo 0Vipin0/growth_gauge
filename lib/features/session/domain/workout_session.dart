@@ -5,6 +5,7 @@ import 'rest_interval.dart';
 import 'session_block.dart';
 import 'session_enums.dart';
 import 'session_interruption.dart';
+import 'session_interval.dart';
 
 part 'workout_session.freezed.dart';
 part 'workout_session.g.dart';
@@ -26,8 +27,11 @@ abstract class WorkoutSession with _$WorkoutSession {
     @Default([]) List<SessionBlock> blocks,
     @Default([]) List<SessionInterruption> interruptions,
     @Default([]) List<RestInterval> restIntervals,
+    @Default([]) List<SessionInterval> sessionIntervals,
     @Default([]) List<AuditEntry> audits,
     String? sessionNotes,
+    double? sessionRpe,
+    SessionMood? sessionMood,
   }) = _WorkoutSession;
 
   factory fromJson(Map<String, dynamic> json) => _$WorkoutSessionFromJson(json);

@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:growth_gauge/core/database/app_database.dart';
 import 'package:growth_gauge/core/error/failures.dart';
 import 'package:growth_gauge/core/error/result.dart';
+import 'package:growth_gauge/core/events/domain_event_dispatcher.dart';
 import 'package:growth_gauge/features/catalog/catalog.dart';
+import 'package:growth_gauge/features/session/application/session_use_cases.dart';
 import 'package:growth_gauge/features/session/domain/execution_set.dart';
 import 'package:growth_gauge/features/session/domain/session_block.dart';
 import 'package:growth_gauge/features/session/domain/session_enums.dart';
 import 'package:growth_gauge/features/session/domain/session_item.dart';
 import 'package:growth_gauge/features/session/domain/workout_session.dart';
+import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
 import 'package:growth_gauge/features/session/presentation/screen/session_summary_screen.dart';
+import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
 class FakeExerciseRepository(final Map<String, Exercise> exercises)
     implements IExerciseRepository {
@@ -113,6 +118,29 @@ void main() {
   );
 
   group('SessionSummaryScreen', () {
+    late AppDatabase database;
+    late TemplateRepository templateRepository;
+    late WorkoutSessionRepository sessionRepository;
+    late SessionUseCases sessionUseCases;
+    late DomainEventDispatcher events;
+
+    setUp(() {
+      database = AppDatabase.inMemory();
+      templateRepository = TemplateRepository(database);
+      sessionRepository = WorkoutSessionRepository(database);
+      events = DomainEventDispatcher();
+      sessionUseCases = SessionUseCases(
+        templates: templateRepository,
+        sessions: sessionRepository,
+        events: events,
+      );
+    });
+
+    tearDown(() async {
+      await events.dispose();
+      await database.close();
+    });
+
     testWidgets(
       'resolves exercise names from repository and sums actual reps',
       (tester) async {
@@ -124,6 +152,7 @@ void main() {
           MaterialApp(
             home: SessionSummaryScreen(
               session: testSession,
+              useCases: sessionUseCases,
               exerciseRepository: fakeRepo,
             ),
           ),
@@ -131,6 +160,16 @@ void main() {
 
         // Allow async name loading to finish
         await tester.pumpAndSettle();
+        await tester.scrollUntilVisible(
+          find.text('Barbell Bench Press'),
+          250,
+          scrollable: find
+              .descendant(
+                of: find.byType(ListView),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        );
 
         // Resolved exercise name from repository
         expect(find.text('Barbell Bench Press'), findsOneWidget);
@@ -148,10 +187,25 @@ void main() {
       'uses formatted slug fallback when exerciseRepository is null',
       (tester) async {
         await tester.pumpWidget(
-          MaterialApp(home: SessionSummaryScreen(session: testSession)),
+          MaterialApp(
+            home: SessionSummaryScreen(
+              session: testSession,
+              useCases: sessionUseCases,
+            ),
+          ),
         );
 
         await tester.pumpAndSettle();
+        await tester.scrollUntilVisible(
+          find.text('Bench Press'),
+          250,
+          scrollable: find
+              .descendant(
+                of: find.byType(ListView),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        );
 
         // Formatted slugs
         expect(find.text('Bench Press'), findsOneWidget);

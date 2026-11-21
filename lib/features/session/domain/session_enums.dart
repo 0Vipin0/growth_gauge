@@ -41,3 +41,11 @@ enum ExecutionSetStatus() {
   completed,
   skipped,
 }
+
+enum SessionMood() {
+  tired,
+  neutral,
+  good,
+  energetic,
+  great,
+}

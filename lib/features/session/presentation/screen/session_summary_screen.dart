@@ -6,11 +6,14 @@ import '../../../../core/routing/app_router.dart';
 import '../../../catalog/catalog.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
+import '../../application/session_use_cases.dart';
+import '../../domain/session_enums.dart';
 import '../../domain/workout_session.dart';
 
 class const SessionSummaryScreen({
   super.key,
   required final WorkoutSession session,
+  required final SessionUseCases useCases,
   final IExerciseRepository? exerciseRepository,
 }) extends StatefulWidget {
   @override
@@ -22,10 +25,15 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
   int _selectedMoodIndex = 2; // Default to 'Good'
   final TextEditingController _notesController = TextEditingController();
   final Map<String, String> _exerciseNames = {};
+  bool _saving = false;
 
   @override
   void initState() {
     super.initState();
+    _rpe = widget.session.sessionRpe ?? _rpe;
+    _selectedMoodIndex =
+        widget.session.sessionMood?.index ?? _selectedMoodIndex;
+    _notesController.text = widget.session.sessionNotes ?? '';
     _loadExerciseNames();
   }
 
@@ -45,6 +53,28 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
         },
         error: (_) {},
       );
+    }
+  }
+
+  Future<void> _saveLog() async {
+    if (_saving) return;
+    setState(() => _saving = true);
+    try {
+      final result = await widget.useCases.saveSessionLog(
+        id: widget.session.id,
+        perceivedEffort: _rpe,
+        mood: SessionMood.values[_selectedMoodIndex],
+        notes: _notesController.text,
+      );
+      if (!mounted) return;
+      if (result.isError) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.errorOrNull!.message)));
+        return;
+      }
+      context.go(appRouteHome);
+    } finally {
+      if (mounted) setState(() => _saving = false);
     }
   }
 
@@ -341,9 +371,10 @@ class _SessionSummaryScreenState() extends State<SessionSummaryScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: AppButton.primary(
-                      label: 'Save Log',
+                      label: _saving ? 'Saving…' : 'Save Log',
                       icon: Icons.bookmark_added_outlined,
-                      onPressed: () => context.go(appRouteHome),
+                      onPressed: _saving ? null : _saveLog,
+                      isLoading: _saving,
                     ),
                   ),
                 ],

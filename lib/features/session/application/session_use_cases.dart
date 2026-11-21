@@ -14,6 +14,7 @@ import '../domain/session_block.dart';
 import '../domain/session_enums.dart';
 import '../domain/session_events.dart';
 import '../domain/session_interruption.dart';
+import '../domain/session_interval.dart';
 import '../domain/session_item.dart';
 import '../domain/workout_session.dart';
 import '../infrastructure/session_repository.dart';
@@ -25,6 +26,55 @@ class const SessionUseCases({
   required final IWorkoutSessionRepository _sessions,
   required final DomainEventDispatcher _events,
 }) {
+  Future<Result<WorkoutSession, Failure>> saveSessionLog({
+    required String id,
+    required double perceivedEffort,
+    required SessionMood mood,
+    required String notes,
+  }) async {
+    if (!perceivedEffort.isFinite ||
+        perceivedEffort < 1 ||
+        perceivedEffort > 10) {
+      return const Result.error(
+        ValidationFailure('Perceived effort must be between 1 and 10'),
+      );
+    }
+    final found = await _get(id);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.completed) {
+      return Result.error(
+        ConflictFailure('A session log can only be saved after completion', id),
+      );
+    }
+    final updated = session.copyWith(
+      sessionRpe: perceivedEffort,
+      sessionMood: mood,
+      sessionNotes: notes.trim().isEmpty ? null : notes.trim(),
+      audits: [
+        ...session.audits,
+        _audit(
+          id,
+          AuditAction.updated,
+          field: 'sessionLog',
+          previousValue: {
+            'rpe': session.sessionRpe,
+            'mood': session.sessionMood?.name,
+            'notes': session.sessionNotes,
+          },
+          newValue: {
+            'rpe': perceivedEffort,
+            'mood': mood.name,
+            'notes': notes.trim().isEmpty ? null : notes.trim(),
+          },
+        ),
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    return Result.success(updated);
+  }
+
   Future<Result<WorkoutSession, Failure>> createFromRevision({
     required String revisionId,
     required String userId,
@@ -52,6 +102,273 @@ class const SessionUseCases({
     return saved.isError
         ? Result.error(saved.errorOrNull!)
         : Result.success(session);
+  }
+
+  Future<Result<WorkoutSession, Failure>> startIntervalSequence({
+    required String sessionId,
+    required int workSeconds,
+    required int restSeconds,
+    required int rounds,
+    required int cooldownSeconds,
+  }) async {
+    if (workSeconds < 1 || workSeconds > 3600) {
+      return const Result.error(
+        ValidationFailure('Work duration must be between 1 and 3600 seconds'),
+      );
+    }
+    if (restSeconds < 0 || restSeconds > 3600) {
+      return const Result.error(
+        ValidationFailure('Rest duration must be between 0 and 3600 seconds'),
+      );
+    }
+    if (cooldownSeconds < 0 || cooldownSeconds > 3600) {
+      return const Result.error(
+        ValidationFailure(
+          'Cooldown duration must be between 0 and 3600 seconds',
+        ),
+      );
+    }
+    if (rounds < 1 || rounds > 50) {
+      return const Result.error(
+        ValidationFailure('Rounds must be between 1 and 50'),
+      );
+    }
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) {
+      return Result.error(
+        ConflictFailure('Intervals require an active workout', sessionId),
+      );
+    }
+    if (session.sessionIntervals.any(
+      (interval) =>
+          interval.status == SessionIntervalStatus.pending ||
+          interval.status == SessionIntervalStatus.active ||
+          interval.status == SessionIntervalStatus.paused,
+    )) {
+      return Result.error(
+        ConflictFailure(
+          'Finish or skip the current interval sequence first',
+          sessionId,
+        ),
+      );
+    }
+
+    final phases = <(SessionIntervalPhase, int)>[];
+    for (var round = 0; round < rounds; round++) {
+      phases.add((SessionIntervalPhase.work, workSeconds));
+      if (restSeconds > 0 && round < rounds - 1) {
+        phases.add((SessionIntervalPhase.rest, restSeconds));
+      }
+    }
+    if (cooldownSeconds > 0) {
+      phases.add((SessionIntervalPhase.cooldown, cooldownSeconds));
+    }
+    final now = AppClock.nowUtc();
+    final intervals = phases.indexed
+        .map(
+          (entry) => SessionInterval(
+            id: UniqueId.generate().value,
+            phase: entry.$2.$1,
+            status: entry.$1 == 0
+                ? SessionIntervalStatus.active
+                : SessionIntervalStatus.pending,
+            durationSeconds: entry.$2.$2,
+            startedAt: entry.$1 == 0 ? now : null,
+          ),
+        )
+        .toList();
+    final updated = session.copyWith(
+      sessionIntervals: [...session.sessionIntervals, ...intervals],
+      audits: [
+        ...session.audits,
+        _audit(
+          sessionId,
+          AuditAction.started,
+          entityType: 'SessionIntervalSequence',
+          entityId: intervals.first.id,
+          newValue: {
+            'rounds': rounds,
+            'workSeconds': workSeconds,
+            'restSeconds': restSeconds,
+            'cooldownSeconds': cooldownSeconds,
+          },
+        ),
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    _events.publish(
+      SessionIntervalSequenceStarted(
+        aggregateId: sessionId,
+        intervalId: intervals.first.id,
+      ),
+    );
+    return Result.success(updated);
+  }
+
+  Future<Result<WorkoutSession, Failure>> advanceInterval(
+    String sessionId, {
+    bool skipped = false,
+  }) async {
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) {
+      return Result.error(
+        ConflictFailure(
+          'Intervals can only advance during an active workout',
+          sessionId,
+        ),
+      );
+    }
+    final index = session.sessionIntervals.indexWhere(
+      (interval) => interval.status == SessionIntervalStatus.active,
+    );
+    if (index < 0) {
+      return Result.error(
+        ConflictFailure('There is no active interval to advance', sessionId),
+      );
+    }
+    final now = AppClock.nowUtc();
+    final intervals = [...session.sessionIntervals];
+    final current = intervals[index];
+    intervals[index] = current.copyWith(
+      status: skipped
+          ? SessionIntervalStatus.skipped
+          : SessionIntervalStatus.completed,
+      elapsedSeconds: current.elapsedAt(now),
+      clearStartedAt: true,
+      completedAt: now,
+    );
+    final nextIndex = intervals.indexWhere(
+      (interval) => interval.status == SessionIntervalStatus.pending,
+    );
+    if (nextIndex >= 0) {
+      intervals[nextIndex] = intervals[nextIndex].copyWith(
+        status: SessionIntervalStatus.active,
+        startedAt: now,
+      );
+    }
+    final updated = session.copyWith(
+      sessionIntervals: intervals,
+      audits: [
+        ...session.audits,
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'SessionInterval',
+          entityId: current.id,
+          field: 'status',
+          previousValue: current.status.name,
+          newValue: intervals[index].status.name,
+        ),
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    _events.publish(
+      SessionIntervalAdvanced(
+        aggregateId: sessionId,
+        intervalId: current.id,
+        phase: current.phase,
+        status: intervals[index].status,
+      ),
+    );
+    return Result.success(updated);
+  }
+
+  Future<Result<WorkoutSession, Failure>> extendActiveInterval(
+    String sessionId, {
+    int extensionSeconds = 15,
+  }) async {
+    if (extensionSeconds < 1 || extensionSeconds > 3600) {
+      return const Result.error(
+        ValidationFailure('Extension must be between 1 and 3600 seconds'),
+      );
+    }
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) {
+      return Result.error(
+        ConflictFailure(
+          'Intervals can only be extended during a workout',
+          sessionId,
+        ),
+      );
+    }
+    final index = session.sessionIntervals.indexWhere(
+      (interval) => interval.status == SessionIntervalStatus.active,
+    );
+    if (index < 0) {
+      return Result.error(
+        ConflictFailure('There is no active interval to extend', sessionId),
+      );
+    }
+    final current = session.sessionIntervals[index];
+    if (current.durationSeconds + extensionSeconds > 7200) {
+      return Result.error(
+        ConflictFailure('An interval cannot exceed 7200 seconds', current.id),
+      );
+    }
+    final intervals = [...session.sessionIntervals];
+    intervals[index] = current.copyWith(
+      durationSeconds: current.durationSeconds + extensionSeconds,
+    );
+    final updated = session.copyWith(
+      sessionIntervals: intervals,
+      audits: [
+        ...session.audits,
+        _audit(
+          sessionId,
+          AuditAction.updated,
+          entityType: 'SessionInterval',
+          entityId: current.id,
+          field: 'durationSeconds',
+          previousValue: current.durationSeconds,
+          newValue: intervals[index].durationSeconds,
+        ),
+      ],
+    );
+    final saved = await _sessions.save(updated);
+    if (saved.isError) return Result.error(saved.errorOrNull!);
+    _events.publish(
+      SessionIntervalExtended(
+        aggregateId: sessionId,
+        intervalId: current.id,
+        durationSeconds: intervals[index].durationSeconds,
+      ),
+    );
+    return Result.success(updated);
+  }
+
+  /// Persists a short timer checkpoint so a process crash cannot count an
+  /// arbitrarily long cold-start gap as active interval time.
+  Future<Result<WorkoutSession, Failure>> checkpointActiveInterval(
+    String sessionId,
+  ) async {
+    final found = await _get(sessionId);
+    if (found.isError) return found;
+    final session = found.dataOrNull!;
+    if (session.status != SessionStatus.inProgress) return found;
+    final index = session.sessionIntervals.indexWhere(
+      (interval) => interval.status == SessionIntervalStatus.active,
+    );
+    if (index < 0) return found;
+    final now = AppClock.nowUtc();
+    final intervals = [...session.sessionIntervals];
+    final active = intervals[index];
+    intervals[index] = active.copyWith(
+      elapsedSeconds: active.elapsedAt(now),
+      startedAt: now,
+    );
+    final updated = session.copyWith(sessionIntervals: intervals);
+    final saved = await _sessions.save(updated);
+    return saved.isError
+        ? Result.error(saved.errorOrNull!)
+        : Result.success(updated);
   }
 
   Future<Result<WorkoutSession, Failure>> start(String id) async {
@@ -111,6 +428,7 @@ class const SessionUseCases({
     final updated = session.copyWith(
       status: SessionStatus.paused,
       pausedAt: now,
+      sessionIntervals: _pauseSessionIntervals(session.sessionIntervals, now),
       interruptions: [
         ...session.interruptions,
         SessionInterruption(
@@ -152,6 +470,7 @@ class const SessionUseCases({
     final updated = session.copyWith(
       status: SessionStatus.inProgress,
       pausedAt: null,
+      sessionIntervals: _resumeSessionIntervals(session.sessionIntervals, now),
       interruptions: interruptions,
       audits: [...session.audits, _audit(id, AuditAction.resumed)],
     );
@@ -936,6 +1255,7 @@ class const SessionUseCases({
     final completing = session.copyWith(
       status: SessionStatus.completing,
       completedAt: now,
+      sessionIntervals: _closeSessionIntervals(session.sessionIntervals, now),
       interruptions: interruptions,
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
@@ -983,6 +1303,7 @@ class const SessionUseCases({
       status: SessionStatus.cancelled,
       interruptions: _closeInterruptions(session, now),
       restIntervals: restIntervals,
+      sessionIntervals: _closeSessionIntervals(session.sessionIntervals, now),
       blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
@@ -1023,6 +1344,7 @@ class const SessionUseCases({
       status: SessionStatus.abandoned,
       interruptions: _closeInterruptions(session, now),
       restIntervals: restIntervals,
+      sessionIntervals: _closeSessionIntervals(session.sessionIntervals, now),
       blocks: _withRestTotals(session.blocks, restIntervals),
       audits: [
         ...session.audits,
@@ -1089,6 +1411,44 @@ class const SessionUseCases({
     if (session.status == SessionStatus.starting) {
       return await recoverStarting(id);
     }
+    if (session.status == SessionStatus.inProgress) {
+      final activeIndex = session.sessionIntervals.indexWhere(
+        (interval) => interval.status == SessionIntervalStatus.active,
+      );
+      if (activeIndex >= 0) {
+        final now = AppClock.nowUtc();
+        final intervals = [...session.sessionIntervals];
+        intervals[activeIndex] = intervals[activeIndex].copyWith(
+          status: SessionIntervalStatus.paused,
+          clearStartedAt: true,
+        );
+        final interruption = SessionInterruption(
+          id: UniqueId.generate().value,
+          startedAt: now,
+          reason: InterruptionReason.applicationBackground,
+          userInitiated: false,
+        );
+        final recovered = session.copyWith(
+          status: SessionStatus.paused,
+          pausedAt: now,
+          sessionIntervals: intervals,
+          interruptions: [...session.interruptions, interruption],
+          audits: [
+            ...session.audits,
+            _audit(
+              id,
+              AuditAction.paused,
+              actorType: AuditActorType.system,
+              reason: 'Recovered active interval from a cold start',
+            ),
+          ],
+        );
+        final saved = await _sessions.save(recovered);
+        if (saved.isError) return Result.error(saved.errorOrNull!);
+        _events.publish(WorkoutSessionPaused(aggregateId: id));
+        return Result.success(recovered);
+      }
+    }
     if (session.status != SessionStatus.completing) {
       return Result.success(session);
     }
@@ -1110,6 +1470,10 @@ class const SessionUseCases({
       status: SessionStatus.completed,
       completedAt: completedAt,
       interruptions: _closeInterruptions(session, completedAt),
+      sessionIntervals: _closeSessionIntervals(
+        session.sessionIntervals,
+        completedAt,
+      ),
       blocks: _withRestTotals(session.blocks, restIntervals),
       restIntervals: restIntervals,
       audits: [
@@ -1132,6 +1496,63 @@ class const SessionUseCases({
 
   Future<Result<WorkoutSession, Failure>> _get(String id) =>
       _sessions.getById(id);
+
+  List<SessionInterval> _pauseSessionIntervals(
+    List<SessionInterval> intervals,
+    DateTime now,
+  ) => intervals
+      .map(
+        (interval) => interval.status == SessionIntervalStatus.active
+            ? interval.copyWith(
+                status: SessionIntervalStatus.paused,
+                elapsedSeconds: interval.elapsedAt(now),
+                clearStartedAt: true,
+              )
+            : interval,
+      )
+      .toList();
+
+  List<SessionInterval> _resumeSessionIntervals(
+    List<SessionInterval> intervals,
+    DateTime now,
+  ) {
+    final index = intervals.indexWhere(
+      (interval) => interval.status == SessionIntervalStatus.paused,
+    );
+    if (index < 0) return intervals;
+    final resumed = [...intervals];
+    resumed[index] = resumed[index].copyWith(
+      status: SessionIntervalStatus.active,
+      startedAt: now,
+    );
+    return resumed;
+  }
+
+  List<SessionInterval> _closeSessionIntervals(
+    List<SessionInterval> intervals,
+    DateTime now,
+  ) => intervals.map((interval) {
+    if (interval.status == SessionIntervalStatus.active) {
+      final elapsed = interval.elapsedAt(now);
+      return interval.copyWith(
+        status: elapsed >= interval.durationSeconds
+            ? SessionIntervalStatus.completed
+            : SessionIntervalStatus.skipped,
+        elapsedSeconds: elapsed,
+        clearStartedAt: true,
+        completedAt: now,
+      );
+    }
+    if (interval.status == SessionIntervalStatus.pending ||
+        interval.status == SessionIntervalStatus.paused) {
+      return interval.copyWith(
+        status: SessionIntervalStatus.skipped,
+        clearStartedAt: true,
+        completedAt: now,
+      );
+    }
+    return interval;
+  }).toList();
 
   List<SessionInterruption> _closeInterruptions(
     WorkoutSession session,

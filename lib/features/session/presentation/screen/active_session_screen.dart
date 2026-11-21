@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/result.dart';
 import '../../../../core/routing/app_router.dart';
+import '../../../../core/time/app_clock.dart';
 import '../../../catalog/infrastructure/exercise_repository.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
@@ -15,6 +16,7 @@ import '../../application/session_use_cases.dart';
 import '../../application/workout_session_bloc.dart';
 import '../../domain/execution_set.dart';
 import '../../domain/session_enums.dart';
+import '../../domain/session_interval.dart';
 import '../../domain/workout_session.dart';
 import '../widgets/widgets.dart';
 
@@ -35,7 +37,8 @@ class _ActiveSessionScreenState()
   late final WorkoutSessionBloc _sessionBloc;
   StreamSubscription<WorkoutSessionState>? _sessionSubscription;
   Timer? _ticker;
-  DateTime _now = DateTime.now().toUtc();
+  DateTime _now = AppClock.nowUtc();
+  DateTime _lastIntervalCheckpoint = DateTime.fromMillisecondsSinceEpoch(0);
   bool _busy = false;
   bool _backgroundPausePending = false;
   int _activeSetIndex = 0;
@@ -90,8 +93,18 @@ class _ActiveSessionScreenState()
 
   void _tick() {
     if (!mounted) return;
-    final now = DateTime.now().toUtc();
+    final now = AppClock.nowUtc();
     setState(() => _now = now);
+    final activeInterval = _activeInterval;
+    if (_session.status == SessionStatus.inProgress && activeInterval != null) {
+      if (activeInterval.remainingAt(now) == 0) {
+        _apply(() => widget.useCases.advanceInterval(_session.id));
+      } else if (now.difference(_lastIntervalCheckpoint).inSeconds >= 5 &&
+          !_sessionBloc.state.isBusy) {
+        _lastIntervalCheckpoint = now;
+        _apply(() => widget.useCases.checkpointActiveInterval(_session.id));
+      }
+    }
     for (final rest in _session.restIntervals.where(
       (entry) =>
           entry.endedAt == null &&
@@ -115,6 +128,30 @@ class _ActiveSessionScreenState()
           })
           .whenComplete(() => _finishingRestIds.remove(rest.id));
     }
+  }
+
+  SessionInterval? get _activeInterval {
+    for (final interval in _session.sessionIntervals) {
+      if (interval.status == SessionIntervalStatus.active) return interval;
+    }
+    return null;
+  }
+
+  Future<void> _configureIntervals() async {
+    final plan = await showDialog<(int, int, int, int)>(
+      context: context,
+      builder: (context) => const _IntervalConfigurationDialog(),
+    );
+    if (plan == null || !mounted) return;
+    await _apply(
+      () => widget.useCases.startIntervalSequence(
+        sessionId: _session.id,
+        workSeconds: plan.$1,
+        restSeconds: plan.$2,
+        rounds: plan.$3,
+        cooldownSeconds: plan.$4,
+      ),
+    );
   }
 
   Future<void> _loadExerciseNames() async {
@@ -646,6 +683,20 @@ class _ActiveSessionScreenState()
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           children: [
+            _IntervalTimerCard(
+              intervals: _session.sessionIntervals,
+              now: _now,
+              enabled: !_busy && !paused,
+              onStart: _configureIntervals,
+              onSkip: () => _apply(
+                () =>
+                    widget.useCases.advanceInterval(_session.id, skipped: true),
+              ),
+              onExtend: () => _apply(
+                () => widget.useCases.extendActiveInterval(_session.id),
+              ),
+            ),
+            const SizedBox(height: 16),
             // Focused Active Exercise Card with Timers & Action Buttons
             ActiveExerciseCard(
               exerciseName: currentInfo?.exerciseName ?? 'Workout Active',
@@ -731,4 +782,187 @@ class _ActiveSessionScreenState()
       ),
     );
   }
+}
+
+class const _IntervalConfigurationDialog() extends StatefulWidget {
+  @override
+  State<_IntervalConfigurationDialog> createState() =>
+      _IntervalConfigurationDialogState();
+}
+
+class _IntervalConfigurationDialogState()
+    extends State<_IntervalConfigurationDialog> {
+  final _work = TextEditingController(text: '20');
+  final _rest = TextEditingController(text: '10');
+  final _rounds = TextEditingController(text: '8');
+  final _cooldown = TextEditingController(text: '60');
+
+  @override
+  void dispose() {
+    _work.dispose();
+    _rest.dispose();
+    _rounds.dispose();
+    _cooldown.dispose();
+    super.dispose();
+  }
+
+  Widget _field(TextEditingController controller, String label) => AppTextField(
+    controller: controller,
+    label: label,
+    keyboardType: TextInputType.number,
+  );
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('Interval timer'),
+    content: SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _field(_work, 'Work (seconds)'),
+          const SizedBox(height: 12),
+          _field(_rest, 'Rest between rounds (seconds)'),
+          const SizedBox(height: 12),
+          _field(_rounds, 'Rounds'),
+          const SizedBox(height: 12),
+          _field(_cooldown, 'Cooldown (seconds, 0 to omit)'),
+        ],
+      ),
+    ),
+    actions: [
+      AppButton.ghost(label: 'Cancel', onPressed: () => Navigator.pop(context)),
+      AppButton.primary(
+        label: 'Start intervals',
+        onPressed: () {
+          final values = (
+            int.tryParse(_work.text),
+            int.tryParse(_rest.text),
+            int.tryParse(_rounds.text),
+            int.tryParse(_cooldown.text),
+          );
+          if (values.$1 != null &&
+              values.$2 != null &&
+              values.$3 != null &&
+              values.$4 != null) {
+            Navigator.pop(context, (
+              values.$1!,
+              values.$2!,
+              values.$3!,
+              values.$4!,
+            ));
+          }
+        },
+      ),
+    ],
+  );
+}
+
+class const _IntervalTimerCard({
+  required final List<SessionInterval> intervals,
+  required final DateTime now,
+  required final bool enabled,
+  required final VoidCallback onStart,
+  required final VoidCallback onSkip,
+  required final VoidCallback onExtend,
+}) extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final current = intervals.where(
+      (interval) =>
+          interval.status == SessionIntervalStatus.active ||
+          interval.status == SessionIntervalStatus.paused,
+    );
+    final interval = current.isEmpty ? null : current.first;
+    final pendingCount = intervals
+        .where((entry) => entry.status == SessionIntervalStatus.pending)
+        .length;
+    final hasSequence = intervals.isNotEmpty;
+
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.timer_outlined, color: colorScheme.primary),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'INTERVAL TIMER',
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 1),
+                ),
+              ),
+              if (interval != null)
+                Text(
+                  interval.status == SessionIntervalStatus.paused
+                      ? 'PAUSED'
+                      : interval.phase.name.toUpperCase(),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          if (interval == null && pendingCount > 0)
+            const Text(
+              'Interval sequence is waiting for the workout to resume.',
+            ),
+          if (interval == null && pendingCount == 0)
+            Text(
+              hasSequence
+                  ? 'Intervals complete'
+                  : 'No interval sequence started',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          if (interval != null) ...[
+            Text(
+              _formatIntervalDuration(interval.remainingAt(now)),
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text('${pendingCount + 1} interval(s) remaining'),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                AppButton.ghost(
+                  label: 'Skip phase',
+                  icon: Icons.skip_next,
+                  onPressed: enabled ? onSkip : null,
+                ),
+                AppButton.ghost(
+                  label: 'Add 15 seconds',
+                  icon: Icons.add_alarm,
+                  onPressed: enabled ? onExtend : null,
+                ),
+              ],
+            ),
+          ],
+          if (interval == null && enabled && pendingCount == 0) ...[
+            const SizedBox(height: 12),
+            AppButton.secondary(
+              label: hasSequence ? 'Set another sequence' : 'Set up intervals',
+              icon: Icons.play_arrow,
+              onPressed: onStart,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+String _formatIntervalDuration(int seconds) {
+  final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
+  final remainder = (seconds % 60).toString().padLeft(2, '0');
+  return '$minutes:$remainder';
 }
