@@ -44,7 +44,7 @@ fl_chart Reactive Streams
 4. **Volume & Frequency Aggregations (Section 26):**
    - Calculates weekly set volume per muscle group.
    - Computes daily workout frequency for calendar heatmaps.
-5. **Streak Heatmaps and Flexible Windows:** Activity detail views must show consecutive active-day streaks and calendar heatmaps. Chart queries support 7-, 14-, 30-, and 90-day windows, with selected period clearly indicated.
+5. **Streak Heatmaps and Flexible Windows:** Activity detail views must show consecutive active-day streaks and calendar heatmaps. **Scope decision (2026-11-21):** retain the existing chart behavior; selectable 7-, 14-, 30-, and 90-day windows are deferred from MVP at the user's direction.
 6. **Daily Log Analytics:** Mood, notes, and RPE are available in session/day history. Aggregate RPE only where meaningful; missing RPE or mood remains missing rather than being treated as zero.
 7. **Goal-Centric Dashboard:** Show count-based and time-based activities, grouped/sorted by supporting goal with progress against configured targets. Completed workouts and configured activity records remain the source of truth; do not restore generic legacy counter storage.
 
@@ -198,11 +198,11 @@ class AnalyticsProjector {
 
 ### 7.3.1 Insight and Activity Detail Requirements
 
-- Provide a detail view for each tracked activity/goal with a calendar heatmap, consecutive-day streak calculation, and charts selectable for **7, 14, 30, or 90 days**. Default chart window: **NA â€” not specified in the legacy source**; allow the user to select a supported window.
+- Provide a detail view for each tracked activity/goal with a calendar heatmap and consecutive-day streak calculation. **Scope decision (2026-11-21):** selectable 7/14/30/90-day chart windows and period selection are deferred from MVP; preserve current chart behavior.
 - The dashboard must support both activity progress, group/sort activities by the goal they support, and show progress bars against configured targets.
 - Daily entries can include mood, notes, and perceived exertion (RPE); show these alongside relevant history and ensure analytics handle missing values correctly.
 - Preserve the intent of the legacy weekly chart/heatmap features within the new fitness dashboard. Do not restore the legacy counter/timer pages or their Shared Preferences repositories.
-- Acceptance checks: all four chart windows return correctly bounded date ranges; heatmap streaks handle missed days, timezone/date boundaries, and empty history; goal progress handles zero/missing targets without division errors; daily log fields survive restart and JSON export/import.
+- In-scope acceptance checks: heatmap streaks handle missed days, UTC date boundaries, duplicate same-day sessions, and empty history; goal progress handles zero/missing targets without division errors; daily log fields survive restart and JSON export/import. Four selectable chart windows are deferred per the scope decision above.
 
 ---
 
@@ -222,7 +222,7 @@ class AnalyticsProjector {
 6. **Step 4.6: Analytics Presentation UI (fl_chart)** `[x]`
    - Implemented analytics dashboard, progression and volume charts, PR trophy UI, and frequency heatmap. Registered the screen in app routing and added an Analytics & Progress entry in the Training hub. Dashboard entry rebuilds projections from completed session documents so existing workouts are included.
 7. **Step 4.7: Automated Projection & Rebuild Tests** `[x]`
-   - Analytics DAO, projector/rebuilder, PR calculator, widget, and volume-query benchmark tests pass. Coverage includes projection idempotency and rebuild parity.
+   - DAO, projector/rebuilder, PR calculator, widget, calorie calculator, and volume-query benchmark suites pass in the focused run (32 tests). Latest benchmark: 12.55 ms median / 14.60 ms p95 for 1,060 of 10,400 rows. UTC heatmap streak coverage includes empty, duplicate, consecutive, and missed-day cases. Per user direction, retain current chart behavior; selectable 7/14/30/90-day windows are deferred from MVP scope.
 
 ---
 
@@ -241,6 +241,8 @@ class AnalyticsProjector {
 
 ### 7.6 Phase 4 Execution Status
 
+**Phase status: `[x] COMPLETED` — 7 / 7 steps complete for the user-approved scope.** Core projection/query behavior, Cubit lifecycle, charts, heatmap streak calculation, and focused tests are verified. Per user direction, retain current chart behavior and defer selectable 7/14/30/90-day windows from MVP scope. The Training Hub live summary and Details CTA are tracked by Phase 7.
+
 | Step | Action | Status | Notes |
 |---|---|---|---|
 | **Step 4.1** | Drift analytics tables and schema migration | `[x] COMPLETED` | Added `DailyWorkoutSummaries`, `ExerciseSetMetrics`, `PersonalRecords`, `MuscleVolumeBreakdowns`, and `RestIntervalMetrics` tables with composite index on `(userId, weekStartDate)`. Generated Drift classes with `DataClassName` overrides. |
@@ -248,17 +250,15 @@ class AnalyticsProjector {
 | **Step 4.3** | Analytics projector & event subscription | `[x] COMPLETED` | `AnalyticsProjector` listens to `WorkoutSessionCompleted` events and transactionally writes all 5 read models with strict idempotency (delete-before-insert per sessionId). |
 | **Step 4.4** | Projection rebuilder | `[x] COMPLETED` | `ProjectionRebuilder` wipes all materialized analytics tables and replays completed session documents in chronological order with 100% data parity. |
 | **Step 4.5** | Analytics DAO & query handlers | `[x] COMPLETED` | `AnalyticsDao` and `AnalyticsQueries` provide reactive `watch` queries for workout history, exercise progression, personal records, and weekly muscle volume. |
-| **Step 4.6** | Analytics presentation UI (fl_chart) | `[x] COMPLETED` | Built `AnalyticsDashboardScreen`, `ExerciseProgressionScreen`, `PrTrophyScreen`, `VolumeBarChart`, `ProgressionLineChart`, `PrBadgeCard`, and `WorkoutFrequencyHeatmap`. Linked in `routes.dart` and Training hub. |
-| **Step 4.7** | Analytics automated test suite | `[x] COMPLETED` | 26 tests pass across PR calculator unit tests, projector idempotency/rebuild parity tests, DAO reactive stream tests, widget UI tests, and 52-week volume query benchmark (<15ms). |
+| **Step 4.6** | Analytics presentation UI (fl_chart) | `[x] COMPLETED` | Dashboard, progression and PR screens/charts are present and routed. Existing chart behavior is retained by user direction; the optional selectable 7/14/30/90-day controls are deferred from MVP. The frequency heatmap displays its existing fixed 10-week window. |
+| **Step 4.7** | Analytics automated test suite | `[x] COMPLETED` | Focused analytics suite passes 32/32 after the Cubit teardown fix, current-date DAO fixture correction, and heatmap streak coverage. The streak test verifies empty history, duplicate same-day sessions, consecutive UTC dates, and gaps. Latest benchmark: 12.55 ms median / 14.60 ms p95 for 1,060 of 10,400 rows. |
 
 ---
 
 
-## Audit status note — 2026-11-21
+## Focused revalidation — 2026-11-21
 
-This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
-
-
-## Serial test result — 2026-11-21
-
-Six analytics DAO tests fail with `Bad state: Cannot emit new states after calling close` in `AnalyticsCubit._initStreams`. Pending initialization can create/emit through subscriptions after Cubit close. This is a valid lifecycle defect; fix cancellation/close coordination and test pending initialization.
+- Before the fix, the focused `analytics_dao_test.dart` run reproduced post-close emissions in six cases. One weekly-volume test also had stale fixture data outside its asserted four-week window.
+- `AnalyticsCubit` now tracks and awaits its initialization, stops attaching streams once teardown starts, guards asynchronous emissions, and cancels subscriptions before and after initialization settles. The DAO fixture now uses a current UTC date for its four-week assertion.
+- `flutter test --concurrency=1 test/features/analytics` passes **32/32**. Scoped fatal analysis passes with no issues; scoped formatting and `git diff --check` pass. The 52-week workload benchmark passed at 12.55 ms median / 14.60 ms p95.
+- Per user direction, selectable 7/14/30/90-day chart windows are deferred and existing chart behavior remains in place. The workout heatmap now shows its longest consecutive UTC-day streak. Phase 4 is complete for this approved scope; repository-wide analyzer/test gates still have unrelated failures recorded in [the audit report](../audit-report.md).

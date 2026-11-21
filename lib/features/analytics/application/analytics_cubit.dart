@@ -58,26 +58,37 @@ class AnalyticsCubit({
   StreamSubscription<List<MuscleVolumeStat>>? _volumeSub;
   StreamSubscription<List<PersonalRecord>>? _prSub;
   StreamSubscription<List<ExerciseSetMetric>>? _progressionSub;
+  late final Future<void> _initialization;
+  bool _closing = false;
 
   this : super(const AnalyticsState()) {
-    _initStreams();
+    _initialization = _initStreams();
+  }
+
+  void _emitIfOpen(AnalyticsState nextState) {
+    if (!_closing && !isClosed) emit(nextState);
   }
 
   Future<void> _initStreams() async {
-    emit(state.copyWith(isLoading: true));
+    _emitIfOpen(state.copyWith(isLoading: true));
 
     try {
       // Rebuild projections on init so existing completed sessions populate analytics
       await _queries.rebuildAnalytics();
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString()));
+      _emitIfOpen(state.copyWith(errorMessage: e.toString()));
     }
+
+    // close() can be called while rebuilding. Do not attach new subscriptions
+    // after teardown has started.
+    if (_closing || isClosed) return;
 
     _historySub = _queries
         .watchWorkoutHistory(_userId)
         .listen(
-          (history) => emit(state.copyWith(history: history, isLoading: false)),
-          onError: (e) => emit(
+          (history) =>
+              _emitIfOpen(state.copyWith(history: history, isLoading: false)),
+          onError: (e) => _emitIfOpen(
             state.copyWith(errorMessage: e.toString(), isLoading: false),
           ),
         );
@@ -85,47 +96,61 @@ class AnalyticsCubit({
     _volumeSub = _queries
         .watchWeeklyMuscleVolume(_userId)
         .listen(
-          (volume) => emit(state.copyWith(weeklyVolume: volume)),
-          onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
+          (volume) => _emitIfOpen(state.copyWith(weeklyVolume: volume)),
+          onError: (e) =>
+              _emitIfOpen(state.copyWith(errorMessage: e.toString())),
         );
 
     _prSub = _queries
         .watchAllPersonalRecords(_userId)
         .listen(
-          (prs) => emit(state.copyWith(personalRecords: prs)),
-          onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
+          (prs) => _emitIfOpen(state.copyWith(personalRecords: prs)),
+          onError: (e) =>
+              _emitIfOpen(state.copyWith(errorMessage: e.toString())),
         );
   }
 
   void selectExercise(String exerciseId) {
+    if (_closing || isClosed) return;
     _progressionSub?.cancel();
-    emit(state.copyWith(selectedExerciseId: exerciseId));
+    _emitIfOpen(state.copyWith(selectedExerciseId: exerciseId));
 
     _progressionSub = _queries
         .watchExerciseProgression(_userId, exerciseId)
         .listen(
           (progression) =>
-              emit(state.copyWith(exerciseProgression: progression)),
-          onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
+              _emitIfOpen(state.copyWith(exerciseProgression: progression)),
+          onError: (e) =>
+              _emitIfOpen(state.copyWith(errorMessage: e.toString())),
         );
   }
 
   Future<void> triggerRebuild() async {
+    if (_closing || isClosed) return;
     try {
-      emit(state.copyWith(isLoading: true));
+      _emitIfOpen(state.copyWith(isLoading: true));
       await _queries.rebuildAnalytics();
-      emit(state.copyWith(isLoading: false));
+      _emitIfOpen(state.copyWith(isLoading: false));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      _emitIfOpen(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
 
   @override
-  Future<void> close() {
-    _historySub?.cancel();
-    _volumeSub?.cancel();
-    _prSub?.cancel();
-    _progressionSub?.cancel();
-    return super.close();
+  Future<void> close() async {
+    _closing = true;
+    await _cancelSubscriptions();
+    await _initialization;
+    await _cancelSubscriptions();
+    await super.close();
+  }
+
+  Future<void> _cancelSubscriptions() async {
+    await Future.wait([
+      if (_historySub != null) _historySub!.cancel(),
+      if (_volumeSub != null) _volumeSub!.cancel(),
+      if (_prSub != null) _prSub!.cancel(),
+      if (_progressionSub != null) _progressionSub!.cancel(),
+    ]);
   }
 }

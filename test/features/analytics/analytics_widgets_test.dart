@@ -14,6 +14,21 @@ import 'package:growth_gauge/features/analytics/presentation/widgets/workout_fre
 
 void main() {
   group('Analytics Presentation Widgets Tests', () {
+    test('longestWorkoutStreak uses unique UTC calendar dates', () {
+      expect(longestWorkoutStreak([]), 0);
+      expect(
+        longestWorkoutStreak([
+          DateTime.utc(2026, 11, 20, 1),
+          DateTime.utc(2026, 11, 20, 23),
+          DateTime.utc(2026, 11, 21),
+          DateTime.utc(2026, 11, 23),
+          DateTime.utc(2026, 11, 24),
+          DateTime.utc(2026, 11, 25),
+        ]),
+        3,
+      );
+    });
+
     final now = DateTime.utc(2026, 10, 4, 12);
 
     testWidgets('PrBadgeCard renders record value and type correctly', (
@@ -204,6 +219,7 @@ void main() {
 
       expect(find.text('Workout Frequency (Last 10 Weeks)'), findsOneWidget);
       expect(find.text('2 total'), findsOneWidget);
+      expect(find.text('Longest streak: 1 day'), findsOneWidget);
     });
   });
 }

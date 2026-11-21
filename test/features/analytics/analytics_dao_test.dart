@@ -136,7 +136,7 @@ void main() {
               muscleGroup: const Value('chest'),
               isoYear: const Value(2026),
               isoWeek: const Value(40),
-              weekStartDate: Value(now),
+              weekStartDate: Value(DateTime.now().toUtc()),
               totalVolumeKg: const Value(1200.0),
               totalSets: const Value(6),
             ),
