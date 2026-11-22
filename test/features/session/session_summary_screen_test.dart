@@ -14,7 +14,7 @@ import 'package:growth_gauge/features/session/domain/session_enums.dart';
 import 'package:growth_gauge/features/session/domain/session_item.dart';
 import 'package:growth_gauge/features/session/domain/workout_session.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
-import 'package:growth_gauge/features/session/presentation/screen/session_summary_screen.dart';
+import 'package:growth_gauge/features/session/presentation/screens/session_summary_screen.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
 class FakeExerciseRepository(final Map<String, Exercise> exercises)

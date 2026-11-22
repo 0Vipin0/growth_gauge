@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/routing/app_router.dart';
 import '../../../common/presentation/utils/responsive_layout.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/goal_cubit.dart';
@@ -22,7 +23,7 @@ class const GoalsScreen({super.key}) extends StatelessWidget {
             if (context.canPop()) {
               context.pop();
             } else {
-              context.go('/home'); // Fallback if stack is empty
+              context.go(appRouteHome); // Fallback if stack is empty
             }
           },
         ),

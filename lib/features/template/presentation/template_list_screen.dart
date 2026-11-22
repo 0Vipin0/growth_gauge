@@ -8,7 +8,7 @@ import '../../common/presentation/widgets/widgets.dart';
 import '../../session/application/session_use_cases.dart';
 import '../../session/domain/session_enums.dart';
 import '../../session/infrastructure/session_repository.dart';
-import '../../session/presentation/screen/session_recovery_dialog.dart';
+import '../../session/presentation/screens/session_recovery_dialog.dart';
 import '../application/template_use_cases.dart';
 import '../domain/workout_template.dart';
 import '../infrastructure/template_repository.dart';

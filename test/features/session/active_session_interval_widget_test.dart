@@ -8,7 +8,7 @@ import 'package:growth_gauge/features/session/application/session_use_cases.dart
 import 'package:growth_gauge/features/session/domain/session_enums.dart';
 import 'package:growth_gauge/features/session/domain/workout_session.dart';
 import 'package:growth_gauge/features/session/infrastructure/session_repository.dart';
-import 'package:growth_gauge/features/session/presentation/screen/active_session_screen.dart';
+import 'package:growth_gauge/features/session/presentation/screens/active_session_screen.dart';
 import 'package:growth_gauge/features/template/infrastructure/template_repository.dart';
 
 void main() {
