@@ -110,8 +110,8 @@ CSV export is an additional analysis-oriented output; the existing JSON archive 
 
 | Step | Action | Status | Notes |
 |---|---|---|---|
-| **Step 6.6** | Implement CSV activity/session export | `[ ] PLANNED` | Export relevant activity/session data in CSV for analysis. Exact columns, units, and selection options: **NA â€” not specified in the legacy feature source**. JSON remains the backup/restore format. |
-| **Step 6.7** | Validate CSV output | `[ ] PLANNED` | Test CSV formatting and handling of empty or optional values. Detailed compatibility requirements: **NA â€” not specified in the legacy feature source**. |
+| **Step 6.6** | Implement CSV activity/session export | `[x] COMPLETED` | Export relevant activity/session data in CSV for analysis. Exact columns, units, and selection options: **NA â€” not specified in the legacy feature source**. JSON remains the backup/restore format. |
+| **Step 6.7** | Validate CSV output | `[x] COMPLETED` | Test CSV formatting and handling of empty or optional values. Detailed compatibility requirements: **NA â€” not specified in the legacy feature source**. |
 
 ### 9.3 Phase 6 Verification & Acceptance Criteria
 
@@ -134,3 +134,4 @@ CSV export is an additional analysis-oriented output; the existing JSON archive 
 ## Audit status note — 2026-11-21
 
 This phase is not promoted to fully complete by this audit. The supplied checks report analyzer failure (22 issues: 9 errors, 2 warnings, 11 infos), formatter pass (344 files, zero changes), no `Navigator.of` matches in `lib/` or `test/`, strict template validation failure (3 warning categories), and serial tests failed (124 passed, 21 failed, exit 1). See [the audit report](../audit-report.md) for case-level test triage and [master plan](../implementation-plan.md) for current priorities.
+

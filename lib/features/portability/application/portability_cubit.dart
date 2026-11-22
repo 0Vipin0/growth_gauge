@@ -6,6 +6,7 @@ import '../../../core/concurrency/isolate_runner.dart';
 import '../domain/conflict_strategy.dart';
 import '../domain/import_report.dart';
 import '../infrastructure/file_storage_service.dart';
+import 'export_csv_use_case.dart';
 import 'export_data_use_case.dart';
 import 'import_data_use_case.dart';
 
@@ -19,11 +20,13 @@ class const PortabilityState({
 class PortabilityCubit({
   required final ExportDataUseCase exportData,
   required final ImportDataUseCase importData,
+  final ExportCsvUseCase? exportCsvUseCase,
   required final FileStorageService fileStorage,
   final IsolateRunner isolateRunner = const IsolateRunner(),
 }) extends Cubit<PortabilityState> {
   final ExportDataUseCase _exportData = exportData;
   final ImportDataUseCase _importData = importData;
+  final ExportCsvUseCase? _exportCsv = exportCsvUseCase;
   final FileStorageService _fileStorage = fileStorage;
   final IsolateRunner _isolateRunner = isolateRunner;
 
@@ -42,6 +45,25 @@ class PortabilityCubit({
       );
     } catch (error) {
       emit(PortabilityState(error: 'Could not export backup: $error'));
+    }
+  }
+
+  Future<void> exportCsv() async {
+    emit(const PortabilityState(isBusy: true));
+    try {
+      final useCase = _exportCsv;
+      if (useCase == null) {
+        throw StateError('CSV export use case is not configured.');
+      }
+      final csv = await useCase();
+      final uri = await _fileStorage.saveCsv(csv);
+      emit(
+        PortabilityState(
+          message: uri == null ? 'CSV export cancelled.' : 'CSV export saved.',
+        ),
+      );
+    } catch (error) {
+      emit(PortabilityState(error: 'Could not export CSV: $error'));
     }
   }
 

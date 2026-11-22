@@ -44,7 +44,7 @@ class const BackupRestoreScreen({super.key}) extends StatelessWidget {
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
-                        'Export a portable copy of your account and workout data, or restore it from a JSON backup.',
+                        'Export a portable copy of your account and workout data, export activity sessions to CSV for spreadsheets, or restore from a JSON backup.',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -60,6 +60,15 @@ class const BackupRestoreScreen({super.key}) extends StatelessWidget {
                 onPressed: state.isBusy
                     ? null
                     : context.read<PortabilityCubit>().exportBackup,
+                isLoading: state.isBusy,
+              ),
+              const SizedBox(height: 12),
+              AppButton.outlined(
+                label: 'Export CSV',
+                icon: Icons.table_chart,
+                onPressed: state.isBusy
+                    ? null
+                    : context.read<PortabilityCubit>().exportCsv,
                 isLoading: state.isBusy,
               ),
               const SizedBox(height: 12),

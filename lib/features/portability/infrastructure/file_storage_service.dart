@@ -25,4 +25,14 @@ class FileStorageService() {
     bytes: Uint8List.fromList(utf8.encode(contents)),
     mimeType: 'application/json',
   );
+
+  Future<Uri?> saveCsv(
+    String contents, {
+    String fileName = 'growth-gauge-activities.csv',
+  }) => FilePicker.saveFile(
+    dialogTitle: 'Save Growth Gauge CSV export',
+    fileName: fileName,
+    bytes: Uint8List.fromList(utf8.encode(contents)),
+    mimeType: 'text/csv',
+  );
 }

@@ -42,6 +42,7 @@ List<RouteBase> createAppRoutes({
     rebuilder: projectionRebuilder,
   );
   final exportData = ExportDataUseCase(database: database);
+  final exportCsv = ExportCsvUseCase(database: database);
   final importData = ImportDataUseCase(
     database: database,
     migrations: MigrationRegistry([MigrationV1ToV2(), MigrationV2ToV3()]),
@@ -189,6 +190,7 @@ List<RouteBase> createAppRoutes({
       builder: (_, _) => BlocProvider(
         create: (_) => PortabilityCubit(
           exportData: exportData,
+          exportCsvUseCase: exportCsv,
           importData: importData,
           fileStorage: FileStorageService(),
         ),
