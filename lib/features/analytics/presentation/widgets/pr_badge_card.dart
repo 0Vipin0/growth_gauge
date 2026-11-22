@@ -38,6 +38,22 @@ class const PrBadgeCard({
     }
   }
 
+  String _formatExerciseName(String exerciseId) {
+    final cleaned = exerciseId
+        .replaceFirst(RegExp(r'^exercise-'), '')
+        .replaceAll(RegExp(r'-\d+$'), '')
+        .replaceAll('-', ' ');
+    if (cleaned.isEmpty) return exerciseId;
+    return cleaned
+        .split(' ')
+        .map(
+          (word) => word.isEmpty
+              ? ''
+              : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
+        )
+        .join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -65,7 +81,7 @@ class const PrBadgeCard({
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  exerciseName ?? record.exerciseId,
+                  exerciseName ?? _formatExerciseName(record.exerciseId),
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
